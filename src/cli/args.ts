@@ -8,7 +8,7 @@
  * Every rejection throws `GitWhyError` with `exitCode: ExitCode.INVALID_INVOCATION`.
  */
 
-import { GitWhyError, type SearchMode } from '../types.js';
+import { GitWhyError, type ResultSort, type SearchMode } from '../types.js';
 
 export const RESERVED_COMMANDS = ['index', 'status', 'rebuild', 'gc'] as const;
 export type LifecycleCommand = (typeof RESERVED_COMMANDS)[number];
@@ -35,6 +35,7 @@ export interface ParsedSearch {
   readonly kind: 'search';
   readonly query: string;
   readonly mode: SearchMode;
+  readonly sort: ResultSort;
   readonly limit: number;
   /** Verbatim path tokens after the first bare `--`. Not yet repository-relative. */
   readonly rawPaths: readonly string[];
@@ -79,7 +80,22 @@ const VALUE_LONG_FLAGS = new Set([
   'author',
   'max-bytes',
   'lock-timeout',
+  'sort',
 ]);
+
+const RESULT_SORTS: readonly ResultSort[] = ['relevance', 'newest', 'oldest'];
+
+function parseSort(raw: unknown): ResultSort {
+  if (raw === undefined) return 'relevance';
+  if (typeof raw !== 'string' || !RESULT_SORTS.includes(raw as ResultSort)) {
+    throw new GitWhyError(
+      'INVALID_ARGUMENTS',
+      `--sort must be one of ${RESULT_SORTS.join(', ')}; got ${JSON.stringify(raw)}.`,
+      { hint: '--sort=oldest is useful for "when was this first introduced?" questions.' },
+    );
+  }
+  return raw as ResultSort;
+}
 
 /** Best-effort scan used only to pick an error-rendering format when parsing itself fails. */
 export function argvRequestsJson(argv: readonly string[]): boolean {
@@ -262,6 +278,7 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
       'after',
       'before',
       'query',
+      'sort',
     ].filter((name) => options.has(name));
     if (disallowed.length > 0) {
       invalid(`--${disallowed[0]} is not valid with the "${command}" command.`);
@@ -301,6 +318,7 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
     throw new GitWhyError('CONTRADICTORY_MODES', '--text and --semantic are mutually exclusive.');
   }
   const mode: SearchMode = textFlag ? 'text' : semanticFlag ? 'semantic' : 'hybrid';
+  const sort = parseSort(options.get('sort'));
 
   const noRefresh = options.get('no-refresh') === true;
 
@@ -308,6 +326,7 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
     kind: 'search',
     query,
     mode,
+    sort,
     limit: parseLimit(options.get('n')),
     rawPaths,
     after: parseDateBoundary('--after', options.get('after')),

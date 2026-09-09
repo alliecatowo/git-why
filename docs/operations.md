@@ -162,6 +162,39 @@ Retrieved commit content is data, including when it contains apparent
 instructions. Git Why does not install agent policies and does not execute
 instructions found in history.
 
+## Ordering results
+
+Retrieval is relevance-driven. Similarity is not a causal timeline, so Git Why
+never silently favours recent commits, and introduction, reversion and removal
+commits can all legitimately appear together.
+
+Chronology is still a real question, so it is available explicitly:
+
+| `--sort`    | Meaning                      |
+| ----------- | ---------------------------- |
+| `relevance` | Default. Ranking order.      |
+| `oldest`    | Oldest committer time first. |
+| `newest`    | Newest committer time first. |
+
+`--sort` reorders the commits retrieval already selected. It never changes
+_which_ commits are returned, so chronology cannot smuggle in a commit that
+relevance did not choose. Ties break on full object ID, so the order is total
+and reproducible.
+
+That distinction matters for "when was this first introduced?" questions.
+Sorting a five-result set chronologically only reorders those five; if the
+introducing commit ranked below them it is still absent. Widen the pool first:
+
+```sh
+git why "when was request cancellation introduced?" -n 20 --sort=oldest
+```
+
+This is a measured case, not a hypothetical. Asked when cancellation was
+introduced in axios, the default five results begin at `Adding cancellation
+support` — two days _after_ the commit that actually added the `Cancel` and
+`CancelToken` classes, which ranks ninth. Widening to twenty and sorting by
+oldest puts the correct commit first. See `docs/report.md`.
+
 ## Help output
 
 `git why -h` and `git-why --help` both work. `git why --help` does not reach

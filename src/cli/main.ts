@@ -27,6 +27,7 @@ import {
   ExitCode,
   GitWhyError,
   type SearchFilters,
+  type ResultSort,
   type SearchMode,
   type SearchRequest,
 } from '../types.js';
@@ -41,6 +42,8 @@ Options:
   -n <count>            Number of distinct commits to return (default 5, max 50)
   --text                Full-text search only
   --semantic            Vector search only (default is hybrid)
+  --sort=<order>        relevance (default), oldest, or newest. Reorders the
+                        selected commits; never changes which are returned
   --after=<date>        Only commits at or after this date (UTC, ISO-8601)
   --before=<date>       Only commits strictly before this date (UTC, ISO-8601)
   --author=<substring>  Case-insensitive substring of author name or email
@@ -98,6 +101,7 @@ interface ErrorContext {
   readonly command: LifecycleCommand | undefined;
   readonly query: string;
   readonly mode: SearchMode;
+  readonly sort?: ResultSort;
 }
 
 function handleError(err: unknown, ctx: ErrorContext): number {
@@ -122,6 +126,7 @@ function handleError(err: unknown, ctx: ErrorContext): number {
         renderSearchErrorJson({
           query: ctx.query,
           mode: ctx.mode,
+          sort: ctx.sort,
           code: interrupted.code,
           message: interrupted.message,
           hint: interrupted.hint,
@@ -144,6 +149,7 @@ function handleError(err: unknown, ctx: ErrorContext): number {
       renderSearchErrorJson({
         query: ctx.query,
         mode: ctx.mode,
+        sort: ctx.sort,
         code: gw.code,
         message: gw.message,
         hint: gw.hint,
@@ -189,7 +195,13 @@ function lifecycleContext(parsed: ParsedLifecycle): ErrorContext {
 }
 
 function searchContext(parsed: ParsedSearch): ErrorContext {
-  return { json: parsed.json, command: undefined, query: parsed.query, mode: parsed.mode };
+  return {
+    json: parsed.json,
+    command: undefined,
+    query: parsed.query,
+    mode: parsed.mode,
+    sort: parsed.sort,
+  };
 }
 
 async function runLifecycle(
@@ -265,6 +277,7 @@ async function runSearch(
     const request: SearchRequest = {
       query: parsed.query,
       mode: parsed.mode,
+      sort: parsed.sort,
       limit: parsed.limit,
       filters,
     };

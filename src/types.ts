@@ -327,6 +327,18 @@ export interface Embedder {
 
 export type SearchMode = 'hybrid' | 'text' | 'semantic';
 
+/**
+ * Deterministic ordering applied to the commits retrieval already selected.
+ *
+ * This is a presentation facet, not a ranking tweak: it never changes WHICH
+ * commits are returned, only the order they are shown in. Retrieval stays
+ * relevance-driven because similarity is not a causal timeline, and silently
+ * favouring recent commits would be wrong. But "when was this first
+ * introduced?" is a real question that ranking alone answers badly, so the
+ * user can ask for chronology explicitly.
+ */
+export type ResultSort = 'relevance' | 'newest' | 'oldest';
+
 /** A path restriction: a literal file path, or a directory prefix. */
 export interface PathRestriction {
   /** Repository-relative, normalised, no leading `./`, no trailing `/`. */
@@ -355,6 +367,7 @@ export const NO_FILTERS: SearchFilters = Object.freeze({
 export interface SearchRequest {
   readonly query: string;
   readonly mode: SearchMode;
+  readonly sort: ResultSort;
   /** Distinct commits to return, 1-50. */
   readonly limit: number;
   readonly filters: SearchFilters;
@@ -407,6 +420,7 @@ export interface SnapshotSummary {
 export interface SearchResponse {
   readonly query: string;
   readonly mode: SearchMode;
+  readonly sort: ResultSort;
   readonly snapshot: SnapshotSummary;
   readonly results: readonly CommitHit[];
   readonly warnings: readonly string[];

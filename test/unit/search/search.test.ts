@@ -152,6 +152,7 @@ function makeEmbedder(): Embedder & { queryCalls: number } {
 const baseRequest: SearchRequest = {
   query: 'auth refresh loop',
   mode: 'hybrid',
+  sort: 'relevance',
   limit: 5,
   filters: NO_FILTERS,
 };
@@ -218,4 +219,69 @@ test('candidateLimitReached is propagated through to the response', async () => 
   const embedder = makeEmbedder();
   const response = await search({ ...baseRequest, limit: 50 }, store, embedder, snapshot);
   assert.equal(typeof response.candidateLimitReached, 'boolean');
+});
+
+test('--sort=oldest reorders the selected commits chronologically without changing the selection', async () => {
+  const response = await search(
+    { ...baseRequest, sort: 'oldest' },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  const relevance = await search(baseRequest, makeStore(), makeEmbedder(), snapshot);
+
+  assert.deepEqual(
+    [...response.results.map((r) => r.sha)].sort(),
+    [...relevance.results.map((r) => r.sha)].sort(),
+    'sorting must never change WHICH commits are returned, only their order',
+  );
+  const times = response.results.map((r) => r.committerTime);
+  assert.deepEqual(
+    times,
+    [...times].sort((a, b) => a - b),
+    'oldest first',
+  );
+  assert.equal(response.sort, 'oldest');
+});
+
+test('--sort=newest is the exact reverse ordering of --sort=oldest', async () => {
+  const oldest = await search(
+    { ...baseRequest, sort: 'oldest' },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  const newest = await search(
+    { ...baseRequest, sort: 'newest' },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  const t = newest.results.map((r) => r.committerTime);
+  assert.deepEqual(
+    t,
+    [...t].sort((a, b) => b - a),
+    'newest first',
+  );
+  assert.equal(oldest.results.length, newest.results.length);
+});
+
+test('sorting is total and deterministic when commits share a committer time', async () => {
+  const a = await search({ ...baseRequest, sort: 'newest' }, makeStore(), makeEmbedder(), snapshot);
+  const b = await search({ ...baseRequest, sort: 'newest' }, makeStore(), makeEmbedder(), snapshot);
+  assert.deepEqual(
+    a.results.map((r) => r.sha),
+    b.results.map((r) => r.sha),
+  );
+});
+
+test('relevance remains the default and preserves rank order', async () => {
+  const response = await search(baseRequest, makeStore(), makeEmbedder(), snapshot);
+  assert.equal(response.sort, 'relevance');
+  const scores = response.results.map((r) => r.rankScore);
+  assert.deepEqual(
+    scores,
+    [...scores].sort((x, y) => y - x),
+    'relevance order is descending rankScore',
+  );
 });

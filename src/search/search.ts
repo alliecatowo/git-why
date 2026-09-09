@@ -14,6 +14,7 @@ import {
   type CommitHit,
   type Embedder,
   type HistoryStore,
+  type ResultSort,
   type SearchRequest,
   type SearchResponse,
   type SnapshotSummary,
@@ -38,6 +39,21 @@ const MAX_MESSAGE_EXCERPT_CHARS = 280;
  */
 function benchRecordTypes(): ('commit' | 'evidence')[] {
   return process.env.GIT_WHY_BENCH_RECORD_TYPES === 'commit' ? ['commit'] : ['commit', 'evidence'];
+}
+
+/**
+ * Reorders the already-selected commits. Retrieval is unchanged: the same set
+ * comes back whatever the sort, so chronology can never smuggle in a commit
+ * that relevance did not choose. Ties break on full SHA so the order is total
+ * and reproducible.
+ */
+function applySort(results: readonly CommitHit[], sort: ResultSort): CommitHit[] {
+  if (sort === 'relevance') return [...results];
+  const direction = sort === 'newest' ? -1 : 1;
+  return [...results].sort((a, b) => {
+    if (a.committerTime !== b.committerTime) return direction * (a.committerTime - b.committerTime);
+    return a.sha < b.sha ? -1 : a.sha > b.sha ? 1 : 0;
+  });
 }
 
 function messageExcerptOf(subject: string, body: string): string {
@@ -111,8 +127,9 @@ export async function search(
   return {
     query: request.query,
     mode: request.mode,
+    sort: request.sort,
     snapshot,
-    results,
+    results: applySort(results, request.sort),
     warnings,
     candidateLimitReached: rankResult.candidateLimitReached,
   };

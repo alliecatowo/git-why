@@ -57,6 +57,7 @@ function makeResponse(overrides: Partial<SearchResponse> = {}): SearchResponse {
   return {
     query: 'auth refresh loop',
     mode: 'hybrid',
+    sort: 'relevance',
     snapshot: {
       scope: 'branches-remotes-tags-worktree-heads',
       fingerprint: 'opaque-fingerprint',

@@ -7,6 +7,7 @@
     "schemaVersion",
     "query",
     "mode",
+    "sort",
     "results",
     "warnings",
     "outputTruncated",
@@ -14,23 +15,43 @@
   ],
   "additionalProperties": false,
   "properties": {
-    "schemaVersion": { "const": 1 },
-    "query": { "type": "string" },
-    "mode": { "enum": ["hybrid", "text", "semantic"] },
+    "schemaVersion": {
+      "const": 1
+    },
+    "query": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": ["hybrid", "text", "semantic"]
+    },
     "snapshot": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "required": ["scope", "fingerprint", "indexedAt", "freshness", "coverage", "generation"],
           "additionalProperties": false,
           "properties": {
-            "scope": { "const": "branches-remotes-tags-worktree-heads" },
-            "fingerprint": { "type": "string" },
-            "indexedAt": { "type": ["string", "null"] },
-            "freshness": { "enum": ["current", "stale", "unknown"] },
-            "coverage": { "enum": ["complete_for_policy", "partial", "unknown"] },
-            "generation": { "type": "string" }
+            "scope": {
+              "const": "branches-remotes-tags-worktree-heads"
+            },
+            "fingerprint": {
+              "type": "string"
+            },
+            "indexedAt": {
+              "type": ["string", "null"]
+            },
+            "freshness": {
+              "enum": ["current", "stale", "unknown"]
+            },
+            "coverage": {
+              "enum": ["complete_for_policy", "partial", "unknown"]
+            },
+            "generation": {
+              "type": "string"
+            }
           }
         }
       ]
@@ -53,20 +74,49 @@
         ],
         "additionalProperties": false,
         "properties": {
-          "sha": { "type": "string" },
-          "subject": { "type": "string" },
+          "sha": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
           "author": {
             "type": "object",
             "required": ["name", "email"],
             "additionalProperties": false,
-            "properties": { "name": { "type": "string" }, "email": { "type": "string" } }
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
           },
-          "authorTime": { "type": "number" },
-          "committerTime": { "type": "number" },
-          "parents": { "type": "array", "items": { "type": "string" } },
-          "messageExcerpt": { "type": "string" },
-          "rankScore": { "type": "number" },
-          "matchedBy": { "type": "array", "items": { "enum": ["text", "semantic"] } },
+          "authorTime": {
+            "type": "number"
+          },
+          "committerTime": {
+            "type": "number"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "messageExcerpt": {
+            "type": "string"
+          },
+          "rankScore": {
+            "type": "number"
+          },
+          "matchedBy": {
+            "type": "array",
+            "items": {
+              "enum": ["text", "semantic"]
+            }
+          },
           "evidence": {
             "type": "array",
             "items": {
@@ -87,38 +137,89 @@
               ],
               "additionalProperties": false,
               "properties": {
-                "recordId": { "type": "string" },
-                "kind": { "enum": ["hunk", "file_change"] },
-                "path": { "type": "string" },
-                "pathBytesBase64": { "type": "string" },
-                "oldPath": { "type": ["string", "null"] },
-                "oldPathBytesBase64": { "type": "string" },
-                "changeType": { "enum": ["A", "C", "D", "M", "R", "T", "U", "X"] },
-                "oldStart": { "type": ["number", "null"] },
-                "oldCount": { "type": ["number", "null"] },
-                "newStart": { "type": ["number", "null"] },
-                "newCount": { "type": ["number", "null"] },
-                "excerpt": { "type": "string" },
-                "truncated": { "type": "boolean" },
-                "omissionReasons": { "type": "array", "items": { "type": "string" } }
+                "recordId": {
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": ["hunk", "file_change"]
+                },
+                "path": {
+                  "type": "string"
+                },
+                "pathBytesBase64": {
+                  "type": "string"
+                },
+                "oldPath": {
+                  "type": ["string", "null"]
+                },
+                "oldPathBytesBase64": {
+                  "type": "string"
+                },
+                "changeType": {
+                  "enum": ["A", "C", "D", "M", "R", "T", "U", "X"]
+                },
+                "oldStart": {
+                  "type": ["number", "null"]
+                },
+                "oldCount": {
+                  "type": ["number", "null"]
+                },
+                "newStart": {
+                  "type": ["number", "null"]
+                },
+                "newCount": {
+                  "type": ["number", "null"]
+                },
+                "excerpt": {
+                  "type": "string"
+                },
+                "truncated": {
+                  "type": "boolean"
+                },
+                "omissionReasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
         }
       }
     },
-    "warnings": { "type": "array", "items": { "type": "string" } },
-    "outputTruncated": { "type": "boolean" },
-    "candidateLimitReached": { "type": "boolean" },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputTruncated": {
+      "type": "boolean"
+    },
+    "candidateLimitReached": {
+      "type": "boolean"
+    },
     "error": {
       "type": "object",
       "required": ["code", "message", "hint"],
       "additionalProperties": false,
       "properties": {
-        "code": { "type": "string" },
-        "message": { "type": "string" },
-        "hint": { "type": ["string", "null"] }
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "hint": {
+          "type": ["string", "null"]
+        }
       }
+    },
+    "sort": {
+      "type": "string",
+      "enum": ["relevance", "newest", "oldest"],
+      "description": "Deterministic ordering applied to the selected commits. Never changes which commits are returned."
     }
   }
 }

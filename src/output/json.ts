@@ -53,6 +53,7 @@ function buildEnvelope(
     schemaVersion: JSON_SCHEMA_VERSION,
     query: response.query,
     mode: response.mode,
+    sort: response.sort,
     snapshot: {
       scope: response.snapshot.scope,
       fingerprint: response.snapshot.fingerprint,
@@ -150,6 +151,8 @@ export function renderSearchJson(
 export interface JsonErrorInput {
   readonly query: string;
   readonly mode: SearchResponse['mode'];
+  /** Defaults to 'relevance' because a failure can occur before --sort is parsed. */
+  readonly sort?: SearchResponse['sort'];
   readonly code: GitWhyErrorCode;
   readonly message: string;
   readonly hint: string | undefined;
@@ -161,6 +164,7 @@ export function renderSearchErrorJson(input: JsonErrorInput): string {
     schemaVersion: JSON_SCHEMA_VERSION,
     query: input.query,
     mode: input.mode,
+    sort: input.sort ?? 'relevance',
     snapshot: null,
     results: [],
     warnings: [],
