@@ -1,0 +1,599 @@
+{
+  "runId": "2026-09-09T20-14-34-765Z",
+  "split": "dev",
+  "protocolHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f",
+  "generatedAt": "2026-09-09T20:15:07.956Z",
+  "totalQueries": 72,
+  "omittedCount": 0,
+  "byCandidateModeCategory": [
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.625
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "rename",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "overall": [
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.6111111111111112,
+      "hit3": 0.8888888888888888,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.7657407407407407
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.6111111111111112,
+      "hit3": 0.8888888888888888,
+      "hit5": 0.8888888888888888,
+      "recall5": 0.8888888888888888,
+      "mrr": 0.7407407407407408
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.6111111111111112,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.7777777777777778
+    }
+  ],
+  "noEvidenceObservations": [
+    {
+      "caseId": "d-noev-01",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "adaabd912dff7de402ae6f56a5b77ea438811181",
+        "878647c7dd28c580038e51c893b6da0db4836979",
+        "287b802786ccfde6404ee661b9927d5f1840e679",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-02",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "32941158bcf2c3839de983baa62b59797113808e",
+        "d6b7e9264791dab161e7ebc244f17a869aa0b58f",
+        "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-03",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "c46e31e33e1b938098ea54beb8024c8f694204f8",
+        "3e1966dceea7222210acaed94e318351478c28f0",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-04",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "79e5e70316f1eb49408c7a14fbc6e9d1ade852f3",
+        "dd8f320bd8a05819c56fe214e8c63baf4b7ba9b5",
+        "2351e36134326cdb3ff86d63b1cbf841ecd861c0",
+        "330caa998438b0d831e9447b890a108848a1e317"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-01",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "adaabd912dff7de402ae6f56a5b77ea438811181",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "0573a4b44b1025be4638256cd1da9934e4b29c10",
+        "de74e504eecc1f0da33714eb5340ee0ab5f051cc"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-02",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "f5878f3520c4d13777f409caf9075c3b44c381e6",
+        "0a758bc3cd116abd004685713fb0d498941237bd",
+        "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-03",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "96c76f26c0722a29595be30e852bbf85d415ca2b",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "3d7e49da5961a4025416e6325d4d7501f5030625"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-04",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+        "466eaaa8bba4976081f839d884b22764e82b7524",
+        "28f1eb675de28b4320093b13ffba0cc31b56a334",
+        "1774869954f4882bb45a0567c20e664e50688055"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-01",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "adaabd912dff7de402ae6f56a5b77ea438811181",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "287b802786ccfde6404ee661b9927d5f1840e679",
+        "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-02",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "dd18f43967c99d810bf481803f9f15fd00a50d60",
+        "771a196b7ea74b43da5c763de6a49b35e129a7f2",
+        "d6b7e9264791dab161e7ebc244f17a869aa0b58f"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-03",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+        "96c76f26c0722a29595be30e852bbf85d415ca2b"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "d-noev-04",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "466eaaa8bba4976081f839d884b22764e82b7524",
+        "1774869954f4882bb45a0567c20e664e50688055",
+        "4c406adfc9cdf63a38825d1e6d3f247027e931c1",
+        "38f2118b42623f57113883e35a963412476e6d67"
+      ],
+      "omitted": false
+    }
+  ]
+}

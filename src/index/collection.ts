@@ -192,7 +192,18 @@ interface RawZVecDoc {
   readonly fields: Record<string, unknown>;
 }
 
-function toScoredRecord(doc: RawZVecDoc): ScoredRecord {
+/**
+ * Zvec's COSINE metric returns a DISTANCE: lower is closer. `ScoredRecord.score`
+ * is defined as "higher is better" and the ranking layer sorts on it that way,
+ * so the vector branch must be converted at this boundary. Leaving it as a raw
+ * distance silently ranks the least relevant commits first, which is not
+ * visible as an error anywhere downstream — only as bad results.
+ */
+function similarityFromCosineDistance(distance: number): number {
+  return 1 - distance;
+}
+
+function toScoredRecord(doc: RawZVecDoc, transform: (score: number) => number = (x) => x): ScoredRecord {
   const type = doc.fields[FIELD.type];
   const sha = doc.fields[FIELD.sha];
   if (type !== 'commit' && type !== 'evidence') {
@@ -201,7 +212,7 @@ function toScoredRecord(doc: RawZVecDoc): ScoredRecord {
   if (typeof sha !== 'string') {
     throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} is missing its sha field`);
   }
-  return { id: doc.id, type, sha, score: doc.score };
+  return { id: doc.id, type, sha, score: transform(doc.score) };
 }
 
 function parsePayload<T>(doc: RawZVecDoc): T {
@@ -250,7 +261,7 @@ export class ZvecHistoryStore implements HistoryStore {
       includeVector: false,
       outputFields: [FIELD.type, FIELD.sha],
     });
-    return docs.map((d) => toScoredRecord(d as unknown as RawZVecDoc));
+    return docs.map((d) => toScoredRecord(d as unknown as RawZVecDoc, similarityFromCosineDistance));
   }
 
   async fetchCommits(shas: readonly string[]): Promise<ReadonlyMap<string, CommitRecord>> {
