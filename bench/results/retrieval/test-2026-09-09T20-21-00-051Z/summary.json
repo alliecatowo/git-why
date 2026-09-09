@@ -1,0 +1,599 @@
+{
+  "runId": "2026-09-09T20-21-00-051Z",
+  "split": "test",
+  "protocolHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f",
+  "generatedAt": "2026-09-09T20:21:33.060Z",
+  "totalQueries": 72,
+  "omittedCount": 0,
+  "byCandidateModeCategory": [
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.35
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "rename",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "poor_message_rich_diff",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "rich_message_skipped_patch",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "lifecycle",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "distractor_intent",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "rename",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "poor_message_rich_diff",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "rich_message_skipped_patch",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "lifecycle",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "distractor_intent",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "rename",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "poor_message_rich_diff",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "rich_message_skipped_patch",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "lifecycle",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "distractor_intent",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "overall": [
+    {
+      "candidate": "production",
+      "mode": "text",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.8333333333333334,
+      "hit3": 0.9444444444444444,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.8907407407407406
+    },
+    {
+      "candidate": "production",
+      "mode": "semantic",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.8333333333333334,
+      "hit3": 0.9444444444444444,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.8999999999999999
+    },
+    {
+      "candidate": "production",
+      "mode": "hybrid",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.8888888888888888,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.9444444444444444
+    }
+  ],
+  "noEvidenceObservations": [
+    {
+      "caseId": "t-noev-01",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "8c6b5df9223e970db3a07a429fabbeef7f17b2a9",
+        "8cb5b8a75e287f8d237655e8336aa7e95baf14e5"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-02",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+        "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+        "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+        "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-03",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "c37cca49ca592898af925856e873a48162c8dd75",
+        "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+        "397fb43f03cc8c6b8157257fea92b8355958ff56",
+        "e9641f22b3bd26547d030d826f07f01e55b9176d",
+        "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-04",
+      "candidate": "production",
+      "mode": "text",
+      "returnedTopK": [
+        "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+        "49d7104b95343b986cc05eeeebd930e6f379ef76",
+        "14643e9d5f248b93bf6c30dd01df385a8c7ef8a6",
+        "fc158b25ee70ad8228fb409e037ea8d3bd76e12f",
+        "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-01",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "0a758bc3cd116abd004685713fb0d498941237bd",
+        "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-02",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+        "070dd59d48a14d9ffedd0443514a4405941b93ec",
+        "2a6ec436807bbe6cccb41d82c65e8d9bff734fd6"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-03",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670",
+        "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+        "e808a7097f68bebc195164a30d4f1146f6f1b420",
+        "e9641f22b3bd26547d030d826f07f01e55b9176d",
+        "12c42fc7ced4296141dc519409fcada508632feb"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-04",
+      "candidate": "production",
+      "mode": "semantic",
+      "returnedTopK": [
+        "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+        "93602427f04f187f1bec9e70ee2d11b497a73361",
+        "22064355de930ec5f36a180b71d1684848d5afa3",
+        "73f4e138e60ba1738422389fa097f42d494fef5c",
+        "a26dbb4b9e0949ba172736e1219496fb20beb97b"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-01",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "343f8c53f540abeeae39691bd215cf0523fc20e5",
+        "3933fa98a6a9225ed49b3ffb003692b397c9f7c1"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-02",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+        "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+        "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+        "070dd59d48a14d9ffedd0443514a4405941b93ec"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-03",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "e9641f22b3bd26547d030d826f07f01e55b9176d",
+        "12c42fc7ced4296141dc519409fcada508632feb",
+        "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+        "e808a7097f68bebc195164a30d4f1146f6f1b420",
+        "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670"
+      ],
+      "omitted": false
+    },
+    {
+      "caseId": "t-noev-04",
+      "candidate": "production",
+      "mode": "hybrid",
+      "returnedTopK": [
+        "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+        "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+        "49d7104b95343b986cc05eeeebd930e6f379ef76",
+        "0d4ed68d63324ee595e0a0a77b2f03a445e952be",
+        "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+      ],
+      "omitted": false
+    }
+  ]
+}

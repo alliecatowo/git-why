@@ -1,0 +1,2480 @@
+[
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "A user shows up twice in the \"who is online\" list after they reconnect from a second tab. Where was that addressed?",
+    "relevantShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+    ],
+    "elapsedMs": 210.734625,
+    "exitCode": 0,
+    "rankedShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "When a call to an upstream provider times out, is there any chance the same request actually gets sent a second time in the background?",
+    "relevantShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75"
+    ],
+    "elapsedMs": 209.337417,
+    "exitCode": 0,
+    "rankedShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "There is a case-insensitive check for the Authorization header — why is that needed?",
+    "relevantShas": [
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+    ],
+    "elapsedMs": 208.085333,
+    "exitCode": 0,
+    "rankedShas": [
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "640894127914c43d4ebd7e5e9260edb042a565a0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why does the Acme client bother parsing the response body even when Acme returns a 200 status?",
+    "relevantShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56"
+    ],
+    "elapsedMs": 211.458792,
+    "exitCode": 0,
+    "rankedShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "6cb30fdfcaca5011285faa506350fccccac3e9be",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "b23a1069983f636d99ae682b2a2a24d5f3aba9ea"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "What did the client SDK use to do for reconnect backoff before it was simplified?",
+    "relevantShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c"
+    ],
+    "elapsedMs": 210.371208,
+    "exitCode": 0,
+    "rankedShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "eae43e96f3f0b1118eb26485e38beb87501420ac",
+      "faf857d8431fa6baaa5463d3379f489914b883ff"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "test",
+    "query": "Did workers used to ask the queue for work on a timer instead of having work pushed to them?",
+    "relevantShas": [
+      "f149ceedf526492534143892c79ae8b33a1959c7"
+    ],
+    "elapsedMs": 210.203041,
+    "exitCode": 0,
+    "rankedShas": [
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "32941158bcf2c3839de983baa62b59797113808e",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "e73c1de38a9dfce79c12dc755bf14fc42c65a088"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is the CSV export code still around, or was it removed after the streaming change?",
+    "relevantShas": [
+      "c46e31e33e1b938098ea54beb8024c8f694204f8"
+    ],
+    "elapsedMs": 210.864333,
+    "exitCode": 0,
+    "rankedShas": [
+      "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "92f0b8c790b4286c445a0772f61ddb39bd9b1ff4",
+      "70f69b06bbab9ada1e633d148e4a112d4db70585",
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is there any Redis-based locking code left in the pipeline after the move to Postgres locks?",
+    "relevantShas": [
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0"
+    ],
+    "elapsedMs": 211.30975,
+    "exitCode": 0,
+    "rankedShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "c3af436e5a3d654afd6868927fb0f82d5cefed00",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "b3c8743c6235f056465d3bdf65d8d572b6bec53b",
+      "983d4028b6a5322dc9d26a17f40c8dbdac2af785"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "AuthSessionProvider cache miss metric",
+    "relevantShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+    ],
+    "elapsedMs": 212.235375,
+    "exitCode": 0,
+    "rankedShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "AuthSessionProvider dispose cache",
+    "relevantShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3"
+    ],
+    "elapsedMs": 224.381625,
+    "exitCode": 0,
+    "rankedShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is there a minimum Node version required specifically for the streaming export code?",
+    "relevantShas": [
+      "3e1966dceea7222210acaed94e318351478c28f0"
+    ],
+    "elapsedMs": 210.469,
+    "exitCode": 0,
+    "rankedShas": [
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "3e1966dceea7222210acaed94e318351478c28f0",
+      "19d2a69fb37a3e468c48c2719953492ab6dbb842",
+      "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+      "c2792a04be171315cd747e5c947dceb6909c782c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Did we ever remove support for building with webpack 4?",
+    "relevantShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699"
+    ],
+    "elapsedMs": 210.956416,
+    "exitCode": 0,
+    "rankedShas": [
+      "aeeb1e83820400980a6cc3e6d17b3d8b5a5dd01d",
+      "c17659c9daa6ba770b8a8cf288fb75ebff9bcd61",
+      "7d192db24f5e4d32121465b1768e6bf55b14d184",
+      "ccf6aee8afb44bc814133dbe04d7bc131d93b8d4",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.2
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "Is PresenceTracker still called that, or was it renamed?",
+    "relevantShas": [
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6"
+    ],
+    "elapsedMs": 547.710583,
+    "exitCode": 0,
+    "rankedShas": [
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "34bfb50a9f46f809e6af4bb56676edc80829a93f",
+      "cc1644eda97a644ba96ae16464a4b5d1aea9b808",
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "The Acme client file used to be named just acme-client.js — where is it now?",
+    "relevantShas": [
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "elapsedMs": 519.958666,
+    "exitCode": 0,
+    "rankedShas": [
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "99c09660eb83e7af364fc740ef9965df41d5d43c",
+      "26c1a951e05ee60ae1ae378b2456b945096c1526",
+      "59bdc834ea43de56bfda8a9f07a6641fa8ef5818",
+      "979261aa33cc986c02789801290ba9dbae2b69d1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "There is a change to the Globex client around handling a 204 with a Retry-After header -- can you find it?",
+    "relevantShas": [
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "elapsedMs": 214.375584,
+    "exitCode": 0,
+    "rankedShas": [
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "e8cc9a168e0c7813a6a806dde56744d897cd97de",
+      "465a1c8b4a08662d698eaeb90f4ced343ef96d81",
+      "3395ad876cdd6e2a52df902814eeb66ad549fdcf",
+      "d1e34b57ec0f4bf381f07c390d65094dc2eda0cb"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Why did the release-notes generator get bumped to a new major version?",
+    "relevantShas": [
+      "f24787847358c0c0b7fc0680803310567434ca7e"
+    ],
+    "elapsedMs": 206.137958,
+    "exitCode": 0,
+    "rankedShas": [
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "f8bb647f98e2a0702578b2e69de8047ff0d1647a",
+      "bf3dbb4996a53acd4f7640dbf3102a91ae3fefb8",
+      "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "fd8a8c6b18203e07de43ae83df1931fafdd4106f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "There was some IE11-specific caching for CORS preflight requests at some point -- when did that come and go?",
+    "relevantShas": [
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3"
+    ],
+    "elapsedMs": 208.283541,
+    "exitCode": 0,
+    "rankedShas": [
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "ee133a2a3d5cbcd73f0127c8483507b666869962",
+      "b012ec59ae375b8fb864f78e01044737e75403ef",
+      "cb93f9d32190b84f05b8c3ebc745c9db0ca09595"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-lifecycle-02",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "I noticed a misspelled field name being sent in some API responses at one point -- what was that about, and is it gone now?",
+    "relevantShas": [
+      "640894127914c43d4ebd7e5e9260edb042a565a0",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f"
+    ],
+    "elapsedMs": 208.793667,
+    "exitCode": 0,
+    "rankedShas": [
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "640894127914c43d4ebd7e5e9260edb042a565a0",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why does the Acme provider client check the response body for an error field even on a successful-looking status?",
+    "relevantShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56"
+    ],
+    "elapsedMs": 208.734792,
+    "exitCode": 0,
+    "rankedShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "c67425023736d4f4fc6e3dffecc4e41304f09132"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-distintent-02",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why doesn't the gateway ever retry against Initech when it gets a 501?",
+    "relevantShas": [
+      "c67425023736d4f4fc6e3dffecc4e41304f09132"
+    ],
+    "elapsedMs": 209.181625,
+    "exitCode": 0,
+    "rankedShas": [
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "test",
+    "query": "Why does WorkerPool track a \"busy\" counter instead of a set of individual worker objects?",
+    "relevantShas": [],
+    "elapsedMs": 207.573375,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "8c6b5df9223e970db3a07a429fabbeef7f17b2a9",
+      "8cb5b8a75e287f8d237655e8336aa7e95baf14e5"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "8c6b5df9223e970db3a07a429fabbeef7f17b2a9",
+        "8cb5b8a75e287f8d237655e8336aa7e95baf14e5"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "Why is the AuthSessionProvider cache TTL exactly 30 seconds rather than, say, 60?",
+    "relevantShas": [],
+    "elapsedMs": 207.542083,
+    "exitCode": 0,
+    "rankedShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+        "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+        "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+        "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why is the retry policy's max attempt count a fixed constant instead of configurable per provider?",
+    "relevantShas": [],
+    "elapsedMs": 210.748333,
+    "exitCode": 0,
+    "rankedShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "e9641f22b3bd26547d030d826f07f01e55b9176d",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "c37cca49ca592898af925856e873a48162c8dd75",
+        "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+        "397fb43f03cc8c6b8157257fea92b8355958ff56",
+        "e9641f22b3bd26547d030d826f07f01e55b9176d",
+        "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "text",
+    "caseId": "t-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Why is the minimum supported Node version 16 rather than 18 for this project?",
+    "relevantShas": [],
+    "elapsedMs": 207.30025,
+    "exitCode": 0,
+    "rankedShas": [
+      "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "49d7104b95343b986cc05eeeebd930e6f379ef76",
+      "14643e9d5f248b93bf6c30dd01df385a8c7ef8a6",
+      "fc158b25ee70ad8228fb409e037ea8d3bd76e12f",
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+        "49d7104b95343b986cc05eeeebd930e6f379ef76",
+        "14643e9d5f248b93bf6c30dd01df385a8c7ef8a6",
+        "fc158b25ee70ad8228fb409e037ea8d3bd76e12f",
+        "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "A user shows up twice in the \"who is online\" list after they reconnect from a second tab. Where was that addressed?",
+    "relevantShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+    ],
+    "elapsedMs": 498.125667,
+    "exitCode": 0,
+    "rankedShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "When a call to an upstream provider times out, is there any chance the same request actually gets sent a second time in the background?",
+    "relevantShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75"
+    ],
+    "elapsedMs": 494.78975,
+    "exitCode": 0,
+    "rankedShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "There is a case-insensitive check for the Authorization header — why is that needed?",
+    "relevantShas": [
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+    ],
+    "elapsedMs": 495.160292,
+    "exitCode": 0,
+    "rankedShas": [
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "cb93f9d32190b84f05b8c3ebc745c9db0ca09595",
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why does the Acme client bother parsing the response body even when Acme returns a 200 status?",
+    "relevantShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56"
+    ],
+    "elapsedMs": 493.595458,
+    "exitCode": 0,
+    "rankedShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "What did the client SDK use to do for reconnect backoff before it was simplified?",
+    "relevantShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c"
+    ],
+    "elapsedMs": 496.454834,
+    "exitCode": 0,
+    "rankedShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "1eb86b0f4ebace28cecc28843a36712469d0ecb4",
+      "39e1f16982e7fb337766f1bf2e2a9a858e080dee",
+      "9cb5a1d155950070b5087f9bf35879a05e9b305b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "test",
+    "query": "Did workers used to ask the queue for work on a timer instead of having work pushed to them?",
+    "relevantShas": [
+      "f149ceedf526492534143892c79ae8b33a1959c7"
+    ],
+    "elapsedMs": 492.285083,
+    "exitCode": 0,
+    "rankedShas": [
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "e73c1de38a9dfce79c12dc755bf14fc42c65a088",
+      "93a801c9646fbf2fc767338c1be31855b8c0a844"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is the CSV export code still around, or was it removed after the streaming change?",
+    "relevantShas": [
+      "c46e31e33e1b938098ea54beb8024c8f694204f8"
+    ],
+    "elapsedMs": 493.887833,
+    "exitCode": 0,
+    "rankedShas": [
+      "c2792a04be171315cd747e5c947dceb6909c782c",
+      "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "d5242b58da7e7f165dec13d1276feb82f2ee72ec",
+      "d1f01133f685e8185ffa29b44f614659496a3367",
+      "435048887323cb9832ba1a9ef6733f9ce4d525b4"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is there any Redis-based locking code left in the pipeline after the move to Postgres locks?",
+    "relevantShas": [
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0"
+    ],
+    "elapsedMs": 498.376541,
+    "exitCode": 0,
+    "rankedShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "9d995275ab8efa0b04a4f37705f49d8c99f27025",
+      "86ca06770b13f2b5cd7d263d1b343a0e70242c86",
+      "f4ca6a01fa260ab2a4fde15f16ed7f89bdb0fc68"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "AuthSessionProvider cache miss metric",
+    "relevantShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+    ],
+    "elapsedMs": 502.056834,
+    "exitCode": 0,
+    "rankedShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "e909130fdb63106657ab2ff2bf5e712f41272580",
+      "9ba5ee236aa610e5aadf63bb8ee0f02644096d80"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "AuthSessionProvider dispose cache",
+    "relevantShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3"
+    ],
+    "elapsedMs": 495.738583,
+    "exitCode": 0,
+    "rankedShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "5a72356d494d92ffe2389f131d104664208549bc",
+      "e48e3f01a6d509217afb820c5a851d08cbf229fd"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is there a minimum Node version required specifically for the streaming export code?",
+    "relevantShas": [
+      "3e1966dceea7222210acaed94e318351478c28f0"
+    ],
+    "elapsedMs": 495.066459,
+    "exitCode": 0,
+    "rankedShas": [
+      "5acb96d2b3e20f6137cb6b94b09066113db22bd1",
+      "3d7e49da5961a4025416e6325d4d7501f5030625",
+      "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+      "435048887323cb9832ba1a9ef6733f9ce4d525b4",
+      "3e1966dceea7222210acaed94e318351478c28f0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.2
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Did we ever remove support for building with webpack 4?",
+    "relevantShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699"
+    ],
+    "elapsedMs": 494.787583,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "5422e48de8dd06938cdec968f8b9dd3a940f57bc",
+      "aeeb1e83820400980a6cc3e6d17b3d8b5a5dd01d",
+      "08959b63654db37bfc19a36259bcbeb9214cd040",
+      "7d192db24f5e4d32121465b1768e6bf55b14d184"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "Is PresenceTracker still called that, or was it renamed?",
+    "relevantShas": [
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6"
+    ],
+    "elapsedMs": 515.707833,
+    "exitCode": 0,
+    "rankedShas": [
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6",
+      "a680e70ddac309ac0104dd328415de0463a38e1c",
+      "1830d186042847116b7298a43e4e7c6c2c1efe3a",
+      "5e1faa103d6cc0689add9930d2fb30cbcc1bce3d",
+      "7b0e6a797edc042af0464286d49129ecdb86ac4e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "The Acme client file used to be named just acme-client.js — where is it now?",
+    "relevantShas": [
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "elapsedMs": 510.85025,
+    "exitCode": 0,
+    "rankedShas": [
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "0aa559fac8122c1940822bb8aac392470ba2cc50",
+      "9c20bd8abb4cfbc9d6db05d79d4e163c975af484",
+      "48f1d1317f9a36c50623cbef1c0dc35263c5307c",
+      "59bdc834ea43de56bfda8a9f07a6641fa8ef5818"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "There is a change to the Globex client around handling a 204 with a Retry-After header -- can you find it?",
+    "relevantShas": [
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "elapsedMs": 492.078292,
+    "exitCode": 0,
+    "rankedShas": [
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "42185647615f69f3c9c05055fced75e1fc37c42f",
+      "84d746caf248b85ffd6771af76fc9cccaa766af1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Why did the release-notes generator get bumped to a new major version?",
+    "relevantShas": [
+      "f24787847358c0c0b7fc0680803310567434ca7e"
+    ],
+    "elapsedMs": 495.218667,
+    "exitCode": 0,
+    "rankedShas": [
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "63188771a14166cda360ec4d7309523145d981fa",
+      "17b62e3e2e31ccd32c129b4ee82f8f7e4dcbba12",
+      "249d2d48c028c2f8a8399a23d54fdb977a192a8e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "There was some IE11-specific caching for CORS preflight requests at some point -- when did that come and go?",
+    "relevantShas": [
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3"
+    ],
+    "elapsedMs": 494.948125,
+    "exitCode": 0,
+    "rankedShas": [
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "ee133a2a3d5cbcd73f0127c8483507b666869962",
+      "b012ec59ae375b8fb864f78e01044737e75403ef",
+      "cb93f9d32190b84f05b8c3ebc745c9db0ca09595"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-lifecycle-02",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "I noticed a misspelled field name being sent in some API responses at one point -- what was that about, and is it gone now?",
+    "relevantShas": [
+      "640894127914c43d4ebd7e5e9260edb042a565a0",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f"
+    ],
+    "elapsedMs": 495.111542,
+    "exitCode": 0,
+    "rankedShas": [
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "640894127914c43d4ebd7e5e9260edb042a565a0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why does the Acme provider client check the response body for an error field even on a successful-looking status?",
+    "relevantShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56"
+    ],
+    "elapsedMs": 491.746417,
+    "exitCode": 0,
+    "rankedShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "1942dceeeed6d8d2c2af939a2491b1d0f07ea59e",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-distintent-02",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why doesn't the gateway ever retry against Initech when it gets a 501?",
+    "relevantShas": [
+      "c67425023736d4f4fc6e3dffecc4e41304f09132"
+    ],
+    "elapsedMs": 494.163125,
+    "exitCode": 0,
+    "rankedShas": [
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "ccf8b52e8fab98178e31c21bd711861992df84e9",
+      "e808a7097f68bebc195164a30d4f1146f6f1b420"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "test",
+    "query": "Why does WorkerPool track a \"busy\" counter instead of a set of individual worker objects?",
+    "relevantShas": [],
+    "elapsedMs": 493.680958,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "0a758bc3cd116abd004685713fb0d498941237bd",
+      "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "0a758bc3cd116abd004685713fb0d498941237bd",
+        "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "Why is the AuthSessionProvider cache TTL exactly 30 seconds rather than, say, 60?",
+    "relevantShas": [],
+    "elapsedMs": 494.719167,
+    "exitCode": 0,
+    "rankedShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "070dd59d48a14d9ffedd0443514a4405941b93ec",
+      "2a6ec436807bbe6cccb41d82c65e8d9bff734fd6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+        "070dd59d48a14d9ffedd0443514a4405941b93ec",
+        "2a6ec436807bbe6cccb41d82c65e8d9bff734fd6"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why is the retry policy's max attempt count a fixed constant instead of configurable per provider?",
+    "relevantShas": [],
+    "elapsedMs": 497.470333,
+    "exitCode": 0,
+    "rankedShas": [
+      "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670",
+      "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+      "e808a7097f68bebc195164a30d4f1146f6f1b420",
+      "e9641f22b3bd26547d030d826f07f01e55b9176d",
+      "12c42fc7ced4296141dc519409fcada508632feb"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670",
+        "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+        "e808a7097f68bebc195164a30d4f1146f6f1b420",
+        "e9641f22b3bd26547d030d826f07f01e55b9176d",
+        "12c42fc7ced4296141dc519409fcada508632feb"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "semantic",
+    "caseId": "t-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Why is the minimum supported Node version 16 rather than 18 for this project?",
+    "relevantShas": [],
+    "elapsedMs": 499.476666,
+    "exitCode": 0,
+    "rankedShas": [
+      "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+      "93602427f04f187f1bec9e70ee2d11b497a73361",
+      "22064355de930ec5f36a180b71d1684848d5afa3",
+      "73f4e138e60ba1738422389fa097f42d494fef5c",
+      "a26dbb4b9e0949ba172736e1219496fb20beb97b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+        "93602427f04f187f1bec9e70ee2d11b497a73361",
+        "22064355de930ec5f36a180b71d1684848d5afa3",
+        "73f4e138e60ba1738422389fa097f42d494fef5c",
+        "a26dbb4b9e0949ba172736e1219496fb20beb97b"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "A user shows up twice in the \"who is online\" list after they reconnect from a second tab. Where was that addressed?",
+    "relevantShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+    ],
+    "elapsedMs": 493.149542,
+    "exitCode": 0,
+    "rankedShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "When a call to an upstream provider times out, is there any chance the same request actually gets sent a second time in the background?",
+    "relevantShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75"
+    ],
+    "elapsedMs": 495.971416,
+    "exitCode": 0,
+    "rankedShas": [
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "There is a case-insensitive check for the Authorization header — why is that needed?",
+    "relevantShas": [
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+    ],
+    "elapsedMs": 499.022584,
+    "exitCode": 0,
+    "rankedShas": [
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "171f8d0b02ec93079ee5245a436d0ca1e7e9542e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why does the Acme client bother parsing the response body even when Acme returns a 200 status?",
+    "relevantShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56"
+    ],
+    "elapsedMs": 499.214041,
+    "exitCode": 0,
+    "rankedShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "9ccf9a0a07f172c1237e6d8758160068a5778c23"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "What did the client SDK use to do for reconnect backoff before it was simplified?",
+    "relevantShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c"
+    ],
+    "elapsedMs": 526.355291,
+    "exitCode": 0,
+    "rankedShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "39e1f16982e7fb337766f1bf2e2a9a858e080dee",
+      "c6caf4928e43779448563d01919cae047079db03",
+      "3dc4a9e7dbc56b26290cce63c8414b1d8dba1086"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "test",
+    "query": "Did workers used to ask the queue for work on a timer instead of having work pushed to them?",
+    "relevantShas": [
+      "f149ceedf526492534143892c79ae8b33a1959c7"
+    ],
+    "elapsedMs": 497.525292,
+    "exitCode": 0,
+    "rankedShas": [
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "e73c1de38a9dfce79c12dc755bf14fc42c65a088",
+      "fabe0f6ce388cf1b863734c58bfb731c9a37fbe6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is the CSV export code still around, or was it removed after the streaming change?",
+    "relevantShas": [
+      "c46e31e33e1b938098ea54beb8024c8f694204f8"
+    ],
+    "elapsedMs": 494.625125,
+    "exitCode": 0,
+    "rankedShas": [
+      "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "435048887323cb9832ba1a9ef6733f9ce4d525b4",
+      "92f0b8c790b4286c445a0772f61ddb39bd9b1ff4",
+      "406d27d848d31cea36696436c20492a87156a71e",
+      "c2792a04be171315cd747e5c947dceb6909c782c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is there any Redis-based locking code left in the pipeline after the move to Postgres locks?",
+    "relevantShas": [
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0"
+    ],
+    "elapsedMs": 498.487625,
+    "exitCode": 0,
+    "rankedShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "c43d817d741370fbe2f6053a2b0beee4a686e2b1",
+      "c3af436e5a3d654afd6868927fb0f82d5cefed00",
+      "7c4d3f2a54656c91238ce9c5767e8a8fa6d148eb"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "AuthSessionProvider cache miss metric",
+    "relevantShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+    ],
+    "elapsedMs": 504.647667,
+    "exitCode": 0,
+    "rankedShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "070dd59d48a14d9ffedd0443514a4405941b93ec"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "AuthSessionProvider dispose cache",
+    "relevantShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3"
+    ],
+    "elapsedMs": 505.043666,
+    "exitCode": 0,
+    "rankedShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "5a72356d494d92ffe2389f131d104664208549bc",
+      "20b8264666a827b3653aec4c622da4bd83976895"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "test",
+    "query": "Is there a minimum Node version required specifically for the streaming export code?",
+    "relevantShas": [
+      "3e1966dceea7222210acaed94e318351478c28f0"
+    ],
+    "elapsedMs": 501.079458,
+    "exitCode": 0,
+    "rankedShas": [
+      "3e1966dceea7222210acaed94e318351478c28f0",
+      "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+      "19d2a69fb37a3e468c48c2719953492ab6dbb842",
+      "435048887323cb9832ba1a9ef6733f9ce4d525b4",
+      "c2792a04be171315cd747e5c947dceb6909c782c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Did we ever remove support for building with webpack 4?",
+    "relevantShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699"
+    ],
+    "elapsedMs": 494.3145,
+    "exitCode": 0,
+    "rankedShas": [
+      "aeeb1e83820400980a6cc3e6d17b3d8b5a5dd01d",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "7d192db24f5e4d32121465b1768e6bf55b14d184",
+      "ccf6aee8afb44bc814133dbe04d7bc131d93b8d4",
+      "5422e48de8dd06938cdec968f8b9dd3a940f57bc"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "test",
+    "query": "Is PresenceTracker still called that, or was it renamed?",
+    "relevantShas": [
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6"
+    ],
+    "elapsedMs": 528.495041,
+    "exitCode": 0,
+    "rankedShas": [
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6",
+      "34bfb50a9f46f809e6af4bb56676edc80829a93f",
+      "a680e70ddac309ac0104dd328415de0463a38e1c",
+      "cc1644eda97a644ba96ae16464a4b5d1aea9b808",
+      "1830d186042847116b7298a43e4e7c6c2c1efe3a"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "The Acme client file used to be named just acme-client.js — where is it now?",
+    "relevantShas": [
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "elapsedMs": 534.684917,
+    "exitCode": 0,
+    "rankedShas": [
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "59bdc834ea43de56bfda8a9f07a6641fa8ef5818",
+      "0aa559fac8122c1940822bb8aac392470ba2cc50",
+      "9b0974ecc3d4e8e67ceaa26a85cab7537e299eb1",
+      "99c09660eb83e7af364fc740ef9965df41d5d43c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "There is a change to the Globex client around handling a 204 with a Retry-After header -- can you find it?",
+    "relevantShas": [
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "elapsedMs": 493.825792,
+    "exitCode": 0,
+    "rankedShas": [
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "e8cc9a168e0c7813a6a806dde56744d897cd97de",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "84d746caf248b85ffd6771af76fc9cccaa766af1",
+      "e4eff3622e9d3afc207560ba06cd739ae668e01f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Why did the release-notes generator get bumped to a new major version?",
+    "relevantShas": [
+      "f24787847358c0c0b7fc0680803310567434ca7e"
+    ],
+    "elapsedMs": 497.184,
+    "exitCode": 0,
+    "rankedShas": [
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "17b62e3e2e31ccd32c129b4ee82f8f7e4dcbba12",
+      "249d2d48c028c2f8a8399a23d54fdb977a192a8e",
+      "49433198d445ac50c641030c72a01390c37d6ed8"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "There was some IE11-specific caching for CORS preflight requests at some point -- when did that come and go?",
+    "relevantShas": [
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3"
+    ],
+    "elapsedMs": 493.917541,
+    "exitCode": 0,
+    "rankedShas": [
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "ee133a2a3d5cbcd73f0127c8483507b666869962",
+      "b012ec59ae375b8fb864f78e01044737e75403ef",
+      "cb93f9d32190b84f05b8c3ebc745c9db0ca09595"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-lifecycle-02",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "I noticed a misspelled field name being sent in some API responses at one point -- what was that about, and is it gone now?",
+    "relevantShas": [
+      "640894127914c43d4ebd7e5e9260edb042a565a0",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f"
+    ],
+    "elapsedMs": 502.303666,
+    "exitCode": 0,
+    "rankedShas": [
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "640894127914c43d4ebd7e5e9260edb042a565a0",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why does the Acme provider client check the response body for an error field even on a successful-looking status?",
+    "relevantShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56"
+    ],
+    "elapsedMs": 503.426083,
+    "exitCode": 0,
+    "rankedShas": [
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "99c09660eb83e7af364fc740ef9965df41d5d43c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-distintent-02",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why doesn't the gateway ever retry against Initech when it gets a 501?",
+    "relevantShas": [
+      "c67425023736d4f4fc6e3dffecc4e41304f09132"
+    ],
+    "elapsedMs": 497.855791,
+    "exitCode": 0,
+    "rankedShas": [
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "0fe455417ec56e9974b8063ba141ef71317fb148"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "test",
+    "query": "Why does WorkerPool track a \"busy\" counter instead of a set of individual worker objects?",
+    "relevantShas": [],
+    "elapsedMs": 500.201916,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "343f8c53f540abeeae39691bd215cf0523fc20e5",
+      "3933fa98a6a9225ed49b3ffb003692b397c9f7c1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "343f8c53f540abeeae39691bd215cf0523fc20e5",
+        "3933fa98a6a9225ed49b3ffb003692b397c9f7c1"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "auth-platform",
+    "split": "test",
+    "query": "Why is the AuthSessionProvider cache TTL exactly 30 seconds rather than, say, 60?",
+    "relevantShas": [],
+    "elapsedMs": 495.293875,
+    "exitCode": 0,
+    "rankedShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "070dd59d48a14d9ffedd0443514a4405941b93ec"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+        "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+        "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+        "070dd59d48a14d9ffedd0443514a4405941b93ec"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "api-gateway",
+    "split": "test",
+    "query": "Why is the retry policy's max attempt count a fixed constant instead of configurable per provider?",
+    "relevantShas": [],
+    "elapsedMs": 493.079584,
+    "exitCode": 0,
+    "rankedShas": [
+      "e9641f22b3bd26547d030d826f07f01e55b9176d",
+      "12c42fc7ced4296141dc519409fcada508632feb",
+      "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+      "e808a7097f68bebc195164a30d4f1146f6f1b420",
+      "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "e9641f22b3bd26547d030d826f07f01e55b9176d",
+        "12c42fc7ced4296141dc519409fcada508632feb",
+        "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+        "e808a7097f68bebc195164a30d4f1146f6f1b420",
+        "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "candidate": "production",
+    "mode": "hybrid",
+    "caseId": "t-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "test",
+    "query": "Why is the minimum supported Node version 16 rather than 18 for this project?",
+    "relevantShas": [],
+    "elapsedMs": 495.972333,
+    "exitCode": 0,
+    "rankedShas": [
+      "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+      "49d7104b95343b986cc05eeeebd930e6f379ef76",
+      "0d4ed68d63324ee595e0a0a77b2f03a445e952be",
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+        "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+        "49d7104b95343b986cc05eeeebd930e6f379ef76",
+        "0d4ed68d63324ee595e0a0a77b2f03a445e952be",
+        "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+      ],
+      "anyResultsReturned": true
+    }
+  }
+]

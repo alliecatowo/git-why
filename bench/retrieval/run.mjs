@@ -138,13 +138,174 @@ function parseSearchResponse(stdout, context) {
   return { ok: true, response: parsed };
 }
 
-function detectAblationFlag(cliPath) {
-  const res = spawnSync('node', [cliPath, '--help'], { encoding: 'utf8' });
-  const help = `${res.stdout ?? ''}${res.stderr ?? ''}`;
-  // No such flag is documented in docs/spec.md section 5 as of this writing.
-  // Detect defensively rather than hardcoding "blocked" forever.
-  const candidates = ['--no-evidence', '--summary-only', '--messages-only'];
-  return candidates.find((flag) => help.includes(flag)) ?? null;
+// The summaries-only ablation is driven by GIT_WHY_BENCH_RECORD_TYPES, an
+// evaluation-only environment variable documented in src/search/search.ts
+// (`benchRecordTypes()`), NOT a CLI flag. Setting it to "commit" restricts
+// retrieval to commit-summary records while leaving the index (which still
+// contains evidence records) untouched -- so priming/build only needs to
+// happen once per fixture, unaffected by the env var.
+const ABLATION_ARMS = [
+  { name: 'summary+evidence', env: {} },
+  { name: 'summary-only', env: { GIT_WHY_BENCH_RECORD_TYPES: 'commit' } },
+];
+
+function runOneQuery(cliPath, repoDir, mode, testCase, env, limit, split) {
+  const cliArgs = buildArgs({ query: testCase.query, mode, filter: testCase.filter, limit });
+  cliArgs.push('--no-refresh');
+  const res = runCli(cliPath, cliArgs, repoDir, env);
+
+  const record = {
+    mode,
+    caseId: testCase.id,
+    category: testCase.category,
+    fixtureId: testCase.fixtureId,
+    split,
+    query: testCase.query,
+    relevantShas: testCase.relevantShas,
+    elapsedMs: res.elapsedMs,
+    exitCode: res.status,
+  };
+
+  if (res.status !== 0) {
+    record.error = `CLI exited ${res.status}`;
+    record.stderr = res.stderr;
+    record.omitted = true;
+    return record;
+  }
+  const parsed = parseSearchResponse(res.stdout, `${mode}/${testCase.id}`);
+  if (!parsed.ok) {
+    record.error = parsed.error;
+    record.omitted = true;
+    return record;
+  }
+  const rankedShas = parsed.response.results.map((r) => r.sha);
+  record.rankedShas = rankedShas;
+  record.candidateCount = parsed.response.results.length;
+  record.candidateLimitReached = parsed.response.candidateLimitReached;
+  record.warnings = parsed.response.warnings;
+  record.snapshotFreshness = parsed.response.snapshot?.freshness ?? null;
+  const scored = scoreCase(rankedShas, testCase.relevantShas);
+  record.scored = scored;
+  if (!scored.applicable) {
+    record.noEvidenceObservation = { returnedTopK: rankedShas, anyResultsReturned: rankedShas.length > 0 };
+  }
+  return record;
+}
+
+function diffMetrics(a, b) {
+  // a - b, null-safe (null when either side has no applicable cases).
+  const keys = ['hit1', 'hit3', 'hit5', 'recall5', 'mrr'];
+  const out = {};
+  for (const k of keys) {
+    out[k] = a?.[k] != null && b?.[k] != null ? a[k] - b[k] : null;
+  }
+  return out;
+}
+
+function runAblation({ candidate, cliPath, fixtureDirs, fixtureIds, dataset, modes, limit, split, outDir }) {
+  for (const fixtureId of fixtureIds) {
+    const repoDir = fixtureDirs[fixtureId];
+    const primeMs = primeIndex(cliPath, repoDir, candidate.env);
+    console.log(
+      `[bench/retrieval] ablation: primed "${fixtureId}" for candidate "${candidate.label}" in ${primeMs.toFixed(0)}ms ` +
+        '(index contains both record types; the env var only restricts retrieval, not ingestion).',
+    );
+  }
+
+  const perQuery = [];
+  const scoredByArmModeCategory = {};
+  for (const arm of ABLATION_ARMS) {
+    for (const mode of modes) {
+      for (const testCase of dataset.cases) {
+        const repoDir = fixtureDirs[testCase.fixtureId];
+        const mergedEnv = { ...candidate.env, ...arm.env };
+        const record = runOneQuery(cliPath, repoDir, mode, testCase, mergedEnv, limit, split);
+        record.candidate = candidate.label;
+        record.arm = arm.name;
+        perQuery.push(record);
+        const key = `${arm.name}::${mode}::${testCase.category}`;
+        (scoredByArmModeCategory[key] ??= []).push(record.scored ?? { applicable: false });
+      }
+    }
+  }
+
+  const byArmModeCategory = Object.entries(scoredByArmModeCategory).map(([key, scoredList]) => {
+    const [arm, mode, category] = key.split('::');
+    return { arm, mode, category, ...aggregate(scoredList) };
+  });
+
+  // Overall rows (excluding exact_identifier and no_evidence, per protocol) per arm/mode.
+  const overallByArmMode = {};
+  for (const rec of perQuery) {
+    if (rec.category === 'exact_identifier' || rec.category === 'no_evidence') continue;
+    if (!rec.scored) continue;
+    const key = `${rec.arm}::${rec.mode}`;
+    (overallByArmMode[key] ??= []).push(rec.scored);
+  }
+  const overallRows = Object.entries(overallByArmMode).map(([key, scoredList]) => {
+    const [arm, mode] = key.split('::');
+    return { arm, mode, category: 'OVERALL_excl_exact_identifier_and_no_evidence', ...aggregate(scoredList) };
+  });
+
+  // Diff table: summary+evidence minus summary-only, per mode+category and per mode overall.
+  const byModeCategory = {};
+  for (const row of byArmModeCategory) {
+    const key = `${row.mode}::${row.category}`;
+    (byModeCategory[key] ??= {})[row.arm] = row;
+  }
+  const diffByModeCategory = Object.entries(byModeCategory).map(([key, arms]) => {
+    const [mode, category] = key.split('::');
+    return {
+      mode,
+      category,
+      nSummaryEvidence: arms['summary+evidence']?.n ?? 0,
+      nSummaryOnly: arms['summary-only']?.n ?? 0,
+      diff_evidenceMinusSummaryOnly: diffMetrics(arms['summary+evidence'], arms['summary-only']),
+    };
+  });
+  const overallByMode = {};
+  for (const row of overallRows) {
+    (overallByMode[row.mode] ??= {})[row.arm] = row;
+  }
+  const diffOverall = Object.entries(overallByMode).map(([mode, arms]) => ({
+    mode,
+    nSummaryEvidence: arms['summary+evidence']?.n ?? 0,
+    nSummaryOnly: arms['summary-only']?.n ?? 0,
+    diff_evidenceMinusSummaryOnly: diffMetrics(arms['summary+evidence'], arms['summary-only']),
+  }));
+
+  const omittedCount = perQuery.filter((r) => r.omitted).length;
+  const summary = {
+    status: 'ran',
+    candidate: candidate.label,
+    split,
+    mechanism:
+      'GIT_WHY_BENCH_RECORD_TYPES=commit restricts retrieval to commit-summary records; unset retrieves ' +
+      'commit + evidence records. Index built once per fixture (both record types always ingested); the ' +
+      'env var only changes what a query is allowed to retrieve. See src/search/search.ts benchRecordTypes().',
+    totalQueries: perQuery.length,
+    omittedCount,
+    byArmModeCategory,
+    overallByArmMode: overallRows,
+    diffByModeCategory,
+    diffOverall,
+  };
+
+  writeFileSync(join(outDir, `ablation-per-query-${candidate.label}.json`), JSON.stringify(perQuery, null, 2));
+  writeFileSync(join(outDir, `ablation-summary-${candidate.label}.json`), JSON.stringify(summary, null, 2));
+  console.log(`[bench/retrieval] ablation complete for "${candidate.label}": ${join(outDir, `ablation-summary-${candidate.label}.json`)}`);
+  console.table(
+    diffOverall.map((r) => ({
+      mode: r.mode,
+      nEvidence: r.nSummaryEvidence,
+      nSummaryOnly: r.nSummaryOnly,
+      dHit1: r.diff_evidenceMinusSummaryOnly.hit1,
+      dHit3: r.diff_evidenceMinusSummaryOnly.hit3,
+      dHit5: r.diff_evidenceMinusSummaryOnly.hit5,
+      dRecall5: r.diff_evidenceMinusSummaryOnly.recall5,
+      dMRR: r.diff_evidenceMinusSummaryOnly.mrr,
+    })),
+  );
 }
 
 async function main() {
@@ -158,6 +319,13 @@ async function main() {
     );
   }
   if (args.split !== 'dev' && args.split !== 'test') fail(`--split must be "dev" or "test", got "${args.split}"`);
+  if (args.ablation && args.split !== 'dev') {
+    fail(
+      'The summaries-only ablation is scoped to the development split only, per bench/protocol.json ' +
+        '("ablation.scope": "development split only ... never run against the held-out split"). ' +
+        `Refusing to run --ablation with --split=${args.split}.`,
+    );
+  }
 
   const protocol = loadJson(join(REPO_ROOT, 'bench', 'protocol.json'));
   const candidatesConfig = loadJson(args.candidates);
@@ -179,29 +347,7 @@ async function main() {
     const cliPath = resolveCliPath(candidate);
 
     if (args.ablation) {
-      const flag = detectAblationFlag(cliPath);
-      if (!flag) {
-        const blockedPath = join(outDir, `ablation-BLOCKED-${candidate.label}.json`);
-        writeFileSync(
-          blockedPath,
-          JSON.stringify(
-            {
-              status: 'blocked',
-              reason:
-                'No documented flag exists (docs/spec.md section 5) to build or query a summary-only index ' +
-                'vs. a summary+evidence index through the external CLI surface. bench/ may not import product ' +
-                'internals to fabricate this comparison, per the evaluation lane brief. Add a documented ' +
-                'bench-facing flag (owned by cli/retrieval lanes) to unblock this ablation.',
-              candidate: candidate.label,
-            },
-            null,
-            2,
-          ),
-        );
-        console.log(`[bench/retrieval] ablation BLOCKED for "${candidate.label}": ${blockedPath}`);
-        continue;
-      }
-      console.log(`[bench/retrieval] ablation flag detected: ${flag} (candidate "${candidate.label}") -- not yet wired up further.`);
+      runAblation({ candidate, cliPath, fixtureDirs, fixtureIds, dataset, modes, limit, split: args.split, outDir });
       continue;
     }
 

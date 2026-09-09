@@ -1,0 +1,197 @@
+{
+  "runId": "2026-09-09T20-23-36-126Z",
+  "generatedAt": "2026-09-09T20:23:36.127Z",
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpuModel": "Apple M2",
+    "cpuCount": 8,
+    "totalMemBytes": 8589934592
+  },
+  "referenceCorpus": {
+    "kind": "synthetic-bench-fixture",
+    "fixtureId": "task-queue",
+    "path": "/Users/allie/Develop/git-why/bench/work/fixtures/task-queue",
+    "commitCount": 135
+  },
+  "knownGaps": [
+    "Per-phase timing breakdown is not part of the frozen --json contract; only total external wall time is measured.",
+    "Loaded-process query loop is approximated via warm fresh-process calls, not a true in-process repeat.",
+    "No pinned public repository was supplied (--repo=); reference corpus is a synthetic fixture, not the 10k-commit target scale."
+  ],
+  "workloads": {
+    "firstUse": {
+      "cacheOverrideVerified": true,
+      "cacheOverrideCaveat": null,
+      "missingModel": {
+        "totalMs": 4156.849417,
+        "exitCode": 0,
+        "error": null
+      },
+      "cachedModel": {
+        "totalMs": 1899.627,
+        "exitCode": 0,
+        "error": null
+      },
+      "networkTransferDeltaMs": 2257.2224170000004
+    },
+    "freshProcessCurrentIndex": {
+      "warmupRuns": 5,
+      "requestedSamples": 30,
+      "successfulSamples": 30,
+      "latencyMs": {
+        "n": 30,
+        "p50": 495.941209,
+        "p95": 508.952375,
+        "min": 491.395333,
+        "max": 515.757959,
+        "mean": 497.32944173333334
+      },
+      "targetNote": "Section 24 initial target: warm-cache fresh-process CLI p95 under 1s on the reference corpus. This is a target, not an established result."
+    },
+    "loadedProcessQueryLoop": {
+      "label": "DIAGNOSTIC ONLY -- approximated via back-to-back fresh processes, NOT a true in-process query loop.",
+      "latencyMs": {
+        "n": 30,
+        "p50": 500.156625,
+        "p95": 535.309416,
+        "min": 492.16225,
+        "max": 540.724125,
+        "mean": 502.6089582333333
+      }
+    },
+    "oneNewCommit": {
+      "totalMs": 841.111083,
+      "indexedCommitsBefore": 135,
+      "indexedCommitsAfter": 136,
+      "targetNote": "Section 24 initial target: one small incremental commit plus query within 3s on reference hardware."
+    },
+    "tenNewCommits": {
+      "totalMs": 796.021666,
+      "exitCode": 0,
+      "peakRssKb": 272976,
+      "rssSampleCount": 15,
+      "throughputCommitsPerSec": 12.562472137536014
+    },
+    "unchangedRefs": {
+      "queryTotalMs": 512.612125,
+      "indexedAtBefore": "2026-09-09T20:24:19.377Z",
+      "indexedAtAfter": "2026-09-09T20:24:19.377Z",
+      "noReembeddingInferred": true,
+      "note": "indexedAt unchanged is used as the externally-observable proxy for \"no document re-embedding\"; query embedding of the incoming query text may still occur per spec."
+    },
+    "renameRebaseBranchDeletion": {
+      "buildMs": 1935.925833,
+      "recordCountBefore": 274,
+      "renameQueryMs": 864.109375,
+      "branchDeleteQueryMs": 623.791,
+      "recordCountAfter": 274,
+      "note": "A full rebase scenario is not exercised here (the fixture generator does not produce a rebase-able branch); this covers rename + branch deletion only. See bench/README.md limitations."
+    },
+    "concurrentReaders": {
+      "n2": {
+        "latencyMs": {
+          "n": 2,
+          "p50": 583.950709,
+          "p95": 584.458583,
+          "min": 583.950709,
+          "max": 584.458583,
+          "mean": 584.2046459999999
+        },
+        "failures": 0,
+        "aggregatePeakRssKb": 261280,
+        "note": "aggregatePeakRssKb samples each reader's own process tree independently; true simultaneous aggregate memory would require one shared sampler across all N processes at once, which this per-reader sampler approximates by taking the max of per-reader peaks (a lower bound on true simultaneous aggregate RSS)."
+      },
+      "n4": {
+        "latencyMs": {
+          "n": 4,
+          "p50": 840.894542,
+          "p95": 841.729792,
+          "min": 840.664791,
+          "max": 841.729792,
+          "mean": 841.1638230000001
+        },
+        "failures": 0,
+        "aggregatePeakRssKb": 194560,
+        "note": "aggregatePeakRssKb samples each reader's own process tree independently; true simultaneous aggregate memory would require one shared sampler across all N processes at once, which this per-reader sampler approximates by taking the max of per-reader peaks (a lower bound on true simultaneous aggregate RSS)."
+      },
+      "n8": {
+        "latencyMs": {
+          "n": 8,
+          "p50": 1462.394625,
+          "p95": 1464.385458,
+          "min": 1455.967125,
+          "max": 1464.385458,
+          "mean": 1461.9947551250002
+        },
+        "failures": 0,
+        "aggregatePeakRssKb": 157376,
+        "note": "aggregatePeakRssKb samples each reader's own process tree independently; true simultaneous aggregate memory would require one shared sampler across all N processes at once, which this per-reader sampler approximates by taking the max of per-reader peaks (a lower bound on true simultaneous aggregate RSS)."
+      }
+    },
+    "readersPlusUpdater": {
+      "updater": {
+        "totalMs": 871.328083,
+        "exitCode": 0
+      },
+      "readers": {
+        "n": 4,
+        "latencyMs": {
+          "n": 4,
+          "p50": 716.708,
+          "p95": 717.822917,
+          "min": 716.256625,
+          "max": 717.822917,
+          "mean": 716.98416675
+        },
+        "failures": 0,
+        "malformedResponses": 0
+      },
+      "finalStatus": {
+        "schemaVersion": 1,
+        "command": "status",
+        "index": {
+          "state": "current",
+          "indexPath": "/Users/allie/Develop/git-why/bench/work/perf/warm-reference/.git/why",
+          "generation": "g-mtujqb13-8eb8df2c",
+          "indexedCommits": 147,
+          "reachableCommits": null,
+          "refsChanged": false,
+          "recordCount": 298,
+          "model": {
+            "id": "minishlab/potion-code-16M-v2",
+            "revision": "e9d2a44ca6a05ac6685f3b23709ea57eb7352d5b",
+            "fingerprint": "m2v-sha256:9e51530c5a19d0147b884669fe4e0db7bfc7773c728e79eaf4c40ffc53b0fbf8"
+          },
+          "diskBytes": 22236346,
+          "indexedAt": "2026-09-09T20:24:28.122Z",
+          "objectFormat": "sha1",
+          "shallow": false,
+          "coverage": {
+            "excludedFiles": 0,
+            "unavailableFiles": 0,
+            "failedFiles": 0,
+            "reasons": []
+          },
+          "warnings": []
+        }
+      }
+    },
+    "twoSimultaneousFirstUses": {
+      "first": {
+        "totalMs": 1971.317625,
+        "exitCode": 0
+      },
+      "second": {
+        "totalMs": 1996.53725,
+        "exitCode": 0
+      },
+      "bothSucceeded": true,
+      "oneWaitedForOther": false,
+      "finalRecordCount": 274,
+      "serialBaselineRecordCount": 274,
+      "recordCountMatchesSerialBaseline": true,
+      "coherenceNote": "A coherent single index implies the raced final record count equals a normal serial first-use build's record count (no duplicate-record inflation)."
+    }
+  }
+}

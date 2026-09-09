@@ -1,0 +1,5 @@
+{
+  "status": "blocked",
+  "reason": "No documented flag exists (docs/spec.md section 5) to build or query a summary-only index vs. a summary+evidence index through the external CLI surface. bench/ may not import product internals to fabricate this comparison, per the evaluation lane brief. Add a documented bench-facing flag (owned by cli/retrieval lanes) to unblock this ablation.",
+  "candidate": "production"
+}

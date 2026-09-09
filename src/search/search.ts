@@ -26,6 +26,22 @@ import { type BranchFetch, rankCommits } from './rank.js';
 
 const MAX_MESSAGE_EXCERPT_CHARS = 280;
 
+/**
+ * Benchmark-only affordance for the summaries-only ablation required by
+ * docs/spec.md section 18 ("does diff ingestion earn its complexity?").
+ *
+ * The comparison needs retrieval restricted to commit summaries while the
+ * index itself is unchanged. This is deliberately an environment variable and
+ * not a CLI flag: it is an evaluation control, not a product feature, and
+ * `bench/` may not import product internals to fabricate the comparison.
+ * Unset (the normal case) retrieves both record types.
+ */
+function benchRecordTypes(): ('commit' | 'evidence')[] {
+  return process.env.GIT_WHY_BENCH_RECORD_TYPES === 'commit'
+    ? ['commit']
+    : ['commit', 'evidence'];
+}
+
 function messageExcerptOf(subject: string, body: string): string {
   const combined = body.length > 0 ? `${subject}\n\n${body}` : subject;
   if (combined.length <= MAX_MESSAGE_EXCERPT_CHARS) return combined;
@@ -48,7 +64,7 @@ export async function search(
     );
   }
 
-  const filter: StorageFilter = buildStorageFilter(request.filters, ['commit', 'evidence']);
+  const filter: StorageFilter = buildStorageFilter(request.filters, benchRecordTypes());
 
   const lexicalFetch: BranchFetch | null = wantsLexical
     ? (topK) => store.searchLexical(compileFtsQuery(request.query), filter, topK)

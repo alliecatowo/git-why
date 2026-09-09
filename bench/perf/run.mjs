@@ -199,8 +199,8 @@ async function main() {
     const after = statusJson(cliPath, warmRepo).json;
     results.workloads.oneNewCommit = {
       totalMs: queryAfterCommit.elapsedMs,
-      indexedCommitsBefore: before?.indexedCommits ?? null,
-      indexedCommitsAfter: after?.indexedCommits ?? null,
+      indexedCommitsBefore: before?.index?.indexedCommits ?? null,
+      indexedCommitsAfter: after?.index?.indexedCommits ?? null,
       targetNote: 'Section 24 initial target: one small incremental commit plus query within 3s on reference hardware.',
     };
   }
@@ -228,9 +228,9 @@ async function main() {
     const second = statusJson(cliPath, warmRepo).json;
     results.workloads.unchangedRefs = {
       queryTotalMs: r.elapsedMs,
-      indexedAtBefore: first?.indexedAt ?? null,
-      indexedAtAfter: second?.indexedAt ?? null,
-      noReembeddingInferred: first?.indexedAt != null && first.indexedAt === second?.indexedAt,
+      indexedAtBefore: first?.index?.indexedAt ?? null,
+      indexedAtAfter: second?.index?.indexedAt ?? null,
+      noReembeddingInferred: first?.index?.indexedAt != null && first.index.indexedAt === second?.index?.indexedAt,
       note: 'indexedAt unchanged is used as the externally-observable proxy for "no document re-embedding"; query embedding of the incoming query text may still occur per spec.',
     };
   }
@@ -256,10 +256,10 @@ async function main() {
 
     results.workloads.renameRebaseBranchDeletion = {
       buildMs: buildIdx.elapsedMs,
-      recordCountBefore: before?.recordCount ?? null,
+      recordCountBefore: before?.index?.recordCount ?? null,
       renameQueryMs: afterRename.elapsedMs,
       branchDeleteQueryMs: afterBranchDelete.elapsedMs,
-      recordCountAfter: afterAll?.recordCount ?? null,
+      recordCountAfter: afterAll?.index?.recordCount ?? null,
       note: 'A full rebase scenario is not exercised here (the fixture generator does not produce a rebase-able branch); this covers rename + branch deletion only. See bench/README.md limitations.',
     };
   }
@@ -332,10 +332,10 @@ async function main() {
       second: { totalMs: second.elapsedMs, exitCode: second.exitCode },
       bothSucceeded: first.exitCode === 0 && second.exitCode === 0,
       oneWaitedForOther: Math.abs(first.elapsedMs - second.elapsedMs) > 500,
-      finalRecordCount: finalStatus?.recordCount ?? null,
-      serialBaselineRecordCount: serialStatus?.recordCount ?? null,
+      finalRecordCount: finalStatus?.index?.recordCount ?? null,
+      serialBaselineRecordCount: serialStatus?.index?.recordCount ?? null,
       recordCountMatchesSerialBaseline:
-        finalStatus?.recordCount != null && finalStatus.recordCount === serialStatus?.recordCount,
+        finalStatus?.index?.recordCount != null && finalStatus.index.recordCount === serialStatus?.index?.recordCount,
       coherenceNote: 'A coherent single index implies the raced final record count equals a normal serial first-use build\'s record count (no duplicate-record inflation).',
     };
   }

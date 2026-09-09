@@ -1,0 +1,5096 @@
+[
+  {
+    "mode": "text",
+    "caseId": "d-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Users on a flaky connection keep getting the same chat message twice after they reconnect. When did we fix that?",
+    "relevantShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "elapsedMs": 210.675666,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "It looks like we are hitting the token endpoint several times for what should be a single outbound call when a request retries. Was that ever fixed?",
+    "relevantShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b"
+    ],
+    "elapsedMs": 210.803291,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "Why do we keep this branch that treats an empty access token as needing reauth instead of just erroring?",
+    "relevantShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "elapsedMs": 213.358542,
+    "exitCode": 0,
+    "rankedShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why do we still send the old V1 request signature header to Acme alongside V2?",
+    "relevantShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7"
+    ],
+    "elapsedMs": 212.148291,
+    "exitCode": 0,
+    "rankedShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "db722858f3a39f5cb78763a2f748165f50dbfa02",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Before the push-based fan-out, how did the relay used to get messages out to sockets?",
+    "relevantShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "elapsedMs": 214.272542,
+    "exitCode": 0,
+    "rankedShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "What did the job queue look like before it was rebuilt around a worker pool?",
+    "relevantShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085"
+    ],
+    "elapsedMs": 220.184625,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "32941158bcf2c3839de983baa62b59797113808e",
+      "b881380b8a4c9e60b0d75520386e64957ad05817"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we stop using Redis for the batch processing lock?",
+    "relevantShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "elapsedMs": 210.432084,
+    "exitCode": 0,
+    "rankedShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "1d56d43740b5dc9223191c8f1c62819fbf240f8c",
+      "c3af436e5a3d654afd6868927fb0f82d5cefed00",
+      "5ab7ebc5ce7fc5fcf515f8641df0adf24b7e4cda"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did the customer export move away from building one big CSV string in memory?",
+    "relevantShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "elapsedMs": 214.690042,
+    "exitCode": 0,
+    "rankedShas": [
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "739418477ca04eb6aa287797271a0565960f3641",
+      "0406ad21bb546b43121d3013e53fdab648f2bc7b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider refreshSession",
+    "relevantShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d"
+    ],
+    "elapsedMs": 208.582417,
+    "exitCode": 0,
+    "rankedShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider caching TTL",
+    "relevantShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9"
+    ],
+    "elapsedMs": 211.187042,
+    "exitCode": 0,
+    "rankedShas": [
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we drop support for Postgres 13?",
+    "relevantShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d"
+    ],
+    "elapsedMs": 210.358583,
+    "exitCode": 0,
+    "rankedShas": [
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "f42c1cfe097fd0f6c65fa0056192488cb9638a42"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why do we now require npm 9 or newer to work on this project?",
+    "relevantShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "elapsedMs": 210.412667,
+    "exitCode": 0,
+    "rankedShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "14643e9d5f248b93bf6c30dd01df385a8c7ef8a6",
+      "8dc105208fbd766bab51af6630650ad96b1866e5",
+      "aa3754d37641acff83f957a57bbcc2b9d7e3470b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Where did the old dispatch.js fan-out logic move to?",
+    "relevantShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "elapsedMs": 515.838167,
+    "exitCode": 0,
+    "rankedShas": [
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "c2da255e91d391d0c25094f41076ffc7f245be59",
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.2
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Whatever happened to the RetryPolicy class — is it called something else now?",
+    "relevantShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c"
+    ],
+    "elapsedMs": 525.73575,
+    "exitCode": 0,
+    "rankedShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90",
+      "12c42fc7ced4296141dc519409fcada508632feb"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Find the change that stopped a room's \"user joined\" listener from being wired up more than once.",
+    "relevantShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "elapsedMs": 210.644167,
+    "exitCode": 0,
+    "rankedShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-poormsg-02",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Something stopped the worker pool from ever running more jobs at once than its configured size allows -- which commit?",
+    "relevantShas": [
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "elapsedMs": 207.435917,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "92af69de5abd0dfde4eb6799b26af442cfe109e9",
+      "8c6b5df9223e970db3a07a429fabbeef7f17b2a9"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why is the pg driver pinned to a specific patch version instead of floating?",
+    "relevantShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e"
+    ],
+    "elapsedMs": 208.383333,
+    "exitCode": 0,
+    "rankedShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "f42c1cfe097fd0f6c65fa0056192488cb9638a42"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-richskip-02",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why is esbuild pinned to an older version instead of tracking latest?",
+    "relevantShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "elapsedMs": 209.34275,
+    "exitCode": 0,
+    "rankedShas": [
+      "a79fc6ce8a17a356474c30c1dcec15f6c12cc58a",
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "1a5e357628464d81829d6c173dbe66a88348b0ad",
+      "bf3dbb4996a53acd4f7640dbf3102a91ae3fefb8"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "We had some kind of special handling for Safari and cookies -- was that ever needed, and is it still there?",
+    "relevantShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "elapsedMs": 211.979042,
+    "exitCode": 0,
+    "rankedShas": [
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why did we widen the token expiry buffer for the Globex client specifically?",
+    "relevantShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "elapsedMs": 212.164292,
+    "exitCode": 0,
+    "rankedShas": [
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "42185647615f69f3c9c05055fced75e1fc37c42f",
+      "7db6afa199d0200e098b05a5ed950097d6b86e3c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Why does SocketPool track sockets in each room with a Set instead of a WeakSet?",
+    "relevantShas": [],
+    "elapsedMs": 211.406417,
+    "exitCode": 0,
+    "rankedShas": [
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "478669decbf303591b700427e16e11a722368456",
+      "fa81f07c5bcc667f211100112d3e045e40e69462"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "adaabd912dff7de402ae6f56a5b77ea438811181",
+        "878647c7dd28c580038e51c893b6da0db4836979",
+        "287b802786ccfde6404ee661b9927d5f1840e679",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Why is the worker pool size configurable but the queue's maximum backlog is not?",
+    "relevantShas": [],
+    "elapsedMs": 209.581667,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "32941158bcf2c3839de983baa62b59797113808e",
+      "d6b7e9264791dab161e7ebc244f17a869aa0b58f",
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "32941158bcf2c3839de983baa62b59797113808e",
+        "d6b7e9264791dab161e7ebc244f17a869aa0b58f",
+        "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we pick NDJSON specifically instead of, say, Parquet for the streaming export format?",
+    "relevantShas": [],
+    "elapsedMs": 212.865583,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "3e1966dceea7222210acaed94e318351478c28f0",
+      "f4c136c53a4735fb06771e58c03924afa4514444",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "c46e31e33e1b938098ea54beb8024c8f694204f8",
+        "3e1966dceea7222210acaed94e318351478c28f0",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why was esbuild chosen as the bundler for this project in the first place, rather than swc or Rollup?",
+    "relevantShas": [],
+    "elapsedMs": 212.848625,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "79e5e70316f1eb49408c7a14fbc6e9d1ade852f3",
+      "dd8f320bd8a05819c56fe214e8c63baf4b7ba9b5",
+      "2351e36134326cdb3ff86d63b1cbf841ecd861c0",
+      "330caa998438b0d831e9447b890a108848a1e317"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "79e5e70316f1eb49408c7a14fbc6e9d1ade852f3",
+        "dd8f320bd8a05819c56fe214e8c63baf4b7ba9b5",
+        "2351e36134326cdb3ff86d63b1cbf841ecd861c0",
+        "330caa998438b0d831e9447b890a108848a1e317"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Users on a flaky connection keep getting the same chat message twice after they reconnect. When did we fix that?",
+    "relevantShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "elapsedMs": 500.772042,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "478669decbf303591b700427e16e11a722368456",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "It looks like we are hitting the token endpoint several times for what should be a single outbound call when a request retries. Was that ever fixed?",
+    "relevantShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b"
+    ],
+    "elapsedMs": 494.976459,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "24e7cc14fdb7d84ce798e45907a911caf15624d7"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "Why do we keep this branch that treats an empty access token as needing reauth instead of just erroring?",
+    "relevantShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "elapsedMs": 492.107625,
+    "exitCode": 0,
+    "rankedShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why do we still send the old V1 request signature header to Acme alongside V2?",
+    "relevantShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7"
+    ],
+    "elapsedMs": 492.286875,
+    "exitCode": 0,
+    "rankedShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "99c09660eb83e7af364fc740ef9965df41d5d43c",
+      "c180436ef8a61e8fce6ade7b80a8803487fd1dca",
+      "67edaed4900b55d89089547c9a13ee0bdb77eb58"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Before the push-based fan-out, how did the relay used to get messages out to sockets?",
+    "relevantShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "elapsedMs": 490.191459,
+    "exitCode": 0,
+    "rankedShas": [
+      "6ad18eb5d34b320776043c4bae1b63f3a1c59e42",
+      "4d06352fb508b2c7b63b24093ea9484f8ed90122",
+      "e750eef381e6e224db5fd04b58b3fe8653697ce4",
+      "2d1ec29c091302638af8e6b0b9d6c9069bdc66fc",
+      "5d18a1ca4d4ee3db7cc3a70bb9ad2daa7c354b85"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "What did the job queue look like before it was rebuilt around a worker pool?",
+    "relevantShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085"
+    ],
+    "elapsedMs": 497.904166,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "65b548571ddc3ba59ecef2dc457d6538aec136e0",
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we stop using Redis for the batch processing lock?",
+    "relevantShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "elapsedMs": 501.252875,
+    "exitCode": 0,
+    "rankedShas": [
+      "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "6da55c8cace9e9be49bc763763a015ab9c8514a6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did the customer export move away from building one big CSV string in memory?",
+    "relevantShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "elapsedMs": 499.750292,
+    "exitCode": 0,
+    "rankedShas": [
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "8de52d3ea2d494b9d8062c6d811a1d5fee7add65",
+      "7d46ea4b3a54ee036c88520318b1e62a54293e4c",
+      "eae2bfc3711161c81c491a7cda878a9e3bcdc87b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider refreshSession",
+    "relevantShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d"
+    ],
+    "elapsedMs": 492.194916,
+    "exitCode": 0,
+    "rankedShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "20b8264666a827b3653aec4c622da4bd83976895",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider caching TTL",
+    "relevantShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9"
+    ],
+    "elapsedMs": 499.782416,
+    "exitCode": 0,
+    "rankedShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "9ba5ee236aa610e5aadf63bb8ee0f02644096d80"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we drop support for Postgres 13?",
+    "relevantShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d"
+    ],
+    "elapsedMs": 495.477917,
+    "exitCode": 0,
+    "rankedShas": [
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "6294037c8330ac9df50964c088fc7543d0166c54"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why do we now require npm 9 or newer to work on this project?",
+    "relevantShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "elapsedMs": 500.950458,
+    "exitCode": 0,
+    "rankedShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "b0ecb6f86ca9d456a25328ef5bc0f68220531093",
+      "acd5704bcdd473bb1b8188839394e69069175b7c",
+      "1774869954f4882bb45a0567c20e664e50688055",
+      "693aa361b2c052e87ba9516d6119bd2e34a2990f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Where did the old dispatch.js fan-out logic move to?",
+    "relevantShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "elapsedMs": 509.70425,
+    "exitCode": 0,
+    "rankedShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "8f0683db09e4a96103a87169e8757280ef6e97e1",
+      "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "c2da255e91d391d0c25094f41076ffc7f245be59"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Whatever happened to the RetryPolicy class — is it called something else now?",
+    "relevantShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c"
+    ],
+    "elapsedMs": 510.224083,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "12c42fc7ced4296141dc519409fcada508632feb",
+      "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90",
+      "0fe455417ec56e9974b8063ba141ef71317fb148"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Find the change that stopped a room's \"user joined\" listener from being wired up more than once.",
+    "relevantShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "elapsedMs": 490.482959,
+    "exitCode": 0,
+    "rankedShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-poormsg-02",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Something stopped the worker pool from ever running more jobs at once than its configured size allows -- which commit?",
+    "relevantShas": [
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "elapsedMs": 489.744042,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "583fab8c1275e983d5b14a3abe9ad0a631f3d399",
+      "d0349d151a8135c157d2484f17ffe8bb3a6c59ca",
+      "294c300b9387f4ab9c6c1bcad2bd54af6eb8971b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why is the pg driver pinned to a specific patch version instead of floating?",
+    "relevantShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e"
+    ],
+    "elapsedMs": 498.663709,
+    "exitCode": 0,
+    "rankedShas": [
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "1f6b244ef42ce4c71a6f9f07398647790f1d00bb",
+      "3f08c47ecc4267b64c0f3a1b987e24fde4e05d58"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-richskip-02",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why is esbuild pinned to an older version instead of tracking latest?",
+    "relevantShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "elapsedMs": 495.151291,
+    "exitCode": 0,
+    "rankedShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "a79fc6ce8a17a356474c30c1dcec15f6c12cc58a",
+      "1a5e357628464d81829d6c173dbe66a88348b0ad",
+      "a26dbb4b9e0949ba172736e1219496fb20beb97b",
+      "5422e48de8dd06938cdec968f8b9dd3a940f57bc"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "We had some kind of special handling for Safari and cookies -- was that ever needed, and is it still there?",
+    "relevantShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "elapsedMs": 498.154166,
+    "exitCode": 0,
+    "rankedShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "f4f4a3e59b576a3e394cad775b857cd7fbb9ba25"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why did we widen the token expiry buffer for the Globex client specifically?",
+    "relevantShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "elapsedMs": 491.231583,
+    "exitCode": 0,
+    "rankedShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "42185647615f69f3c9c05055fced75e1fc37c42f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Why does SocketPool track sockets in each room with a Set instead of a WeakSet?",
+    "relevantShas": [],
+    "elapsedMs": 508.75325,
+    "exitCode": 0,
+    "rankedShas": [
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "478669decbf303591b700427e16e11a722368456",
+      "fa81f07c5bcc667f211100112d3e045e40e69462",
+      "0573a4b44b1025be4638256cd1da9934e4b29c10",
+      "de74e504eecc1f0da33714eb5340ee0ab5f051cc"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "adaabd912dff7de402ae6f56a5b77ea438811181",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "0573a4b44b1025be4638256cd1da9934e4b29c10",
+        "de74e504eecc1f0da33714eb5340ee0ab5f051cc"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Why is the worker pool size configurable but the queue's maximum backlog is not?",
+    "relevantShas": [],
+    "elapsedMs": 513.350916,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f5878f3520c4d13777f409caf9075c3b44c381e6",
+      "0a758bc3cd116abd004685713fb0d498941237bd",
+      "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "f5878f3520c4d13777f409caf9075c3b44c381e6",
+        "0a758bc3cd116abd004685713fb0d498941237bd",
+        "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we pick NDJSON specifically instead of, say, Parquet for the streaming export format?",
+    "relevantShas": [],
+    "elapsedMs": 499.995958,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "96c76f26c0722a29595be30e852bbf85d415ca2b",
+      "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+      "f4c136c53a4735fb06771e58c03924afa4514444",
+      "3d7e49da5961a4025416e6325d4d7501f5030625"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "96c76f26c0722a29595be30e852bbf85d415ca2b",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "3d7e49da5961a4025416e6325d4d7501f5030625"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why was esbuild chosen as the bundler for this project in the first place, rather than swc or Rollup?",
+    "relevantShas": [],
+    "elapsedMs": 492.892583,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "466eaaa8bba4976081f839d884b22764e82b7524",
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "1774869954f4882bb45a0567c20e664e50688055"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+        "466eaaa8bba4976081f839d884b22764e82b7524",
+        "28f1eb675de28b4320093b13ffba0cc31b56a334",
+        "1774869954f4882bb45a0567c20e664e50688055"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Users on a flaky connection keep getting the same chat message twice after they reconnect. When did we fix that?",
+    "relevantShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "elapsedMs": 494.442084,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "adaabd912dff7de402ae6f56a5b77ea438811181"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "It looks like we are hitting the token endpoint several times for what should be a single outbound call when a request retries. Was that ever fixed?",
+    "relevantShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b"
+    ],
+    "elapsedMs": 495.332709,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "0fe455417ec56e9974b8063ba141ef71317fb148"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "Why do we keep this branch that treats an empty access token as needing reauth instead of just erroring?",
+    "relevantShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "elapsedMs": 493.046584,
+    "exitCode": 0,
+    "rankedShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "3266cd512c96b250b7b312a2557216c2766315e1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why do we still send the old V1 request signature header to Acme alongside V2?",
+    "relevantShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7"
+    ],
+    "elapsedMs": 501.777958,
+    "exitCode": 0,
+    "rankedShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "99c09660eb83e7af364fc740ef9965df41d5d43c",
+      "67edaed4900b55d89089547c9a13ee0bdb77eb58",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Before the push-based fan-out, how did the relay used to get messages out to sockets?",
+    "relevantShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "elapsedMs": 501.019959,
+    "exitCode": 0,
+    "rankedShas": [
+      "6ad18eb5d34b320776043c4bae1b63f3a1c59e42",
+      "4d06352fb508b2c7b63b24093ea9484f8ed90122",
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "2d1ec29c091302638af8e6b0b9d6c9069bdc66fc",
+      "adaabd912dff7de402ae6f56a5b77ea438811181"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "What did the job queue look like before it was rebuilt around a worker pool?",
+    "relevantShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085"
+    ],
+    "elapsedMs": 502.614542,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919",
+      "ff3df885fe10cb9f71efa2d605d9cbcfb16cd79e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we stop using Redis for the batch processing lock?",
+    "relevantShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "elapsedMs": 502.755083,
+    "exitCode": 0,
+    "rankedShas": [
+      "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "1d56d43740b5dc9223191c8f1c62819fbf240f8c",
+      "5ab7ebc5ce7fc5fcf515f8641df0adf24b7e4cda",
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did the customer export move away from building one big CSV string in memory?",
+    "relevantShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "elapsedMs": 513.178834,
+    "exitCode": 0,
+    "rankedShas": [
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "8de52d3ea2d494b9d8062c6d811a1d5fee7add65",
+      "0406ad21bb546b43121d3013e53fdab648f2bc7b",
+      "e2f940873219d7b0fe5299ac6951996aed08f0a1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider refreshSession",
+    "relevantShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d"
+    ],
+    "elapsedMs": 498.806125,
+    "exitCode": 0,
+    "rankedShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "20b8264666a827b3653aec4c622da4bd83976895"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider caching TTL",
+    "relevantShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9"
+    ],
+    "elapsedMs": 500.581333,
+    "exitCode": 0,
+    "rankedShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "e909130fdb63106657ab2ff2bf5e712f41272580"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we drop support for Postgres 13?",
+    "relevantShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d"
+    ],
+    "elapsedMs": 498.007375,
+    "exitCode": 0,
+    "rankedShas": [
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "cb05f8767df92e70f6e410d3ee7507f2ec7cd279",
+      "6294037c8330ac9df50964c088fc7543d0166c54"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why do we now require npm 9 or newer to work on this project?",
+    "relevantShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "elapsedMs": 497.274084,
+    "exitCode": 0,
+    "rankedShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "acd5704bcdd473bb1b8188839394e69069175b7c",
+      "b0ecb6f86ca9d456a25328ef5bc0f68220531093",
+      "73f4e138e60ba1738422389fa097f42d494fef5c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Where did the old dispatch.js fan-out logic move to?",
+    "relevantShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "elapsedMs": 526.047792,
+    "exitCode": 0,
+    "rankedShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "8f0683db09e4a96103a87169e8757280ef6e97e1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Whatever happened to the RetryPolicy class — is it called something else now?",
+    "relevantShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c"
+    ],
+    "elapsedMs": 539.240875,
+    "exitCode": 0,
+    "rankedShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "12c42fc7ced4296141dc519409fcada508632feb",
+      "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Find the change that stopped a room's \"user joined\" listener from being wired up more than once.",
+    "relevantShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "elapsedMs": 496.911584,
+    "exitCode": 0,
+    "rankedShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0",
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2",
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-poormsg-02",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Something stopped the worker pool from ever running more jobs at once than its configured size allows -- which commit?",
+    "relevantShas": [
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "elapsedMs": 512.4755,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919",
+      "d0349d151a8135c157d2484f17ffe8bb3a6c59ca",
+      "92af69de5abd0dfde4eb6799b26af442cfe109e9"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why is the pg driver pinned to a specific patch version instead of floating?",
+    "relevantShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e"
+    ],
+    "elapsedMs": 495.306625,
+    "exitCode": 0,
+    "rankedShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-richskip-02",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why is esbuild pinned to an older version instead of tracking latest?",
+    "relevantShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "elapsedMs": 501.459292,
+    "exitCode": 0,
+    "rankedShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "a79fc6ce8a17a356474c30c1dcec15f6c12cc58a",
+      "1a5e357628464d81829d6c173dbe66a88348b0ad",
+      "5422e48de8dd06938cdec968f8b9dd3a940f57bc",
+      "73f4e138e60ba1738422389fa097f42d494fef5c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "We had some kind of special handling for Safari and cookies -- was that ever needed, and is it still there?",
+    "relevantShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "elapsedMs": 495.627583,
+    "exitCode": 0,
+    "rankedShas": [
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "f4f4a3e59b576a3e394cad775b857cd7fbb9ba25",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why did we widen the token expiry buffer for the Globex client specifically?",
+    "relevantShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "elapsedMs": 496.465125,
+    "exitCode": 0,
+    "rankedShas": [
+      "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "42185647615f69f3c9c05055fced75e1fc37c42f",
+      "857d825e67e8dc64511b1b0b36d77fa9e8371ec4"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Why does SocketPool track sockets in each room with a Set instead of a WeakSet?",
+    "relevantShas": [],
+    "elapsedMs": 495.927542,
+    "exitCode": 0,
+    "rankedShas": [
+      "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "478669decbf303591b700427e16e11a722368456",
+      "fa81f07c5bcc667f211100112d3e045e40e69462",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "adaabd912dff7de402ae6f56a5b77ea438811181",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "287b802786ccfde6404ee661b9927d5f1840e679",
+        "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Why is the worker pool size configurable but the queue's maximum backlog is not?",
+    "relevantShas": [],
+    "elapsedMs": 496.391666,
+    "exitCode": 0,
+    "rankedShas": [
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "dd18f43967c99d810bf481803f9f15fd00a50d60",
+      "771a196b7ea74b43da5c763de6a49b35e129a7f2",
+      "d6b7e9264791dab161e7ebc244f17a869aa0b58f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "dd18f43967c99d810bf481803f9f15fd00a50d60",
+        "771a196b7ea74b43da5c763de6a49b35e129a7f2",
+        "d6b7e9264791dab161e7ebc244f17a869aa0b58f"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we pick NDJSON specifically instead of, say, Parquet for the streaming export format?",
+    "relevantShas": [],
+    "elapsedMs": 496.766625,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "f4c136c53a4735fb06771e58c03924afa4514444",
+      "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+      "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+      "96c76f26c0722a29595be30e852bbf85d415ca2b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+        "96c76f26c0722a29595be30e852bbf85d415ca2b"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why was esbuild chosen as the bundler for this project in the first place, rather than swc or Rollup?",
+    "relevantShas": [],
+    "elapsedMs": 496.553459,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "466eaaa8bba4976081f839d884b22764e82b7524",
+      "1774869954f4882bb45a0567c20e664e50688055",
+      "4c406adfc9cdf63a38825d1e6d3f247027e931c1",
+      "38f2118b42623f57113883e35a963412476e6d67"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "466eaaa8bba4976081f839d884b22764e82b7524",
+        "1774869954f4882bb45a0567c20e664e50688055",
+        "4c406adfc9cdf63a38825d1e6d3f247027e931c1",
+        "38f2118b42623f57113883e35a963412476e6d67"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary+evidence"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Users on a flaky connection keep getting the same chat message twice after they reconnect. When did we fix that?",
+    "relevantShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "elapsedMs": 206.847834,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "It looks like we are hitting the token endpoint several times for what should be a single outbound call when a request retries. Was that ever fixed?",
+    "relevantShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b"
+    ],
+    "elapsedMs": 206.954542,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "c37cca49ca592898af925856e873a48162c8dd75"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "Why do we keep this branch that treats an empty access token as needing reauth instead of just erroring?",
+    "relevantShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "elapsedMs": 207.422125,
+    "exitCode": 0,
+    "rankedShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why do we still send the old V1 request signature header to Acme alongside V2?",
+    "relevantShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7"
+    ],
+    "elapsedMs": 205.795333,
+    "exitCode": 0,
+    "rankedShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "db722858f3a39f5cb78763a2f748165f50dbfa02",
+      "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "26c1a951e05ee60ae1ae378b2456b945096c1526"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Before the push-based fan-out, how did the relay used to get messages out to sockets?",
+    "relevantShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "elapsedMs": 210.733083,
+    "exitCode": 0,
+    "rankedShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "38ebebb7d9641a9eb59f8f0a1ac0c429abfbe3c0",
+      "6e338d2a3b3d84c232ccea436aa3b5f01c12a102"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "What did the job queue look like before it was rebuilt around a worker pool?",
+    "relevantShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085"
+    ],
+    "elapsedMs": 208.2825,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "32941158bcf2c3839de983baa62b59797113808e",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "93bc3ec8268a9bfb6e660bfc9509b436b5c78303"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we stop using Redis for the batch processing lock?",
+    "relevantShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "elapsedMs": 211.134834,
+    "exitCode": 0,
+    "rankedShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "1d56d43740b5dc9223191c8f1c62819fbf240f8c",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "6da55c8cace9e9be49bc763763a015ab9c8514a6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did the customer export move away from building one big CSV string in memory?",
+    "relevantShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "elapsedMs": 214.936833,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "406d27d848d31cea36696436c20492a87156a71e",
+      "8de52d3ea2d494b9d8062c6d811a1d5fee7add65",
+      "961838e453894d3c8409a15a7e853f2fbfa9988f",
+      "a589e10576dacfb9ada4355c7cefb76761a3c54a"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider refreshSession",
+    "relevantShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d"
+    ],
+    "elapsedMs": 209.939833,
+    "exitCode": 0,
+    "rankedShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "20b8264666a827b3653aec4c622da4bd83976895"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider caching TTL",
+    "relevantShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9"
+    ],
+    "elapsedMs": 210.182458,
+    "exitCode": 0,
+    "rankedShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "20b8264666a827b3653aec4c622da4bd83976895"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we drop support for Postgres 13?",
+    "relevantShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d"
+    ],
+    "elapsedMs": 207.6815,
+    "exitCode": 0,
+    "rankedShas": [
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "39a4924cb2ede0f2e898cb32f250a09c5e3ae65f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why do we now require npm 9 or newer to work on this project?",
+    "relevantShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "elapsedMs": 210.298917,
+    "exitCode": 0,
+    "rankedShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "8dc105208fbd766bab51af6630650ad96b1866e5",
+      "aa3754d37641acff83f957a57bbcc2b9d7e3470b",
+      "4bc16381b74c2d863c894188e66c3d6c8db13638"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Where did the old dispatch.js fan-out logic move to?",
+    "relevantShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "elapsedMs": 523.092875,
+    "exitCode": 0,
+    "rankedShas": [
+      "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "c2da255e91d391d0c25094f41076ffc7f245be59",
+      "8f0683db09e4a96103a87169e8757280ef6e97e1",
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.2
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Whatever happened to the RetryPolicy class — is it called something else now?",
+    "relevantShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c"
+    ],
+    "elapsedMs": 521.822833,
+    "exitCode": 0,
+    "rankedShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "12c42fc7ced4296141dc519409fcada508632feb",
+      "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90",
+      "0fe455417ec56e9974b8063ba141ef71317fb148"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Find the change that stopped a room's \"user joined\" listener from being wired up more than once.",
+    "relevantShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "elapsedMs": 211.666542,
+    "exitCode": 0,
+    "rankedShas": [
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "076c70908886903ed52bac7c0af20597e08e2192"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-poormsg-02",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Something stopped the worker pool from ever running more jobs at once than its configured size allows -- which commit?",
+    "relevantShas": [
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "elapsedMs": 209.577958,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "2347a6783a338860a7dd6eac963614e559e26971",
+      "324bad920d6d49cf6888d8e2c35c7f67b7fcd006",
+      "65cea31de65dffc05ffb28d2dec202c4e1972815",
+      "cc008ff1de7e827495bac2fe09d4a373a9f346c7"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why is the pg driver pinned to a specific patch version instead of floating?",
+    "relevantShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e"
+    ],
+    "elapsedMs": 208.419208,
+    "exitCode": 0,
+    "rankedShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-richskip-02",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why is esbuild pinned to an older version instead of tracking latest?",
+    "relevantShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "elapsedMs": 208.525708,
+    "exitCode": 0,
+    "rankedShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "fd8a8c6b18203e07de43ae83df1931fafdd4106f",
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "062ef5fce6897ee09f502f0108442d11bfcbd948"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "We had some kind of special handling for Safari and cookies -- was that ever needed, and is it still there?",
+    "relevantShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "elapsedMs": 210.148042,
+    "exitCode": 0,
+    "rankedShas": [
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why did we widen the token expiry buffer for the Globex client specifically?",
+    "relevantShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "elapsedMs": 208.239792,
+    "exitCode": 0,
+    "rankedShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "0330707bb0eab15995083064f4100571b7a434ca",
+      "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "27fa99f54d3ce6bdf3b9e42a360c6e0cab2a144f",
+      "7db6afa199d0200e098b05a5ed950097d6b86e3c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Why does SocketPool track sockets in each room with a Set instead of a WeakSet?",
+    "relevantShas": [],
+    "elapsedMs": 209.3715,
+    "exitCode": 0,
+    "rankedShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "478669decbf303591b700427e16e11a722368456",
+      "fa81f07c5bcc667f211100112d3e045e40e69462",
+      "c3305019d7418ff16b7eddb390ea8be030abf60f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "878647c7dd28c580038e51c893b6da0db4836979",
+        "287b802786ccfde6404ee661b9927d5f1840e679",
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "c3305019d7418ff16b7eddb390ea8be030abf60f"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Why is the worker pool size configurable but the queue's maximum backlog is not?",
+    "relevantShas": [],
+    "elapsedMs": 206.775875,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "32941158bcf2c3839de983baa62b59797113808e",
+      "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "93bc3ec8268a9bfb6e660bfc9509b436b5c78303"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "32941158bcf2c3839de983baa62b59797113808e",
+        "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+        "f149ceedf526492534143892c79ae8b33a1959c7",
+        "93bc3ec8268a9bfb6e660bfc9509b436b5c78303"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we pick NDJSON specifically instead of, say, Parquet for the streaming export format?",
+    "relevantShas": [],
+    "elapsedMs": 213.01375,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "3e1966dceea7222210acaed94e318351478c28f0",
+      "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+      "f4c136c53a4735fb06771e58c03924afa4514444"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "c46e31e33e1b938098ea54beb8024c8f694204f8",
+        "3e1966dceea7222210acaed94e318351478c28f0",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "f4c136c53a4735fb06771e58c03924afa4514444"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "text",
+    "caseId": "d-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why was esbuild chosen as the bundler for this project in the first place, rather than swc or Rollup?",
+    "relevantShas": [],
+    "elapsedMs": 211.395583,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "1eef0f317fbcacfb67896c6d260559ef4150859d",
+      "484d2520dce7a38f3594afeb298f76f1a2432a46"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "28f1eb675de28b4320093b13ffba0cc31b56a334",
+        "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+        "1eef0f317fbcacfb67896c6d260559ef4150859d",
+        "484d2520dce7a38f3594afeb298f76f1a2432a46"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Users on a flaky connection keep getting the same chat message twice after they reconnect. When did we fix that?",
+    "relevantShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "elapsedMs": 515.211916,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "138c58949737dbd6c8c5e405b96b46b480db4a8a"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "It looks like we are hitting the token endpoint several times for what should be a single outbound call when a request retries. Was that ever fixed?",
+    "relevantShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b"
+    ],
+    "elapsedMs": 497.021083,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "e808a7097f68bebc195164a30d4f1146f6f1b420",
+      "e9641f22b3bd26547d030d826f07f01e55b9176d"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "Why do we keep this branch that treats an empty access token as needing reauth instead of just erroring?",
+    "relevantShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "elapsedMs": 496.965625,
+    "exitCode": 0,
+    "rankedShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "001f9a4e33c84e5677c5039b95e92d1bf783f5c2"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why do we still send the old V1 request signature header to Acme alongside V2?",
+    "relevantShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7"
+    ],
+    "elapsedMs": 493.208959,
+    "exitCode": 0,
+    "rankedShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "1942dceeeed6d8d2c2af939a2491b1d0f07ea59e",
+      "67edaed4900b55d89089547c9a13ee0bdb77eb58"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Before the push-based fan-out, how did the relay used to get messages out to sockets?",
+    "relevantShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "elapsedMs": 504.352083,
+    "exitCode": 0,
+    "rankedShas": [
+      "6ad18eb5d34b320776043c4bae1b63f3a1c59e42",
+      "4d06352fb508b2c7b63b24093ea9484f8ed90122",
+      "e750eef381e6e224db5fd04b58b3fe8653697ce4",
+      "2d1ec29c091302638af8e6b0b9d6c9069bdc66fc",
+      "5d18a1ca4d4ee3db7cc3a70bb9ad2daa7c354b85"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "What did the job queue look like before it was rebuilt around a worker pool?",
+    "relevantShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085"
+    ],
+    "elapsedMs": 506.056041,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "65b548571ddc3ba59ecef2dc457d6538aec136e0",
+      "0a758bc3cd116abd004685713fb0d498941237bd",
+      "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we stop using Redis for the batch processing lock?",
+    "relevantShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "elapsedMs": 495.240791,
+    "exitCode": 0,
+    "rankedShas": [
+      "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "6da55c8cace9e9be49bc763763a015ab9c8514a6",
+      "1d56d43740b5dc9223191c8f1c62819fbf240f8c"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did the customer export move away from building one big CSV string in memory?",
+    "relevantShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "elapsedMs": 505.861875,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "8de52d3ea2d494b9d8062c6d811a1d5fee7add65",
+      "7d46ea4b3a54ee036c88520318b1e62a54293e4c",
+      "0406ad21bb546b43121d3013e53fdab648f2bc7b",
+      "70f69b06bbab9ada1e633d148e4a112d4db70585"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider refreshSession",
+    "relevantShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d"
+    ],
+    "elapsedMs": 507.774667,
+    "exitCode": 0,
+    "rankedShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "20b8264666a827b3653aec4c622da4bd83976895",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider caching TTL",
+    "relevantShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9"
+    ],
+    "elapsedMs": 545.520417,
+    "exitCode": 0,
+    "rankedShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "9ba5ee236aa610e5aadf63bb8ee0f02644096d80"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we drop support for Postgres 13?",
+    "relevantShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d"
+    ],
+    "elapsedMs": 562.218208,
+    "exitCode": 0,
+    "rankedShas": [
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "6294037c8330ac9df50964c088fc7543d0166c54",
+      "e976e35284e56b9533b8a83248e1563043688b35"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why do we now require npm 9 or newer to work on this project?",
+    "relevantShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "elapsedMs": 661.564875,
+    "exitCode": 0,
+    "rankedShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "a18a4bb26f588aa553175a80bdfc9e3b537de108",
+      "4bc16381b74c2d863c894188e66c3d6c8db13638"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Where did the old dispatch.js fan-out logic move to?",
+    "relevantShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "elapsedMs": 562.258584,
+    "exitCode": 0,
+    "rankedShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "8f0683db09e4a96103a87169e8757280ef6e97e1",
+      "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "c2da255e91d391d0c25094f41076ffc7f245be59"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Whatever happened to the RetryPolicy class — is it called something else now?",
+    "relevantShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c"
+    ],
+    "elapsedMs": 601.596792,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "12c42fc7ced4296141dc519409fcada508632feb",
+      "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90",
+      "0fe455417ec56e9974b8063ba141ef71317fb148"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Find the change that stopped a room's \"user joined\" listener from being wired up more than once.",
+    "relevantShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "elapsedMs": 563.540542,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6",
+      "80def0ebee115a3300ed8fd863a07f569bbc33ac",
+      "d73a8a628095f424c81145f052205fb500c0f415"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-poormsg-02",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Something stopped the worker pool from ever running more jobs at once than its configured size allows -- which commit?",
+    "relevantShas": [
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "elapsedMs": 532.640459,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "294c300b9387f4ab9c6c1bcad2bd54af6eb8971b",
+      "d6b7e9264791dab161e7ebc244f17a869aa0b58f",
+      "0a758bc3cd116abd004685713fb0d498941237bd",
+      "583fab8c1275e983d5b14a3abe9ad0a631f3d399"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why is the pg driver pinned to a specific patch version instead of floating?",
+    "relevantShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e"
+    ],
+    "elapsedMs": 523.841333,
+    "exitCode": 0,
+    "rankedShas": [
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "1f6b244ef42ce4c71a6f9f07398647790f1d00bb",
+      "3f08c47ecc4267b64c0f3a1b987e24fde4e05d58"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-richskip-02",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why is esbuild pinned to an older version instead of tracking latest?",
+    "relevantShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "elapsedMs": 565.278,
+    "exitCode": 0,
+    "rankedShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+      "e7e79cd835c4707cbc1712eb8eadf9044d8e7aaa",
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "a26dbb4b9e0949ba172736e1219496fb20beb97b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "We had some kind of special handling for Safari and cookies -- was that ever needed, and is it still there?",
+    "relevantShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "elapsedMs": 563.15975,
+    "exitCode": 0,
+    "rankedShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "12ec86c4afd1040963204328032889e1326e4195",
+      "5c01552f00562c2b04487c275b3e5ead24ac1744",
+      "b19c202517303f2eb00b9e96e5681d1f977415a1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why did we widen the token expiry buffer for the Globex client specifically?",
+    "relevantShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "elapsedMs": 653.345583,
+    "exitCode": 0,
+    "rankedShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "42185647615f69f3c9c05055fced75e1fc37c42f",
+      "857d825e67e8dc64511b1b0b36d77fa9e8371ec4",
+      "ce3e47b200ff6985e0996c854fa70bd2ed97a11f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Why does SocketPool track sockets in each room with a Set instead of a WeakSet?",
+    "relevantShas": [],
+    "elapsedMs": 583.712792,
+    "exitCode": 0,
+    "rankedShas": [
+      "478669decbf303591b700427e16e11a722368456",
+      "fa81f07c5bcc667f211100112d3e045e40e69462",
+      "0573a4b44b1025be4638256cd1da9934e4b29c10",
+      "de74e504eecc1f0da33714eb5340ee0ab5f051cc",
+      "f3d3b63c46a018a142bdce352513aa51a41695d1"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "0573a4b44b1025be4638256cd1da9934e4b29c10",
+        "de74e504eecc1f0da33714eb5340ee0ab5f051cc",
+        "f3d3b63c46a018a142bdce352513aa51a41695d1"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Why is the worker pool size configurable but the queue's maximum backlog is not?",
+    "relevantShas": [],
+    "elapsedMs": 568.505792,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f5878f3520c4d13777f409caf9075c3b44c381e6",
+      "0a758bc3cd116abd004685713fb0d498941237bd",
+      "583fab8c1275e983d5b14a3abe9ad0a631f3d399",
+      "d0349d151a8135c157d2484f17ffe8bb3a6c59ca"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "f5878f3520c4d13777f409caf9075c3b44c381e6",
+        "0a758bc3cd116abd004685713fb0d498941237bd",
+        "583fab8c1275e983d5b14a3abe9ad0a631f3d399",
+        "d0349d151a8135c157d2484f17ffe8bb3a6c59ca"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we pick NDJSON specifically instead of, say, Parquet for the streaming export format?",
+    "relevantShas": [],
+    "elapsedMs": 520.033292,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "96c76f26c0722a29595be30e852bbf85d415ca2b",
+      "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+      "f4c136c53a4735fb06771e58c03924afa4514444",
+      "3d7e49da5961a4025416e6325d4d7501f5030625"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "96c76f26c0722a29595be30e852bbf85d415ca2b",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "3d7e49da5961a4025416e6325d4d7501f5030625"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "semantic",
+    "caseId": "d-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why was esbuild chosen as the bundler for this project in the first place, rather than swc or Rollup?",
+    "relevantShas": [],
+    "elapsedMs": 510.264667,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "0e67fe42ff132ea0053dd6f11f93ea025a688b85",
+      "040c6492ff4a4e76bd66e7739ef28a794d341dd7",
+      "14883aec7809dd3d5a2334d524fcf7589206dca2"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "28f1eb675de28b4320093b13ffba0cc31b56a334",
+        "0e67fe42ff132ea0053dd6f11f93ea025a688b85",
+        "040c6492ff4a4e76bd66e7739ef28a794d341dd7",
+        "14883aec7809dd3d5a2334d524fcf7589206dca2"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-synmis-01",
+    "category": "synonym_mismatch",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Users on a flaky connection keep getting the same chat message twice after they reconnect. When did we fix that?",
+    "relevantShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679"
+    ],
+    "elapsedMs": 561.239333,
+    "exitCode": 0,
+    "rankedShas": [
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "138c58949737dbd6c8c5e405b96b46b480db4a8a"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-synmis-02",
+    "category": "synonym_mismatch",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "It looks like we are hitting the token endpoint several times for what should be a single outbound call when a request retries. Was that ever fixed?",
+    "relevantShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b"
+    ],
+    "elapsedMs": 519.393292,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "c37cca49ca592898af925856e873a48162c8dd75",
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "c67425023736d4f4fc6e3dffecc4e41304f09132"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-workr-01",
+    "category": "workaround_rationale",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "Why do we keep this branch that treats an empty access token as needing reauth instead of just erroring?",
+    "relevantShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "elapsedMs": 515.715375,
+    "exitCode": 0,
+    "rankedShas": [
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-workr-02",
+    "category": "workaround_rationale",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why do we still send the old V1 request signature header to Acme alongside V2?",
+    "relevantShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7"
+    ],
+    "elapsedMs": 508.297333,
+    "exitCode": 0,
+    "rankedShas": [
+      "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "1942dceeeed6d8d2c2af939a2491b1d0f07ea59e",
+      "c180436ef8a61e8fce6ade7b80a8803487fd1dca",
+      "f22566ffa901293a76dcb72e1d11769ab29a828e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-delimpl-01",
+    "category": "deleted_implementation",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Before the push-based fan-out, how did the relay used to get messages out to sockets?",
+    "relevantShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "elapsedMs": 510.29175,
+    "exitCode": 0,
+    "rankedShas": [
+      "878647c7dd28c580038e51c893b6da0db4836979",
+      "4d06352fb508b2c7b63b24093ea9484f8ed90122",
+      "6ad18eb5d34b320776043c4bae1b63f3a1c59e42",
+      "2d1ec29c091302638af8e6b0b9d6c9069bdc66fc",
+      "5d18a1ca4d4ee3db7cc3a70bb9ad2daa7c354b85"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-delimpl-02",
+    "category": "deleted_implementation",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "What did the job queue look like before it was rebuilt around a worker pool?",
+    "relevantShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085"
+    ],
+    "elapsedMs": 528.633542,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "f149ceedf526492534143892c79ae8b33a1959c7",
+      "65b548571ddc3ba59ecef2dc457d6538aec136e0",
+      "294c300b9387f4ab9c6c1bcad2bd54af6eb8971b",
+      "343f8c53f540abeeae39691bd215cf0523fc20e5"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-migr-01",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we stop using Redis for the batch processing lock?",
+    "relevantShas": [
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb"
+    ],
+    "elapsedMs": 516.047125,
+    "exitCode": 0,
+    "rankedShas": [
+      "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "1d56d43740b5dc9223191c8f1c62819fbf240f8c",
+      "6da55c8cace9e9be49bc763763a015ab9c8514a6"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-migr-02",
+    "category": "migration",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did the customer export move away from building one big CSV string in memory?",
+    "relevantShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53"
+    ],
+    "elapsedMs": 513.047625,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "8de52d3ea2d494b9d8062c6d811a1d5fee7add65",
+      "0406ad21bb546b43121d3013e53fdab648f2bc7b",
+      "961838e453894d3c8409a15a7e853f2fbfa9988f",
+      "70f69b06bbab9ada1e633d148e4a112d4db70585"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-exid-01",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider refreshSession",
+    "relevantShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d"
+    ],
+    "elapsedMs": 496.948083,
+    "exitCode": 0,
+    "rankedShas": [
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "20b8264666a827b3653aec4c622da4bd83976895",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-exid-02",
+    "category": "exact_identifier",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "AuthSessionProvider caching TTL",
+    "relevantShas": [
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9"
+    ],
+    "elapsedMs": 499.475666,
+    "exitCode": 0,
+    "rankedShas": [
+      "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "20b8264666a827b3653aec4c622da4bd83976895"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-numver-01",
+    "category": "number_version",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we drop support for Postgres 13?",
+    "relevantShas": [
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d"
+    ],
+    "elapsedMs": 495.176875,
+    "exitCode": 0,
+    "rankedShas": [
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "6294037c8330ac9df50964c088fc7543d0166c54",
+      "39a4924cb2ede0f2e898cb32f250a09c5e3ae65f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-numver-02",
+    "category": "number_version",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why do we now require npm 9 or newer to work on this project?",
+    "relevantShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf"
+    ],
+    "elapsedMs": 496.654167,
+    "exitCode": 0,
+    "rankedShas": [
+      "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "4bc16381b74c2d863c894188e66c3d6c8db13638",
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-rename-01",
+    "category": "rename",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Where did the old dispatch.js fan-out logic move to?",
+    "relevantShas": [
+      "ed3d488d601cce41aadc6a60488a434b211f9866"
+    ],
+    "elapsedMs": 528.847625,
+    "exitCode": 0,
+    "rankedShas": [
+      "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "8f0683db09e4a96103a87169e8757280ef6e97e1",
+      "c2da255e91d391d0c25094f41076ffc7f245be59"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-rename-02",
+    "category": "rename",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Whatever happened to the RetryPolicy class — is it called something else now?",
+    "relevantShas": [
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c"
+    ],
+    "elapsedMs": 537.327041,
+    "exitCode": 0,
+    "rankedShas": [
+      "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "12c42fc7ced4296141dc519409fcada508632feb",
+      "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90",
+      "0fe455417ec56e9974b8063ba141ef71317fb148"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-poormsg-01",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Find the change that stopped a room's \"user joined\" listener from being wired up more than once.",
+    "relevantShas": [
+      "0b48877e46ec05999b02a9856956a1094c6a80d0"
+    ],
+    "elapsedMs": 494.487834,
+    "exitCode": 0,
+    "rankedShas": [
+      "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "a279f2a34173e452cbdbb80eadf863dc2266f4c6",
+      "d73a8a628095f424c81145f052205fb500c0f415",
+      "878647c7dd28c580038e51c893b6da0db4836979"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-poormsg-02",
+    "category": "poor_message_rich_diff",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Something stopped the worker pool from ever running more jobs at once than its configured size allows -- which commit?",
+    "relevantShas": [
+      "5c54ff0a641eb15dde8a1dd03636878d1ccc1919"
+    ],
+    "elapsedMs": 495.853792,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "294c300b9387f4ab9c6c1bcad2bd54af6eb8971b",
+      "d6b7e9264791dab161e7ebc244f17a869aa0b58f",
+      "343f8c53f540abeeae39691bd215cf0523fc20e5",
+      "65b548571ddc3ba59ecef2dc457d6538aec136e0"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-richskip-01",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why is the pg driver pinned to a specific patch version instead of floating?",
+    "relevantShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e"
+    ],
+    "elapsedMs": 498.573208,
+    "exitCode": 0,
+    "rankedShas": [
+      "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "6294037c8330ac9df50964c088fc7543d0166c54"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-richskip-02",
+    "category": "rich_message_skipped_patch",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why is esbuild pinned to an older version instead of tracking latest?",
+    "relevantShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334"
+    ],
+    "elapsedMs": 494.454417,
+    "exitCode": 0,
+    "rankedShas": [
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "f24787847358c0c0b7fc0680803310567434ca7e",
+      "fd8a8c6b18203e07de43ae83df1931fafdd4106f",
+      "459aa431037cb9592c1a206de1c1bf5f570a2f52",
+      "062ef5fce6897ee09f502f0108442d11bfcbd948"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-lifecycle-01",
+    "category": "lifecycle",
+    "fixtureId": "auth-platform",
+    "split": "dev",
+    "query": "We had some kind of special handling for Safari and cookies -- was that ever needed, and is it still there?",
+    "relevantShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854"
+    ],
+    "elapsedMs": 495.024292,
+    "exitCode": 0,
+    "rankedShas": [
+      "3266cd512c96b250b7b312a2557216c2766315e1",
+      "f2a35a2b6163b218741aafc190656991175dc854",
+      "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "12ec86c4afd1040963204328032889e1326e4195",
+      "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-distintent-01",
+    "category": "distractor_intent",
+    "fixtureId": "api-gateway",
+    "split": "dev",
+    "query": "Why did we widen the token expiry buffer for the Globex client specifically?",
+    "relevantShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de"
+    ],
+    "elapsedMs": 493.516459,
+    "exitCode": 0,
+    "rankedShas": [
+      "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "857d825e67e8dc64511b1b0b36d77fa9e8371ec4",
+      "0330707bb0eab15995083064f4100571b7a434ca",
+      "ce3e47b200ff6985e0996c854fa70bd2ed97a11f",
+      "27fa99f54d3ce6bdf3b9e42a360c6e0cab2a144f"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-01",
+    "category": "no_evidence",
+    "fixtureId": "realtime-chat",
+    "split": "dev",
+    "query": "Why does SocketPool track sockets in each room with a Set instead of a WeakSet?",
+    "relevantShas": [],
+    "elapsedMs": 498.817916,
+    "exitCode": 0,
+    "rankedShas": [
+      "478669decbf303591b700427e16e11a722368456",
+      "fa81f07c5bcc667f211100112d3e045e40e69462",
+      "287b802786ccfde6404ee661b9927d5f1840e679",
+      "7506e476872827a24fd4c0376f3bc611a29e77a1",
+      "54a7c25ec7bbfb76ca2efae8b76cff144233e67a"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "478669decbf303591b700427e16e11a722368456",
+        "fa81f07c5bcc667f211100112d3e045e40e69462",
+        "287b802786ccfde6404ee661b9927d5f1840e679",
+        "7506e476872827a24fd4c0376f3bc611a29e77a1",
+        "54a7c25ec7bbfb76ca2efae8b76cff144233e67a"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-02",
+    "category": "no_evidence",
+    "fixtureId": "task-queue",
+    "split": "dev",
+    "query": "Why is the worker pool size configurable but the queue's maximum backlog is not?",
+    "relevantShas": [],
+    "elapsedMs": 492.586125,
+    "exitCode": 0,
+    "rankedShas": [
+      "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "343f8c53f540abeeae39691bd215cf0523fc20e5",
+      "3933fa98a6a9225ed49b3ffb003692b397c9f7c1",
+      "0a758bc3cd116abd004685713fb0d498941237bd",
+      "0c382826c0bdc6f14c6866bcfa1a013cc1510014"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+        "343f8c53f540abeeae39691bd215cf0523fc20e5",
+        "3933fa98a6a9225ed49b3ffb003692b397c9f7c1",
+        "0a758bc3cd116abd004685713fb0d498941237bd",
+        "0c382826c0bdc6f14c6866bcfa1a013cc1510014"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-03",
+    "category": "no_evidence",
+    "fixtureId": "data-pipeline",
+    "split": "dev",
+    "query": "Why did we pick NDJSON specifically instead of, say, Parquet for the streaming export format?",
+    "relevantShas": [],
+    "elapsedMs": 494.902875,
+    "exitCode": 0,
+    "rankedShas": [
+      "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+      "f4c136c53a4735fb06771e58c03924afa4514444",
+      "3d7e49da5961a4025416e6325d4d7501f5030625",
+      "96c76f26c0722a29595be30e852bbf85d415ca2b"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+        "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+        "f4c136c53a4735fb06771e58c03924afa4514444",
+        "3d7e49da5961a4025416e6325d4d7501f5030625",
+        "96c76f26c0722a29595be30e852bbf85d415ca2b"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  },
+  {
+    "mode": "hybrid",
+    "caseId": "d-noev-04",
+    "category": "no_evidence",
+    "fixtureId": "build-tooling",
+    "split": "dev",
+    "query": "Why was esbuild chosen as the bundler for this project in the first place, rather than swc or Rollup?",
+    "relevantShas": [],
+    "elapsedMs": 493.165334,
+    "exitCode": 0,
+    "rankedShas": [
+      "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "040c6492ff4a4e76bd66e7739ef28a794d341dd7",
+      "14883aec7809dd3d5a2334d524fcf7589206dca2",
+      "1eef0f317fbcacfb67896c6d260559ef4150859d"
+    ],
+    "candidateCount": 5,
+    "candidateLimitReached": false,
+    "warnings": [],
+    "snapshotFreshness": "current",
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699",
+        "28f1eb675de28b4320093b13ffba0cc31b56a334",
+        "040c6492ff4a4e76bd66e7739ef28a794d341dd7",
+        "14883aec7809dd3d5a2334d524fcf7589206dca2",
+        "1eef0f317fbcacfb67896c6d260559ef4150859d"
+      ],
+      "anyResultsReturned": true
+    },
+    "candidate": "production",
+    "arm": "summary-only"
+  }
+]
