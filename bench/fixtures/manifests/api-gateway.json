@@ -1,0 +1,1956 @@
+{
+  "fixtureId": "api-gateway",
+  "seed": "git-why-bench::api-gateway::v1",
+  "theme": "Outbound API gateway with a shared retry policy and three upstream provider clients.",
+  "headSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df",
+  "commitCount": 161,
+  "objectCount": 761,
+  "commits": [
+    {
+      "sha": "0fe455417ec56e9974b8063ba141ef71317fb148",
+      "index": 0,
+      "epochSeconds": 1720000000,
+      "category": "scaffold",
+      "subsystem": "core",
+      "subject": "Initial scaffold",
+      "files": [
+        "src/retry/retry-policy.js",
+        "src/providers/acme-client.js",
+        "src/providers/globex-client.js",
+        "src/providers/initech-client.js"
+      ],
+      "note": "Repository scaffold; not a query target."
+    },
+    {
+      "sha": "77a89e008c0e27966ad6e97db4e029fb52791e39",
+      "index": 1,
+      "epochSeconds": 1720010800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5ebcddf27ecab1183f912054f47bb197fb338906",
+      "index": 2,
+      "epochSeconds": 1720021600,
+      "category": "distractor",
+      "subsystem": "providers",
+      "subject": "Bump the Initech request timeout to 5s",
+      "files": [
+        "src/providers/initech-timeout.js"
+      ],
+      "note": "Distractor: same provider, unrelated concern (timeout vs. retry-on-status-code)."
+    },
+    {
+      "sha": "67fc9fab9b269cca89c309f852c39b2aca004d26",
+      "index": 3,
+      "epochSeconds": 1720032400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump jest to 6.1.26",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b77eeea943878756603938b13db3887499be2272",
+      "index": 4,
+      "epochSeconds": 1720043200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Rename local variable in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ce3e47b200ff6985e0996c854fa70bd2ed97a11f",
+      "index": 5,
+      "epochSeconds": 1720054000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Improve readability of src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "331c20b9f1b50c0b19775eb028501160f164c24f",
+      "index": 6,
+      "epochSeconds": 1720064800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/initech-client.js comment",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9c20bd8abb4cfbc9d6db05d79d4e163c975af484",
+      "index": 7,
+      "epochSeconds": 1720075600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Remove unused variable in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ce67283337a669bbbecb6b1c4a0c02171c56e2c8",
+      "index": 8,
+      "epochSeconds": 1720086400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Simplify conditional in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "910b7480808d992594e8b276a3b40cab3e95309c",
+      "index": 9,
+      "epochSeconds": 1720097200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Extract helper in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "12c42fc7ced4296141dc519409fcada508632feb",
+      "index": 10,
+      "epochSeconds": 1720108000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Small refactor of src/retry/retry-policy.js",
+      "files": [
+        "src/retry/retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ae4232d7dde5337fd7cfe7b2b4a6a0b97799fa90",
+      "index": 11,
+      "epochSeconds": 1720118800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Fix typo in src/retry/retry-policy.js comment",
+      "files": [
+        "src/retry/retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a0f6ee3e61c6928d7bcbe2aaf2db2121a26bc6b7",
+      "index": 12,
+      "epochSeconds": 1720129600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump uuid 1.20.14",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "473b539522b03c7d9cebae1c87a29bbcacadbc78",
+      "index": 13,
+      "epochSeconds": 1720140400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Add missing semicolon in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+      "index": 14,
+      "epochSeconds": 1720151200,
+      "category": "synonym_mismatch",
+      "subsystem": "retry",
+      "subject": "Avoid refreshing the auth token on every retry attempt",
+      "files": [
+        "src/retry/retry-policy.js"
+      ],
+      "note": "Relevant fix for \"token refresh happening twice on retry\"; no literal overlap with the word \"duplicate\".",
+      "beatId": "retry.fix-duplicate-token-refresh"
+    },
+    {
+      "sha": "2fb57da8e47b6c66f68631054589219924feb099",
+      "index": 15,
+      "epochSeconds": 1720162000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update axios dependency to 1.15.28",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "1da199eb21f788b23449a63aef99c1508520aa46",
+      "index": 16,
+      "epochSeconds": 1720172800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump ws 9.20.19",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "09d29a4d49af63e8fdc5b24609ef0406870bacd8",
+      "index": 17,
+      "epochSeconds": 1720183600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update lodash dependency to 5.11.5",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "aa27eb7345e3d2ef84ba72bfcb42fe4098adc353",
+      "index": 18,
+      "epochSeconds": 1720194400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7f995889467f2620ea8ef1d9ed86cfdcf4bd0358",
+      "index": 19,
+      "epochSeconds": 1720205200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump commander 1.6.9",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "c3f59295c6da922264d5f71bd7e1d6f3aa7154ec",
+      "index": 20,
+      "epochSeconds": 1720216000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump ws 1.17.24",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "be76e27056d67a906e2b01639e8076ecf9171c2c",
+      "index": 21,
+      "epochSeconds": 1720226800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d11a9c3458a98d3bd5b0c42bb9c0fcc241bdcf8f",
+      "index": 22,
+      "epochSeconds": 1720237600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump ioredis 3.8.14",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "9f69d8b48f35a0bfab85f3e09eedcf863abdf8b3",
+      "index": 23,
+      "epochSeconds": 1720248400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump moment 3.13.16",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "fad6403e120ed6920e9a4ed6076c460fbbfc58ec",
+      "index": 24,
+      "epochSeconds": 1720259200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "53f022539c329a4aaf7cdbd171a7f5bd3acf12f6",
+      "index": 25,
+      "epochSeconds": 1720270000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update prettier dependency to 8.5.7",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ad1b5a3dd458b33727f0fa201f7cd2bc9ff0b1b5",
+      "index": 26,
+      "epochSeconds": 1720280800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update eslint dependency to 7.20.16",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4143bf2de4f85551b072442551886a692130e9ef",
+      "index": 27,
+      "epochSeconds": 1720291600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin commander at 9.7.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "77584c06e70e0497eafe560ff6f7e19bed8352cf",
+      "index": 28,
+      "epochSeconds": 1720302400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Remove unused variable in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e51f7cf0d215869290b4ee9f24b581b28f34560c",
+      "index": 29,
+      "epochSeconds": 1720313200,
+      "category": "rename",
+      "subsystem": "retry",
+      "subject": "Rename RetryPolicy to IdempotentRetryPolicy to be explicit about the assumption",
+      "files": [
+        "src/retry/idempotent-retry-policy.js",
+        "src/retry/retry-policy.js"
+      ],
+      "note": "Single-change rename: a query about \"RetryPolicy\" should resolve here.",
+      "beatId": "retry.rename-policy-idempotent"
+    },
+    {
+      "sha": "7b7cb509ca55ecd799835e47ae12cb3b34fdf430",
+      "index": 30,
+      "epochSeconds": 1720324000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update lodash dependency to 6.6.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "1531fae64e5dff0eb45c621f421787ce399313b3",
+      "index": 31,
+      "epochSeconds": 1720334800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump lodash to 4.9.12",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "06c53ca0c46801fb2a8118c62116b0da0063060e",
+      "index": 32,
+      "epochSeconds": 1720345600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update commander dependency to 1.0.27",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "d1e34b57ec0f4bf381f07c390d65094dc2eda0cb",
+      "index": 33,
+      "epochSeconds": 1720356400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Improve readability of src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "270cb23d19a35a80dd4bb0026dc01bb08de5d199",
+      "index": 34,
+      "epochSeconds": 1720367200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump uuid to 2.3.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "236425cc8919956db6e7706b0e9a19ca3ac5fbf7",
+      "index": 35,
+      "epochSeconds": 1720378000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade ioredis to v9.11.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "10ffb0ef6fe9bbccce2ac434eb63515a3ef14e31",
+      "index": 36,
+      "epochSeconds": 1720388800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Simplify conditional in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2f046910ec0b91c5259a50117c8e0e246802bacf",
+      "index": 37,
+      "epochSeconds": 1720399600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update lodash dependency to 5.18.21",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "7eff5a1b1fb8a092233c240a46688d7bf8ac3ef4",
+      "index": 38,
+      "epochSeconds": 1720410400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Adjust logging verbosity in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7858b46d7bde650ef1ba9c58a5eb477c2e843219",
+      "index": 39,
+      "epochSeconds": 1720421200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Tidy up imports in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "22e087e4cd2a77144507e16ab03d11bd3f1a3ca0",
+      "index": 40,
+      "epochSeconds": 1720432000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Add missing semicolon in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5172aa6ded6b3132244b7a470450fe6b2520df93",
+      "index": 41,
+      "epochSeconds": 1720442800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Align src/providers/acme-client.js with lint rules",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "db722858f3a39f5cb78763a2f748165f50dbfa02",
+      "index": 42,
+      "epochSeconds": 1720453600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade ioredis to v1.0.12",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "05d4c25bab9adf5c579880c14c1558d1bfd189aa",
+      "index": 43,
+      "epochSeconds": 1720464400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump prettier 7.3.5",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+      "index": 44,
+      "epochSeconds": 1720475200,
+      "category": "distractor_intent",
+      "subsystem": "providers",
+      "subject": "Bump the Globex token expiry buffer from 30s to 90s",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Real reason is Globex-specific clock skew; Acme and Initech token/response changes below are plausible-looking distractors with their own unrelated reasons.",
+      "beatId": "globex.bump-token-expiry-buffer"
+    },
+    {
+      "sha": "baa2aaf0bb17488ef257936b1e17c6ad8c506759",
+      "index": 45,
+      "epochSeconds": 1720486000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin moment at 1.6.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "6048e45da740652ab1c7573493854de0453f33bd",
+      "index": 46,
+      "epochSeconds": 1720496800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Add missing semicolon in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9ccf9a0a07f172c1237e6d8758160068a5778c23",
+      "index": 47,
+      "epochSeconds": 1720507600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7df14a4d1ee45eada346dc051164438628b75c23",
+      "index": 48,
+      "epochSeconds": 1720518400,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Simplify conditional in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dc55266faa67bb67866c6ff55d7fe2b41104a596",
+      "index": 49,
+      "epochSeconds": 1720529200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump pg 6.14.9",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "3c48b3750300e570cafe806c5f65105d36518fb9",
+      "index": 50,
+      "epochSeconds": 1720540000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "59bdc834ea43de56bfda8a9f07a6641fa8ef5818",
+      "index": 51,
+      "epochSeconds": 1720550800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Small refactor of src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8fef7d63cb993943bdc013ea897ec889ffd5e123",
+      "index": 52,
+      "epochSeconds": 1720561600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump ioredis 9.16.10",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "9b0974ecc3d4e8e67ceaa26a85cab7537e299eb1",
+      "index": 53,
+      "epochSeconds": 1720572400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Improve readability of src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "979261aa33cc986c02789801290ba9dbae2b69d1",
+      "index": 54,
+      "epochSeconds": 1720583200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Adjust logging verbosity in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ef691e75ebafa5ffb523ca7fe598ed34ed2dc928",
+      "index": 55,
+      "epochSeconds": 1720594000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Consolidate constants in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "86f8863b1429e17246c6f0060d63c7df23fea4eb",
+      "index": 56,
+      "epochSeconds": 1720604800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Normalize whitespace in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "67edaed4900b55d89089547c9a13ee0bdb77eb58",
+      "index": 57,
+      "epochSeconds": 1720615600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "397fb43f03cc8c6b8157257fea92b8355958ff56",
+      "index": 58,
+      "epochSeconds": 1720626400,
+      "category": "distractor_intent",
+      "subsystem": "providers",
+      "subject": "Treat Acme 200 responses with an error field as failures",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Distractor for the Globex query and target for its own query: a different provider, different quirk, different reason.",
+      "beatId": "acme.handle-200-with-error-body"
+    },
+    {
+      "sha": "6f289269fd1885f7dffcb4632712694b0bbc7934",
+      "index": 59,
+      "epochSeconds": 1720637200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Improve readability of src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6cb30fdfcaca5011285faa506350fccccac3e9be",
+      "index": 60,
+      "epochSeconds": 1720648000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Drop dead code path in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f22566ffa901293a76dcb72e1d11769ab29a828e",
+      "index": 61,
+      "epochSeconds": 1720658800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Consolidate constants in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7db6afa199d0200e098b05a5ed950097d6b86e3c",
+      "index": 62,
+      "epochSeconds": 1720669600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Minor cleanup in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "086149895e7d4b10afb6a80f9f5956f099b62fa1",
+      "index": 63,
+      "epochSeconds": 1720680400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Align src/providers/initech-client.js with lint rules",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1518476300e44779f5e0af2e0b66431e87c8191f",
+      "index": 64,
+      "epochSeconds": 1720691200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Add missing semicolon in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "48f1d1317f9a36c50623cbef1c0dc35263c5307c",
+      "index": 65,
+      "epochSeconds": 1720702000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Simplify conditional in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a3cd1e773f599269179d4f115658285057aaabc3",
+      "index": 66,
+      "epochSeconds": 1720712800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Fix typo in src/retry/idempotent-retry-policy.js comment",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "68d63e1ad1f61850fae04618b38448b9f38f9c86",
+      "index": 67,
+      "epochSeconds": 1720723600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Rename local variable in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e2644de55fffb4d68ab3c96323444180f320178b",
+      "index": 68,
+      "epochSeconds": 1720734400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Minor cleanup in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "73cc4d9aaee957ec54edf01ae222ce1c71ee52d3",
+      "index": 69,
+      "epochSeconds": 1720745200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Small refactor of src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "404d4f33c7aa88606772428081c67d424c454c72",
+      "index": 70,
+      "epochSeconds": 1720756000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Drop dead code path in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "84d746caf248b85ffd6771af76fc9cccaa766af1",
+      "index": 71,
+      "epochSeconds": 1720766800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2c268983964f45d6bf3db2c175b6c90af0b94547",
+      "index": 72,
+      "epochSeconds": 1720777600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Add missing semicolon in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "336133458b9ecc40bde193d85097f50555e353b0",
+      "index": 73,
+      "epochSeconds": 1720788400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reformat src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1942dceeeed6d8d2c2af939a2491b1d0f07ea59e",
+      "index": 74,
+      "epochSeconds": 1720799200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "773543abee3d3da854957a8a39cb75ab1b5334de",
+      "index": 75,
+      "epochSeconds": 1720810000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/acme-client.js comment",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0d991a0767b72581ace21ad3a493b2958c9a8320",
+      "index": 76,
+      "epochSeconds": 1720820800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Consolidate constants in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "945b8ce2d12f4f9c6b6b88ab23f0cb1d9baab962",
+      "index": 77,
+      "epochSeconds": 1720831600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Minor cleanup in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c67425023736d4f4fc6e3dffecc4e41304f09132",
+      "index": 78,
+      "epochSeconds": 1720842400,
+      "category": "workaround_rationale",
+      "subsystem": "providers",
+      "subject": "Never retry Initech 501 responses",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Distractor_intent target for Initech, and also this fixture's first workaround_rationale case (specific documented upstream behavior).",
+      "beatId": "initech.no-retry-on-501"
+    },
+    {
+      "sha": "fe7ebc639fd6bc3b370dd7ab98dded0e9b2d10dd",
+      "index": 79,
+      "epochSeconds": 1720853200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Reorder function arguments in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e348a12a798b6b65102df1fbf02c34374d43bb1b",
+      "index": 80,
+      "epochSeconds": 1720864000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/acme-client.js comment",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bf7784b3236973b8923d1f70f7a8dbf93c88c603",
+      "index": 81,
+      "epochSeconds": 1720874800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Add missing semicolon in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8818652365375cb236348d7a90990b711ad57dd1",
+      "index": 82,
+      "epochSeconds": 1720885600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Normalize whitespace in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c180436ef8a61e8fce6ade7b80a8803487fd1dca",
+      "index": 83,
+      "epochSeconds": 1720896400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Consolidate constants in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0aa559fac8122c1940822bb8aac392470ba2cc50",
+      "index": 84,
+      "epochSeconds": 1720907200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Simplify conditional in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2dc1bb0e6fe62a55ce033a4c5d0a9313b79bed91",
+      "index": 85,
+      "epochSeconds": 1720918000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/acme-client.js comment",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "edc661e75c7e80d3d60b1c6c1c1d639fd029e2dc",
+      "index": 86,
+      "epochSeconds": 1720928800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Update inline docs for src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "76b6a7a84ee716ddb93df1d30381bc4804899a19",
+      "index": 87,
+      "epochSeconds": 1720939600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "26c1a951e05ee60ae1ae378b2456b945096c1526",
+      "index": 88,
+      "epochSeconds": 1720950400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reformat src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "99c09660eb83e7af364fc740ef9965df41d5d43c",
+      "index": 89,
+      "epochSeconds": 1720961200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/acme-client.js",
+      "files": [
+        "src/providers/acme-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ccf8b52e8fab98178e31c21bd711861992df84e9",
+      "index": 90,
+      "epochSeconds": 1720972000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Reformat src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eb9650b3cdda4b1794c54af1bdcd722834bb5ddf",
+      "index": 91,
+      "epochSeconds": 1720982800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Consolidate constants in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7",
+      "index": 92,
+      "epochSeconds": 1720993600,
+      "category": "rename",
+      "subsystem": "providers",
+      "subject": "Rename acme-client.js to acme-payments-client.js for clarity among providers",
+      "files": [
+        "src/providers/acme-payments-client.js",
+        "src/providers/acme-client.js"
+      ],
+      "note": "Second rename case in this fixture.",
+      "beatId": "providers.rename-acme-client-file"
+    },
+    {
+      "sha": "857d825e67e8dc64511b1b0b36d77fa9e8371ec4",
+      "index": 93,
+      "epochSeconds": 1721004400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Improve readability of src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "24e7cc14fdb7d84ce798e45907a911caf15624d7",
+      "index": 94,
+      "epochSeconds": 1721015200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Extract helper in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0061b43d62980cc479f5d2216ad8f21d8b40c397",
+      "index": 95,
+      "epochSeconds": 1721026000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Tidy up imports in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4b1e13d923522ce8c12148b950cedd6b6e8678ba",
+      "index": 96,
+      "epochSeconds": 1721036800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Fix typo in src/retry/idempotent-retry-policy.js comment",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "23ffbb88ec95ec998a8cc6cf4038fdb07a2941d6",
+      "index": 97,
+      "epochSeconds": 1721047600,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Trim trailing whitespace in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "15e5237d594db0774a10aaed5cefde45741781ad",
+      "index": 98,
+      "epochSeconds": 1721058400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/initech-client.js comment",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a131dca16c3af34bf7b5f973dcba12fc9ea377f7",
+      "index": 99,
+      "epochSeconds": 1721069200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Align src/providers/acme-payments-client.js with lint rules",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b8d122501c4f26117734b5e58d4dbb561ada5920",
+      "index": 100,
+      "epochSeconds": 1721080000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Simplify conditional in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9fe23ee148ef63f347efadcdb7560247a6d21bc6",
+      "index": 101,
+      "epochSeconds": 1721090800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Remove unused variable in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c022d0de61a6fbe8dda3fc408b5ffdb5723cb68a",
+      "index": 102,
+      "epochSeconds": 1721101600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Simplify conditional in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f1a18795b6c15de140c7d5cc5f284a9e8a7c55a2",
+      "index": 103,
+      "epochSeconds": 1721112400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c036b58e5715c552424f00a69d32c5ee95c11f2b",
+      "index": 104,
+      "epochSeconds": 1721123200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Trim trailing whitespace in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b91d71e7f8bbbb1293f6a4795806b2ae896daf57",
+      "index": 105,
+      "epochSeconds": 1721134000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Rename local variable in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "42185647615f69f3c9c05055fced75e1fc37c42f",
+      "index": 106,
+      "epochSeconds": 1721144800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Adjust logging verbosity in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d73668f63ffbe2ce3328c922eac48aa7f9c49278",
+      "index": 107,
+      "epochSeconds": 1721155600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Align src/providers/acme-payments-client.js with lint rules",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "182a2b175f486034480f9a0fdc9d9b0adc42181d",
+      "index": 108,
+      "epochSeconds": 1721166400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/acme-payments-client.js comment",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f173e87c51c5b7c5fb7c509ffa2e1259d8bef10a",
+      "index": 109,
+      "epochSeconds": 1721177200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Minor cleanup in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3273d61903c43da8224c7255177ea4629e00c4a8",
+      "index": 110,
+      "epochSeconds": 1721188000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reformat src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c37cca49ca592898af925856e873a48162c8dd75",
+      "index": 111,
+      "epochSeconds": 1721198800,
+      "category": "synonym_mismatch",
+      "subsystem": "retry",
+      "subject": "Stop sending a request twice when the first attempt times out",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Second synonym_mismatch case; phrased around \"sending twice\" rather than \"duplicate\".",
+      "beatId": "retry.fix-double-send-on-timeout"
+    },
+    {
+      "sha": "0330707bb0eab15995083064f4100571b7a434ca",
+      "index": 112,
+      "epochSeconds": 1721209600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reformat src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e196b4e39c419f6799ca648d55fbcb3a2bbb115a",
+      "index": 113,
+      "epochSeconds": 1721220400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f15b9562a758127dcb966688d2be55c7227c0a0a",
+      "index": 114,
+      "epochSeconds": 1721231200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Extract helper in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ffc5e8d8bc84df4cd213be7fc0e751b2906c308b",
+      "index": 115,
+      "epochSeconds": 1721242000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Trim trailing whitespace in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "40cc1cb71303e56420db2c35092d40cd32590e5f",
+      "index": 116,
+      "epochSeconds": 1721252800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e9a78f832d199ec6d0431a10fbf38d671c657040",
+      "index": 117,
+      "epochSeconds": 1721263600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e4eff3622e9d3afc207560ba06cd739ae668e01f",
+      "index": 118,
+      "epochSeconds": 1721274400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Tidy up imports in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "58fed0d1b243ad2b10677854816ea53a4d787c6d",
+      "index": 119,
+      "epochSeconds": 1721285200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Update comment in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7c2cdb18d779ea4c336930c89ec6ca0a66eead33",
+      "index": 120,
+      "epochSeconds": 1721296000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Consolidate constants in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9fbc76bc9fc6130be15b9c6cc5e128d3dff82670",
+      "index": 121,
+      "epochSeconds": 1721306800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Consolidate constants in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "da603b9b9edfc0ad7bc3924a956825e10b482e17",
+      "index": 122,
+      "epochSeconds": 1721317600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Remove unused variable in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "980058cedde8dc4ef6a0732b722e8073427ec780",
+      "index": 123,
+      "epochSeconds": 1721328400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Tidy up imports in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8a74d316c9938642eb7b8438be2e6e454a70a4af",
+      "index": 124,
+      "epochSeconds": 1721339200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "51e12b755ca851b0cfec1bf9d9caee8172da16ba",
+      "index": 125,
+      "epochSeconds": 1721350000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Normalize whitespace in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "282803259d9d26a74c5cbb36f13d33f3d5df70c8",
+      "index": 126,
+      "epochSeconds": 1721360800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Extract helper in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a5ceeb29200e0183aacd2aa9ba6d5561734deeea",
+      "index": 127,
+      "epochSeconds": 1721371600,
+      "category": "poor_message_rich_diff",
+      "subsystem": "providers",
+      "subject": "fix 2",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Terse subject \"fix 2\"; the Retry-After handling is only visible in the diff.",
+      "beatId": "providers.fix-2"
+    },
+    {
+      "sha": "e9641f22b3bd26547d030d826f07f01e55b9176d",
+      "index": 128,
+      "epochSeconds": 1721382400,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Small refactor of src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "172a5da201941935e87c264c41de77ee0295f8ed",
+      "index": 129,
+      "epochSeconds": 1721393200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Rename local variable in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e47b2cf1b4fed496f3b07a4a508651c6e593029e",
+      "index": 130,
+      "epochSeconds": 1721404000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Remove unused variable in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e808a7097f68bebc195164a30d4f1146f6f1b420",
+      "index": 131,
+      "epochSeconds": 1721414800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Small refactor of src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "68e8d8d234ad626af466793eeda15b0bc43a7856",
+      "index": 132,
+      "epochSeconds": 1721425600,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Reorder function arguments in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f607e28c3081db0ae49f001ef21fe8cd491f99f1",
+      "index": 133,
+      "epochSeconds": 1721436400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Remove unused variable in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c57e73b633e5313e5bc4e0d44ce0832ffb9df530",
+      "index": 134,
+      "epochSeconds": 1721447200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e1a1f1d170f8379cbc6359d17c37f6dff7046767",
+      "index": 135,
+      "epochSeconds": 1721458000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reorder function arguments in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d06b89dcccf3abc36a3b783c06d68200550158d0",
+      "index": 136,
+      "epochSeconds": 1721468800,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "87c5d296b0b931f28cd18307c90ca37fb7c320d3",
+      "index": 137,
+      "epochSeconds": 1721479600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Rename local variable in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "27fa99f54d3ce6bdf3b9e42a360c6e0cab2a144f",
+      "index": 138,
+      "epochSeconds": 1721490400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Extract helper in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0f8815bb53b562186765a4062ce297aa0e1c7800",
+      "index": 139,
+      "epochSeconds": 1721501200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Remove unused variable in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "20db9b5d1b64b8dadb0c1e3f2e91ee34510c4ceb",
+      "index": 140,
+      "epochSeconds": 1721512000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Reformat src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "279d510b62b30be990de83f5c0fa3add5aa209a7",
+      "index": 141,
+      "epochSeconds": 1721522800,
+      "category": "workaround_rationale",
+      "subsystem": "providers",
+      "subject": "Keep sending X-Acme-Signature-V1 alongside V2",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Second workaround_rationale case: a specific, cited third-party dependency on the old behavior.",
+      "beatId": "acme.keep-legacy-signature-header"
+    },
+    {
+      "sha": "9b643dbc4cfea25af027c7cdac67a65bb173e5f3",
+      "index": 142,
+      "epochSeconds": 1721533600,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Adjust logging verbosity in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "85f6831ce643a7b1f6c3d2b8b6051c9a5643a73f",
+      "index": 143,
+      "epochSeconds": 1721544400,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Align src/retry/idempotent-retry-policy.js with lint rules",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b23a1069983f636d99ae682b2a2a24d5f3aba9ea",
+      "index": 144,
+      "epochSeconds": 1721555200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/acme-payments-client.js comment",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e8cc9a168e0c7813a6a806dde56744d897cd97de",
+      "index": 145,
+      "epochSeconds": 1721566000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Adjust logging verbosity in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0fb63b0ad428fc4b1f5730a4a64abaa5f01a3fd3",
+      "index": 146,
+      "epochSeconds": 1721576800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Adjust logging verbosity in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5fee957d61277c2e5caac5184bf5425d14dda1c5",
+      "index": 147,
+      "epochSeconds": 1721587600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reformat src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "782af472ef9898905ce3ade00e0f6d2ad38ccbe7",
+      "index": 148,
+      "epochSeconds": 1721598400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Reformat src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "225225612cd90eabd069e0224fa68f3cffe0676c",
+      "index": 149,
+      "epochSeconds": 1721609200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Small refactor of src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3395ad876cdd6e2a52df902814eeb66ad549fdcf",
+      "index": 150,
+      "epochSeconds": 1721620000,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7f9e841eea0d39d32efa6c83e91c5dba1857703a",
+      "index": 151,
+      "epochSeconds": 1721630800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Adjust logging verbosity in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b775a0968f0366a9ed40b17e7a258a67ecd11d59",
+      "index": 152,
+      "epochSeconds": 1721641600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Fix typo in src/providers/acme-payments-client.js comment",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "465a1c8b4a08662d698eaeb90f4ced343ef96d81",
+      "index": 153,
+      "epochSeconds": 1721652400,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Reorder function arguments in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b0ad38261c6da5a40067cd03950470f87141c0f7",
+      "index": 154,
+      "epochSeconds": 1721663200,
+      "category": "churn",
+      "subsystem": "retry",
+      "subject": "Remove unused variable in src/retry/idempotent-retry-policy.js",
+      "files": [
+        "src/retry/idempotent-retry-policy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fb48b6ccb41a87f0402dc51bcadbfd0b13296c52",
+      "index": 155,
+      "epochSeconds": 1721674000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Simplify conditional in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9ee80d155d4122f68c9812a08aab3f70b85edbfa",
+      "index": 156,
+      "epochSeconds": 1721684800,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a85fb1add7e6adff652b512fdfc891b78fd851d7",
+      "index": 157,
+      "epochSeconds": 1721695600,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Add missing semicolon in src/providers/globex-client.js",
+      "files": [
+        "src/providers/globex-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "43febab3ee2be58d0c029a4ae1925bcd11bb351c",
+      "index": 158,
+      "epochSeconds": 1721706400,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Trim trailing whitespace in src/providers/initech-client.js",
+      "files": [
+        "src/providers/initech-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7dd606740e848654990089653ed04982986f5f15",
+      "index": 159,
+      "epochSeconds": 1721717200,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Small refactor of src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df",
+      "index": 160,
+      "epochSeconds": 1721728000,
+      "category": "churn",
+      "subsystem": "providers",
+      "subject": "Update comment in src/providers/acme-payments-client.js",
+      "files": [
+        "src/providers/acme-payments-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    }
+  ]
+}

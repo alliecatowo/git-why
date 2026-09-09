@@ -1,0 +1,1825 @@
+{
+  "fixtureId": "realtime-chat",
+  "seed": "git-why-bench::realtime-chat::v1",
+  "theme": "Realtime chat relay, presence tracking, and a client SDK.",
+  "headSha": "c3305019d7418ff16b7eddb390ea8be030abf60f",
+  "commitCount": 150,
+  "objectCount": 698,
+  "commits": [
+    {
+      "sha": "adaabd912dff7de402ae6f56a5b77ea438811181",
+      "index": 0,
+      "epochSeconds": 1700000000,
+      "category": "scaffold",
+      "subsystem": "core",
+      "subject": "Initial scaffold",
+      "files": [
+        "src/relay/polling-dispatcher.js",
+        "src/relay/dispatch.js",
+        "src/relay/socket-pool.js",
+        "src/presence/tracker.js",
+        "src/client-sdk/socket.js",
+        "docs/CHANGELOG.md",
+        "src/presence/roster-view.js"
+      ],
+      "note": "Repository scaffold; not a query target."
+    },
+    {
+      "sha": "65cefe0388fcca4301b4fed50e687e655b1606a2",
+      "index": 1,
+      "epochSeconds": 1700010800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump uuid 1.5.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "7c142afc336b484bfd71290b7b1f3343555df54e",
+      "index": 2,
+      "epochSeconds": 1700021600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin axios at 9.19.21",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "38ebebb7d9641a9eb59f8f0a1ac0c429abfbe3c0",
+      "index": 3,
+      "epochSeconds": 1700032400,
+      "category": "distractor",
+      "subsystem": "presence",
+      "subject": "Add jitter to the presence heartbeat timer",
+      "files": [
+        "src/presence/heartbeat.js"
+      ],
+      "note": "Plausible-looking but wrong distractor for the reconnect/duplicate-dispatch query: it touches timing, not delivery correctness."
+    },
+    {
+      "sha": "3f7ab9a07fa0bc7675ec230c3ba9b050beada640",
+      "index": 4,
+      "epochSeconds": 1700043200,
+      "category": "distractor",
+      "subsystem": "client-sdk",
+      "subject": "Avoid double-logging connection events",
+      "files": [
+        "src/client-sdk/logging.js"
+      ],
+      "note": "Surface-similar (\"duplicate\") but about logs, not message dispatch; must not outrank the real fix."
+    },
+    {
+      "sha": "8f0683db09e4a96103a87169e8757280ef6e97e1",
+      "index": 5,
+      "epochSeconds": 1700054000,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Drop dead code path in src/relay/dispatch.js",
+      "files": [
+        "src/relay/dispatch.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c2da255e91d391d0c25094f41076ffc7f245be59",
+      "index": 6,
+      "epochSeconds": 1700064800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Trim trailing whitespace in src/relay/dispatch.js",
+      "files": [
+        "src/relay/dispatch.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dd93b168a37b2cc09353bfb1ec982fd1b725108e",
+      "index": 7,
+      "epochSeconds": 1700075600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Normalize whitespace in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "231417abd89591410c4b354111b32e5c7063056a",
+      "index": 8,
+      "epochSeconds": 1700086400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump webpack 2.16.0",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "03b1b48ebc0e24d2b32d45da60a6ba5ed40608c0",
+      "index": 9,
+      "epochSeconds": 1700097200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Update inline docs for src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6e28e2d13db2a40964bd0def0a0fdd33f2108e66",
+      "index": 10,
+      "epochSeconds": 1700108000,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Minor cleanup in src/relay/dispatch.js",
+      "files": [
+        "src/relay/dispatch.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3f982ca9a60f55ee486a29000a1c6ef353d5969e",
+      "index": 11,
+      "epochSeconds": 1700118800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Rename local variable in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6e338d2a3b3d84c232ccea436aa3b5f01c12a102",
+      "index": 12,
+      "epochSeconds": 1700129600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade prettier to v4.6.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "830cde3d8afdc5a596f12d5f6469bbb09490dcdf",
+      "index": 13,
+      "epochSeconds": 1700140400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump dotenv to 2.1.23",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b79624ac3a321a045c11a2934b9c94cd1f371057",
+      "index": 14,
+      "epochSeconds": 1700151200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump express 4.19.1",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "aac4206dfe424d04a7f15716f9c9c0e54566c0d2",
+      "index": 15,
+      "epochSeconds": 1700162000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update prettier dependency to 9.10.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "91db6242ac90448d3f2b3ea6d04abf1fe8f28f17",
+      "index": 16,
+      "epochSeconds": 1700172800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin moment at 7.15.8",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "478669decbf303591b700427e16e11a722368456",
+      "index": 17,
+      "epochSeconds": 1700183600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Improve readability of src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ef28f95b65d6bfa422e376c0ac0d8b84c199ca09",
+      "index": 18,
+      "epochSeconds": 1700194400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Trim trailing whitespace in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "08d58d69463a174ef665b0b5d09a152bc7ca4544",
+      "index": 19,
+      "epochSeconds": 1700205200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin commander at 8.3.12",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "878647c7dd28c580038e51c893b6da0db4836979",
+      "index": 20,
+      "epochSeconds": 1700216000,
+      "category": "deleted_implementation",
+      "subsystem": "relay",
+      "subject": "Remove the legacy polling dispatcher",
+      "files": [
+        "src/relay/polling-dispatcher.js"
+      ],
+      "note": "Removed file; the deleted implementation itself, not just the removal commit, is what a \"queue/dispatch before push\" query should surface.",
+      "beatId": "relay.remove-polling-dispatcher"
+    },
+    {
+      "sha": "d57676964294ccf6b9d3468d7a8aa236879fd93c",
+      "index": 21,
+      "epochSeconds": 1700226800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade lodash to v8.15.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "121a950bd4e31a6394fec81d2989b464dd952c8d",
+      "index": 22,
+      "epochSeconds": 1700237600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Fix typo in src/presence/roster-view.js comment",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eb6a603c2c18b333f82d3bdd2e2c59ec4ac9e4ba",
+      "index": 23,
+      "epochSeconds": 1700248400,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Align src/relay/socket-pool.js with lint rules",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1dcc19c258ee0bbb2f5d93214d1e30ebddae9042",
+      "index": 24,
+      "epochSeconds": 1700259200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Update inline docs for src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9f15c1d2c5bd2d6b47b449683dd850ad90091cd4",
+      "index": 25,
+      "epochSeconds": 1700270000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump moment to 6.15.12",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "f5489c268219f9b45024411c225066bbae6e707d",
+      "index": 26,
+      "epochSeconds": 1700280800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump axios 4.9.7",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "21ceec73dc720ad9b57290cd11965f9ac4711d02",
+      "index": 27,
+      "epochSeconds": 1700291600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Minor cleanup in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "422074ae7c90b1a60759f8119863601c90040f0d",
+      "index": 28,
+      "epochSeconds": 1700302400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump eslint 8.0.24",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "74e6bff67f5d71629cbe4cb2d3d9e0ea60324fbd",
+      "index": 29,
+      "epochSeconds": 1700313200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update chalk dependency to 4.17.1",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "a3d4ab548f0bec0dd64a592bb903d0b0244e1045",
+      "index": 30,
+      "epochSeconds": 1700324000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump ws 3.6.19",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "037cee9cf05132d2b790c48722d66bb0b00d1dc8",
+      "index": 31,
+      "epochSeconds": 1700334800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump pg to 4.20.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "6357333ea392a268fddc2473625720d1b14450d5",
+      "index": 32,
+      "epochSeconds": 1700345600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Consolidate constants in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "de74e504eecc1f0da33714eb5340ee0ab5f051cc",
+      "index": 33,
+      "epochSeconds": 1700356400,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Add missing semicolon in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eff12a0ebdcd620b14d7f53556c299405930f55d",
+      "index": 34,
+      "epochSeconds": 1700367200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade axios to v2.17.0",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "3ed898e196a604ce79e2fa7e87c589227b304eb9",
+      "index": 35,
+      "epochSeconds": 1700378000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Consolidate constants in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eb1b6e061ef3f428a5ba550d1d5ba147baccca8c",
+      "index": 36,
+      "epochSeconds": 1700388800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Simplify conditional in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3fd2fb9c6b97bddbea03d6684254c9ff08a9f66c",
+      "index": 37,
+      "epochSeconds": 1700399600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade pg to v8.7.2",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "86b11c707a56751db9302c10295a7647bcfa0c2f",
+      "index": 38,
+      "epochSeconds": 1700410400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin node-fetch at 6.18.8",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "45d26b289108b68881737b8b7f729c6a14f83191",
+      "index": 39,
+      "epochSeconds": 1700421200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade eslint to v8.12.23",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "fb488f6978f11b2172e436720ff5dd0d9fa0402c",
+      "index": 40,
+      "epochSeconds": 1700432000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update eslint dependency to 1.9.9",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "c23192e0e1d7c9dc73154f6b85f7ffac380952c5",
+      "index": 41,
+      "epochSeconds": 1700442800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Align src/relay/dispatch.js with lint rules",
+      "files": [
+        "src/relay/dispatch.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "43cff0871b377a14e2de76e7a74634a5724954a1",
+      "index": 42,
+      "epochSeconds": 1700453600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Drop dead code path in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6f98b235094a5f3ba3ffa322ce6e5c21f2b93675",
+      "index": 43,
+      "epochSeconds": 1700464400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Tidy up imports in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cc401b2b0495c022b9507a6437c64da425c69eaf",
+      "index": 44,
+      "epochSeconds": 1700475200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Improve readability of src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ed3d488d601cce41aadc6a60488a434b211f9866",
+      "index": 45,
+      "epochSeconds": 1700486000,
+      "category": "rename",
+      "subsystem": "relay",
+      "subject": "Rename dispatch.js to fanout.js to match the \"fanout\" terminology used elsewhere",
+      "files": [
+        "src/relay/fanout.js",
+        "src/relay/dispatch.js"
+      ],
+      "note": "Single-change rename: a query about the old name (\"dispatch\") should resolve to this commit and the current path fanout.js.",
+      "beatId": "relay.rename-dispatch-to-fanout"
+    },
+    {
+      "sha": "b6f97da726987840003ac099da25175286e8285c",
+      "index": 46,
+      "epochSeconds": 1700496800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Extract helper in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "83ae4e691e9f16f31c724081208411ffc3d52fb4",
+      "index": 47,
+      "epochSeconds": 1700507600,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Improve readability of src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3fc2df1a39025edcdd0d97f306c58da6e6b9dbc3",
+      "index": 48,
+      "epochSeconds": 1700518400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Reorder function arguments in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4b838a7c583dd38689622b27a2d9431db87b1d9d",
+      "index": 49,
+      "epochSeconds": 1700529200,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Update inline docs for src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "57df1a8c3a10fa6732bb8528546b20552d6bb2e8",
+      "index": 50,
+      "epochSeconds": 1700540000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Extract helper in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "80def0ebee115a3300ed8fd863a07f569bbc33ac",
+      "index": 51,
+      "epochSeconds": 1700550800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Minor cleanup in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f3d3b63c46a018a142bdce352513aa51a41695d1",
+      "index": 52,
+      "epochSeconds": 1700561600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Add missing semicolon in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "39e1f16982e7fb337766f1bf2e2a9a858e080dee",
+      "index": 53,
+      "epochSeconds": 1700572400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Normalize whitespace in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0d9d333c2b6469079893a518813d64157154aaad",
+      "index": 54,
+      "epochSeconds": 1700583200,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Simplify conditional in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "25c054b25f89fafca1dd99f57d9e080cfaf50799",
+      "index": 55,
+      "epochSeconds": 1700594000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Extract helper in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c20cc3b97493ebbd317714c30d2d8ae183dc1574",
+      "index": 56,
+      "epochSeconds": 1700604800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Rename local variable in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2d1ec29c091302638af8e6b0b9d6c9069bdc66fc",
+      "index": 57,
+      "epochSeconds": 1700615600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Simplify conditional in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4b12970826c7cc7d200b20597f7e79baa49df079",
+      "index": 58,
+      "epochSeconds": 1700626400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Improve readability of docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d57a43fa6ace448e6815b5a42f054ccf9f335144",
+      "index": 59,
+      "epochSeconds": 1700637200,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Consolidate constants in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9bfdd88d12704f7725ba32e39515a4e0ef14868f",
+      "index": 60,
+      "epochSeconds": 1700648000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Update comment in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e4a52331e29c4d2e777993fa24368a293f347758",
+      "index": 61,
+      "epochSeconds": 1700658800,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "34bfb50a9f46f809e6af4bb56676edc80829a93f",
+      "index": 62,
+      "epochSeconds": 1700669600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Small refactor of src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3dc4a9e7dbc56b26290cce63c8414b1d8dba1086",
+      "index": 63,
+      "epochSeconds": 1700680400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "287b802786ccfde6404ee661b9927d5f1840e679",
+      "index": 64,
+      "epochSeconds": 1700691200,
+      "category": "synonym_mismatch",
+      "subsystem": "relay",
+      "subject": "Fix duplicate message dispatch after reconnect",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "The relevant fix for \"messages arriving twice after reconnect\" -- no literal word overlap with \"duplicate dispatch\" beyond domain terms.",
+      "beatId": "relay.fix-duplicate-dispatch-on-reconnect"
+    },
+    {
+      "sha": "955fcc661b8c670f6b5435c77647d37754d617fa",
+      "index": 65,
+      "epochSeconds": 1700702000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Tidy up imports in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "89cf7ee74def9cec9ae4c1479ea1319892a8ff51",
+      "index": 66,
+      "epochSeconds": 1700712800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Fix typo in src/presence/roster-view.js comment",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e0fbd8f7a6b2eb1b9757111425d47571503f115d",
+      "index": 67,
+      "epochSeconds": 1700723600,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fb5b28560d1bb921e107df9c1b19b9cd3ba25e72",
+      "index": 68,
+      "epochSeconds": 1700734400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Trim trailing whitespace in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cc1644eda97a644ba96ae16464a4b5d1aea9b808",
+      "index": 69,
+      "epochSeconds": 1700745200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Improve readability of src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4c79bc37a90778263a909579784f2d3b06dac50f",
+      "index": 70,
+      "epochSeconds": 1700756000,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Reorder function arguments in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8c07e2139d052f6bde7d7a6f48e6a452ed7932fa",
+      "index": 71,
+      "epochSeconds": 1700766800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Small refactor of src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5d18a1ca4d4ee3db7cc3a70bb9ad2daa7c354b85",
+      "index": 72,
+      "epochSeconds": 1700777600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Simplify conditional in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "da08994c199047ab198e44e7ba39239e66f111b7",
+      "index": 73,
+      "epochSeconds": 1700788400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Minor cleanup in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e047992bb559d1f6ac1143d1cb2be3a0051db5c1",
+      "index": 74,
+      "epochSeconds": 1700799200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Minor cleanup in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e6ad77bdf311608921d6c7209cb51fd81c4bb4d2",
+      "index": 75,
+      "epochSeconds": 1700810000,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Minor cleanup in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fa81f07c5bcc667f211100112d3e045e40e69462",
+      "index": 76,
+      "epochSeconds": 1700820800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Small refactor of src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cba33cd9456dcf2499c4420d014f48dcb07423a3",
+      "index": 77,
+      "epochSeconds": 1700831600,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Add missing semicolon in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4f8902cff116c40ec8f1fe32e6cb1756fc280eaa",
+      "index": 78,
+      "epochSeconds": 1700842400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Update comment in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "94cd92afabb09ca4b55b5308648ad0d933cef875",
+      "index": 79,
+      "epochSeconds": 1700853200,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Normalize whitespace in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eafb1af05c05c0e24e367e8f9fb54baf2e73c368",
+      "index": 80,
+      "epochSeconds": 1700864000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Simplify conditional in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d5eb55478058ff17b57c558e4a9749a5ee845cd3",
+      "index": 81,
+      "epochSeconds": 1700874800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Add missing semicolon in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d73a8a628095f424c81145f052205fb500c0f415",
+      "index": 82,
+      "epochSeconds": 1700885600,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Tidy up imports in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c",
+      "index": 83,
+      "epochSeconds": 1700896400,
+      "category": "synonym_mismatch",
+      "subsystem": "presence",
+      "subject": "Deduplicate names in the roster view",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Relevant fix for \"same person shows up twice in the online list\"; no literal overlap with \"duplicate\" or \"dispatch\".",
+      "beatId": "presence.dedupe-roster-view"
+    },
+    {
+      "sha": "9e43a53a27abb75a679af965009ab70343fe059e",
+      "index": 84,
+      "epochSeconds": 1700907200,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Reorder function arguments in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f1b23abd3b4a24dd87991aefd521d6c5f72ced63",
+      "index": 85,
+      "epochSeconds": 1700918000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Simplify conditional in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9a3cbe97e8a50dce66052fa8d73c16cf28cca536",
+      "index": 86,
+      "epochSeconds": 1700928800,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Extract helper in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a680e70ddac309ac0104dd328415de0463a38e1c",
+      "index": 87,
+      "epochSeconds": 1700939600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Consolidate constants in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e647cac4d240a765689cc1ea75ec4bcdfcd64052",
+      "index": 88,
+      "epochSeconds": 1700950400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Drop dead code path in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1119f200b9fa71a298119601414a5b2593e7b917",
+      "index": 89,
+      "epochSeconds": 1700961200,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Small refactor of src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a338e3a70e56bfd74f52d09f4ae5b0d605f87432",
+      "index": 90,
+      "epochSeconds": 1700972000,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Rename local variable in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "54a7c25ec7bbfb76ca2efae8b76cff144233e67a",
+      "index": 91,
+      "epochSeconds": 1700982800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Update comment in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9cfeafec5958bb96c85648be77991042c5a62cec",
+      "index": 92,
+      "epochSeconds": 1700993600,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Reformat src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0a255bd681ff429f4d6a9b6aa2e9adf587c44734",
+      "index": 93,
+      "epochSeconds": 1701004400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Remove unused variable in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "71c20b011e6671e66bcba5036273498f683c855c",
+      "index": 94,
+      "epochSeconds": 1701015200,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Fix typo in src/relay/fanout.js comment",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "54149f5fc63aab491ab0d1275ea622e25a1d1287",
+      "index": 95,
+      "epochSeconds": 1701026000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Adjust logging verbosity in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0573a4b44b1025be4638256cd1da9934e4b29c10",
+      "index": 96,
+      "epochSeconds": 1701036800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Reformat src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0b48877e46ec05999b02a9856956a1094c6a80d0",
+      "index": 97,
+      "epochSeconds": 1701047600,
+      "category": "poor_message_rich_diff",
+      "subsystem": "presence",
+      "subject": "fix issue",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Subject gives no clue; the diff and its inline comment are the only evidence of \"duplicated listener registration\".",
+      "beatId": "relay.fix-issue"
+    },
+    {
+      "sha": "9dd0221ec369848433ea348290326ae39806e9c1",
+      "index": 98,
+      "epochSeconds": 1701058400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Tidy up imports in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "452b19d0da686bb7555e6988ccb9fe7521b021ee",
+      "index": 99,
+      "epochSeconds": 1701069200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Reformat src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "be4daeb57d43a78ae0d9423729c2e3918bcb2201",
+      "index": 100,
+      "epochSeconds": 1701080000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Normalize whitespace in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "07fcef63907a682cad0bc26c8530c1978c90692d",
+      "index": 101,
+      "epochSeconds": 1701090800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Add missing semicolon in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "82cc29d75b2ba4cdd941bdfa242ed7af060a4e10",
+      "index": 102,
+      "epochSeconds": 1701101600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Fix typo in src/presence/tracker.js comment",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "24f2f836ce2881f33b3442f761d3a3174efbb1a3",
+      "index": 103,
+      "epochSeconds": 1701112400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Fix typo in src/presence/roster-view.js comment",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e8e4008d8e574a866ee55d7850c139fb20561ea6",
+      "index": 104,
+      "epochSeconds": 1701123200,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Tidy up imports in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d347cef9c614d0f0ddf7b593c0a3daed239a8ae5",
+      "index": 105,
+      "epochSeconds": 1701134000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Tidy up imports in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4d06352fb508b2c7b63b24093ea9484f8ed90122",
+      "index": 106,
+      "epochSeconds": 1701144800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Reformat src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e750eef381e6e224db5fd04b58b3fe8653697ce4",
+      "index": 107,
+      "epochSeconds": 1701155600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Adjust logging verbosity in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "38000c65707ca7a8709526abe4dc316c7f03b796",
+      "index": 108,
+      "epochSeconds": 1701166400,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Simplify conditional in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7b0e6a797edc042af0464286d49129ecdb86ac4e",
+      "index": 109,
+      "epochSeconds": 1701177200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Rename local variable in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3ff5204329afa1335537e4529134df938cdbf1ac",
+      "index": 110,
+      "epochSeconds": 1701188000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Reformat src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7d834aab2c8b0d3b21152f371da7705054d4b53c",
+      "index": 111,
+      "epochSeconds": 1701198800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Extract helper in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "032c2a2bc3ac11df73076eff89ca6d4416a43a7a",
+      "index": 112,
+      "epochSeconds": 1701209600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Trim trailing whitespace in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "faf857d8431fa6baaa5463d3379f489914b883ff",
+      "index": 113,
+      "epochSeconds": 1701220400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Align src/client-sdk/socket.js with lint rules",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7a69e19158233766cf8cb51b3d239c38531fa558",
+      "index": 114,
+      "epochSeconds": 1701231200,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Rename local variable in docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c",
+      "index": 115,
+      "epochSeconds": 1701242000,
+      "category": "deleted_implementation",
+      "subsystem": "client-sdk",
+      "subject": "Remove the hand-rolled exponential backoff loop from ChatSocket",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "The removed inline backoff loop is the deleted implementation a \"how did reconnect retry used to work\" query should find.",
+      "beatId": "sdk.remove-manual-reconnect-loop"
+    },
+    {
+      "sha": "d3b9f97db2cacca9e88b9eca1640bc6c75ee114b",
+      "index": 116,
+      "epochSeconds": 1701252800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Normalize whitespace in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1830d186042847116b7298a43e4e7c6c2c1efe3a",
+      "index": 117,
+      "epochSeconds": 1701263600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Reformat src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "80f8f184772d5d9cf95ea0ee29b89988c3240c4a",
+      "index": 118,
+      "epochSeconds": 1701274400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Tidy up imports in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6fc81e13f4edfa7e2a37d6130d9c355f5103e66a",
+      "index": 119,
+      "epochSeconds": 1701285200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Tidy up imports in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dcfd95281eb87dd45dfbf088916b7bca40a3ba3c",
+      "index": 120,
+      "epochSeconds": 1701296000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Reorder function arguments in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c6caf4928e43779448563d01919cae047079db03",
+      "index": 121,
+      "epochSeconds": 1701306800,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Small refactor of src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3e5e7d2e7222fa290ec9ea5e58bccc83773f8e0d",
+      "index": 122,
+      "epochSeconds": 1701317600,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6ad18eb5d34b320776043c4bae1b63f3a1c59e42",
+      "index": 123,
+      "epochSeconds": 1701328400,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Extract helper in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5e1faa103d6cc0689add9930d2fb30cbcc1bce3d",
+      "index": 124,
+      "epochSeconds": 1701339200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Rename local variable in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ed9cbda8dc60e3ab753e7463b55abba5ccb8d8d1",
+      "index": 125,
+      "epochSeconds": 1701350000,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Trim trailing whitespace in src/presence/tracker.js",
+      "files": [
+        "src/presence/tracker.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7506e476872827a24fd4c0376f3bc611a29e77a1",
+      "index": 126,
+      "epochSeconds": 1701360800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Minor cleanup in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a2a9a4eb64cff78209ef0f934df6d7e85c5f03e2",
+      "index": 127,
+      "epochSeconds": 1701371600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Simplify conditional in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "138c58949737dbd6c8c5e405b96b46b480db4a8a",
+      "index": 128,
+      "epochSeconds": 1701382400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Fix typo in src/client-sdk/socket.js comment",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0ce1e9102eeb884bf772e4f68d61272755be7a00",
+      "index": 129,
+      "epochSeconds": 1701393200,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Align src/client-sdk/socket.js with lint rules",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a279f2a34173e452cbdbb80eadf863dc2266f4c6",
+      "index": 130,
+      "epochSeconds": 1701404000,
+      "category": "rename",
+      "subsystem": "presence",
+      "subject": "Rename PresenceTracker to RoomPresence for consistency with RoomFanout",
+      "files": [
+        "src/presence/room-presence.js",
+        "src/presence/tracker.js"
+      ],
+      "note": "Rename case; old identifier \"PresenceTracker\" should resolve here.",
+      "beatId": "presence.rename-tracker-class"
+    },
+    {
+      "sha": "2ba826b6b7ddbe0fda18ac82bc8746877f7acf0b",
+      "index": 131,
+      "epochSeconds": 1701414800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Simplify conditional in src/presence/room-presence.js",
+      "files": [
+        "src/presence/room-presence.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d2b929e54c6b19468b2b3503c0ddfb4735270bb7",
+      "index": 132,
+      "epochSeconds": 1701425600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Consolidate constants in src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c1328a39016314e33398e5e552e9ea61047ee8a0",
+      "index": 133,
+      "epochSeconds": 1701436400,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Update comment in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "076c70908886903ed52bac7c0af20597e08e2192",
+      "index": 134,
+      "epochSeconds": 1701447200,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Small refactor of src/presence/room-presence.js",
+      "files": [
+        "src/presence/room-presence.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1eb86b0f4ebace28cecc28843a36712469d0ecb4",
+      "index": 135,
+      "epochSeconds": 1701458000,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Improve readability of src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "283d036070872fff6923f9c22eda7d98f71925c6",
+      "index": 136,
+      "epochSeconds": 1701468800,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Drop dead code path in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e6eef17a805ae84406f571cb7ac3b40db46e151d",
+      "index": 137,
+      "epochSeconds": 1701479600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Small refactor of src/presence/roster-view.js",
+      "files": [
+        "src/presence/roster-view.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "def4cd8f1bc5a84ea1310b68fb375944f8ec6482",
+      "index": 138,
+      "epochSeconds": 1701490400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eae43e96f3f0b1118eb26485e38beb87501420ac",
+      "index": 139,
+      "epochSeconds": 1701501200,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Update inline docs for src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9cb5a1d155950070b5087f9bf35879a05e9b305b",
+      "index": 140,
+      "epochSeconds": 1701512000,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Reformat src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cd79d7160091cb363165616cc1052e08758c500b",
+      "index": 141,
+      "epochSeconds": 1701522800,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Simplify conditional in src/relay/fanout.js",
+      "files": [
+        "src/relay/fanout.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7784fd4f08f92664a54c8cce4ffbaa2b95e3a9de",
+      "index": 142,
+      "epochSeconds": 1701533600,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Adjust logging verbosity in src/presence/room-presence.js",
+      "files": [
+        "src/presence/room-presence.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "18902a78a3327ae62da343ffff1be47501e29196",
+      "index": 143,
+      "epochSeconds": 1701544400,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "308fcccb8b07325c946c933984e1861be21f55bf",
+      "index": 144,
+      "epochSeconds": 1701555200,
+      "category": "churn",
+      "subsystem": "client-sdk",
+      "subject": "Small refactor of src/client-sdk/socket.js",
+      "files": [
+        "src/client-sdk/socket.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a0936631282cdcd152fba1716a19ed1510776ead",
+      "index": 145,
+      "epochSeconds": 1701566000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Small refactor of docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d9670182e71ecdcbe51421cbb75601ba75e68f25",
+      "index": 146,
+      "epochSeconds": 1701576800,
+      "category": "churn",
+      "subsystem": "presence",
+      "subject": "Update comment in src/presence/room-presence.js",
+      "files": [
+        "src/presence/room-presence.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a7781624e13e61c74b3233a20a0409402092789a",
+      "index": 147,
+      "epochSeconds": 1701587600,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Simplify conditional in src/relay/socket-pool.js",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b3af16d64e45132eeead2c3244349d72db73e7da",
+      "index": 148,
+      "epochSeconds": 1701598400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Small refactor of docs/CHANGELOG.md",
+      "files": [
+        "docs/CHANGELOG.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c3305019d7418ff16b7eddb390ea8be030abf60f",
+      "index": 149,
+      "epochSeconds": 1701609200,
+      "category": "churn",
+      "subsystem": "relay",
+      "subject": "Align src/relay/socket-pool.js with lint rules",
+      "files": [
+        "src/relay/socket-pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    }
+  ]
+}

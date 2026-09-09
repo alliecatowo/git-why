@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "truncation": null,
+  "padding": null,
+  "added_tokens": [
+    { "id": 0, "content": "[PAD]", "special": true },
+    { "id": 1, "content": "[UNK]", "special": true }
+  ],
+  "normalizer": {
+    "type": "BertNormalizer",
+    "clean_text": true,
+    "handle_chinese_chars": true,
+    "strip_accents": null,
+    "lowercase": true
+  },
+  "pre_tokenizer": { "type": "BertPreTokenizer" },
+  "post_processor": null,
+  "decoder": { "type": "WordPiece", "prefix": "##", "cleanup": true },
+  "model": {
+    "type": "WordPiece",
+    "unk_token": "[UNK]",
+    "continuing_subword_prefix": "##",
+    "max_input_chars_per_word": 10,
+    "vocab": {
+      "[PAD]": 0,
+      "[UNK]": 1,
+      "hello": 2,
+      "wor": 3,
+      "##ld": 4,
+      "cafe": 5,
+      "the": 6,
+      "quick": 7,
+      "!": 8,
+      ",": 9,
+      "中": 10,
+      "a": 11,
+      "fox": 12
+    }
+  }
+}

@@ -1,0 +1,2009 @@
+{
+  "fixtureId": "build-tooling",
+  "seed": "git-why-bench::build-tooling::v1",
+  "theme": "CLI build/release tooling: engines, bundler version, pinned dev dependencies.",
+  "headSha": "6cf38719ec01eb87c2728af807807794ed9095ae",
+  "commitCount": 166,
+  "objectCount": 592,
+  "commits": [
+    {
+      "sha": "d4cb7dbd4cc07d66acf420a5acf6ff1177a022a9",
+      "index": 0,
+      "epochSeconds": 1725000000,
+      "category": "scaffold",
+      "subsystem": "core",
+      "subject": "Initial scaffold",
+      "files": [
+        "scripts/build.js",
+        "config/engines.json",
+        "scripts/release.js",
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Repository scaffold; not a query target."
+    },
+    {
+      "sha": "873d9a42f7dd2becf4f17515c95d01746696eef8",
+      "index": 1,
+      "epochSeconds": 1725010800,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Normalize whitespace in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fd8a8c6b18203e07de43ae83df1931fafdd4106f",
+      "index": 2,
+      "epochSeconds": 1725021600,
+      "category": "distractor",
+      "subsystem": "build",
+      "subject": "Tune the build cache directory size limit",
+      "files": [
+        "scripts/build-cache.js"
+      ],
+      "note": "Distractor: touches build tooling but is not about version support."
+    },
+    {
+      "sha": "a26dbb4b9e0949ba172736e1219496fb20beb97b",
+      "index": 3,
+      "epochSeconds": 1725032400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin express at 1.17.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "89d66f4af27eed0816cde9a785be8c06a9a69ba3",
+      "index": 4,
+      "epochSeconds": 1725043200,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Fix typo in scripts/release.js comment",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "70a6033e5acc51e33cf8870176832eeb6036a8a5",
+      "index": 5,
+      "epochSeconds": 1725054000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update inline docs for package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "39682f9a84b100a5209170ae82ab6c6a976bac1d",
+      "index": 6,
+      "epochSeconds": 1725064800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update ws dependency to 3.20.28",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4bc16381b74c2d863c894188e66c3d6c8db13638",
+      "index": 7,
+      "epochSeconds": 1725075600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update axios dependency to 9.3.13",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4e7ac60f73e3dbcc3743c4535dec0796be27d491",
+      "index": 8,
+      "epochSeconds": 1725086400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Small refactor of package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "871b642736f5fa4ed33bd04164f1c348914d251b",
+      "index": 9,
+      "epochSeconds": 1725097200,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Adjust logging verbosity in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "040c6492ff4a4e76bd66e7739ef28a794d341dd7",
+      "index": 10,
+      "epochSeconds": 1725108000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "144ec4f0533be13a0249ece89f6dceca23f30d43",
+      "index": 11,
+      "epochSeconds": 1725118800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump express 2.4.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "a18a4bb26f588aa553175a80bdfc9e3b537de108",
+      "index": 12,
+      "epochSeconds": 1725129600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update chalk dependency to 8.4.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "2351e36134326cdb3ff86d63b1cbf841ecd861c0",
+      "index": 13,
+      "epochSeconds": 1725140400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update comment in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fc158b25ee70ad8228fb409e037ea8d3bd76e12f",
+      "index": 14,
+      "epochSeconds": 1725151200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Fix typo in config/engines.json comment",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0fe18f466e46a5ec288922ac2b921cffef7e2b07",
+      "index": 15,
+      "epochSeconds": 1725162000,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Reorder function arguments in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dd8f320bd8a05819c56fe214e8c63baf4b7ba9b5",
+      "index": 16,
+      "epochSeconds": 1725172800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump jest 7.12.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "8dc105208fbd766bab51af6630650ad96b1866e5",
+      "index": 17,
+      "epochSeconds": 1725183600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump pg to 4.9.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "fe9cd7712898fb5554db6ea52bb8a9e0fd170dcd",
+      "index": 18,
+      "epochSeconds": 1725194400,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Reformat config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "147aca7398c5e9e39a742a7e0513a9ac6bee4617",
+      "index": 19,
+      "epochSeconds": 1725205200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump chalk 2.6.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ca18667e067ef727f6917e0ebc38ecc25690c5ac",
+      "index": 20,
+      "epochSeconds": 1725216000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump axios to 7.10.29",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "9c2b92c37f618d3281d6a2a7ef52f720c05f35b2",
+      "index": 21,
+      "epochSeconds": 1725226800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update express dependency to 1.19.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "e7d3f48971461aea4710519bec1d77e7e0e87583",
+      "index": 22,
+      "epochSeconds": 1725237600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin uuid at 4.7.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "1dbe2c4941962955cf27cce12b4607f9b29f86dd",
+      "index": 23,
+      "epochSeconds": 1725248400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin uuid at 5.6.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ce4ef559dfb8060eef926db2b4123877bc8cc710",
+      "index": 24,
+      "epochSeconds": 1725259200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin dotenv at 4.18.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "330caa998438b0d831e9447b890a108848a1e317",
+      "index": 25,
+      "epochSeconds": 1725270000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Normalize whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f79f599063984a74537d951cef0dc368f23ba3c2",
+      "index": 26,
+      "epochSeconds": 1725280800,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Extract helper in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5422e48de8dd06938cdec968f8b9dd3a940f57bc",
+      "index": 27,
+      "epochSeconds": 1725291600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update webpack dependency to 7.15.5",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b67ab79bcd1e1b0a25d80cf87c6edc6ed39f88f3",
+      "index": 28,
+      "epochSeconds": 1725302400,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Drop dead code path in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "72ccc0084963c4a45d189db64ee00e3b35c7c4d1",
+      "index": 29,
+      "epochSeconds": 1725313200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade commander to v1.20.23",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "949858cf81f7dfb7b3cc524030f3c42bf71e6667",
+      "index": 30,
+      "epochSeconds": 1725324000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin jest at 3.6.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "0e67fe42ff132ea0053dd6f11f93ea025a688b85",
+      "index": 31,
+      "epochSeconds": 1725334800,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Small refactor of scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+      "index": 32,
+      "epochSeconds": 1725345600,
+      "category": "number_version",
+      "subsystem": "config",
+      "subject": "Require npm 9+ for the lockfile v3 format",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Real reason is the lockfile v3 format, not a generic \"newer npm is better\" preference.",
+      "beatId": "config.require-npm-9"
+    },
+    {
+      "sha": "2e57f228b7cd853607333485e1c3d570f5de7562",
+      "index": 33,
+      "epochSeconds": 1725356400,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Trim trailing whitespace in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eff37d744a66e3954486516355c457d23f235b6e",
+      "index": 34,
+      "epochSeconds": 1725367200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Tidy up imports in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "aa3754d37641acff83f957a57bbcc2b9d7e3470b",
+      "index": 35,
+      "epochSeconds": 1725378000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump uuid to 9.18.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "31392129c95d703924cd20e18c2da836f98bffe1",
+      "index": 36,
+      "epochSeconds": 1725388800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin axios at 3.3.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "c27baa872767569f3473c50026b308181aafd2f7",
+      "index": 37,
+      "epochSeconds": 1725399600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Remove unused variable in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "07f60eef421206104d4674a22ec823d43ee9c219",
+      "index": 38,
+      "epochSeconds": 1725410400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Fix typo in package-lock.snapshot.txt comment",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2e34c682aaa6d1f13c754337e397a8bff08d282e",
+      "index": 39,
+      "epochSeconds": 1725421200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Small refactor of package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6771aa71ec27f5c746012a5907aa5365275e16c4",
+      "index": 40,
+      "epochSeconds": 1725432000,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Rename local variable in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "73f4e138e60ba1738422389fa097f42d494fef5c",
+      "index": 41,
+      "epochSeconds": 1725442800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade moment to v3.17.13",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "abf411c8b6a354a293945ed3bc61367a349063d2",
+      "index": 42,
+      "epochSeconds": 1725453600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "062ef5fce6897ee09f502f0108442d11bfcbd948",
+      "index": 43,
+      "epochSeconds": 1725464400,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Improve readability of scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6b60b9d385d60caf3e224d418b2514ea1a10b711",
+      "index": 44,
+      "epochSeconds": 1725475200,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Adjust logging verbosity in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "93602427f04f187f1bec9e70ee2d11b497a73361",
+      "index": 45,
+      "epochSeconds": 1725486000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade ioredis to v8.12.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "aeeb1e83820400980a6cc3e6d17b3d8b5a5dd01d",
+      "index": 46,
+      "epochSeconds": 1725496800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump webpack to 4.5.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ccf6aee8afb44bc814133dbe04d7bc131d93b8d4",
+      "index": 47,
+      "epochSeconds": 1725507600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update express dependency to 5.3.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "693aa361b2c052e87ba9516d6119bd2e34a2990f",
+      "index": 48,
+      "epochSeconds": 1725518400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Extract helper in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "acd5704bcdd473bb1b8188839394e69069175b7c",
+      "index": 49,
+      "epochSeconds": 1725529200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump node-fetch to 9.0.1",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "14643e9d5f248b93bf6c30dd01df385a8c7ef8a6",
+      "index": 50,
+      "epochSeconds": 1725540000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Reorder function arguments in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0d4ed68d63324ee595e0a0a77b2f03a445e952be",
+      "index": 51,
+      "epochSeconds": 1725550800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade babel-core to v2.13.24",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "22064355de930ec5f36a180b71d1684848d5afa3",
+      "index": 52,
+      "epochSeconds": 1725561600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin moment at 8.18.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "2e878790fc6a2a9a299761d74fea824289597fa8",
+      "index": 53,
+      "epochSeconds": 1725572400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump commander to 8.20.30",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "2d8de52f28991d51b819ef68d04044c2524a25c7",
+      "index": 54,
+      "epochSeconds": 1725583200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update prettier dependency to 8.15.21",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "1774869954f4882bb45a0567c20e664e50688055",
+      "index": 55,
+      "epochSeconds": 1725594000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Extract helper in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b0ecb6f86ca9d456a25328ef5bc0f68220531093",
+      "index": 56,
+      "epochSeconds": 1725604800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin axios at 9.16.11",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "6bd9b793b9d3636a76741d9b836c5d9238c1f318",
+      "index": 57,
+      "epochSeconds": 1725615600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin prettier at 1.9.26",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "e7e79cd835c4707cbc1712eb8eadf9044d8e7aaa",
+      "index": 58,
+      "epochSeconds": 1725626400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin eslint at 1.11.24",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "7d30a8a569ad916ba655dbbda621d70a7505a21f",
+      "index": 59,
+      "epochSeconds": 1725637200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Small refactor of config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4c406adfc9cdf63a38825d1e6d3f247027e931c1",
+      "index": 60,
+      "epochSeconds": 1725648000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reformat package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "466eaaa8bba4976081f839d884b22764e82b7524",
+      "index": 61,
+      "epochSeconds": 1725658800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump uuid to 5.15.25",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "35f6ededb07eec6717bffed6b48ad3acd611aec5",
+      "index": 62,
+      "epochSeconds": 1725669600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Update comment in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1eef0f317fbcacfb67896c6d260559ef4150859d",
+      "index": 63,
+      "epochSeconds": 1725680400,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Update inline docs for scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "983ce2d1961d7ea44e3f8623119dedc96083ac15",
+      "index": 64,
+      "epochSeconds": 1725691200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump axios 2.14.11",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4fabf5baa674c23a9890c5d2741dd810bc445789",
+      "index": 65,
+      "epochSeconds": 1725702000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade pg to v8.0.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "5117627878d199861b235dfd28162f866bd0baf5",
+      "index": 66,
+      "epochSeconds": 1725712800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade ioredis to v9.14.28",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "28f1eb675de28b4320093b13ffba0cc31b56a334",
+      "index": 67,
+      "epochSeconds": 1725723600,
+      "category": "rich_message_skipped_patch",
+      "subsystem": "deps",
+      "subject": "Pin esbuild to 0.19.2 pending a Windows path-handling fix",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Message-only rationale surviving patch suppression; the \"patch\" here is an intentionally uninformative lockfile line.",
+      "beatId": "deps.pin-esbuild"
+    },
+    {
+      "sha": "a79fc6ce8a17a356474c30c1dcec15f6c12cc58a",
+      "index": 68,
+      "epochSeconds": 1725734400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump babel-core to 4.20.9",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "459aa431037cb9592c1a206de1c1bf5f570a2f52",
+      "index": 69,
+      "epochSeconds": 1725745200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump chalk to 2.7.29",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "f83b3a0338cf18e4a2aac3bf7581b08534c8d585",
+      "index": 70,
+      "epochSeconds": 1725756000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump chalk 6.10.16",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "49d7104b95343b986cc05eeeebd930e6f379ef76",
+      "index": 71,
+      "epochSeconds": 1725766800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump node-fetch 8.15.2",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "17b62e3e2e31ccd32c129b4ee82f8f7e4dcbba12",
+      "index": 72,
+      "epochSeconds": 1725777600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Improve readability of scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ae32cd55673ab9508a46cc6d84b074941dcd7d93",
+      "index": 73,
+      "epochSeconds": 1725788400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin lodash at 6.17.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "1f097d7604448ce831cf4e5254748cdabd13df26",
+      "index": 74,
+      "epochSeconds": 1725799200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update ioredis dependency to 3.10.26",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "6448aba2c492bcf6aeabbbb82b936b5924d5f145",
+      "index": 75,
+      "epochSeconds": 1725810000,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Adjust logging verbosity in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ddcd93431e63aa3aadf7e45016ef230e15ba5326",
+      "index": 76,
+      "epochSeconds": 1725820800,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Align config/engines.json with lint rules",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "38e9c3510e9af822ed45b3ddc236244673a8a117",
+      "index": 77,
+      "epochSeconds": 1725831600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Rename local variable in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8c29089c659a0bc03e69fce0e0106bc746f52138",
+      "index": 78,
+      "epochSeconds": 1725842400,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Fix typo in scripts/release.js comment",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e75f211e7b37ea248e39cfe8af79a292eb41810a",
+      "index": 79,
+      "epochSeconds": 1725853200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Remove unused variable in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1e272567918b6f44f093cec6df2babe996357e60",
+      "index": 80,
+      "epochSeconds": 1725864000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Align config/engines.json with lint rules",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "49433198d445ac50c641030c72a01390c37d6ed8",
+      "index": 81,
+      "epochSeconds": 1725874800,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Small refactor of scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dbb53601862a228bd0bbb940d8494158a985a3e9",
+      "index": 82,
+      "epochSeconds": 1725885600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Small refactor of scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "484d2520dce7a38f3594afeb298f76f1a2432a46",
+      "index": 83,
+      "epochSeconds": 1725896400,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Update inline docs for scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1a5e357628464d81829d6c173dbe66a88348b0ad",
+      "index": 84,
+      "epochSeconds": 1725907200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8f0be9116665e1c70f3936e314475ff4b7458c1f",
+      "index": 85,
+      "epochSeconds": 1725918000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Normalize whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0266c82d6d98e51b97109fb9b0f9a819f64238e2",
+      "index": 86,
+      "epochSeconds": 1725928800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Tidy up imports in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "38f2118b42623f57113883e35a963412476e6d67",
+      "index": 87,
+      "epochSeconds": 1725939600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c17659c9daa6ba770b8a8cf288fb75ebff9bcd61",
+      "index": 88,
+      "epochSeconds": 1725950400,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Remove unused variable in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8375190ef67b5e176b3903dcfc0ce10e212612ec",
+      "index": 89,
+      "epochSeconds": 1725961200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Remove unused variable in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f927f33aaab4739121fca2461d900e856d08f310",
+      "index": 90,
+      "epochSeconds": 1725972000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Consolidate constants in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "04e448e37eaf7bb727221b0b05d4ea2f1225b4ea",
+      "index": 91,
+      "epochSeconds": 1725982800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update comment in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7cecf0154bac3663706d4f336e5303d9551b8c4a",
+      "index": 92,
+      "epochSeconds": 1725993600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reformat package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8f83b10b43a08b76a7aa9daf996fdd415fd69357",
+      "index": 93,
+      "epochSeconds": 1726004400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reorder function arguments in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b68bb504b016aba9d715fc0fb4aa2ffc4818fd14",
+      "index": 94,
+      "epochSeconds": 1726015200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Consolidate constants in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fb4fdfcfae9e5eaa54ff0c941a6e694726b7ef1e",
+      "index": 95,
+      "epochSeconds": 1726026000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Consolidate constants in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "416b61a68ef598dde37fa3a1226ef9d42c066699",
+      "index": 96,
+      "epochSeconds": 1726036800,
+      "category": "number_version",
+      "subsystem": "build",
+      "subject": "Drop the webpack 4 build path; require webpack 5",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "A second number/version case with its own distinct rationale, to be distinguished from the npm 9 case and from filler version bumps.",
+      "beatId": "build.drop-webpack-4"
+    },
+    {
+      "sha": "79e5e70316f1eb49408c7a14fbc6e9d1ade852f3",
+      "index": 97,
+      "epochSeconds": 1726047600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Drop dead code path in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "32094ee191f54ed7ab8bd0fecdeb3f251dabaa86",
+      "index": 98,
+      "epochSeconds": 1726058400,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Improve readability of config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "de8b92eae71754d592309b4ba2fb67356587a7d8",
+      "index": 99,
+      "epochSeconds": 1726069200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Drop dead code path in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "36214d993e0ff4cab1f8e90e099f301661a8ac95",
+      "index": 100,
+      "epochSeconds": 1726080000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Drop dead code path in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1f1d40f3782936f5a83feddb2680231f5bef8819",
+      "index": 101,
+      "epochSeconds": 1726090800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Align package-lock.snapshot.txt with lint rules",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4c17565759298d0a44c0bd01226c97b7b0954d82",
+      "index": 102,
+      "epochSeconds": 1726101600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reformat package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8b33d11c98a8601425c941671550f85bfae5dba0",
+      "index": 103,
+      "epochSeconds": 1726112400,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Adjust logging verbosity in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3032294f3d26a2b2e61ccb950b5e204867450bda",
+      "index": 104,
+      "epochSeconds": 1726123200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Extract helper in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5752d742e8cfb8bf36101f446e09cf694c80735b",
+      "index": 105,
+      "epochSeconds": 1726134000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Fix typo in config/engines.json comment",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e2d4b7590143852d0dd366c77aa65dfcc91a432b",
+      "index": 106,
+      "epochSeconds": 1726144800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Extract helper in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "444018a254cb3b4197a74920a79a3b14d111d69a",
+      "index": 107,
+      "epochSeconds": 1726155600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Align scripts/release.js with lint rules",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "089285a50e09a9a4ca0a11b9ed3be60813de9fea",
+      "index": 108,
+      "epochSeconds": 1726166400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4dd751fca21ccfbca456ccf3d058462ab42b1d49",
+      "index": 109,
+      "epochSeconds": 1726177200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Extract helper in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "41b247ff1c8b23f8b031531706ead920ae6b164a",
+      "index": 110,
+      "epochSeconds": 1726188000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Drop dead code path in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "255d5991d9b909d6f6c0a6c3d3104358fb959ea6",
+      "index": 111,
+      "epochSeconds": 1726198800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Minor cleanup in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3b7dbfffc594cb72cb6eb2c24b4dc062773ac561",
+      "index": 112,
+      "epochSeconds": 1726209600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Reformat scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a81848058c3bdbe8ef8d5f38eef7eb64aaf46ab9",
+      "index": 113,
+      "epochSeconds": 1726220400,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Update comment in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "63188771a14166cda360ec4d7309523145d981fa",
+      "index": 114,
+      "epochSeconds": 1726231200,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Update inline docs for scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fc20f849fd788346baf8c823036cd6b74d3a9a36",
+      "index": 115,
+      "epochSeconds": 1726242000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Update inline docs for config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "03b7ca831bc5c157d4893576ccae08bfdaa6b7e8",
+      "index": 116,
+      "epochSeconds": 1726252800,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Extract helper in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "554a103bfffe69950316ad15bcfb367f4ac9106c",
+      "index": 117,
+      "epochSeconds": 1726263600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Improve readability of scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "80238ad6cb89321b764a3f3424b08dc1c3a33e39",
+      "index": 118,
+      "epochSeconds": 1726274400,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Reorder function arguments in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "32324cd28b5b0b134087ac9b2b042a459cb4d29a",
+      "index": 119,
+      "epochSeconds": 1726285200,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Adjust logging verbosity in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e9c77bfcfe8315a0218eb563e16e7aa784e9b50a",
+      "index": 120,
+      "epochSeconds": 1726296000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Tidy up imports in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7d192db24f5e4d32121465b1768e6bf55b14d184",
+      "index": 121,
+      "epochSeconds": 1726306800,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Remove unused variable in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "634a1d55a78230d95699b4bd93f10a44e3064af7",
+      "index": 122,
+      "epochSeconds": 1726317600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Trim trailing whitespace in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1ac871390dcbe1240a88b3cd0c08ebf7f65461e6",
+      "index": 123,
+      "epochSeconds": 1726328400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f2d6111b4b9915753649edede82a8b0a7b8d605a",
+      "index": 124,
+      "epochSeconds": 1726339200,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Reorder function arguments in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "39cbb56877a9017323bccc35b6cdbd34c83b79d0",
+      "index": 125,
+      "epochSeconds": 1726350000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Reformat config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a7d67fb4cc0feeb78afc1d3f709e541c77eedd34",
+      "index": 126,
+      "epochSeconds": 1726360800,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Adjust logging verbosity in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d97c37ce378c34055fffe04e1c0b7c876024d25d",
+      "index": 127,
+      "epochSeconds": 1726371600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Fix typo in package-lock.snapshot.txt comment",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5ef75492c50bbbfc6ab8e9faa646197feacb03b4",
+      "index": 128,
+      "epochSeconds": 1726382400,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Rename local variable in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "581c6dea49431d75c5ebc422a5ad1465d95f4a4d",
+      "index": 129,
+      "epochSeconds": 1726393200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Tidy up imports in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "68877f2d41287736509b4fdd6a3100def394d1d0",
+      "index": 130,
+      "epochSeconds": 1726404000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Update comment in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "77823cb29e9752bca7e522b317567d828513b748",
+      "index": 131,
+      "epochSeconds": 1726414800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Add missing semicolon in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b26a963d561138f1144c35207d026e1e30fd0442",
+      "index": 132,
+      "epochSeconds": 1726425600,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Simplify conditional in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "29459ceb7c3ecfe50fb0bf666549c98e1e98c21d",
+      "index": 133,
+      "epochSeconds": 1726436400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Consolidate constants in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f24787847358c0c0b7fc0680803310567434ca7e",
+      "index": 134,
+      "epochSeconds": 1726447200,
+      "category": "rich_message_skipped_patch",
+      "subsystem": "deps",
+      "subject": "Bump the internal release-notes generator to its new major version",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Second rich-message/skipped-patch case: a dependency bump whose real motivation is entirely in the message.",
+      "beatId": "deps.bump-release-tool-major"
+    },
+    {
+      "sha": "9ddc531a8a20ee710ae684610eb62582cc9306c3",
+      "index": 135,
+      "epochSeconds": 1726458000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Minor cleanup in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "398af6c9ae046882e16a63c13a0af01a29fceb8d",
+      "index": 136,
+      "epochSeconds": 1726468800,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Fix typo in config/engines.json comment",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bf3dbb4996a53acd4f7640dbf3102a91ae3fefb8",
+      "index": 137,
+      "epochSeconds": 1726479600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Trim trailing whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f8bb647f98e2a0702578b2e69de8047ff0d1647a",
+      "index": 138,
+      "epochSeconds": 1726490400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Small refactor of package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "249d2d48c028c2f8a8399a23d54fdb977a192a8e",
+      "index": 139,
+      "epochSeconds": 1726501200,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Minor cleanup in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9673cb58b806cda08ff1cfb01b09821accd5ead4",
+      "index": 140,
+      "epochSeconds": 1726512000,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Consolidate constants in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4e7ab831bbe0faf658a499a98996a79c6e4dec00",
+      "index": 141,
+      "epochSeconds": 1726522800,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Update comment in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "aa443f311e6db5958168643ce6fc00d8ebe00c9d",
+      "index": 142,
+      "epochSeconds": 1726533600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Update inline docs for scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "da744caad7a7ee66210e13d5504ad5688b23bb3c",
+      "index": 143,
+      "epochSeconds": 1726544400,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bbbc71745bdb515ec29dbc61118c34bf3fe20abb",
+      "index": 144,
+      "epochSeconds": 1726555200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Rename local variable in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "08959b63654db37bfc19a36259bcbeb9214cd040",
+      "index": 145,
+      "epochSeconds": 1726566000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Remove unused variable in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "380002b105372f12f09c5bac30c9e4a343097611",
+      "index": 146,
+      "epochSeconds": 1726576800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Minor cleanup in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "53778a0e2d94f8f2398c64ff0a9c955fdcb4219f",
+      "index": 147,
+      "epochSeconds": 1726587600,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "90876d3963eeeaaad82dc572f6efc019bbf19fdc",
+      "index": 148,
+      "epochSeconds": 1726598400,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Consolidate constants in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e33ed424f13dd6ea8600c06e5dcb77f86935dca9",
+      "index": 149,
+      "epochSeconds": 1726609200,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Reformat scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b995b825ab891af5d1a6eb398c6ed1980bdcb204",
+      "index": 150,
+      "epochSeconds": 1726620000,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Tidy up imports in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3eb1aa5f954a26a143beb1d5f59ef9d7039115bd",
+      "index": 151,
+      "epochSeconds": 1726630800,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Remove unused variable in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "807af82ecb6e722fe9a0be090c10979fa2f356db",
+      "index": 152,
+      "epochSeconds": 1726641600,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Reorder function arguments in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e1396e94b00c05f4cef2a6a81c22e913342af2a8",
+      "index": 153,
+      "epochSeconds": 1726652400,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Normalize whitespace in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8eb143487f3e0a445a6c79cf7ff0ab07be595af5",
+      "index": 154,
+      "epochSeconds": 1726663200,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Trim trailing whitespace in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e722a7f7d5cbc93027835fc7823c34e611966afb",
+      "index": 155,
+      "epochSeconds": 1726674000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Trim trailing whitespace in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d6dd6012ef6cc904d6c9358d8bb6d4d048b893a6",
+      "index": 156,
+      "epochSeconds": 1726684800,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Consolidate constants in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3f52e89f0315c738ebe32a507725061524d31e2b",
+      "index": 157,
+      "epochSeconds": 1726695600,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Extract helper in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0840bcd8381abd84b0eae785eb7667fc3d835761",
+      "index": 158,
+      "epochSeconds": 1726706400,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Improve readability of config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "14883aec7809dd3d5a2334d524fcf7589206dca2",
+      "index": 159,
+      "epochSeconds": 1726717200,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c72180eff5ff9a6ef25311b8817ed006c098e559",
+      "index": 160,
+      "epochSeconds": 1726728000,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Tidy up imports in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fbb341619f36fdea3135db9b4e25123b82ea55d6",
+      "index": 161,
+      "epochSeconds": 1726738800,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Extract helper in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9a9fd183b8a7e60f5f4b21628c49818abfb5d559",
+      "index": 162,
+      "epochSeconds": 1726749600,
+      "category": "churn",
+      "subsystem": "config",
+      "subject": "Drop dead code path in config/engines.json",
+      "files": [
+        "config/engines.json"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "68d66fe2c354de3b9b5ed993eba5ae8feb702f2e",
+      "index": 163,
+      "epochSeconds": 1726760400,
+      "category": "churn",
+      "subsystem": "build",
+      "subject": "Simplify conditional in scripts/build.js",
+      "files": [
+        "scripts/build.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "079d87ac7e0e8c5c734d1f9814257b2c4fe91159",
+      "index": 164,
+      "epochSeconds": 1726771200,
+      "category": "churn",
+      "subsystem": "release",
+      "subject": "Rename local variable in scripts/release.js",
+      "files": [
+        "scripts/release.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6cf38719ec01eb87c2728af807807794ed9095ae",
+      "index": 165,
+      "epochSeconds": 1726782000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Improve readability of package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    }
+  ]
+}

@@ -1,0 +1,1637 @@
+{
+  "fixtureId": "task-queue",
+  "seed": "git-why-bench::task-queue::v1",
+  "theme": "Background job queue migrating from an array loop to a worker pool.",
+  "headSha": "9ebabcbb481c16e01384e16ad0f423091286e307",
+  "commitCount": 135,
+  "objectCount": 598,
+  "commits": [
+    {
+      "sha": "1dbd51a0ccdeb1d4b91cd3d636592dc8e497d6d6",
+      "index": 0,
+      "epochSeconds": 1705000000,
+      "category": "scaffold",
+      "subsystem": "core",
+      "subject": "Initial scaffold",
+      "files": [
+        "src/queue/array-queue.js",
+        "src/worker/pool.js",
+        "src/metrics/counters.js",
+        "README.md",
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Repository scaffold; not a query target."
+    },
+    {
+      "sha": "8c6b5df9223e970db3a07a429fabbeef7f17b2a9",
+      "index": 1,
+      "epochSeconds": 1705010800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Fix typo in src/worker/pool.js comment",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dee9c168eb633e112847f360d77c8561073c38b9",
+      "index": 2,
+      "epochSeconds": 1705021600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Tidy up imports in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "150eee451e18f18d6ce1ffca5e624325c5c21f4a",
+      "index": 3,
+      "epochSeconds": 1705032400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump chalk to 5.16.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "8f6e4c41c2e68857e8e0663f6d4ee16c1a9d5f27",
+      "index": 4,
+      "epochSeconds": 1705043200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Reformat src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "65cea31de65dffc05ffb28d2dec202c4e1972815",
+      "index": 5,
+      "epochSeconds": 1705054000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin uuid at 5.11.23",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ff3df885fe10cb9f71efa2d605d9cbcfb16cd79e",
+      "index": 6,
+      "epochSeconds": 1705064800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Simplify conditional in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "32941158bcf2c3839de983baa62b59797113808e",
+      "index": 7,
+      "epochSeconds": 1705075600,
+      "category": "distractor",
+      "subsystem": "metrics",
+      "subject": "Refactor counters into a class for testability",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Looks like it could be \"the old counters implementation\" but is an unrelated refactor, not a deletion."
+    },
+    {
+      "sha": "700a7a27a2a44ebac09e24f18b5c1caaad8f1280",
+      "index": 8,
+      "epochSeconds": 1705086400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Small refactor of src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cb1483e4b247741ce010ac9641ebfab8a8d09fa1",
+      "index": 9,
+      "epochSeconds": 1705097200,
+      "category": "churn",
+      "subsystem": "queue",
+      "subject": "Minor cleanup in src/queue/array-queue.js",
+      "files": [
+        "src/queue/array-queue.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "06eee22f0a2ae0e3d97d069fbf7e34310a8c3f6c",
+      "index": 10,
+      "epochSeconds": 1705108000,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Trim trailing whitespace in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a9c6eb367afe38f7c153d3605c50fc5c338ec0a1",
+      "index": 11,
+      "epochSeconds": 1705118800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade chalk to v9.8.30",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "f6561ee3c3c3997e3a780649c3ebad0692156f5a",
+      "index": 12,
+      "epochSeconds": 1705129600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin commander at 9.3.13",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "6aea743ccc4bfd777a28066bf1c784b65990a657",
+      "index": 13,
+      "epochSeconds": 1705140400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Align src/worker/pool.js with lint rules",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "070ab87f0f132a65d0ae145df4b75a37e572cb04",
+      "index": 14,
+      "epochSeconds": 1705151200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Rename local variable in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "aee3beceef2113308b05b071da70f5f534aac13f",
+      "index": 15,
+      "epochSeconds": 1705162000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Improve readability of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dbea8f5e29ff2bc8f78b808b4f18e3b0502f4b72",
+      "index": 16,
+      "epochSeconds": 1705172800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade chalk to v5.19.11",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "324bad920d6d49cf6888d8e2c35c7f67b7fcd006",
+      "index": 17,
+      "epochSeconds": 1705183600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin yargs at 6.0.7",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "e73c1de38a9dfce79c12dc755bf14fc42c65a088",
+      "index": 18,
+      "epochSeconds": 1705194400,
+      "category": "churn",
+      "subsystem": "queue",
+      "subject": "Small refactor of src/queue/array-queue.js",
+      "files": [
+        "src/queue/array-queue.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c1e5e447ece802a6318955f21b7a9d9cc6843b4a",
+      "index": 19,
+      "epochSeconds": 1705205200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade prettier to v2.10.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "16290306816b454bdc46788a5f30c8fca6f990ad",
+      "index": 20,
+      "epochSeconds": 1705216000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade chalk to v3.16.12",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "957957be419e7ca4fd04930eed45c5cf5dccf224",
+      "index": 21,
+      "epochSeconds": 1705226800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump uuid 8.17.9",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "c3cde865abb58e718b8995fafe65aec12b390588",
+      "index": 22,
+      "epochSeconds": 1705237600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade jest to v3.12.27",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "237fd933168ca1a9d712afdc0520694b39a9aef3",
+      "index": 23,
+      "epochSeconds": 1705248400,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Fix typo in src/metrics/counters.js comment",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "93a801c9646fbf2fc767338c1be31855b8c0a844",
+      "index": 24,
+      "epochSeconds": 1705259200,
+      "category": "churn",
+      "subsystem": "queue",
+      "subject": "Normalize whitespace in src/queue/array-queue.js",
+      "files": [
+        "src/queue/array-queue.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2347a6783a338860a7dd6eac963614e559e26971",
+      "index": 25,
+      "epochSeconds": 1705270000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin commander at 4.10.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "565da547dff89882e649b32565125f562282b2dd",
+      "index": 26,
+      "epochSeconds": 1705280800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin node-fetch at 1.7.10",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b881380b8a4c9e60b0d75520386e64957ad05817",
+      "index": 27,
+      "epochSeconds": 1705291600,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Consolidate constants in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d042064925b568288dc7aca2b3de78f65876ec2a",
+      "index": 28,
+      "epochSeconds": 1705302400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump commander to 6.0.18",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "fabe0f6ce388cf1b863734c58bfb731c9a37fbe6",
+      "index": 29,
+      "epochSeconds": 1705313200,
+      "category": "churn",
+      "subsystem": "queue",
+      "subject": "Trim trailing whitespace in src/queue/array-queue.js",
+      "files": [
+        "src/queue/array-queue.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1e15fd0d83d476f7c2d8ceff120a5c691faa364b",
+      "index": 30,
+      "epochSeconds": 1705324000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update jest dependency to 4.0.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "5f6ce8f98ea0741a0178ea3302d92c433a108a19",
+      "index": 31,
+      "epochSeconds": 1705334800,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Update comment in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "93bc3ec8268a9bfb6e660bfc9509b436b5c78303",
+      "index": 32,
+      "epochSeconds": 1705345600,
+      "category": "churn",
+      "subsystem": "queue",
+      "subject": "Reformat src/queue/array-queue.js",
+      "files": [
+        "src/queue/array-queue.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "338811f7bb9c9236841aefd996b170be900d7ccf",
+      "index": 33,
+      "epochSeconds": 1705356400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Small refactor of src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "771a196b7ea74b43da5c763de6a49b35e129a7f2",
+      "index": 34,
+      "epochSeconds": 1705367200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update inline docs for src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c2b990bded4f8d3a670710a095cba9d258d79bf2",
+      "index": 35,
+      "epochSeconds": 1705378000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade axios to v1.4.9",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "abef8056f2f0a1ba50525a9422eeb555d92e5085",
+      "index": 36,
+      "epochSeconds": 1705388800,
+      "category": "deleted_implementation",
+      "subsystem": "queue",
+      "subject": "Delete ArrayQueue now that WorkerPool handles all job intake",
+      "files": [
+        "src/queue/array-queue.js"
+      ],
+      "note": "The deleted queue implementation itself is the expected evidence for \"the queue before we moved to workers\".",
+      "beatId": "queue.remove-array-queue"
+    },
+    {
+      "sha": "51c09b6002c87859f64a895f27e093b224906cea",
+      "index": 37,
+      "epochSeconds": 1705399600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump babel-core to 6.11.10",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "a0c06473d6169b51b748ea61078db4a225225ebe",
+      "index": 38,
+      "epochSeconds": 1705410400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update inline docs for src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "92767a7c3ecda68483d569fce21f3c0e8358c9a6",
+      "index": 39,
+      "epochSeconds": 1705421200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade commander to v1.7.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "dd18f43967c99d810bf481803f9f15fd00a50d60",
+      "index": 40,
+      "epochSeconds": 1705432000,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Add missing semicolon in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d0349d151a8135c157d2484f17ffe8bb3a6c59ca",
+      "index": 41,
+      "epochSeconds": 1705442800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Remove unused variable in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f1487d9fa08e58b54a1f7b44497be5a6b85b00db",
+      "index": 42,
+      "epochSeconds": 1705453600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump prettier 8.6.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "09d09d16c7e29a9ac5d8c34b856a22e53d3b851d",
+      "index": 43,
+      "epochSeconds": 1705464400,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Rename local variable in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7c20ba9f16473591bdca24286ada9af197f1eecf",
+      "index": 44,
+      "epochSeconds": 1705475200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Drop dead code path in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9ebdfc4523012db828843de313add04d59444131",
+      "index": 45,
+      "epochSeconds": 1705486000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Small refactor of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cc008ff1de7e827495bac2fe09d4a373a9f346c7",
+      "index": 46,
+      "epochSeconds": 1705496800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin uuid at 8.18.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "7bb76b9d9c678f468806364d33e601a8875b3966",
+      "index": 47,
+      "epochSeconds": 1705507600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Reorder function arguments in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e629de9aeab8c698bd36af715ca988014eab6644",
+      "index": 48,
+      "epochSeconds": 1705518400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Normalize whitespace in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0c382826c0bdc6f14c6866bcfa1a013cc1510014",
+      "index": 49,
+      "epochSeconds": 1705529200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Extract helper in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1185aa8f290c50e834830537a99aadea2f04b1d7",
+      "index": 50,
+      "epochSeconds": 1705540000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Improve readability of README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "490e0bc8bbc3469fdaea834e466601530dc2aea0",
+      "index": 51,
+      "epochSeconds": 1705550800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update comment in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4532f18982ba605078a05d25cd8254c66bad6e70",
+      "index": 52,
+      "epochSeconds": 1705561600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update eslint dependency to 8.15.13",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "225b5cfb63c1b1aafbc3edaee133d07f2f9d49bf",
+      "index": 53,
+      "epochSeconds": 1705572400,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Add missing semicolon in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "583fab8c1275e983d5b14a3abe9ad0a631f3d399",
+      "index": 54,
+      "epochSeconds": 1705583200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Remove unused variable in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2146dd9ad459f78ce28e95ed19c4db7cdee3f020",
+      "index": 55,
+      "epochSeconds": 1705594000,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Trim trailing whitespace in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "764eaf293d5f13f58c62f499de11e17fbb219f0f",
+      "index": 56,
+      "epochSeconds": 1705604800,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Small refactor of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "89ba9fbf9e2773bce5caca82f015e44135b84e22",
+      "index": 57,
+      "epochSeconds": 1705615600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Align src/worker/poll-legacy.js with lint rules",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f4213262c8343b19efe38ded4cd4a4f8cc53f7b5",
+      "index": 58,
+      "epochSeconds": 1705626400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Reorder function arguments in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a6d315495ac3315504951cd30d77770b2b628797",
+      "index": 59,
+      "epochSeconds": 1705637200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Small refactor of src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "343f8c53f540abeeae39691bd215cf0523fc20e5",
+      "index": 60,
+      "epochSeconds": 1705648000,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Small refactor of src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5d9167adf4c6393487dcb8394d786f4340562f64",
+      "index": 61,
+      "epochSeconds": 1705658800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Tidy up imports in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5c54ff0a641eb15dde8a1dd03636878d1ccc1919",
+      "index": 62,
+      "epochSeconds": 1705669600,
+      "category": "poor_message_rich_diff",
+      "subsystem": "worker",
+      "subject": "wip",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Subject \"wip\" carries no signal; the guarded release() and its comment are the only evidence for a query about over-concurrent workers.",
+      "beatId": "worker.fix-issue-2"
+    },
+    {
+      "sha": "2e13d0e21dc2572e1fb206c2aaa28c82f84cfbae",
+      "index": 63,
+      "epochSeconds": 1705680400,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Fix typo in src/metrics/counters.js comment",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f17bf0f6ad6bd0b38edc530514e17a516397af5c",
+      "index": 64,
+      "epochSeconds": 1705691200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Rename local variable in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eff28eccd5747284433c446c4b2c902be5e4aa06",
+      "index": 65,
+      "epochSeconds": 1705702000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Reformat README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e812225e1f7cd5b7eb51d1b3d78952e20d965554",
+      "index": 66,
+      "epochSeconds": 1705712800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Minor cleanup in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8cb5b8a75e287f8d237655e8336aa7e95baf14e5",
+      "index": 67,
+      "epochSeconds": 1705723600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Add missing semicolon in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f95e01c3299e8bb4587f135598e6810ed5034d1b",
+      "index": 68,
+      "epochSeconds": 1705734400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Improve readability of README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fae838d719f5bc586014ed5076b343f78db0b68f",
+      "index": 69,
+      "epochSeconds": 1705745200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Trim trailing whitespace in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bca8fbddf55ed3c0fc6bab81e35ecb28a19bf31f",
+      "index": 70,
+      "epochSeconds": 1705756000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Small refactor of README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "38d1627fc997a5b8d6cceed6fdce13715ad45026",
+      "index": 71,
+      "epochSeconds": 1705766800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Fix typo in src/worker/poll-legacy.js comment",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "64ce7fe0cdd70280a7b7e0568e6818bf095b45ac",
+      "index": 72,
+      "epochSeconds": 1705777600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update comment in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5c48028db12b5827562af0e764c152fbe71de656",
+      "index": 73,
+      "epochSeconds": 1705788400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Drop dead code path in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "92af69de5abd0dfde4eb6799b26af442cfe109e9",
+      "index": 74,
+      "epochSeconds": 1705799200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update comment in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bb231e4a258d2870e5a0d25fc6009f0eadf02796",
+      "index": 75,
+      "epochSeconds": 1705810000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Trim trailing whitespace in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d98eb1f2dc2eae997d1b313630cd88b8b71010e0",
+      "index": 76,
+      "epochSeconds": 1705820800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Improve readability of src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f841db16b3bca485782624b06ea83b02b11ccc58",
+      "index": 77,
+      "epochSeconds": 1705831600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Rename local variable in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "294c300b9387f4ab9c6c1bcad2bd54af6eb8971b",
+      "index": 78,
+      "epochSeconds": 1705842400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Minor cleanup in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eafc5a30102efa282cc79809f3f44f226197db7b",
+      "index": 79,
+      "epochSeconds": 1705853200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update inline docs for src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3925b32d97bbef55442b5668a78c1acfe7d71252",
+      "index": 80,
+      "epochSeconds": 1705864000,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Small refactor of src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8bf057d9d79584dca4f7713a1ff264cb6b88bd74",
+      "index": 81,
+      "epochSeconds": 1705874800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Update inline docs for README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "903654124e680578e24ac0e35698171096b9f560",
+      "index": 82,
+      "epochSeconds": 1705885600,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Minor cleanup in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3933fa98a6a9225ed49b3ffb003692b397c9f7c1",
+      "index": 83,
+      "epochSeconds": 1705896400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Small refactor of src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9c48fa66ef7418bf74b0576afa68b90c4f36d44c",
+      "index": 84,
+      "epochSeconds": 1705907200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Minor cleanup in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6587a99a76e1229438ec2cf9e6f8ccd47fe48f20",
+      "index": 85,
+      "epochSeconds": 1705918000,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Fix typo in src/worker/pool.js comment",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1b217fccb4f2c9e1b958b8f656ae327cd3599c43",
+      "index": 86,
+      "epochSeconds": 1705928800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Rename local variable in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "93653afbbedce1285a4b0adee91c2cbc3b2db6ad",
+      "index": 87,
+      "epochSeconds": 1705939600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Trim trailing whitespace in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f6052386c3b94aa76089ea94a2cab546321c3e52",
+      "index": 88,
+      "epochSeconds": 1705950400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Reformat README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d6b7e9264791dab161e7ebc244f17a869aa0b58f",
+      "index": 89,
+      "epochSeconds": 1705961200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Minor cleanup in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "40f489f0a86c1069598c74918e8b039bb6a49dfc",
+      "index": 90,
+      "epochSeconds": 1705972000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Consolidate constants in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "271cf75641935bc02614aaec5fc8d93b394ac7b0",
+      "index": 91,
+      "epochSeconds": 1705982800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Align src/worker/poll-legacy.js with lint rules",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2587a68eb735446ff396686afd525aa1801c959f",
+      "index": 92,
+      "epochSeconds": 1705993600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Consolidate constants in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ff83588d089ef584b3a71cada93ed0f5e5d78f68",
+      "index": 93,
+      "epochSeconds": 1706004400,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Drop dead code path in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1bb6e83c0f89f653a9958909662147277ad8e472",
+      "index": 94,
+      "epochSeconds": 1706015200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Small refactor of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2991c7f682c2a19943bafc61c40ae184bd41869d",
+      "index": 95,
+      "epochSeconds": 1706026000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Small refactor of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "50a2d9b0d858d109492824d4ad6835f9fdbde988",
+      "index": 96,
+      "epochSeconds": 1706036800,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Normalize whitespace in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ef5bd3af9fdac2ae339083503f9192876ea39925",
+      "index": 97,
+      "epochSeconds": 1706047600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Tidy up imports in src/worker/poll-legacy.js",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f149ceedf526492534143892c79ae8b33a1959c7",
+      "index": 98,
+      "epochSeconds": 1706058400,
+      "category": "deleted_implementation",
+      "subsystem": "worker",
+      "subject": "Remove WorkerPool.pollForWork(), replaced by push-based submit()",
+      "files": [
+        "src/worker/poll-legacy.js"
+      ],
+      "note": "A second deleted-implementation case in the same fixture, targeting a different removed function than the array queue.",
+      "beatId": "worker.remove-polling-submit"
+    },
+    {
+      "sha": "a0a9f49d30c3c7f4106b448337c435eba89b51f2",
+      "index": 99,
+      "epochSeconds": 1706069200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Simplify conditional in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "52fa79d94e5c89223000c48858ae2d33051201d5",
+      "index": 100,
+      "epochSeconds": 1706080000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Minor cleanup in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fc3e443c7dd250edd22118bfdc983641b5d1f8c5",
+      "index": 101,
+      "epochSeconds": 1706090800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Fix typo in src/worker/pool.js comment",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bb2ec6fd083e0fcc0b98e7de3680ef92fadc3a1d",
+      "index": 102,
+      "epochSeconds": 1706101600,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Update inline docs for README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f5878f3520c4d13777f409caf9075c3b44c381e6",
+      "index": 103,
+      "epochSeconds": 1706112400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Adjust logging verbosity in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6fd1c6f2c201d7732b9c64e5a69614c6c9c9d1a0",
+      "index": 104,
+      "epochSeconds": 1706123200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Reorder function arguments in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d8d4e48d2ca2f738c4ab40c28d70ac72aac17070",
+      "index": 105,
+      "epochSeconds": 1706134000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Improve readability of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d3c525f81e741e042e3ad2584c6bc2204b5e8dd9",
+      "index": 106,
+      "epochSeconds": 1706144800,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Trim trailing whitespace in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "88ed6c4ae47f83647c020fc36c6ec751ece77160",
+      "index": 107,
+      "epochSeconds": 1706155600,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Consolidate constants in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "65b548571ddc3ba59ecef2dc457d6538aec136e0",
+      "index": 108,
+      "epochSeconds": 1706166400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Consolidate constants in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "832c7f14ccf6ca7c01719c1962d03f473c423c69",
+      "index": 109,
+      "epochSeconds": 1706177200,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update inline docs for src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dfb49f98624b37467cf9e7cae234d892ad8c7a22",
+      "index": 110,
+      "epochSeconds": 1706188000,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Tidy up imports in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8824a6fd05313c3c6444e8d1d8ea4274f80d0097",
+      "index": 111,
+      "epochSeconds": 1706198800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Update comment in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ce36579eef4b48265f9bfde5c018c61bf4474b04",
+      "index": 112,
+      "epochSeconds": 1706209600,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Adjust logging verbosity in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5609920f98cff1ba59002d9c29471fa5c1e8047f",
+      "index": 113,
+      "epochSeconds": 1706220400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Reorder function arguments in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "77c50147997099b58b239ba5b1e61fe7aaf79f92",
+      "index": 114,
+      "epochSeconds": 1706231200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Tidy up imports in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6da5d57f625f8b1226f820e833c30ecfec3df017",
+      "index": 115,
+      "epochSeconds": 1706242000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Adjust logging verbosity in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0a758bc3cd116abd004685713fb0d498941237bd",
+      "index": 116,
+      "epochSeconds": 1706252800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Remove unused variable in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "40aa52fa40f10e228269d4a2fef1a03b17d98680",
+      "index": 117,
+      "epochSeconds": 1706263600,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Remove unused variable in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "93ec6a5a60c1f1898960077fc37d7ecff0f3eba8",
+      "index": 118,
+      "epochSeconds": 1706274400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Rename local variable in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0ff8d30e82bb3f8400e14564aff7d8dd8c91526c",
+      "index": 119,
+      "epochSeconds": 1706285200,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Drop dead code path in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "71d806f5906f0b97938c7647ead79f01bb260556",
+      "index": 120,
+      "epochSeconds": 1706296000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Simplify conditional in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b60c9daca114357f973e32881223feb940ef8c7a",
+      "index": 121,
+      "epochSeconds": 1706306800,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Simplify conditional in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "de5a5193828d8a3255c61816aa05b1e4539adf6a",
+      "index": 122,
+      "epochSeconds": 1706317600,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Tidy up imports in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fc01006b709eb504a26320d30b5bd52af05eaa63",
+      "index": 123,
+      "epochSeconds": 1706328400,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Add missing semicolon in README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "70e64ffac3f23b66a46e6dbdcfc53b83d2b3782e",
+      "index": 124,
+      "epochSeconds": 1706339200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Simplify conditional in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "071de9f0a3c358bef5286dc84186a686dfeab6b3",
+      "index": 125,
+      "epochSeconds": 1706350000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Extract helper in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "81658e6a1cca145f3974ba72235f075057d45443",
+      "index": 126,
+      "epochSeconds": 1706360800,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Minor cleanup in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a2904af9bc89cd2069c6bbe9a7fee1539b05a1e7",
+      "index": 127,
+      "epochSeconds": 1706371600,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Add missing semicolon in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2c8868680aa3979d11a0ec7982441a3ca14b364d",
+      "index": 128,
+      "epochSeconds": 1706382400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Drop dead code path in src/worker/pool.js",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "17f5b5e9b3765f6fe3804919d06dd8dbcce9ff2c",
+      "index": 129,
+      "epochSeconds": 1706393200,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Remove unused variable in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0a8bef15dc22f1fa3fce524d73d0446917497553",
+      "index": 130,
+      "epochSeconds": 1706404000,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Small refactor of src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dc37f5f64103fceb2a7557de1babfbfb0dd2b9d5",
+      "index": 131,
+      "epochSeconds": 1706414800,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Simplify conditional in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8499b524b102797f4fcf7f3b56439ff92324d1d4",
+      "index": 132,
+      "epochSeconds": 1706425600,
+      "category": "churn",
+      "subsystem": "metrics",
+      "subject": "Drop dead code path in src/metrics/counters.js",
+      "files": [
+        "src/metrics/counters.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2bc95f6b37589d634c2360ec93ae167b3534ca43",
+      "index": 133,
+      "epochSeconds": 1706436400,
+      "category": "churn",
+      "subsystem": "worker",
+      "subject": "Fix typo in src/worker/pool.js comment",
+      "files": [
+        "src/worker/pool.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9ebabcbb481c16e01384e16ad0f423091286e307",
+      "index": 134,
+      "epochSeconds": 1706447200,
+      "category": "churn",
+      "subsystem": "docs",
+      "subject": "Reformat README.md",
+      "files": [
+        "README.md"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    }
+  ]
+}

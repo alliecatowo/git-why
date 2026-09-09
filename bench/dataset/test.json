@@ -1,0 +1,446 @@
+{
+  "splitName": "test",
+  "description": "Held-out split for benchmark A. NOT blinded: the same agent system that implements Git Why also authored these cases. Do not read this file from any tuning script. See bench/README.md for the honesty note.",
+  "cases": [
+    {
+      "id": "t-synmis-01",
+      "category": "synonym_mismatch",
+      "fixtureId": "realtime-chat",
+      "query": "A user shows up twice in the \"who is online\" list after they reconnect from a second tab. Where was that addressed?",
+      "relevantShas": [
+        "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "src/presence/roster-view.js: names collection switched from an array (push) to a Set (add) to dedupe."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "287b802786ccfde6404ee661b9927d5f1840e679",
+          "subject": "Fix duplicate message dispatch after reconnect",
+          "reason": "Same fixture, same general theme (reconnect duplication), but fixes socket-pool dispatch, not the visible roster list."
+        }
+      ],
+      "corpusSnapshotSha": "c3305019d7418ff16b7eddb390ea8be030abf60f"
+    },
+    {
+      "id": "t-synmis-02",
+      "category": "synonym_mismatch",
+      "fixtureId": "api-gateway",
+      "query": "When a call to an upstream provider times out, is there any chance the same request actually gets sent a second time in the background?",
+      "relevantShas": [
+        "c37cca49ca592898af925856e873a48162c8dd75"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "src/retry/idempotent-retry-policy.js: aborts the timed-out attempt before starting the next one."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "3ce4f258c24d53cbe34d922e22fcb52fb8c9490b",
+          "subject": "Avoid refreshing the auth token on every retry attempt",
+          "reason": "Same subsystem and same retry loop, but about token refetching, not about the request itself firing twice."
+        }
+      ],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-workr-01",
+      "category": "workaround_rationale",
+      "fixtureId": "auth-platform",
+      "query": "There is a case-insensitive check for the Authorization header — why is that needed?",
+      "relevantShas": [
+        "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: mobile app versions <= 4.2 on Android send the header name lowercase due to a WebView quirk; keep until those versions drop below 1% of sessions."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "3ee65ce3d140d5804390e072d03005a63751b260"
+    },
+    {
+      "id": "t-workr-02",
+      "category": "workaround_rationale",
+      "fixtureId": "api-gateway",
+      "query": "Why does the Acme client bother parsing the response body even when Acme returns a 200 status?",
+      "relevantShas": [
+        "397fb43f03cc8c6b8157257fea92b8355958ff56"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: Acme returns HTTP 200 with { error: \"rate_limited\" } in the body instead of 429 (confirmed via their support ticket #88213)."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "c67425023736d4f4fc6e3dffecc4e41304f09132",
+          "subject": "Never retry Initech 501 responses",
+          "reason": "A different provider with its own, differently-shaped status-code quirk."
+        }
+      ],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-delimpl-01",
+      "category": "deleted_implementation",
+      "fixtureId": "realtime-chat",
+      "query": "What did the client SDK use to do for reconnect backoff before it was simplified?",
+      "relevantShas": [
+        "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit removed a hand-rolled exponential backoff loop that lived inline in ChatSocket.connect()."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "c3305019d7418ff16b7eddb390ea8be030abf60f"
+    },
+    {
+      "id": "t-delimpl-02",
+      "category": "deleted_implementation",
+      "fixtureId": "task-queue",
+      "query": "Did workers used to ask the queue for work on a timer instead of having work pushed to them?",
+      "relevantShas": [
+        "f149ceedf526492534143892c79ae8b33a1959c7"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "src/worker/poll-legacy.js (removed): pollForWork() had idle workers poll for work every 50ms before submit() pushed work directly."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "9ebabcbb481c16e01384e16ad0f423091286e307"
+    },
+    {
+      "id": "t-migr-01",
+      "category": "migration",
+      "fixtureId": "data-pipeline",
+      "query": "Is the CSV export code still around, or was it removed after the streaming change?",
+      "relevantShas": [
+        "c46e31e33e1b938098ea54beb8024c8f694204f8"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "buildCsv() deleted as a follow-up once every caller used streamNdjson()."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "6be9c85689373237bc4dd98e70d861b41e35ce40"
+    },
+    {
+      "id": "t-migr-02",
+      "category": "migration",
+      "fixtureId": "data-pipeline",
+      "query": "Is there any Redis-based locking code left in the pipeline after the move to Postgres locks?",
+      "relevantShas": [
+        "e3c0c083793c1626bd7ec447e4efa038becd5fb0"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "src/locking/redis-lock.js deleted once all callers moved to withAdvisoryLock()."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "6be9c85689373237bc4dd98e70d861b41e35ce40"
+    },
+    {
+      "id": "t-exid-01",
+      "category": "exact_identifier",
+      "fixtureId": "auth-platform",
+      "query": "AuthSessionProvider cache miss metric",
+      "relevantShas": [
+        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Emits auth_session_provider.cache_miss on a cache miss in AuthSessionProvider.getSession()."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+          "subject": "Add dispose() to AuthSessionProvider to clear its cache",
+          "reason": "Same class, adds dispose(), not a metric."
+        }
+      ],
+      "corpusSnapshotSha": "3ee65ce3d140d5804390e072d03005a63751b260"
+    },
+    {
+      "id": "t-exid-02",
+      "category": "exact_identifier",
+      "fixtureId": "auth-platform",
+      "query": "AuthSessionProvider dispose cache",
+      "relevantShas": [
+        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "dispose() added to AuthSessionProvider to clear its internal cache."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+          "subject": "Emit a metric from AuthSessionProvider on cache miss",
+          "reason": "Same class, adds a metric, not dispose()."
+        }
+      ],
+      "corpusSnapshotSha": "3ee65ce3d140d5804390e072d03005a63751b260"
+    },
+    {
+      "id": "t-numver-01",
+      "category": "number_version",
+      "fixtureId": "data-pipeline",
+      "query": "Is there a minimum Node version required specifically for the streaming export code?",
+      "relevantShas": [
+        "3e1966dceea7222210acaed94e318351478c28f0"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: Node 16's ReadableStream.from() drops the final chunk under backpressure; Node 18+ required for streamNdjson()."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+          "subject": "Require Postgres 14+; drop support for Postgres 13",
+          "reason": "A version requirement in the same fixture, but about Postgres, not Node."
+        }
+      ],
+      "corpusSnapshotSha": "6be9c85689373237bc4dd98e70d861b41e35ce40"
+    },
+    {
+      "id": "t-numver-02",
+      "category": "number_version",
+      "fixtureId": "build-tooling",
+      "query": "Did we ever remove support for building with webpack 4?",
+      "relevantShas": [
+        "416b61a68ef598dde37fa3a1226ef9d42c066699"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: the webpack 4 compatibility branch in build.js had not been exercised by CI in three months; removed."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+          "subject": "Require npm 9+ for the lockfile v3 format",
+          "reason": "A different tool-version requirement (npm, not webpack) in the same fixture."
+        }
+      ],
+      "corpusSnapshotSha": "6cf38719ec01eb87c2728af807807794ed9095ae"
+    },
+    {
+      "id": "t-rename-01",
+      "category": "rename",
+      "fixtureId": "realtime-chat",
+      "query": "Is PresenceTracker still called that, or was it renamed?",
+      "relevantShas": [
+        "a279f2a34173e452cbdbb80eadf863dc2266f4c6"
+      ],
+      "filter": {
+        "paths": [
+          {
+            "value": "src/presence/tracker.js",
+            "kind": "file"
+          }
+        ],
+        "after": null,
+        "before": null,
+        "author": null
+      },
+      "expectedEvidence": [
+        "src/presence/tracker.js (class PresenceTracker) renamed to src/presence/room-presence.js (RoomPresence)."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "c3305019d7418ff16b7eddb390ea8be030abf60f"
+    },
+    {
+      "id": "t-rename-02",
+      "category": "rename",
+      "fixtureId": "api-gateway",
+      "query": "The Acme client file used to be named just acme-client.js — where is it now?",
+      "relevantShas": [
+        "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
+      ],
+      "filter": {
+        "paths": [
+          {
+            "value": "src/providers/acme-client.js",
+            "kind": "file"
+          }
+        ],
+        "after": null,
+        "before": null,
+        "author": null
+      },
+      "expectedEvidence": [
+        "src/providers/acme-client.js renamed to src/providers/acme-payments-client.js."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-poormsg-01",
+      "category": "poor_message_rich_diff",
+      "fixtureId": "api-gateway",
+      "query": "There is a change to the Globex client around handling a 204 with a Retry-After header -- can you find it?",
+      "relevantShas": [
+        "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "src/providers/globex-client.js: callGlobex() now waits out Retry-After on a 204 before retrying (subject was just \"fix 2\")."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-richskip-01",
+      "category": "rich_message_skipped_patch",
+      "fixtureId": "build-tooling",
+      "query": "Why did the release-notes generator get bumped to a new major version?",
+      "relevantShas": [
+        "f24787847358c0c0b7fc0680803310567434ca7e"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: the new major version writes per-version changelog files instead of rewriting one CHANGELOG.md, which plays better with the release script's diff-based sanity check."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "28f1eb675de28b4320093b13ffba0cc31b56a334",
+          "subject": "Pin esbuild to 0.19.2 pending a Windows path-handling fix",
+          "reason": "Another lockfile-only commit in the same fixture, but about a bundler bug, not the release-notes tool."
+        }
+      ],
+      "corpusSnapshotSha": "6cf38719ec01eb87c2728af807807794ed9095ae"
+    },
+    {
+      "id": "t-lifecycle-01",
+      "category": "lifecycle",
+      "fixtureId": "auth-platform",
+      "query": "There was some IE11-specific caching for CORS preflight requests at some point -- when did that come and go?",
+      "relevantShas": [
+        "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+        "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Introduced: IE11's fetch polyfill re-sent an OPTIONS preflight per request; cached the preflight response client-side for IE11.",
+        "Removed: IE11 dropped from the supported browser matrix; cache deleted."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "3ee65ce3d140d5804390e072d03005a63751b260"
+    },
+    {
+      "id": "t-lifecycle-02",
+      "category": "lifecycle",
+      "fixtureId": "auth-platform",
+      "query": "I noticed a misspelled field name being sent in some API responses at one point -- what was that about, and is it gone now?",
+      "relevantShas": [
+        "640894127914c43d4ebd7e5e9260edb042a565a0",
+        "1adae5fad51f5bf7edc305e5120c88a39fde7a3f"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Introduced: app versions <= 3.0 read response.sucess (typo) instead of response.success; mirrored the field under both keys.",
+        "Removed: app version 3.0 and earlier can no longer authenticate at all after a certificate pin rotation; mirrored field deleted."
+      ],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "3ee65ce3d140d5804390e072d03005a63751b260"
+    },
+    {
+      "id": "t-distintent-01",
+      "category": "distractor_intent",
+      "fixtureId": "api-gateway",
+      "query": "Why does the Acme provider client check the response body for an error field even on a successful-looking status?",
+      "relevantShas": [
+        "397fb43f03cc8c6b8157257fea92b8355958ff56"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: Acme returns 200 with { error: \"rate_limited\" } in the body instead of 429 (support ticket #88213)."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+          "subject": "Bump the Globex token expiry buffer from 30s to 90s",
+          "reason": "A different provider (Globex) whose issue is clock skew on token expiry, not response body shape."
+        }
+      ],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-distintent-02",
+      "category": "distractor_intent",
+      "fixtureId": "api-gateway",
+      "query": "Why doesn't the gateway ever retry against Initech when it gets a 501?",
+      "relevantShas": [
+        "c67425023736d4f4fc6e3dffecc4e41304f09132"
+      ],
+      "filter": null,
+      "expectedEvidence": [
+        "Commit message: Initech uses 501 to mean \"billing account not yet provisioned\" (their docs section 9), which resolves over minutes/hours, not something a short retry backoff would ever catch."
+      ],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "4a97a48133b5b9a037377ac2c8b8f33e9822d6de",
+          "subject": "Bump the Globex token expiry buffer from 30s to 90s",
+          "reason": "A different provider and a token-timing issue, not a status-code retry rule."
+        }
+      ],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-noev-01",
+      "category": "no_evidence",
+      "fixtureId": "task-queue",
+      "query": "Why does WorkerPool track a \"busy\" counter instead of a set of individual worker objects?",
+      "relevantShas": [],
+      "filter": null,
+      "expectedEvidence": [],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "9ebabcbb481c16e01384e16ad0f423091286e307"
+    },
+    {
+      "id": "t-noev-02",
+      "category": "no_evidence",
+      "fixtureId": "auth-platform",
+      "query": "Why is the AuthSessionProvider cache TTL exactly 30 seconds rather than, say, 60?",
+      "relevantShas": [],
+      "filter": null,
+      "expectedEvidence": [],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+          "subject": "AuthSessionProvider: cache getSession() results for 30s",
+          "reason": "Introduces the 30s TTL but never justifies the specific number."
+        }
+      ],
+      "corpusSnapshotSha": "3ee65ce3d140d5804390e072d03005a63751b260"
+    },
+    {
+      "id": "t-noev-03",
+      "category": "no_evidence",
+      "fixtureId": "api-gateway",
+      "query": "Why is the retry policy's max attempt count a fixed constant instead of configurable per provider?",
+      "relevantShas": [],
+      "filter": null,
+      "expectedEvidence": [],
+      "whyDistractorsAreNotAnswers": [],
+      "corpusSnapshotSha": "fb3905cb55f785c2fa786a2913f8bbaae9e834df"
+    },
+    {
+      "id": "t-noev-04",
+      "category": "no_evidence",
+      "fixtureId": "build-tooling",
+      "query": "Why is the minimum supported Node version 16 rather than 18 for this project?",
+      "relevantShas": [],
+      "filter": null,
+      "expectedEvidence": [],
+      "whyDistractorsAreNotAnswers": [
+        {
+          "sha": "be8c9ece1e45e5f57cf9c536d6927cee4069babf",
+          "subject": "Require npm 9+ for the lockfile v3 format",
+          "reason": "Bumps the npm floor and explains why, but never touches or justifies the Node floor."
+        }
+      ],
+      "corpusSnapshotSha": "6cf38719ec01eb87c2728af807807794ed9095ae"
+    }
+  ]
+}

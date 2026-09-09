@@ -218,14 +218,18 @@ export function parsePatchSections(buf: Buffer): ParsedFileSection[] {
       i += 1;
       let oldRemaining = oldCount;
       let newRemaining = newCount;
-      while (i < lines.length && (oldRemaining > 0 || newRemaining > 0)) {
+      while (i < lines.length) {
         const l = lines[i] ?? '';
         if (l.startsWith('\\')) {
+          // `\ No newline at end of file` can trail the very last content line, i.e.
+          // after old/new counts already hit zero; still consume it as part of this
+          // hunk rather than letting the outer count check stop one line too early.
           const last = hunkLines[hunkLines.length - 1];
           if (last !== undefined) hunkLines[hunkLines.length - 1] = { ...last, noNewline: true };
           i += 1;
           continue;
         }
+        if (oldRemaining <= 0 && newRemaining <= 0) break;
         const marker = l.charAt(0);
         const rest = l.slice(1);
         if (marker === ' ') {

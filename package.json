@@ -4,18 +4,29 @@
   "description": "Semantic archaeology for Git. Find the history that explains the code.",
   "license": "Apache-2.0",
   "type": "module",
-  "engines": { "node": ">=22.12.0" },
-  "bin": { "git-why": "dist/cli/main.js" },
-  "files": ["dist/", "README.md", "LICENSE", "NOTICE", "schema/"],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "bin": {
+    "git-why": "dist/cli/main.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "schema/"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node scripts/postbuild.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "test:unit": "node --test --test-concurrency=4 test/unit/",
-    "test:integration": "node --test --test-concurrency=2 --test-timeout=300000 test/integration/",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit"
+    "test:unit": "npm run build:test && node --test --test-concurrency=4 \".tmp/tsc-test/test/unit/**/*.test.js\"",
+    "test:integration": "npm run build:test && node --test --test-concurrency=2 --test-timeout=600000 \".tmp/tsc-test/test/integration/**/*.test.js\"",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit",
+    "build:test": "tsc -p tsconfig.test.json && node scripts/copy-test-assets.mjs"
   },
   "dependencies": {
     "@zvec/zvec": "0.7.1"

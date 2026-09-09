@@ -1,0 +1,1952 @@
+{
+  "fixtureId": "data-pipeline",
+  "seed": "git-why-bench::data-pipeline::v1",
+  "theme": "ETL pipeline: batch locking, CSV/NDJSON export, Postgres minimum version.",
+  "headSha": "6be9c85689373237bc4dd98e70d861b41e35ce40",
+  "commitCount": 161,
+  "objectCount": 675,
+  "commits": [
+    {
+      "sha": "36ec30299fe4b102d38cc4ae6f98c45015659dd6",
+      "index": 0,
+      "epochSeconds": 1715000000,
+      "category": "scaffold",
+      "subsystem": "core",
+      "subject": "Initial scaffold",
+      "files": [
+        "src/locking/redis-lock.js",
+        "src/export/csv-export.js",
+        "src/db/schema.js",
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Repository scaffold; not a query target."
+    },
+    {
+      "sha": "7d46ea4b3a54ee036c88520318b1e62a54293e4c",
+      "index": 1,
+      "epochSeconds": 1715010800,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Improve readability of src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "21a8ba03e318de313357d57ffdb0b48d5df7f113",
+      "index": 2,
+      "epochSeconds": 1715021600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade webpack to v6.11.23",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "61c22a69b0056f1a0718808b42a67a0c485e8048",
+      "index": 3,
+      "epochSeconds": 1715032400,
+      "category": "distractor",
+      "subsystem": "locking",
+      "subject": "Increase the Redis session-cache read timeout to 200ms",
+      "files": [
+        "src/locking/redis-cache-config.js"
+      ],
+      "note": "Distractor for the \"why stop using redis locks\" migration query: same technology, unrelated subsystem."
+    },
+    {
+      "sha": "66c46c8e3c5ac9cf76f11c9cac35e54018187aad",
+      "index": 4,
+      "epochSeconds": 1715043200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump express to 1.1.1",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "1a47a3b9de2310360f8bf9e8b3422ac45b7cc636",
+      "index": 5,
+      "epochSeconds": 1715054000,
+      "category": "distractor",
+      "subsystem": "deps",
+      "subject": "Require Node 20; drop support for Node 18",
+      "files": [
+        ".node-version-snapshot.txt"
+      ],
+      "note": "Distractor for the \"why drop postgres 13\" number/version query: a different product with a similarly shaped version-drop message."
+    },
+    {
+      "sha": "f44e346f0535239eec06792e7a05ae36f3dfea43",
+      "index": 6,
+      "epochSeconds": 1715064800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade moment to v7.6.5",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "76e3038a9d8089c8390e876146ec4ca034746505",
+      "index": 7,
+      "epochSeconds": 1715075600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump moment to 8.20.16",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "0af54d27085feeca82e49988333261ec35407669",
+      "index": 8,
+      "epochSeconds": 1715086400,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Align src/export/csv-export.js with lint rules",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "02ce78ce7780c3f3c06a0f566803255c16906cb6",
+      "index": 9,
+      "epochSeconds": 1715097200,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Adjust logging verbosity in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "49feadf86d496092d3e276fb7b53351dbd85ddf4",
+      "index": 10,
+      "epochSeconds": 1715108000,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Reorder function arguments in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c6bd1118d5fb2566072c39a09b4c46233ab8c62f",
+      "index": 11,
+      "epochSeconds": 1715118800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade node-fetch to v5.2.26",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b139e5cd524bdd92767c516ce3eedd1301bb4f28",
+      "index": 12,
+      "epochSeconds": 1715129600,
+      "category": "distractor",
+      "subsystem": "db",
+      "subject": "Document Postgres 15 compatibility in the ops runbook",
+      "files": [
+        "docs/postgres-15-notes.md"
+      ],
+      "note": "Nearby-version distractor: mentions a different Postgres version number in an unrelated context."
+    },
+    {
+      "sha": "7cedc704ab334b9c87d05f85ba7cd7b7ff0ef1e8",
+      "index": 13,
+      "epochSeconds": 1715140400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin eslint at 1.5.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4954652c1c9e00ab95173897c6af657f806c4b53",
+      "index": 14,
+      "epochSeconds": 1715151200,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Minor cleanup in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4a3100f52bb1c89f6f5ef74b20e581eba5ab1907",
+      "index": 15,
+      "epochSeconds": 1715162000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump commander to 5.5.25",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "e17a3ce8ff18fc96bca886cdc03afe616aca3c2b",
+      "index": 16,
+      "epochSeconds": 1715172800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin eslint at 3.4.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "fa2bee338eece8a91f5d1d3da360a2282cbeb2a3",
+      "index": 17,
+      "epochSeconds": 1715183600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade webpack to v6.0.8",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "db52a0e21794ca1548eb092f935699bc164837ba",
+      "index": 18,
+      "epochSeconds": 1715194400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reorder function arguments in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c140095ce3d2e841c885eb0ffccfa1ebc8941cfb",
+      "index": 19,
+      "epochSeconds": 1715205200,
+      "category": "migration",
+      "subsystem": "locking",
+      "subject": "Migrate batch locking from Redis to Postgres advisory locks",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Real migration constraint (failover data loss), not a generic \"we prefer Postgres\" statement.",
+      "beatId": "locking.migrate-to-postgres-advisory-locks"
+    },
+    {
+      "sha": "496db97bd57148c914679e32892c7a21797ec2b5",
+      "index": 20,
+      "epochSeconds": 1715216000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade dotenv to v5.5.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "d86459e64a17969cae3d0db4930607363938eed2",
+      "index": 21,
+      "epochSeconds": 1715226800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Simplify conditional in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "55cf7f401c0726968abdbb5b356271fa87dc2c70",
+      "index": 22,
+      "epochSeconds": 1715237600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin ioredis at 1.17.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "4d4fddf779b70017c844238789a56819545cdc9a",
+      "index": 23,
+      "epochSeconds": 1715248400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin dotenv at 1.9.30",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "23c9ece44501fbe16e2fafd9d332d73e1c53615f",
+      "index": 24,
+      "epochSeconds": 1715259200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin chalk at 6.5.4",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "201b5bcc36d90a77f7acf88af65eec7945b5cb1c",
+      "index": 25,
+      "epochSeconds": 1715270000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update jest dependency to 8.10.10",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "86ca06770b13f2b5cd7d263d1b343a0e70242c86",
+      "index": 26,
+      "epochSeconds": 1715280800,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Remove unused variable in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "406d27d848d31cea36696436c20492a87156a71e",
+      "index": 27,
+      "epochSeconds": 1715291600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Update comment in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "98cb6b795bdeb2ed9ecca1dff031b9b23bb44cec",
+      "index": 28,
+      "epochSeconds": 1715302400,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Minor cleanup in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "833f72335a24279e1912c26d31f98573917fdc24",
+      "index": 29,
+      "epochSeconds": 1715313200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump yargs to 3.8.0",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ae9e2a6e733ca0621c160292b9290d1ddd6f8fee",
+      "index": 30,
+      "epochSeconds": 1715324000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump axios 9.0.4",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "410448bd1d5b33e4b956de35d492fc81ec35c1f0",
+      "index": 31,
+      "epochSeconds": 1715334800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reorder function arguments in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e0d6c84c587e49807beb3468514a56627e80904e",
+      "index": 32,
+      "epochSeconds": 1715345600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update ws dependency to 4.11.25",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "cb50dcc6c70453dcf24a173d3281e50e6d508cde",
+      "index": 33,
+      "epochSeconds": 1715356400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update node-fetch dependency to 2.1.4",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "26c15b49c4287557b53a3c4742a1056bec95e45f",
+      "index": 34,
+      "epochSeconds": 1715367200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update uuid dependency to 3.11.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "987f51071650166ec8e695ee516b374a23a6f688",
+      "index": 35,
+      "epochSeconds": 1715378000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump babel-core to 6.1.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "26aaaac54f5bc64017b9f64695fc6f6f92f630ed",
+      "index": 36,
+      "epochSeconds": 1715388800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update webpack dependency to 3.3.15",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "64c4f3346fbb3bf7dfe445a4e83b10aa3640a03d",
+      "index": 37,
+      "epochSeconds": 1715399600,
+      "category": "number_version",
+      "subsystem": "db",
+      "subject": "Require Postgres 14+; drop support for Postgres 13",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Must be distinguished from unrelated numeric distractors (Node version bumps, dependency versions) and from nearby Postgres versions (12, 15) mentioned only in filler.",
+      "beatId": "db.drop-postgres-13"
+    },
+    {
+      "sha": "cf4aecc72f7da9edcb9a0a2cb46145e5d477adec",
+      "index": 38,
+      "epochSeconds": 1715410400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Consolidate constants in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "92f0b8c790b4286c445a0772f61ddb39bd9b1ff4",
+      "index": 39,
+      "epochSeconds": 1715421200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Tidy up imports in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "70f69b06bbab9ada1e633d148e4a112d4db70585",
+      "index": 40,
+      "epochSeconds": 1715432000,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Rename local variable in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "170002b8daae7d7aa4f6db60ad4d7c0aedd8bc7a",
+      "index": 41,
+      "epochSeconds": 1715442800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump axios to 9.17.4",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "172d13499ce6ea8edd3f1fdd76e5ab81bf9eca25",
+      "index": 42,
+      "epochSeconds": 1715453600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin prettier at 5.12.25",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "a9e83fc2c013b0c45c1287ad0ed3d59713f24cd0",
+      "index": 43,
+      "epochSeconds": 1715464400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Extract helper in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e22581ee2af1de7727f8cdaa99b1de6a6c521848",
+      "index": 44,
+      "epochSeconds": 1715475200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update comment in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "01cd309cf8f71b75a214e664a43209fc0de14cb2",
+      "index": 45,
+      "epochSeconds": 1715486000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Drop dead code path in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a589e10576dacfb9ada4355c7cefb76761a3c54a",
+      "index": 46,
+      "epochSeconds": 1715496800,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Normalize whitespace in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bc31f33b9cf984dbe4caa280e028e055dc1dc518",
+      "index": 47,
+      "epochSeconds": 1715507600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump ioredis to 5.17.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ce601e7928c1ce8dbcdb819f14e0805c4ef869c5",
+      "index": 48,
+      "epochSeconds": 1715518400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump yargs to 9.15.10",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "983d4028b6a5322dc9d26a17f40c8dbdac2af785",
+      "index": 49,
+      "epochSeconds": 1715529200,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Tidy up imports in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "24d1c2620219e97cca7ddeba347a3a1402c09664",
+      "index": 50,
+      "epochSeconds": 1715540000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade jest to v3.6.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "3b1d8117a8e7f1eb94265f6b83ba29cc884210e9",
+      "index": 51,
+      "epochSeconds": 1715550800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump chalk 1.16.20",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b022202b75652a55a3289e374c9d87d7d02d153d",
+      "index": 52,
+      "epochSeconds": 1715561600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin express at 9.1.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b3c8743c6235f056465d3bdf65d8d572b6bec53b",
+      "index": 53,
+      "epochSeconds": 1715572400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Add missing semicolon in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "510e76d47ed1f4f2e1cffff3971b5b64e3ea419e",
+      "index": 54,
+      "epochSeconds": 1715583200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin prettier at 9.20.24",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "a7636747e106c72b4d3574ca3c3a310ca8b1aafb",
+      "index": 55,
+      "epochSeconds": 1715594000,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Reformat src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "739418477ca04eb6aa287797271a0565960f3641",
+      "index": 56,
+      "epochSeconds": 1715604800,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Reformat src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cbfdeb7ae51a08ee5c3113889adee277d1ef5133",
+      "index": 57,
+      "epochSeconds": 1715615600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump lodash 2.6.16",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "23a83169974dc45b855a2418df4f82122fe67833",
+      "index": 58,
+      "epochSeconds": 1715626400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Drop dead code path in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8b22ac5b1d799687822f2dfbbad2783c5c33cc06",
+      "index": 59,
+      "epochSeconds": 1715637200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Minor cleanup in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e2f940873219d7b0fe5299ac6951996aed08f0a1",
+      "index": 60,
+      "epochSeconds": 1715648000,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Rename local variable in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8db96007ae0f6c86c7b6a31984dba44b9a32b82e",
+      "index": 61,
+      "epochSeconds": 1715658800,
+      "category": "rich_message_skipped_patch",
+      "subsystem": "deps",
+      "subject": "Pin the pg driver to 8.11.3 to avoid a connection-pool leak",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "The message carries the entire rationale; a policy that skips lockfile patches must still let this be found and explained from the message alone.",
+      "beatId": "deps.pin-pg-driver"
+    },
+    {
+      "sha": "0406ad21bb546b43121d3013e53fdab648f2bc7b",
+      "index": 62,
+      "epochSeconds": 1715669600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Rename local variable in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f4ca6a01fa260ab2a4fde15f16ed7f89bdb0fc68",
+      "index": 63,
+      "epochSeconds": 1715680400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Remove unused variable in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c7dbf41cc58edf7e0cc677ce848abd3939f91426",
+      "index": 64,
+      "epochSeconds": 1715691200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Adjust logging verbosity in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "daebe9270eccdce4050f991a21c8a9613184d652",
+      "index": 65,
+      "epochSeconds": 1715702000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Rename local variable in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "01edbd097d3c8a55bd1d0305c059696139776724",
+      "index": 66,
+      "epochSeconds": 1715712800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update inline docs for package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f42c1cfe097fd0f6c65fa0056192488cb9638a42",
+      "index": 67,
+      "epochSeconds": 1715723600,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Extract helper in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "961838e453894d3c8409a15a7e853f2fbfa9988f",
+      "index": 68,
+      "epochSeconds": 1715734400,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Simplify conditional in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "af7d56e3106be19bbbfd1a911b0bc0bf781c4a79",
+      "index": 69,
+      "epochSeconds": 1715745200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Align package-lock.snapshot.txt with lint rules",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8de52d3ea2d494b9d8062c6d811a1d5fee7add65",
+      "index": 70,
+      "epochSeconds": 1715756000,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Extract helper in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "075a8c8246bdf1fc71588791a2c1c35997135557",
+      "index": 71,
+      "epochSeconds": 1715766800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Consolidate constants in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "038dae9a007059f2213aa95a962b84a2421462b9",
+      "index": 72,
+      "epochSeconds": 1715777600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9d995275ab8efa0b04a4f37705f49d8c99f27025",
+      "index": 73,
+      "epochSeconds": 1715788400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Align src/locking/postgres-lock.js with lint rules",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "73dc77c2937923c95e53e51128b295ae5590e872",
+      "index": 74,
+      "epochSeconds": 1715799200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Align src/export/csv-export.js with lint rules",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dcc9bf48aa52b129fefd9cf19ef9f3c70cebea48",
+      "index": 75,
+      "epochSeconds": 1715810000,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Trim trailing whitespace in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d8bc5ae432ecaa847e8b2667871203785512de89",
+      "index": 76,
+      "epochSeconds": 1715820800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reformat package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8c8bdf451566425f4eacb8ace933b849a97e2d53",
+      "index": 77,
+      "epochSeconds": 1715831600,
+      "category": "migration",
+      "subsystem": "export",
+      "subject": "Replace in-memory CSV export with streaming NDJSON",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Real migration constraint (OOM at ~4M rows), distinct from the locking migration in the same fixture.",
+      "beatId": "export.migrate-to-streaming-ndjson"
+    },
+    {
+      "sha": "96c76f26c0722a29595be30e852bbf85d415ca2b",
+      "index": 78,
+      "epochSeconds": 1715842400,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Adjust logging verbosity in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "33844ea5add361920c388b4ca529861946005c6b",
+      "index": 79,
+      "epochSeconds": 1715853200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Consolidate constants in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e4d717ba0194cc6a146eaafb5cfe5774d5f2a964",
+      "index": 80,
+      "epochSeconds": 1715864000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Normalize whitespace in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5acb96d2b3e20f6137cb6b94b09066113db22bd1",
+      "index": 81,
+      "epochSeconds": 1715874800,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Minor cleanup in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6983ee3decf121dd693d2fbfa2ea9ef1eb8748e2",
+      "index": 82,
+      "epochSeconds": 1715885600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Fix typo in src/export/csv-export.js comment",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e976e35284e56b9533b8a83248e1563043688b35",
+      "index": 83,
+      "epochSeconds": 1715896400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Add missing semicolon in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eae2bfc3711161c81c491a7cda878a9e3bcdc87b",
+      "index": 84,
+      "epochSeconds": 1715907200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Simplify conditional in src/export/csv-export.js",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2b4b0558d75ba15ce08f5223f992a4a496ee2fba",
+      "index": 85,
+      "epochSeconds": 1715918000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Reorder function arguments in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "33bbda4d52c57c83ff8c5890d50bc4557306f405",
+      "index": 86,
+      "epochSeconds": 1715928800,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Extract helper in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1694be3593b7d3895dcb6c27010c8e513b7fddc5",
+      "index": 87,
+      "epochSeconds": 1715939600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Fix typo in package-lock.snapshot.txt comment",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "01957d85e77f27560cb5723e960e885dc10ade39",
+      "index": 88,
+      "epochSeconds": 1715950400,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Adjust logging verbosity in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d1f01133f685e8185ffa29b44f614659496a3367",
+      "index": 89,
+      "epochSeconds": 1715961200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Trim trailing whitespace in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "55b38bab10e142352d654e749be5b9aad8aa3b82",
+      "index": 90,
+      "epochSeconds": 1715972000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Simplify conditional in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "df147bc0f6bddf19201e2a04633cb65941e6e4cc",
+      "index": 91,
+      "epochSeconds": 1715982800,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Add missing semicolon in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "54c16669c91e15d71185a6dd00897eedbcc4b3a5",
+      "index": 92,
+      "epochSeconds": 1715993600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Update comment in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c472ffcf7c3336af9fe51da5a01b1dece5ffa2b7",
+      "index": 93,
+      "epochSeconds": 1716004400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Minor cleanup in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e1ab7a8cb60caf85ee9b5d0ed88162044f0e3abd",
+      "index": 94,
+      "epochSeconds": 1716015200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update comment in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d34e859ef25c6d9df524ccb35982cb9c59aa0470",
+      "index": 95,
+      "epochSeconds": 1716026000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Trim trailing whitespace in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c3af436e5a3d654afd6868927fb0f82d5cefed00",
+      "index": 96,
+      "epochSeconds": 1716036800,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Update comment in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "628fcfbfd64d5412965526ce186a458168a6b219",
+      "index": 97,
+      "epochSeconds": 1716047600,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Trim trailing whitespace in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8688b32ec98cf904c0daa3d742feb0694118dd68",
+      "index": 98,
+      "epochSeconds": 1716058400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Minor cleanup in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c46e31e33e1b938098ea54beb8024c8f694204f8",
+      "index": 99,
+      "epochSeconds": 1716069200,
+      "category": "migration",
+      "subsystem": "export",
+      "subject": "Delete buildCsv() now that every caller uses streamNdjson()",
+      "files": [
+        "src/export/csv-export.js"
+      ],
+      "note": "Completes the export migration story; relevant to a query about why CSV export was replaced.",
+      "beatId": "export.remove-csv-export"
+    },
+    {
+      "sha": "c43d817d741370fbe2f6053a2b0beee4a686e2b1",
+      "index": 100,
+      "epochSeconds": 1716080000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Align src/locking/redis-lock.js with lint rules",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d4a69521f21fda4398fd1f8a4d00779bb30bf46e",
+      "index": 101,
+      "epochSeconds": 1716090800,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Consolidate constants in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7c4d3f2a54656c91238ce9c5767e8a8fa6d148eb",
+      "index": 102,
+      "epochSeconds": 1716101600,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Align src/locking/redis-lock.js with lint rules",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "947586744598de4f0b42e204e578d89bfd1f9a63",
+      "index": 103,
+      "epochSeconds": 1716112400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Minor cleanup in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "337ff8507e7c4b28dd206986a37792e028a40557",
+      "index": 104,
+      "epochSeconds": 1716123200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Update inline docs for package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "39a4924cb2ede0f2e898cb32f250a09c5e3ae65f",
+      "index": 105,
+      "epochSeconds": 1716134000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Update inline docs for src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ac23e7c2886f1ad4ffaee0abca1a896eb518f507",
+      "index": 106,
+      "epochSeconds": 1716144800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Trim trailing whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bec7780129aa55d21427e7dc770c69f5d3f6f3ed",
+      "index": 107,
+      "epochSeconds": 1716155600,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Adjust logging verbosity in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7b3aa95f6dbae2590a197b846360b6de5a2da448",
+      "index": 108,
+      "epochSeconds": 1716166400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Improve readability of package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0a7a1602495ca733be265a4e5701370709afc8d8",
+      "index": 109,
+      "epochSeconds": 1716177200,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Align src/db/schema.js with lint rules",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e777b7c359c8995be02ab730ae2447b139d8d861",
+      "index": 110,
+      "epochSeconds": 1716188000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Minor cleanup in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "402c476ce31bc57c0bff6d8be6b9b9940ffcf6af",
+      "index": 111,
+      "epochSeconds": 1716198800,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Remove unused variable in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6459bf9233ecde795fba34410ca8008989edeaac",
+      "index": 112,
+      "epochSeconds": 1716209600,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Tidy up imports in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5ab7ebc5ce7fc5fcf515f8641df0adf24b7e4cda",
+      "index": 113,
+      "epochSeconds": 1716220400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Drop dead code path in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1d56d43740b5dc9223191c8f1c62819fbf240f8c",
+      "index": 114,
+      "epochSeconds": 1716231200,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Update inline docs for src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "99e6ddd1a5655e186c642f68e2eb54b96ed35780",
+      "index": 115,
+      "epochSeconds": 1716242000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Consolidate constants in src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "719a480ffa80cfe91510304ec7c14a9feec91260",
+      "index": 116,
+      "epochSeconds": 1716252800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Normalize whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "de43f9774b4046d277f5f286d140eeb6d1401774",
+      "index": 117,
+      "epochSeconds": 1716263600,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Reorder function arguments in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "62623c763fad5c3813790da54f6f8eea2b1006f5",
+      "index": 118,
+      "epochSeconds": 1716274400,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Reformat src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f5f4b790980e1c16f0e0eba7dfcb21d00e1f6c41",
+      "index": 119,
+      "epochSeconds": 1716285200,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Reformat src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c316480a3b449a195117445894a51289c4664065",
+      "index": 120,
+      "epochSeconds": 1716296000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Fix typo in package-lock.snapshot.txt comment",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6cae2255b869d24f17b432a38ea71736bd54bf08",
+      "index": 121,
+      "epochSeconds": 1716306800,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Extract helper in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d8805a1ada2d8c646de50f5a9624bcf1dd149fec",
+      "index": 122,
+      "epochSeconds": 1716317600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Normalize whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6da55c8cace9e9be49bc763763a015ab9c8514a6",
+      "index": 123,
+      "epochSeconds": 1716328400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Small refactor of src/locking/redis-lock.js",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8344373c44cc37df7dd8fc17c5cf5d83fd942ad5",
+      "index": 124,
+      "epochSeconds": 1716339200,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Add missing semicolon in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0a79d34c095ac87986c3e535e0469788c838a0f5",
+      "index": 125,
+      "epochSeconds": 1716350000,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Tidy up imports in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "088ebc2b16a86b693543b2a7d00f38df4a86815b",
+      "index": 126,
+      "epochSeconds": 1716360800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Tidy up imports in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e3c0c083793c1626bd7ec447e4efa038becd5fb0",
+      "index": 127,
+      "epochSeconds": 1716371600,
+      "category": "migration",
+      "subsystem": "locking",
+      "subject": "Delete the Redis lock implementation now unused",
+      "files": [
+        "src/locking/redis-lock.js"
+      ],
+      "note": "Fourth migration-category commit: completes the locking migration story.",
+      "beatId": "locking.remove-redis-lock-file"
+    },
+    {
+      "sha": "1351a002395946e1dcb5961537e4a241d9044363",
+      "index": 128,
+      "epochSeconds": 1716382400,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Tidy up imports in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f993953a856aef02fac55910320e13bc5ebfb7de",
+      "index": 129,
+      "epochSeconds": 1716393200,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Remove unused variable in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9f9314d39551a762d6129907bcb3700b21b64115",
+      "index": 130,
+      "epochSeconds": 1716404000,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Minor cleanup in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "973f48a924b149ad4efef6e181839ffcde20cf4b",
+      "index": 131,
+      "epochSeconds": 1716414800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e6ffaeb00913d38d05a94f54d44101072072b3cc",
+      "index": 132,
+      "epochSeconds": 1716425600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Extract helper in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a0683de400fbfd167cef30dc0614ded3a37ae322",
+      "index": 133,
+      "epochSeconds": 1716436400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Extract helper in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3f08c47ecc4267b64c0f3a1b987e24fde4e05d58",
+      "index": 134,
+      "epochSeconds": 1716447200,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Update comment in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5eba8fa7e511aab4e96f3b6d4c62aecdcc4298ad",
+      "index": 135,
+      "epochSeconds": 1716458000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Reorder function arguments in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ce9d91141939090e993232c4916525e27dac8326",
+      "index": 136,
+      "epochSeconds": 1716468800,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Simplify conditional in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "043c61b5c2d1c6281cc21b29b945a4283091b5a0",
+      "index": 137,
+      "epochSeconds": 1716479600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Add missing semicolon in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5d9c8478c186791cf2ff1fd2b2428738c473faf8",
+      "index": 138,
+      "epochSeconds": 1716490400,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Reorder function arguments in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c2792a04be171315cd747e5c947dceb6909c782c",
+      "index": 139,
+      "epochSeconds": 1716501200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Remove unused variable in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1f6b244ef42ce4c71a6f9f07398647790f1d00bb",
+      "index": 140,
+      "epochSeconds": 1716512000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Update comment in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6294037c8330ac9df50964c088fc7543d0166c54",
+      "index": 141,
+      "epochSeconds": 1716522800,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Small refactor of src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "542280b18923c475ee858d6b6cd63d867878c669",
+      "index": 142,
+      "epochSeconds": 1716533600,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Simplify conditional in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "19d2a69fb37a3e468c48c2719953492ab6dbb842",
+      "index": 143,
+      "epochSeconds": 1716544400,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Update comment in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3e1966dceea7222210acaed94e318351478c28f0",
+      "index": 144,
+      "epochSeconds": 1716555200,
+      "category": "number_version",
+      "subsystem": "export",
+      "subject": "Require Node 18+ for the streaming export path",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Second number_version case in this fixture, distinguished from the Postgres 13 drop and from unrelated Node-version filler mentions.",
+      "beatId": "export.require-node-18-streams"
+    },
+    {
+      "sha": "01d09be9d2486541e1222993967e9fbe83508903",
+      "index": 145,
+      "epochSeconds": 1716566000,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Fix typo in src/db/schema.js comment",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1c8caa7947c012727ea9818672bc5350d8f23919",
+      "index": 146,
+      "epochSeconds": 1716576800,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Normalize whitespace in package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f687023081b6092061467a512fd95cd82502ec4e",
+      "index": 147,
+      "epochSeconds": 1716587600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Fix typo in src/export/streaming-export.js comment",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3d7e49da5961a4025416e6325d4d7501f5030625",
+      "index": 148,
+      "epochSeconds": 1716598400,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Extract helper in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "adf8bdf92ca6aae516e66a2cd619d617599d924c",
+      "index": 149,
+      "epochSeconds": 1716609200,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Adjust logging verbosity in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cb05f8767df92e70f6e410d3ee7507f2ec7cd279",
+      "index": 150,
+      "epochSeconds": 1716620000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Reorder function arguments in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f4c136c53a4735fb06771e58c03924afa4514444",
+      "index": 151,
+      "epochSeconds": 1716630800,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Small refactor of src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e4306177c5f6137947da61236d747aa9beb6a82c",
+      "index": 152,
+      "epochSeconds": 1716641600,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Reorder function arguments in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d3cadb68c04e53dec425de303980c4cd2f37ffb5",
+      "index": 153,
+      "epochSeconds": 1716652400,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Simplify conditional in src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "435048887323cb9832ba1a9ef6733f9ce4d525b4",
+      "index": 154,
+      "epochSeconds": 1716663200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Drop dead code path in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bef5a7673349e8dfcf77ee128da070e374173be6",
+      "index": 155,
+      "epochSeconds": 1716674000,
+      "category": "churn",
+      "subsystem": "locking",
+      "subject": "Improve readability of src/locking/postgres-lock.js",
+      "files": [
+        "src/locking/postgres-lock.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d5242b58da7e7f165dec13d1276feb82f2ee72ec",
+      "index": 156,
+      "epochSeconds": 1716684800,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Remove unused variable in src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a8403b3e65163424c6e2494786bd7dbe1af5169a",
+      "index": 157,
+      "epochSeconds": 1716695600,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Reorder function arguments in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4e4c99597c300957a9d9365810bb99be22b7a6c1",
+      "index": 158,
+      "epochSeconds": 1716706400,
+      "category": "churn",
+      "subsystem": "db",
+      "subject": "Consolidate constants in src/db/schema.js",
+      "files": [
+        "src/db/schema.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2144893f7bd3937a0c17dc03e5a8dbf4e2ae1de5",
+      "index": 159,
+      "epochSeconds": 1716717200,
+      "category": "churn",
+      "subsystem": "export",
+      "subject": "Small refactor of src/export/streaming-export.js",
+      "files": [
+        "src/export/streaming-export.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6be9c85689373237bc4dd98e70d861b41e35ce40",
+      "index": 160,
+      "epochSeconds": 1716728000,
+      "category": "churn",
+      "subsystem": "deps",
+      "subject": "Improve readability of package-lock.snapshot.txt",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    }
+  ]
+}

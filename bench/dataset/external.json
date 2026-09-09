@@ -1,0 +1,166 @@
+{
+  "status": "collected",
+  "collectionNote": "Reachable and pinned via `gh api` (authenticated GitHub CLI) on 2026-09-09. Every relevantSha below was verified to exist in the named repository and to be an ancestor of that repository's pinned cutoffSha via `gh api repos/<owner>/<repo>/compare/<sha>...<cutoffSha>` returning status \"ahead\" (i.e. the cutoff is strictly ahead of, and reachable from, the candidate commit on the default branch). No repository content or model output was used to author these questions beyond ordinary GitHub search/read access; queries were written by a human-style task description first, then checked against the real history, not the reverse.",
+  "notBlinded": "See bench/README.md: the same agent system that implements Git Why also authored this file. This is real-repository evidence, not a blinded held-out study.",
+  "repositories": [
+    {
+      "id": "expressjs-express",
+      "url": "https://github.com/expressjs/express",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/expressjs/express/blob/master/LICENSE",
+      "defaultBranch": "master",
+      "cutoffSha": "bed501c695a61886399ee622875f3be933c716d8",
+      "cutoffCapturedAt": "2026-09-09T00:00:00Z",
+      "cutoffCommitAuthoredAt": "2026-09-08T13:33:05Z"
+    },
+    {
+      "id": "axios-axios",
+      "url": "https://github.com/axios/axios",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/axios/axios/blob/v1.x/LICENSE",
+      "defaultBranch": "v1.x",
+      "cutoffSha": "1226e6c53eeb0e9d7159bea83556c2ff117b5f2e",
+      "cutoffCapturedAt": "2026-09-09T00:00:00Z",
+      "cutoffCommitAuthoredAt": "2026-09-09T13:09:33Z"
+    }
+  ],
+  "cases": [
+    {
+      "id": "ext-d-express-01",
+      "split": "dev",
+      "repositoryId": "expressjs-express",
+      "category": "number_version",
+      "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+      "relevantShas": ["f6db4ee805a62edb066c5290f4c9c444f2aff6fb"],
+      "verification": "gh api repos/expressjs/express/commits/f6db4ee805 -> subject \"Drop support for Node.js below 4\"; compare f6db4ee805...bed501c695 -> status ahead.",
+      "expectedEvidence": ["Commit message subject states the version drop directly; files touched are CI config and package.json engines, consistent with a support-matrix change rather than a code migration."],
+      "notes": "Terse, real-world message: unlike the synthetic fixtures, this commit does not explain *why* Node <4 was dropped beyond the fact of dropping it. A faithful tool should surface the commit and its literal content, not invent a fuller rationale than the message gives."
+    },
+    {
+      "id": "ext-d-express-02",
+      "split": "dev",
+      "repositoryId": "expressjs-express",
+      "category": "deleted_implementation",
+      "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+      "relevantShas": ["3228fd3cbc6486d1f60fff2789447077834aa9ac"],
+      "verification": "gh api repos/expressjs/express/commits/3228fd3cbc -> subject \"remove res.charset support\"; compare 3228fd3cbc...bed501c695 -> status ahead.",
+      "expectedEvidence": ["History.md changelog entry recording the removal of res.charset support."],
+      "notes": "The diff itself only touches History.md at this SHA (the code removal landed as part of the same release cut); a real tool must not overclaim a source-code hunk that is not actually attached to this commit."
+    },
+    {
+      "id": "ext-d-express-03",
+      "split": "dev",
+      "repositoryId": "expressjs-express",
+      "category": "migration",
+      "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+      "relevantShas": ["450c468d0469ea79c878084c623cd18642d7ad7d"],
+      "verification": "gh api repos/expressjs/express/commits/450c468d04 -> subject \"Change query parser setting default to 'simple'\", closes #3361 and #3621; compare 450c468d04...bed501c695 -> status ahead.",
+      "expectedEvidence": ["lib/application.js and test/req.query.js changed; commit message references issues #3361 and #3621 but does not itself restate their content."],
+      "notes": "Honesty check: the commit message alone does not explain the underlying motivation (the linked issues do, off-repository). A tool that fabricates a specific security rationale not present in the message or diff would be overclaiming; the correct behavior is to surface the commit and the issue references, not invent the issues' content."
+    },
+    {
+      "id": "ext-t-express-01",
+      "split": "test",
+      "repositoryId": "expressjs-express",
+      "category": "regression",
+      "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+      "relevantShas": ["7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"],
+      "verification": "gh api repos/expressjs/express/commits/7ec5dd2b3c -> subject \"Fix regression routing a large stack in a single route\", body \"fixes #4913\"; compare 7ec5dd2b3c...bed501c695 -> status ahead.",
+      "expectedEvidence": ["lib/router/route.js and test/Route.js changed; message references issue #4913."],
+      "notes": "Genuine regression-fix case with a real linked issue number as the only rationale trace in-repository."
+    },
+    {
+      "id": "ext-t-express-02",
+      "split": "test",
+      "repositoryId": "expressjs-express",
+      "category": "deleted_implementation",
+      "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+      "relevantShas": ["4d1ee23f84de64a4f317384f61d1cd9925849107"],
+      "verification": "gh api repos/expressjs/express/commits/4d1ee23f84 -> subject \"Use etag module to generate ETag headers\", touches lib/utils.js and package.json; compare 4d1ee23f84...bed501c695 -> status ahead.",
+      "expectedEvidence": ["lib/utils.js and package.json changed together, consistent with replacing an inline implementation with a dependency."],
+      "notes": "An earlier, textually similar commit (51d33edb7973cb9ecec404d03e62d1ef9dff4a92, \"Use etag to generate ETag headers\", 2014-08-25) exists in the same history and is NOT listed as relevant here: it predates and is superseded by 4d1ee23f84 (2014-10-18). Distinguishing the two requires noticing they touch different code, not just similar subjects -- a deliberate near-duplicate-subject trap left in place rather than curated away."
+    },
+    {
+      "id": "ext-t-express-03",
+      "split": "test",
+      "repositoryId": "expressjs-express",
+      "category": "no_evidence",
+      "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+      "relevantShas": [],
+      "verification": "Searched via `gh api search/commits` for X-Powered-By/\"powered\" across expressjs/express; the introducing commit (8940b6e5a32bd586cb39a63ebfcade3fb42a1e1b, 2010-10-17, \"Added X-Powered-By, remove Connects \\\"Server\\\" header field\") explains the header's introduction (replacing Connect's Server header) but not why that specific header name was chosen over an Express-specific alternative.",
+      "expectedEvidence": [],
+      "notes": "Real no-evidence case: a plausible near-answer commit exists and is worth surfacing, but it does not establish the specific naming rationale the question asks about. A correct answer states uncertainty rather than treating 'introduced the header' as an answer to 'why this name'."
+    },
+    {
+      "id": "ext-d-axios-01",
+      "split": "dev",
+      "repositoryId": "axios-axios",
+      "category": "workaround_rationale",
+      "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+      "relevantShas": ["cff996779b272a5e94c2b52f5503ccf668bc42dc"],
+      "verification": "gh api repos/axios/axios/commits/cff996779b -> subject states withXSRFToken was \"added ... as a workaround to achieve the old `withCredentials` behavior\" (#6046); compare cff996779b...1226e6c53e -> status ahead.",
+      "expectedEvidence": ["lib/adapters/xhr.js, lib/core/mergeConfig.js, lib/helpers/cookies.js and lib/helpers/isURLSameOrigin.js changed together with a new withXSRFToken option and matching test/specs/xsrf.spec.js additions."],
+      "notes": "Message explicitly uses the word \"workaround\", making this an unusually direct real-world match for the workaround_rationale category."
+    },
+    {
+      "id": "ext-d-axios-02",
+      "split": "dev",
+      "repositoryId": "axios-axios",
+      "category": "exact_identifier",
+      "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+      "relevantShas": ["b2bc3354ac22e76e129ef8ae5b9656fa555fa061"],
+      "verification": "gh api repos/axios/axios/commits/b2bc3354ac -> adds lib/cancel/Cancel.js and lib/cancel/CancelToken.js with matching specs; compare b2bc3354ac...1226e6c53e -> status ahead.",
+      "expectedEvidence": ["New files lib/cancel/Cancel.js and lib/cancel/CancelToken.js plus their spec files, added together in one commit."],
+      "notes": "Exact-identifier style case (CancelToken is later touched by many unrelated commits, e.g. type-alignment and unsubscribe fixes, that a lexical search must not confuse with the class's introduction)."
+    },
+    {
+      "id": "ext-d-axios-03",
+      "split": "dev",
+      "repositoryId": "axios-axios",
+      "category": "deleted_implementation",
+      "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+      "relevantShas": ["af170334bdd02e39882a88a7cbd9690d5bc78606"],
+      "verification": "gh api repos/axios/axios/commits/af170334bd -> subject \"Dropping support for auth.user/pass\", body \"Only accept `username` and `password` as arguments\"; compare af170334bd...1226e6c53e -> status ahead.",
+      "expectedEvidence": ["README.md and lib/adapters/xhr.js changed together, removing the old auth.user/auth.pass field names in favor of auth.username/auth.password."],
+      "notes": "A companion commit on the same day (95df032fbd21ddf50e4147ad7a16bb8390423429, \"Abandoning URL embedded identities for Basic auth\") addresses a related but distinct removal (URL-embedded credentials) and is deliberately NOT included as relevant here."
+    },
+    {
+      "id": "ext-t-axios-01",
+      "split": "test",
+      "repositoryId": "axios-axios",
+      "category": "migration",
+      "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+      "relevantShas": ["945435fc51467303768202250debb8d4ae892593"],
+      "verification": "gh api repos/axios/axios/commits/945435fc51 -> body references \"CVE-2025-58754\" and adds lib/helpers/estimateDataURLDecodedBytes.js; compare 945435fc51...1226e6c53e -> status ahead.",
+      "expectedEvidence": ["lib/adapters/http.js and new lib/helpers/estimateDataURLDecodedBytes.js changed together; commit body cites CVE-2025-58754 and describes a pre-decode size check for data: URLs."],
+      "notes": "One of the few external cases with an explicit, verifiable CVE citation in the commit body itself, not just an issue number."
+    },
+    {
+      "id": "ext-t-axios-02",
+      "split": "test",
+      "repositoryId": "axios-axios",
+      "category": "exact_identifier",
+      "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+      "relevantShas": ["1c6a86dd2c0623ee1af043a8491dbc96d40e883b"],
+      "verification": "gh api repos/axios/axios/commits/1c6a86dd2c -> subject \"fix: turn AxiosError into a native error (#5394) (#5558)\", touches lib/core/AxiosError.js and lib/cancel/CanceledError.js; compare 1c6a86dd2c...1226e6c53e -> status ahead.",
+      "expectedEvidence": ["lib/core/AxiosError.js and lib/cancel/CanceledError.js refactored into classes; matching spec files updated in the same commit."],
+      "notes": "A long, squashed PR body (multiple bullet points) is attached to this single commit; a tool should not need every bullet to answer the core question, just the ones about AxiosError's class-ness."
+    },
+    {
+      "id": "ext-t-axios-03",
+      "split": "test",
+      "repositoryId": "axios-axios",
+      "category": "no_evidence",
+      "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+      "relevantShas": [],
+      "verification": "Searched via `gh api search/commits` for timeout/default across axios/axios. The commit that introduces the setting (1ccd4161c7b525bb5efb444232ffe7f15c590d60, \"Added defaults.timeout to default config.\") sets the value without justifying it; later commits (9005a54a8b, \"Clarify in README that default timeout is 0 (no timeout)\") only document the existing default.",
+      "expectedEvidence": [],
+      "notes": "Real no-evidence case: the default's existence and its later documentation are both in history, but no commit found states why 0 (rather than a finite value) was chosen. Distractors below explain what the default is, not why."
+    }
+  ],
+  "distractorsForNoEvidenceCases": [
+    { "caseId": "ext-t-express-03", "sha": "8940b6e5a32bd586cb39a63ebfcade3fb42a1e1b", "subject": "Added X-Powered-By, remove Connects \"Server\" header field", "reason": "Explains why the header exists at all (replacing Connect's Server header), not why this specific name was picked." },
+    { "caseId": "ext-t-axios-03", "sha": "1ccd4161c7b525bb5efb444232ffe7f15c590d60", "subject": "Added defaults.timeout to default config.", "reason": "Introduces the 0 default without justification." },
+    { "caseId": "ext-t-axios-03", "sha": "9005a54a8b42be41ca49a31dcfda915d1a91c388", "subject": "Clarify in README that default timeout is 0 (no timeout)", "reason": "Documents the existing default; does not justify why 0 was chosen." }
+  ]
+}

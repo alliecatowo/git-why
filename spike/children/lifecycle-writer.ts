@@ -3,7 +3,9 @@
 import { ZVecCreateAndOpen, ZVecOpen, ZVecCollectionSchema, ZVecDataType, ZVecIndexType, ZVecMetricType, isZVecError } from '@zvec/zvec';
 import fs from 'node:fs';
 
-const [, , colPath, mode, countArg] = process.argv;
+const [, , colPathArg, mode, countArg] = process.argv;
+if (colPathArg === undefined) throw new Error('usage: lifecycle-writer.ts <colPath> <mode> [count]');
+const colPath: string = colPathArg;
 const count = countArg ? Number(countArg) : 5;
 
 function schema() {

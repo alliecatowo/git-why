@@ -1,0 +1,1992 @@
+{
+  "fixtureId": "auth-platform",
+  "seed": "git-why-bench::auth-platform::v1",
+  "theme": "Session/auth platform with OAuth upstream and mobile/browser compatibility shims.",
+  "headSha": "3ee65ce3d140d5804390e072d03005a63751b260",
+  "commitCount": 164,
+  "objectCount": 776,
+  "commits": [
+    {
+      "sha": "aa702bc1c74d1277ed17096094ecdc8a2a8c3e6e",
+      "index": 0,
+      "epochSeconds": 1710000000,
+      "category": "scaffold",
+      "subsystem": "core",
+      "subject": "Initial scaffold",
+      "files": [
+        "src/session/auth-session-provider.js",
+        "src/oauth/provider-client.js",
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Repository scaffold; not a query target."
+    },
+    {
+      "sha": "7f5f740d536cf0e9c1737d0622e1f04487c62693",
+      "index": 1,
+      "epochSeconds": 1710010800,
+      "category": "distractor",
+      "subsystem": "oauth",
+      "subject": "Add retry with jitter to the OAuth token exchange call",
+      "files": [
+        "src/oauth/retry.js"
+      ],
+      "note": "Distractor for workaround_rationale: mentions the same OAuth call but addresses network retries, not the empty-token behavior."
+    },
+    {
+      "sha": "b680bc4016a1818cb5519043e251d95fbe44ccfc",
+      "index": 2,
+      "epochSeconds": 1710021600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump chalk to 6.2.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "c15ebb52a597785934e2c72112695f5aa991ec5f",
+      "index": 3,
+      "epochSeconds": 1710032400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin axios at 2.5.0",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "757a73edca11979b693d42e09025957b1070749f",
+      "index": 4,
+      "epochSeconds": 1710043200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade yargs to v2.17.29",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "2c05992f7d857ea6450f0e11494f8712d12bf0d0",
+      "index": 5,
+      "epochSeconds": 1710054000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Extract helper in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0c6d2efa397fce1c95f96bd479b7cd2a99cb76e4",
+      "index": 6,
+      "epochSeconds": 1710064800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update express dependency to 5.9.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "2ee60cd1f6af61e242e65c0a16d197c609eb7f1b",
+      "index": 7,
+      "epochSeconds": 1710075600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade pg to v4.16.28",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "0efd759365a88b1317811c8facab36d3c7e16b86",
+      "index": 8,
+      "epochSeconds": 1710086400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump uuid to 8.11.30",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "d16dd300e4f080e17c64c2496d9b98cace2dbb88",
+      "index": 9,
+      "epochSeconds": 1710097200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Update comment in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2f195fb743f9bf424dccda281ff78b8b07335ae2",
+      "index": 10,
+      "epochSeconds": 1710108000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade webpack to v4.7.8",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "28dc22f1c5ba1bc30c9344f1e6187d32bb9e7fcb",
+      "index": 11,
+      "epochSeconds": 1710118800,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Simplify conditional in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "aae613b9c41fea8a86d5c8a214756d7359e9408f",
+      "index": 12,
+      "epochSeconds": 1710129600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Tidy up imports in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "77f2465f88bdfffefb77a534de1040dd4df83c7d",
+      "index": 13,
+      "epochSeconds": 1710140400,
+      "category": "exact_identifier",
+      "subsystem": "session",
+      "subject": "Add refreshSession() to AuthSessionProvider",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Exact-identifier target: literal string \"AuthSessionProvider\" appears in subject and diff.",
+      "beatId": "session.add-refresh-to-provider"
+    },
+    {
+      "sha": "c3c24feaa64e80481bdb4ee2bf071fc73294622a",
+      "index": 14,
+      "epochSeconds": 1710151200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin ioredis at 7.15.13",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "2f984bfaa1512a4073fd0f907e72677b6beaba7d",
+      "index": 15,
+      "epochSeconds": 1710162000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Reformat src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "194c8d5fb3f1be5f146c161ec4602e4e40f6fb82",
+      "index": 16,
+      "epochSeconds": 1710172800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Tidy up imports in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d18efea79681e0af3c158a9f015f3e753e78688b",
+      "index": 17,
+      "epochSeconds": 1710183600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Remove unused variable in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "032bf9db7a1f7d670c3f18185b8d9eab2a6f2b88",
+      "index": 18,
+      "epochSeconds": 1710194400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Trim trailing whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3353bf606c17b63cce721866e10abf63c7bf0a58",
+      "index": 19,
+      "epochSeconds": 1710205200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump prettier 7.5.6",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b54ad16a26a467c83cdd060b60d5ba528d560cc2",
+      "index": 20,
+      "epochSeconds": 1710216000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump babel-core to 3.1.7",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "c803fc707bed3e67b2e44b2cc5342d1adc58ef02",
+      "index": 21,
+      "epochSeconds": 1710226800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump commander to 2.3.1",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "b27fd5096dbe4bc6272feba0003f693c882b4483",
+      "index": 22,
+      "epochSeconds": 1710237600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Extract helper in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bd5199911f7a92190cb8a1116d4c1a9a70a2bdd8",
+      "index": 23,
+      "epochSeconds": 1710248400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Bump ioredis to 5.19.22",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "f94b9a96edb8b4a1295f9d70bb0fbc3fa3445f1e",
+      "index": 24,
+      "epochSeconds": 1710259200,
+      "category": "workaround_rationale",
+      "subsystem": "oauth",
+      "subject": "Keep the empty-string token branch for the legacy IdP tenant",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Establishes the specific upstream behavior (empty string, specific tenant) that justifies keeping the branch.",
+      "beatId": "oauth.keep-empty-token-branch"
+    },
+    {
+      "sha": "2c803cea2a289a669ed6d1d915256ec82bd0d1fe",
+      "index": 25,
+      "epochSeconds": 1710270000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Improve readability of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "255a7b36292b8db0898dca8a7da664a71577957d",
+      "index": 26,
+      "epochSeconds": 1710280800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade babel-core to v6.11.4",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "a9331f4432b60e8d5572f45065f22fb64c98e2f2",
+      "index": 27,
+      "epochSeconds": 1710291600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade dotenv to v4.12.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ec7ccda60daf38c3b1f655aa7ea326b6f7bc5e11",
+      "index": 28,
+      "epochSeconds": 1710302400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin express at 1.4.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "3b9c8b90d955d9381ef323e8bea25ad2dc96c762",
+      "index": 29,
+      "epochSeconds": 1710313200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade uuid to v2.2.3",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "5e0b918c2e5df6e89134f6282b60848f2b6fb1d9",
+      "index": 30,
+      "epochSeconds": 1710324000,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump eslint 4.6.13",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "e44911f3cd826498ba87e339556e478023652bf8",
+      "index": 31,
+      "epochSeconds": 1710334800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Normalize whitespace in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6c14993242146c3dc1883553ce77dd815ca9106c",
+      "index": 32,
+      "epochSeconds": 1710345600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade express to v9.17.19",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "eb647cb88fd5526d2e0a92058778b7240ceea949",
+      "index": 33,
+      "epochSeconds": 1710356400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Upgrade commander to v5.2.11",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "5a72356d494d92ffe2389f131d104664208549bc",
+      "index": 34,
+      "epochSeconds": 1710367200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Minor cleanup in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "da5885f32ae1ce974c35624b6bd6d4331043c673",
+      "index": 35,
+      "epochSeconds": 1710378000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Drop dead code path in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5119c468a6751c59679f3f5f21c56f3baac39c2b",
+      "index": 36,
+      "epochSeconds": 1710388800,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Update dotenv dependency to 7.3.1",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "cf8344a71d3ddfa34e3f6925c8960b96ba6b684b",
+      "index": 37,
+      "epochSeconds": 1710399600,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump commander 6.12.14",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "80b3869e8b38c8183051121cd0aa088be70e36ab",
+      "index": 38,
+      "epochSeconds": 1710410400,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "Pin axios at 6.11.17",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "7d456f610ac09647f8a56935c787f3960e863cbe",
+      "index": 39,
+      "epochSeconds": 1710421200,
+      "category": "version_distractor",
+      "subsystem": "deps",
+      "subject": "chore: bump dotenv 7.13.25",
+      "files": [
+        "package-lock.snapshot.txt"
+      ],
+      "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
+    },
+    {
+      "sha": "ac3c539244038aaac9cf8c729d91d2221be3ffd9",
+      "index": 40,
+      "epochSeconds": 1710432000,
+      "category": "exact_identifier",
+      "subsystem": "session",
+      "subject": "AuthSessionProvider: cache getSession() results for 30s",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Second exact-identifier commit for AuthSessionProvider.",
+      "beatId": "session.provider-cache-ttl"
+    },
+    {
+      "sha": "f0c6749af03bf6119c5e2b9227f023002ed9d6d1",
+      "index": 41,
+      "epochSeconds": 1710442800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Consolidate constants in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b19c202517303f2eb00b9e96e5681d1f977415a1",
+      "index": 42,
+      "epochSeconds": 1710453600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Small refactor of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "da11227d0af91162c7fb8b65778ccc7d039859f2",
+      "index": 43,
+      "epochSeconds": 1710464400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Small refactor of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f205b01c779dd4805c93d8bd50bdc8acddfce81c",
+      "index": 44,
+      "epochSeconds": 1710475200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Tidy up imports in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "825868d26297295a768c698653455bc6293bd6f1",
+      "index": 45,
+      "epochSeconds": 1710486000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Align src/compat/legacy-mobile.js with lint rules",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e2ab4e4829f5c25fa5fb932a9d33fc42c366bdd3",
+      "index": 46,
+      "epochSeconds": 1710496800,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Adjust logging verbosity in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0676ca88625112b70ea9eebbffdbd18379f133d5",
+      "index": 47,
+      "epochSeconds": 1710507600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Reorder function arguments in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3266cd512c96b250b7b312a2557216c2766315e1",
+      "index": 48,
+      "epochSeconds": 1710518400,
+      "category": "lifecycle_intro",
+      "subsystem": "compat",
+      "subject": "Work around Safari dropping SameSite=None cookies without Secure",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Introduction half of the lifecycle case; a query about the Safari cookie workaround should surface this commit as \"relevant\" for the introduction.",
+      "beatId": "compat.safari-cookie-workaround-intro"
+    },
+    {
+      "sha": "b96f1a41c1dd99b00b08376c04b7d2609eaefe49",
+      "index": 49,
+      "epochSeconds": 1710529200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Reorder function arguments in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a036449590eef32d0cd5011d04c1962a94295343",
+      "index": 50,
+      "epochSeconds": 1710540000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Fix typo in src/oauth/provider-client.js comment",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d863d98db77195144996bc5bedd31752587d46db",
+      "index": 51,
+      "epochSeconds": 1710550800,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Improve readability of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4aeccd80b67a10ed12ffaa482cfa242b2486e6a1",
+      "index": 52,
+      "epochSeconds": 1710561600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Reformat src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "36b08db52879b488911d49a98fa200d5dfcd0359",
+      "index": 53,
+      "epochSeconds": 1710572400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Remove unused variable in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ce2415833248e3258c371d86d2d4bb4e5dca859a",
+      "index": 54,
+      "epochSeconds": 1710583200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Improve readability of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3425cfc6e88d1a4de1ed9b54ad4a5cc724cdcba3",
+      "index": 55,
+      "epochSeconds": 1710594000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Add missing semicolon in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fc1273a5496a1b049d1951db6c6d895e00a5eabe",
+      "index": 56,
+      "epochSeconds": 1710604800,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Small refactor of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0afe8ee7b06e053f8280a63181333d7a641d921e",
+      "index": 57,
+      "epochSeconds": 1710615600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Update inline docs for src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fb7a11e4914bd8fa46e0f221b517c61c042f3577",
+      "index": 58,
+      "epochSeconds": 1710626400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Remove unused variable in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2c9043aeb1e0c74178e9796145c3803c18ef1043",
+      "index": 59,
+      "epochSeconds": 1710637200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Rename local variable in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "171d49dc0c5aec370c4eb14d68ab4e6885bf6cb5",
+      "index": 60,
+      "epochSeconds": 1710648000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Tidy up imports in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3",
+      "index": 61,
+      "epochSeconds": 1710658800,
+      "category": "workaround_rationale",
+      "subsystem": "compat",
+      "subject": "Accept lowercase \"authorization\" header from app versions <= 4.2",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Second workaround_rationale case: a distinct client quirk with its own specific justification.",
+      "beatId": "compat.mobile-lowercase-header"
+    },
+    {
+      "sha": "9e924f248e0485e9394fe847e5c83fb64c71d0a0",
+      "index": 62,
+      "epochSeconds": 1710669600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Simplify conditional in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c24c538dd2a2dc04c45a680fefad8a7bca8a2cd5",
+      "index": 63,
+      "epochSeconds": 1710680400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Extract helper in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "97e28cbf0e3bcd0d8a7feae000924fb26d14c7f8",
+      "index": 64,
+      "epochSeconds": 1710691200,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Rename local variable in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c37018843a9fcf792125c1945ea819c843249669",
+      "index": 65,
+      "epochSeconds": 1710702000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Reformat src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "fe15389925ce97a180ed55bb3224db66d3bc5734",
+      "index": 66,
+      "epochSeconds": 1710712800,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Minor cleanup in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b553ea6418d196dd33c69669a365184368b9711c",
+      "index": 67,
+      "epochSeconds": 1710723600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Improve readability of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7fb30d94421be85572bd72397a96e73e274b7deb",
+      "index": 68,
+      "epochSeconds": 1710734400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Remove unused variable in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ee516fb92ec26babee05692a16ee2fcdd38035c1",
+      "index": 69,
+      "epochSeconds": 1710745200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Add missing semicolon in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "eb1aa755062e4ab980835ca8b7712ff222b19c40",
+      "index": 70,
+      "epochSeconds": 1710756000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Improve readability of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2a6ec436807bbe6cccb41d82c65e8d9bff734fd6",
+      "index": 71,
+      "epochSeconds": 1710766800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Small refactor of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "543ab076e3f0d8064c3a97d2a7c1e29b78584f8a",
+      "index": 72,
+      "epochSeconds": 1710777600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Extract helper in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7f18947610aab3d35e6bad776d7b4418ed5168f1",
+      "index": 73,
+      "epochSeconds": 1710788400,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Update inline docs for src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9b1bb8cc6bfccc0a8075ad9fd838d281d09d63da",
+      "index": 74,
+      "epochSeconds": 1710799200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Remove unused variable in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c99936e8c15aae26aa54485151dab6b056b349b8",
+      "index": 75,
+      "epochSeconds": 1710810000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Rename local variable in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
+      "index": 76,
+      "epochSeconds": 1710820800,
+      "category": "exact_identifier",
+      "subsystem": "session",
+      "subject": "Emit a metric from AuthSessionProvider on cache miss",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Third exact-identifier commit.",
+      "beatId": "session.provider-metrics"
+    },
+    {
+      "sha": "422e0c6a211685e761fb735cf713c8e8e7b2be88",
+      "index": 77,
+      "epochSeconds": 1710831600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Improve readability of src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c35b52aff6a0506ecbe769e86236c5fe9bbab9a1",
+      "index": 78,
+      "epochSeconds": 1710842400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Add missing semicolon in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "56163167991aa833bf62dec81266f7ef17c2fd82",
+      "index": 79,
+      "epochSeconds": 1710853200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Fix typo in src/compat/legacy-mobile.js comment",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b13767628c1a8517d4b73ab6a34ed2f88ea11dd6",
+      "index": 80,
+      "epochSeconds": 1710864000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Extract helper in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "57bf3e8e4990eb4d0b28395b34e9eeb0eb1e2637",
+      "index": 81,
+      "epochSeconds": 1710874800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Small refactor of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a248bc592ec10bab6183b0f4a5a9469271a2e003",
+      "index": 82,
+      "epochSeconds": 1710885600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "25ae0cf9b39ff4c8aa56400af49a20a3020a204f",
+      "index": 83,
+      "epochSeconds": 1710896400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6d7d74ecc4525b00195c5d5d79f4834a0e62a383",
+      "index": 84,
+      "epochSeconds": 1710907200,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Minor cleanup in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "89df0ad7dedb97af2ac1fe882448c7c25910a9da",
+      "index": 85,
+      "epochSeconds": 1710918000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f2a35a2b6163b218741aafc190656991175dc854",
+      "index": 86,
+      "epochSeconds": 1710928800,
+      "category": "lifecycle_removal",
+      "subsystem": "compat",
+      "subject": "Remove the Safari 12.0-12.1 SameSite cookie workaround",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Removal half of the lifecycle case; both this and the introduction commit are relevant to the same lifecycle query.",
+      "beatId": "compat.safari-cookie-workaround-removed"
+    },
+    {
+      "sha": "732ae5c430edcee870ab85ffee5d10500fba40bc",
+      "index": 87,
+      "epochSeconds": 1710939600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Improve readability of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "4424b2ff71f6f320a4c7bb0dea54a941174b1993",
+      "index": 88,
+      "epochSeconds": 1710950400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Drop dead code path in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "33d10e00230ea141903fb9eae35fa0de88862e5d",
+      "index": 89,
+      "epochSeconds": 1710961200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Remove unused variable in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "171f8d0b02ec93079ee5245a436d0ca1e7e9542e",
+      "index": 90,
+      "epochSeconds": 1710972000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Adjust logging verbosity in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6d77ec8d4e6804b242d8661d9b6afa19c3d72caf",
+      "index": 91,
+      "epochSeconds": 1710982800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Improve readability of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "dad208d7365a4cc475d38b0376c9f091bd9e9587",
+      "index": 92,
+      "epochSeconds": 1710993600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Drop dead code path in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "13f6593257f9ffa07d3416bd167a405b8e8efdf8",
+      "index": 93,
+      "epochSeconds": 1711004400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Drop dead code path in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a5513db2c8203efb930e81396f90ceed084f0a09",
+      "index": 94,
+      "epochSeconds": 1711015200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Reorder function arguments in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8ec4fe967157e95d217fc09b4e33c362795bc658",
+      "index": 95,
+      "epochSeconds": 1711026000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Rename local variable in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2e1a58d448e47e3916f183c549578e4f9f638575",
+      "index": 96,
+      "epochSeconds": 1711036800,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2b895c76c9b34943523623cfb1b9dc90cb02d650",
+      "index": 97,
+      "epochSeconds": 1711047600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Fix typo in src/oauth/provider-client.js comment",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6171ac0eae520a45872a3a50a000e5ad0ad5fedf",
+      "index": 98,
+      "epochSeconds": 1711058400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "0452469c342a5eb2f8ea62f9f56498c31df726b9",
+      "index": 99,
+      "epochSeconds": 1711069200,
+      "category": "lifecycle_intro",
+      "subsystem": "oauth",
+      "subject": "Cache CORS preflight responses in-memory for IE11 clients",
+      "files": [
+        "src/oauth/ie11-preflight-cache.js"
+      ],
+      "note": "Introduction half of the IE11 lifecycle case.",
+      "beatId": "oauth.ie11-preflight-cache-intro"
+    },
+    {
+      "sha": "67d2a1f82ea26aebe701aa0f7d967d6604b89c47",
+      "index": 100,
+      "epochSeconds": 1711080000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Update comment in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1a3ade4ad81d5249135809a31b6d9f33012a9417",
+      "index": 101,
+      "epochSeconds": 1711090800,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ee133a2a3d5cbcd73f0127c8483507b666869962",
+      "index": 102,
+      "epochSeconds": 1711101600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Small refactor of src/oauth/ie11-preflight-cache.js",
+      "files": [
+        "src/oauth/ie11-preflight-cache.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "41acc20d829bc934f8388deb7d9a0d09229431d0",
+      "index": 103,
+      "epochSeconds": 1711112400,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Align src/oauth/provider-client.js with lint rules",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "35d109c94fa85767fb3f50d03f4d5b656dfd43d9",
+      "index": 104,
+      "epochSeconds": 1711123200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Trim trailing whitespace in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1a0f0bdfcfb9d09f640585d239e58ef87205c674",
+      "index": 105,
+      "epochSeconds": 1711134000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Update inline docs for src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "001f9a4e33c84e5677c5039b95e92d1bf783f5c2",
+      "index": 106,
+      "epochSeconds": 1711144800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Remove unused variable in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3",
+      "index": 107,
+      "epochSeconds": 1711155600,
+      "category": "exact_identifier",
+      "subsystem": "session",
+      "subject": "Add dispose() to AuthSessionProvider to clear its cache",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Fourth exact-identifier commit.",
+      "beatId": "session.provider-dispose"
+    },
+    {
+      "sha": "b012ec59ae375b8fb864f78e01044737e75403ef",
+      "index": 108,
+      "epochSeconds": 1711166400,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Simplify conditional in src/oauth/ie11-preflight-cache.js",
+      "files": [
+        "src/oauth/ie11-preflight-cache.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cb93f9d32190b84f05b8c3ebc745c9db0ca09595",
+      "index": 109,
+      "epochSeconds": 1711177200,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Simplify conditional in src/oauth/ie11-preflight-cache.js",
+      "files": [
+        "src/oauth/ie11-preflight-cache.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "d899f9a73c570e9e82e76312d16056c755791674",
+      "index": 110,
+      "epochSeconds": 1711188000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Rename local variable in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c590442b57108eacb8315dac2f816871146884ed",
+      "index": 111,
+      "epochSeconds": 1711198800,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Align src/oauth/ie11-preflight-cache.js with lint rules",
+      "files": [
+        "src/oauth/ie11-preflight-cache.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2e376317bfa89c6eb04ddc7a8235c240191b44e0",
+      "index": 112,
+      "epochSeconds": 1711209600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Drop dead code path in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "20b8264666a827b3653aec4c622da4bd83976895",
+      "index": 113,
+      "epochSeconds": 1711220400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Reformat src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "31bcb51d8b669f860ab302ebed58b13cbdbcbb11",
+      "index": 114,
+      "epochSeconds": 1711231200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Remove unused variable in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "bbc4508c1f97c53a2558088f3b5c4d7650d358ea",
+      "index": 115,
+      "epochSeconds": 1711242000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Extract helper in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3f7a060671e3310a54fb7c035b6b5ed519ba4811",
+      "index": 116,
+      "epochSeconds": 1711252800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Update inline docs for src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8ae03905ce2700854422928413b8600aecfe0d1d",
+      "index": 117,
+      "epochSeconds": 1711263600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Add missing semicolon in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "9ba5ee236aa610e5aadf63bb8ee0f02644096d80",
+      "index": 118,
+      "epochSeconds": 1711274400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Align src/session/auth-session-provider.js with lint rules",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "2042a0beafc0f0871e0c9c561e22d9d5f6b528b3",
+      "index": 119,
+      "epochSeconds": 1711285200,
+      "category": "lifecycle_removal",
+      "subsystem": "oauth",
+      "subject": "Delete the IE11 preflight cache now that IE11 is unsupported",
+      "files": [
+        "src/oauth/ie11-preflight-cache.js"
+      ],
+      "note": "Removal half of the IE11 lifecycle case.",
+      "beatId": "oauth.ie11-preflight-cache-removed"
+    },
+    {
+      "sha": "cfc1e96311369134d27481c19353805d7f3421cd",
+      "index": 120,
+      "epochSeconds": 1711296000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Consolidate constants in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3fa9f06ad6e2b95cb27a10168fcdbcae8a649e65",
+      "index": 121,
+      "epochSeconds": 1711306800,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Improve readability of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "7e522bdf3c3266032b60b099509d3e2546a07b9d",
+      "index": 122,
+      "epochSeconds": 1711317600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Align src/compat/legacy-mobile.js with lint rules",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "cf37df2235176bcc5011974160c6c7f865e1995b",
+      "index": 123,
+      "epochSeconds": 1711328400,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Normalize whitespace in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a0d78650e9264de620032e0b2834aec83c5aa985",
+      "index": 124,
+      "epochSeconds": 1711339200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Simplify conditional in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "b3ae81e1c05f208e1ce5050f5ec4c4c8464de1db",
+      "index": 125,
+      "epochSeconds": 1711350000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Simplify conditional in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e909130fdb63106657ab2ff2bf5e712f41272580",
+      "index": 126,
+      "epochSeconds": 1711360800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Small refactor of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "92a4b13a775103b50f0857a71b39886f86b6b3bf",
+      "index": 127,
+      "epochSeconds": 1711371600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Fix typo in src/session/auth-session-provider.js comment",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a9c00c947bf827d1af554aacacf168feaf961b8e",
+      "index": 128,
+      "epochSeconds": 1711382400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Small refactor of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "f4f4a3e59b576a3e394cad775b857cd7fbb9ba25",
+      "index": 129,
+      "epochSeconds": 1711393200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Small refactor of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5dea10d2ca4c9701c2bdeaaacf681173bc820267",
+      "index": 130,
+      "epochSeconds": 1711404000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Improve readability of src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e0fd028e70ffe5a7739d20367962c4846241ff32",
+      "index": 131,
+      "epochSeconds": 1711414800,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Drop dead code path in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "567f9967241582d9e378cece5dcf17d527ebb9ed",
+      "index": 132,
+      "epochSeconds": 1711425600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Consolidate constants in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "640894127914c43d4ebd7e5e9260edb042a565a0",
+      "index": 133,
+      "epochSeconds": 1711436400,
+      "category": "lifecycle_intro",
+      "subsystem": "compat",
+      "subject": "Emit both \"success\" and \"sucess\" fields for app versions <= 3.0",
+      "files": [
+        "src/compat/legacy-response.js"
+      ],
+      "note": "Introduction half of the third lifecycle case.",
+      "beatId": "compat.legacy-sucess-field-intro"
+    },
+    {
+      "sha": "7d8f3107c3ae4177f4e0d6d08e5800294608cd1a",
+      "index": 134,
+      "epochSeconds": 1711447200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Trim trailing whitespace in src/compat/legacy-response.js",
+      "files": [
+        "src/compat/legacy-response.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "88b5a5f9023747c27b705630b2e0d10e15c0b0e2",
+      "index": 135,
+      "epochSeconds": 1711458000,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Tidy up imports in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "039a737e90b9a7c3ecbfe7c1fa1df2806f36ccde",
+      "index": 136,
+      "epochSeconds": 1711468800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Adjust logging verbosity in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6ed0dacdbf2b4002066049aee70de0fb853c1854",
+      "index": 137,
+      "epochSeconds": 1711479600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Minor cleanup in src/compat/legacy-response.js",
+      "files": [
+        "src/compat/legacy-response.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "40761bfbabbbf8f574a1e9e9047e544bbf9fd14c",
+      "index": 138,
+      "epochSeconds": 1711490400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Extract helper in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "119a26a89bcdb752d8947c4aba7d65feb4c7c8f8",
+      "index": 139,
+      "epochSeconds": 1711501200,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "784ba126c6819f9a06ae14dc231f23a51be34f6c",
+      "index": 140,
+      "epochSeconds": 1711512000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Reformat src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "03758b40cd399b99201cfe0d4f8e6f4991044c5d",
+      "index": 141,
+      "epochSeconds": 1711522800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Adjust logging verbosity in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "070dd59d48a14d9ffedd0443514a4405941b93ec",
+      "index": 142,
+      "epochSeconds": 1711533600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Small refactor of src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "87b5815775dae9a776d115eb7ee105ba826c4275",
+      "index": 143,
+      "epochSeconds": 1711544400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Update comment in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "150785410106252f36c28852541a3b9faab9bc8e",
+      "index": 144,
+      "epochSeconds": 1711555200,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Drop dead code path in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "35f837c6de3ab4a360b2651a925e07e468250ccc",
+      "index": 145,
+      "epochSeconds": 1711566000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Reformat src/compat/legacy-response.js",
+      "files": [
+        "src/compat/legacy-response.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "e48e3f01a6d509217afb820c5a851d08cbf229fd",
+      "index": 146,
+      "epochSeconds": 1711576800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Minor cleanup in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "93b304036946c3297d8b28c147b7eae944370665",
+      "index": 147,
+      "epochSeconds": 1711587600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Normalize whitespace in src/compat/legacy-response.js",
+      "files": [
+        "src/compat/legacy-response.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "5c01552f00562c2b04487c275b3e5ead24ac1744",
+      "index": 148,
+      "epochSeconds": 1711598400,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Small refactor of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "1adae5fad51f5bf7edc305e5120c88a39fde7a3f",
+      "index": 149,
+      "epochSeconds": 1711609200,
+      "category": "lifecycle_removal",
+      "subsystem": "compat",
+      "subject": "Stop emitting the \"sucess\" typo field",
+      "files": [
+        "src/compat/legacy-response.js"
+      ],
+      "note": "Removal half of the third lifecycle case.",
+      "beatId": "compat.legacy-sucess-field-removed"
+    },
+    {
+      "sha": "439fd7cc3e8c1744c766010a797f52a9a6d4f51f",
+      "index": 150,
+      "epochSeconds": 1711620000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Consolidate constants in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c2c324c79a73c28ae3af5edda5a256fd00624fa5",
+      "index": 151,
+      "epochSeconds": 1711630800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Fix typo in src/session/auth-session-provider.js comment",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "912710ac9ed353182322bc0a68b78c9070fa538f",
+      "index": 152,
+      "epochSeconds": 1711641600,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Trim trailing whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "a310738cea2e8941aa4b9e51399dda04b0862681",
+      "index": 153,
+      "epochSeconds": 1711652400,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Update inline docs for src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "82eb2e60a486d20c5cb7d724d94a3d95255fae38",
+      "index": 154,
+      "epochSeconds": 1711663200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Fix typo in src/compat/legacy-mobile.js comment",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "6396aef7505f42e861803a27f1a5f14755eaf7e1",
+      "index": 155,
+      "epochSeconds": 1711674000,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "ad1535abc5801728aa285db0028d2b3211d33487",
+      "index": 156,
+      "epochSeconds": 1711684800,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Tidy up imports in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "945f67c2f6777e614ebb053d00a5633e89a2d108",
+      "index": 157,
+      "epochSeconds": 1711695600,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Update inline docs for src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "07661aa9a7d88374ee02f2f93c66552d3381299c",
+      "index": 158,
+      "epochSeconds": 1711706400,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Reorder function arguments in src/oauth/provider-client.js",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "12ec86c4afd1040963204328032889e1326e4195",
+      "index": 159,
+      "epochSeconds": 1711717200,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Small refactor of src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "08def73e99f4dc4bd593c4e66084e7f05f54621d",
+      "index": 160,
+      "epochSeconds": 1711728000,
+      "category": "churn",
+      "subsystem": "oauth",
+      "subject": "Fix typo in src/oauth/provider-client.js comment",
+      "files": [
+        "src/oauth/provider-client.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "8b1112905d61dd904a44a35a47b6bdc3b5ed5a01",
+      "index": 161,
+      "epochSeconds": 1711738800,
+      "category": "churn",
+      "subsystem": "compat",
+      "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
+      "files": [
+        "src/compat/legacy-mobile.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "c92bbc0a92b571d365de1fee1b22701de586c61f",
+      "index": 162,
+      "epochSeconds": 1711749600,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Normalize whitespace in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    },
+    {
+      "sha": "3ee65ce3d140d5804390e072d03005a63751b260",
+      "index": 163,
+      "epochSeconds": 1711760400,
+      "category": "churn",
+      "subsystem": "session",
+      "subject": "Trim trailing whitespace in src/session/auth-session-provider.js",
+      "files": [
+        "src/session/auth-session-provider.js"
+      ],
+      "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
+    }
+  ]
+}

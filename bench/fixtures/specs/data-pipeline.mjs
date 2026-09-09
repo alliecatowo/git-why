@@ -150,7 +150,7 @@ export async function* streamNdjson(rows) {
     files: [{ path: 'src/export/csv-export.js', op: 'remove' }],
     note: 'Completes the export migration story; relevant to a query about why CSV export was replaced.',
   },
-  // --- number_version #2 (test) ---
+  // --- migration #4 (test) ---
   {
     id: 'locking.remove-redis-lock-file',
     category: 'migration',
@@ -159,6 +159,36 @@ export async function* streamNdjson(rows) {
     body: 'All callers moved to withAdvisoryLock(); removing the dead Redis lock code.',
     files: [{ path: 'src/locking/redis-lock.js', op: 'remove' }],
     note: 'Fourth migration-category commit: completes the locking migration story.',
+  },
+  // --- number_version #2 (test): require Node 18 for the streaming export ---
+  {
+    id: 'export.require-node-18-streams',
+    category: 'number_version',
+    subsystem: SUBSYS.export,
+    subject: 'Require Node 18+ for the streaming export path',
+    body: `streamNdjson() relies on ReadableStream.from() semantics for async
+generators that only landed correctly in Node 18 (Node 16's
+implementation drops the final chunk under backpressure, verified
+locally against Node 16.20 and Node 18.16). Bumping the engines
+requirement rather than adding a Node-16 polyfill for a runtime
+already past its support window.`,
+    files: [
+      {
+        path: 'src/export/streaming-export.js',
+        op: 'write',
+        content: `// Streams rows as newline-delimited JSON instead of building the
+// whole export in memory. Requires Node 18+: see commit message
+// (Node 16's ReadableStream.from() drops the final chunk under
+// backpressure).
+export async function* streamNdjson(rows) {
+  for (const row of rows) {
+    yield JSON.stringify(row) + '\\n';
+  }
+}
+`,
+      },
+    ],
+    note: 'Second number_version case in this fixture, distinguished from the Postgres 13 drop and from unrelated Node-version filler mentions.',
   },
 ];
 

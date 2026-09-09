@@ -25,6 +25,7 @@ function evidenceToJson(ev: EvidenceHit): JsonValue {
     kind: ev.kind,
     path: ev.path.display,
     oldPath: ev.oldPath ? ev.oldPath.display : null,
+    changeType: ev.changeType,
     oldStart: ev.oldStart,
     oldCount: ev.oldCount,
     newStart: ev.newStart,

@@ -13,9 +13,10 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "types": ["node"],
     "outDir": "dist",
-    "rootDir": "src",
     "sourceMap": true,
     "declaration": false
   },

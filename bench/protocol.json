@@ -1,0 +1,139 @@
+{
+  "protocolVersion": 1,
+  "frozenAt": "2026-09-09T00:00:00Z",
+  "frozenBy": "evaluation lane, before any retrieval tuning against bench/dataset/test.json",
+  "status": "This file is written BEFORE tuning. Any change to representation, embedding, ranking, thresholds, candidate limits, or dataset composition requires bumping protocolVersion and re-deriving protocolHash, and invalidates prior held-out results against the old holdout. If bench/dataset/test.json is ever read by a tuning script, the holdout is burned and a new, unused holdout must be constructed before any further claim is made.",
+  "developmentTarget": {
+    "statement": "At least 75% Hit@5 on answerable (non no-evidence) semantic-archaeology cases in bench/dataset/dev.json, with exact-identifier (category=exact_identifier) performance reported SEPARATELY and not folded into the 75% figure.",
+    "isA": "A provisional product-quality floor used to pick a default configuration before the held-out run.",
+    "isNotA": "A statistical claim. With 20 answerable dev cases (24 dev cases minus 4 dev no-evidence cases), a single-point Hit@5 estimate carries wide uncertainty; do not report a confidence interval implying more precision than a 20-item sample supports.",
+    "selectionRule": "The smallest/cheapest candidate embedding model meeting the target is the default unless a documented, material gain on dev data justifies the extra cost (extra cost = latency, disk, or memory -- see bench/perf/run.mjs)."
+  },
+  "ranking": {
+    "method": "Reciprocal Rank Fusion (RRF) over the lexical (FTS) and semantic (vector) branches.",
+    "rrfConstant": 60,
+    "rrfConstantRationale": "60 is the constant from the original Cormack et al. RRF paper and is the de facto default in hybrid-search literature; not tuned against this dataset. Changing it would require re-freezing this protocol.",
+    "formula": "score(doc) = sum over branches b where doc appears in b's ranked list of 1 / (rrfConstant + rank_b(doc)), 1-indexed rank.",
+    "commitCollapse": "Evidence-level hits are grouped to their owning commit before RRF; a commit's rankScore is computed from its best rank in each branch, per docs/spec.md section 14. This file does not restate the grouping algorithm -- src/search/ owns it -- it only pins the constant and candidate limits used when bench measures it."
+  },
+  "candidateLimits": {
+    "lexicalTopK": 50,
+    "semanticTopK": 50,
+    "note": "Both branches are queried for up to 50 candidate records (commit or evidence records, per the storage eligibility filter) before RRF fusion and commit collapse. This mirrors the SearchRequest.limit ceiling of 50 in src/types.ts.",
+    "resultLimitForMetrics": 5,
+    "resultLimitForMetricsNote": "Hit@1/3/5 and Recall@5 are computed over the top 5 returned commits. MRR is computed over the full returned ranking up to resultLimitForMetrics."
+  },
+  "perRunBudgets": {
+    "wallClockMinutes": 8,
+    "toolCalls": 60,
+    "generatedTokens": 12000,
+    "generatedTokensNote": "Enforced only where the provider/harness exposes a usable stop condition or token count; OpenCode's documented CLI does not expose a token-limit flag (verified against `opencode run --help`, 1.18.30), so this is enforced by the runner truncating/aborting on observed usage after the fact, with documented event-boundary overshoot possible. Wall time and tool-call counts ARE actively enforced by the runner (bench/agents/runner.mjs) via a deadline timer and a tool-call counter over the parsed event stream.",
+    "appliesTo": "Each individual OpenCode trial (one arm x one task x one repetition) in Benchmark B."
+  },
+  "arms": {
+    "A": {
+      "name": "baseline",
+      "tools": "Normal OpenCode built-in tools: shell, file read/edit, ripgrep, tests, and native Git history commands (git log, git show, git blame, git log -S, git log -G). No zg. No git why."
+    },
+    "B": {
+      "name": "workspace",
+      "tools": "Arm A + Zvec-Grep (zg) over the current task workspace. No git why.",
+      "status": "BLOCKED: zg is not installed in this environment and must not be installed by the evaluation lane per its brief. Runner marks this arm 'unavailable' rather than skipping it silently; see bench/agents/isolation.mjs and bench/agents/runner.mjs."
+    },
+    "C": {
+      "name": "workspace+history",
+      "tools": "Arm A + the identical zg setup from arm B + git why over the permitted history.",
+      "status": "BLOCKED on the same zg dependency as arm B."
+    },
+    "D": {
+      "name": "history",
+      "tools": "Arm A + git why over the permitted history, without zg.",
+      "status": "runnable once dist/cli/main.js exists; does not require zg."
+    },
+    "primaryComparisons": [
+      "C vs B",
+      "D vs A"
+    ],
+    "secondaryComparisons": [
+      "B vs A (workspace retrieval alone)",
+      "C vs A (combined package)",
+      "(C - B) - (D - A) interaction, descriptive only, not attributed entirely to Git Why"
+    ]
+  },
+  "executionBudget": {
+    "modelCalibration": {
+      "runs": "at most 2 candidates x 2 neutral tasks",
+      "purpose": "confirm actual free availability and tool use"
+    },
+    "harnessSmoke": {
+      "runs": "4 tasks x 4 arms x 1 trial = 16",
+      "entersPilotAggregate": false
+    },
+    "pilot": {
+      "runs": "8 frozen tasks x 4 arms x 2 fresh trials = 64",
+      "purpose": "first paired usefulness comparison"
+    },
+    "optionalReplication": {
+      "runs": "same pilot with one selected DevPass model",
+      "status": "not run; requires opting into a paid route, budget currently zero"
+    },
+    "optionalLargerStudy": {
+      "runs": "20 tasks x 4 arms x 3 trials = 240",
+      "status": "not run; only after pilot identifies a reason to expand"
+    }
+  },
+  "concurrency": {
+    "openCodeSessionsTotal": 2,
+    "note": "Two concurrent OpenCode sessions TOTAL across all arms, not two per arm. Arm order is randomized within each task/trial block and arms are interleaved so time-of-day/provider load does not systematically favor any one arm."
+  },
+  "billedModelBudget": {
+    "amount": 0,
+    "note": "Zero billed-model spend for the initial pilot. A rate limit does not authorize silently switching to a paid OpenCode model or an unknown metered endpoint. DevPass is a separate, explicitly opted-in cohort, never mixed mid-block with the free cohort."
+  },
+  "datasetComposition": {
+    "totalCases": 48,
+    "devCases": 24,
+    "testCases": 24,
+    "noEvidenceCases": 8,
+    "noEvidenceStratification": "4 dev, 4 test",
+    "fixtureCount": 6,
+    "requiredCategories": [
+      "synonym_mismatch",
+      "workaround_rationale",
+      "deleted_implementation",
+      "migration",
+      "exact_identifier",
+      "number_version",
+      "rename",
+      "poor_message_rich_diff",
+      "rich_message_skipped_patch",
+      "lifecycle",
+      "distractor_intent",
+      "no_evidence"
+    ],
+    "paraphraseRule": "Paraphrases of the same underlying change stay in the same split. This dataset does not include deliberate paraphrase pairs (each case targets a distinct underlying commit or commit pair); the rule is recorded here for any future dataset extension.",
+    "externalValidity": "bench/dataset/external.json: 12 hand-verified cases over expressjs/express and axios/axios (both MIT-licensed), 6 dev / 6 test, pinned cutoff SHAs and ancestry-verified relevant SHAs. See that file's 'notBlinded' field."
+  },
+  "ablation": {
+    "name": "summary-only vs summary+diff-evidence",
+    "scope": "development split only (bench/dataset/dev.json), never run against the held-out split",
+    "purpose": "Tests whether ingesting diff/evidence records earns its complexity over indexing commit summaries (subject+body) alone."
+  },
+  "metrics": {
+    "commitLevel": [
+      "Hit@1",
+      "Hit@3",
+      "Hit@5",
+      "Recall@5 (multi-relevant, correct denominator = count of ALL relevant SHAs for the case, not 1)",
+      "MRR"
+    ],
+    "noEvidenceHandling": "No-evidence cases are excluded from Hit@k/Recall@k/MRR (there is no relevant SHA to rank). They are reported separately: what the system actually returned (top-k commits), and whether a fabricated-sounding rationale would be unsupported by that evidence.",
+    "denominatorWarning": "\"At least one relevant hit in the top 5\" is Hit@5, not Recall@5. Recall@5 for a case with N relevant SHAs is (relevant SHAs found in top 5) / N."
+  },
+  "comparisons": [
+    "FTS only",
+    "Vector only, per candidate embedding model",
+    "Hybrid (RRF per this protocol), per candidate embedding model"
+  ],
+  "protocolHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f"
+}

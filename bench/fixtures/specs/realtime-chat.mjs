@@ -6,6 +6,21 @@ const SUBSYS = { relay: 'relay', presence: 'presence', sdk: 'client-sdk' };
 
 const initialFiles = [
   {
+    path: 'src/relay/polling-dispatcher.js',
+    subsystem: SUBSYS.relay,
+    content: `// Legacy polling dispatcher: polls every socket pool on a 250ms
+// timer and flushes any queued messages. Predates the push-based
+// dispatch() below; kept only until every caller migrates off it.
+export function pollAndFlush(pool, intervalMs) {
+  return setInterval(() => {
+    for (const [room, sockets] of pool.byRoom) {
+      // ...
+    }
+  }, intervalMs);
+}
+`,
+  },
+  {
     path: 'src/relay/dispatch.js',
     subsystem: SUBSYS.relay,
     content: `// Fans out an incoming message to every subscriber of a room.
