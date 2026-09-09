@@ -13,7 +13,10 @@ import { captureSnapshot } from '../../../src/git/snapshot.js';
 import { createTestRepo } from '../../fixtures/repo.js';
 import type { CommitExtraction } from '../../../src/types.js';
 
-async function extractAll(dir: string, shas: readonly string[]): Promise<Map<string, CommitExtraction>> {
+async function extractAll(
+  dir: string,
+  shas: readonly string[],
+): Promise<Map<string, CommitExtraction>> {
   const repository = await resolveRepositoryIdentity(dir);
   const snapshot = await captureSnapshot(repository);
   const extractor = createGitHistoryExtractor(new FakeEmbedder());
@@ -40,7 +43,10 @@ test('root commit: zero parents, diffs against the empty tree, no hard-coded has
     assert.equal(extraction.commit.changedPaths[0]?.path.display, 'a.txt');
     assert.equal(extraction.commit.coverage.complete, true);
     const hunkEvidence = extraction.evidence.find((e) => e.kind === 'hunk');
-    assert.ok(hunkEvidence, 'root commit should still produce hunk evidence against the empty tree');
+    assert.ok(
+      hunkEvidence,
+      'root commit should still produce hunk evidence against the empty tree',
+    );
     assert.match(hunkEvidence.sourceExcerpt, /\+hello/);
   } finally {
     await repo.cleanup();
@@ -207,7 +213,14 @@ test('merge commit: all parent OIDs, first-parent changed paths, no hunk evidenc
     await repo.add(['main-side.txt']);
     await repo.commit('main side commit');
 
-    const mergeResult = await repo.git(['merge', '-q', '--no-ff', 'feature', '-m', 'merge feature']);
+    const mergeResult = await repo.git([
+      'merge',
+      '-q',
+      '--no-ff',
+      'feature',
+      '-m',
+      'merge feature',
+    ]);
     assert.equal(mergeResult.code, 0, mergeResult.stderr);
     const mergeSha = await repo.head();
     const parentsResult = await repo.gitOrThrow(['log', '-1', '--format=%P', mergeSha]);

@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { commitSummaryPathKeys, hunkPathKeys, pathMatchKeys } from '../../../src/history/pathkeys.js';
+import {
+  commitSummaryPathKeys,
+  hunkPathKeys,
+  pathMatchKeys,
+} from '../../../src/history/pathkeys.js';
 import type { HistoricalPath, HistoricalPathChange } from '../../../src/types.js';
 
 function hp(display: string): HistoricalPath {

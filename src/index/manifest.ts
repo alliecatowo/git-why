@@ -7,7 +7,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { ObjectFormat, OmissionReason } from '../types.js';
-import { GitWhyError, MANIFEST_VERSION, RECORD_SCHEMA_VERSION, EXTRACTION_POLICY_VERSION, LEXICAL_NORMALIZATION_VERSION, RANKING_VERSION } from '../types.js';
+import {
+  GitWhyError,
+  MANIFEST_VERSION,
+  RECORD_SCHEMA_VERSION,
+  EXTRACTION_POLICY_VERSION,
+  LEXICAL_NORMALIZATION_VERSION,
+  RANKING_VERSION,
+} from '../types.js';
 import { fsyncDirectoryBestEffort } from './layout.js';
 
 export type ManifestState = 'clean' | 'recovery_required';
@@ -49,7 +56,11 @@ export interface IndexManifest {
 
 export function currentPolicyIdentities(): Pick<
   IndexManifest,
-  'manifestVersion' | 'recordSchemaVersion' | 'extractionPolicyVersion' | 'lexicalNormalizationVersion' | 'rankingVersion'
+  | 'manifestVersion'
+  | 'recordSchemaVersion'
+  | 'extractionPolicyVersion'
+  | 'lexicalNormalizationVersion'
+  | 'rankingVersion'
 > {
   return {
     manifestVersion: MANIFEST_VERSION,
@@ -95,16 +106,32 @@ function validateManifestShape(value: unknown, sourcePath: string): IndexManifes
   ];
   for (const key of requiredStrings) {
     if (typeof value[key] !== 'string') {
-      throw new GitWhyError('INDEX_CORRUPT', `manifest at ${sourcePath} missing/invalid string field "${key}"`);
+      throw new GitWhyError(
+        'INDEX_CORRUPT',
+        `manifest at ${sourcePath} missing/invalid string field "${key}"`,
+      );
     }
   }
-  const requiredNumbers = ['manifestVersion', 'recordSchemaVersion', 'extractionPolicyVersion', 'lexicalNormalizationVersion', 'rankingVersion'];
+  const requiredNumbers = [
+    'manifestVersion',
+    'recordSchemaVersion',
+    'extractionPolicyVersion',
+    'lexicalNormalizationVersion',
+    'rankingVersion',
+  ];
   for (const key of requiredNumbers) {
     if (typeof value[key] !== 'number') {
-      throw new GitWhyError('INDEX_CORRUPT', `manifest at ${sourcePath} missing/invalid numeric field "${key}"`);
+      throw new GitWhyError(
+        'INDEX_CORRUPT',
+        `manifest at ${sourcePath} missing/invalid numeric field "${key}"`,
+      );
     }
   }
-  if (!isPlainObject(value.counts) || typeof value.counts.commits !== 'number' || typeof value.counts.evidence !== 'number') {
+  if (
+    !isPlainObject(value.counts) ||
+    typeof value.counts.commits !== 'number' ||
+    typeof value.counts.evidence !== 'number'
+  ) {
     throw new GitWhyError('INDEX_CORRUPT', `manifest at ${sourcePath} has invalid "counts"`);
   }
   if (
@@ -117,10 +144,16 @@ function validateManifestShape(value: unknown, sourcePath: string): IndexManifes
     throw new GitWhyError('INDEX_CORRUPT', `manifest at ${sourcePath} has invalid "omissions"`);
   }
   if (value.state !== 'clean' && value.state !== 'recovery_required') {
-    throw new GitWhyError('INDEX_CORRUPT', `manifest at ${sourcePath} has invalid "state": ${String(value.state)}`);
+    throw new GitWhyError(
+      'INDEX_CORRUPT',
+      `manifest at ${sourcePath} has invalid "state": ${String(value.state)}`,
+    );
   }
   if (value.objectFormat !== 'sha1' && value.objectFormat !== 'sha256') {
-    throw new GitWhyError('INDEX_CORRUPT', `manifest at ${sourcePath} has invalid "objectFormat": ${String(value.objectFormat)}`);
+    throw new GitWhyError(
+      'INDEX_CORRUPT',
+      `manifest at ${sourcePath} has invalid "objectFormat": ${String(value.objectFormat)}`,
+    );
   }
   return value as unknown as IndexManifest;
 }
@@ -132,13 +165,19 @@ export function readManifest(manifestFile: string): IndexManifest | null {
     raw = fs.readFileSync(manifestFile, 'utf8');
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null;
-    throw new GitWhyError('STORAGE_FAILED', `failed to read manifest at ${manifestFile}: ${(err as Error).message}`, { cause: err });
+    throw new GitWhyError(
+      'STORAGE_FAILED',
+      `failed to read manifest at ${manifestFile}: ${(err as Error).message}`,
+      { cause: err },
+    );
   }
   let parsed: unknown;
   try {
     parsed = JSON.parse(raw);
   } catch (err) {
-    throw new GitWhyError('INDEX_CORRUPT', `manifest at ${manifestFile} is not valid JSON`, { cause: err });
+    throw new GitWhyError('INDEX_CORRUPT', `manifest at ${manifestFile} is not valid JSON`, {
+      cause: err,
+    });
   }
   return validateManifestShape(parsed, manifestFile);
 }
@@ -147,7 +186,10 @@ export function readManifest(manifestFile: string): IndexManifest | null {
 export function writeManifestAtomic(manifestFile: string, manifest: IndexManifest): void {
   const dir = path.dirname(manifestFile);
   fs.mkdirSync(dir, { recursive: true });
-  const tmp = path.join(dir, `.manifest.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const tmp = path.join(
+    dir,
+    `.manifest.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  );
   const fd = fs.openSync(tmp, 'w');
   try {
     fs.writeFileSync(fd, JSON.stringify(manifest, null, 2));

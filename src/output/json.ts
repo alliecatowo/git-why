@@ -6,7 +6,13 @@
  * `schema/status-response.schema.json` for the shapes produced here.
  */
 
-import { JSON_SCHEMA_VERSION, type EvidenceHit, type GitWhyErrorCode, type IndexStatus, type SearchResponse } from '../types.js';
+import {
+  JSON_SCHEMA_VERSION,
+  type EvidenceHit,
+  type GitWhyErrorCode,
+  type IndexStatus,
+  type SearchResponse,
+} from '../types.js';
 
 export interface JsonRenderOptions {
   readonly maxBytes: number;
@@ -39,7 +45,10 @@ function evidenceToJson(ev: EvidenceHit): JsonValue {
   return out;
 }
 
-function buildEnvelope(response: SearchResponse, outputTruncated: boolean): { [key: string]: JsonValue } {
+function buildEnvelope(
+  response: SearchResponse,
+  outputTruncated: boolean,
+): { [key: string]: JsonValue } {
   return {
     schemaVersion: JSON_SCHEMA_VERSION,
     query: response.query,
@@ -81,7 +90,10 @@ const TRUNCATION_WARNING = 'Output truncated to fit --max-bytes; dropped evidenc
  * evidence entries, then whole results, then (as a last resort) shorten the
  * query text. Always returns a syntactically valid, single JSON object.
  */
-export function renderSearchJson(response: SearchResponse, options: JsonRenderOptions): JsonRenderResult {
+export function renderSearchJson(
+  response: SearchResponse,
+  options: JsonRenderOptions,
+): JsonRenderResult {
   let outputTruncated = false;
   const results = response.results.map((hit) => ({ ...hit, evidence: [...hit.evidence] }));
   let warnings = [...response.warnings];
@@ -118,7 +130,10 @@ export function renderSearchJson(response: SearchResponse, options: JsonRenderOp
     // a long query. Shorten the query text rather than emit invalid JSON.
     const query = String(envelope.query ?? '');
     if (query.length > 8) {
-      envelope = { ...envelope, query: query.slice(0, Math.max(1, Math.floor(query.length / 2))) + '…' };
+      envelope = {
+        ...envelope,
+        query: query.slice(0, Math.max(1, Math.floor(query.length / 2))) + '…',
+      };
       outputTruncated = true;
       envelope = { ...envelope, outputTruncated: true };
       continue;
@@ -168,7 +183,11 @@ function indexStatusToJson(status: IndexStatus): JsonValue {
     refsChanged: status.refsChanged,
     recordCount: status.recordCount,
     model: status.model
-      ? { id: status.model.id, revision: status.model.revision, fingerprint: status.model.fingerprint }
+      ? {
+          id: status.model.id,
+          revision: status.model.revision,
+          fingerprint: status.model.fingerprint,
+        }
       : null,
     diskBytes: status.diskBytes,
     indexedAt: status.indexedAt,

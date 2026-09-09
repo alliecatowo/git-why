@@ -3,7 +3,15 @@
   "$id": "https://git-why.dev/schema/search-response.schema.json",
   "title": "Git Why search response envelope",
   "type": "object",
-  "required": ["schemaVersion", "query", "mode", "results", "warnings", "outputTruncated", "candidateLimitReached"],
+  "required": [
+    "schemaVersion",
+    "query",
+    "mode",
+    "results",
+    "warnings",
+    "outputTruncated",
+    "candidateLimitReached"
+  ],
   "additionalProperties": false,
   "properties": {
     "schemaVersion": { "const": 1 },

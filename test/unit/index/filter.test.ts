@@ -1,9 +1,19 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { quoteFilterLiteral, likeSubstringPattern, pathMatchKeys, buildEligibilityExpression } from '../../../src/index/filter.js';
+import {
+  quoteFilterLiteral,
+  likeSubstringPattern,
+  pathMatchKeys,
+  buildEligibilityExpression,
+} from '../../../src/index/filter.js';
 import { NO_FILTERS } from '../../../src/types.js';
 
-const FIELDS = { type: 'rtype', committerTime: 'committerTime', authorSearch: 'authorSearch', pathKeys: 'pathKeys' };
+const FIELDS = {
+  type: 'rtype',
+  committerTime: 'committerTime',
+  authorSearch: 'authorSearch',
+  pathKeys: 'pathKeys',
+};
 
 test('quoteFilterLiteral picks the delimiter absent from the value', () => {
   assert.equal(quoteFilterLiteral('plain'), "'plain'");
@@ -22,7 +32,11 @@ test('likeSubstringPattern escapes LIKE wildcards and the escape character itsel
 });
 
 test('pathMatchKeys includes the full path and every directory prefix', () => {
-  assert.deepEqual(pathMatchKeys('src/index/collection.ts'), ['src/index/collection.ts', 'src/index', 'src']);
+  assert.deepEqual(pathMatchKeys('src/index/collection.ts'), [
+    'src/index/collection.ts',
+    'src/index',
+    'src',
+  ]);
   assert.deepEqual(pathMatchKeys('README.md'), ['README.md']);
   assert.deepEqual(pathMatchKeys(''), []);
 });

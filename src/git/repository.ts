@@ -27,7 +27,12 @@ export async function resolveRepositoryIdentity(startDir: string): Promise<Repos
   }
   const lines = result.stdout.toString('utf8').trim().split('\n');
   const [commonDirRaw, , isBareRaw, objectFormatRaw, isShallowRaw] = lines;
-  if (commonDirRaw === undefined || isBareRaw === undefined || objectFormatRaw === undefined || isShallowRaw === undefined) {
+  if (
+    commonDirRaw === undefined ||
+    isBareRaw === undefined ||
+    objectFormatRaw === undefined ||
+    isShallowRaw === undefined
+  ) {
     throw new GitWhyError('NO_REPOSITORY', `could not parse repository identity for: ${startDir}`);
   }
 
@@ -40,7 +45,11 @@ export async function resolveRepositoryIdentity(startDir: string): Promise<Repos
 
   let worktreeRoot: string | null = null;
   if (!isBare) {
-    const topLevel = await runGitDiscovery(startDir, ['rev-parse', '--path-format=absolute', '--show-toplevel']);
+    const topLevel = await runGitDiscovery(startDir, [
+      'rev-parse',
+      '--path-format=absolute',
+      '--show-toplevel',
+    ]);
     if (topLevel.code === 0) {
       const top = topLevel.stdout.toString('utf8').trim();
       if (top.length > 0) worktreeRoot = await realpath(top);
@@ -75,7 +84,9 @@ async function rejectLegacyGrafts(commonDir: string): Promise<void> {
       throw new GitWhyError(
         'UNSUPPORTED_HISTORY_OVERRIDE',
         'this repository uses legacy Git grafts (.git/info/grafts), which silently rewrite commit ancestry',
-        { hint: 'remove the grafts file (after converting it with `git filter-repo` or similar) to use git-why' },
+        {
+          hint: 'remove the grafts file (after converting it with `git filter-repo` or similar) to use git-why',
+        },
       );
     }
   } catch (error) {

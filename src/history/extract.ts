@@ -219,7 +219,8 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
   );
 
   const totalPatchBytes = raw.files.reduce(
-    (sum, f) => sum + f.hunks.reduce((s, h) => s + Buffer.byteLength(renderHunkForSizing(h), 'utf8'), 0),
+    (sum, f) =>
+      sum + f.hunks.reduce((s, h) => s + Buffer.byteLength(renderHunkForSizing(h), 'utf8'), 0),
     0,
   );
   const pathological = isPathologicalPatch(totalPatchBytes);

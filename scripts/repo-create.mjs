@@ -32,7 +32,12 @@ const PACKAGE_NAME_MARKER = '"@alliecatowo/git-why"'; // used to recognize "clea
 
 function sh(cmd, args, opts = {}) {
   try {
-    const out = execFileSync(cmd, args, { cwd: repoRoot, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts });
+    const out = execFileSync(cmd, args, {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      ...opts,
+    });
     return { ok: true, stdout: out.trim() };
   } catch (err) {
     return { ok: false, stdout: '', stderr: String(err.stderr ?? err.message ?? err) };
@@ -54,14 +59,22 @@ function resolveLogin() {
   }
   const login = sh('gh', ['api', 'user', '--jq', '.login']);
   if (!login.ok || !login.stdout) {
-    die(`gh api user --jq .login failed even though gh auth status succeeded: ${login.stderr}. Run \`gh auth login\`.`);
+    die(
+      `gh api user --jq .login failed even though gh auth status succeeded: ${login.stderr}. Run \`gh auth login\`.`,
+    );
   }
   return login.stdout;
 }
 
 /** `gh repo view` as structured data, or null if the repo does not exist. */
 function viewRepo(nameWithOwner) {
-  const result = sh('gh', ['repo', 'view', nameWithOwner, '--json', 'name,owner,isPrivate,defaultBranchRef,url,sshUrl,description']);
+  const result = sh('gh', [
+    'repo',
+    'view',
+    nameWithOwner,
+    '--json',
+    'name,owner,isPrivate,defaultBranchRef,url,sshUrl,description',
+  ]);
   if (!result.ok) return null;
   try {
     return JSON.parse(result.stdout);
@@ -74,7 +87,12 @@ function viewRepo(nameWithOwner) {
 function looksLikeThisProject(nameWithOwner, info) {
   const branch = info?.defaultBranchRef?.name;
   if (!branch) return false; // empty repo, e.g. created by hand with no pushes yet — not clearly ours
-  const contents = sh('gh', ['api', `repos/${nameWithOwner}/contents/package.json?ref=${branch}`, '--jq', '.content']);
+  const contents = sh('gh', [
+    'api',
+    `repos/${nameWithOwner}/contents/package.json?ref=${branch}`,
+    '--jq',
+    '.content',
+  ]);
   if (!contents.ok || !contents.stdout) return false;
   let decoded = '';
   try {
@@ -95,7 +113,9 @@ function chooseTargetRepo(login) {
     return { nameWithOwner: primary, name: PRIMARY_NAME, exists: true, info: primaryInfo };
   }
 
-  console.log(`repo-create: ${primary} exists and is not clearly this project; falling back to ${FALLBACK_NAME}.`);
+  console.log(
+    `repo-create: ${primary} exists and is not clearly this project; falling back to ${FALLBACK_NAME}.`,
+  );
   const fallback = `${login}/${FALLBACK_NAME}`;
   const fallbackInfo = viewRepo(fallback);
   if (!fallbackInfo) {
@@ -143,7 +163,8 @@ function scanForSecrets(files) {
       if (pattern.test(file)) findings.push(`${file}: forbidden path pattern (${pattern})`);
     }
     // Skip large/binary-looking files; a content scan is for text config/logs.
-    if (/\.(png|jpg|jpeg|gif|ico|woff2?|ttf|zip|tgz|gz|onnx|safetensors|gguf)$/i.test(file)) continue;
+    if (/\.(png|jpg|jpeg|gif|ico|woff2?|ttf|zip|tgz|gz|onnx|safetensors|gguf)$/i.test(file))
+      continue;
     const blob = sh('git', ['show', `HEAD:${file}`]);
     if (!blob.ok) continue;
     for (const [pattern, label] of SECRET_PATTERNS) {
@@ -174,10 +195,13 @@ function main() {
 
   const target = chooseTargetRepo(login);
   const headRev = sh('git', ['rev-parse', 'HEAD']);
-  if (!headRev.ok) die(`git rev-parse HEAD failed: ${headRev.stderr}. Is this a git repository with a commit?`);
+  if (!headRev.ok)
+    die(`git rev-parse HEAD failed: ${headRev.stderr}. Is this a git repository with a commit?`);
 
   const files = listPushedFiles();
-  console.log(`\nrepo-create: ${files.length} files at HEAD (${headRev.stdout.slice(0, 12)}) will be pushed to ${target.nameWithOwner}:`);
+  console.log(
+    `\nrepo-create: ${files.length} files at HEAD (${headRev.stdout.slice(0, 12)}) will be pushed to ${target.nameWithOwner}:`,
+  );
   for (const f of files) console.log(`  ${f}`);
 
   const findings = scanForSecrets(files);
@@ -190,10 +214,19 @@ function main() {
 
   if (!target.exists) {
     console.log(`\nrepo-create: creating ${target.nameWithOwner} (public, no immediate push)...`);
-    const create = sh('gh', ['repo', 'create', target.nameWithOwner, '--public', '--description', DESCRIPTION]);
+    const create = sh('gh', [
+      'repo',
+      'create',
+      target.nameWithOwner,
+      '--public',
+      '--description',
+      DESCRIPTION,
+    ]);
     if (!create.ok) die(`gh repo create failed: ${create.stderr}`);
   } else {
-    console.log(`\nrepo-create: reusing existing repository ${target.nameWithOwner} (recognized as this project).`);
+    console.log(
+      `\nrepo-create: reusing existing repository ${target.nameWithOwner} (recognized as this project).`,
+    );
   }
 
   const info = viewRepo(target.nameWithOwner);
@@ -203,10 +236,18 @@ function main() {
   ensureRemote(target.nameWithOwner, sshUrl);
 
   const localBranch = sh('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
-  if (!localBranch.ok || localBranch.stdout === 'HEAD') die('not on a named local branch; refusing to push a detached HEAD.');
+  if (!localBranch.ok || localBranch.stdout === 'HEAD')
+    die('not on a named local branch; refusing to push a detached HEAD.');
 
-  console.log(`\nrepo-create: pushing ${localBranch.stdout} -> origin/${localBranch.stdout} (no force)...`);
-  const push = sh('git', ['push', '--set-upstream', 'origin', `${localBranch.stdout}:${localBranch.stdout}`]);
+  console.log(
+    `\nrepo-create: pushing ${localBranch.stdout} -> origin/${localBranch.stdout} (no force)...`,
+  );
+  const push = sh('git', [
+    'push',
+    '--set-upstream',
+    'origin',
+    `${localBranch.stdout}:${localBranch.stdout}`,
+  ]);
   if (!push.ok) {
     die(
       `git push failed: ${push.stderr}\n` +
@@ -217,13 +258,22 @@ function main() {
   console.log('\nrepo-create: verifying postconditions...');
   const finalInfo = viewRepo(target.nameWithOwner);
   if (!finalInfo) die('could not re-fetch repo info to verify postconditions.');
-  if (finalInfo.isPrivate) die(`${target.nameWithOwner} is private, not public. A printed gh command is not evidence.`);
+  if (finalInfo.isPrivate)
+    die(`${target.nameWithOwner} is private, not public. A printed gh command is not evidence.`);
 
   const defaultBranch = finalInfo.defaultBranchRef?.name;
   if (!defaultBranch) die(`${target.nameWithOwner} has no default branch after push.`);
 
-  const remoteTip = sh('gh', ['api', `repos/${target.nameWithOwner}/commits/${defaultBranch}`, '--jq', '.sha']);
-  if (!remoteTip.ok) die(`could not read the tip commit of ${target.nameWithOwner}@${defaultBranch}: ${remoteTip.stderr}`);
+  const remoteTip = sh('gh', [
+    'api',
+    `repos/${target.nameWithOwner}/commits/${defaultBranch}`,
+    '--jq',
+    '.sha',
+  ]);
+  if (!remoteTip.ok)
+    die(
+      `could not read the tip commit of ${target.nameWithOwner}@${defaultBranch}: ${remoteTip.stderr}`,
+    );
   if (remoteTip.stdout !== headRev.stdout) {
     die(
       `${target.nameWithOwner}@${defaultBranch} tip is ${remoteTip.stdout}, expected ${headRev.stdout}. ` +
@@ -231,7 +281,9 @@ function main() {
     );
   }
 
-  console.log(`\nrepo-create: verified public, default branch "${defaultBranch}" contains ${headRev.stdout}.`);
+  console.log(
+    `\nrepo-create: verified public, default branch "${defaultBranch}" contains ${headRev.stdout}.`,
+  );
   console.log(`repo-create: done. URL: ${finalInfo.url}`);
 }
 

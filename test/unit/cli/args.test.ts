@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { parseArgs, argvRequestsJson, type ParsedLifecycle, type ParsedSearch } from '../../../src/cli/args.js';
+import {
+  parseArgs,
+  argvRequestsJson,
+  type ParsedLifecycle,
+  type ParsedSearch,
+} from '../../../src/cli/args.js';
 import { GitWhyError, type GitWhyErrorCode, ExitCode } from '../../../src/types.js';
 
 /** Asserts `err` is a `GitWhyError` with the given code, and returns the exit code for further checks. */

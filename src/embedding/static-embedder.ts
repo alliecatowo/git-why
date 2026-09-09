@@ -107,7 +107,9 @@ export class StaticEmbedder implements Embedder {
     }
     this.dimension = dimension;
     this.embeddings = tensors.getFloat32(EMBEDDINGS_TENSOR_NAME);
-    this.weights = tensors.has(WEIGHTS_TENSOR_NAME) ? tensors.getFloat32(WEIGHTS_TENSOR_NAME) : null;
+    this.weights = tensors.has(WEIGHTS_TENSOR_NAME)
+      ? tensors.getFloat32(WEIGHTS_TENSOR_NAME)
+      : null;
 
     this.normalize = artifacts.config.normalize;
     this.disposed = false;
@@ -142,7 +144,7 @@ export class StaticEmbedder implements Embedder {
     return this.embedOne(text);
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+   
   async dispose(): Promise<void> {
     this.disposed = true;
   }

@@ -97,20 +97,20 @@ cache shared across repositories, never inside your project.
 
 ## Options
 
-| Flag | Meaning |
-| --- | --- |
-| `-n <1-50>` | Distinct commits to return. Default 5. |
-| `-- <path>...` | Restrict to literal historical paths; a trailing `/` means a directory prefix. |
-| `--after=`, `--before=` | Committer-time bounds. `YYYY-MM-DD` is interpreted as UTC. |
-| `--author=` | Case-insensitive literal substring of author name or email. |
-| `--text` | Keyword search only. |
-| `--semantic` | Vector search only. |
-| `--json` | One valid JSON object on stdout; diagnostics on stderr. |
-| `--no-refresh` | Never create, mutate, recover or compact the index. |
-| `--offline` | Additionally forbid model artifact downloads. |
-| `--max-bytes` | Bound rendered output. Default 16 KiB, maximum 256 KiB. |
-| `--lock-timeout` | Seconds to wait for another process. Default 30. |
-| `--query` | Disambiguate a query that looks like a command or an option. |
+| Flag                    | Meaning                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `-n <1-50>`             | Distinct commits to return. Default 5.                                         |
+| `-- <path>...`          | Restrict to literal historical paths; a trailing `/` means a directory prefix. |
+| `--after=`, `--before=` | Committer-time bounds. `YYYY-MM-DD` is interpreted as UTC.                     |
+| `--author=`             | Case-insensitive literal substring of author name or email.                    |
+| `--text`                | Keyword search only.                                                           |
+| `--semantic`            | Vector search only.                                                            |
+| `--json`                | One valid JSON object on stdout; diagnostics on stderr.                        |
+| `--no-refresh`          | Never create, mutate, recover or compact the index.                            |
+| `--offline`             | Additionally forbid model artifact downloads.                                  |
+| `--max-bytes`           | Bound rendered output. Default 16 KiB, maximum 256 KiB.                        |
+| `--lock-timeout`        | Seconds to wait for another process. Default 30.                               |
+| `--query`               | Disambiguate a query that looks like a command or an option.                   |
 
 Lifecycle commands: `git why index`, `status`, `status --json`, `rebuild`,
 `rebuild --use-default-model`, `gc`.

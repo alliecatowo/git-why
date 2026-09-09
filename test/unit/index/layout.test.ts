@@ -52,8 +52,14 @@ test('assertSafeToRecursivelyDelete rejects a path outside the owned generations
   try {
     const layout = layoutFor(commonDir);
     ensureScaffolding(layout);
-    assert.throws(() => assertSafeToRecursivelyDelete(layout, commonDir), /outside generations\/staging/);
-    assert.throws(() => assertSafeToRecursivelyDelete(layout, path.dirname(commonDir)), /outside generations\/staging/);
+    assert.throws(
+      () => assertSafeToRecursivelyDelete(layout, commonDir),
+      /outside generations\/staging/,
+    );
+    assert.throws(
+      () => assertSafeToRecursivelyDelete(layout, path.dirname(commonDir)),
+      /outside generations\/staging/,
+    );
   } finally {
     rmDir(commonDir);
   }

@@ -83,7 +83,8 @@ export function resolveCacheRoot(
 ): string {
   if (env.GIT_WHY_MODEL_CACHE) return env.GIT_WHY_MODEL_CACHE;
   if (env.XDG_CACHE_HOME) return path.join(env.XDG_CACHE_HOME, 'git-why', 'models');
-  if (platform === 'darwin') return path.join(os.homedir(), 'Library', 'Caches', 'git-why', 'models');
+  if (platform === 'darwin')
+    return path.join(os.homedir(), 'Library', 'Caches', 'git-why', 'models');
   return path.join(os.homedir(), '.cache', 'git-why', 'models');
 }
 
@@ -195,7 +196,11 @@ function jitteredBackoff(attempt: number): number {
   return base + Math.random() * base * 0.5;
 }
 
-async function withDownloadLock<T>(dir: string, timeoutMs: number, body: () => Promise<T>): Promise<T> {
+async function withDownloadLock<T>(
+  dir: string,
+  timeoutMs: number,
+  body: () => Promise<T>,
+): Promise<T> {
   const lockPath = lockFilePath(dir);
   const deadline = Date.now() + timeoutMs;
   let attempt = 0;
@@ -204,7 +209,10 @@ async function withDownloadLock<T>(dir: string, timeoutMs: number, body: () => P
     try {
       const fd = fs.openSync(lockPath, 'wx');
       try {
-        fs.writeSync(fd, JSON.stringify({ pid: process.pid, acquiredAt: Date.now() } satisfies LockToken));
+        fs.writeSync(
+          fd,
+          JSON.stringify({ pid: process.pid, acquiredAt: Date.now() } satisfies LockToken),
+        );
       } finally {
         fs.closeSync(fd);
       }
@@ -212,7 +220,10 @@ async function withDownloadLock<T>(dir: string, timeoutMs: number, body: () => P
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code !== 'EEXIST') throw err;
       if (Date.now() > deadline) {
-        throw new GitWhyError('MODEL_DOWNLOAD_FAILED', `timed out waiting for a concurrent model download to finish (${dir})`);
+        throw new GitWhyError(
+          'MODEL_DOWNLOAD_FAILED',
+          `timed out waiting for a concurrent model download to finish (${dir})`,
+        );
       }
       await sleep(jitteredBackoff(attempt++));
     }
@@ -273,7 +284,12 @@ async function downloadOne(
         const writable = fileHandle.createWriteStream();
         for await (const chunk of res.body as unknown as AsyncIterable<Uint8Array>) {
           bytesDownloaded += chunk.length;
-          onProgress?.({ modelId: artifact.modelId, file: file.filename, bytesDownloaded, totalBytes });
+          onProgress?.({
+            modelId: artifact.modelId,
+            file: file.filename,
+            bytesDownloaded,
+            totalBytes,
+          });
           if (!writable.write(chunk)) {
             await new Promise<void>((resolve) => writable.once('drain', resolve));
           }
@@ -305,16 +321,23 @@ async function downloadOne(
       }
     }
   }
-  throw new GitWhyError('MODEL_DOWNLOAD_FAILED', `failed to download ${file.filename} for ${artifact.modelId}`, {
-    cause: lastError,
-  });
+  throw new GitWhyError(
+    'MODEL_DOWNLOAD_FAILED',
+    `failed to download ${file.filename} for ${artifact.modelId}`,
+    {
+      cause: lastError,
+    },
+  );
 }
 
 /**
  * Ensure `artifact`'s three files are present and checksum-verified under
  * the cache root, downloading if necessary. Fully offline once cached.
  */
-export async function ensureCached(artifact: PinnedArtifact, options: CacheOptions = {}): Promise<CachedPaths> {
+export async function ensureCached(
+  artifact: PinnedArtifact,
+  options: CacheOptions = {},
+): Promise<CachedPaths> {
   const cacheRoot = options.cacheDir ?? resolveCacheRoot();
   const dir = targetDir(cacheRoot, artifact);
 
@@ -326,7 +349,9 @@ export async function ensureCached(artifact: PinnedArtifact, options: CacheOptio
     throw new GitWhyError(
       'OFFLINE_REQUIRED_RESOURCE',
       `${artifact.modelId}@${artifact.revision} is not cached locally and --offline forbids downloading it`,
-      { hint: `Run once without --offline to populate ${dir}, or set GIT_WHY_MODEL_CACHE to a pre-populated cache.` },
+      {
+        hint: `Run once without --offline to populate ${dir}, or set GIT_WHY_MODEL_CACHE to a pre-populated cache.`,
+      },
     );
   }
 
@@ -339,7 +364,10 @@ export async function ensureCached(artifact: PinnedArtifact, options: CacheOptio
     if (isFullyCached(dir, artifact)) return pathsFor(dir, artifact);
 
     for (const file of [artifact.config, artifact.tokenizer, artifact.weights]) {
-      if (fs.existsSync(path.join(dir, file.filename)) && sha256OfFile(path.join(dir, file.filename)) === file.sha256) {
+      if (
+        fs.existsSync(path.join(dir, file.filename)) &&
+        sha256OfFile(path.join(dir, file.filename)) === file.sha256
+      ) {
         continue; // partial prior run already got this one right
       }
       await downloadOne(artifact, file, dir, fetchImpl, options.onProgress);

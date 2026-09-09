@@ -38,7 +38,11 @@ test('a trailing slash resolves to a directory restriction', () => {
 });
 
 test('a path is resolved relative to the caller working directory, not the repo root', () => {
-  const ctx: PathResolutionContext = { repositoryRoot: '/repo', isBare: false, cwd: '/repo/src/auth' };
+  const ctx: PathResolutionContext = {
+    repositoryRoot: '/repo',
+    isBare: false,
+    cwd: '/repo/src/auth',
+  };
   const r = resolvePathRestriction('session.ts', ctx);
   assert.deepEqual(r, { value: 'src/auth/session.ts', kind: 'file' });
 });
@@ -114,7 +118,11 @@ test('restrictionMatchesPath: directory kind matches the directory itself and de
 
 test('a hunk matches on either its own path or its rename source (oldPath)', () => {
   const restriction = { value: 'src/billing/old_invoice.ts', kind: 'file' as const };
-  const matched = anyRestrictionMatchesChange([restriction], hp('src/billing/invoice.ts'), hp('src/billing/old_invoice.ts'));
+  const matched = anyRestrictionMatchesChange(
+    [restriction],
+    hp('src/billing/invoice.ts'),
+    hp('src/billing/old_invoice.ts'),
+  );
   assert.equal(matched, true);
 });
 

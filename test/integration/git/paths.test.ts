@@ -86,14 +86,20 @@ test('non-UTF-8 byte path identity, where the platform permits creating one', as
   // macOS/APFS) require valid UTF-8 filenames and will refuse to create this file; in
   // that case the platform does not permit the test, and it is skipped with a clear
   // reason rather than silently passing or failing.
-  const weirdName = Buffer.concat([Buffer.from('bad-'), Buffer.from([0xff, 0xfe, 0x80]), Buffer.from('.txt')]);
+  const weirdName = Buffer.concat([
+    Buffer.from('bad-'),
+    Buffer.from([0xff, 0xfe, 0x80]),
+    Buffer.from('.txt'),
+  ]);
   const repo = await createTestRepo();
   try {
     try {
       await repo.writeFile(weirdName, 'content\n');
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`SKIP: platform filesystem rejected a non-UTF-8 filename: ${(error as Error).message}`);
+       
+      console.log(
+        `SKIP: platform filesystem rejected a non-UTF-8 filename: ${(error as Error).message}`,
+      );
       return;
     }
     await repo.add([weirdName]);
@@ -102,8 +108,16 @@ test('non-UTF-8 byte path identity, where the platform permits creating one', as
     const change = extraction.commit.changedPaths[0];
     assert.ok(change);
     const decoded = Buffer.from(change.path.bytesBase64, 'base64');
-    assert.equal(decoded.equals(weirdName), true, 'raw bytes must be preserved exactly regardless of display lossiness');
-    assert.equal(change.path.lossy, true, 'a non-UTF-8 path must not round-trip through the display string');
+    assert.equal(
+      decoded.equals(weirdName),
+      true,
+      'raw bytes must be preserved exactly regardless of display lossiness',
+    );
+    assert.equal(
+      change.path.lossy,
+      true,
+      'a non-UTF-8 path must not round-trip through the display string',
+    );
   } finally {
     await repo.cleanup();
   }

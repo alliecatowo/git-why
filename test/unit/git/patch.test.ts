@@ -37,7 +37,10 @@ test('parseRawChanges: deletion has null oldPath, path is the removed path', () 
 });
 
 test('parseRawChanges: rename carries similarity and both paths', () => {
-  const buf = rawRecord(['100644', '100644', 'a'.repeat(40), 'a'.repeat(40), 'R100'], ['old name.txt', 'new name.txt']);
+  const buf = rawRecord(
+    ['100644', '100644', 'a'.repeat(40), 'a'.repeat(40), 'R100'],
+    ['old name.txt', 'new name.txt'],
+  );
   const entries = parseRawChanges(buf);
   assert.equal(entries[0]?.changeType, 'R');
   assert.equal(entries[0]?.similarity, 100);

@@ -38,7 +38,7 @@ test('SHA-1 repository: object format detected, 40-char OIDs', async () => {
 
 test('SHA-256 repository: object format detected, 64-char OIDs, empty tree resolved dynamically', async () => {
   if (!(await supportsObjectFormat('sha256'))) {
-    // eslint-disable-next-line no-console
+     
     console.log('SKIP: installed Git does not support --object-format=sha256 on this machine');
     return;
   }
@@ -60,7 +60,10 @@ test('SHA-256 repository: object format detected, 64-char OIDs, empty tree resol
     assert.deepEqual(results[0]?.commit.parents, []);
     assert.equal(results[0]?.commit.changedPaths[0]?.changeType, 'A');
     const hunk = results[0]?.evidence.find((e) => e.kind === 'hunk');
-    assert.ok(hunk, 'root commit in a SHA-256 repo must still diff against a correctly resolved empty tree');
+    assert.ok(
+      hunk,
+      'root commit in a SHA-256 repo must still diff against a correctly resolved empty tree',
+    );
   } finally {
     await repo.cleanup();
   }

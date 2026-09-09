@@ -56,7 +56,11 @@ export function probeGitCapabilities(): Promise<GitCapabilities> {
 }
 
 async function probeNow(): Promise<GitCapabilities> {
-  const versionResult = await spawnRaw(['git', 'version'], { cwd: tmpdir(), env: minimalEnv(), maxBytes: 4096 });
+  const versionResult = await spawnRaw(['git', 'version'], {
+    cwd: tmpdir(),
+    env: minimalEnv(),
+    maxBytes: 4096,
+  });
   const version = versionResult.stdout.toString('utf8').trim();
 
   const [noReplaceObjects, noLazyFetch, noOptionalLocks, noAdvice] = await Promise.all([
@@ -82,7 +86,11 @@ async function probeNow(): Promise<GitCapabilities> {
 async function probeGlobalFlag(flag: string): Promise<boolean> {
   // A real global flag is listed in git's own usage error for a deliberately unknown
   // flag, and does not itself produce "unknown option" when used with --version.
-  const result = await spawnRaw(['git', flag, '--version'], { cwd: tmpdir(), env: minimalEnv(), maxBytes: 4096 });
+  const result = await spawnRaw(['git', flag, '--version'], {
+    cwd: tmpdir(),
+    env: minimalEnv(),
+    maxBytes: 4096,
+  });
   if (result.code !== 0) return false;
   return !/unknown option/i.test(result.stderr.toString('utf8'));
 }
@@ -108,12 +116,28 @@ async function probeAttrSource(): Promise<boolean> {
   const dir = await mkdtemp(join(tmpdir(), 'gitwhy-probe-'));
   try {
     await spawnRaw(['git', 'init', '-q'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
-    await spawnRaw(['git', 'config', 'user.name', 'probe'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
-    await spawnRaw(['git', 'config', 'user.email', 'probe@example.com'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
+    await spawnRaw(['git', 'config', 'user.name', 'probe'], {
+      cwd: dir,
+      env: minimalEnv(),
+      maxBytes: 4096,
+    });
+    await spawnRaw(['git', 'config', 'user.email', 'probe@example.com'], {
+      cwd: dir,
+      env: minimalEnv(),
+      maxBytes: 4096,
+    });
     await writeFile(join(dir, 'f.txt'), 'x\n');
     await spawnRaw(['git', 'add', 'f.txt'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
-    await spawnRaw(['git', 'commit', '-q', '-m', 'probe'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
-    const head = await spawnRaw(['git', 'rev-parse', 'HEAD'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
+    await spawnRaw(['git', 'commit', '-q', '-m', 'probe'], {
+      cwd: dir,
+      env: minimalEnv(),
+      maxBytes: 4096,
+    });
+    const head = await spawnRaw(['git', 'rev-parse', 'HEAD'], {
+      cwd: dir,
+      env: minimalEnv(),
+      maxBytes: 4096,
+    });
     const sha = head.stdout.toString('utf8').trim();
     const result = await spawnRaw(['git', 'show', `--attr-source=${sha}`, sha], {
       cwd: dir,
@@ -309,9 +333,13 @@ export async function runGit(opts: RunGitOptions): Promise<RunGitResult> {
 export async function runGitOrThrow(opts: RunGitOptions): Promise<RunGitResult> {
   const result = await runGit(opts);
   if (result.code !== 0) {
-    throw new GitWhyError('EXTRACTION_FAILED', `git ${opts.args.join(' ')} failed: ${result.stderr.toString('utf8').trim()}`, {
-      hint: `argv: ${result.argv.join(' ')}`,
-    });
+    throw new GitWhyError(
+      'EXTRACTION_FAILED',
+      `git ${opts.args.join(' ')} failed: ${result.stderr.toString('utf8').trim()}`,
+      {
+        hint: `argv: ${result.argv.join(' ')}`,
+      },
+    );
   }
   return result;
 }

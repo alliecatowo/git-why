@@ -47,7 +47,12 @@ export function fakeRepository(commonDir: string): RepositoryIdentity {
   };
 }
 
-export function fakeSnapshot(repository: RepositoryIdentity, tipOids: readonly string[], fingerprint: string, complete = true): RepositorySnapshot {
+export function fakeSnapshot(
+  repository: RepositoryIdentity,
+  tipOids: readonly string[],
+  fingerprint: string,
+  complete = true,
+): RepositorySnapshot {
   return {
     repository,
     tips: tipOids.map((oid, i) => ({ name: `refs/heads/b${i}`, oid })),
@@ -71,7 +76,11 @@ export interface FakeCommitSpec {
 
 /** Builds a minimal-but-valid CommitExtraction (spec section 8 shape) for a fake commit. */
 export function makeExtraction(spec: FakeCommitSpec): CommitExtraction {
-  const author = spec.author ?? { name: 'Test Author', email: 'author@example.com', time: spec.committerTime ?? 1000 };
+  const author = spec.author ?? {
+    name: 'Test Author',
+    email: 'author@example.com',
+    time: spec.committerTime ?? 1000,
+  };
   const committerTime = spec.committerTime ?? 1000;
   const paths = spec.paths ?? [`src/${spec.sha.slice(0, 6)}.ts`];
   const changedPaths = paths.map((p) => ({
@@ -92,7 +101,11 @@ export function makeExtraction(spec: FakeCommitSpec): CommitExtraction {
     parents: [],
     subject,
     body: '',
-    author: { name: author.name, email: author.email, time: 'time' in author ? author.time : committerTime },
+    author: {
+      name: author.name,
+      email: author.email,
+      time: 'time' in author ? author.time : committerTime,
+    },
     committerTime,
     changedPaths,
     semanticText: `${subject}\n${paths.join(', ')}`,
@@ -136,7 +149,11 @@ export function makeExtraction(spec: FakeCommitSpec): CommitExtraction {
  * synchronize on it. This gives deterministic crash-injection points
  * without racing a real external SIGKILL against synchronous native calls.
  */
-export function makeFakeExtractor(bySha: ReadonlyMap<string, CommitExtraction>, crashOnSha?: string, marker = 'CRASH_POINT'): HistoryExtractor {
+export function makeFakeExtractor(
+  bySha: ReadonlyMap<string, CommitExtraction>,
+  crashOnSha?: string,
+  marker = 'CRASH_POINT',
+): HistoryExtractor {
   return {
     async *extract(_snapshot, shas) {
       for (const sha of shas) {

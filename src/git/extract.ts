@@ -149,10 +149,16 @@ async function batchCommitObjects(
     maxBytes: CAT_FILE_MAX_BYTES,
   });
   if (res.code !== 0) {
-    throw new GitWhyError('EXTRACTION_FAILED', `git cat-file --batch failed: ${res.stderr.toString('utf8').trim()}`);
+    throw new GitWhyError(
+      'EXTRACTION_FAILED',
+      `git cat-file --batch failed: ${res.stderr.toString('utf8').trim()}`,
+    );
   }
   if (res.truncatedStdout) {
-    throw new GitWhyError('EXTRACTION_FAILED', 'git cat-file --batch output exceeded the memory cap');
+    throw new GitWhyError(
+      'EXTRACTION_FAILED',
+      'git cat-file --batch output exceeded the memory cap',
+    );
   }
   const records = parseCatFileBatch(res.stdout);
   for (const sha of shas) {
@@ -177,7 +183,10 @@ async function resolveEmptyTreeOid(repository: RepositoryIdentity): Promise<stri
     args: ['hash-object', '-t', 'tree', '/dev/null'],
   });
   if (res.code !== 0) {
-    throw new GitWhyError('EXTRACTION_FAILED', `could not resolve the empty tree object: ${res.stderr.toString('utf8').trim()}`);
+    throw new GitWhyError(
+      'EXTRACTION_FAILED',
+      `could not resolve the empty tree object: ${res.stderr.toString('utf8').trim()}`,
+    );
   }
   return res.stdout.toString('utf8').trim();
 }
@@ -221,7 +230,11 @@ interface DiffResult {
   readonly truncated: boolean;
 }
 
-async function runDiffTreeRaw(repository: RepositoryIdentity, parent: string, sha: string): Promise<DiffResult> {
+async function runDiffTreeRaw(
+  repository: RepositoryIdentity,
+  parent: string,
+  sha: string,
+): Promise<DiffResult> {
   const res = await runGit({
     gitDir: repository.commonDir,
     cwd: repository.commonDir,
@@ -231,7 +244,11 @@ async function runDiffTreeRaw(repository: RepositoryIdentity, parent: string, sh
   return { ok: res.code === 0, stdout: res.stdout, truncated: res.truncatedStdout };
 }
 
-async function runDiffTreePatch(repository: RepositoryIdentity, parent: string, sha: string): Promise<DiffResult> {
+async function runDiffTreePatch(
+  repository: RepositoryIdentity,
+  parent: string,
+  sha: string,
+): Promise<DiffResult> {
   const res = await runGit({
     gitDir: repository.commonDir,
     cwd: repository.commonDir,
@@ -343,7 +360,10 @@ async function extractOneCommit(
     // Should not normally happen once the raw call above succeeded; keep summary
     // metadata and record the omission rather than fabricating diff material.
     const reason: OmissionReason = shallowBoundary.has(sha) ? 'shallow_boundary' : 'missing_object';
-    const gitCoverage: GitDiscoveredCoverage = { reasons: [reason], failedFiles: rawEntries.length };
+    const gitCoverage: GitDiscoveredCoverage = {
+      reasons: [reason],
+      failedFiles: rawEntries.length,
+    };
     return { raw: { ...base, files: [], gitCoverage }, changedPaths };
   }
 
@@ -452,7 +472,10 @@ export function createGitHistoryExtractor(
   concurrency: number = DEFAULT_CONCURRENCY,
 ): HistoryExtractor {
   return {
-    async *extract(snapshot: RepositorySnapshot, shas: readonly string[]): AsyncIterable<CommitExtraction> {
+    async *extract(
+      snapshot: RepositorySnapshot,
+      shas: readonly string[],
+    ): AsyncIterable<CommitExtraction> {
       const repository = snapshot.repository;
       const shallowBoundary = new Set(snapshot.shallowBoundary);
       const [emptyTreeOid, commitObjects] = await Promise.all([
@@ -470,7 +493,13 @@ export function createGitHistoryExtractor(
             hint: 'this indicates the reachable-commit list included an object Git cannot read',
           });
         }
-        const { raw, changedPaths } = await extractOneCommit(repository, sha, parsed, emptyTreeOid, shallowBoundary);
+        const { raw, changedPaths } = await extractOneCommit(
+          repository,
+          sha,
+          parsed,
+          emptyTreeOid,
+          shallowBoundary,
+        );
         const built = buildCommitExtraction(raw, embedder);
         // `buildCommitExtraction` derives `changedPaths` from `raw.files`, which this
         // module deliberately empties out for merge/failure/pathological commits (so

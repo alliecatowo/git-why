@@ -12,7 +12,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import type { CommitExtraction, Embedder, HistoryExtractor, ObjectFormat, OmissionReason, RepositorySnapshot } from '../types.js';
+import type {
+  CommitExtraction,
+  Embedder,
+  HistoryExtractor,
+  ObjectFormat,
+  OmissionReason,
+  RepositorySnapshot,
+} from '../types.js';
 import { GitWhyError } from '../types.js';
 import {
   layoutFor,
@@ -23,12 +30,28 @@ import {
   publishCurrentGenerationId,
   recursivelyRemove,
   assertSafeToRecursivelyDelete,
-  type IndexLayout,
   type GenerationPaths,
 } from './layout.js';
-import { acquireExclusive, acquireShared, type LockHandle, DEFAULT_LOCK_TIMEOUT_SECONDS } from './lock.js';
-import { readManifest, writeManifestAtomic, manifestPolicyIsCompatible, currentPolicyIdentities, type IndexManifest } from './manifest.js';
-import { readPendingBatch, writePendingBatch, clearPendingBatch, applyCommitBatch, type CommitBatchUnit } from './journal.js';
+import {
+  acquireExclusive,
+  acquireShared,
+  type LockHandle,
+  DEFAULT_LOCK_TIMEOUT_SECONDS,
+} from './lock.js';
+import {
+  readManifest,
+  writeManifestAtomic,
+  manifestPolicyIsCompatible,
+  currentPolicyIdentities,
+  type IndexManifest,
+} from './manifest.js';
+import {
+  readPendingBatch,
+  writePendingBatch,
+  clearPendingBatch,
+  applyCommitBatch,
+  type CommitBatchUnit,
+} from './journal.js';
 import {
   openOrCreateHistoryCollection,
   buildCommitDoc,
@@ -86,17 +109,29 @@ function readCatalog(commitsFile: string): Map<string, CatalogEntry> {
     raw = fs.readFileSync(commitsFile, 'utf8');
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') return map;
-    throw new GitWhyError('STORAGE_FAILED', `failed to read commit catalog at ${commitsFile}: ${(err as Error).message}`, { cause: err });
+    throw new GitWhyError(
+      'STORAGE_FAILED',
+      `failed to read commit catalog at ${commitsFile}: ${(err as Error).message}`,
+      { cause: err },
+    );
   }
   for (const line of raw.split('\n')) {
     const trimmed = line.trim();
     if (trimmed.length === 0) continue;
     try {
       const parsed = JSON.parse(trimmed) as { sha: string } & CatalogEntry;
-      map.set(parsed.sha, { id: parsed.id, evidenceIds: parsed.evidenceIds, complete: parsed.complete, updatedAt: parsed.updatedAt });
+      map.set(parsed.sha, {
+        id: parsed.id,
+        evidenceIds: parsed.evidenceIds,
+        complete: parsed.complete,
+        updatedAt: parsed.updatedAt,
+      });
     } catch {
       // A malformed catalog line means recovery is required, not a crash of status/refresh.
-      throw new GitWhyError('INDEX_RECOVERY_REQUIRED', `commit catalog at ${commitsFile} contains a malformed line`);
+      throw new GitWhyError(
+        'INDEX_RECOVERY_REQUIRED',
+        `commit catalog at ${commitsFile} contains a malformed line`,
+      );
     }
   }
   return map;
@@ -108,7 +143,10 @@ function writeCatalogAtomic(commitsFile: string, catalog: ReadonlyMap<string, Ca
   const lines = [...catalog.entries()]
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
     .map(([sha, entry]) => JSON.stringify({ sha, ...entry }));
-  const tmp = path.join(dir, `.commits.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const tmp = path.join(
+    dir,
+    `.commits.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  );
   const fd = fs.openSync(tmp, 'w');
   try {
     fs.writeFileSync(fd, lines.length > 0 ? lines.join('\n') + '\n' : '');
@@ -123,7 +161,11 @@ function newGenerationId(): string {
   return `g-${Date.now().toString(36)}-${crypto.randomBytes(4).toString('hex')}`;
 }
 
-function emptyManifest(generationId: string, objectFormat: ObjectFormat, embedder: Embedder): IndexManifest {
+function emptyManifest(
+  generationId: string,
+  objectFormat: ObjectFormat,
+  embedder: Embedder,
+): IndexManifest {
   const now = new Date().toISOString();
   return {
     ...currentPolicyIdentities(),
@@ -147,7 +189,11 @@ function isViewChanged(manifest: IndexManifest | null, snapshot: RepositorySnaps
 }
 
 /** True when the quick, lock-cheap "is the current generation already good enough" check passes. */
-function isAlreadyCurrent(manifest: IndexManifest | null, hasPending: boolean, snapshot: RepositorySnapshot): boolean {
+function isAlreadyCurrent(
+  manifest: IndexManifest | null,
+  hasPending: boolean,
+  snapshot: RepositorySnapshot,
+): boolean {
   if (manifest === null) return false;
   if (hasPending) return false;
   if (manifest.state !== 'clean') return false;
@@ -155,7 +201,11 @@ function isAlreadyCurrent(manifest: IndexManifest | null, hasPending: boolean, s
   return manifest.snapshotFingerprint === snapshot.fingerprint;
 }
 
-async function collectExtractions(extractor: HistoryExtractor, snapshot: RepositorySnapshot, shas: readonly string[]): Promise<CommitExtraction[]> {
+async function collectExtractions(
+  extractor: HistoryExtractor,
+  snapshot: RepositorySnapshot,
+  shas: readonly string[],
+): Promise<CommitExtraction[]> {
   const out: CommitExtraction[] = [];
   for await (const extraction of extractor.extract(snapshot, shas)) {
     out.push(extraction);
@@ -182,7 +232,12 @@ async function applyBatch(
   batchShas: readonly string[],
   catalog: Map<string, CatalogEntry>,
 ): Promise<BatchOutcome> {
-  writePendingBatch(pendingFile, { version: 1, generationId, startedAt: new Date().toISOString(), commitShas: [...batchShas] });
+  writePendingBatch(pendingFile, {
+    version: 1,
+    generationId,
+    startedAt: new Date().toISOString(),
+    commitShas: [...batchShas],
+  });
 
   const extractions = await collectExtractions(extractor, snapshot, batchShas);
 
@@ -195,7 +250,10 @@ async function applyBatch(
 
   let cursor = 0;
   const units: CommitBatchUnit[] = [];
-  const commitVectorBySha = new Map<string, { commitVector: Float32Array; evidenceVectors: Float32Array[] }>();
+  const commitVectorBySha = new Map<
+    string,
+    { commitVector: Float32Array; evidenceVectors: Float32Array[] }
+  >();
   for (const extraction of extractions) {
     const commitVector = vectors[cursor]!;
     cursor++;
@@ -248,7 +306,14 @@ async function applyBatch(
     });
   }
 
-  return { appliedShas: result.appliedShas, failedShas: result.failedShas, excludedFiles, unavailableFiles, failedFiles, reasons };
+  return {
+    appliedShas: result.appliedShas,
+    failedShas: result.failedShas,
+    excludedFiles,
+    unavailableFiles,
+    failedFiles,
+    reasons,
+  };
 }
 
 function chunk<T>(items: readonly T[], size: number): T[][] {
@@ -273,7 +338,8 @@ async function reconcile(
   options: Required<Pick<RefreshOptions, 'forceRetryIncomplete' | 'batchSize' | 'vectorIndex'>>,
 ): Promise<IndexManifest> {
   fs.mkdirSync(paths.dir, { recursive: true });
-  let manifest = readManifest(paths.manifestFile) ?? emptyManifest(paths.id, objectFormat, deps.embedder);
+  let manifest =
+    readManifest(paths.manifestFile) ?? emptyManifest(paths.id, objectFormat, deps.embedder);
   const viewChanged = isViewChanged(manifest, snapshot);
 
   const catalog = readCatalog(paths.commitsFile);
@@ -282,13 +348,20 @@ async function reconcile(
   const reachableSet = new Set(reachable.shas);
   const newShas = reachable.shas.filter((sha) => !catalog.has(sha));
   const retryShas = [...catalog.entries()]
-    .filter(([sha, entry]) => reachableSet.has(sha) && !entry.complete && (options.forceRetryIncomplete || viewChanged))
+    .filter(
+      ([sha, entry]) =>
+        reachableSet.has(sha) && !entry.complete && (options.forceRetryIncomplete || viewChanged),
+    )
     .map(([sha]) => sha);
-  const recoveryShas = pending !== null ? pending.commitShas.filter((sha) => reachableSet.has(sha)) : [];
+  const recoveryShas =
+    pending !== null ? pending.commitShas.filter((sha) => reachableSet.has(sha)) : [];
 
   const toProcess = [...new Set([...recoveryShas, ...newShas, ...retryShas])];
 
-  const collection = openOrCreateHistoryCollection(paths.collectionDir, { embeddingDimension: deps.embedder.dimension, vectorIndex: options.vectorIndex });
+  const collection = openOrCreateHistoryCollection(paths.collectionDir, {
+    embeddingDimension: deps.embedder.dimension,
+    vectorIndex: options.vectorIndex,
+  });
   try {
     const omissionReasons = new Set<OmissionReason>();
     let excludedFiles = 0;
@@ -296,7 +369,16 @@ async function reconcile(
     let failedFiles = 0;
 
     for (const batch of chunk(toProcess, options.batchSize)) {
-      const outcome = await applyBatch(collection, paths.pendingFile, paths.id, deps.extractor, deps.embedder, snapshot, batch, catalog);
+      const outcome = await applyBatch(
+        collection,
+        paths.pendingFile,
+        paths.id,
+        deps.extractor,
+        deps.embedder,
+        snapshot,
+        batch,
+        catalog,
+      );
       excludedFiles += outcome.excludedFiles;
       unavailableFiles += outcome.unavailableFiles;
       failedFiles += outcome.failedFiles;
@@ -364,7 +446,10 @@ async function reconcile(
   }
 }
 
-function countsOf(catalog: ReadonlyMap<string, CatalogEntry>): { commits: number; evidence: number } {
+function countsOf(catalog: ReadonlyMap<string, CatalogEntry>): {
+  commits: number;
+  evidence: number;
+} {
   let evidence = 0;
   for (const entry of catalog.values()) evidence += entry.evidenceIds.length;
   return { commits: catalog.size, evidence };
@@ -403,7 +488,10 @@ export async function ensureCurrentGeneration(
   }
 
   if (options.noRefresh === true) {
-    throw new GitWhyError('INDEX_RECOVERY_REQUIRED', 'the index needs reconciliation but --no-refresh was passed');
+    throw new GitWhyError(
+      'INDEX_RECOVERY_REQUIRED',
+      'the index needs reconciliation but --no-refresh was passed',
+    );
   }
 
   // Step 3: exclusive access, then recheck — another process may have finished.
@@ -461,17 +549,28 @@ export async function rebuild(
     const stagingId = newGenerationId();
     const staging = stagingPaths(layout, stagingId);
     try {
-      const manifest = await reconcile(staging, repository.objectFormat, snapshot, reachable, deps, {
-        forceRetryIncomplete: true,
-        batchSize: options.batchSize ?? 32,
-        vectorIndex: options.vectorIndex ?? 'flat',
-      });
+      const manifest = await reconcile(
+        staging,
+        repository.objectFormat,
+        snapshot,
+        reachable,
+        deps,
+        {
+          forceRetryIncomplete: true,
+          batchSize: options.batchSize ?? 32,
+          vectorIndex: options.vectorIndex ?? 'flat',
+        },
+      );
 
       // Validate: the manifest must be clean and the collection must open.
       if (manifest.state !== 'clean') {
         throw new GitWhyError('STORAGE_FAILED', 'rebuild produced a non-clean generation');
       }
-      const validation = openOrCreateHistoryCollection(staging.collectionDir, { embeddingDimension: deps.embedder.dimension }, { readOnly: true });
+      const validation = openOrCreateHistoryCollection(
+        staging.collectionDir,
+        { embeddingDimension: deps.embedder.dimension },
+        { readOnly: true },
+      );
       validation.closeSync();
 
       const finalPaths = generationPaths(layout, stagingId);
@@ -500,10 +599,16 @@ export async function rebuild(
  * generations. Requires exclusive access. Never touches Git refs or
  * objects.
  */
-export async function gc(repository: { readonly commonDir: string }, options: { readonly lockTimeoutSeconds?: number } = {}): Promise<{ removed: string[] }> {
+export async function gc(
+  repository: { readonly commonDir: string },
+  options: { readonly lockTimeoutSeconds?: number } = {},
+): Promise<{ removed: string[] }> {
   const layout = layoutFor(repository.commonDir);
   ensureScaffolding(layout);
-  const exclusive = await acquireExclusive(layout.repositoryLockFile, options.lockTimeoutSeconds ?? DEFAULT_LOCK_TIMEOUT_SECONDS);
+  const exclusive = await acquireExclusive(
+    layout.repositoryLockFile,
+    options.lockTimeoutSeconds ?? DEFAULT_LOCK_TIMEOUT_SECONDS,
+  );
   const removed: string[] = [];
   try {
     const currentId = readCurrentGenerationId(layout);
@@ -542,9 +647,17 @@ function listDirSafe(dir: string): string[] {
 export async function openReadOnlyStore(
   repository: { readonly commonDir: string },
   options: { readonly lockTimeoutSeconds?: number } = {},
-): Promise<{ store: ZvecHistoryStore; generationId: string; manifest: IndexManifest; lock: LockHandle }> {
+): Promise<{
+  store: ZvecHistoryStore;
+  generationId: string;
+  manifest: IndexManifest;
+  lock: LockHandle;
+}> {
   const layout = layoutFor(repository.commonDir);
-  const lock = await acquireShared(layout.repositoryLockFile, options.lockTimeoutSeconds ?? DEFAULT_LOCK_TIMEOUT_SECONDS);
+  const lock = await acquireShared(
+    layout.repositoryLockFile,
+    options.lockTimeoutSeconds ?? DEFAULT_LOCK_TIMEOUT_SECONDS,
+  );
   try {
     const generationId = readCurrentGenerationId(layout);
     if (generationId === null) {
@@ -553,16 +666,26 @@ export async function openReadOnlyStore(
     const paths = generationPaths(layout, generationId);
     const manifest = readManifest(paths.manifestFile);
     if (manifest === null) {
-      throw new GitWhyError('INDEX_CORRUPT', `generation ${generationId} is published but has no manifest`);
+      throw new GitWhyError(
+        'INDEX_CORRUPT',
+        `generation ${generationId} is published but has no manifest`,
+      );
     }
     if (manifest.state === 'recovery_required' || readPendingBatch(paths.pendingFile) !== null) {
-      throw new GitWhyError('INDEX_RECOVERY_REQUIRED', `generation ${generationId} requires recovery before it can be queried`);
+      throw new GitWhyError(
+        'INDEX_RECOVERY_REQUIRED',
+        `generation ${generationId} requires recovery before it can be queried`,
+      );
     }
     let collection: ZVecCollection;
     try {
       collection = ZVecOpen(paths.collectionDir, { readOnly: true });
     } catch (err) {
-      throw new GitWhyError('INDEX_CORRUPT', `failed to open collection for generation ${generationId}: ${isZVecError(err) ? err.message : String(err)}`, { cause: err });
+      throw new GitWhyError(
+        'INDEX_CORRUPT',
+        `failed to open collection for generation ${generationId}: ${isZVecError(err) ? err.message : String(err)}`,
+        { cause: err },
+      );
     }
     return { store: new ZvecHistoryStore(collection), generationId, manifest, lock };
   } catch (err) {

@@ -14,5 +14,9 @@ import path from 'node:path';
 export function childSpawnArgs(dir: string, repoRoot: string, baseName: string): string[] {
   const compiled = path.join(dir, `${baseName}.js`);
   if (fs.existsSync(compiled)) return [compiled];
-  return ['--import', path.join(repoRoot, 'scripts', 'ts-esm-loader.mjs'), path.join(dir, `${baseName}.ts`)];
+  return [
+    '--import',
+    path.join(repoRoot, 'scripts', 'ts-esm-loader.mjs'),
+    path.join(dir, `${baseName}.ts`),
+  ];
 }

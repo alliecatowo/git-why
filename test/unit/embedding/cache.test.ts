@@ -8,7 +8,11 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { ensureCached, resolveCacheRoot, type PinnedArtifact } from '../../../src/embedding/cache.js';
+import {
+  ensureCached,
+  resolveCacheRoot,
+  type PinnedArtifact,
+} from '../../../src/embedding/cache.js';
 import { GitWhyError } from '../../../src/types.js';
 
 test('resolveCacheRoot honours GIT_WHY_MODEL_CACHE above everything else', () => {

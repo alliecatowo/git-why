@@ -31,7 +31,11 @@ test('scope includes branches, annotated tags-to-commits, remote-tracking refs a
     // Annotated tag peeling to a commit: in scope.
     await repo.gitOrThrow(['tag', '-a', 'v1', '-m', 'v1', shaMain]);
     // Tag pointing at a blob, not a commit: out of scope.
-    const blobOid = (await repo.gitOrThrow(['hash-object', '-w', '--stdin'], { input: Buffer.from('blob content') })).stdout.trim();
+    const blobOid = (
+      await repo.gitOrThrow(['hash-object', '-w', '--stdin'], {
+        input: Buffer.from('blob content'),
+      })
+    ).stdout.trim();
     await repo.gitOrThrow(['tag', 'blob-tag', blobOid]);
 
     // Remote-tracking branch: clone into a bare "remote", add it, fetch.

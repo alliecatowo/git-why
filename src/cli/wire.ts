@@ -52,7 +52,10 @@ import type {
  * `--offline` forbids downloading model artifacts. It does not forbid using an
  * already cached model, which is the ordinary offline case.
  */
-async function loadEmbedder(options: { offline: boolean; onProgress: RunOptions['onProgress'] }): Promise<Embedder> {
+async function loadEmbedder(options: {
+  offline: boolean;
+  onProgress: RunOptions['onProgress'];
+}): Promise<Embedder> {
   options.onProgress({ stage: 'model', message: 'loading embedding model' });
   // The cache reports every chunk. Emitting one stderr line per chunk buries
   // the actual stages, so only report a file starting and each 25% step.
@@ -222,9 +225,13 @@ class RealBackend implements Backend {
 
   async index(repo: RepositoryHandle, options: RunOptions): Promise<IndexStatus> {
     if (options.noRefresh) {
-      throw new GitWhyError('INVALID_ARGUMENTS', '--no-refresh cannot be combined with `git why index`', {
-        hint: 'Drop --no-refresh to build or reconcile the index.',
-      });
+      throw new GitWhyError(
+        'INVALID_ARGUMENTS',
+        '--no-refresh cannot be combined with `git why index`',
+        {
+          hint: 'Drop --no-refresh to build or reconcile the index.',
+        },
+      );
     }
     const { snapshot, reachable } = await captureReachable(repo);
     const deps = await storageDeps(options);
@@ -243,9 +250,13 @@ class RealBackend implements Backend {
 
   async rebuild(repo: RepositoryHandle, options: RebuildOptions): Promise<IndexStatus> {
     if (options.noRefresh) {
-      throw new GitWhyError('INVALID_ARGUMENTS', '--no-refresh cannot be combined with `git why rebuild`', {
-        hint: 'Drop --no-refresh to rebuild the index.',
-      });
+      throw new GitWhyError(
+        'INVALID_ARGUMENTS',
+        '--no-refresh cannot be combined with `git why rebuild`',
+        {
+          hint: 'Drop --no-refresh to rebuild the index.',
+        },
+      );
     }
     const { snapshot, reachable } = await captureReachable(repo);
     const deps = await storageDeps(options);
@@ -259,9 +270,13 @@ class RealBackend implements Backend {
 
   async gc(repo: RepositoryHandle, options: RunOptions): Promise<IndexStatus> {
     if (options.noRefresh) {
-      throw new GitWhyError('INVALID_ARGUMENTS', '--no-refresh cannot be combined with `git why gc`', {
-        hint: 'Drop --no-refresh to compact the index.',
-      });
+      throw new GitWhyError(
+        'INVALID_ARGUMENTS',
+        '--no-refresh cannot be combined with `git why gc`',
+        {
+          hint: 'Drop --no-refresh to compact the index.',
+        },
+      );
     }
     // gc reconciles without downloading embeddings, so no model is loaded here.
     options.onProgress({ stage: 'gc', message: 'removing abandoned generations' });

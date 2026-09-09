@@ -1,9 +1,18 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { chunkHunk, renderDiffLines, type RawDiffLine, type RawHunk } from '../../../src/history/chunk.js';
+import {
+  chunkHunk,
+  renderDiffLines,
+  type RawDiffLine,
+  type RawHunk,
+} from '../../../src/history/chunk.js';
 import type { HistoricalPath } from '../../../src/types.js';
 
-const PATH: HistoricalPath = { bytesBase64: Buffer.from('a.ts').toString('base64'), display: 'a.ts', lossy: false };
+const PATH: HistoricalPath = {
+  bytesBase64: Buffer.from('a.ts').toString('base64'),
+  display: 'a.ts',
+  lossy: false,
+};
 
 function line(kind: RawDiffLine['kind'], text: string): RawDiffLine {
   return { kind, text };
@@ -26,7 +35,12 @@ function makeHunk(lines: RawDiffLine[], overrides: Partial<RawHunk> = {}): RawHu
 }
 
 test('a small hunk is returned as a single unsplit slice', () => {
-  const lines = [line('context', 'a'), line('removed', 'b'), line('added', 'c'), line('context', 'd')];
+  const lines = [
+    line('context', 'a'),
+    line('removed', 'b'),
+    line('added', 'c'),
+    line('context', 'd'),
+  ];
   const hunk = makeHunk(lines);
   const slices = chunkHunk(hunk, { maxLinesPerSlice: 60, contextOverlap: 3 });
   assert.equal(slices.length, 1);
@@ -37,7 +51,11 @@ test('a small hunk is returned as a single unsplit slice', () => {
 });
 
 test('sourceExcerpt is a faithful unified-diff rendering, never normalised', () => {
-  const lines = [line('context', '  const x = 1;'), line('removed', '  return null;'), line('added', '  return x;')];
+  const lines = [
+    line('context', '  const x = 1;'),
+    line('removed', '  return null;'),
+    line('added', '  return x;'),
+  ];
   const hunk = makeHunk(lines);
   const [slice] = chunkHunk(hunk);
   assert.equal(slice!.sourceExcerpt, renderDiffLines(lines));

@@ -12,9 +12,20 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '..', '..', '..');
 const childArgs = childSpawnArgs(here, repoRoot, 'lock-child');
 
-function runChild(lockFile: string, kind: 'shared' | 'exclusive', timeoutSeconds: number, holdMs: number) {
+function runChild(
+  lockFile: string,
+  kind: 'shared' | 'exclusive',
+  timeoutSeconds: number,
+  holdMs: number,
+) {
   return new Promise<{ lines: Record<string, unknown>[]; code: number | null }>((resolve) => {
-    const child = spawn(process.execPath, [...childArgs, lockFile, kind, String(timeoutSeconds), String(holdMs)]);
+    const child = spawn(process.execPath, [
+      ...childArgs,
+      lockFile,
+      kind,
+      String(timeoutSeconds),
+      String(holdMs),
+    ]);
     let out = '';
     child.stdout.on('data', (d) => (out += d.toString()));
     child.on('close', (code) =>
@@ -30,8 +41,19 @@ function runChild(lockFile: string, kind: 'shared' | 'exclusive', timeoutSeconds
   });
 }
 
-function spawnChildRaw(lockFile: string, kind: 'shared' | 'exclusive', timeoutSeconds: number, holdMs: number) {
-  return spawn(process.execPath, [...childArgs, lockFile, kind, String(timeoutSeconds), String(holdMs)]);
+function spawnChildRaw(
+  lockFile: string,
+  kind: 'shared' | 'exclusive',
+  timeoutSeconds: number,
+  holdMs: number,
+) {
+  return spawn(process.execPath, [
+    ...childArgs,
+    lockFile,
+    kind,
+    String(timeoutSeconds),
+    String(holdMs),
+  ]);
 }
 
 test('exclusive lock: acquire, hold, release, then a second process reacquires', async () => {
@@ -52,7 +74,10 @@ test('two shared locks are acquired concurrently without waiting on each other',
   const dir = freshTmpDir('lock-shared');
   const lockFile = path.join(dir, 'repository.lock');
   try {
-    const [a, b] = await Promise.all([runChild(lockFile, 'shared', 5, 300), runChild(lockFile, 'shared', 5, 300)]);
+    const [a, b] = await Promise.all([
+      runChild(lockFile, 'shared', 5, 300),
+      runChild(lockFile, 'shared', 5, 300),
+    ]);
     const aAcq = a.lines.find((l) => l.event === 'acquired') as { waitedMs: number } | undefined;
     const bAcq = b.lines.find((l) => l.event === 'acquired') as { waitedMs: number } | undefined;
     assert.ok(aAcq && bAcq);
@@ -71,9 +96,13 @@ test('an exclusive holder blocks a concurrent shared request until it releases',
     await new Promise((r) => setTimeout(r, 100));
     const shared = await runChild(lockFile, 'shared', 5, 50);
     await exclusivePromise;
-    const sharedAcq = shared.lines.find((l) => l.event === 'acquired') as { waitedMs: number } | undefined;
+    const sharedAcq = shared.lines.find((l) => l.event === 'acquired') as
+      { waitedMs: number } | undefined;
     assert.ok(sharedAcq, 'shared request should eventually succeed');
-    assert.ok(sharedAcq.waitedMs >= 300, `shared request should have waited out most of the exclusive hold, only waited ${sharedAcq.waitedMs}ms`);
+    assert.ok(
+      sharedAcq.waitedMs >= 300,
+      `shared request should have waited out most of the exclusive hold, only waited ${sharedAcq.waitedMs}ms`,
+    );
   } finally {
     rmDir(dir);
   }
@@ -147,7 +176,8 @@ test('shared -> exclusive upgrade releases shared first (never holds both) and l
     }
     const [a, b] = await Promise.allSettled([upgradeHoldRelease(), upgradeHoldRelease()]);
     for (const r of [a, b]) {
-      if (r.status === 'rejected') assert.fail(`upgrader should not deadlock or time out: ${String(r.reason)}`);
+      if (r.status === 'rejected')
+        assert.fail(`upgrader should not deadlock or time out: ${String(r.reason)}`);
     }
   } finally {
     rmDir(dir);

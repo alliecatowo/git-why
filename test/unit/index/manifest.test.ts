@@ -3,7 +3,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { readManifest, writeManifestAtomic, manifestPolicyIsCompatible, currentPolicyIdentities, type IndexManifest } from '../../../src/index/manifest.js';
+import {
+  readManifest,
+  writeManifestAtomic,
+  manifestPolicyIsCompatible,
+  currentPolicyIdentities,
+  type IndexManifest,
+} from '../../../src/index/manifest.js';
 import { GitWhyError } from '../../../src/types.js';
 
 function freshTmpDir(): string {
@@ -68,7 +74,10 @@ test('readManifest throws INDEX_CORRUPT on invalid JSON', () => {
   try {
     const file = path.join(dir, 'manifest.json');
     fs.writeFileSync(file, '{ not json');
-    assert.throws(() => readManifest(file), (err: unknown) => err instanceof GitWhyError && err.code === 'INDEX_CORRUPT');
+    assert.throws(
+      () => readManifest(file),
+      (err: unknown) => err instanceof GitWhyError && err.code === 'INDEX_CORRUPT',
+    );
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
@@ -80,7 +89,10 @@ test('readManifest throws INDEX_CORRUPT when a required field is missing', () =>
     const file = path.join(dir, 'manifest.json');
     const { generationId: _drop, ...incomplete } = sampleManifest();
     fs.writeFileSync(file, JSON.stringify(incomplete));
-    assert.throws(() => readManifest(file), (err: unknown) => err instanceof GitWhyError && err.code === 'INDEX_CORRUPT');
+    assert.throws(
+      () => readManifest(file),
+      (err: unknown) => err instanceof GitWhyError && err.code === 'INDEX_CORRUPT',
+    );
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }

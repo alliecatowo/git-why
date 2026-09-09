@@ -17,7 +17,10 @@ import type { CommitExtraction } from '../../../src/types.js';
 
 const HEX_64 = /^[0-9a-f]{64}$/;
 
-async function extractAll(dir: string, shas: readonly string[]): Promise<Map<string, CommitExtraction>> {
+async function extractAll(
+  dir: string,
+  shas: readonly string[],
+): Promise<Map<string, CommitExtraction>> {
   const repository = await resolveRepositoryIdentity(dir);
   const snapshot = await captureSnapshot(repository);
   const extractor = createGitHistoryExtractor(new FakeEmbedder());
@@ -52,7 +55,14 @@ test('git extraction is routed through buildCommitExtraction: real ids, populate
     await repo.writeFile('main-side.txt', 'main side\n');
     await repo.add(['main-side.txt']);
     await repo.commit('main side commit');
-    const mergeResult = await repo.git(['merge', '-q', '--no-ff', 'feature', '-m', 'merge feature']);
+    const mergeResult = await repo.git([
+      'merge',
+      '-q',
+      '--no-ff',
+      'feature',
+      '-m',
+      'merge feature',
+    ]);
     assert.equal(mergeResult.code, 0, mergeResult.stderr);
     const mergeSha = await repo.head();
 

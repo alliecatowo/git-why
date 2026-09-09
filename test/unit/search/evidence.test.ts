@@ -13,7 +13,12 @@ function hp(display: string): HistoricalPath {
   return { bytesBase64: Buffer.from(display).toString('base64'), display, lossy: false };
 }
 
-function evidence(id: string, path: string, hunkOrdinal: number | null, sliceOrdinal = 0): EvidenceRecord {
+function evidence(
+  id: string,
+  path: string,
+  hunkOrdinal: number | null,
+  sliceOrdinal = 0,
+): EvidenceRecord {
   return {
     type: 'evidence',
     kind: hunkOrdinal === null ? 'file_change' : 'hunk',

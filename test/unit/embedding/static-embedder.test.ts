@@ -20,7 +20,13 @@ const MINI_TOKENIZER = {
     max_input_chars_per_word: 100,
     vocab: { '[PAD]': 0, '[UNK]': 1, hello: 2, world: 3 },
   },
-  normalizer: { type: 'BertNormalizer', clean_text: true, handle_chinese_chars: true, strip_accents: null, lowercase: true },
+  normalizer: {
+    type: 'BertNormalizer',
+    clean_text: true,
+    handle_chinese_chars: true,
+    strip_accents: null,
+    lowercase: true,
+  },
   pre_tokenizer: { type: 'BertPreTokenizer' },
   post_processor: null,
 };
@@ -34,17 +40,28 @@ const EMBEDDING_ROWS = [
   [0, 1, 0], // world
 ];
 
-function buildWeightsBuffer(rows: number[][], extraTensors: Record<string, { dtype: string; shape: number[]; data: Buffer }> = {}): Buffer {
+function buildWeightsBuffer(
+  rows: number[][],
+  extraTensors: Record<string, { dtype: string; shape: number[]; data: Buffer }> = {},
+): Buffer {
   const flat = rows.flat();
   const embData = Buffer.alloc(flat.length * 4);
   flat.forEach((v, i) => embData.writeFloatLE(v, i * 4));
   const header: Record<string, unknown> = {
-    embeddings: { dtype: 'F32', shape: [rows.length, rows[0]!.length], data_offsets: [0, embData.length] },
+    embeddings: {
+      dtype: 'F32',
+      shape: [rows.length, rows[0]!.length],
+      data_offsets: [0, embData.length],
+    },
   };
   const parts: Buffer[] = [embData];
   let offset = embData.length;
   for (const [name, t] of Object.entries(extraTensors)) {
-    header[name] = { dtype: t.dtype, shape: t.shape, data_offsets: [offset, offset + t.data.length] };
+    header[name] = {
+      dtype: t.dtype,
+      shape: t.shape,
+      data_offsets: [offset, offset + t.data.length],
+    };
     parts.push(t.data);
     offset += t.data.length;
   }
@@ -137,7 +154,10 @@ test('dimension is read from the embedding matrix shape', () => {
 test('rejects a vocab/embedding-matrix size mismatch', () => {
   const badTokenizer = {
     ...MINI_TOKENIZER,
-    model: { ...MINI_TOKENIZER.model, vocab: { '[PAD]': 0, '[UNK]': 1, hello: 2, world: 3, extra: 4 } },
+    model: {
+      ...MINI_TOKENIZER.model,
+      vocab: { '[PAD]': 0, '[UNK]': 1, hello: 2, world: 3, extra: 4 },
+    },
   };
   const weightsBuffer = buildWeightsBuffer(EMBEDDING_ROWS); // still only 4 rows
   assert.throws(

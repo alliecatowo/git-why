@@ -34,11 +34,9 @@ function resolveOne(raw: string, ctx: PathResolutionContext): PathRestriction {
     throw new GitWhyError('INVALID_PATH_RESTRICTION', 'A path restriction cannot be empty.');
   }
   if (UNSUPPORTED_PATTERN.test(raw)) {
-    throw new GitWhyError(
-      'UNSUPPORTED_PATHSPEC',
-      `Unsupported path pattern: "${raw}".`,
-      { hint: 'Only literal file paths and directory prefixes are supported, not globs or pathspec magic.' },
-    );
+    throw new GitWhyError('UNSUPPORTED_PATHSPEC', `Unsupported path pattern: "${raw}".`, {
+      hint: 'Only literal file paths and directory prefixes are supported, not globs or pathspec magic.',
+    });
   }
 
   const isDirectory = raw.endsWith('/');

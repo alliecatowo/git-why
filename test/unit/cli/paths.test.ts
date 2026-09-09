@@ -21,21 +21,30 @@ test('a path already relative to the repository root resolves from cwd', () => {
 });
 
 test('escaping the repository root is rejected', () => {
-  assert.throws(() => resolvePathRestrictions(['../../etc/passwd'], worktree), (err: unknown) => {
-    return err instanceof GitWhyError && err.code === 'INVALID_PATH_RESTRICTION';
-  });
+  assert.throws(
+    () => resolvePathRestrictions(['../../etc/passwd'], worktree),
+    (err: unknown) => {
+      return err instanceof GitWhyError && err.code === 'INVALID_PATH_RESTRICTION';
+    },
+  );
 });
 
 test('glob syntax is rejected as an unsupported pathspec', () => {
-  assert.throws(() => resolvePathRestrictions(['*.ts'], worktree), (err: unknown) => {
-    return err instanceof GitWhyError && err.code === 'UNSUPPORTED_PATHSPEC';
-  });
+  assert.throws(
+    () => resolvePathRestrictions(['*.ts'], worktree),
+    (err: unknown) => {
+      return err instanceof GitWhyError && err.code === 'UNSUPPORTED_PATHSPEC';
+    },
+  );
 });
 
 test('pathspec magic prefix is rejected', () => {
-  assert.throws(() => resolvePathRestrictions([':(icase)readme.md'], worktree), (err: unknown) => {
-    return err instanceof GitWhyError && err.code === 'UNSUPPORTED_PATHSPEC';
-  });
+  assert.throws(
+    () => resolvePathRestrictions([':(icase)readme.md'], worktree),
+    (err: unknown) => {
+      return err instanceof GitWhyError && err.code === 'UNSUPPORTED_PATHSPEC';
+    },
+  );
 });
 
 test('an empty restriction is rejected', () => {
@@ -43,14 +52,20 @@ test('an empty restriction is rejected', () => {
 });
 
 test('a bare repository treats the string as already repository-relative', () => {
-  const [r] = resolvePathRestrictions(['src/auth/session.ts'], { worktreeRoot: null, cwd: '/anywhere' });
+  const [r] = resolvePathRestrictions(['src/auth/session.ts'], {
+    worktreeRoot: null,
+    cwd: '/anywhere',
+  });
   assert.deepEqual(r, { value: 'src/auth/session.ts', kind: 'file' });
 });
 
 test('a bare repository still rejects an escaping restriction', () => {
-  assert.throws(() => resolvePathRestrictions(['../outside'], { worktreeRoot: null, cwd: '/anywhere' }), (err: unknown) => {
-    return err instanceof GitWhyError && err.code === 'INVALID_PATH_RESTRICTION';
-  });
+  assert.throws(
+    () => resolvePathRestrictions(['../outside'], { worktreeRoot: null, cwd: '/anywhere' }),
+    (err: unknown) => {
+      return err instanceof GitWhyError && err.code === 'INVALID_PATH_RESTRICTION';
+    },
+  );
 });
 
 test('multiple restrictions resolve independently, preserving order', () => {

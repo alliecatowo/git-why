@@ -72,7 +72,14 @@ const BOOLEAN_LONG_FLAGS = new Set([
   'version',
 ]);
 
-const VALUE_LONG_FLAGS = new Set(['query', 'after', 'before', 'author', 'max-bytes', 'lock-timeout']);
+const VALUE_LONG_FLAGS = new Set([
+  'query',
+  'after',
+  'before',
+  'author',
+  'max-bytes',
+  'lock-timeout',
+]);
 
 /** Best-effort scan used only to pick an error-rendering format when parsing itself fails. */
 export function argvRequestsJson(argv: readonly string[]): boolean {
@@ -151,7 +158,10 @@ function parseLimit(raw: string | true | undefined): number {
   if (raw === true) throw new GitWhyError('INVALID_LIMIT', '-n requires a numeric value.');
   const n = Number(raw);
   if (!Number.isInteger(n) || n < MIN_LIMIT || n > MAX_LIMIT) {
-    throw new GitWhyError('INVALID_LIMIT', `-n must be an integer between ${MIN_LIMIT} and ${MAX_LIMIT}, got "${raw}".`);
+    throw new GitWhyError(
+      'INVALID_LIMIT',
+      `-n must be an integer between ${MIN_LIMIT} and ${MAX_LIMIT}, got "${raw}".`,
+    );
   }
   return n;
 }
@@ -159,7 +169,10 @@ function parseLimit(raw: string | true | undefined): number {
 const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 const DATE_TIME_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
 
-function parseDateBoundary(flag: '--after' | '--before', raw: string | true | undefined): number | null {
+function parseDateBoundary(
+  flag: '--after' | '--before',
+  raw: string | true | undefined,
+): number | null {
   if (raw === undefined) return null;
   if (raw === true || !(DATE_ONLY.test(raw) || DATE_TIME_TZ.test(raw))) {
     throw new GitWhyError(
@@ -180,7 +193,9 @@ function parseMaxBytes(raw: string | true | undefined): number {
   if (raw === true) invalid('--max-bytes requires a numeric value.');
   const n = Number(raw);
   if (!Number.isInteger(n) || n < MIN_MAX_BYTES || n > MAX_MAX_BYTES) {
-    invalid(`--max-bytes must be an integer between ${MIN_MAX_BYTES} and ${MAX_MAX_BYTES}, got "${raw}".`);
+    invalid(
+      `--max-bytes must be an integer between ${MIN_MAX_BYTES} and ${MAX_MAX_BYTES}, got "${raw}".`,
+    );
   }
   return n;
 }
@@ -239,9 +254,15 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
       invalid('--use-default-model is only valid with "rebuild".');
     }
 
-    const disallowed = ['text', 'semantic', 'no-refresh', 'author', 'after', 'before', 'query'].filter((name) =>
-      options.has(name),
-    );
+    const disallowed = [
+      'text',
+      'semantic',
+      'no-refresh',
+      'author',
+      'after',
+      'before',
+      'query',
+    ].filter((name) => options.has(name));
     if (disallowed.length > 0) {
       invalid(`--${disallowed[0]} is not valid with the "${command}" command.`);
     }
@@ -261,7 +282,10 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
 
   const explicitQuery = asStringOption(options, 'query');
   if (explicitQuery !== undefined && positionals.length > 0) {
-    invalid('Cannot combine --query with a positional query.', 'Pass the query either positionally or via --query, not both.');
+    invalid(
+      'Cannot combine --query with a positional query.',
+      'Pass the query either positionally or via --query, not both.',
+    );
   }
 
   const query = (explicitQuery ?? positionals.join(' ')).trim();

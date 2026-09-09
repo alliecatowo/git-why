@@ -62,11 +62,19 @@ async function checkNode() {
  */
 function probeGitFlag(args) {
   try {
-    execFileSync('git', args, { input: '', cwd: repoRoot, stdio: ['pipe', 'ignore', 'pipe'], timeout: 10_000 });
+    execFileSync('git', args, {
+      input: '',
+      cwd: repoRoot,
+      stdio: ['pipe', 'ignore', 'pipe'],
+      timeout: 10_000,
+    });
     return { ok: true };
   } catch (err) {
     const stderr = err && typeof err === 'object' && 'stderr' in err ? String(err.stderr) : '';
-    return { ok: false, detail: (stderr || (err instanceof Error ? err.message : String(err))).split('\n')[0] };
+    return {
+      ok: false,
+      detail: (stderr || (err instanceof Error ? err.message : String(err))).split('\n')[0],
+    };
   }
 }
 
@@ -99,9 +107,19 @@ async function checkZvec() {
       record('@zvec/zvec native load', true, 'fail', 'module loaded but exported nothing');
       return;
     }
-    record('@zvec/zvec native load', true, 'pass', `loaded, exports: ${exportNames.slice(0, 8).join(', ')}`);
+    record(
+      '@zvec/zvec native load',
+      true,
+      'pass',
+      `loaded, exports: ${exportNames.slice(0, 8).join(', ')}`,
+    );
   } catch (err) {
-    record('@zvec/zvec native load', true, 'fail', err instanceof Error ? err.message : String(err));
+    record(
+      '@zvec/zvec native load',
+      true,
+      'fail',
+      err instanceof Error ? err.message : String(err),
+    );
   }
 }
 
@@ -116,13 +134,20 @@ function checkModelCache() {
     'model cache',
     false,
     found ? 'pass' : 'not_installed',
-    found ? `present at ${found}` : 'not present yet (expected before first run; the CLI downloads it on demand)',
+    found
+      ? `present at ${found}`
+      : 'not present yet (expected before first run; the CLI downloads it on demand)',
   );
 }
 
 async function checkOptionalTool(name, args = ['--version']) {
   const result = await run(name, args);
-  record(name, false, result.ok ? 'pass' : 'not_installed', result.ok ? result.output.split('\n')[0] : 'not found on PATH');
+  record(
+    name,
+    false,
+    result.ok ? 'pass' : 'not_installed',
+    result.ok ? result.output.split('\n')[0] : 'not found on PATH',
+  );
 }
 
 async function main() {
@@ -137,11 +162,18 @@ async function main() {
   const requiredFailures = checks.filter((c) => c.required && c.status === 'fail');
 
   if (jsonMode) {
-    console.log(JSON.stringify({ platform: `${os.platform()}-${os.arch()}`, checks, ok: requiredFailures.length === 0 }, null, 2));
+    console.log(
+      JSON.stringify(
+        { platform: `${os.platform()}-${os.arch()}`, checks, ok: requiredFailures.length === 0 },
+        null,
+        2,
+      ),
+    );
   } else {
     console.log(`Git Why doctor — ${os.platform()}-${os.arch()}`);
     for (const c of checks) {
-      const label = c.status === 'pass' ? 'PASS' : c.status === 'not_installed' ? 'NOT INSTALLED' : 'FAIL';
+      const label =
+        c.status === 'pass' ? 'PASS' : c.status === 'not_installed' ? 'NOT INSTALLED' : 'FAIL';
       const marker = c.required ? '' : ' (optional)';
       console.log(`  [${label}] ${c.name}${marker} — ${c.detail}`);
     }

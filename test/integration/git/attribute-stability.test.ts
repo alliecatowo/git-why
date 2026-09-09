@@ -26,7 +26,7 @@ async function extractOne(dir: string, sha: string): Promise<CommitExtraction> {
   throw new Error('no result');
 }
 
-test('a working-tree .gitattributes does not change an already-committed commit\'s extraction', async () => {
+test("a working-tree .gitattributes does not change an already-committed commit's extraction", async () => {
   const repo = await createTestRepo();
   try {
     await repo.writeFile('data.bin', 'line one\nline two\n');
@@ -39,7 +39,11 @@ test('a working-tree .gitattributes does not change an already-committed commit\
     const baseline = await extractOne(repo.dir, sha);
     const baselineEvidence = baseline.evidence.find((e) => e.path.display === 'data.bin');
     assert.ok(baselineEvidence);
-    assert.equal(baselineEvidence.kind, 'hunk', 'baseline: plain text change produces a hunk, not a binary file_change');
+    assert.equal(
+      baselineEvidence.kind,
+      'hunk',
+      'baseline: plain text change produces a hunk, not a binary file_change',
+    );
 
     // Add an UNTRACKED worktree .gitattributes marking the file as binary. This is
     // exactly the working-tree state a user could have checked out locally; it must
@@ -49,7 +53,11 @@ test('a working-tree .gitattributes does not change an already-committed commit\
     const withAttrs = await extractOne(repo.dir, sha);
     const withAttrsEvidence = withAttrs.evidence.find((e) => e.path.display === 'data.bin');
     assert.ok(withAttrsEvidence);
-    assert.equal(withAttrsEvidence.kind, 'hunk', 'a worktree .gitattributes must not turn this into a binary file_change');
+    assert.equal(
+      withAttrsEvidence.kind,
+      'hunk',
+      'a worktree .gitattributes must not turn this into a binary file_change',
+    );
     assert.deepEqual(withAttrsEvidence.sourceExcerpt, baselineEvidence.sourceExcerpt);
     assert.deepEqual(withAttrs.commit.coverage, baseline.commit.coverage);
   } finally {

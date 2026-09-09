@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { buildDocId, commitDocId, DOC_ID_HEX_LENGTH, evidenceDocId } from '../../../src/history/ids.js';
+import {
+  buildDocId,
+  commitDocId,
+  DOC_ID_HEX_LENGTH,
+  evidenceDocId,
+} from '../../../src/history/ids.js';
 
 test('commitDocId is deterministic and full-length hex', () => {
   const a = commitDocId('deadbeef');
@@ -15,14 +20,22 @@ test('commitDocId differs for different commits', () => {
 });
 
 test('evidenceDocId differs by hunk ordinal', () => {
-  const base = { sha: 's', parentSha: 'p', pathBytesBase64: Buffer.from('src/a.ts').toString('base64') };
+  const base = {
+    sha: 's',
+    parentSha: 'p',
+    pathBytesBase64: Buffer.from('src/a.ts').toString('base64'),
+  };
   const a = evidenceDocId({ ...base, hunkOrdinal: 0, sliceOrdinal: 0 });
   const b = evidenceDocId({ ...base, hunkOrdinal: 1, sliceOrdinal: 0 });
   assert.notEqual(a, b);
 });
 
 test('evidenceDocId differs by slice ordinal', () => {
-  const base = { sha: 's', parentSha: 'p', pathBytesBase64: Buffer.from('src/a.ts').toString('base64') };
+  const base = {
+    sha: 's',
+    parentSha: 'p',
+    pathBytesBase64: Buffer.from('src/a.ts').toString('base64'),
+  };
   const a = evidenceDocId({ ...base, hunkOrdinal: 0, sliceOrdinal: 0 });
   const b = evidenceDocId({ ...base, hunkOrdinal: 0, sliceOrdinal: 1 });
   assert.notEqual(a, b);

@@ -28,7 +28,11 @@ export function readPendingBatch(pendingFile: string): PendingBatch | null {
     raw = fs.readFileSync(pendingFile, 'utf8');
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null;
-    throw new GitWhyError('STORAGE_FAILED', `failed to read pending marker at ${pendingFile}: ${(err as Error).message}`, { cause: err });
+    throw new GitWhyError(
+      'STORAGE_FAILED',
+      `failed to read pending marker at ${pendingFile}: ${(err as Error).message}`,
+      { cause: err },
+    );
   }
   try {
     const parsed = JSON.parse(raw) as PendingBatch;
@@ -39,7 +43,11 @@ export function readPendingBatch(pendingFile: string): PendingBatch | null {
   } catch (err) {
     // A corrupt pending marker still means "recovery required" — treat it
     // as a full-generation replay signal rather than silently ignoring it.
-    throw new GitWhyError('INDEX_RECOVERY_REQUIRED', `pending marker at ${pendingFile} is corrupt and requires recovery`, { cause: err });
+    throw new GitWhyError(
+      'INDEX_RECOVERY_REQUIRED',
+      `pending marker at ${pendingFile} is corrupt and requires recovery`,
+      { cause: err },
+    );
   }
 }
 
@@ -47,7 +55,10 @@ export function readPendingBatch(pendingFile: string): PendingBatch | null {
 export function writePendingBatch(pendingFile: string, batch: PendingBatch): void {
   const dir = path.dirname(pendingFile);
   fs.mkdirSync(dir, { recursive: true });
-  const tmp = path.join(dir, `.pending.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const tmp = path.join(
+    dir,
+    `.pending.tmp-${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  );
   const fd = fs.openSync(tmp, 'w');
   try {
     fs.writeFileSync(fd, JSON.stringify(batch));
@@ -65,7 +76,11 @@ export function clearPendingBatch(pendingFile: string): void {
     fs.unlinkSync(pendingFile);
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code !== 'ENOENT') {
-      throw new GitWhyError('STORAGE_FAILED', `failed to clear pending marker at ${pendingFile}: ${(err as Error).message}`, { cause: err });
+      throw new GitWhyError(
+        'STORAGE_FAILED',
+        `failed to clear pending marker at ${pendingFile}: ${(err as Error).message}`,
+        { cause: err },
+      );
     }
   }
   fsyncDirectoryBestEffort(path.dirname(pendingFile));
@@ -97,7 +112,10 @@ function statusesOf(result: ZVecStatus | ZVecStatus[]): ZVecStatus[] {
  * the caller clears it only after the catalog/manifest checkpoint that
  * follows a successful apply.
  */
-export function applyCommitBatch(collection: ZVecCollection, units: readonly CommitBatchUnit[]): ApplyBatchResult {
+export function applyCommitBatch(
+  collection: ZVecCollection,
+  units: readonly CommitBatchUnit[],
+): ApplyBatchResult {
   const appliedShas: string[] = [];
   const failedShas: { sha: string; reason: string }[] = [];
 
@@ -112,16 +130,25 @@ export function applyCommitBatch(collection: ZVecCollection, units: readonly Com
         appliedShas.push(unit.commitSha);
         continue;
       }
-      const result = unit.upserts.length === 1 ? collection.upsertSync(unit.upserts[0]!) : collection.upsertSync([...unit.upserts]);
+      const result =
+        unit.upserts.length === 1
+          ? collection.upsertSync(unit.upserts[0]!)
+          : collection.upsertSync([...unit.upserts]);
       const statuses = statusesOf(result);
       const failed = statuses.filter((s) => !s.ok);
       if (failed.length > 0) {
-        failedShas.push({ sha: unit.commitSha, reason: failed.map((f) => `${f.code}: ${f.message}`).join('; ') });
+        failedShas.push({
+          sha: unit.commitSha,
+          reason: failed.map((f) => `${f.code}: ${f.message}`).join('; '),
+        });
         continue;
       }
       appliedShas.push(unit.commitSha);
     } catch (err) {
-      failedShas.push({ sha: unit.commitSha, reason: err instanceof Error ? err.message : String(err) });
+      failedShas.push({
+        sha: unit.commitSha,
+        reason: err instanceof Error ? err.message : String(err),
+      });
     }
   }
 

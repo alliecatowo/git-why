@@ -69,7 +69,9 @@ const snapshot: SnapshotSummary = {
   generation: 'gen-1',
 };
 
-function makeStore(overrides: Partial<HistoryStore> = {}): HistoryStore & { receivedFilters: StorageFilter[] } {
+function makeStore(
+  overrides: Partial<HistoryStore> = {},
+): HistoryStore & { receivedFilters: StorageFilter[] } {
   const commits = new Map<string, CommitRecord>([
     ['sha1', commit('sha1', 'Fix auth refresh loop')],
     ['sha2', commit('sha2', 'Unrelated change')],
@@ -81,14 +83,20 @@ function makeStore(overrides: Partial<HistoryStore> = {}): HistoryStore & { rece
 
   const store: HistoryStore & { receivedFilters: StorageFilter[] } = {
     receivedFilters,
-    async searchLexical(_queryText: string, filter: StorageFilter): Promise<readonly ScoredRecord[]> {
+    async searchLexical(
+      _queryText: string,
+      filter: StorageFilter,
+    ): Promise<readonly ScoredRecord[]> {
       receivedFilters.push(filter);
       return [
         { id: 'ev1', type: 'evidence', sha: 'sha1', score: 10 },
         { id: 'commit-sha2', type: 'commit', sha: 'sha2', score: 5 },
       ];
     },
-    async searchSemantic(_queryVector: Float32Array, filter: StorageFilter): Promise<readonly ScoredRecord[]> {
+    async searchSemantic(
+      _queryVector: Float32Array,
+      filter: StorageFilter,
+    ): Promise<readonly ScoredRecord[]> {
       receivedFilters.push(filter);
       return [{ id: 'ev1', type: 'evidence', sha: 'sha1', score: 0.9 }];
     },

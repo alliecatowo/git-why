@@ -28,17 +28,30 @@ test('shallow clone: boundary commit keeps evidence, is not treated as root, cov
     }
 
     await rm(cloneDir, { recursive: true, force: true });
-    const clone = await source.git(['clone', '-q', '--depth=2', '--no-local', `file://${source.dir}`, cloneDir]);
+    const clone = await source.git([
+      'clone',
+      '-q',
+      '--depth=2',
+      '--no-local',
+      `file://${source.dir}`,
+      cloneDir,
+    ]);
     assert.equal(clone.code, 0, clone.stderr);
 
     const repository = await resolveRepositoryIdentity(cloneDir);
     assert.equal(repository.isShallow, true);
     const snapshot = await captureSnapshot(repository);
-    assert.ok(snapshot.shallowBoundary.length > 0, 'shallow boundary must list real OIDs, not just a boolean');
+    assert.ok(
+      snapshot.shallowBoundary.length > 0,
+      'shallow boundary must list real OIDs, not just a boolean',
+    );
 
     const boundaryOid = snapshot.shallowBoundary[0] as string;
     const reachable = await enumerateReachable(repository, snapshot.tipOids);
-    assert.ok(reachable.length > 0, 'a failed/interrupted enumeration must throw, never silently return empty');
+    assert.ok(
+      reachable.length > 0,
+      'a failed/interrupted enumeration must throw, never silently return empty',
+    );
     assert.ok(reachable.includes(boundaryOid));
 
     const extractor = createGitHistoryExtractor(new FakeEmbedder());
@@ -50,11 +63,22 @@ test('shallow clone: boundary commit keeps evidence, is not treated as root, cov
 
     // Missing ancestor must not become a root: the commit object still lists a
     // parent, so `parents` is non-empty even though that parent is unavailable.
-    assert.ok(extraction.commit.parents.length > 0, 'a shallow boundary commit must not be reported as a root');
-    assert.equal(extraction.commit.subject.length > 0, true, 'message evidence must still be retained');
+    assert.ok(
+      extraction.commit.parents.length > 0,
+      'a shallow boundary commit must not be reported as a root',
+    );
+    assert.equal(
+      extraction.commit.subject.length > 0,
+      true,
+      'message evidence must still be retained',
+    );
     assert.ok(extraction.commit.coverage.reasons.includes('shallow_boundary'));
     assert.equal(extraction.commit.coverage.complete, false);
-    assert.equal(extraction.evidence.length, 0, 'no diff evidence is obtainable across the shallow boundary');
+    assert.equal(
+      extraction.evidence.length,
+      0,
+      'no diff evidence is obtainable across the shallow boundary',
+    );
   } finally {
     await source.cleanup();
     await rm(cloneDir, { recursive: true, force: true });

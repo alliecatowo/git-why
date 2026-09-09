@@ -22,12 +22,16 @@ function typeOf(value: unknown): string {
 
 function validateNode(value: unknown, schema: Schema, path: string, errors: string[]): void {
   if ('const' in schema) {
-    if (value !== schema.const) errors.push(`${path}: expected const ${JSON.stringify(schema.const)}, got ${JSON.stringify(value)}`);
+    if (value !== schema.const)
+      errors.push(
+        `${path}: expected const ${JSON.stringify(schema.const)}, got ${JSON.stringify(value)}`,
+      );
     return;
   }
   if ('enum' in schema) {
     const allowed = schema.enum as unknown[];
-    if (!allowed.includes(value)) errors.push(`${path}: ${JSON.stringify(value)} is not one of ${JSON.stringify(allowed)}`);
+    if (!allowed.includes(value))
+      errors.push(`${path}: ${JSON.stringify(value)} is not one of ${JSON.stringify(allowed)}`);
     return;
   }
   if ('oneOf' in schema) {
@@ -37,7 +41,8 @@ function validateNode(value: unknown, schema: Schema, path: string, errors: stri
       validateNode(value, opt, path, sub);
       return sub.length === 0;
     });
-    if (matches.length !== 1) errors.push(`${path}: expected exactly one oneOf branch to match, got ${matches.length}`);
+    if (matches.length !== 1)
+      errors.push(`${path}: expected exactly one oneOf branch to match, got ${matches.length}`);
     return;
   }
 
@@ -52,7 +57,12 @@ function validateNode(value: unknown, schema: Schema, path: string, errors: stri
     }
   }
 
-  if (schema.type === 'object' && typeof value === 'object' && value !== null && !Array.isArray(value)) {
+  if (
+    schema.type === 'object' &&
+    typeof value === 'object' &&
+    value !== null &&
+    !Array.isArray(value)
+  ) {
     const obj = value as Record<string, unknown>;
     const required = (schema.required as string[] | undefined) ?? [];
     for (const key of required) {

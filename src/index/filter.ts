@@ -20,7 +20,10 @@ import { GitWhyError } from '../types.js';
 export function quoteFilterLiteral(value: string): string {
   if (!value.includes("'")) return `'${value}'`;
   if (!value.includes('"')) return `"${value}"`;
-  throw new GitWhyError('INTERNAL', `cannot safely quote a filter literal containing both quote characters: ${JSON.stringify(value)}`);
+  throw new GitWhyError(
+    'INTERNAL',
+    `cannot safely quote a filter literal containing both quote characters: ${JSON.stringify(value)}`,
+  );
 }
 
 /**
@@ -93,11 +96,15 @@ export function buildEligibilityExpression(
     clauses.push(`${fields.type} IN (${literals.join(', ')})`);
   }
 
-  if (filters.after !== null) clauses.push(`${fields.committerTime} >= ${Math.trunc(filters.after)}`);
-  if (filters.before !== null) clauses.push(`${fields.committerTime} < ${Math.trunc(filters.before)}`);
+  if (filters.after !== null)
+    clauses.push(`${fields.committerTime} >= ${Math.trunc(filters.after)}`);
+  if (filters.before !== null)
+    clauses.push(`${fields.committerTime} < ${Math.trunc(filters.before)}`);
 
   if (filters.author !== null && filters.author.length > 0) {
-    clauses.push(`${fields.authorSearch} LIKE ${likeSubstringPattern(filters.author.toLowerCase())}`);
+    clauses.push(
+      `${fields.authorSearch} LIKE ${likeSubstringPattern(filters.author.toLowerCase())}`,
+    );
   }
 
   if (filters.paths.length > 0) {

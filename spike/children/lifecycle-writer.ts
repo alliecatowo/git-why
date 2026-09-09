@@ -1,18 +1,39 @@
 // Child process: create/open a collection, insert a batch, optionally close.
 // argv: [colPath, mode]  mode = 'close' | 'no-close' | 'checkpoint-then-noop'
-import { ZVecCreateAndOpen, ZVecOpen, ZVecCollectionSchema, ZVecDataType, ZVecIndexType, ZVecMetricType, isZVecError } from '@zvec/zvec';
+import {
+  ZVecCreateAndOpen,
+  ZVecOpen,
+  ZVecCollectionSchema,
+  ZVecDataType,
+  ZVecIndexType,
+  ZVecMetricType,
+} from '@zvec/zvec';
 import fs from 'node:fs';
 
 const [, , colPathArg, mode, countArg] = process.argv;
-if (colPathArg === undefined) throw new Error('usage: lifecycle-writer.ts <colPath> <mode> [count]');
+if (colPathArg === undefined)
+  throw new Error('usage: lifecycle-writer.ts <colPath> <mode> [count]');
 const colPath: string = colPathArg;
 const count = countArg ? Number(countArg) : 5;
 
 function schema() {
   return new ZVecCollectionSchema({
     name: 'lifecycle',
-    fields: [{ name: 'seq', dataType: ZVecDataType.INT64, indexParams: { indexType: ZVecIndexType.INVERT } }],
-    vectors: [{ name: 'vec', dataType: ZVecDataType.VECTOR_FP32, dimension: 8, indexParams: { indexType: ZVecIndexType.FLAT, metricType: ZVecMetricType.COSINE } }],
+    fields: [
+      {
+        name: 'seq',
+        dataType: ZVecDataType.INT64,
+        indexParams: { indexType: ZVecIndexType.INVERT },
+      },
+    ],
+    vectors: [
+      {
+        name: 'vec',
+        dataType: ZVecDataType.VECTOR_FP32,
+        dimension: 8,
+        indexParams: { indexType: ZVecIndexType.FLAT, metricType: ZVecMetricType.COSINE },
+      },
+    ],
   });
 }
 

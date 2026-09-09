@@ -11,7 +11,8 @@ function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
     authorTime: 1762160400,
     committerTime: 1762160400, // 2025-11-03T09:00:00Z
     parents: ['b'.repeat(40)],
-    messageExcerpt: 'Provider X can return an empty refresh token while the current access\ntoken remains valid.',
+    messageExcerpt:
+      'Provider X can return an empty refresh token while the current access\ntoken remains valid.',
     rankScore: 0.0325,
     matchedBy: ['text', 'semantic'],
     evidence: [
@@ -25,7 +26,8 @@ function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
         oldCount: 1,
         newStart: 72,
         newCount: 1,
-        excerpt: '- if (!refreshToken) throw new InvalidTokenError()\n+ if (!refreshToken) return currentSession',
+        excerpt:
+          '- if (!refreshToken) throw new InvalidTokenError()\n+ if (!refreshToken) return currentSession',
         truncated: false,
         omissionReasons: [],
       },
@@ -49,7 +51,11 @@ test('the SHA is shortened to 7 characters in human output, unlike JSON', () => 
 });
 
 test('rankScore never appears in human output, as a number or a percentage', () => {
-  const out = renderSearchHuman({ query: 'q', results: [makeHit({ rankScore: 0.874 })], warnings: [] });
+  const out = renderSearchHuman({
+    query: 'q',
+    results: [makeHit({ rankScore: 0.874 })],
+    warnings: [],
+  });
   assert.ok(!out.includes('0.874'));
   assert.ok(!out.includes('87.4%'));
   assert.ok(!out.includes('%'));
@@ -92,7 +98,11 @@ test('a rename shows old path -> new path', () => {
 });
 
 test('warnings are rendered, prefixed for visibility', () => {
-  const out = renderSearchHuman({ query: 'q', results: [makeHit()], warnings: ['candidate pool capped at 200'] });
+  const out = renderSearchHuman({
+    query: 'q',
+    results: [makeHit()],
+    warnings: ['candidate pool capped at 200'],
+  });
   assert.ok(out.includes('warning: candidate pool capped at 200'));
 });
 
@@ -104,7 +114,9 @@ test('a commit message containing an ANSI escape is sanitized before reaching th
 });
 
 test('an author name containing a control sequence is sanitized', () => {
-  const hit = makeHit({ author: { name: 'Evil\x1b]8;;http://x\x07Author', email: 'e@example.invalid' } });
+  const hit = makeHit({
+    author: { name: 'Evil\x1b]8;;http://x\x07Author', email: 'e@example.invalid' },
+  });
   const out = renderSearchHuman({ query: 'q', results: [hit], warnings: [] });
   assert.ok(!out.includes('\x1b'));
 });
@@ -146,7 +158,16 @@ test('status renders state, counts and model identity', () => {
 
 test('a missing index reports null fields without crashing', () => {
   const out = renderStatusHuman(
-    makeStatus({ state: 'missing', generation: null, indexedCommits: null, reachableCommits: null, recordCount: null, model: null, diskBytes: null, indexedAt: null }),
+    makeStatus({
+      state: 'missing',
+      generation: null,
+      indexedCommits: null,
+      reachableCommits: null,
+      recordCount: null,
+      model: null,
+      diskBytes: null,
+      indexedAt: null,
+    }),
   );
   assert.ok(out.includes('missing'));
   assert.ok(out.includes('never'));

@@ -25,7 +25,10 @@ test('a bare BEL is stripped', () => {
 });
 
 test('carriage return (overwrite trick) is stripped', () => {
-  assert.equal(sanitizeForTerminal('progress: 100%\rprogress: 0% (fake)'), 'progress: 100%progress: 0% (fake)');
+  assert.equal(
+    sanitizeForTerminal('progress: 100%\rprogress: 0% (fake)'),
+    'progress: 100%progress: 0% (fake)',
+  );
 });
 
 test('a simple escape sequence (terminal reset) is stripped', () => {
@@ -37,7 +40,10 @@ test('charset designation escapes are stripped', () => {
 });
 
 test('newlines and tabs are preserved for multi-line message bodies', () => {
-  assert.equal(sanitizeForTerminal('line one\n\tindented line two'), 'line one\n\tindented line two');
+  assert.equal(
+    sanitizeForTerminal('line one\n\tindented line two'),
+    'line one\n\tindented line two',
+  );
 });
 
 test('ordinary text with no control sequences is unchanged', () => {

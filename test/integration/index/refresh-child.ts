@@ -3,7 +3,14 @@
 // and fake embedder, optionally injecting a mid-batch crash. Reads its
 // job as JSON from argv[2].
 import { ensureCurrentGeneration, rebuild } from '../../../src/index/refresh.js';
-import { fakeRepository, fakeSnapshot, makeExtraction, makeFakeExtractor, makeFakeEmbedder, FAKE_EMBEDDER_DIMENSION } from './helpers.js';
+import {
+  fakeRepository,
+  fakeSnapshot,
+  makeExtraction,
+  makeFakeExtractor,
+  makeFakeEmbedder,
+  FAKE_EMBEDDER_DIMENSION,
+} from './helpers.js';
 import type { CommitExtraction } from '../../../src/types.js';
 
 interface Job {
@@ -23,7 +30,14 @@ async function main() {
 
   const bySha = new Map<string, CommitExtraction>();
   for (const sha of job.shas) {
-    bySha.set(sha, makeExtraction({ sha, subject: `Change ${sha.slice(0, 8)}`, paths: [`src/${sha.slice(0, 6)}.ts`] }));
+    bySha.set(
+      sha,
+      makeExtraction({
+        sha,
+        subject: `Change ${sha.slice(0, 8)}`,
+        paths: [`src/${sha.slice(0, 6)}.ts`],
+      }),
+    );
   }
   const extractor = makeFakeExtractor(bySha, job.crashOnSha);
   const embedder = makeFakeEmbedder(FAKE_EMBEDDER_DIMENSION);
@@ -34,12 +48,30 @@ async function main() {
   const result =
     job.mode === 'rebuild'
       ? await rebuild(repository, snapshot, reachable, { extractor, embedder }, options)
-      : await ensureCurrentGeneration(repository, snapshot, reachable, { extractor, embedder }, options);
+      : await ensureCurrentGeneration(
+          repository,
+          snapshot,
+          reachable,
+          { extractor, embedder },
+          options,
+        );
 
-  process.stdout.write(JSON.stringify({ event: 'done', generationId: result.generationId, counts: result.manifest.counts }) + '\n');
+  process.stdout.write(
+    JSON.stringify({
+      event: 'done',
+      generationId: result.generationId,
+      counts: result.manifest.counts,
+    }) + '\n',
+  );
 }
 
 main().catch((err) => {
-  process.stdout.write(JSON.stringify({ event: 'error', message: err instanceof Error ? err.message : String(err), code: (err as { code?: string }).code }) + '\n');
+  process.stdout.write(
+    JSON.stringify({
+      event: 'error',
+      message: err instanceof Error ? err.message : String(err),
+      code: (err as { code?: string }).code,
+    }) + '\n',
+  );
   process.exitCode = 1;
 });

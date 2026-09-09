@@ -7,7 +7,12 @@
  */
 
 import { createHash } from 'node:crypto';
-import { EXTRACTION_POLICY_VERSION, type RefTip, type RepositoryIdentity, type RepositorySnapshot } from '../types.js';
+import {
+  EXTRACTION_POLICY_VERSION,
+  type RefTip,
+  type RepositoryIdentity,
+  type RepositorySnapshot,
+} from '../types.js';
 import { probeGitCapabilities, runGit } from './exec.js';
 import { extractionConfigFingerprint } from './policy.js';
 import { readShallowBoundary } from './repository.js';
@@ -20,7 +25,13 @@ async function listRefTips(repository: RepositoryIdentity): Promise<RefTip[]> {
   // and `%(*objecttype)` are empty unless the ref is an annotated tag, giving us the
   // peeled target for free without a second pass per tag. Git terminates each record
   // with its own `\n`, so splitting on that needs no extra record marker.
-  const format = ['%(refname)', '%(objectname)', '%(objecttype)', '%(*objectname)', '%(*objecttype)'].join(FIELD_SEP);
+  const format = [
+    '%(refname)',
+    '%(objectname)',
+    '%(objecttype)',
+    '%(*objectname)',
+    '%(*objecttype)',
+  ].join(FIELD_SEP);
   const result = await runGit({
     gitDir: repository.commonDir,
     cwd: repository.commonDir,
@@ -134,7 +145,12 @@ export async function captureSnapshot(repository: RepositoryIdentity): Promise<R
   const tips = dedupeSortTips([...refTips, ...worktrees.tips]);
   const tipOids = dedupeSortOids(tips);
   const configFingerprint = extractionConfigFingerprint(caps);
-  const fingerprint = computeFingerprint(tips, shallowBoundary, repository.objectFormat, configFingerprint);
+  const fingerprint = computeFingerprint(
+    tips,
+    shallowBoundary,
+    repository.objectFormat,
+    configFingerprint,
+  );
 
   return {
     repository,

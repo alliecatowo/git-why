@@ -20,7 +20,8 @@ export interface RepositoryHandle {
 
 /** One stage of user-visible progress, always rendered to stderr. */
 export interface ProgressEvent {
-  readonly stage: 'model' | 'extraction' | 'embedding' | 'reconcile' | 'compaction' | 'gc' | 'recovery';
+  readonly stage:
+    'model' | 'extraction' | 'embedding' | 'reconcile' | 'compaction' | 'gc' | 'recovery';
   /** Short, human-readable, already complete (no trailing punctuation required). */
   readonly message: string;
 }
@@ -68,7 +69,11 @@ export interface Backend {
    * Runs a search. Unless `options.noRefresh`, first creates or reconciles
    * the index for the captured snapshot.
    */
-  search(repo: RepositoryHandle, request: SearchRequest, options: RunOptions): Promise<SearchResponse>;
+  search(
+    repo: RepositoryHandle,
+    request: SearchRequest,
+    options: RunOptions,
+  ): Promise<SearchResponse>;
 
   /** `git why index`: create/reconcile, explicitly retrying obtainable missing evidence. */
   index(repo: RepositoryHandle, options: RunOptions): Promise<IndexStatus>;

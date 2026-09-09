@@ -90,7 +90,11 @@ test('static inference agrees with the real model2vec reference vectors', async 
 
   for (const c of reference.cases) {
     const vec = await embedder.embedQuery(c.text);
-    assert.equal(vec.length, reference.dim, `dimension mismatch for ${JSON.stringify(c.text.slice(0, 30))}`);
+    assert.equal(
+      vec.length,
+      reference.dim,
+      `dimension mismatch for ${JSON.stringify(c.text.slice(0, 30))}`,
+    );
     let maxDiff = 0;
     for (let i = 0; i < reference.dim; i++) {
       maxDiff = Math.max(maxDiff, Math.abs(vec[i]! - c.vector[i]!));

@@ -22,9 +22,21 @@ import {
   isZVecError,
 } from '@zvec/zvec';
 import type { ZVecCollection, ZVecCollectionOptions, ZVecDocInput } from '@zvec/zvec';
-import type { CommitRecord, EvidenceRecord, ScoredRecord, StorageFilter, HistoryStore } from '../types.js';
+import type {
+  CommitRecord,
+  EvidenceRecord,
+  ScoredRecord,
+  StorageFilter,
+  HistoryStore,
+} from '../types.js';
 import { GitWhyError } from '../types.js';
-import { buildEligibilityExpression, pathMatchKeys, quoteFilterLiteral, stripQuotesForIndexing, type EligibilityFieldNames } from './filter.js';
+import {
+  buildEligibilityExpression,
+  pathMatchKeys,
+  quoteFilterLiteral,
+  stripQuotesForIndexing,
+  type EligibilityFieldNames,
+} from './filter.js';
 
 export const HISTORY_COLLECTION_NAME = 'git_why_history_v1';
 
@@ -75,19 +87,50 @@ export function historyCollectionSchema(config: HistoryCollectionConfig): ZVecCo
   return new ZVecCollectionSchema({
     name: HISTORY_COLLECTION_NAME,
     fields: [
-      { name: FIELD.type, dataType: ZVecDataType.STRING, indexParams: { indexType: ZVecIndexType.INVERT } },
-      { name: FIELD.sha, dataType: ZVecDataType.STRING, indexParams: { indexType: ZVecIndexType.INVERT } },
-      { name: FIELD.committerTime, dataType: ZVecDataType.INT64, indexParams: { indexType: ZVecIndexType.INVERT } },
-      { name: FIELD.authorSearch, dataType: ZVecDataType.STRING, indexParams: { indexType: ZVecIndexType.INVERT } },
-      { name: FIELD.pathKeys, dataType: ZVecDataType.ARRAY_STRING, indexParams: { indexType: ZVecIndexType.INVERT } },
+      {
+        name: FIELD.type,
+        dataType: ZVecDataType.STRING,
+        indexParams: { indexType: ZVecIndexType.INVERT },
+      },
+      {
+        name: FIELD.sha,
+        dataType: ZVecDataType.STRING,
+        indexParams: { indexType: ZVecIndexType.INVERT },
+      },
+      {
+        name: FIELD.committerTime,
+        dataType: ZVecDataType.INT64,
+        indexParams: { indexType: ZVecIndexType.INVERT },
+      },
+      {
+        name: FIELD.authorSearch,
+        dataType: ZVecDataType.STRING,
+        indexParams: { indexType: ZVecIndexType.INVERT },
+      },
+      {
+        name: FIELD.pathKeys,
+        dataType: ZVecDataType.ARRAY_STRING,
+        indexParams: { indexType: ZVecIndexType.INVERT },
+      },
       {
         name: FIELD.lexicalText,
         dataType: ZVecDataType.STRING,
-        indexParams: { indexType: ZVecIndexType.FTS, tokenizerName: 'standard', filters: ['lowercase'] },
+        indexParams: {
+          indexType: ZVecIndexType.FTS,
+          tokenizerName: 'standard',
+          filters: ['lowercase'],
+        },
       },
       { name: FIELD.payload, dataType: ZVecDataType.STRING },
     ],
-    vectors: [{ name: VECTOR_FIELD, dataType: ZVecDataType.VECTOR_FP32, dimension: config.embeddingDimension, indexParams: vectorIndexParams }],
+    vectors: [
+      {
+        name: VECTOR_FIELD,
+        dataType: ZVecDataType.VECTOR_FP32,
+        dimension: config.embeddingDimension,
+        indexParams: vectorIndexParams,
+      },
+    ],
   });
 }
 
@@ -111,7 +154,11 @@ export function openOrCreateHistoryCollection(
           : ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config));
       }
       const message = err instanceof Error ? err.message : String(err);
-      throw new GitWhyError('STORAGE_FAILED', `failed to open history collection at ${collectionDir}: ${message}`, { cause: err });
+      throw new GitWhyError(
+        'STORAGE_FAILED',
+        `failed to open history collection at ${collectionDir}: ${message}`,
+        { cause: err },
+      );
     }
   }
   return options !== undefined
@@ -170,7 +217,10 @@ export function buildCommitDoc(input: CommitDocInput): ZVecDocInput {
 
 export function buildEvidenceDoc(input: EvidenceDocInput): ZVecDocInput {
   const { record, vector, committerTime, author } = input;
-  const keys = boundedUniqueKeys([...pathMatchKeys(record.path.display), ...(record.oldPath !== null ? pathMatchKeys(record.oldPath.display) : [])]);
+  const keys = boundedUniqueKeys([
+    ...pathMatchKeys(record.path.display),
+    ...(record.oldPath !== null ? pathMatchKeys(record.oldPath.display) : []),
+  ]);
   return {
     id: record.id,
     fields: {
@@ -203,11 +253,17 @@ function similarityFromCosineDistance(distance: number): number {
   return 1 - distance;
 }
 
-function toScoredRecord(doc: RawZVecDoc, transform: (score: number) => number = (x) => x): ScoredRecord {
+function toScoredRecord(
+  doc: RawZVecDoc,
+  transform: (score: number) => number = (x) => x,
+): ScoredRecord {
   const type = doc.fields[FIELD.type];
   const sha = doc.fields[FIELD.sha];
   if (type !== 'commit' && type !== 'evidence') {
-    throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} has an invalid record type: ${String(type)}`);
+    throw new GitWhyError(
+      'INDEX_CORRUPT',
+      `document ${doc.id} has an invalid record type: ${String(type)}`,
+    );
   }
   if (typeof sha !== 'string') {
     throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} is missing its sha field`);
@@ -223,7 +279,9 @@ function parsePayload<T>(doc: RawZVecDoc): T {
   try {
     return JSON.parse(payload) as T;
   } catch (err) {
-    throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} has an unparsable payload`, { cause: err });
+    throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} has an unparsable payload`, {
+      cause: err,
+    });
   }
 }
 
@@ -239,7 +297,11 @@ export class ZvecHistoryStore implements HistoryStore {
     return buildEligibilityExpression(ELIGIBILITY_FIELDS, filter.recordTypes, filter.filters);
   }
 
-  async searchLexical(queryText: string, filter: StorageFilter, topK: number): Promise<readonly ScoredRecord[]> {
+  async searchLexical(
+    queryText: string,
+    filter: StorageFilter,
+    topK: number,
+  ): Promise<readonly ScoredRecord[]> {
     const docs = this.collection.querySync({
       fieldName: FIELD.lexicalText,
       // Never `queryString`: arbitrary user text is not trusted query-parser syntax (docs/decisions.md section 2).
@@ -252,7 +314,11 @@ export class ZvecHistoryStore implements HistoryStore {
     return docs.map((d) => toScoredRecord(d as unknown as RawZVecDoc));
   }
 
-  async searchSemantic(queryVector: Float32Array, filter: StorageFilter, topK: number): Promise<readonly ScoredRecord[]> {
+  async searchSemantic(
+    queryVector: Float32Array,
+    filter: StorageFilter,
+    topK: number,
+  ): Promise<readonly ScoredRecord[]> {
     const docs = this.collection.querySync({
       fieldName: VECTOR_FIELD,
       vector: queryVector,
@@ -261,14 +327,21 @@ export class ZvecHistoryStore implements HistoryStore {
       includeVector: false,
       outputFields: [FIELD.type, FIELD.sha],
     });
-    return docs.map((d) => toScoredRecord(d as unknown as RawZVecDoc, similarityFromCosineDistance));
+    return docs.map((d) =>
+      toScoredRecord(d as unknown as RawZVecDoc, similarityFromCosineDistance),
+    );
   }
 
   async fetchCommits(shas: readonly string[]): Promise<ReadonlyMap<string, CommitRecord>> {
     const map = new Map<string, CommitRecord>();
     if (shas.length === 0) return map;
     const expr = `${FIELD.type} = 'commit' AND ${FIELD.sha} IN (${shas.map((s) => quoteFilterLiteral(s)).join(', ')})`;
-    const docs = this.collection.querySync({ filter: expr, topk: shas.length, includeVector: false, outputFields: [FIELD.payload] });
+    const docs = this.collection.querySync({
+      filter: expr,
+      topk: shas.length,
+      includeVector: false,
+      outputFields: [FIELD.payload],
+    });
     for (const doc of docs) {
       const record = parsePayload<CommitRecord>(doc as unknown as RawZVecDoc);
       map.set(record.sha, record);
@@ -279,18 +352,35 @@ export class ZvecHistoryStore implements HistoryStore {
   async fetchEvidence(ids: readonly string[]): Promise<ReadonlyMap<string, EvidenceRecord>> {
     const map = new Map<string, EvidenceRecord>();
     if (ids.length === 0) return map;
-    const docs = this.collection.fetchSync({ ids: [...ids], includeVector: false, outputFields: [FIELD.payload] });
+    const docs = this.collection.fetchSync({
+      ids: [...ids],
+      includeVector: false,
+      outputFields: [FIELD.payload],
+    });
     for (const [id, doc] of Object.entries(docs)) {
       map.set(id, parsePayload<EvidenceRecord>({ id, score: doc.score, fields: doc.fields }));
     }
     return map;
   }
 
-  async evidenceForCommit(sha: string, filter: StorageFilter, limit: number): Promise<readonly EvidenceRecord[]> {
-    const eligibility = buildEligibilityExpression(ELIGIBILITY_FIELDS, ['evidence'], filter.filters);
+  async evidenceForCommit(
+    sha: string,
+    filter: StorageFilter,
+    limit: number,
+  ): Promise<readonly EvidenceRecord[]> {
+    const eligibility = buildEligibilityExpression(
+      ELIGIBILITY_FIELDS,
+      ['evidence'],
+      filter.filters,
+    );
     const shaClause = `${FIELD.sha} = ${quoteFilterLiteral(sha)}`;
     const expr = eligibility !== undefined ? `${shaClause} AND ${eligibility}` : shaClause;
-    const docs = this.collection.querySync({ filter: expr, topk: limit, includeVector: false, outputFields: [FIELD.payload] });
+    const docs = this.collection.querySync({
+      filter: expr,
+      topk: limit,
+      includeVector: false,
+      outputFields: [FIELD.payload],
+    });
     return docs.map((doc) => parsePayload<EvidenceRecord>(doc as unknown as RawZVecDoc));
   }
 

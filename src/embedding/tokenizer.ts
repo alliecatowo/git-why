@@ -138,7 +138,12 @@ const CONTROL = /\p{C}/u;
 // Matches HuggingFace's is_punctuation: ASCII punctuation ranges, or category P*.
 function isPunctuation(ch: string): boolean {
   const cp = ch.codePointAt(0) ?? 0;
-  if ((cp >= 33 && cp <= 47) || (cp >= 58 && cp <= 64) || (cp >= 91 && cp <= 96) || (cp >= 123 && cp <= 126)) {
+  if (
+    (cp >= 33 && cp <= 47) ||
+    (cp >= 58 && cp <= 64) ||
+    (cp >= 91 && cp <= 96) ||
+    (cp >= 123 && cp <= 126)
+  ) {
     return true;
   }
   return /\p{P}/u.test(ch);
@@ -288,7 +293,9 @@ class WordPieceTokenizerImpl implements WordPieceTokenizer {
     this.vocabSize = wordPieceConfig.vocab.size;
     const unkId = wordPieceConfig.vocab.get(wordPieceConfig.unkToken);
     if (unkId === undefined) {
-      throw new Error(`tokenizer.json: unk_token '${wordPieceConfig.unkToken}' not present in vocab`);
+      throw new Error(
+        `tokenizer.json: unk_token '${wordPieceConfig.unkToken}' not present in vocab`,
+      );
     }
     this.unkTokenId = unkId;
     this.padTokenId = wordPieceConfig.vocab.get('[PAD]') ?? null;

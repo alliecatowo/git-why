@@ -17,15 +17,15 @@ every other lane. Report the required change instead.
 Exactly one lane owns each directory. Do not create or edit files outside the
 directories you own.
 
-| Owner | Directories |
-| --- | --- |
+| Owner      | Directories                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | integrator | `src/types.ts`, `package.json`, `package-lock.json`, `tsconfig*.json`, `mise.toml`, `eslint.config.js`, `.prettierrc`, `README.md` |
-| git | `src/git/`, `test/unit/git/`, `test/integration/git/`, `test/fixtures/` |
-| storage | `spike/`, `src/index/`, `test/unit/index/`, `test/integration/index/` |
-| embedding | `src/embedding/`, `test/unit/embedding/`, `test/integration/embedding/` |
-| retrieval | `src/history/`, `src/search/`, `test/unit/history/`, `test/unit/search/` |
-| cli | `src/cli/`, `src/output/`, `scripts/`, `schema/`, `test/unit/cli/`, `test/unit/output/`, `test/integration/cli/` |
-| evaluation | `bench/` |
+| git        | `src/git/`, `test/unit/git/`, `test/integration/git/`, `test/fixtures/`                                                            |
+| storage    | `spike/`, `src/index/`, `test/unit/index/`, `test/integration/index/`                                                              |
+| embedding  | `src/embedding/`, `test/unit/embedding/`, `test/integration/embedding/`                                                            |
+| retrieval  | `src/history/`, `src/search/`, `test/unit/history/`, `test/unit/search/`                                                           |
+| cli        | `src/cli/`, `src/output/`, `scripts/`, `schema/`, `test/unit/cli/`, `test/unit/output/`, `test/integration/cli/`                   |
+| evaluation | `bench/`                                                                                                                           |
 
 ## Dependencies
 

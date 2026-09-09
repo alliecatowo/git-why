@@ -1,9 +1,18 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { DEFAULT_CANDIDATE_POOL_CAP, MIN_CANDIDATE_POOL, rankCommits } from '../../../src/search/rank.js';
+import {
+  DEFAULT_CANDIDATE_POOL_CAP,
+  MIN_CANDIDATE_POOL,
+  rankCommits,
+} from '../../../src/search/rank.js';
 import type { ScoredRecord } from '../../../src/types.js';
 
-function rec(sha: string, score: number, type: 'commit' | 'evidence' = 'evidence', id?: string): ScoredRecord {
+function rec(
+  sha: string,
+  score: number,
+  type: 'commit' | 'evidence' = 'evidence',
+  id?: string,
+): ScoredRecord {
   return { id: id ?? `${sha}-${type}-${score}`, type, sha, score };
 }
 
@@ -11,7 +20,9 @@ test('five distinct top scores mean five distinct commits, not five hunks from o
   // One commit contributes 20 duplicate-scoring hunk records; four other
   // commits contribute one record each with a lower score. Naive top-5-by-
   // record-score would return only the big commit's hunks.
-  const bigCommitRecords = Array.from({ length: 20 }, (_, i) => rec('big', 100, 'evidence', `big-${i}`));
+  const bigCommitRecords = Array.from({ length: 20 }, (_, i) =>
+    rec('big', 100, 'evidence', `big-${i}`),
+  );
   const others = ['c1', 'c2', 'c3', 'c4'].map((sha, i) => rec(sha, 50 - i, 'evidence'));
   const lexicalFetch = async () => [...bigCommitRecords, ...others];
 
@@ -67,7 +78,10 @@ test('a missing branch contributes zero, not a penalty', async () => {
 test('single-mode search (one branch only) still produces a monotonic ranking number, not a raw score', async () => {
   const semanticFetch = async () => [rec('x', 0.9), rec('y', 0.1)];
   const result = await rankCommits({ n: 2, lexicalFetch: null, semanticFetch });
-  assert.deepEqual(result.ranked.map((r) => r.sha), ['x', 'y']);
+  assert.deepEqual(
+    result.ranked.map((r) => r.sha),
+    ['x', 'y'],
+  );
   assert.notEqual(result.ranked[0]!.score, 0.9); // never the raw cosine value
 });
 
@@ -84,7 +98,10 @@ test('matchedBy reports which branch(es) actually surfaced the commit', async ()
 test('stable full-SHA tie-break never favours recency: identical scores order by SHA alone', async () => {
   const lexicalFetch = async () => [rec('zzzz', 5), rec('aaaa', 5)];
   const result = await rankCommits({ n: 2, lexicalFetch, semanticFetch: null });
-  assert.deepEqual(result.ranked.map((r) => r.sha), ['aaaa', 'zzzz']);
+  assert.deepEqual(
+    result.ranked.map((r) => r.sha),
+    ['aaaa', 'zzzz'],
+  );
 });
 
 test('candidate pool expands geometrically when the first fetch has too few unique commits', async () => {
@@ -97,8 +114,16 @@ test('candidate pool expands geometrically when the first fetch has too few uniq
     const uniqueCount = Math.ceil(topK / 50);
     return Array.from({ length: topK }, (_, i) => rec(`c${i % uniqueCount}`, topK - i));
   };
-  const result = await rankCommits({ n: 10, lexicalFetch, semanticFetch: null, candidatePoolCap: 5000 });
-  assert.ok(calls.length > 1, 'must have queried more than once to satisfy n=10 from a low-density pool');
+  const result = await rankCommits({
+    n: 10,
+    lexicalFetch,
+    semanticFetch: null,
+    candidatePoolCap: 5000,
+  });
+  assert.ok(
+    calls.length > 1,
+    'must have queried more than once to satisfy n=10 from a low-density pool',
+  );
   assert.ok(calls[0]! >= MIN_CANDIDATE_POOL);
   // Every subsequent call requests strictly more than the previous (geometric growth).
   for (let i = 1; i < calls.length; i += 1) assert.ok(calls[i]! > calls[i - 1]!);
@@ -113,7 +138,12 @@ test('candidateLimitReached is set when the bounded cap still limits diversity b
     const capped = Math.min(topK, 10);
     return Array.from({ length: topK }, (_, i) => rec(`c${i % capped}`, 1000 - i));
   };
-  const result = await rankCommits({ n: 50, lexicalFetch, semanticFetch: null, candidatePoolCap: 200 });
+  const result = await rankCommits({
+    n: 50,
+    lexicalFetch,
+    semanticFetch: null,
+    candidatePoolCap: 200,
+  });
   assert.equal(result.candidateLimitReached, true);
 });
 
@@ -122,7 +152,12 @@ test('candidateLimitReached is false when the pool is exhausted honestly (store 
     const all = Array.from({ length: 10 }, (_, i) => rec(`c${i}`, 100 - i));
     return all.slice(0, Math.min(topK, all.length));
   };
-  const result = await rankCommits({ n: 50, lexicalFetch, semanticFetch: null, candidatePoolCap: 2000 });
+  const result = await rankCommits({
+    n: 50,
+    lexicalFetch,
+    semanticFetch: null,
+    candidatePoolCap: 2000,
+  });
   assert.equal(result.candidateLimitReached, false);
   assert.equal(result.ranked.length, 10);
 });

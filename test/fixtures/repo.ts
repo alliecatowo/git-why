@@ -15,7 +15,12 @@ export interface RunResult {
   readonly code: number | null;
 }
 
-function run(cwd: string, args: readonly string[], env?: NodeJS.ProcessEnv, input?: Buffer): Promise<RunResult> {
+function run(
+  cwd: string,
+  args: readonly string[],
+  env?: NodeJS.ProcessEnv,
+  input?: Buffer,
+): Promise<RunResult> {
   return new Promise((resolve, reject) => {
     const child = spawn('git', args as string[], {
       cwd,
@@ -28,7 +33,11 @@ function run(cwd: string, args: readonly string[], env?: NodeJS.ProcessEnv, inpu
     child.stderr.on('data', (c: Buffer) => err.push(c));
     child.on('error', reject);
     child.on('close', (code) => {
-      resolve({ stdout: Buffer.concat(out).toString('utf8'), stderr: Buffer.concat(err).toString('utf8'), code });
+      resolve({
+        stdout: Buffer.concat(out).toString('utf8'),
+        stderr: Buffer.concat(err).toString('utf8'),
+        code,
+      });
     });
     if (input !== undefined) child.stdin.end(input);
     else child.stdin.end();
@@ -48,8 +57,14 @@ export const FIXTURE_AUTHOR_EMAIL = 'fixture@git-why.test';
 
 export interface TestRepo {
   readonly dir: string;
-  git(args: readonly string[], opts?: { input?: Buffer; env?: NodeJS.ProcessEnv }): Promise<RunResult>;
-  gitOrThrow(args: readonly string[], opts?: { input?: Buffer; env?: NodeJS.ProcessEnv }): Promise<RunResult>;
+  git(
+    args: readonly string[],
+    opts?: { input?: Buffer; env?: NodeJS.ProcessEnv },
+  ): Promise<RunResult>;
+  gitOrThrow(
+    args: readonly string[],
+    opts?: { input?: Buffer; env?: NodeJS.ProcessEnv },
+  ): Promise<RunResult>;
   /** Write a file. `name` may be a Buffer for byte-exact, possibly non-UTF-8, filenames. */
   writeFile(name: string | Buffer, content: string | Buffer): Promise<void>;
   add(paths: readonly (string | Buffer)[]): Promise<void>;

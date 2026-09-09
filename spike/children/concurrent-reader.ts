@@ -10,7 +10,7 @@ const enableMMAP = mmapArg === undefined ? undefined : mmapArg === 'true';
 const start = Date.now();
 let opens = 0;
 let queries = 0;
-let errors: string[] = [];
+const errors: string[] = [];
 try {
   const col = ZVecOpen(colPath!, { readOnly, ...(enableMMAP === undefined ? {} : { enableMMAP }) });
   opens++;
@@ -26,4 +26,12 @@ try {
 } catch (err) {
   errors.push(`open-failed:${isZVecError(err) ? err.code : String(err)}`);
 }
-process.stdout.write(JSON.stringify({ role: 'reader', opens, queries, errors: errors.slice(0, 10), errorCount: errors.length }) + '\n');
+process.stdout.write(
+  JSON.stringify({
+    role: 'reader',
+    opens,
+    queries,
+    errors: errors.slice(0, 10),
+    errorCount: errors.length,
+  }) + '\n',
+);

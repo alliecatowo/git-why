@@ -9,12 +9,18 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { SafetensorsFile } from '../../../src/embedding/safetensors.js';
 
-function buildSafetensors(tensors: Record<string, { dtype: string; shape: number[]; data: Buffer }>): Buffer {
+function buildSafetensors(
+  tensors: Record<string, { dtype: string; shape: number[]; data: Buffer }>,
+): Buffer {
   const header: Record<string, unknown> = {};
   const dataParts: Buffer[] = [];
   let offset = 0;
   for (const [name, t] of Object.entries(tensors)) {
-    header[name] = { dtype: t.dtype, shape: t.shape, data_offsets: [offset, offset + t.data.length] };
+    header[name] = {
+      dtype: t.dtype,
+      shape: t.shape,
+      data_offsets: [offset, offset + t.data.length],
+    };
     dataParts.push(t.data);
     offset += t.data.length;
   }

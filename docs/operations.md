@@ -26,7 +26,7 @@ error disappear.
 
 ## Freshness
 
-Normal commits are immutable, but the *available view* of a repository is not:
+Normal commits are immutable, but the _available view_ of a repository is not:
 a shallow clone can deepen, missing objects can arrive, interpretation settings
 can change. The snapshot fingerprint therefore covers captured ref names and
 OIDs, worktree HEAD OIDs, the full contents of the shallow boundary (not merely
@@ -42,17 +42,17 @@ inaccessible worktree is not proof that its history became ineligible.
 
 ## Where state lives
 
-All repository-specific state is under the Git *common* directory, so every
+All repository-specific state is under the Git _common_ directory, so every
 worktree of one repository shares a single index and a single lock:
 
-| Path | Purpose |
-| --- | --- |
-| `<common>/why/CURRENT` | Atomically published active generation identifier |
-| `<common>/why/locks/repository.lock` | Shared/exclusive coordination lock |
-| `<common>/why/generations/<id>/manifest.json` | Versions, fingerprints, counts, coverage |
-| `<common>/why/generations/<id>/collection/` | The Zvec history collection |
-| `<common>/why/generations/<id>/pending.json` | Durable intent for an incomplete batch |
-| `<common>/why/staging/<id>/` | An incomplete first build or replacement build |
+| Path                                          | Purpose                                           |
+| --------------------------------------------- | ------------------------------------------------- |
+| `<common>/why/CURRENT`                        | Atomically published active generation identifier |
+| `<common>/why/locks/repository.lock`          | Shared/exclusive coordination lock                |
+| `<common>/why/generations/<id>/manifest.json` | Versions, fingerprints, counts, coverage          |
+| `<common>/why/generations/<id>/collection/`   | The Zvec history collection                       |
+| `<common>/why/generations/<id>/pending.json`  | Durable intent for an incomplete batch            |
+| `<common>/why/staging/<id>/`                  | An incomplete first build or replacement build    |
 
 Model artifacts live in a **user-level** cache outside any repository
 (`$GIT_WHY_MODEL_CACHE`, else `$XDG_CACHE_HOME/git-why/models`, else the
@@ -84,7 +84,7 @@ so two updaters cannot deadlock each other.
 
 If another process holds the lock longer than `--lock-timeout` (default 30
 seconds), the command exits 5 with `INDEX_BUSY` and a useful next step. That
-timeout bounds waiting for *another* process; it does not abort your own
+timeout bounds waiting for _another_ process; it does not abort your own
 indexing operation.
 
 V1 does not serve an actively mutated collection as a stale snapshot.
@@ -134,14 +134,14 @@ or silently downgrade a hybrid query to lexical mode.
 
 ## Exit codes
 
-| Exit | Meaning |
-| --- | --- |
-| 0 | Successful command, including zero results |
-| 2 | Invalid invocation |
-| 3 | No usable Git repository |
-| 4 | Index, model, storage, compatibility or extraction failure |
-| 5 | Index lock wait exceeded |
-| 130 | User interruption |
+| Exit | Meaning                                                    |
+| ---- | ---------------------------------------------------------- |
+| 0    | Successful command, including zero results                 |
+| 2    | Invalid invocation                                         |
+| 3    | No usable Git repository                                   |
+| 4    | Index, model, storage, compatibility or extraction failure |
+| 5    | Index lock wait exceeded                                   |
+| 130  | User interruption                                          |
 
 Exit 4 is broad on purpose; the machine-readable error code in `--json`
 distinguishes the cause. The full set is enumerated as `GitWhyErrorCode` in
@@ -187,7 +187,7 @@ These are documented gaps, not bugs to be papered over:
 - Path restrictions match both sides of an individual rename. They do not
   traverse a rename chain: `-- src/new.ts` finds the commit that renamed
   `lib/old.ts`, but not every earlier commit to `lib/old.ts`.
-- Keyword mode is *ranked* retrieval, not exhaustive literal or regular
+- Keyword mode is _ranked_ retrieval, not exhaustive literal or regular
   expression search. For a known exact string, `git log -S`, `git log -G` and
   ripgrep remain the right tools.
 - "Deleted code is searchable" means retained added and removed historical

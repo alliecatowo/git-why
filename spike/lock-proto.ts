@@ -151,7 +151,10 @@ export interface LockPaths {
 }
 
 export function lockPathsFor(lockDir: string): LockPaths {
-  return { lockFile: path.join(lockDir, 'repository.lock'), readersDir: path.join(lockDir, 'readers') };
+  return {
+    lockFile: path.join(lockDir, 'repository.lock'),
+    readersDir: path.join(lockDir, 'readers'),
+  };
 }
 
 export async function acquireShared(lockDir: string, timeoutMs: number): Promise<LockHandle> {
@@ -164,7 +167,10 @@ export async function acquireShared(lockDir: string, timeoutMs: number): Promise
       reclaimExclusiveIfStale(lockFile);
     }
     if (!fs.existsSync(lockFile)) {
-      const readerFile = path.join(readersDir, `${process.pid}-${crypto.randomBytes(4).toString('hex')}.json`);
+      const readerFile = path.join(
+        readersDir,
+        `${process.pid}-${crypto.randomBytes(4).toString('hex')}.json`,
+      );
       writeTokenFile(readerFile);
       if (!fs.existsSync(lockFile)) {
         return {
@@ -198,7 +204,8 @@ export async function acquireExclusive(lockDir: string, timeoutMs: number): Prom
       } catch (err) {
         if ((err as NodeJS.ErrnoException).code === 'EEXIST') {
           // Someone else created it first; retry loop.
-          if (Date.now() > deadline) throw new LockTimeoutError(`timed out acquiring exclusive lock on ${lockDir}`);
+          if (Date.now() > deadline)
+            throw new LockTimeoutError(`timed out acquiring exclusive lock on ${lockDir}`);
           await sleep(jitteredBackoff(attempt++));
           continue;
         }
@@ -220,7 +227,11 @@ export async function acquireExclusive(lockDir: string, timeoutMs: number): Prom
 }
 
 /** Safe shared -> exclusive upgrade: release shared first, then acquire exclusive and let the caller recheck state. */
-export async function upgrade(shared: LockHandle, lockDir: string, timeoutMs: number): Promise<LockHandle> {
+export async function upgrade(
+  shared: LockHandle,
+  lockDir: string,
+  timeoutMs: number,
+): Promise<LockHandle> {
   shared.release();
   return acquireExclusive(lockDir, timeoutMs);
 }

@@ -32,7 +32,15 @@
           "additionalProperties": false,
           "properties": {
             "state": {
-              "enum": ["missing", "current", "stale", "incomplete", "busy", "recovery_required", "rebuild_required"]
+              "enum": [
+                "missing",
+                "current",
+                "stale",
+                "incomplete",
+                "busy",
+                "recovery_required",
+                "rebuild_required"
+              ]
             },
             "indexPath": { "type": "string" },
             "generation": { "type": ["string", "null"] },

@@ -22,7 +22,13 @@
  *    without importing `src/index/`, which we do not own).
  */
 import * as nodePath from 'node:path';
-import { GitWhyError, type HistoricalPath, type PathRestriction, type SearchFilters, type StorageFilter } from '../types.js';
+import {
+  GitWhyError,
+  type HistoricalPath,
+  type PathRestriction,
+  type SearchFilters,
+  type StorageFilter,
+} from '../types.js';
 
 /* ------------------------------------------------------------------ *
  * Path restrictions
@@ -56,14 +62,18 @@ export function resolvePathRestriction(raw: string, ctx: PathResolutionContext):
     throw new GitWhyError(
       'INVALID_PATH_RESTRICTION',
       `Path restriction may not contain quote characters: ${raw}`,
-      { hint: 'Quote characters cannot be safely represented in the underlying filter expression.' },
+      {
+        hint: 'Quote characters cannot be safely represented in the underlying filter expression.',
+      },
     );
   }
   if (GLOB_METACHARACTER_RE.test(raw) || raw.startsWith(':')) {
     throw new GitWhyError(
       'UNSUPPORTED_PATHSPEC',
       `Unsupported pathspec syntax: ${JSON.stringify(raw)}`,
-      { hint: 'Git Why matches literal file paths and directory prefixes only, not glob or magic pathspecs.' },
+      {
+        hint: 'Git Why matches literal file paths and directory prefixes only, not glob or magic pathspecs.',
+      },
     );
   }
 
@@ -78,31 +88,50 @@ export function resolvePathRestriction(raw: string, ctx: PathResolutionContext):
     // A bare repository has no worktree: the value is already
     // repository-relative. Normalise the string only; do not stat anything.
     const normalized = nodePath.posix.normalize(toPosix(trimmed));
-    if (normalized === '..' || normalized.startsWith('../') || nodePath.posix.isAbsolute(normalized)) {
-      throw new GitWhyError('INVALID_PATH_RESTRICTION', `Path restriction escapes the repository root: ${raw}`);
+    if (
+      normalized === '..' ||
+      normalized.startsWith('../') ||
+      nodePath.posix.isAbsolute(normalized)
+    ) {
+      throw new GitWhyError(
+        'INVALID_PATH_RESTRICTION',
+        `Path restriction escapes the repository root: ${raw}`,
+      );
     }
     relPosix = normalized;
   } else {
     const absolute = nodePath.resolve(ctx.cwd, trimmed);
     const rel = nodePath.relative(ctx.repositoryRoot, absolute);
     if (rel === '..' || rel.startsWith(`..${nodePath.sep}`) || nodePath.isAbsolute(rel)) {
-      throw new GitWhyError('INVALID_PATH_RESTRICTION', `Path restriction escapes the repository root: ${raw}`);
+      throw new GitWhyError(
+        'INVALID_PATH_RESTRICTION',
+        `Path restriction escapes the repository root: ${raw}`,
+      );
     }
     relPosix = toPosix(rel);
   }
 
   relPosix = relPosix.replace(/^\.\/+/, '');
   if (relPosix.length === 0 || relPosix === '.') {
-    throw new GitWhyError('INVALID_PATH_RESTRICTION', 'Path restriction resolves to the repository root itself.');
+    throw new GitWhyError(
+      'INVALID_PATH_RESTRICTION',
+      'Path restriction resolves to the repository root itself.',
+    );
   }
 
   return { value: relPosix, kind: isDirectory ? 'directory' : 'file' };
 }
 
 /** Reference matching semantics: a literal file path, or a directory prefix. */
-export function restrictionMatchesPath(restriction: PathRestriction, candidateDisplayPath: string): boolean {
+export function restrictionMatchesPath(
+  restriction: PathRestriction,
+  candidateDisplayPath: string,
+): boolean {
   if (restriction.kind === 'file') return candidateDisplayPath === restriction.value;
-  return candidateDisplayPath === restriction.value || candidateDisplayPath.startsWith(`${restriction.value}/`);
+  return (
+    candidateDisplayPath === restriction.value ||
+    candidateDisplayPath.startsWith(`${restriction.value}/`)
+  );
 }
 
 /** A hunk/evidence change matches if either its path or its old path (rename source) matches. */
@@ -130,7 +159,10 @@ export function anyRestrictionMatchesChange(
 /** A commit summary matches when any of its changed paths (old or new) satisfies the restriction. */
 export function anyRestrictionMatchesSummary(
   restrictions: readonly PathRestriction[],
-  changedPaths: readonly { readonly path: HistoricalPath; readonly oldPath: HistoricalPath | null }[],
+  changedPaths: readonly {
+    readonly path: HistoricalPath;
+    readonly oldPath: HistoricalPath | null;
+  }[],
 ): boolean {
   if (restrictions.length === 0) return true;
   return changedPaths.some((c) => anyRestrictionMatchesChange(restrictions, c.path, c.oldPath));
@@ -144,7 +176,14 @@ const DATE_ONLY_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
 const DATE_TIME_RE =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(Z|[+-]\d{2}:\d{2})$/;
 
-function isValidCivilDateTime(y: number, mo: number, d: number, h: number, mi: number, s: number): boolean {
+function isValidCivilDateTime(
+  y: number,
+  mo: number,
+  d: number,
+  h: number,
+  mi: number,
+  s: number,
+): boolean {
   if (mo < 1 || mo > 12 || h > 23 || mi > 59 || s > 59) return false;
   const utcMs = Date.UTC(y, mo - 1, d, h, mi, s);
   const check = new Date(utcMs);
@@ -238,7 +277,9 @@ export function authorMatches(
   filterSubstring: string | null,
 ): boolean {
   if (filterSubstring === null) return true;
-  return matchesAuthor(author.name, filterSubstring) || matchesAuthor(author.email, filterSubstring);
+  return (
+    matchesAuthor(author.name, filterSubstring) || matchesAuthor(author.email, filterSubstring)
+  );
 }
 
 /* ------------------------------------------------------------------ *

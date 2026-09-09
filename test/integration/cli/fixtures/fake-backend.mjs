@@ -129,7 +129,10 @@ const backend = {
   async search(_repo, request, options) {
     const cfg = loadConfig();
     if (options.onProgress) {
-      options.onProgress({ stage: 'reconcile', message: 'fake backend reconciling (progress on stderr)' });
+      options.onProgress({
+        stage: 'reconcile',
+        message: 'fake backend reconciling (progress on stderr)',
+      });
     }
     if (cfg.searchDelayMs) await delay(cfg.searchDelayMs, options.signal);
     await maybeThrow(cfg.searchError);

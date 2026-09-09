@@ -7,11 +7,19 @@ import {
   renderStatusErrorJson,
   renderStatusJson,
 } from '../../../src/output/json.js';
-import { EMPTY_COVERAGE, type CommitHit, type IndexStatus, type SearchResponse } from '../../../src/types.js';
+import {
+  type CommitHit,
+  type IndexStatus,
+  type SearchResponse,
+} from '../../../src/types.js';
 import { validateAgainstSchema } from './schema-check.js';
 
-const searchSchema = JSON.parse(readFileSync(new URL('../../../schema/search-response.schema.json', import.meta.url), 'utf8'));
-const statusSchema = JSON.parse(readFileSync(new URL('../../../schema/status-response.schema.json', import.meta.url), 'utf8'));
+const searchSchema = JSON.parse(
+  readFileSync(new URL('../../../schema/search-response.schema.json', import.meta.url), 'utf8'),
+);
+const statusSchema = JSON.parse(
+  readFileSync(new URL('../../../schema/status-response.schema.json', import.meta.url), 'utf8'),
+);
 
 function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
   return {
@@ -28,14 +36,19 @@ function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
       {
         recordId: 'record-1',
         kind: 'hunk',
-        path: { bytesBase64: Buffer.from('src/auth/refresh.ts').toString('base64'), display: 'src/auth/refresh.ts', lossy: false },
+        path: {
+          bytesBase64: Buffer.from('src/auth/refresh.ts').toString('base64'),
+          display: 'src/auth/refresh.ts',
+          lossy: false,
+        },
         oldPath: null,
         changeType: 'M',
         oldStart: 72,
         oldCount: 1,
         newStart: 72,
         newCount: 1,
-        excerpt: '- if (!refreshToken) throw new InvalidTokenError()\n+ if (!refreshToken) return currentSession',
+        excerpt:
+          '- if (!refreshToken) throw new InvalidTokenError()\n+ if (!refreshToken) return currentSession',
         truncated: false,
         omissionReasons: [],
       },
@@ -109,7 +122,11 @@ test('a lossy path includes pathBytesBase64', () => {
     evidence: [
       {
         ...makeHit().evidence[0]!,
-        path: { bytesBase64: Buffer.from([0xff, 0xfe]).toString('base64'), display: '��', lossy: true },
+        path: {
+          bytesBase64: Buffer.from([0xff, 0xfe]).toString('base64'),
+          display: '��',
+          lossy: true,
+        },
       },
     ],
   });
@@ -141,14 +158,22 @@ test('truncation drops evidence before dropping whole results', () => {
   // cost of adding the truncation warning depends on JSON string escaping
   // and indentation, which is an implementation detail this test shouldn't
   // hardcode.
-  const noEvidenceTruncatedSize = renderSearchJson(response, { maxBytes: fullSize - 1 }).text.length;
-  assert.ok(noEvidenceTruncatedSize < fullSize, 'test setup: dropping evidence must shrink the envelope');
+  const noEvidenceTruncatedSize = renderSearchJson(response, { maxBytes: fullSize - 1 }).text
+    .length;
+  assert.ok(
+    noEvidenceTruncatedSize < fullSize,
+    'test setup: dropping evidence must shrink the envelope',
+  );
 
   const budget = noEvidenceTruncatedSize + 10;
   const { text, outputTruncated } = renderSearchJson(response, { maxBytes: budget });
   const parsed = JSON.parse(text);
   assert.equal(outputTruncated, true);
-  assert.equal(parsed.results.length, 1, 'the result itself should survive; only its evidence should be dropped');
+  assert.equal(
+    parsed.results.length,
+    1,
+    'the result itself should survive; only its evidence should be dropped',
+  );
   assert.equal(parsed.results[0].evidence.length, 0);
 });
 
@@ -183,7 +208,12 @@ test('a status response matches the status schema', () => {
 });
 
 test('a status error response matches the status schema', () => {
-  const text = renderStatusErrorJson('rebuild', 'MODEL_UNAVAILABLE', 'No model is cached and --offline was set.', undefined);
+  const text = renderStatusErrorJson(
+    'rebuild',
+    'MODEL_UNAVAILABLE',
+    'No model is cached and --offline was set.',
+    undefined,
+  );
   const parsed = JSON.parse(text);
   assert.equal(parsed.command, 'rebuild');
   assert.equal(parsed.index, null);
@@ -194,7 +224,16 @@ test('a status error response matches the status schema', () => {
 test('IndexStatus with a null model and null generation (a fresh "missing" index) still matches the schema', () => {
   const text = renderStatusJson(
     'status',
-    makeStatus({ state: 'missing', generation: null, indexedCommits: null, reachableCommits: null, recordCount: null, model: null, diskBytes: null, indexedAt: null }),
+    makeStatus({
+      state: 'missing',
+      generation: null,
+      indexedCommits: null,
+      reachableCommits: null,
+      recordCount: null,
+      model: null,
+      diskBytes: null,
+      indexedAt: null,
+    }),
   );
   const parsed = JSON.parse(text);
   const result = validateAgainstSchema(parsed, statusSchema);

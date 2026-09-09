@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { buildCommitText, buildHunkText, clipToBytes, tokenizeForLexical } from '../../../src/history/text.js';
+import {
+  buildCommitText,
+  buildHunkText,
+  clipToBytes,
+  tokenizeForLexical,
+} from '../../../src/history/text.js';
 import { makeFakeEmbedder } from './fakes.js';
 
 test('tokenizeForLexical retains 13 and 18 as distinct tokens', () => {
@@ -15,9 +20,18 @@ test('tokenizeForLexical retains 13 and 18 as distinct tokens', () => {
 test('tokenizeForLexical keeps AuthSessionProvider matchable as itself and by components', () => {
   const tokens = tokenizeForLexical('class AuthSessionProvider implements Provider {}');
   assert.ok(tokens.includes('AuthSessionProvider'), 'whole identifier retained');
-  assert.ok(tokens.some((t) => t.toLowerCase() === 'auth'), 'Auth component present');
-  assert.ok(tokens.some((t) => t.toLowerCase() === 'session'), 'Session component present');
-  assert.ok(tokens.some((t) => t.toLowerCase() === 'provider'), 'Provider component present');
+  assert.ok(
+    tokens.some((t) => t.toLowerCase() === 'auth'),
+    'Auth component present',
+  );
+  assert.ok(
+    tokens.some((t) => t.toLowerCase() === 'session'),
+    'Session component present',
+  );
+  assert.ok(
+    tokens.some((t) => t.toLowerCase() === 'provider'),
+    'Provider component present',
+  );
 });
 
 test('tokenizeForLexical decomposes snake_case while retaining the original', () => {
@@ -91,7 +105,11 @@ test('buildHunkText labels removed/added code explicitly', () => {
     {
       subject: 'Guard null token',
       body: '',
-      path: { bytesBase64: Buffer.from('auth.ts').toString('base64'), display: 'src/auth.ts', lossy: false },
+      path: {
+        bytesBase64: Buffer.from('auth.ts').toString('base64'),
+        display: 'src/auth.ts',
+        lossy: false,
+      },
       oldPath: null,
       changeType: 'M',
       removedLines: ['throw new Error()'],
@@ -108,7 +126,11 @@ test('buildHunkText labels removed/added code explicitly', () => {
 test('buildCommitText caps embedded changed-path list without dropping the full catalog (caller retains that separately)', () => {
   const embedder = makeFakeEmbedder({ maxInputTokens: 1024 });
   const paths = Array.from({ length: 300 }, (_, i) => `src/file${i}.ts`);
-  const built = buildCommitText({ subject: 'Big refactor', body: '', changedPathDisplays: paths }, embedder, 128);
+  const built = buildCommitText(
+    { subject: 'Big refactor', body: '', changedPathDisplays: paths },
+    embedder,
+    128,
+  );
   // only up to maxChangedPaths should ever appear in the embedded text
   assert.ok(!built.semanticText.includes('src/file200.ts'));
   assert.ok(built.semanticText.includes('src/file0.ts'));
@@ -117,7 +139,11 @@ test('buildCommitText caps embedded changed-path list without dropping the full 
 test('buildCommitText lexical text includes decomposed path components from changed files', () => {
   const embedder = makeFakeEmbedder();
   const built = buildCommitText(
-    { subject: 'Update AuthSessionProvider', body: '', changedPathDisplays: ['src/auth/session.ts'] },
+    {
+      subject: 'Update AuthSessionProvider',
+      body: '',
+      changedPathDisplays: ['src/auth/session.ts'],
+    },
     embedder,
     128,
   );

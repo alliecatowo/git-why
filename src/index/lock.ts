@@ -54,7 +54,11 @@ function isStale(pid: number, recordedStartTime: string): boolean {
 }
 
 function selfToken(): LockToken {
-  return { pid: process.pid, startTime: getProcessStartTime(process.pid) ?? '', acquiredAt: Date.now() };
+  return {
+    pid: process.pid,
+    startTime: getProcessStartTime(process.pid) ?? '',
+    acquiredAt: Date.now(),
+  };
 }
 
 function writeTokenFile(filePath: string): void {
@@ -124,7 +128,10 @@ interface LockPaths {
 }
 
 function lockPathsFor(repositoryLockFile: string): LockPaths {
-  return { lockFile: repositoryLockFile, readersDir: path.join(path.dirname(repositoryLockFile), 'readers') };
+  return {
+    lockFile: repositoryLockFile,
+    readersDir: path.join(path.dirname(repositoryLockFile), 'readers'),
+  };
 }
 
 function timeoutError(kind: string, lockFile: string): GitWhyError {
@@ -134,7 +141,10 @@ function timeoutError(kind: string, lockFile: string): GitWhyError {
 }
 
 /** Acquire shared (reader) access. `timeoutSeconds` defaults to `DEFAULT_LOCK_TIMEOUT_SECONDS`. */
-export async function acquireShared(repositoryLockFile: string, timeoutSeconds = DEFAULT_LOCK_TIMEOUT_SECONDS): Promise<LockHandle> {
+export async function acquireShared(
+  repositoryLockFile: string,
+  timeoutSeconds = DEFAULT_LOCK_TIMEOUT_SECONDS,
+): Promise<LockHandle> {
   const { lockFile, readersDir } = lockPathsFor(repositoryLockFile);
   fs.mkdirSync(readersDir, { recursive: true });
   const deadline = Date.now() + timeoutSeconds * 1000;
@@ -142,7 +152,10 @@ export async function acquireShared(repositoryLockFile: string, timeoutSeconds =
   for (;;) {
     if (fs.existsSync(lockFile)) reclaimExclusiveIfStale(lockFile);
     if (!fs.existsSync(lockFile)) {
-      const readerFile = path.join(readersDir, `${process.pid}-${crypto.randomBytes(4).toString('hex')}.json`);
+      const readerFile = path.join(
+        readersDir,
+        `${process.pid}-${crypto.randomBytes(4).toString('hex')}.json`,
+      );
       writeTokenFile(readerFile);
       if (!fs.existsSync(lockFile)) {
         let released = false;
@@ -163,7 +176,10 @@ export async function acquireShared(repositoryLockFile: string, timeoutSeconds =
 }
 
 /** Acquire exclusive (writer) access. `timeoutSeconds` defaults to `DEFAULT_LOCK_TIMEOUT_SECONDS`. */
-export async function acquireExclusive(repositoryLockFile: string, timeoutSeconds = DEFAULT_LOCK_TIMEOUT_SECONDS): Promise<LockHandle> {
+export async function acquireExclusive(
+  repositoryLockFile: string,
+  timeoutSeconds = DEFAULT_LOCK_TIMEOUT_SECONDS,
+): Promise<LockHandle> {
   const { lockFile, readersDir } = lockPathsFor(repositoryLockFile);
   fs.mkdirSync(readersDir, { recursive: true });
   fs.mkdirSync(path.dirname(lockFile), { recursive: true });

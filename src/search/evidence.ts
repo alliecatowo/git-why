@@ -22,7 +22,9 @@ export async function chooseEvidence(
   maxCount = 2,
 ): Promise<EvidenceHit[]> {
   const lex = lexicalRecords.filter((r) => r.type === 'evidence').sort((a, b) => b.score - a.score);
-  const sem = semanticRecords.filter((r) => r.type === 'evidence').sort((a, b) => b.score - a.score);
+  const sem = semanticRecords
+    .filter((r) => r.type === 'evidence')
+    .sort((a, b) => b.score - a.score);
 
   // Interleave the two branches (best-first within each) rather than
   // sorting by raw score across branches, since those scores are not on a

@@ -56,7 +56,7 @@ export interface ChunkOptions {
 export const DEFAULT_CHUNK_OPTIONS: ChunkOptions = {
   maxLinesPerSlice: 60,
   contextOverlap: 3,
-}
+};
 
 export function renderDiffLines(lines: readonly RawDiffLine[]): string {
   return lines
@@ -168,7 +168,11 @@ export function chunkHunk(hunk: RawHunk, opts: ChunkOptions = DEFAULT_CHUNK_OPTI
     // Back off by the overlap so the next slice repeats trailing context.
     let nextStart = end;
     let overlapped = 0;
-    while (nextStart > start && overlapped < opts.contextOverlap && lines[nextStart - 1]!.kind === 'context') {
+    while (
+      nextStart > start &&
+      overlapped < opts.contextOverlap &&
+      lines[nextStart - 1]!.kind === 'context'
+    ) {
       nextStart -= 1;
       overlapped += 1;
     }

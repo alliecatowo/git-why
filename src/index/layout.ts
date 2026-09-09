@@ -39,7 +39,10 @@ export function assertValidGenerationId(id: string): void {
 /** Derives `<commonDir>/why` from an already-resolved, absolute common directory. */
 export function stateDirFor(commonDir: string): string {
   if (!path.isAbsolute(commonDir)) {
-    throw new GitWhyError('INTERNAL', `commonDir must be absolute, got ${JSON.stringify(commonDir)}`);
+    throw new GitWhyError(
+      'INTERNAL',
+      `commonDir must be absolute, got ${JSON.stringify(commonDir)}`,
+    );
   }
   return path.join(commonDir, STATE_DIR_NAME);
 }
@@ -109,7 +112,9 @@ export function readCurrentGenerationId(layout: IndexLayout): string | null {
     return raw.length > 0 ? raw : null;
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null;
-    throw new GitWhyError('STORAGE_FAILED', `failed to read CURRENT: ${(err as Error).message}`, { cause: err });
+    throw new GitWhyError('STORAGE_FAILED', `failed to read CURRENT: ${(err as Error).message}`, {
+      cause: err,
+    });
   }
 }
 
@@ -160,7 +165,10 @@ export function assertSafeToRecursivelyDelete(layout: IndexLayout, candidate: st
     return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
   });
   if (!isUnderAnOwnedRoot) {
-    throw new GitWhyError('INTERNAL', `refusing to recursively delete a path outside generations/staging: ${candidate}`);
+    throw new GitWhyError(
+      'INTERNAL',
+      `refusing to recursively delete a path outside generations/staging: ${candidate}`,
+    );
   }
   // The candidate itself (a generation/staging id directory) must not be a
   // symlink — a symlinked "generation" could point anywhere, including at
@@ -170,10 +178,17 @@ export function assertSafeToRecursivelyDelete(layout: IndexLayout, candidate: st
     st = fs.lstatSync(candidate);
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') return; // nothing to delete
-    throw new GitWhyError('STORAGE_FAILED', `failed to stat ${candidate}: ${(err as Error).message}`, { cause: err });
+    throw new GitWhyError(
+      'STORAGE_FAILED',
+      `failed to stat ${candidate}: ${(err as Error).message}`,
+      { cause: err },
+    );
   }
   if (st.isSymbolicLink()) {
-    throw new GitWhyError('INTERNAL', `refusing to recursively delete a symlinked path: ${candidate}`);
+    throw new GitWhyError(
+      'INTERNAL',
+      `refusing to recursively delete a symlinked path: ${candidate}`,
+    );
   }
   // Belt and suspenders: the fully resolved real path must still be under
   // the owned root's real path, and must never equal or contain the Git
@@ -181,7 +196,10 @@ export function assertSafeToRecursivelyDelete(layout: IndexLayout, candidate: st
   const realCandidate = fs.realpathSync(candidate);
   const realCommonDir = fs.realpathSync(layout.commonDir);
   if (realCandidate === realCommonDir || realCommonDir.startsWith(realCandidate + path.sep)) {
-    throw new GitWhyError('INTERNAL', `refusing to recursively delete a path that contains the Git common directory: ${candidate}`);
+    throw new GitWhyError(
+      'INTERNAL',
+      `refusing to recursively delete a path that contains the Git common directory: ${candidate}`,
+    );
   }
   const realOwningRoots = owningRoots.map((r) => {
     try {
@@ -195,7 +213,10 @@ export function assertSafeToRecursivelyDelete(layout: IndexLayout, candidate: st
     return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
   });
   if (!stillUnderOwnedRoot) {
-    throw new GitWhyError('INTERNAL', `refusing to recursively delete a path whose real location escaped generations/staging: ${candidate}`);
+    throw new GitWhyError(
+      'INTERNAL',
+      `refusing to recursively delete a path whose real location escaped generations/staging: ${candidate}`,
+    );
   }
 }
 

@@ -16,7 +16,11 @@ import { createHash } from 'node:crypto';
 import { POTION_CODE_16M_V2 } from '../../../src/embedding/candidates.js';
 
 const execFileAsync = promisify(execFile);
-const workerPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'helpers', 'download-worker.ts');
+const workerPath = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  'helpers',
+  'download-worker.ts',
+);
 
 function sha256OfFile(filePath: string): string {
   return createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');
@@ -26,7 +30,9 @@ test('two concurrent first-time downloads converge on one verified cache, with n
   const cacheDir = fs.mkdtempSync(path.join(os.tmpdir(), 'git-why-embedding-concurrent-'));
 
   const spawnOne = () =>
-    execFileAsync(process.execPath, [workerPath, cacheDir]).catch((err) => err as { stdout: string; stderr: string });
+    execFileAsync(process.execPath, [workerPath, cacheDir]).catch(
+      (err) => err as { stdout: string; stderr: string },
+    );
 
   const [r1, r2] = await Promise.all([spawnOne(), spawnOne()]);
   const out1 = (r1 as { stdout: string }).stdout.trim();
@@ -54,10 +60,17 @@ test('two concurrent first-time downloads converge on one verified cache, with n
   const dir = path.join(cacheDir, 'minishlab__potion-code-16M-v2', POTION_CODE_16M_V2.revision);
   assert.equal(sha256OfFile(path.join(dir, 'config.json')), POTION_CODE_16M_V2.config.sha256);
   assert.equal(sha256OfFile(path.join(dir, 'tokenizer.json')), POTION_CODE_16M_V2.tokenizer.sha256);
-  assert.equal(sha256OfFile(path.join(dir, 'model.safetensors')), POTION_CODE_16M_V2.weights.sha256);
+  assert.equal(
+    sha256OfFile(path.join(dir, 'model.safetensors')),
+    POTION_CODE_16M_V2.weights.sha256,
+  );
 
   // No leftover lock file or temp download artifacts.
   const entries = fs.readdirSync(dir);
   const leftover = entries.filter((e) => e.startsWith('.'));
-  assert.deepEqual(leftover, [], `unexpected leftover files after both downloads finished: ${leftover.join(', ')}`);
+  assert.deepEqual(
+    leftover,
+    [],
+    `unexpected leftover files after both downloads finished: ${leftover.join(', ')}`,
+  );
 });

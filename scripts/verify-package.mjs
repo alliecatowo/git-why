@@ -40,7 +40,14 @@ const FORBIDDEN_PATH_PATTERNS = [
   /\.gguf$/i,
 ];
 
-const ALLOWED_TOP_LEVEL = new Set(['package.json', 'README.md', 'LICENSE', 'NOTICE', 'dist', 'schema']);
+const ALLOWED_TOP_LEVEL = new Set([
+  'package.json',
+  'README.md',
+  'LICENSE',
+  'NOTICE',
+  'dist',
+  'schema',
+]);
 
 function fail(message) {
   console.error(`verify-package: FAIL — ${message}`);
@@ -69,15 +76,21 @@ function main() {
 
   try {
     console.log('verify-package: npm pack...');
-    const packOutput = run('npm', ['pack', '--json', '--pack-destination', work], { cwd: repoRoot });
+    const packOutput = run('npm', ['pack', '--json', '--pack-destination', work], {
+      cwd: repoRoot,
+    });
     const parsedPackOutput = JSON.parse(packOutput);
     // Different npm versions have shipped `npm pack --json` as either a
     // top-level array of pack results, or an object keyed by package name.
-    const packInfo = Array.isArray(parsedPackOutput) ? parsedPackOutput[0] : Object.values(parsedPackOutput)[0];
+    const packInfo = Array.isArray(parsedPackOutput)
+      ? parsedPackOutput[0]
+      : Object.values(parsedPackOutput)[0];
     if (!packInfo) throw new Error(`could not parse npm pack --json output:\n${packOutput}`);
     const tarballPath = path.join(work, packInfo.filename);
     if (!existsSync(tarballPath)) throw new Error(`expected tarball at ${tarballPath}`);
-    console.log(`verify-package: tarball at ${tarballPath} (${packInfo.size} bytes packed, ${packInfo.unpackedSize} unpacked)`);
+    console.log(
+      `verify-package: tarball at ${tarballPath} (${packInfo.size} bytes packed, ${packInfo.unpackedSize} unpacked)`,
+    );
 
     console.log('verify-package: inspecting tarball contents...');
     const listing = run('tar', ['-tzf', tarballPath])
@@ -109,17 +122,25 @@ function main() {
     const extractedMain = path.join(extractDir, 'package', 'dist', 'cli', 'main.js');
     const firstLine = readFileSync(extractedMain, 'utf8').split('\n')[0];
     if (firstLine !== '#!/usr/bin/env node') {
-      fail(`extracted dist/cli/main.js lost its shebang (first line: ${JSON.stringify(firstLine)})`);
+      fail(
+        `extracted dist/cli/main.js lost its shebang (first line: ${JSON.stringify(firstLine)})`,
+      );
     }
     const mode = statSync(extractedMain).mode & 0o777;
     if ((mode & 0o111) === 0) {
       fail(`extracted dist/cli/main.js is not executable (mode ${mode.toString(8)})`);
     } else {
-      console.log(`verify-package: shebang and executable mode (${mode.toString(8)}) survived packing.`);
+      console.log(
+        `verify-package: shebang and executable mode (${mode.toString(8)}) survived packing.`,
+      );
     }
 
     console.log('verify-package: installing tarball into a temporary prefix...');
-    run('npm', ['install', '--global', '--prefix', prefix, '--no-audit', '--fund=false', tarballPath], { cwd: work });
+    run(
+      'npm',
+      ['install', '--global', '--prefix', prefix, '--no-audit', '--fund=false', tarballPath],
+      { cwd: work },
+    );
 
     const binDir = path.join(prefix, 'bin');
     if (!existsSync(path.join(binDir, 'git-why'))) {
@@ -131,9 +152,15 @@ function main() {
     delete env.GIT_WHY_MODEL_CACHE;
 
     console.log('verify-package: git-why --version (direct)...');
-    const directVersion = spawnSync('git-why', ['--version'], { cwd: elsewhere, env, encoding: 'utf8' });
+    const directVersion = spawnSync('git-why', ['--version'], {
+      cwd: elsewhere,
+      env,
+      encoding: 'utf8',
+    });
     if (directVersion.status !== 0 || !directVersion.stdout.trim()) {
-      fail(`git-why --version failed: status=${directVersion.status} stderr=${directVersion.stderr}`);
+      fail(
+        `git-why --version failed: status=${directVersion.status} stderr=${directVersion.stderr}`,
+      );
     } else {
       console.log(`verify-package: git-why --version -> ${directVersion.stdout.trim()}`);
     }
@@ -144,8 +171,14 @@ function main() {
       fail(`git-why --help failed: status=${directHelp.status} stderr=${directHelp.stderr}`);
     }
 
-    console.log('verify-package: git why --version (via PATH discovery, from a different directory)...');
-    const viaGit = spawnSync('git', ['why', '--version'], { cwd: elsewhere, env, encoding: 'utf8' });
+    console.log(
+      'verify-package: git why --version (via PATH discovery, from a different directory)...',
+    );
+    const viaGit = spawnSync('git', ['why', '--version'], {
+      cwd: elsewhere,
+      env,
+      encoding: 'utf8',
+    });
     if (viaGit.status !== 0 || !viaGit.stdout.trim()) {
       fail(`git why --version failed: status=${viaGit.status} stderr=${viaGit.stderr}`);
     } else {

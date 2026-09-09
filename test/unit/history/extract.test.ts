@@ -10,7 +10,10 @@ function hp(display: string): HistoricalPath {
   return { bytesBase64: Buffer.from(display).toString('base64'), display, lossy: false };
 }
 
-function change(path: string, changeType: HistoricalPathChange['changeType'] = 'M'): HistoricalPathChange {
+function change(
+  path: string,
+  changeType: HistoricalPathChange['changeType'] = 'M',
+): HistoricalPathChange {
   return {
     path: hp(path),
     oldPath: null,
@@ -23,7 +26,10 @@ function change(path: string, changeType: HistoricalPathChange['changeType'] = '
   };
 }
 
-function baseCommit(files: RawFileChange[], overrides: Partial<RawCommitInput> = {}): RawCommitInput {
+function baseCommit(
+  files: RawFileChange[],
+  overrides: Partial<RawCommitInput> = {},
+): RawCommitInput {
   return {
     sha: 'a'.repeat(40),
     parents: ['b'.repeat(40)],

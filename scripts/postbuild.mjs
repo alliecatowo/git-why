@@ -16,7 +16,9 @@ const repoRoot = path.resolve(here, '..');
 const entry = path.join(repoRoot, 'dist', 'cli', 'main.js');
 
 if (!existsSync(entry)) {
-  console.error(`postbuild: expected build output at ${entry}, but it does not exist. Did the build fail?`);
+  console.error(
+    `postbuild: expected build output at ${entry}, but it does not exist. Did the build fail?`,
+  );
   process.exit(1);
 }
 
@@ -36,4 +38,6 @@ if ((mode & 0o111) === 0) {
   process.exit(1);
 }
 
-console.log(`postbuild: ${path.relative(repoRoot, entry)} has shebang and mode ${mode.toString(8)}.`);
+console.log(
+  `postbuild: ${path.relative(repoRoot, entry)} has shebang and mode ${mode.toString(8)}.`,
+);

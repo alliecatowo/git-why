@@ -37,9 +37,7 @@ const MAX_MESSAGE_EXCERPT_CHARS = 280;
  * Unset (the normal case) retrieves both record types.
  */
 function benchRecordTypes(): ('commit' | 'evidence')[] {
-  return process.env.GIT_WHY_BENCH_RECORD_TYPES === 'commit'
-    ? ['commit']
-    : ['commit', 'evidence'];
+  return process.env.GIT_WHY_BENCH_RECORD_TYPES === 'commit' ? ['commit'] : ['commit', 'evidence'];
 }
 
 function messageExcerptOf(subject: string, body: string): string {

@@ -136,8 +136,12 @@ export async function rankCommits(inputs: RankInputs): Promise<RankResult> {
   const k = inputs.k ?? RRF_K;
 
   const [lexical, semantic] = await Promise.all([
-    inputs.lexicalFetch ? runBranch(inputs.lexicalFetch, inputs.n, cap) : Promise.resolve(EMPTY_BRANCH),
-    inputs.semanticFetch ? runBranch(inputs.semanticFetch, inputs.n, cap) : Promise.resolve(EMPTY_BRANCH),
+    inputs.lexicalFetch
+      ? runBranch(inputs.lexicalFetch, inputs.n, cap)
+      : Promise.resolve(EMPTY_BRANCH),
+    inputs.semanticFetch
+      ? runBranch(inputs.semanticFetch, inputs.n, cap)
+      : Promise.resolve(EMPTY_BRANCH),
   ]);
 
   const lexicalScores = rrfContribution(lexical.commitOrder, k);
@@ -152,9 +156,12 @@ export async function rankCommits(inputs: RankInputs): Promise<RankResult> {
     return { sha, score, matchedBy };
   });
 
-  ranked.sort((a, b) => (b.score !== a.score ? b.score - a.score : a.sha < b.sha ? -1 : a.sha > b.sha ? 1 : 0));
+  ranked.sort((a, b) =>
+    b.score !== a.score ? b.score - a.score : a.sha < b.sha ? -1 : a.sha > b.sha ? 1 : 0,
+  );
 
-  const candidateLimitReached = allShas.size < inputs.n && (lexical.limitReached || semantic.limitReached);
+  const candidateLimitReached =
+    allShas.size < inputs.n && (lexical.limitReached || semantic.limitReached);
 
   return {
     ranked,

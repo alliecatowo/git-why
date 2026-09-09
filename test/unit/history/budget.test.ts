@@ -35,16 +35,28 @@ test('selection is deterministic: identical input always produces identical outp
 });
 
 test('sorting by path means the fair-share round-robin still visits every file each round regardless of directory grouping', () => {
-  const files = [file('test/a.spec.ts', 3), file('src/a.ts', 3), file('src/b.ts', 3), file('test/b.spec.ts', 3)];
+  const files = [
+    file('test/a.spec.ts', 3),
+    file('src/a.ts', 3),
+    file('src/b.ts', 3),
+    file('test/b.spec.ts', 3),
+  ];
   const result = selectSlicesWithinBudget(files, { maxSlices: 4, maxTokens: 1000 });
   const touchedFiles = new Set(result.selected.map((s) => s.fileIndex));
-  assert.equal(touchedFiles.size, 4, 'every file should get at least one slice before any gets a second');
+  assert.equal(
+    touchedFiles.size,
+    4,
+    'every file should get at least one slice before any gets a second',
+  );
 });
 
 test('token budget stops selection even when the slice count budget is not exhausted', () => {
   const files = [file('a.ts', 3, 40), file('b.ts', 3, 40)];
   const result = selectSlicesWithinBudget(files, { maxSlices: 100, maxTokens: 100 });
-  const totalTokens = result.selected.reduce((sum, s) => sum + files[s.fileIndex]!.slices[s.sliceIndex]!.tokenCount, 0);
+  const totalTokens = result.selected.reduce(
+    (sum, s) => sum + files[s.fileIndex]!.slices[s.sliceIndex]!.tokenCount,
+    0,
+  );
   assert.ok(totalTokens <= 100);
   assert.ok(result.omittedSliceCount > 0);
   assert.ok(result.reasons.includes('token_budget'));

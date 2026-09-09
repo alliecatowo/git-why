@@ -435,7 +435,11 @@ export interface IndexStatus {
   readonly reachableCommits: number | null;
   readonly refsChanged: boolean;
   readonly recordCount: number | null;
-  readonly model: { readonly id: string; readonly revision: string; readonly fingerprint: string } | null;
+  readonly model: {
+    readonly id: string;
+    readonly revision: string;
+    readonly fingerprint: string;
+  } | null;
   readonly diskBytes: number | null;
   readonly indexedAt: string | null;
   readonly objectFormat: ObjectFormat;

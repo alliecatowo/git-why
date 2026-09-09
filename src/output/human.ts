@@ -59,7 +59,9 @@ function renderResult(hit: CommitHit, index: number): string {
       lines.push('');
       const path = s(ev.path.display);
       const oldPath = ev.oldPath ? s(ev.oldPath.display) : null;
-      lines.push(oldPath && oldPath !== path ? `${INDENT}${oldPath} -> ${path}` : `${INDENT}${path}`);
+      lines.push(
+        oldPath && oldPath !== path ? `${INDENT}${oldPath} -> ${path}` : `${INDENT}${path}`,
+      );
       if (ev.excerpt.trim().length > 0) {
         lines.push(indentBlock(s(ev.excerpt), INDENT));
       }
@@ -73,12 +75,18 @@ function renderResult(hit: CommitHit, index: number): string {
   return lines.join('\n');
 }
 
-export function renderSearchHuman(response: { readonly query: string; readonly results: readonly CommitHit[]; readonly warnings: readonly string[] }): string {
+export function renderSearchHuman(response: {
+  readonly query: string;
+  readonly results: readonly CommitHit[];
+  readonly warnings: readonly string[];
+}): string {
   const lines: string[] = [];
 
   if (response.results.length === 0) {
     lines.push(`No match found in the indexed history for "${s(response.query)}".`);
-    lines.push('This does not prove the repository has no explanation, only that none was found in the available indexed material.');
+    lines.push(
+      'This does not prove the repository has no explanation, only that none was found in the available indexed material.',
+    );
   } else {
     response.results.forEach((hit, i) => {
       if (i > 0) lines.push('');
@@ -116,14 +124,28 @@ export function renderStatusHuman(status: IndexStatus): string {
   lines.push(field('state:', status.state));
   lines.push(field('index:', status.indexPath));
   lines.push(field('generation:', status.generation ?? 'none'));
-  lines.push(field('indexed commits:', status.indexedCommits === null ? 'unknown' : String(status.indexedCommits)));
-  lines.push(field('reachable commits:', status.reachableCommits === null ? 'unknown' : String(status.reachableCommits)));
+  lines.push(
+    field(
+      'indexed commits:',
+      status.indexedCommits === null ? 'unknown' : String(status.indexedCommits),
+    ),
+  );
+  lines.push(
+    field(
+      'reachable commits:',
+      status.reachableCommits === null ? 'unknown' : String(status.reachableCommits),
+    ),
+  );
   lines.push(field('refs changed:', status.refsChanged ? 'yes' : 'no'));
-  lines.push(field('records:', status.recordCount === null ? 'unknown' : String(status.recordCount)));
+  lines.push(
+    field('records:', status.recordCount === null ? 'unknown' : String(status.recordCount)),
+  );
   lines.push(
     field(
       'model:',
-      status.model ? `${s(status.model.id)} @ ${s(status.model.revision)} (${status.model.fingerprint})` : 'none',
+      status.model
+        ? `${s(status.model.id)} @ ${s(status.model.revision)} (${status.model.fingerprint})`
+        : 'none',
     ),
   );
   lines.push(field('disk:', formatBytes(status.diskBytes)));

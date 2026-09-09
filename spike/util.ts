@@ -16,7 +16,10 @@ export interface ProbeResult {
 }
 
 export function freshTmpDir(prefix: string): string {
-  const dir = path.join(os.tmpdir(), `git-why-spike-${prefix}-${crypto.randomBytes(6).toString('hex')}`);
+  const dir = path.join(
+    os.tmpdir(),
+    `git-why-spike-${prefix}-${crypto.randomBytes(6).toString('hex')}`,
+  );
   fs.mkdirSync(dir, { recursive: true });
   return dir;
 }
@@ -66,13 +69,21 @@ export async function runProbe(
   results: ProbeResult[],
   id: string,
   name: string,
-  fn: () => Promise<{ detail: string; evidence?: unknown }> | { detail: string; evidence?: unknown },
+  fn: () =>
+    Promise<{ detail: string; evidence?: unknown }> | { detail: string; evidence?: unknown },
 ): Promise<void> {
   try {
     const out = await fn();
     record(results, id, name, 'passed', out.detail, out.evidence);
   } catch (err) {
     const detail = err instanceof Error ? `${err.message}` : String(err);
-    record(results, id, name, 'failed', detail, err instanceof Error ? { stack: err.stack } : undefined);
+    record(
+      results,
+      id,
+      name,
+      'failed',
+      detail,
+      err instanceof Error ? { stack: err.stack } : undefined,
+    );
   }
 }

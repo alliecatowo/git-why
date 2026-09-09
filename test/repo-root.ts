@@ -12,7 +12,10 @@ import path from 'node:path';
 export function findRepoRoot(startDir: string): string {
   let dir = startDir;
   for (;;) {
-    if (fs.existsSync(path.join(dir, 'package.json')) && fs.existsSync(path.join(dir, 'tsconfig.build.json'))) {
+    if (
+      fs.existsSync(path.join(dir, 'package.json')) &&
+      fs.existsSync(path.join(dir, 'tsconfig.build.json'))
+    ) {
       return dir;
     }
     const parent = path.dirname(dir);

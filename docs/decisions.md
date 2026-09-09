@@ -40,7 +40,7 @@ Re-running: `node --experimental-strip-types spike/run.ts`.
   matches nothing; only the full original token matches.
   - **Consequence for the retrieval lane's lexical normalization (spec
     section 9):** it must explicitly emit split components (camelCase
-    parts, snake_case parts, dotted/path/version segments) as *additional*
+    parts, snake_case parts, dotted/path/version segments) as _additional_
     lexical tokens alongside the original text. The native tokenizer will
     never do this splitting on its own, for identifiers or diff content.
 - Numbers and dotted version strings are preserved distinctly and are not
@@ -76,9 +76,9 @@ The filter grammar is SQL-like, ANTLR-based (error messages come from
   single literal containing the quote character; both throw or silently
   fail to mean what you'd expect. **Verified-safe strategy: pick whichever
   delimiter character does not occur in the value.** If a value contains
-  *both* `'` and `"`, there is no proven-safe way to embed it literally in a
+  _both_ `'` and `"`, there is no proven-safe way to embed it literally in a
   filter expression with this build. `src/index/collection.ts` avoids this
-  entirely by stripping quote characters from values it *generates* for
+  entirely by stripping quote characters from values it _generates_ for
   indexed scalar fields (the normalized author search value; path match
   keys are derived, quote-free path segments) rather than trying to escape
   arbitrary content.
@@ -99,7 +99,7 @@ The filter grammar is SQL-like, ANTLR-based (error messages come from
 - Filters compose with vector queries (`fieldName` + `vector` + `filter`)
   and are applied **before** top-k selection: a 1000-document FLAT/cosine
   collection where the filter matches exactly 5 documents that are the
-  *worst* similarity matches for the query vector, queried with
+  _worst_ similarity matches for the query vector, queried with
   `topk: 5` and that filter, returns exactly those 5 documents — never an
   empty or wrong result from filtering an already-selected top-5 (probe
   5.1). This is the eligibility-before-top-k guarantee spec sections 8 and
@@ -150,7 +150,7 @@ spike run — worth knowing before anyone else calls these two entry points.
   coordination.
 - **Two simultaneous writers opening and upserting into the same collection
   path, with no application-level exclusion**: one of the two writer
-  processes failed to even *open* the collection (`ZVEC_INTERNAL_ERROR`).
+  processes failed to even _open_ the collection (`ZVEC_INTERNAL_ERROR`).
   **Confirms the spec's requirement for an application-level exclusive
   writer lock — Zvec does not make concurrent multi-process writers safe on
   its own**, and the failure mode is not a clean, retryable rejection.
@@ -165,7 +165,7 @@ spike run — worth knowing before anyone else calls these two entry points.
 
 **Design implication:** the `src/index/lock.ts` shared/exclusive advisory
 lock (below) is load-bearing, not optional. All the above native-level
-findings assume the *only* two access modes that occur across processes in
+findings assume the _only_ two access modes that occur across processes in
 production are "many readers of a generation nobody is writing to" and
 "exactly one writer, nobody else touching that generation" — which is what
 the lock is for.
@@ -176,7 +176,7 @@ the lock is for.
   7 upserts, `closeSync()`, then `SIGKILL` of the (already-exited, so this
   is really just confirming no hidden async work) process, followed by
   reopening in a fresh process, shows all 7 documents present.
-- **`SIGKILL` with *no* `closeSync()` call at all**, immediately after a
+- **`SIGKILL` with _no_ `closeSync()` call at all**, immediately after a
   batch of 5 `upsertSync` calls returned successfully: reopening in a fresh
   process showed all 5 documents present. This was reproducible in this
   environment, but is **not** being treated as a documented guarantee —
@@ -187,17 +187,17 @@ the lock is for.
   pending-batch-durable-before-apply protocol from spec section 12**,
   because (a) partial-failure status arrays are per-record and must be
   checked regardless of this finding, (b) this finding says nothing about
-  atomicity *across* a multi-record batch under a crash mid-batch, and (c)
+  atomicity _across_ a multi-record batch under a crash mid-batch, and (c)
   relying on an unverified/undocumented internal durability behavior would
   violate spec section 12's explicit instruction not to invent guarantees
   beyond what's tested. The journal is what makes the batch atomic and
   recoverable; this finding just means we are not depending on
-  `closeSync()` as the *only* durability mechanism.
+  `closeSync()` as the _only_ durability mechanism.
 - A crash between a `ForwardBlock`/index-segment write and its rename left
-  residue files on disk that the *next* open cleaned up automatically with
+  residue files on disk that the _next_ open cleaned up automatically with
   a warning log line ("possible crash residue; cleaning and overwriting").
   This is a helpful native self-repair behavior but is not a substitute for
-  the application journal, which must still track which *logical* batch was
+  the application journal, which must still track which _logical_ batch was
   pending so `commits.jsonl`/manifest state stays consistent with what the
   collection actually contains.
 
@@ -220,19 +220,19 @@ matches, the original process is gone and its lock is stale).
 - **Reader (shared) acquire**: if the exclusive marker exists, first check
   whether its owner is stale (dead, or pid reused) and reclaim if so;
   otherwise back off and retry. Once the marker is absent, create a reader
-  token file, then *re-check* the marker — if a writer raced in between,
+  token file, then _re-check_ the marker — if a writer raced in between,
   remove the just-created reader file and retry. This is a
   register-then-verify pattern, not a naive check-then-act.
 - **Writer (exclusive) acquire**: prune stale reader files; if any live
   reader remains or the exclusive marker exists (and is live), back off and
-  retry. Otherwise create the exclusive marker, then *re-check* the readers
+  retry. Otherwise create the exclusive marker, then _re-check_ the readers
   directory — if any reader file is present (even a soon-to-back-off one),
   remove the marker and back off rather than risk overlapping a reader that
   had already passed its own re-check. This trades a small amount of
   liveness for a hard safety guarantee: a writer never proceeds while any
   reader token could possibly still be active.
 - **Release** is simply deleting the owning process's token file(s). If the
-  process dies without releasing, the *next* acquirer of the opposite kind
+  process dies without releasing, the _next_ acquirer of the opposite kind
   reclaims the lock via the staleness check above — release is never
   time-based.
 
@@ -259,9 +259,9 @@ adding to the runtime dependency budget.
 ## 9. External command surfaces
 
 - `opencode --version` → `1.18.30`. Runnable via `execFileSync('opencode',
-  ['--version'])`.
+['--version'])`.
 - `zg --version` → **not installed** in this environment (`zg: command not
-  found`). Per instructions, no attempt was made to install it. The
+found`). Per instructions, no attempt was made to install it. The
   evaluation adapters (bench lane) must treat a missing `zg` as a
   documented precondition to skip/report, not as a bug to work around.
 

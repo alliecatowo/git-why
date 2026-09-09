@@ -18,7 +18,9 @@ import { createTestRepo, type TestRepo } from '../../fixtures/repo.js';
 import { findRepoRoot } from '../../repo-root.js';
 const repoRoot = findRepoRoot(import.meta.dirname);
 const distMain = path.join(repoRoot, 'dist', 'cli', 'main.js');
-const fakeBackendUrl = pathToFileURL(path.join(import.meta.dirname, 'fixtures', 'fake-backend.mjs')).href;
+const fakeBackendUrl = pathToFileURL(
+  path.join(import.meta.dirname, 'fixtures', 'fake-backend.mjs'),
+).href;
 const typesModuleUrl = pathToFileURL(path.join(repoRoot, 'dist', 'types.js')).href;
 
 before(() => {
@@ -63,7 +65,12 @@ function runCli(args: readonly string[], options: RunOptions): Promise<RunResult
     child.stderr.on('data', (c: Buffer) => err.push(c));
     child.on('error', reject);
     child.on('close', (code, signal) => {
-      resolve({ stdout: Buffer.concat(out).toString('utf8'), stderr: Buffer.concat(err).toString('utf8'), code, signal });
+      resolve({
+        stdout: Buffer.concat(out).toString('utf8'),
+        stderr: Buffer.concat(err).toString('utf8'),
+        code,
+        signal,
+      });
     });
   });
 }
@@ -131,14 +138,25 @@ test('--json search output is exactly one valid JSON object on stdout; progress 
 });
 
 test('no ANSI escape sequences appear in output, with or without NO_COLOR', async () => {
-  const withVar = await runCli(['fake query'], { cwd: repo.dir, config: {}, env: { NO_COLOR: '1' } });
-  const withoutVar = await runCli(['fake query'], { cwd: repo.dir, config: {}, env: { NO_COLOR: undefined } });
+  const withVar = await runCli(['fake query'], {
+    cwd: repo.dir,
+    config: {},
+    env: { NO_COLOR: '1' },
+  });
+  const withoutVar = await runCli(['fake query'], {
+    cwd: repo.dir,
+    config: {},
+    env: { NO_COLOR: undefined },
+  });
   assert.ok(!withVar.stdout.includes('\x1b'));
   assert.ok(!withoutVar.stdout.includes('\x1b'));
 });
 
 test('path restrictions after -- are accepted and do not break dispatch', async () => {
-  const result = await runCli(['fake query', '--', 'src/auth/refresh.ts'], { cwd: repo.dir, config: {} });
+  const result = await runCli(['fake query', '--', 'src/auth/refresh.ts'], {
+    cwd: repo.dir,
+    config: {},
+  });
   assert.equal(result.code, 0);
 });
 
@@ -273,12 +291,17 @@ test('SIGINT during a slow search exits 130 promptly, honouring the abort signal
   await new Promise((resolve) => setTimeout(resolve, 300));
   child.kill('SIGINT');
 
-  const exit = await new Promise<{ code: number | null; signal: NodeJS.Signals | null }>((resolve) => {
-    child.on('close', (code, signal) => resolve({ code, signal }));
-  });
+  const exit = await new Promise<{ code: number | null; signal: NodeJS.Signals | null }>(
+    (resolve) => {
+      child.on('close', (code, signal) => resolve({ code, signal }));
+    },
+  );
 
   assert.equal(exit.code, 130);
-  assert.ok(Date.now() - start < 3_000, 'SIGINT should not wait out the 3s forced-exit fallback when the backend cooperates');
+  assert.ok(
+    Date.now() - start < 3_000,
+    'SIGINT should not wait out the 3s forced-exit fallback when the backend cooperates',
+  );
 });
 
 // --- EPIPE -----------------------------------------------------------------
@@ -332,6 +355,9 @@ test('a closed stdout pipe (EPIPE) exits cleanly with no stack trace', async () 
   });
 
   const stderrText = Buffer.concat(err).toString('utf8');
-  assert.ok(!/at .*\(.*:\d+:\d+\)/.test(stderrText), `expected no stack trace on EPIPE, got: ${stderrText}`);
+  assert.ok(
+    !/at .*\(.*:\d+:\d+\)/.test(stderrText),
+    `expected no stack trace on EPIPE, got: ${stderrText}`,
+  );
   assert.equal(result.code, 0);
 });

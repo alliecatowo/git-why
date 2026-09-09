@@ -73,7 +73,11 @@ export function computeIndexStatus(input: ComputeStatusInput): IndexStatus {
   try {
     generationId = readCurrentGenerationId(layout);
   } catch {
-    return { ...missingStatus(input, layout.stateDir), state: 'rebuild_required', warnings: ['CURRENT file could not be read'] };
+    return {
+      ...missingStatus(input, layout.stateDir),
+      state: 'rebuild_required',
+      warnings: ['CURRENT file could not be read'],
+    };
   }
   if (generationId === null) return missingStatus(input, layout.stateDir);
 
@@ -92,7 +96,12 @@ export function computeIndexStatus(input: ComputeStatusInput): IndexStatus {
     };
   }
   if (manifest === null) {
-    return { ...missingStatus(input, layout.stateDir), state: 'rebuild_required', generation: generationId, warnings: ['generation is published but has no manifest'] };
+    return {
+      ...missingStatus(input, layout.stateDir),
+      state: 'rebuild_required',
+      generation: generationId,
+      warnings: ['generation is published but has no manifest'],
+    };
   }
 
   if (!manifestPolicyIsCompatible(manifest)) {
@@ -133,7 +142,11 @@ export function computeIndexStatus(input: ComputeStatusInput): IndexStatus {
     reachableCommits: input.currentSnapshotFingerprint !== null ? null : null,
     refsChanged: input.refsChanged,
     recordCount: manifest.counts.commits + manifest.counts.evidence,
-    model: { id: manifest.embeddingModelId, revision: manifest.embeddingModelRevision, fingerprint: manifest.embeddingFingerprint },
+    model: {
+      id: manifest.embeddingModelId,
+      revision: manifest.embeddingModelRevision,
+      fingerprint: manifest.embeddingFingerprint,
+    },
     diskBytes,
     indexedAt: manifest.updatedAt,
     objectFormat: manifest.objectFormat,

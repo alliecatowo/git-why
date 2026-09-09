@@ -1,15 +1,50 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
+const nodeGlobals = {
+  process: 'readonly',
+  console: 'readonly',
+  Buffer: 'readonly',
+  URL: 'readonly',
+  URLSearchParams: 'readonly',
+  fetch: 'readonly',
+  Response: 'readonly',
+  Request: 'readonly',
+  Headers: 'readonly',
+  AbortController: 'readonly',
+  AbortSignal: 'readonly',
+  TextEncoder: 'readonly',
+  TextDecoder: 'readonly',
+  setTimeout: 'readonly',
+  clearTimeout: 'readonly',
+  setInterval: 'readonly',
+  clearInterval: 'readonly',
+  structuredClone: 'readonly',
+  __dirname: 'readonly',
+  __filename: 'readonly',
+};
+
 export default tseslint.config(
-  { ignores: ['dist/**', 'node_modules/**', 'bench/work/**', 'spike/out/**', 'test/fixtures/tmp/**'] },
+  {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      '.tmp/**',
+      'bench/work/**',
+      'bench/results/**',
+      'spike/out/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
     files: ['**/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       'no-console': 'off',
       eqeqeq: ['error', 'always', { null: 'ignore' }],
     },
@@ -17,7 +52,29 @@ export default tseslint.config(
   {
     files: ['**/*.mjs', '**/*.js'],
     ...tseslint.configs.disableTypeChecked,
-    languageOptions: { globals: { process: 'readonly', console: 'readonly', Buffer: 'readonly', URL: 'readonly', fetch: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly', __dirname: 'readonly' } },
-    rules: { '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }] },
+    languageOptions: { globals: nodeGlobals },
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+  {
+    // Hidden grader tests run inside disposable task repositories that have no
+    // package.json of their own, so they must be CommonJS.
+    files: ['**/*.cjs'],
+    ...tseslint.configs.disableTypeChecked,
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: { ...nodeGlobals, require: 'readonly', module: 'writable', exports: 'writable' },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+  {
+    // Matching terminal control sequences is the entire purpose of the output
+    // sanitiser and of the tests that verify it.
+    files: ['src/output/sanitize.ts', 'test/**/*sanitize*', 'test/**/*cli*', 'bench/**'],
+    rules: { 'no-control-regex': 'off' },
   },
 );

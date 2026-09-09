@@ -15,22 +15,49 @@ import { NO_FILTERS } from '../../../src/types.js';
 const DIM = 8;
 
 async function seededStore(dir: string) {
-  const collection = ZVecCreateAndOpen(path.join(dir, 'collection'), historyCollectionSchema({ embeddingDimension: DIM }));
+  const collection = ZVecCreateAndOpen(
+    path.join(dir, 'collection'),
+    historyCollectionSchema({ embeddingDimension: DIM }),
+  );
   const embedder = makeFakeEmbedder(DIM);
 
   const specs = [
-    { sha: fakeSha('one'), subject: 'Fix null pointer in AuthSessionProvider', committerTime: 1000, paths: ['src/auth/session.ts'] },
-    { sha: fakeSha('two'), subject: 'Bump postgres to 13.9', committerTime: 2000, paths: ['docker-compose.yml'], author: { name: 'Bob', email: 'bob@example.com', time: 2000 } },
-    { sha: fakeSha('three'), subject: 'Refactor evidence chunking', committerTime: 3000, paths: ['src/history/chunk.ts', 'src/history/budget.ts'] },
+    {
+      sha: fakeSha('one'),
+      subject: 'Fix null pointer in AuthSessionProvider',
+      committerTime: 1000,
+      paths: ['src/auth/session.ts'],
+    },
+    {
+      sha: fakeSha('two'),
+      subject: 'Bump postgres to 13.9',
+      committerTime: 2000,
+      paths: ['docker-compose.yml'],
+      author: { name: 'Bob', email: 'bob@example.com', time: 2000 },
+    },
+    {
+      sha: fakeSha('three'),
+      subject: 'Refactor evidence chunking',
+      committerTime: 3000,
+      paths: ['src/history/chunk.ts', 'src/history/budget.ts'],
+    },
   ];
 
   for (const spec of specs) {
     const extraction = makeExtraction(spec);
-    const texts = [extraction.commit.semanticText, ...extraction.evidence.map((e) => e.semanticText)];
+    const texts = [
+      extraction.commit.semanticText,
+      ...extraction.evidence.map((e) => e.semanticText),
+    ];
     const vectors = await embedder.embedDocuments(texts);
     const commitDoc = buildCommitDoc({ record: extraction.commit, vector: vectors[0]! });
     const evidenceDocs = extraction.evidence.map((e, i) =>
-      buildEvidenceDoc({ record: e, vector: vectors[i + 1]!, committerTime: extraction.commit.committerTime, author: extraction.commit.author }),
+      buildEvidenceDoc({
+        record: e,
+        vector: vectors[i + 1]!,
+        committerTime: extraction.commit.committerTime,
+        author: extraction.commit.author,
+      }),
     );
     collection.upsertSync([commitDoc, ...evidenceDocs]);
   }
@@ -38,7 +65,10 @@ async function seededStore(dir: string) {
   return { collection, specs, embedder };
 }
 
-function filterFor(recordTypes: readonly ('commit' | 'evidence')[], overrides: Partial<StorageFilter['filters']> = {}): StorageFilter {
+function filterFor(
+  recordTypes: readonly ('commit' | 'evidence')[],
+  overrides: Partial<StorageFilter['filters']> = {},
+): StorageFilter {
   return { recordTypes, filters: { ...NO_FILTERS, ...overrides } };
 }
 
@@ -51,8 +81,16 @@ test('searchLexical finds commits by identifier and honours record-type eligibil
     assert.equal(hits.length, 1);
     assert.equal(hits[0]!.type, 'commit');
 
-    const evidenceOnly = await store.searchLexical('AuthSessionProvider', filterFor(['evidence']), 10);
-    assert.equal(evidenceOnly.length, 0, 'commit-only match must not leak into an evidence-only search');
+    const evidenceOnly = await store.searchLexical(
+      'AuthSessionProvider',
+      filterFor(['evidence']),
+      10,
+    );
+    assert.equal(
+      evidenceOnly.length,
+      0,
+      'commit-only match must not leak into an evidence-only search',
+    );
     await store.close();
   } finally {
     rmDir(dir);
@@ -65,7 +103,9 @@ test('searchSemantic returns the eligible commit as the closest match to its own
     const { collection, specs, embedder } = await seededStore(dir);
     const store = new ZvecHistoryStore(collection);
     const target = specs[0]!;
-    const queryVector = await embedder.embedQuery(`Change ${target.sha.slice(0, 8)}\n${target.paths[0]}`);
+    const queryVector = await embedder.embedQuery(
+      `Change ${target.sha.slice(0, 8)}\n${target.paths[0]}`,
+    );
     const hits = await store.searchSemantic(queryVector, filterFor(['commit']), 3);
     assert.ok(hits.length > 0);
     assert.equal(hits[0]!.sha, target.sha);
@@ -81,20 +121,44 @@ test('date-range and author filters apply to search, and path restrictions match
     const { collection } = await seededStore(dir);
     const store = new ZvecHistoryStore(collection);
 
-    const afterOnly = await store.searchLexical('postgres', filterFor(['commit'], { after: 1500 }), 10);
+    const afterOnly = await store.searchLexical(
+      'postgres',
+      filterFor(['commit'], { after: 1500 }),
+      10,
+    );
     assert.equal(afterOnly.length, 1);
 
-    const tooLate = await store.searchLexical('postgres', filterFor(['commit'], { after: 2500 }), 10);
+    const tooLate = await store.searchLexical(
+      'postgres',
+      filterFor(['commit'], { after: 2500 }),
+      10,
+    );
     assert.equal(tooLate.length, 0);
 
-    const authorMatch = await store.searchLexical('postgres', filterFor(['commit'], { author: 'bob' }), 10);
+    const authorMatch = await store.searchLexical(
+      'postgres',
+      filterFor(['commit'], { author: 'bob' }),
+      10,
+    );
     assert.equal(authorMatch.length, 1);
-    const authorMiss = await store.searchLexical('postgres', filterFor(['commit'], { author: 'nobody' }), 10);
+    const authorMiss = await store.searchLexical(
+      'postgres',
+      filterFor(['commit'], { author: 'nobody' }),
+      10,
+    );
     assert.equal(authorMiss.length, 0);
 
-    const byDir = await store.searchLexical('chunking', filterFor(['commit'], { paths: [{ value: 'src/history', kind: 'directory' }] }), 10);
+    const byDir = await store.searchLexical(
+      'chunking',
+      filterFor(['commit'], { paths: [{ value: 'src/history', kind: 'directory' }] }),
+      10,
+    );
     assert.equal(byDir.length, 1);
-    const wrongDir = await store.searchLexical('chunking', filterFor(['commit'], { paths: [{ value: 'src/auth', kind: 'directory' }] }), 10);
+    const wrongDir = await store.searchLexical(
+      'chunking',
+      filterFor(['commit'], { paths: [{ value: 'src/auth', kind: 'directory' }] }),
+      10,
+    );
     assert.equal(wrongDir.length, 0);
 
     await store.close();
@@ -131,32 +195,64 @@ test('eligibility filter is applied before top-k, not after (real ZvecHistorySto
   const dir = freshTmpDir('collection-topk');
   try {
     const dim = 32;
-    const collection = ZVecCreateAndOpen(path.join(dir, 'collection'), historyCollectionSchema({ embeddingDimension: dim }));
+    const collection = ZVecCreateAndOpen(
+      path.join(dir, 'collection'),
+      historyCollectionSchema({ embeddingDimension: dim }),
+    );
     const embedder = makeFakeEmbedder(dim);
 
     // 300 "noise" commits that will out-rank the 3 eligible ones for any query.
-    const noiseTexts = Array.from({ length: 300 }, (_, i) => `noise commit body number ${i} unrelated content`);
+    const noiseTexts = Array.from(
+      { length: 300 },
+      (_, i) => `noise commit body number ${i} unrelated content`,
+    );
     const noiseVectors = await embedder.embedDocuments(noiseTexts);
     const noiseDocs = noiseTexts.map((text, i) => {
-      const extraction = makeExtraction({ sha: fakeSha(`noise-${i}`), subject: text, paths: ['other/file.ts'] });
-      return buildCommitDoc({ record: { ...extraction.commit, semanticText: text }, vector: noiseVectors[i]! });
+      const extraction = makeExtraction({
+        sha: fakeSha(`noise-${i}`),
+        subject: text,
+        paths: ['other/file.ts'],
+      });
+      return buildCommitDoc({
+        record: { ...extraction.commit, semanticText: text },
+        vector: noiseVectors[i]!,
+      });
     });
     collection.upsertSync(noiseDocs);
 
-    const eligibleSpecs = Array.from({ length: 3 }, (_, i) => ({ sha: fakeSha(`eligible-${i}`), subject: `eligible target ${i}`, paths: ['target/dir/file.ts'] }));
+    const eligibleSpecs = Array.from({ length: 3 }, (_, i) => ({
+      sha: fakeSha(`eligible-${i}`),
+      subject: `eligible target ${i}`,
+      paths: ['target/dir/file.ts'],
+    }));
     const eligibleVectors = await embedder.embedDocuments(eligibleSpecs.map((s) => s.subject));
     const eligibleDocs = eligibleSpecs.map((spec, i) => {
-      const extraction = makeExtraction({ sha: spec.sha, subject: spec.subject, paths: spec.paths });
-      return buildCommitDoc({ record: { ...extraction.commit, semanticText: spec.subject }, vector: eligibleVectors[i]! });
+      const extraction = makeExtraction({
+        sha: spec.sha,
+        subject: spec.subject,
+        paths: spec.paths,
+      });
+      return buildCommitDoc({
+        record: { ...extraction.commit, semanticText: spec.subject },
+        vector: eligibleVectors[i]!,
+      });
     });
     collection.upsertSync(eligibleDocs);
 
     const store = new ZvecHistoryStore(collection);
     const queryVector = await embedder.embedQuery('completely unrelated query text');
-    const hits = await store.searchSemantic(queryVector, filterFor(['commit'], { paths: [{ value: 'target/dir', kind: 'directory' }] }), 3);
+    const hits = await store.searchSemantic(
+      queryVector,
+      filterFor(['commit'], { paths: [{ value: 'target/dir', kind: 'directory' }] }),
+      3,
+    );
     assert.equal(hits.length, 3);
     const expected = new Set(eligibleSpecs.map((s) => s.sha));
-    for (const hit of hits) assert.ok(expected.has(hit.sha), `${hit.sha} should be one of the 3 eligible docs, not a noise doc`);
+    for (const hit of hits)
+      assert.ok(
+        expected.has(hit.sha),
+        `${hit.sha} should be one of the 3 eligible docs, not a noise doc`,
+      );
 
     await store.close();
   } finally {

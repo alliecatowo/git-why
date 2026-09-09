@@ -27,18 +27,36 @@ import { readFile } from 'node:fs/promises';
 export const POTION_CODE_16M_V2: PinnedArtifact = {
   modelId: 'minishlab/potion-code-16M-v2',
   revision: 'e9d2a44ca6a05ac6685f3b23709ea57eb7352d5b',
-  config: { filename: 'config.json', sha256: '148e5691a6fcc553437156859701fba017a1ba5d340b170f17e0f3668fb861a7' },
-  tokenizer: { filename: 'tokenizer.json', sha256: '107bbdcbad4bff1d299b7a4c3a2fb17c52890688b7dd0e4c9deab79d3c4f3d45' },
-  weights: { filename: 'model.safetensors', sha256: '75cf7a6c2171b230ad19b1e7d8e0b1aee86da5a02af8e7cacedd9921d227623c' },
+  config: {
+    filename: 'config.json',
+    sha256: '148e5691a6fcc553437156859701fba017a1ba5d340b170f17e0f3668fb861a7',
+  },
+  tokenizer: {
+    filename: 'tokenizer.json',
+    sha256: '107bbdcbad4bff1d299b7a4c3a2fb17c52890688b7dd0e4c9deab79d3c4f3d45',
+  },
+  weights: {
+    filename: 'model.safetensors',
+    sha256: '75cf7a6c2171b230ad19b1e7d8e0b1aee86da5a02af8e7cacedd9921d227623c',
+  },
 };
 
 /** minishlab/potion-retrieval-32M — prose-retrieval candidate, to test whether message-heavy history favors it. */
 export const POTION_RETRIEVAL_32M: PinnedArtifact = {
   modelId: 'minishlab/potion-retrieval-32M',
   revision: '6fc8051fab2a1e0ee76689cf08c853792ac285e7',
-  config: { filename: 'config.json', sha256: '63c00d90824c832c04ec1d02b6a983fb90489bf049f29fbff15ba481b8a432ee' },
-  tokenizer: { filename: 'tokenizer.json', sha256: '7d75cbc54318138807c401b0f0c9721117c628b39de8e8e0edb6cb17e0ee7d18' },
-  weights: { filename: 'model.safetensors', sha256: '07609e5bd33aad37900b3fd62f4ec96f6daec88ca4d46b9d8b928bfababf6ea0' },
+  config: {
+    filename: 'config.json',
+    sha256: '63c00d90824c832c04ec1d02b6a983fb90489bf049f29fbff15ba481b8a432ee',
+  },
+  tokenizer: {
+    filename: 'tokenizer.json',
+    sha256: '7d75cbc54318138807c401b0f0c9721117c628b39de8e8e0edb6cb17e0ee7d18',
+  },
+  weights: {
+    filename: 'model.safetensors',
+    sha256: '07609e5bd33aad37900b3fd62f4ec96f6daec88ca4d46b9d8b928bfababf6ea0',
+  },
 };
 
 export interface CandidateDescriptor {
@@ -51,7 +69,10 @@ export interface CandidateDescriptor {
   readonly createEmbedder?: (options?: CacheOptions) => Promise<Embedder>;
 }
 
-async function createGenericStaticEmbedder(pinned: PinnedArtifact, options: CacheOptions = {}): Promise<Embedder> {
+async function createGenericStaticEmbedder(
+  pinned: PinnedArtifact,
+  options: CacheOptions = {},
+): Promise<Embedder> {
   const paths = await ensureCached(pinned, options);
   const [configJson, tokenizerJson, weightsBuffer] = await Promise.all([
     readFile(paths.configPath, 'utf8').then((s) => JSON.parse(s) as unknown),
@@ -113,7 +134,10 @@ export const MODEL_CANDIDATES: readonly CandidateDescriptor[] = [
 ];
 
 /** Convenience for benchmark tooling: throws `MODEL_UNAVAILABLE` for a candidate marked unavailable. */
-export async function createCandidateEmbedder(name: string, options?: CacheOptions): Promise<Embedder> {
+export async function createCandidateEmbedder(
+  name: string,
+  options?: CacheOptions,
+): Promise<Embedder> {
   const candidate = MODEL_CANDIDATES.find((c) => c.name === name);
   if (!candidate) {
     throw new GitWhyError('MODEL_UNAVAILABLE', `unknown embedding candidate: ${name}`);

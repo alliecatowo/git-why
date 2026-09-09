@@ -6,13 +6,30 @@
  */
 
 import { readFileSync } from 'node:fs';
-import { parseArgs, argvRequestsJson, type LifecycleCommand, type ParsedLifecycle, type ParsedSearch } from './args.js';
+import {
+  parseArgs,
+  argvRequestsJson,
+  type LifecycleCommand,
+  type ParsedLifecycle,
+  type ParsedSearch,
+} from './args.js';
 import { resolvePathRestrictions } from './paths.js';
 import { createBackend } from './wire.js';
 import type { Backend, ProgressEvent, RepositoryHandle } from './ports.js';
 import { renderSearchHuman, renderStatusHuman } from '../output/human.js';
-import { renderSearchErrorJson, renderSearchJson, renderStatusErrorJson, renderStatusJson } from '../output/json.js';
-import { ExitCode, GitWhyError, type SearchFilters, type SearchMode, type SearchRequest } from '../types.js';
+import {
+  renderSearchErrorJson,
+  renderSearchJson,
+  renderStatusErrorJson,
+  renderStatusJson,
+} from '../output/json.js';
+import {
+  ExitCode,
+  GitWhyError,
+  type SearchFilters,
+  type SearchMode,
+  type SearchRequest,
+} from '../types.js';
 
 const HELP_TEXT = `Usage: git why <query> [-- <path>...] [options]
        git why --query <query> [options]
@@ -92,10 +109,23 @@ function handleError(err: unknown, ctx: ErrorContext): number {
   if (controller.signal.aborted) {
     const interrupted = new GitWhyError('INTERRUPTED', 'Interrupted.');
     if (ctx.command !== undefined && ctx.json) {
-      writeStdout(renderStatusErrorJson(ctx.command, interrupted.code, interrupted.message, interrupted.hint) + '\n');
+      writeStdout(
+        renderStatusErrorJson(
+          ctx.command,
+          interrupted.code,
+          interrupted.message,
+          interrupted.hint,
+        ) + '\n',
+      );
     } else if (ctx.command === undefined && ctx.json) {
       writeStdout(
-        renderSearchErrorJson({ query: ctx.query, mode: ctx.mode, code: interrupted.code, message: interrupted.message, hint: interrupted.hint }) + '\n',
+        renderSearchErrorJson({
+          query: ctx.query,
+          mode: ctx.mode,
+          code: interrupted.code,
+          message: interrupted.message,
+          hint: interrupted.hint,
+        }) + '\n',
       );
     } else {
       writeErrorHuman(interrupted);
@@ -110,7 +140,15 @@ function handleError(err: unknown, ctx: ErrorContext): number {
       writeErrorHuman(gw);
     }
   } else if (ctx.json) {
-    writeStdout(renderSearchErrorJson({ query: ctx.query, mode: ctx.mode, code: gw.code, message: gw.message, hint: gw.hint }) + '\n');
+    writeStdout(
+      renderSearchErrorJson({
+        query: ctx.query,
+        mode: ctx.mode,
+        code: gw.code,
+        message: gw.message,
+        hint: gw.hint,
+      }) + '\n',
+    );
   } else {
     writeErrorHuman(gw);
   }
@@ -154,7 +192,11 @@ function searchContext(parsed: ParsedSearch): ErrorContext {
   return { json: parsed.json, command: undefined, query: parsed.query, mode: parsed.mode };
 }
 
-async function runLifecycle(backend: Backend, repo: RepositoryHandle, parsed: ParsedLifecycle): Promise<number> {
+async function runLifecycle(
+  backend: Backend,
+  repo: RepositoryHandle,
+  parsed: ParsedLifecycle,
+): Promise<number> {
   const onProgress = makeProgressListener();
   const lockTimeoutMs = parsed.lockTimeoutSeconds * 1000;
   const signal = controller.signal;
@@ -164,7 +206,13 @@ async function runLifecycle(backend: Backend, repo: RepositoryHandle, parsed: Pa
         case 'status':
           return backend.getStatus(repo, { lockTimeoutMs, signal });
         case 'index':
-          return backend.index(repo, { offline: parsed.offline, noRefresh: false, lockTimeoutMs, signal, onProgress });
+          return backend.index(repo, {
+            offline: parsed.offline,
+            noRefresh: false,
+            lockTimeoutMs,
+            signal,
+            onProgress,
+          });
         case 'rebuild':
           return backend.rebuild(repo, {
             offline: parsed.offline,
@@ -175,7 +223,13 @@ async function runLifecycle(backend: Backend, repo: RepositoryHandle, parsed: Pa
             useDefaultModel: parsed.useDefaultModel,
           });
         case 'gc':
-          return backend.gc(repo, { offline: parsed.offline, noRefresh: false, lockTimeoutMs, signal, onProgress });
+          return backend.gc(repo, {
+            offline: parsed.offline,
+            noRefresh: false,
+            lockTimeoutMs,
+            signal,
+            onProgress,
+          });
       }
     })();
 
@@ -190,12 +244,30 @@ async function runLifecycle(backend: Backend, repo: RepositoryHandle, parsed: Pa
   }
 }
 
-async function runSearch(backend: Backend, repo: RepositoryHandle, parsed: ParsedSearch, cwd: string): Promise<number> {
+async function runSearch(
+  backend: Backend,
+  repo: RepositoryHandle,
+  parsed: ParsedSearch,
+  cwd: string,
+): Promise<number> {
   const onProgress = makeProgressListener();
   try {
-    const paths = resolvePathRestrictions(parsed.rawPaths, { worktreeRoot: repo.identity.worktreeRoot, cwd });
-    const filters: SearchFilters = { paths, after: parsed.after, before: parsed.before, author: parsed.author };
-    const request: SearchRequest = { query: parsed.query, mode: parsed.mode, limit: parsed.limit, filters };
+    const paths = resolvePathRestrictions(parsed.rawPaths, {
+      worktreeRoot: repo.identity.worktreeRoot,
+      cwd,
+    });
+    const filters: SearchFilters = {
+      paths,
+      after: parsed.after,
+      before: parsed.before,
+      author: parsed.author,
+    };
+    const request: SearchRequest = {
+      query: parsed.query,
+      mode: parsed.mode,
+      limit: parsed.limit,
+      filters,
+    };
 
     const response = await backend.search(repo, request, {
       offline: parsed.offline,
@@ -224,7 +296,12 @@ async function run(): Promise<number> {
   try {
     parsed = parseArgs(argv);
   } catch (err) {
-    return handleError(err, { json: argvRequestsJson(argv), command: undefined, query: '', mode: 'hybrid' });
+    return handleError(err, {
+      json: argvRequestsJson(argv),
+      command: undefined,
+      query: '',
+      mode: 'hybrid',
+    });
   }
 
   if (parsed.kind === 'help') {
