@@ -6,15 +6,15 @@ import { fileURLToPath } from 'node:url';
 import { acquireExclusive, acquireShared } from '../../../src/index/lock.js';
 import { GitWhyError } from '../../../src/types.js';
 import { freshTmpDir, rmDir } from './helpers.js';
+import { childSpawnArgs } from './child-script.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '..', '..', '..');
-const loader = path.join(repoRoot, 'scripts', 'ts-esm-loader.mjs');
-const childScript = path.join(here, 'lock-child.ts');
+const childArgs = childSpawnArgs(here, repoRoot, 'lock-child');
 
 function runChild(lockFile: string, kind: 'shared' | 'exclusive', timeoutSeconds: number, holdMs: number) {
   return new Promise<{ lines: Record<string, unknown>[]; code: number | null }>((resolve) => {
-    const child = spawn(process.execPath, ['--import', loader, childScript, lockFile, kind, String(timeoutSeconds), String(holdMs)]);
+    const child = spawn(process.execPath, [...childArgs, lockFile, kind, String(timeoutSeconds), String(holdMs)]);
     let out = '';
     child.stdout.on('data', (d) => (out += d.toString()));
     child.on('close', (code) =>
@@ -31,7 +31,7 @@ function runChild(lockFile: string, kind: 'shared' | 'exclusive', timeoutSeconds
 }
 
 function spawnChildRaw(lockFile: string, kind: 'shared' | 'exclusive', timeoutSeconds: number, holdMs: number) {
-  return spawn(process.execPath, ['--import', loader, childScript, lockFile, kind, String(timeoutSeconds), String(holdMs)]);
+  return spawn(process.execPath, [...childArgs, lockFile, kind, String(timeoutSeconds), String(holdMs)]);
 }
 
 test('exclusive lock: acquire, hold, release, then a second process reacquires', async () => {

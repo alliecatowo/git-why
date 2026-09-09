@@ -9,11 +9,11 @@ import { readCurrentGenerationId, layoutFor, generationPaths } from '../../../sr
 import { readManifest } from '../../../src/index/manifest.js';
 import type { CommitExtraction, HistoryExtractor } from '../../../src/types.js';
 import { freshTmpDir, rmDir, fakeRepository, fakeSnapshot, makeExtraction, makeFakeEmbedder, makeFakeExtractor, fakeSha, FAKE_EMBEDDER_DIMENSION } from './helpers.js';
+import { childSpawnArgs } from './child-script.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '..', '..', '..');
-const loader = path.join(repoRoot, 'scripts', 'ts-esm-loader.mjs');
-const childScript = path.join(here, 'refresh-child.ts');
+const childArgs = childSpawnArgs(here, repoRoot, 'refresh-child');
 
 function countingExtractor(bySha: ReadonlyMap<string, CommitExtraction>): { extractor: HistoryExtractor; calls: string[] } {
   const calls: string[] = [];
@@ -33,7 +33,7 @@ function countingExtractor(bySha: ReadonlyMap<string, CommitExtraction>): { extr
 
 function runChildJob(job: Record<string, unknown>) {
   return new Promise<{ lines: Record<string, unknown>[]; code: number | null }>((resolve) => {
-    const child = spawn(process.execPath, ['--import', loader, childScript, JSON.stringify(job)]);
+    const child = spawn(process.execPath, [...childArgs, JSON.stringify(job)]);
     let out = '';
     child.stdout.on('data', (d) => (out += d.toString()));
     child.on('close', (code) =>

@@ -404,7 +404,15 @@ async function main() {
   console.log(JSON.stringify(summary, null, 2));
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Guarded, unlike the other bench/*/run.mjs entry points: this one spawns
+// real OpenCode sessions (real, if free-tier, API usage) the instant it
+// runs. `import()`-ing this module for a helper (e.g. checkZgAvailable)
+// must never accidentally trigger a live run -- caught during harness
+// validation when a diagnostic `import()` silently kicked off real trials.
+const isMainModule = process.argv[1] && import.meta.url === `file://${process.argv[1]}`;
+if (isMainModule) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

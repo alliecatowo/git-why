@@ -15,7 +15,8 @@ import { pathToFileURL } from 'node:url';
 import { after, before, test } from 'node:test';
 import { createTestRepo, type TestRepo } from '../../fixtures/repo.js';
 
-const repoRoot = path.resolve(import.meta.dirname, '..', '..', '..');
+import { findRepoRoot } from '../../repo-root.js';
+const repoRoot = findRepoRoot(import.meta.dirname);
 const distMain = path.join(repoRoot, 'dist', 'cli', 'main.js');
 const fakeBackendUrl = pathToFileURL(path.join(import.meta.dirname, 'fixtures', 'fake-backend.mjs')).href;
 const typesModuleUrl = pathToFileURL(path.join(repoRoot, 'dist', 'types.js')).href;
