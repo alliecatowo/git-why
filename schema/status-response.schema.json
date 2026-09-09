@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://git-why.dev/schema/status-response.schema.json",
+  "title": "Git Why status/lifecycle response envelope",
+  "type": "object",
+  "required": ["schemaVersion", "command", "index"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "command": { "enum": ["index", "status", "rebuild", "gc"] },
+    "index": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": [
+            "state",
+            "indexPath",
+            "generation",
+            "indexedCommits",
+            "reachableCommits",
+            "refsChanged",
+            "recordCount",
+            "model",
+            "diskBytes",
+            "indexedAt",
+            "objectFormat",
+            "shallow",
+            "coverage",
+            "warnings"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "enum": ["missing", "current", "stale", "incomplete", "busy", "recovery_required", "rebuild_required"]
+            },
+            "indexPath": { "type": "string" },
+            "generation": { "type": ["string", "null"] },
+            "indexedCommits": { "type": ["number", "null"] },
+            "reachableCommits": { "type": ["number", "null"] },
+            "refsChanged": { "type": "boolean" },
+            "recordCount": { "type": ["number", "null"] },
+            "model": {
+              "oneOf": [
+                { "type": "null" },
+                {
+                  "type": "object",
+                  "required": ["id", "revision", "fingerprint"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": { "type": "string" },
+                    "revision": { "type": "string" },
+                    "fingerprint": { "type": "string" }
+                  }
+                }
+              ]
+            },
+            "diskBytes": { "type": ["number", "null"] },
+            "indexedAt": { "type": ["string", "null"] },
+            "objectFormat": { "enum": ["sha1", "sha256"] },
+            "shallow": { "type": "boolean" },
+            "coverage": {
+              "type": "object",
+              "required": ["excludedFiles", "unavailableFiles", "failedFiles", "reasons"],
+              "additionalProperties": false,
+              "properties": {
+                "excludedFiles": { "type": "number" },
+                "unavailableFiles": { "type": "number" },
+                "failedFiles": { "type": "number" },
+                "reasons": { "type": "array", "items": { "type": "string" } }
+              }
+            },
+            "warnings": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      ]
+    },
+    "error": {
+      "type": "object",
+      "required": ["code", "message", "hint"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "hint": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

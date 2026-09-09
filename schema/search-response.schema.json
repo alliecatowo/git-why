@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://git-why.dev/schema/search-response.schema.json",
+  "title": "Git Why search response envelope",
+  "type": "object",
+  "required": ["schemaVersion", "query", "mode", "results", "warnings", "outputTruncated", "candidateLimitReached"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "query": { "type": "string" },
+    "mode": { "enum": ["hybrid", "text", "semantic"] },
+    "snapshot": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["scope", "fingerprint", "indexedAt", "freshness", "coverage", "generation"],
+          "additionalProperties": false,
+          "properties": {
+            "scope": { "const": "branches-remotes-tags-worktree-heads" },
+            "fingerprint": { "type": "string" },
+            "indexedAt": { "type": ["string", "null"] },
+            "freshness": { "enum": ["current", "stale", "unknown"] },
+            "coverage": { "enum": ["complete_for_policy", "partial", "unknown"] },
+            "generation": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sha",
+          "subject",
+          "author",
+          "authorTime",
+          "committerTime",
+          "parents",
+          "messageExcerpt",
+          "rankScore",
+          "matchedBy",
+          "evidence"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "sha": { "type": "string" },
+          "subject": { "type": "string" },
+          "author": {
+            "type": "object",
+            "required": ["name", "email"],
+            "additionalProperties": false,
+            "properties": { "name": { "type": "string" }, "email": { "type": "string" } }
+          },
+          "authorTime": { "type": "number" },
+          "committerTime": { "type": "number" },
+          "parents": { "type": "array", "items": { "type": "string" } },
+          "messageExcerpt": { "type": "string" },
+          "rankScore": { "type": "number" },
+          "matchedBy": { "type": "array", "items": { "enum": ["text", "semantic"] } },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "recordId",
+                "kind",
+                "path",
+                "oldPath",
+                "oldStart",
+                "oldCount",
+                "newStart",
+                "newCount",
+                "excerpt",
+                "truncated",
+                "omissionReasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "recordId": { "type": "string" },
+                "kind": { "enum": ["hunk", "file_change"] },
+                "path": { "type": "string" },
+                "pathBytesBase64": { "type": "string" },
+                "oldPath": { "type": ["string", "null"] },
+                "oldPathBytesBase64": { "type": "string" },
+                "oldStart": { "type": ["number", "null"] },
+                "oldCount": { "type": ["number", "null"] },
+                "newStart": { "type": ["number", "null"] },
+                "newCount": { "type": ["number", "null"] },
+                "excerpt": { "type": "string" },
+                "truncated": { "type": "boolean" },
+                "omissionReasons": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "outputTruncated": { "type": "boolean" },
+    "candidateLimitReached": { "type": "boolean" },
+    "error": {
+      "type": "object",
+      "required": ["code", "message", "hint"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "hint": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

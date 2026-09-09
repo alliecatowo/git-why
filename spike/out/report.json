@@ -1,0 +1,633 @@
+{
+  "generatedAt": "2026-09-09T18:58:31.215Z",
+  "versions": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "Darwin Allisons-Mac-mini.local 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:09 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T8112 arm64",
+    "osProductVersion": "ProductName:\t\tmacOS\nProductVersion:\t\t26.4\nBuildVersion:\t\t25E246",
+    "zvecPackageVersion": "0.7.1",
+    "nativeBinding": {
+      "packageName": "@zvec/bindings-darwin-arm64",
+      "version": "0.7.1"
+    },
+    "gitVersion": "git version 2.50.1 (Apple Git-155)"
+  },
+  "probes": [
+    {
+      "id": "0.0",
+      "name": "environment",
+      "status": "passed",
+      "detail": "captured platform/runtime/package/native-binding/git versions",
+      "evidence": {
+        "node": "v24.21.0",
+        "platform": "darwin",
+        "arch": "arm64",
+        "osRelease": "Darwin Allisons-Mac-mini.local 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:09 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T8112 arm64",
+        "osProductVersion": "ProductName:\t\tmacOS\nProductVersion:\t\t26.4\nBuildVersion:\t\t25E246",
+        "zvecPackageVersion": "0.7.1",
+        "nativeBinding": {
+          "packageName": "@zvec/bindings-darwin-arm64",
+          "version": "0.7.1"
+        },
+        "gitVersion": "git version 2.50.1 (Apple Git-155)"
+      }
+    },
+    {
+      "id": "1.1",
+      "name": "import and native binary load",
+      "status": "passed",
+      "detail": "module imported, entry points present"
+    },
+    {
+      "id": "1.2",
+      "name": "create, insert, upsert, close, reopen",
+      "status": "passed",
+      "detail": "insert then upsert then close then reopen then fetch(includeVector:false): upsert overwrote ts 1->2 as expected, and fetch honoured includeVector:false by returning an empty vectors object (not the vector data)",
+      "evidence": {
+        "insertStatus": {
+          "ok": true,
+          "code": "ZVEC_OK",
+          "message": ""
+        },
+        "upsertStatus": {
+          "ok": true,
+          "code": "ZVEC_OK",
+          "message": ""
+        },
+        "doc": {
+          "0000000000000000000000000000000000000000000000000000000000000001": {
+            "id": "0000000000000000000000000000000000000000000000000000000000000001",
+            "score": 0,
+            "vectors": {},
+            "fields": {
+              "kind": "commit",
+              "ts": 2,
+              "author": "a",
+              "paths": [
+                "x"
+              ],
+              "text": "hello again"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "1.3",
+      "name": "delete by id and by filter",
+      "status": "passed",
+      "detail": "docCount 2 -> 1 (id delete) -> 1 (filter delete)",
+      "evidence": {
+        "delStatus": {
+          "ok": true,
+          "code": "ZVEC_OK",
+          "message": ""
+        },
+        "filterDelStatus": {
+          "ok": true,
+          "code": "ZVEC_OK",
+          "message": ""
+        }
+      }
+    },
+    {
+      "id": "1.4",
+      "name": "persistence across a process boundary",
+      "status": "passed",
+      "detail": "data written by one process and closed was fully visible after reopening in a second process",
+      "evidence": {
+        "docCount": 5,
+        "fetched": 5
+      }
+    },
+    {
+      "id": "2.1",
+      "name": "FTS on ordinary prose (queryString)",
+      "status": "passed",
+      "detail": "matched 1 doc(s)",
+      "evidence": [
+        "Fixed a bug in the authentication flow for new users"
+      ]
+    },
+    {
+      "id": "2.2",
+      "name": "FTS on camelCase identifier AuthSessionProvider",
+      "status": "passed",
+      "detail": "standard tokenizer treats camelCase as ONE token (case-insensitive via lowercase filter): exact=1 lower(case)=1 substring-word 'Session' alone=0",
+      "evidence": {
+        "exact": [
+          "Refactor AuthSessionProvider to cache tokens"
+        ],
+        "lower": [
+          "Refactor AuthSessionProvider to cache tokens"
+        ],
+        "split": []
+      }
+    },
+    {
+      "id": "2.3",
+      "name": "FTS on dotted version string postgres 13.4",
+      "status": "passed",
+      "detail": "numbers preserved distinctly: '13.4' matches=1, '13.9' matches=1 (13.9 also literally present in doc as target version, see evidence)",
+      "evidence": {
+        "full": [
+          "Bump postgres 13.4 -> 13.9 in docker-compose"
+        ],
+        "numOnly": [
+          "Bump postgres 13.4 -> 13.9 in docker-compose"
+        ],
+        "wrongNum": [
+          "Bump postgres 13.4 -> 13.9 in docker-compose"
+        ]
+      }
+    },
+    {
+      "id": "2.4",
+      "name": "FTS on a line of deleted code: diff markers, dotted identifiers, tokenizer choice",
+      "status": "passed",
+      "detail": "Diff markers do NOT need stripping: '-'/'+'-prefixed lines tokenize identically to the bare line under the 'standard' tokenizer (grantAccess matched in all 3/3 variants). The real hazard is DOTTED IDENTIFIERS: the 'standard' tokenizer keeps 'user.isAdmin' as a single token (matches full-dotted:3, but bare component 'isAdmin' alone matches:0/3 — i.e. it does NOT auto-split, same as the camelCase finding in 2.2). RULE for the retrieval lane's lexical normalization (spec section 9): it must explicitly emit split components (camelCase parts, snake_case parts, dotted/path segments) as additional lexical tokens alongside the original text, because the native tokenizer will not do this splitting itself. Tokenizer choice: 'whitespace' is UNSUITABLE for code — punctuation-attached identifiers like 'grantAccess();' never separate from trailing punctuation (whitespace-tokenizer match rate for a bare identifier next to punctuation: 0/3, expected 3/3 (confirmed broken)). Use 'standard', not 'whitespace'.",
+      "evidence": {
+        "stdGrant": 3,
+        "wsGrant": 0,
+        "stdBareComponent": 0,
+        "stdFullDotted": 3,
+        "dottedComponentSplits": false
+      }
+    },
+    {
+      "id": "2.5",
+      "name": "safe compilation of arbitrary user text: queryString vs matchString",
+      "status": "passed",
+      "detail": "RULE: 'matchString' is the literal, safe API for arbitrary user text — it never interprets quotes/parens/boolean words as query syntax. 'queryString' runs a query-parser grammar (parentheses, quoted phrases, AND/OR/NOT, field:value) and CAN throw or misparse on natural-language punctuation. Compilation rule for git-why: pass the raw user query string to 'matchString' for lexical search; never build 'queryString' from unsanitized text.",
+      "evidence": {
+        "queryStringOutcome": "THREW: ZVEC_INVALID_ARGUMENT — FTS query parse failed: field-prefixed queries are not supported",
+        "matchStringOutcome": "parsed and executed as a literal phrase/terms match, 2 hit(s)",
+        "matchHits": 2,
+        "queryStringBooleanBreak": "THREW as expected: ZVEC_INVALID_ARGUMENT"
+      }
+    },
+    {
+      "id": "3.1",
+      "name": "FLAT index at dim=256, cosine",
+      "status": "passed",
+      "detail": "FLAT/cosine returns the exact nearest neighbour (self) as top-1 over 200 vectors",
+      "evidence": [
+        {
+          "id": "0000000000000000000000000000000000000000000000000000000000000412",
+          "score": 0
+        },
+        {
+          "id": "000000000000000000000000000000000000000000000000000000000000048f",
+          "score": 0.8032734394073486
+        },
+        {
+          "id": "00000000000000000000000000000000000000000000000000000000000004ac",
+          "score": 0.8142271041870117
+        },
+        {
+          "id": "0000000000000000000000000000000000000000000000000000000000000414",
+          "score": 0.8194438219070435
+        },
+        {
+          "id": "0000000000000000000000000000000000000000000000000000000000000409",
+          "score": 0.8287156224250793
+        }
+      ]
+    },
+    {
+      "id": "3.2",
+      "name": "HNSW index at dim=256, cosine",
+      "status": "passed",
+      "detail": "HNSW/cosine top-1 self-match: true over 500 vectors",
+      "evidence": [
+        {
+          "id": "0000000000000000000000000000000000000000000000000000000000000833",
+          "score": 0
+        },
+        {
+          "id": "00000000000000000000000000000000000000000000000000000000000009b7",
+          "score": 0.8268910646438599
+        },
+        {
+          "id": "000000000000000000000000000000000000000000000000000000000000093c",
+          "score": 0.8296942710876465
+        },
+        {
+          "id": "0000000000000000000000000000000000000000000000000000000000000821",
+          "score": 0.8333039283752441
+        },
+        {
+          "id": "00000000000000000000000000000000000000000000000000000000000008d2",
+          "score": 0.8367746472358704
+        }
+      ]
+    },
+    {
+      "id": "3.3",
+      "name": "filter grammar trial-and-error log",
+      "status": "passed",
+      "detail": "Comparison uses '=' not '=='; both single- and double-quoted string literals accepted with NO verified in-literal escape (see docs/decisions.md); AND/OR/IN/!=/LIKE(scalar) work; '&&', bare 'NOT', and 'BETWEEN' do not parse; array containment is 'field CONTAIN_ANY(v1,v2,...)' / 'CONTAIN_ALL(...)', combinable with AND/OR.",
+      "evidence": [
+        {
+          "expr": "kind == 'commit'",
+          "outcome": "FAIL ZVEC_INVALID_ARGUMENT: Invalid filter [kind == 'commit']: syntax error [1 6 extraneous input '=' expecting {'OR', 'AND', 'NOT', 'IN', 'BETWEEN', 'LIKE', 'WHERE', '"
+        },
+        {
+          "expr": "kind = 'commit'",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "kind = \"commit\"",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "ts > 50",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "ts > 50 and ts < 55",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "ts > 50 && ts < 55",
+          "outcome": "FAIL ZVEC_INVALID_ARGUMENT: Invalid filter [ts > 50 && ts < 55]: lexer error [1 9 token recognition error at: '&']"
+        },
+        {
+          "expr": "kind = 'commit' AND ts > 50",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "kind IN ('commit','evidence')",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "kind != 'commit'",
+          "outcome": "OK (0 rows)"
+        },
+        {
+          "expr": "NOT kind = 'commit'",
+          "outcome": "FAIL ZVEC_INVALID_ARGUMENT: Invalid filter [NOT kind = 'commit']: syntax error [1 4 no viable alternative at input 'NOTkind']"
+        },
+        {
+          "expr": "ts BETWEEN 50 AND 55",
+          "outcome": "FAIL ZVEC_INVALID_ARGUMENT: Invalid filter [ts BETWEEN 50 AND 55]: syntax error [1 18 mismatched input '55' expecting {'OR', 'AND', 'NOT', 'IN', 'BETWEEN', 'LIKE', 'WHE"
+        },
+        {
+          "expr": "kind LIKE 'comm%'",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "paths = 'p1'",
+          "outcome": "FAIL ZVEC_INVALID_ARGUMENT: Analyze SQL info failed: Contain_* rel expr only works with array data type and array data type only works with contain_* op. filter: paths="
+        },
+        {
+          "expr": "paths CONTAIN_ANY('p1')",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "paths CONTAIN_ANY('p1','p2')",
+          "outcome": "OK (3 rows)"
+        },
+        {
+          "expr": "paths CONTAIN_ALL('p1')",
+          "outcome": "OK (3 rows)"
+        }
+      ]
+    },
+    {
+      "id": "3.4",
+      "name": "scalar filter: integer range",
+      "status": "passed",
+      "detail": "range filter ts in [10,20) returned exactly 10 rows"
+    },
+    {
+      "id": "3.5",
+      "name": "scalar filter: string equality and substring/LIKE",
+      "status": "passed",
+      "detail": "equality on scalar STRING: 200 rows; LIKE prefix wildcard on scalar STRING: 200 rows (both supported on scalar fields)",
+      "evidence": {
+        "eqCount": 200,
+        "likeCount": 200
+      }
+    },
+    {
+      "id": "3.6",
+      "name": "CRITICAL: LIKE on an ARRAY_STRING field crashes the process (SIGBUS/SIGSEGV)",
+      "status": "passed",
+      "detail": "confirmed crash: signal=SIGSEGV status=null — LIKE must never be used on an ARRAY_STRING field; use CONTAIN_ANY/CONTAIN_ALL instead",
+      "evidence": {
+        "signal": "SIGSEGV",
+        "status": null,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "3.7",
+      "name": "array containment filter for path match keys (ARRAY_STRING + CONTAIN_ANY)",
+      "status": "passed",
+      "detail": "CONTAIN_ANY/CONTAIN_ALL work natively on ARRAY_STRING with INVERT index; ARRAY_STRING is ADEQUATE for path match-key filtering (no sidecar catalog needed) as long as LIKE is never applied to the array field",
+      "evidence": {
+        "any1": 20,
+        "any2": 40,
+        "all": 20,
+        "combinedWithScalar": 20
+      }
+    },
+    {
+      "id": "4.1",
+      "name": "ID constraints: sha256 hex, length, character set",
+      "status": "passed",
+      "detail": "64-hex-char SHA-256 digest works as an ID. Long (4096-char) id: threw: ZVEC_INVALID_ARGUMENT. UUID-with-dashes: accepted uuid-with-dashes. Empty id: threw: ZVEC_INVALID_ARGUMENT.",
+      "evidence": {
+        "okSha": {
+          "ok": true,
+          "code": "ZVEC_OK",
+          "message": ""
+        },
+        "longOutcome": "threw: ZVEC_INVALID_ARGUMENT",
+        "uuidOutcome": "accepted uuid-with-dashes",
+        "emptyOutcome": "threw: ZVEC_INVALID_ARGUMENT"
+      }
+    },
+    {
+      "id": "5.1",
+      "name": "eligibility filter applied BEFORE top-k, not after",
+      "status": "passed",
+      "detail": "filter is applied before top-k selection: asking for topk=5 with a filter matching exactly 5 poor-similarity docs returns exactly those 5, not an empty/wrong set from filtering an unfiltered top-5",
+      "evidence": [
+        "0000000000000000000000000000000000000000000000000000000000000fa0",
+        "0000000000000000000000000000000000000000000000000000000000000fa1",
+        "0000000000000000000000000000000000000000000000000000000000000fa2",
+        "0000000000000000000000000000000000000000000000000000000000000fa3",
+        "0000000000000000000000000000000000000000000000000000000000000fa4"
+      ]
+    },
+    {
+      "id": "6.1",
+      "name": "two concurrent reader processes",
+      "status": "passed",
+      "detail": "see 6.1b for the actual concurrent run (spawnSync trial retained as sequential baseline)",
+      "evidence": {
+        "r1": "{\"role\":\"reader\",\"opens\":1,\"queries\":8234,\"errors\":[],\"errorCount\":0}",
+        "r2": "{\"role\":\"reader\",\"opens\":1,\"queries\":7760,\"errors\":[],\"errorCount\":0}"
+      }
+    },
+    {
+      "id": "6.2",
+      "name": "two readers, truly concurrent (readOnly)",
+      "status": "passed",
+      "detail": "two simultaneous readOnly readers: 13408 total successful queries, 0 errors — concurrent reads work cleanly",
+      "evidence": {
+        "pa": {
+          "role": "reader",
+          "opens": 1,
+          "queries": 6692,
+          "errors": [],
+          "errorCount": 0
+        },
+        "pb": {
+          "role": "reader",
+          "opens": 1,
+          "queries": 6716,
+          "errors": [],
+          "errorCount": 0
+        }
+      }
+    },
+    {
+      "id": "6.3",
+      "name": "two competing writer processes (non-readOnly, non-exclusive at the app level)",
+      "status": "passed",
+      "detail": "two concurrent writers WITHOUT app-level exclusion produced errors: {\"paErrors\":[\"open-failed:ZVEC_INTERNAL_ERROR\"],\"pbErrors\":[]} — confirms the spec requirement for an exclusive application lock around writers; Zvec does not itself make concurrent writers from two processes safe",
+      "evidence": {
+        "pa": {
+          "role": "writer",
+          "tag": "1",
+          "writes": 0,
+          "errors": [
+            "open-failed:ZVEC_INTERNAL_ERROR"
+          ],
+          "errorCount": 1
+        },
+        "pb": {
+          "role": "writer",
+          "tag": "2",
+          "writes": 30244,
+          "errors": [],
+          "errorCount": 0
+        }
+      }
+    },
+    {
+      "id": "6.4",
+      "name": "a writer concurrent with readers",
+      "status": "passed",
+      "detail": "writer+2 readOnly readers concurrently: writer errors=0, reader errors=1/1. Observed contention errors — the application lock must serialize writers against readers per spec section 13.",
+      "evidence": {
+        "pw": {
+          "role": "writer",
+          "tag": "3",
+          "writes": 30495,
+          "errors": [],
+          "errorCount": 0
+        },
+        "pr1": {
+          "role": "reader",
+          "opens": 0,
+          "queries": 0,
+          "errors": [
+            "open-failed:ZVEC_INTERNAL_ERROR"
+          ],
+          "errorCount": 1
+        },
+        "pr2": {
+          "role": "reader",
+          "opens": 0,
+          "queries": 0,
+          "errors": [
+            "open-failed:ZVEC_INTERNAL_ERROR"
+          ],
+          "errorCount": 1
+        }
+      }
+    },
+    {
+      "id": "6.5",
+      "name": "readOnly and enableMMAP options",
+      "status": "passed",
+      "detail": "readOnly:true works standalone; enableMMAP:true and enableMMAP:false both open and query successfully (errors: mmap-true=0, mmap-false=0)",
+      "evidence": {
+        "proResult": {
+          "role": "reader",
+          "opens": 1,
+          "queries": 3,
+          "errors": [],
+          "errorCount": 0
+        },
+        "proFalse": {
+          "role": "reader",
+          "opens": 1,
+          "queries": 3,
+          "errors": [],
+          "errorCount": 0
+        }
+      }
+    },
+    {
+      "id": "7.1",
+      "name": "durability: SIGKILL before any close()",
+      "status": "passed",
+      "detail": "after SIGKILL with no closeSync(), reopen succeeded with docCount=5 (of 5 inserted) — closeSync() is NOT proven to be required for durability of already-applied upsertSync calls on this build, but the application journal must still exist because per-record status/partial-failure and cross-record batch atomicity are not guaranteed by this alone",
+      "evidence": {
+        "openError": null,
+        "survived": 5
+      }
+    },
+    {
+      "id": "7.2",
+      "name": "durability: closeSync() then SIGKILL (already-exited process control)",
+      "status": "passed",
+      "detail": "closeSync() followed by process exit is a reliable checkpoint: all 7 docs survived reopening in a fresh process",
+      "evidence": {
+        "survived": 7
+      }
+    },
+    {
+      "id": "8.1",
+      "name": "exclusive lock: acquire, hold, release, then reacquire",
+      "status": "passed",
+      "detail": "exclusive lock acquired, held, released, then successfully reacquired by a second process",
+      "evidence": {
+        "first": [
+          {
+            "event": "acquired",
+            "kind": "exclusive",
+            "waitedMs": 6,
+            "pid": 57358
+          },
+          {
+            "event": "released",
+            "kind": "exclusive",
+            "pid": 57358
+          }
+        ],
+        "second": [
+          {
+            "event": "acquired",
+            "kind": "exclusive",
+            "waitedMs": 4,
+            "pid": 57372
+          },
+          {
+            "event": "released",
+            "kind": "exclusive",
+            "pid": 57372
+          }
+        ]
+      }
+    },
+    {
+      "id": "8.2",
+      "name": "two shared (reader) locks held concurrently",
+      "status": "passed",
+      "detail": "two shared holders acquired concurrently without waiting on each other (waited 5ms / 5ms)",
+      "evidence": {
+        "a": [
+          {
+            "event": "acquired",
+            "kind": "shared",
+            "waitedMs": 5,
+            "pid": 57386
+          },
+          {
+            "event": "released",
+            "kind": "shared",
+            "pid": 57386
+          }
+        ],
+        "b": [
+          {
+            "event": "acquired",
+            "kind": "shared",
+            "waitedMs": 5,
+            "pid": 57387
+          },
+          {
+            "event": "released",
+            "kind": "shared",
+            "pid": 57387
+          }
+        ]
+      }
+    },
+    {
+      "id": "8.3",
+      "name": "exclusive lock excludes a concurrent shared lock, and vice versa",
+      "status": "passed",
+      "detail": "a shared-lock request correctly blocked until the exclusive holder released (waited 702ms against a ~500ms exclusive hold)",
+      "evidence": {
+        "exclusiveResult": [
+          {
+            "event": "acquired",
+            "kind": "exclusive",
+            "waitedMs": 5,
+            "pid": 57414
+          },
+          {
+            "event": "released",
+            "kind": "exclusive",
+            "pid": 57414
+          }
+        ],
+        "sharedSecond": [
+          {
+            "event": "acquired",
+            "kind": "shared",
+            "waitedMs": 702,
+            "pid": 57415
+          },
+          {
+            "event": "released",
+            "kind": "shared",
+            "pid": 57415
+          }
+        ]
+      }
+    },
+    {
+      "id": "8.4",
+      "name": "lock released by SIGKILL (staleness reclaim), not by a timer",
+      "status": "passed",
+      "detail": "after SIGKILL of the exclusive holder, a new requester reclaimed the lock via liveness+start-time staleness detection in 7ms — not via an elapsed timer",
+      "evidence": [
+        {
+          "event": "acquired",
+          "kind": "exclusive",
+          "waitedMs": 7,
+          "pid": 57537
+        },
+        {
+          "event": "released",
+          "kind": "exclusive",
+          "pid": 57537
+        }
+      ]
+    },
+    {
+      "id": "9.1",
+      "name": "opencode --version",
+      "status": "passed",
+      "detail": "opencode is installed: 1.18.30",
+      "evidence": "1.18.30"
+    },
+    {
+      "id": "9.2",
+      "name": "zg --version",
+      "status": "unsupported",
+      "detail": "zg is NOT installed in this environment; not attempting installation per instructions. The evaluation adapters must treat a missing zg as a documented precondition, not a bug.",
+      "evidence": null
+    }
+  ]
+}
