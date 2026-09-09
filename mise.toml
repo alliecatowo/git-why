@@ -1,0 +1,65 @@
+[tools]
+node = "24.21.0"
+gh = "latest"
+
+[env]
+_.path = ["{{config_root}}/node_modules/.bin"]
+
+[tasks.setup]
+description = "Install dependencies from the lockfile and run doctor"
+run = ["npm ci --no-audit --fund=false || npm install --no-audit --fund=false", "node scripts/doctor.mjs"]
+
+[tasks.doctor]
+description = "Verify tools, native deps, Git capabilities, benchmark prerequisites"
+run = "node scripts/doctor.mjs"
+
+[tasks.build]
+description = "Compile the package"
+run = "npm run build"
+
+[tasks.check]
+description = "Format, lint, typecheck and required functional tests"
+depends = ["build"]
+run = "npm run check"
+
+[tasks."test:integration"]
+description = "Real repositories, storage, locks, recovery, edge cases"
+depends = ["build"]
+run = "npm run test:integration"
+
+[tasks."test:package"]
+description = "Pack, install into a clean prefix, invoke through Git"
+depends = ["build"]
+run = "node scripts/verify-package.mjs"
+
+[tasks."spike:capabilities"]
+description = "Execute dependency and runtime probes"
+run = "node --experimental-strip-types spike/run.ts"
+
+[tasks."bench:retrieval"]
+description = "Run the frozen retrieval comparison"
+depends = ["build"]
+run = "node bench/retrieval/run.mjs"
+
+[tasks."bench:perf"]
+description = "Run the bounded CLI/system measurements"
+depends = ["build"]
+run = "node bench/perf/run.mjs"
+
+[tasks."bench:agents:smoke"]
+description = "Run the 16 free-model smoke trials"
+depends = ["build"]
+run = "node bench/agents/run.mjs --stage=smoke"
+
+[tasks."bench:agents:pilot"]
+description = "Run the 64 free-model pilot trials"
+depends = ["build"]
+run = "node bench/agents/run.mjs --stage=pilot"
+
+[tasks."bench:report"]
+description = "Generate tables and the report from saved records"
+run = "node bench/report.mjs"
+
+[tasks."repo:create"]
+description = "Idempotently create/verify and push the authorized public repository"
+run = "node scripts/repo-create.mjs"

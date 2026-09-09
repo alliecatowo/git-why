@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.mise.local.toml
+
+# benchmark + spike outputs that are regenerated, not committed
+bench/work/
+bench/raw/opencode-models-raw.txt
+spike/out/*.log
+.tmp/
+*.tgz
+
+# never publish
+.env
+.env.*
+**/auth.json

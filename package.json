@@ -1,0 +1,31 @@
+{
+  "name": "@alliecatowo/git-why",
+  "version": "0.1.0",
+  "description": "Semantic archaeology for Git. Find the history that explains the code.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "bin": { "git-why": "dist/cli/main.js" },
+  "files": ["dist/", "README.md", "LICENSE", "NOTICE", "schema/"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/postbuild.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "test:unit": "node --test --test-concurrency=4 test/unit/",
+    "test:integration": "node --test --test-concurrency=2 --test-timeout=300000 test/integration/",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit"
+  },
+  "dependencies": {
+    "@zvec/zvec": "0.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.7.0",
+    "eslint": "^9.17.0",
+    "typescript-eslint": "^8.19.0",
+    "@eslint/js": "^9.17.0",
+    "prettier": "^3.4.2"
+  }
+}

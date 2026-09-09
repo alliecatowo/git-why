@@ -1,0 +1,15 @@
+Git Why
+Copyright 2026 Git Why contributors
+
+This product includes software developed at the Git Why project.
+
+Third-party components:
+
+  @zvec/zvec (Apache-2.0) — in-process vector and full-text storage engine.
+  https://github.com/zvec-ai/zvec-node
+
+  Static embedding inference in src/embedding/ is an independent
+  implementation of the Model2Vec static-embedding scheme.
+  Model weights are downloaded at runtime and are not distributed with this
+  package. The default model, minishlab/potion-code-16M-v2, is MIT licensed.
+  https://huggingface.co/minishlab/potion-code-16M-v2
