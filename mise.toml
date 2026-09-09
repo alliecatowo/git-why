@@ -1,6 +1,6 @@
 [tools]
 node = "24.21.0"
-gh = "latest"
+gh = "2.100.0"
 
 [env]
 _.path = ["{{config_root}}/node_modules/.bin"]

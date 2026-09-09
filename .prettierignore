@@ -1,0 +1,9 @@
+dist/
+node_modules/
+LICENSE
+docs/spec.md
+bench/work/
+bench/results/
+bench/raw/
+spike/out/
+*.jsonl
