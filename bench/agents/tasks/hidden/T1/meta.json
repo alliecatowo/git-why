@@ -1,0 +1,9 @@
+{
+  "taskId": "T1",
+  "kind": "preserve_rationale",
+  "baseSha": "0863abc99b2c518221094d51239fc10d21b0a9f7",
+  "goldSha": null,
+  "successNote": "Hidden behavior tests pass (simplification did not change behavior) AND the legacy-tenant empty-token rationale is correctly cited if the agent explains its change.",
+  "hasHiddenTest": true,
+  "hasRubric": false
+}

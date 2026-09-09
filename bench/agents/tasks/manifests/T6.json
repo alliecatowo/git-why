@@ -1,0 +1,9 @@
+{
+  "taskId": "T6",
+  "seed": "git-why-bench::agents::T6::v1",
+  "kind": "current_code_control",
+  "baseSha": "38c6c75f9fe084e668536f9d88a74fac3696ff14",
+  "goldSha": null,
+  "priorShas": [],
+  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T6"
+}

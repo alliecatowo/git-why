@@ -7,7 +7,7 @@ import { join } from 'node:path';
 
 const OUT = '.tmp/tsc-test';
 
-for (const dir of ['test', 'src']) {
+for (const dir of ['test', 'src', 'schema']) {
   if (!existsSync(dir)) continue;
   await mkdir(join(OUT, dir), { recursive: true });
   await cp(dir, join(OUT, dir), {

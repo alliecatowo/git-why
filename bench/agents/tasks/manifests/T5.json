@@ -1,0 +1,18 @@
+{
+  "taskId": "T5",
+  "seed": "git-why-bench::agents::T5::v1",
+  "kind": "evidence_question",
+  "baseSha": "3f31cda2879da261ae8117babf9d71e80cdef928",
+  "goldSha": null,
+  "priorShas": [
+    {
+      "sha": "d6d1063c70d5f532b966da0d09d033c29236ec42",
+      "message": "Work around Safari dropping SameSite=None cookies without Secure\n\nSafari versions in the 12.0-12.1 range silently drop cookies marked\nSameSite=None even when Secure is also set, due to a known Safari\nbug. Detect these Safari versions via user-agent and omit SameSite\nentirely for them so the session cookie survives. Track Safari's fix\nrollout before removing this branch."
+    },
+    {
+      "sha": "d96b6bb9fb65a28593b34689f5beff7ba6f0dee5",
+      "message": "Remove the Safari 12.0-12.1 SameSite cookie workaround\n\nTraffic from Safari 12.0-12.1 has been under 0.01% of sessions for\ntwo full quarters and the affected versions are no longer receiving\nOS updates that would let users reach us at all. Removing the\nuser-agent branch added earlier for this workaround."
+    }
+  ],
+  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T5"
+}

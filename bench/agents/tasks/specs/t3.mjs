@@ -98,6 +98,7 @@ test('a priority job jumps ahead of already-queued normal jobs', async () => {
   pool.submit(() => Promise.resolve().then(() => order.push('B')));
   assert.equal(typeof pool.submitPriority, 'function', 'expected pool.submitPriority to exist');
   pool.submitPriority(() => Promise.resolve().then(() => order.push('C')));
+  await wait(5);
   resolveA();
   await wait(30);
   assert.deepEqual(order, ['A', 'C', 'B']);

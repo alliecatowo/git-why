@@ -1,0 +1,14 @@
+{
+  "taskId": "T4",
+  "seed": "git-why-bench::agents::T4::v1",
+  "kind": "architecture_constraint",
+  "baseSha": "6599a6f72e307a44cdf3f2f18eb184dada36eace",
+  "goldSha": null,
+  "priorShas": [
+    {
+      "sha": "e765b1d76c31423853effcee64c53d6761bfac73",
+      "message": "Never retry Initech's /charge endpoint\n\nInitech's /charge endpoint is not idempotent: retrying a charge\nrequest that actually reached their server (but whose response we\nmissed due to a network error) creates a second real-world charge.\nTheir API docs (section 12) confirm there is no idempotency-key\nmechanism on this endpoint. Every other Initech endpoint is safe to\nretry on network error."
+    }
+  ],
+  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T4"
+}

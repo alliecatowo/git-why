@@ -1,0 +1,9 @@
+{
+  "taskId": "T5",
+  "kind": "evidence_question",
+  "baseSha": "3f31cda2879da261ae8117babf9d71e80cdef928",
+  "goldSha": null,
+  "successNote": "Supported facts and valid ancestor-SHA citations; no fabricated motivation.",
+  "hasHiddenTest": false,
+  "hasRubric": true
+}

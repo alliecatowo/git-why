@@ -54,17 +54,25 @@ import type {
  */
 async function loadEmbedder(options: { offline: boolean; onProgress: RunOptions['onProgress'] }): Promise<Embedder> {
   options.onProgress({ stage: 'model', message: 'loading embedding model' });
+  // The cache reports every chunk. Emitting one stderr line per chunk buries
+  // the actual stages, so only report a file starting and each 25% step.
+  const lastStep = new Map<string, number>();
   return loadDefaultEmbedder({
     offline: options.offline,
-    onProgress: (p) =>
-      options.onProgress({
-        stage: 'model',
-        // Content-Length is optional, so a percentage is not always available.
-        message:
-          p.totalBytes === null
-            ? `downloading ${p.file} (${p.bytesDownloaded} bytes)`
-            : `downloading ${p.file} (${Math.round((p.bytesDownloaded / Math.max(p.totalBytes, 1)) * 100)}%)`,
-      }),
+    onProgress: (p) => {
+      const step =
+        p.totalBytes === null || p.totalBytes === 0
+          ? 0
+          : Math.floor((p.bytesDownloaded / p.totalBytes) * 4);
+      if (lastStep.get(p.file) === step) return;
+      lastStep.set(p.file, step);
+      // Content-Length is optional, so a percentage is not always available.
+      const detail =
+        p.totalBytes === null || p.totalBytes === 0
+          ? ''
+          : ` (${Math.round((p.bytesDownloaded / p.totalBytes) * 100)}%)`;
+      options.onProgress({ stage: 'model', message: `downloading ${p.file}${detail}` });
+    },
   });
 }
 

@@ -1,0 +1,9 @@
+{
+  "taskId": "T3",
+  "kind": "deleted_approach",
+  "baseSha": "7cc725f83d13ee9a0a4819d6cf212fb92c3351b6",
+  "goldSha": null,
+  "successNote": "Priority behavior restored inside the new interface without exceeding the concurrency limit (the old queue's known defect: no concurrency control at all).",
+  "hasHiddenTest": true,
+  "hasRubric": false
+}

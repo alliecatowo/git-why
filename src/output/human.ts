@@ -32,12 +32,20 @@ function indentBlock(text: string, indent: string): string {
     .join('\n');
 }
 
+function stripLeadingSubject(excerpt: string, subject: string): string {
+  const trimmed = excerpt.trimStart();
+  if (!trimmed.startsWith(subject)) return excerpt;
+  return trimmed.slice(subject.length).replace(/^\r?\n\r?\n?/, '');
+}
+
 function renderResult(hit: CommitHit, index: number): string {
   const lines: string[] = [];
   lines.push(`${index}. ${shortSha(hit.sha)}  ${s(hit.subject)}`);
   lines.push(`${INDENT}${formatDate(hit.committerTime)} · ${s(hit.author.name)}`);
 
-  const excerpt = hit.messageExcerpt.trim();
+  // The excerpt is subject + body so that JSON consumers get a self-contained
+  // message, but the subject is already on the first line here.
+  const excerpt = stripLeadingSubject(hit.messageExcerpt, hit.subject).trim();
   if (excerpt.length > 0) {
     lines.push('');
     lines.push(indentBlock(s(excerpt), INDENT));

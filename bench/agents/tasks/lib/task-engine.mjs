@@ -24,7 +24,11 @@ export function buildTaskRepo(spec, { workDir, manifestDir }) {
   }
 
   applyFiles(dir, spec.baseCommit.files);
-  const baseSha = commitAll(dir, { message: spec.baseCommit.message, epochSeconds: epoch });
+  const baseSha = commitAll(dir, {
+    message: spec.baseCommit.message,
+    epochSeconds: epoch,
+    allowEmpty: spec.baseCommit.files.length === 0,
+  });
   epoch += 3600;
 
   let goldSha = null;

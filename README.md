@@ -3,11 +3,47 @@
 **Semantic archaeology for Git.** `git blame` tells you who changed the code.
 `git why` finds the history that explains it.
 
-<!-- DEMO: replaced by scripts/render-demo.mjs from a real run against the
-     committed fixture. Do not hand-edit. -->
+Real output from `mise run demo`, which rebuilds the fixture repository from
+`bench/fixtures/demo/build.mjs` and runs these queries. Nothing here is
+hand-written.
 
 ```text
 $ git why "that bizarre bug where reconnecting subscribed twice"
+
+1. 7deab42  Stop duplicate subscriptions after reconnect
+   2025-11-20 · Maya Chen
+
+   Reconnecting re-ran the subscribe handler without clearing the previous
+   registration, so every reconnect doubled the delivered events.
+
+   src/net/socket.ts
+   -export function connect(url) { return new Socket(url); }
+   +export function connect(url) {
+   +  const s = new Socket(url);
+   +  s.on('reconnect', () => resubscribeOnce(s));
+   +  return s;
+   +}
+```
+
+The query and the commit share no vocabulary. "reconnecting subscribed twice"
+finds "Stop duplicate subscriptions after reconnect" because the index carries
+the meaning of the change, not just its words.
+
+```text
+$ git why "why do we keep the session when the refresh token is empty?"
+
+1. f17db20  Fix infinite token-refresh loop
+   2025-11-03 · Maya Chen
+
+   Provider X can return an empty refresh token while the current access
+   token remains valid. Retrying here puts clients into an infinite loop.
+
+   src/auth/refresh.ts
+    export function refresh(session, refreshToken) {
+   -  if (!refreshToken) throw new InvalidTokenError();
+   +  if (!refreshToken) return session;
+      return exchange(refreshToken);
+    }
 ```
 
 ## Install

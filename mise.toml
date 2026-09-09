@@ -36,6 +36,11 @@ run = "node scripts/verify-package.mjs"
 description = "Execute dependency and runtime probes"
 run = "node --experimental-strip-types spike/run.ts"
 
+[tasks.demo]
+description = "Rebuild the demo repository and run the README queries against it"
+depends = ["build"]
+run = "node scripts/demo.mjs"
+
 [tasks."bench:retrieval"]
 description = "Run the frozen retrieval comparison"
 depends = ["build"]
