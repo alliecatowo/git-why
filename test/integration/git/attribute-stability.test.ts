@@ -12,6 +12,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createGitHistoryExtractor } from '../../../src/git/extract.js';
+import { FakeEmbedder } from '../../../src/embedding/fake.js';
 import { resolveRepositoryIdentity } from '../../../src/git/repository.js';
 import { captureSnapshot } from '../../../src/git/snapshot.js';
 import { createTestRepo } from '../../fixtures/repo.js';
@@ -20,7 +21,7 @@ import type { CommitExtraction } from '../../../src/types.js';
 async function extractOne(dir: string, sha: string): Promise<CommitExtraction> {
   const repository = await resolveRepositoryIdentity(dir);
   const snapshot = await captureSnapshot(repository);
-  const extractor = createGitHistoryExtractor();
+  const extractor = createGitHistoryExtractor(new FakeEmbedder());
   for await (const item of extractor.extract(snapshot, [sha])) return item;
   throw new Error('no result');
 }

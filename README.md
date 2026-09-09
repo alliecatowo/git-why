@@ -79,6 +79,12 @@ cache shared across repositories, never inside your project.
 Lifecycle commands: `git why index`, `status`, `status --json`, `rebuild`,
 `rebuild --use-default-model`, `gc`.
 
+For help, use `git why -h` or `git-why --help`. Git itself intercepts
+`--help` in the first position after a subcommand name and redirects it to a
+man-page lookup, so `git why --help` reports a missing manual page rather than
+reaching this tool. That is Git's behaviour for every external subcommand, not
+something Git Why can override.
+
 ## Offline use and privacy
 
 Git Why is local by default. Repository text is never sent to a model host;

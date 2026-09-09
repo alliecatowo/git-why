@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T18:58:31.215Z",
+  "generatedAt": "2026-09-09T20:03:08.730Z",
   "versions": {
     "node": "v24.21.0",
     "platform": "darwin",
@@ -370,27 +370,27 @@
       "status": "passed",
       "detail": "see 6.1b for the actual concurrent run (spawnSync trial retained as sequential baseline)",
       "evidence": {
-        "r1": "{\"role\":\"reader\",\"opens\":1,\"queries\":8234,\"errors\":[],\"errorCount\":0}",
-        "r2": "{\"role\":\"reader\",\"opens\":1,\"queries\":7760,\"errors\":[],\"errorCount\":0}"
+        "r1": "{\"role\":\"reader\",\"opens\":1,\"queries\":7800,\"errors\":[],\"errorCount\":0}",
+        "r2": "{\"role\":\"reader\",\"opens\":1,\"queries\":8112,\"errors\":[],\"errorCount\":0}"
       }
     },
     {
       "id": "6.2",
       "name": "two readers, truly concurrent (readOnly)",
       "status": "passed",
-      "detail": "two simultaneous readOnly readers: 13408 total successful queries, 0 errors — concurrent reads work cleanly",
+      "detail": "two simultaneous readOnly readers: 13199 total successful queries, 0 errors — concurrent reads work cleanly",
       "evidence": {
         "pa": {
           "role": "reader",
           "opens": 1,
-          "queries": 6692,
+          "queries": 6576,
           "errors": [],
           "errorCount": 0
         },
         "pb": {
           "role": "reader",
           "opens": 1,
-          "queries": 6716,
+          "queries": 6623,
           "errors": [],
           "errorCount": 0
         }
@@ -414,7 +414,7 @@
         "pb": {
           "role": "writer",
           "tag": "2",
-          "writes": 30244,
+          "writes": 30170,
           "errors": [],
           "errorCount": 0
         }
@@ -424,32 +424,30 @@
       "id": "6.4",
       "name": "a writer concurrent with readers",
       "status": "passed",
-      "detail": "writer+2 readOnly readers concurrently: writer errors=0, reader errors=1/1. Observed contention errors — the application lock must serialize writers against readers per spec section 13.",
+      "detail": "writer+2 readOnly readers concurrently: writer errors=1, reader errors=0/0. Observed contention errors — the application lock must serialize writers against readers per spec section 13.",
       "evidence": {
         "pw": {
           "role": "writer",
           "tag": "3",
-          "writes": 30495,
-          "errors": [],
-          "errorCount": 0
+          "writes": 0,
+          "errors": [
+            "open-failed:ZVEC_INTERNAL_ERROR"
+          ],
+          "errorCount": 1
         },
         "pr1": {
           "role": "reader",
-          "opens": 0,
-          "queries": 0,
-          "errors": [
-            "open-failed:ZVEC_INTERNAL_ERROR"
-          ],
-          "errorCount": 1
+          "opens": 1,
+          "queries": 485,
+          "errors": [],
+          "errorCount": 0
         },
         "pr2": {
           "role": "reader",
-          "opens": 0,
-          "queries": 0,
-          "errors": [
-            "open-failed:ZVEC_INTERNAL_ERROR"
-          ],
-          "errorCount": 1
+          "opens": 1,
+          "queries": 483,
+          "errors": [],
+          "errorCount": 0
         }
       }
     },
@@ -462,14 +460,14 @@
         "proResult": {
           "role": "reader",
           "opens": 1,
-          "queries": 3,
+          "queries": 119,
           "errors": [],
           "errorCount": 0
         },
         "proFalse": {
           "role": "reader",
           "opens": 1,
-          "queries": 3,
+          "queries": 110,
           "errors": [],
           "errorCount": 0
         }
@@ -505,25 +503,25 @@
             "event": "acquired",
             "kind": "exclusive",
             "waitedMs": 6,
-            "pid": 57358
+            "pid": 27678
           },
           {
             "event": "released",
             "kind": "exclusive",
-            "pid": 57358
+            "pid": 27678
           }
         ],
         "second": [
           {
             "event": "acquired",
             "kind": "exclusive",
-            "waitedMs": 4,
-            "pid": 57372
+            "waitedMs": 5,
+            "pid": 27692
           },
           {
             "event": "released",
             "kind": "exclusive",
-            "pid": 57372
+            "pid": 27692
           }
         ]
       }
@@ -539,12 +537,12 @@
             "event": "acquired",
             "kind": "shared",
             "waitedMs": 5,
-            "pid": 57386
+            "pid": 27706
           },
           {
             "event": "released",
             "kind": "shared",
-            "pid": 57386
+            "pid": 27706
           }
         ],
         "b": [
@@ -552,12 +550,12 @@
             "event": "acquired",
             "kind": "shared",
             "waitedMs": 5,
-            "pid": 57387
+            "pid": 27707
           },
           {
             "event": "released",
             "kind": "shared",
-            "pid": 57387
+            "pid": 27707
           }
         ]
       }
@@ -566,32 +564,32 @@
       "id": "8.3",
       "name": "exclusive lock excludes a concurrent shared lock, and vice versa",
       "status": "passed",
-      "detail": "a shared-lock request correctly blocked until the exclusive holder released (waited 702ms against a ~500ms exclusive hold)",
+      "detail": "a shared-lock request correctly blocked until the exclusive holder released (waited 725ms against a ~500ms exclusive hold)",
       "evidence": {
         "exclusiveResult": [
           {
             "event": "acquired",
             "kind": "exclusive",
-            "waitedMs": 5,
-            "pid": 57414
+            "waitedMs": 4,
+            "pid": 27734
           },
           {
             "event": "released",
             "kind": "exclusive",
-            "pid": 57414
+            "pid": 27734
           }
         ],
         "sharedSecond": [
           {
             "event": "acquired",
             "kind": "shared",
-            "waitedMs": 702,
-            "pid": 57415
+            "waitedMs": 725,
+            "pid": 27735
           },
           {
             "event": "released",
             "kind": "shared",
-            "pid": 57415
+            "pid": 27735
           }
         ]
       }
@@ -600,18 +598,18 @@
       "id": "8.4",
       "name": "lock released by SIGKILL (staleness reclaim), not by a timer",
       "status": "passed",
-      "detail": "after SIGKILL of the exclusive holder, a new requester reclaimed the lock via liveness+start-time staleness detection in 7ms — not via an elapsed timer",
+      "detail": "after SIGKILL of the exclusive holder, a new requester reclaimed the lock via liveness+start-time staleness detection in 8ms — not via an elapsed timer",
       "evidence": [
         {
           "event": "acquired",
           "kind": "exclusive",
-          "waitedMs": 7,
-          "pid": 57537
+          "waitedMs": 8,
+          "pid": 27854
         },
         {
           "event": "released",
           "kind": "exclusive",
-          "pid": 57537
+          "pid": 27854
         }
       ]
     },

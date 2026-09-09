@@ -1,0 +1,6 @@
+{
+  "note": "Each entry is a distinct installed/built git-why CLI to compare. The product ships exactly ONE production embedder (docs/spec.md section 10), so by default there is one candidate: whatever dist/cli/main.js was built with. Comparing multiple embedding-model candidates (the up-to-three-model spike in section 10) requires either separate builds pointed at by separate cliPath entries, or a documented bench-only override the CLI exposes -- there is none in the section 5 command contract as of this writing, so bench/retrieval/run.mjs cannot fabricate that comparison by importing product internals. Add additional entries here once separate builds exist.",
+  "candidates": [
+    { "label": "production", "cliPath": "dist/cli/main.js", "env": {} }
+  ]
+}

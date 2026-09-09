@@ -10,6 +10,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { createGitHistoryExtractor } from '../../../src/git/extract.js';
+import { FakeEmbedder } from '../../../src/embedding/fake.js';
 import { resolveRepositoryIdentity } from '../../../src/git/repository.js';
 import { captureSnapshot } from '../../../src/git/snapshot.js';
 import { enumerateReachable } from '../../../src/git/reachable.js';
@@ -40,7 +41,7 @@ test('shallow clone: boundary commit keeps evidence, is not treated as root, cov
     assert.ok(reachable.length > 0, 'a failed/interrupted enumeration must throw, never silently return empty');
     assert.ok(reachable.includes(boundaryOid));
 
-    const extractor = createGitHistoryExtractor();
+    const extractor = createGitHistoryExtractor(new FakeEmbedder());
     const results = [];
     for await (const item of extractor.extract(snapshot, [boundaryOid])) results.push(item);
     assert.equal(results.length, 1);

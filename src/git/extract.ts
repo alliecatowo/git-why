@@ -1,9 +1,13 @@
 /**
  * The `HistoryExtractor`: trusts Git, parses its machine interfaces, and emits raw
- * structural material per commit (spec #7). `semanticText`/`lexicalText` are left as
- * the empty string here — populating them, plus chunking/slicing and the exclusion
- * policy, is the retrieval lane's job (`src/history/`). This module never imports
- * from `src/history/`; it coordinates only through `src/types.ts`.
+ * structural material per commit (spec #7), then routes that material through
+ * `buildCommitExtraction` (`src/history/extract.ts`) -- the retrieval lane's
+ * documented join point -- which applies ids, exclusion, chunking, the oversized-
+ * commit budget, and populates `semanticText`/`lexicalText`. This module owns
+ * discovering Git-side coverage reasons (`shallow_boundary`, `missing_object`,
+ * `merge_hunks_omitted`, `binary`, `pathological_commit`) and hands them to
+ * `buildCommitExtraction` via the `gitCoverage` field on `RawCommitInput`/
+ * `RawFileChange`, which merges them into the coverage it computes.
  *
  * Uses a small, bounded number of batched Git processes per refresh: one
  * `cat-file --batch` call for ALL requested commits' metadata, then a bounded pool of
@@ -13,13 +17,8 @@
  */
 
 import {
-  type ChangeType,
-  type Coverage,
+  type Embedder,
   type CommitExtraction,
-  type CommitRecord,
-  EMPTY_COVERAGE,
-  type EvidenceKind,
-  type EvidenceRecord,
   GitWhyError,
   type HistoricalPath,
   type HistoricalPathChange,
@@ -29,41 +28,25 @@ import {
   type RepositorySnapshot,
 } from '../types.js';
 import { runGit } from './exec.js';
-import { type ParsedHunk, type RawChangeEntry, parsePatchSections, parseRawChanges } from './patch.js';
+import {
+  type ParsedHunk,
+  type PatchLine,
+  type PatchLineKind,
+  type RawChangeEntry,
+  parsePatchSections,
+  parseRawChanges,
+} from './patch.js';
 import { PATCH_POLICY_BYTE_CAP, diffTreePatchArgs, diffTreeRawArgs } from './policy.js';
+import {
+  buildCommitExtraction,
+  type GitDiscoveredCoverage,
+  type RawCommitInput,
+  type RawFileChange,
+} from '../history/extract.js';
+import type { DiffLineKind, RawHunk } from '../history/chunk.js';
 
 const CAT_FILE_MAX_BYTES = 512 * 1024 * 1024;
 const RAW_DIFF_MAX_BYTES = 64 * 1024 * 1024;
-
-/* ------------------------------------------------------------------ *
- * Provisional record IDs
- *
- * `src/types.ts` requires `CommitRecord.id`/`EvidenceRecord.id` to already be present
- * on the records `HistoryExtractor.extract()` yields, and documents the canonical
- * algorithm as living in `src/history/ids.ts` (retrieval lane). This module must not
- * import from `src/history/`, and must not reimplement that hashing scheme under a
- * different name (that would just be the same duplication by another route). These
- * IDs are therefore a deliberately distinct, non-hashed, human-readable placeholder
- * built only from fields already present elsewhere on the same record (sha,
- * parentSha, path bytes, hunk/slice ordinal) so whichever layer wires this extractor
- * up to storage can trivially recompute the canonical ID from the record itself, or
- * overwrite this field outright. Flagged in the handoff report.
- * ------------------------------------------------------------------ */
-
-function provisionalCommitId(sha: string): string {
-  return `commit:${sha}`;
-}
-
-function provisionalEvidenceId(
-  kind: EvidenceKind,
-  sha: string,
-  parentSha: string | null,
-  pathBytesBase64: string,
-  hunkOrdinal: number | null,
-  sliceOrdinal: number,
-): string {
-  return `${kind}:${sha}:${parentSha ?? '-'}:${pathBytesBase64}:${hunkOrdinal ?? -1}:${sliceOrdinal}`;
-}
 
 /* ------------------------------------------------------------------ *
  * Commit object parsing (git cat-file --batch)
@@ -259,122 +242,51 @@ async function runDiffTreePatch(repository: RepositoryIdentity, parent: string, 
 }
 
 /* ------------------------------------------------------------------ *
- * Evidence construction
+ * Git lane -> history lane line/hunk mapping
+ *
+ * `PatchLine.kind` (this module's parser) and `DiffLineKind` (the history
+ * lane's `RawHunk` contract, `src/history/chunk.ts`) are deliberately
+ * different unions spelled by two independently-built lanes. Mapped
+ * explicitly, exhaustively, and totally -- never by casting -- so a future
+ * third spelling fails to compile here instead of silently mislabelling
+ * evidence.
  * ------------------------------------------------------------------ */
 
-function reconstructHunkExcerpt(hunk: ParsedHunk): string {
-  const bodyLines = hunk.lines.map((l) => {
-    const marker = l.kind === 'add' ? '+' : l.kind === 'remove' ? '-' : ' ';
-    return marker + l.text;
-  });
-  return [hunk.header, ...bodyLines].join('\n');
+function toDiffLineKind(kind: PatchLineKind): DiffLineKind {
+  switch (kind) {
+    case 'context':
+      return 'context';
+    case 'add':
+      return 'added';
+    case 'remove':
+      return 'removed';
+  }
 }
 
-function makeFileChangeEvidence(
-  sha: string,
-  parentSha: string | null,
-  change: HistoricalPathChange,
-  coverage: Coverage,
-): EvidenceRecord {
+function toRawHunk(change: HistoricalPathChange, hunkOrdinal: number, hunk: ParsedHunk): RawHunk {
   return {
-    type: 'evidence',
-    kind: 'file_change',
-    id: provisionalEvidenceId('file_change', sha, parentSha, change.path.bytesBase64, null, 0),
-    sha,
-    parentSha,
-    path: change.path,
-    oldPath: change.oldPath,
-    changeType: change.changeType,
-    hunkOrdinal: null,
-    sliceOrdinal: 0,
-    header: null,
-    oldStart: null,
-    oldCount: null,
-    newStart: null,
-    newCount: null,
-    sourceExcerpt: '',
-    // Filled in by src/history/ (retrieval lane); this extractor only emits structure.
-    semanticText: '',
-    lexicalText: '',
-    coverage,
-  };
-}
-
-function makeHunkEvidence(
-  sha: string,
-  parentSha: string | null,
-  change: HistoricalPathChange,
-  hunkOrdinal: number,
-  hunk: ParsedHunk,
-): EvidenceRecord {
-  return {
-    type: 'evidence',
-    kind: 'hunk',
-    id: provisionalEvidenceId('hunk', sha, parentSha, change.path.bytesBase64, hunkOrdinal, 0),
-    sha,
-    parentSha,
     path: change.path,
     oldPath: change.oldPath,
     changeType: change.changeType,
     hunkOrdinal,
-    sliceOrdinal: 0,
     header: hunk.header,
     oldStart: hunk.oldStart,
     oldCount: hunk.oldCount,
     newStart: hunk.newStart,
     newCount: hunk.newCount,
-    sourceExcerpt: reconstructHunkExcerpt(hunk),
-    // Filled in by src/history/ (retrieval lane); this extractor only emits structure.
-    semanticText: '',
-    lexicalText: '',
-    coverage: EMPTY_COVERAGE,
-  };
-}
-
-function buildCoverage(partial: {
-  complete: boolean;
-  reasons: readonly OmissionReason[];
-  excludedFiles?: number;
-  unavailableFiles?: number;
-  failedFiles?: number;
-  truncated?: boolean;
-}): Coverage {
-  return {
-    complete: partial.complete,
-    reasons: [...new Set(partial.reasons)],
-    excludedFiles: partial.excludedFiles ?? 0,
-    unavailableFiles: partial.unavailableFiles ?? 0,
-    failedFiles: partial.failedFiles ?? 0,
-    truncated: partial.truncated ?? false,
-  };
-}
-
-function buildCommitRecord(
-  sha: string,
-  parsed: ParsedCommit,
-  changedPaths: readonly HistoricalPathChange[],
-  coverage: Coverage,
-): CommitRecord {
-  return {
-    type: 'commit',
-    id: provisionalCommitId(sha),
-    sha,
-    parents: parsed.parents,
-    subject: parsed.subject,
-    body: parsed.body,
-    author: parsed.author,
-    committerTime: parsed.committerTime,
-    changedPaths,
-    // Filled in by src/history/ (retrieval lane); this extractor only emits structure.
-    semanticText: '',
-    lexicalText: '',
-    coverage,
+    lines: hunk.lines.map((l: PatchLine) => ({ kind: toDiffLineKind(l.kind), text: l.text })),
   };
 }
 
 /* ------------------------------------------------------------------ *
- * Per-commit extraction
+ * Per-commit raw material (fed into `buildCommitExtraction`)
  * ------------------------------------------------------------------ */
+
+interface GitExtractedCommit {
+  readonly raw: RawCommitInput;
+  /** First-parent (or empty-tree, for a root) changed paths; empty only when no diff was obtainable at all. */
+  readonly changedPaths: readonly HistoricalPathChange[];
+}
 
 async function extractOneCommit(
   repository: RepositoryIdentity,
@@ -382,21 +294,31 @@ async function extractOneCommit(
   parsed: ParsedCommit,
   emptyTreeOid: string,
   shallowBoundary: ReadonlySet<string>,
-): Promise<CommitExtraction> {
+): Promise<GitExtractedCommit> {
   const isRoot = parsed.parents.length === 0;
   const isMerge = parsed.parents.length > 1;
   const diffParent = isRoot ? emptyTreeOid : (parsed.parents[0] as string);
-  const parentSha = isRoot ? null : (parsed.parents[0] as string);
+
+  const base = {
+    sha,
+    parents: parsed.parents,
+    subject: parsed.subject,
+    body: parsed.body,
+    author: parsed.author,
+    committerTime: parsed.committerTime,
+  };
 
   const raw = await runDiffTreeRaw(repository, diffParent, sha);
   if (!raw.ok) {
     // The parent (or the empty tree, which should never fail) is unavailable. A
-    // missing parent is never treated as a root: message/path/metadata we already
-    // have from the commit object itself is retained, but there is no diff evidence.
+    // missing parent is never treated as a root: message evidence we already have
+    // from the commit object itself is retained, but there is no diff evidence.
     const reason: OmissionReason = shallowBoundary.has(sha) ? 'shallow_boundary' : 'missing_object';
     const reasons: OmissionReason[] = isMerge ? [reason, 'merge_hunks_omitted'] : [reason];
-    const commit = buildCommitRecord(sha, parsed, [], buildCoverage({ complete: false, reasons, unavailableFiles: 1 }));
-    return { commit, evidence: [] };
+    return {
+      raw: { ...base, files: [], gitCoverage: { reasons, unavailableFiles: 1 } },
+      changedPaths: [],
+    };
   }
 
   const rawEntries = parseRawChanges(raw.stdout);
@@ -405,78 +327,82 @@ async function extractOneCommit(
   if (isMerge) {
     // No merge diff hunks in V1 (spec #7): metadata and first-parent changed paths
     // only, flagged with the documented coverage reason.
-    const coverage = buildCoverage({
-      complete: false,
+    const gitCoverage: GitDiscoveredCoverage = {
       reasons: ['merge_hunks_omitted'],
       excludedFiles: rawEntries.length,
-    });
-    const commit = buildCommitRecord(sha, parsed, changedPaths, coverage);
-    return { commit, evidence: [] };
+    };
+    return { raw: { ...base, files: [], gitCoverage }, changedPaths };
   }
 
-  const evidence: EvidenceRecord[] = [];
-  const reasons: OmissionReason[] = [];
-  let truncated = false;
-  let failedFiles = 0;
+  if (rawEntries.length === 0) {
+    return { raw: { ...base, files: [] }, changedPaths };
+  }
 
-  if (rawEntries.length > 0) {
-    const patch = await runDiffTreePatch(repository, diffParent, sha);
-    if (!patch.ok) {
-      // Should not normally happen once the raw call above succeeded; keep summary
-      // metadata and record the omission rather than fabricating diff material.
-      reasons.push(shallowBoundary.has(sha) ? 'shallow_boundary' : 'missing_object');
-      failedFiles = rawEntries.length;
-    } else if (patch.truncated) {
-      reasons.push('pathological_commit');
-      truncated = true;
-      failedFiles = rawEntries.length;
-    } else {
-      const sections = parsePatchSections(patch.stdout);
-      for (let i = 0; i < rawEntries.length; i += 1) {
-        const entry = rawEntries[i] as RawChangeEntry;
-        const change = changedPaths[i] as HistoricalPathChange;
-        const section = sections[i];
+  const patch = await runDiffTreePatch(repository, diffParent, sha);
+  if (!patch.ok) {
+    // Should not normally happen once the raw call above succeeded; keep summary
+    // metadata and record the omission rather than fabricating diff material.
+    const reason: OmissionReason = shallowBoundary.has(sha) ? 'shallow_boundary' : 'missing_object';
+    const gitCoverage: GitDiscoveredCoverage = { reasons: [reason], failedFiles: rawEntries.length };
+    return { raw: { ...base, files: [], gitCoverage }, changedPaths };
+  }
 
-        if (isSubmoduleEntry(entry)) {
-          // Never index the submodule's own objects; keep the gitlink OIDs as metadata.
-          evidence.push(makeFileChangeEvidence(sha, parentSha, change, EMPTY_COVERAGE));
-          continue;
-        }
+  if (patch.truncated) {
+    const gitCoverage: GitDiscoveredCoverage = {
+      reasons: ['pathological_commit'],
+      failedFiles: rawEntries.length,
+      truncated: true,
+    };
+    return { raw: { ...base, files: [], gitCoverage }, changedPaths };
+  }
 
-        if (section === undefined) {
-          // No corresponding patch section (defensive: should track 1:1 with raw entries).
-          evidence.push(makeFileChangeEvidence(sha, parentSha, change, EMPTY_COVERAGE));
-          continue;
-        }
+  const sections = parsePatchSections(patch.stdout);
+  const files: RawFileChange[] = [];
+  const commitLevelReasons: OmissionReason[] = [];
 
-        if (section.binary) {
-          const fileCoverage = buildCoverage({ complete: false, reasons: ['binary'], excludedFiles: 1 });
-          evidence.push(makeFileChangeEvidence(sha, parentSha, change, fileCoverage));
-          if (!reasons.includes('binary')) reasons.push('binary');
-          continue;
-        }
+  for (let i = 0; i < rawEntries.length; i += 1) {
+    const entry = rawEntries[i] as RawChangeEntry;
+    const change = changedPaths[i] as HistoricalPathChange;
+    const section = sections[i];
 
-        if (section.hunks.length === 0) {
-          // Rename/copy/mode-only change with no textual hunk still yields file-change evidence.
-          evidence.push(makeFileChangeEvidence(sha, parentSha, change, EMPTY_COVERAGE));
-          continue;
-        }
-
-        section.hunks.forEach((hunk, hunkOrdinal) => {
-          evidence.push(makeHunkEvidence(sha, parentSha, change, hunkOrdinal, hunk));
-        });
-      }
+    if (isSubmoduleEntry(entry)) {
+      // Never index the submodule's own objects; keep the gitlink OIDs as metadata.
+      files.push({ change, hunks: [] });
+      continue;
     }
+
+    if (section === undefined) {
+      // No corresponding patch section (defensive: should track 1:1 with raw entries).
+      files.push({ change, hunks: [] });
+      continue;
+    }
+
+    if (section.binary) {
+      files.push({ change, hunks: [], gitCoverage: { reasons: ['binary'], excludedFiles: 1 } });
+      if (!commitLevelReasons.includes('binary')) commitLevelReasons.push('binary');
+      continue;
+    }
+
+    if (section.hunks.length === 0) {
+      // Rename/copy/mode-only change with no textual hunk still yields file-change evidence.
+      files.push({ change, hunks: [] });
+      continue;
+    }
+
+    files.push({
+      change,
+      hunks: section.hunks.map((hunk, hunkOrdinal) => toRawHunk(change, hunkOrdinal, hunk)),
+    });
   }
 
-  const coverage = buildCoverage({
-    complete: reasons.length === 0,
-    reasons,
-    failedFiles,
-    truncated,
-  });
-  const commit = buildCommitRecord(sha, parsed, changedPaths, coverage);
-  return { commit, evidence };
+  return {
+    raw: {
+      ...base,
+      files,
+      gitCoverage: commitLevelReasons.length > 0 ? { reasons: commitLevelReasons } : undefined,
+    },
+    changedPaths,
+  };
 }
 
 /* ------------------------------------------------------------------ *
@@ -516,8 +442,15 @@ async function* mapWithOrderedConcurrency<T, R>(
 
 const DEFAULT_CONCURRENCY = 6;
 
-/** Create a `HistoryExtractor` backed by real Git plumbing. */
-export function createGitHistoryExtractor(concurrency: number = DEFAULT_CONCURRENCY): HistoryExtractor {
+/**
+ * Create a `HistoryExtractor` backed by real Git plumbing. `embedder` is used only
+ * for its synchronous `countTokens`/`truncateToTokens` budgeting (via
+ * `buildCommitExtraction`); nothing here calls `embedDocuments`.
+ */
+export function createGitHistoryExtractor(
+  embedder: Embedder,
+  concurrency: number = DEFAULT_CONCURRENCY,
+): HistoryExtractor {
   return {
     async *extract(snapshot: RepositorySnapshot, shas: readonly string[]): AsyncIterable<CommitExtraction> {
       const repository = snapshot.repository;
@@ -537,7 +470,13 @@ export function createGitHistoryExtractor(concurrency: number = DEFAULT_CONCURRE
             hint: 'this indicates the reachable-commit list included an object Git cannot read',
           });
         }
-        return extractOneCommit(repository, sha, parsed, emptyTreeOid, shallowBoundary);
+        const { raw, changedPaths } = await extractOneCommit(repository, sha, parsed, emptyTreeOid, shallowBoundary);
+        const built = buildCommitExtraction(raw, embedder);
+        // `buildCommitExtraction` derives `changedPaths` from `raw.files`, which this
+        // module deliberately empties out for merge/failure/pathological commits (so
+        // no evidence is fabricated for them) while still knowing the real first-parent
+        // changed paths from the raw diff. Restore them here.
+        return { commit: { ...built.commit, changedPaths }, evidence: built.evidence };
       });
     },
   };

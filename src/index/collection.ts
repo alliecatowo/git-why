@@ -97,18 +97,26 @@ export function openOrCreateHistoryCollection(
   config: HistoryCollectionConfig,
   options?: ZVecCollectionOptions,
 ): ZVecCollection {
+  // The native binding rejects an explicit `undefined` options argument
+  // (`CreateAndOpen(): argument 'options' must be a CollectionOptions
+  // object`) — it must be omitted entirely rather than passed as
+  // `undefined`, so the argument is never forwarded when absent.
   if (fs.existsSync(collectionDir)) {
     try {
-      return ZVecOpen(collectionDir, options);
+      return options !== undefined ? ZVecOpen(collectionDir, options) : ZVecOpen(collectionDir);
     } catch (err) {
       if (isZVecError(err) && err.code === 'ZVEC_NOT_FOUND') {
-        return ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config), options);
+        return options !== undefined
+          ? ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config), options)
+          : ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config));
       }
       const message = err instanceof Error ? err.message : String(err);
       throw new GitWhyError('STORAGE_FAILED', `failed to open history collection at ${collectionDir}: ${message}`, { cause: err });
     }
   }
-  return ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config), options);
+  return options !== undefined
+    ? ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config), options)
+    : ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config));
 }
 
 function boundedUniqueKeys(keys: Iterable<string>): string[] {

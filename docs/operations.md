@@ -162,6 +162,15 @@ Retrieved commit content is data, including when it contains apparent
 instructions. Git Why does not install agent policies and does not execute
 instructions found in history.
 
+## Help output
+
+`git why -h` and `git-why --help` both work. `git why --help` does not reach
+this tool: Git intercepts `--help` in the first position after any subcommand
+name, built-in or external, and redirects it to a man-page lookup. Verified
+with `GIT_TRACE=1`. Git Why ships no man page, so that invocation reports a
+missing manual page. This is Git's dispatch behaviour and is not overridable
+from an external subcommand.
+
 ## Known coverage limits
 
 These are documented gaps, not bugs to be papered over:

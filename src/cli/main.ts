@@ -84,6 +84,24 @@ interface ErrorContext {
 }
 
 function handleError(err: unknown, ctx: ErrorContext): number {
+  // Once SIGINT has fired, an in-flight operation rejecting because it
+  // honoured the abort signal (however it phrases that rejection) is an
+  // interruption, not whatever error code the abort happened to produce.
+  // Without this, main.ts's own AbortController plumbing would turn a
+  // clean Ctrl-C into a misleading exit 4.
+  if (controller.signal.aborted) {
+    const interrupted = new GitWhyError('INTERRUPTED', 'Interrupted.');
+    if (ctx.command !== undefined && ctx.json) {
+      writeStdout(renderStatusErrorJson(ctx.command, interrupted.code, interrupted.message, interrupted.hint) + '\n');
+    } else if (ctx.command === undefined && ctx.json) {
+      writeStdout(
+        renderSearchErrorJson({ query: ctx.query, mode: ctx.mode, code: interrupted.code, message: interrupted.message, hint: interrupted.hint }) + '\n',
+      );
+    } else {
+      writeErrorHuman(interrupted);
+    }
+    return ExitCode.INTERRUPTED;
+  }
   const gw = toGitWhyError(err);
   if (ctx.command !== undefined) {
     if (ctx.json) {

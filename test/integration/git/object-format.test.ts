@@ -7,6 +7,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createGitHistoryExtractor } from '../../../src/git/extract.js';
+import { FakeEmbedder } from '../../../src/embedding/fake.js';
 import { resolveRepositoryIdentity } from '../../../src/git/repository.js';
 import { captureSnapshot } from '../../../src/git/snapshot.js';
 import { createTestRepo, supportsObjectFormat } from '../../fixtures/repo.js';
@@ -23,7 +24,7 @@ test('SHA-1 repository: object format detected, 40-char OIDs', async () => {
     assert.equal(sha.length, 40);
 
     const snapshot = await captureSnapshot(repository);
-    const extractor = createGitHistoryExtractor();
+    const extractor = createGitHistoryExtractor(new FakeEmbedder());
     let count = 0;
     for await (const item of extractor.extract(snapshot, [sha])) {
       count += 1;
@@ -52,7 +53,7 @@ test('SHA-256 repository: object format detected, 64-char OIDs, empty tree resol
     assert.equal(sha.length, 64);
 
     const snapshot = await captureSnapshot(repository);
-    const extractor = createGitHistoryExtractor();
+    const extractor = createGitHistoryExtractor(new FakeEmbedder());
     const results = [];
     for await (const item of extractor.extract(snapshot, [sha])) results.push(item);
     assert.equal(results.length, 1);

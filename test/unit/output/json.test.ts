@@ -131,16 +131,20 @@ test('an extremely small --max-bytes still produces a single valid JSON object, 
 });
 
 test('truncation drops evidence before dropping whole results', () => {
-  // Budget large enough for one result with no evidence, but not enough
-  // for one result with its evidence attached.
+  // Budget large enough for one result with no evidence *plus* the
+  // truncation warning that gets added once truncation happens, but not
+  // enough for one result with its evidence attached.
   const response = makeResponse({ results: [makeHit()] });
   const fullSize = renderSearchJson(response, { maxBytes: 1024 * 1024 }).text.length;
-  const noEvidenceSize = renderSearchJson(makeResponse({ results: [makeHit({ evidence: [] })] }), {
-    maxBytes: 1024 * 1024,
-  }).text.length;
-  const budget = noEvidenceSize + 20;
-  assert.ok(budget < fullSize, 'test setup: evidence must add meaningfully to the size');
 
+  // Find this size empirically rather than predicting it: the exact byte
+  // cost of adding the truncation warning depends on JSON string escaping
+  // and indentation, which is an implementation detail this test shouldn't
+  // hardcode.
+  const noEvidenceTruncatedSize = renderSearchJson(response, { maxBytes: fullSize - 1 }).text.length;
+  assert.ok(noEvidenceTruncatedSize < fullSize, 'test setup: dropping evidence must shrink the envelope');
+
+  const budget = noEvidenceTruncatedSize + 10;
   const { text, outputTruncated } = renderSearchJson(response, { maxBytes: budget });
   const parsed = JSON.parse(text);
   assert.equal(outputTruncated, true);

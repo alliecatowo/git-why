@@ -43,10 +43,29 @@ import {
 import { buildCommitText, buildHunkText, clipToBytes, type HunkTextInput } from './text.js';
 import { selectSlicesWithinBudget, type CandidateFile } from './budget.js';
 
+/**
+ * Coverage the git lane discovers directly (a failed/truncated patch fetch,
+ * a shallow boundary, a binary section, merge-hunk omission) that this
+ * module does not itself detect. Additive only: unioned/summed into
+ * whatever coverage this module computes for the same commit or file, never
+ * replacing it. This is the one deliberate seam through which the git lane
+ * hands coverage reasons it alone knows about into the records this module
+ * builds.
+ */
+export interface GitDiscoveredCoverage {
+  readonly reasons: readonly OmissionReason[];
+  readonly unavailableFiles?: number;
+  readonly failedFiles?: number;
+  readonly excludedFiles?: number;
+  readonly truncated?: boolean;
+}
+
 export interface RawFileChange {
   readonly change: HistoricalPathChange;
   /** Empty when there is no textual diff for this change (binary, mode-only, pure rename). */
   readonly hunks: readonly RawHunk[];
+  /** Git-discovered coverage specific to this one file (e.g. `binary`). */
+  readonly gitCoverage?: GitDiscoveredCoverage;
 }
 
 export interface RawCommitInput {
@@ -57,6 +76,8 @@ export interface RawCommitInput {
   readonly author: { readonly name: string; readonly email: string; readonly time: number };
   readonly committerTime: number;
   readonly files: readonly RawFileChange[];
+  /** Git-discovered coverage for the commit as a whole (e.g. `merge_hunks_omitted`, `shallow_boundary`). */
+  readonly gitCoverage?: GitDiscoveredCoverage;
 }
 
 function coverageOf(reasons: readonly OmissionReason[], extra: Partial<Coverage> = {}): Coverage {
@@ -68,6 +89,29 @@ function coverageOf(reasons: readonly OmissionReason[], extra: Partial<Coverage>
     unavailableFiles: extra.unavailableFiles ?? 0,
     failedFiles: extra.failedFiles ?? 0,
     truncated: extra.truncated ?? false,
+  };
+}
+
+/**
+ * Union a git-discovered coverage fragment into locally-computed reasons and
+ * `Coverage` fields: reason lists are unioned, counts are summed, and
+ * `truncated` is OR'd. `undefined` is a no-op.
+ */
+function mergeGitCoverage(
+  reasons: readonly OmissionReason[],
+  extra: Partial<Coverage>,
+  git: GitDiscoveredCoverage | undefined,
+): { reasons: readonly OmissionReason[]; extra: Partial<Coverage> } {
+  if (git === undefined) return { reasons, extra };
+  return {
+    reasons: [...reasons, ...git.reasons],
+    extra: {
+      ...extra,
+      excludedFiles: (extra.excludedFiles ?? 0) + (git.excludedFiles ?? 0),
+      unavailableFiles: (extra.unavailableFiles ?? 0) + (git.unavailableFiles ?? 0),
+      failedFiles: (extra.failedFiles ?? 0) + (git.failedFiles ?? 0),
+      truncated: (extra.truncated ?? false) || (git.truncated ?? false),
+    },
   };
 }
 
@@ -105,7 +149,14 @@ function buildFileChangeRecord(
   subject: string,
   body: string,
   omissionReason: OmissionReason | null,
+  gitCoverage?: GitDiscoveredCoverage,
 ): EvidenceRecord {
+  const { reasons: mergedReasons, extra } = mergeGitCoverage(
+    omissionReason === null ? [] : [omissionReason],
+    {},
+    gitCoverage,
+  );
+  const uniqueReasons = [...new Set(mergedReasons)];
   const input: HunkTextInput = {
     subject,
     body,
@@ -113,11 +164,10 @@ function buildFileChangeRecord(
     oldPath: change.oldPath,
     changeType: change.changeType,
     removedLines: [],
-    addedLines: omissionReason === null ? [] : [`(${omissionReason}: content omitted)`],
+    addedLines: uniqueReasons.map((r) => `(${r}: content omitted)`),
     contextLines: [CHANGE_TYPE_NOTE[change.changeType]],
   };
   const built = buildHunkText(input, embedder);
-  const reasons: OmissionReason[] = omissionReason === null ? [] : [omissionReason];
   return {
     type: 'evidence',
     kind: 'file_change',
@@ -143,7 +193,7 @@ function buildFileChangeRecord(
     sourceExcerpt: '',
     semanticText: built.semanticText,
     lexicalText: built.lexicalText,
-    coverage: coverageOf(reasons),
+    coverage: coverageOf(uniqueReasons, extra),
   };
 }
 
@@ -197,7 +247,16 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
 
       if (exclusion !== null) {
         evidence.push(
-          buildFileChangeRecord(raw.sha, parentSha, change, embedder, clippedMessage.subject, clippedMessage.body, exclusion),
+          buildFileChangeRecord(
+            raw.sha,
+            parentSha,
+            change,
+            embedder,
+            clippedMessage.subject,
+            clippedMessage.body,
+            exclusion,
+            file.gitCoverage,
+          ),
         );
         excludedFiles += 1;
         continue;
@@ -205,7 +264,16 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
 
       if (file.hunks.length === 0) {
         evidence.push(
-          buildFileChangeRecord(raw.sha, parentSha, change, embedder, clippedMessage.subject, clippedMessage.body, null),
+          buildFileChangeRecord(
+            raw.sha,
+            parentSha,
+            change,
+            embedder,
+            clippedMessage.subject,
+            clippedMessage.body,
+            null,
+            file.gitCoverage,
+          ),
         );
         continue;
       }
@@ -293,6 +361,15 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
     }
   }
 
+  const { reasons: finalCommitReasons, extra: finalCommitExtra } = mergeGitCoverage(
+    commitReasons,
+    {
+      excludedFiles,
+      truncated: commitReasons.length > 0 || commitText.semanticTruncated,
+    },
+    raw.gitCoverage,
+  );
+
   const commit: CommitRecord = {
     type: 'commit',
     id: commitDocId(raw.sha),
@@ -305,10 +382,7 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
     changedPaths,
     semanticText: commitText.semanticText,
     lexicalText: commitText.lexicalText,
-    coverage: coverageOf(commitReasons, {
-      excludedFiles,
-      truncated: commitReasons.length > 0 || commitText.semanticTruncated,
-    }),
+    coverage: coverageOf(finalCommitReasons, finalCommitExtra),
   };
 
   return { commit, evidence };

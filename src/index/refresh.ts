@@ -570,3 +570,14 @@ export async function openReadOnlyStore(
     throw err;
   }
 }
+
+/**
+ * Exposed for integration tests only (test/integration/index/refresh.test.ts).
+ * `reconcile` lets a test build a generation's collection/manifest/catalog
+ * WITHOUT publishing `CURRENT`, to directly exercise the "generation built
+ * but never published" and "staging built but rebuild never switched over"
+ * recovery paths without racing a real process kill against a step that
+ * has no other externally-observable boundary. Do not import from
+ * production code.
+ */
+export const __testHooks = { reconcile, newGenerationId };

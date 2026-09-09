@@ -106,6 +106,20 @@ The filter grammar is SQL-like, ANTLR-based (error messages come from
   14 require, and it holds natively; no adapter-side pre-filtering pass is
   needed for a single Zvec `querySync` call.
 
+### 3a. API gotcha: `undefined` is not a valid "omitted" options argument
+
+`ZVecOpen(path, options)` and `ZVecCreateAndOpen(path, schema, options)`
+both throw `ZVEC_INVALID_ARGUMENT` ("argument 'options' must be a
+CollectionOptions object") if called with an explicit `options: undefined`
+— the idiomatic JS pattern of `fn(path, maybeOptions)` where
+`maybeOptions` is `ZVecCollectionOptions | undefined` does NOT work here;
+the third argument must be omitted entirely when there are no options.
+`src/index/collection.ts`'s `openOrCreateHistoryCollection` branches on
+`options !== undefined` and calls the binding with a different arity
+rather than forwarding `undefined`. Discovered while wiring
+`src/index/refresh.ts` against a real collection, not in the original
+spike run — worth knowing before anyone else calls these two entry points.
+
 ## 4. Dense retrieval
 
 - `FLAT` and `HNSW` indexes at dimension 256 with `metricType: COSINE` both
