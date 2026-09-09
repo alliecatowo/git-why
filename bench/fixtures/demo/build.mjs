@@ -30,8 +30,16 @@ const REFRESH_V2 = `export function refresh(session, refreshToken) {
 `;
 
 const COMMITS = [
-  { date: '2025-10-01T10:00:00Z', files: { 'src/auth/refresh.ts': REFRESH_V1 }, message: 'Add session refresh' },
-  { date: '2025-10-15T10:00:00Z', files: { 'src/net/socket.ts': SOCKET_V1 }, message: 'Add socket client' },
+  {
+    date: '2025-10-01T10:00:00Z',
+    files: { 'src/auth/refresh.ts': REFRESH_V1 },
+    message: 'Add session refresh',
+  },
+  {
+    date: '2025-10-15T10:00:00Z',
+    files: { 'src/net/socket.ts': SOCKET_V1 },
+    message: 'Add socket client',
+  },
   {
     date: '2025-11-03T10:00:00Z',
     files: { 'src/auth/refresh.ts': REFRESH_V2 },

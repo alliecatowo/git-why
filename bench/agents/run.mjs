@@ -15,7 +15,7 @@
 // recorded as infrastructure-blocked, not silently skipped or faked; the
 // exact same code path runs for real the moment `zg` appears on PATH.
 
-import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
@@ -55,7 +55,8 @@ function parseArgs(argv) {
     if (a.startsWith('--stage=')) args.stage = a.slice('--stage='.length);
     else if (a.startsWith('--only=')) args.only = a.slice('--only='.length).split(',');
     else if (a.startsWith('--model=')) args.model = a.slice('--model='.length);
-    else if (a.startsWith('--repetitions=')) args.repetitions = Number(a.slice('--repetitions='.length));
+    else if (a.startsWith('--repetitions='))
+      args.repetitions = Number(a.slice('--repetitions='.length));
   }
   return args;
 }
@@ -128,7 +129,8 @@ function buildPlan({ taskIds, repetitions, seed }) {
   const maxArms = Math.max(...shuffledBlocks.map((b) => b.arms.length));
   for (let i = 0; i < maxArms; i++) {
     for (const block of shuffledBlocks) {
-      if (block.arms[i]) plan.push({ taskId: block.taskId, repetition: block.repetition, arm: block.arms[i] });
+      if (block.arms[i])
+        plan.push({ taskId: block.taskId, repetition: block.repetition, arm: block.arms[i] });
     }
   }
   return plan;
@@ -155,7 +157,10 @@ function isInfrastructureError(trialResult) {
   return trialResult.exitCode === null && trialResult.eventCount === 0;
 }
 
-async function runOnePlannedTrial(planItem, { taskMetaById, model, runRoot, reviewDir, zgAvailable, attempt }) {
+async function runOnePlannedTrial(
+  planItem,
+  { taskMetaById, model, runRoot, reviewDir, zgAvailable, attempt },
+) {
   const { taskId, arm, repetition } = planItem;
   const taskMeta = taskMetaById[taskId];
   const trialLabel = `${taskId}-${arm}-r${repetition}-a${attempt}`;
@@ -207,7 +212,8 @@ async function runOnePlannedTrial(planItem, { taskMetaById, model, runRoot, revi
 
   if (armNeedsZg(arm) && !zgAvailable) {
     record.exit_reason = 'infrastructure_blocked';
-    record.infrastructure_error = 'zg not installed on PATH; arm requires zg per protocol. See bench/protocol.json arms.B/C.status.';
+    record.infrastructure_error =
+      'zg not installed on PATH; arm requires zg per protocol. See bench/protocol.json arms.B/C.status.';
     return record;
   }
 
@@ -230,12 +236,14 @@ async function runOnePlannedTrial(planItem, { taskMetaById, model, runRoot, revi
   const inspection = inspectProfile(profile.env);
   if (!inspection.agentListStdout.includes('git-why-bench')) {
     record.exit_reason = 'infrastructure_blocked';
-    record.infrastructure_error = 'isolated profile did not recognize the git-why-bench agent; see profile inspection log.';
+    record.infrastructure_error =
+      'isolated profile did not recognize the git-why-bench agent; see profile inspection log.';
     return record;
   }
 
   const usageCard = usageCardFor(arm);
-  const commonPreamble = 'You are given a single task in the current repository. Source code and any permitted Git history are available; use your judgment about what to consult.';
+  const commonPreamble =
+    'You are given a single task in the current repository. Source code and any permitted Git history are available; use your judgment about what to consult.';
 
   const trialResult = await runTrial({
     taskId,
@@ -270,7 +278,8 @@ async function runOnePlannedTrial(planItem, { taskMetaById, model, runRoot, revi
   record.estimated_list_price_cost = null; // zero-priced free-tier models: no list price to estimate
   record.tool_output_bytes = JSON.stringify(trialResult.rawEvents).length;
   record.exit_reason = trialResult.exitReason;
-  record.treatment_error = trialResult.exitCode !== 0 ? `opencode exited ${trialResult.exitCode}` : null;
+  record.treatment_error =
+    trialResult.exitCode !== 0 ? `opencode exited ${trialResult.exitCode}` : null;
 
   const grading = gradeTrial({
     taskMeta,
@@ -329,20 +338,29 @@ async function main() {
 
   for (const taskId of taskIds) {
     const srcDir = join(SOURCE_REPOS_DIR, taskId);
-    if (!existsSync(srcDir)) fail(`Task source repo missing for ${taskId}. Run: node bench/agents/tasks/build.mjs`);
+    if (!existsSync(srcDir))
+      fail(`Task source repo missing for ${taskId}. Run: node bench/agents/tasks/build.mjs`);
   }
 
   const zgAvailable = checkZgAvailable();
   console.log(`[bench/agents] zg available: ${zgAvailable}`);
   if (!zgAvailable) {
-    console.warn('[bench/agents] zg is not installed. Arms B and C will be recorded as infrastructure_blocked, not skipped or faked.');
+    console.warn(
+      '[bench/agents] zg is not installed. Arms B and C will be recorded as infrastructure_blocked, not skipped or faked.',
+    );
   }
 
   const taskMetaById = Object.fromEntries(taskIds.map((id) => [id, loadTaskMeta(id)]));
 
-  const plan = buildPlan({ taskIds, repetitions, seed: `git-why-bench::agents::${args.stage}::v1` });
+  const plan = buildPlan({
+    taskIds,
+    repetitions,
+    seed: `git-why-bench::agents::${args.stage}::v1`,
+  });
   const plannedCount = plan.length;
-  console.log(`[bench/agents] planned ${plannedCount} trials (${taskIds.length} tasks x ${ARMS.length} arms x ${repetitions} repetitions)`);
+  console.log(
+    `[bench/agents] planned ${plannedCount} trials (${taskIds.length} tasks x ${ARMS.length} arms x ${repetitions} repetitions)`,
+  );
 
   const runId = new Date().toISOString().replace(/[:.]/g, '-');
   const runRoot = join(WORK_ROOT, `${args.stage}-${runId}`);
@@ -351,7 +369,14 @@ async function main() {
   mkdirSync(outDir, { recursive: true });
 
   const records = await pooledMap(plan, TOTAL_CONCURRENCY, (item) =>
-    runOnePlannedTrial(item, { taskMetaById, model: args.model, runRoot, reviewDir, zgAvailable, attempt: 1 }),
+    runOnePlannedTrial(item, {
+      taskMetaById,
+      model: args.model,
+      runRoot,
+      reviewDir,
+      zgAvailable,
+      attempt: 1,
+    }),
   );
 
   // Predeclared single retry for infrastructure-failed blocks, retaining
@@ -360,7 +385,15 @@ async function main() {
   const retryRecords = await pooledMap(
     retryTargets.map((r) => ({ taskId: r.task_id, arm: r.arm, repetition: r.repetition })),
     TOTAL_CONCURRENCY,
-    (item) => runOnePlannedTrial(item, { taskMetaById, model: args.model, runRoot, reviewDir, zgAvailable, attempt: 2 }),
+    (item) =>
+      runOnePlannedTrial(item, {
+        taskMetaById,
+        model: args.model,
+        runRoot,
+        reviewDir,
+        zgAvailable,
+        attempt: 2,
+      }),
   );
 
   const allRecords = [...records, ...retryRecords];
@@ -368,8 +401,10 @@ async function main() {
 
   const attempted = allRecords.length;
   const blocked = allRecords.filter((r) => r.exit_reason === 'infrastructure_blocked').length;
-  const infraFailed = allRecords.filter((r) => r.exit_reason === 'infrastructure_error').length;
-  const valid = allRecords.filter((r) => r.exit_reason !== 'infrastructure_blocked' && r.exit_reason !== 'infrastructure_error').length;
+
+  const valid = allRecords.filter(
+    (r) => r.exit_reason !== 'infrastructure_blocked' && r.exit_reason !== 'infrastructure_error',
+  ).length;
   const successful = allRecords.filter((r) => r.pass === true).length;
 
   const summary = {
@@ -380,7 +415,9 @@ async function main() {
     planned: plannedCount,
     attempted,
     blocked,
-    infrastructureFailedAfterRetry: allRecords.filter((r) => r.attempt === 2 && r.exit_reason === 'infrastructure_error').length,
+    infrastructureFailedAfterRetry: allRecords.filter(
+      (r) => r.attempt === 2 && r.exit_reason === 'infrastructure_error',
+    ).length,
     valid,
     successful,
     byArm: Object.fromEntries(
@@ -391,7 +428,11 @@ async function main() {
           {
             attempted: armRecords.length,
             blocked: armRecords.filter((r) => r.exit_reason === 'infrastructure_blocked').length,
-            valid: armRecords.filter((r) => r.exit_reason !== 'infrastructure_blocked' && r.exit_reason !== 'infrastructure_error').length,
+            valid: armRecords.filter(
+              (r) =>
+                r.exit_reason !== 'infrastructure_blocked' &&
+                r.exit_reason !== 'infrastructure_error',
+            ).length,
             pass: armRecords.filter((r) => r.pass === true).length,
           },
         ];

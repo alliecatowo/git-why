@@ -79,17 +79,14 @@ export class FakeEmbedder implements Embedder {
     return tokens.slice(0, maxTokens).join(' ');
   }
 
-   
   async embedDocuments(texts: readonly string[]): Promise<Float32Array[]> {
     return texts.map((text) => hashToUnitVector(text, this.dimension));
   }
 
-   
   async embedQuery(text: string): Promise<Float32Array> {
     return hashToUnitVector(text, this.dimension);
   }
 
-   
   async dispose(): Promise<void> {
     // Nothing to release.
   }

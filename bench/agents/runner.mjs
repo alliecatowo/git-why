@@ -99,8 +99,14 @@ export function createIsolatedProfile(profileRoot) {
  * itself).
  */
 export function inspectProfile(env) {
-  const agents = spawnSync('opencode', ['agent', 'list', '--pure'], { env: { ...process.env, ...env }, encoding: 'utf8' });
-  const providers = spawnSync('opencode', ['providers', 'list', '--pure'], { env: { ...process.env, ...env }, encoding: 'utf8' });
+  const agents = spawnSync('opencode', ['agent', 'list', '--pure'], {
+    env: { ...process.env, ...env },
+    encoding: 'utf8',
+  });
+  const providers = spawnSync('opencode', ['providers', 'list', '--pure'], {
+    env: { ...process.env, ...env },
+    encoding: 'utf8',
+  });
   return {
     agentListExitCode: agents.status,
     agentListStdout: agents.stdout,
@@ -171,10 +177,14 @@ export function runTrial({
     const args = [
       'run',
       '--pure',
-      '--agent', AGENT_NAME,
-      '--model', model,
-      '--format', 'json',
-      '--file', promptFilePath,
+      '--agent',
+      AGENT_NAME,
+      '--model',
+      model,
+      '--format',
+      'json',
+      '--file',
+      promptFilePath,
       '--auto', // required for non-interactive completion; applied identically to every arm
       'Complete the attached task using the permitted repository.',
     ];
@@ -213,7 +223,11 @@ export function runTrial({
       events.push(evt);
       sessionId ??= evt.sessionID ?? null;
       if (evt.type === 'tool_use' || evt.type === 'tool') {
-        toolCalls.push({ tool: evt.part?.tool ?? evt.tool ?? null, callID: evt.part?.callID ?? null, status: evt.part?.state?.status ?? null });
+        toolCalls.push({
+          tool: evt.part?.tool ?? evt.tool ?? null,
+          callID: evt.part?.callID ?? null,
+          status: evt.part?.state?.status ?? null,
+        });
         if (toolCalls.length > budgets.toolCalls && !toolCallBudgetExceeded) {
           toolCallBudgetExceeded = true;
           killProcessGroup(child.pid);

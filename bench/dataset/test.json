@@ -7,9 +7,7 @@
       "category": "synonym_mismatch",
       "fixtureId": "realtime-chat",
       "query": "A user shows up twice in the \"who is online\" list after they reconnect from a second tab. Where was that addressed?",
-      "relevantShas": [
-        "7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"
-      ],
+      "relevantShas": ["7cdbd0c6edf47db6904502c7886cd1ffdaa9f72c"],
       "filter": null,
       "expectedEvidence": [
         "src/presence/roster-view.js: names collection switched from an array (push) to a Set (add) to dedupe."
@@ -28,9 +26,7 @@
       "category": "synonym_mismatch",
       "fixtureId": "api-gateway",
       "query": "When a call to an upstream provider times out, is there any chance the same request actually gets sent a second time in the background?",
-      "relevantShas": [
-        "c37cca49ca592898af925856e873a48162c8dd75"
-      ],
+      "relevantShas": ["c37cca49ca592898af925856e873a48162c8dd75"],
       "filter": null,
       "expectedEvidence": [
         "src/retry/idempotent-retry-policy.js: aborts the timed-out attempt before starting the next one."
@@ -49,9 +45,7 @@
       "category": "workaround_rationale",
       "fixtureId": "auth-platform",
       "query": "There is a case-insensitive check for the Authorization header — why is that needed?",
-      "relevantShas": [
-        "f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"
-      ],
+      "relevantShas": ["f74c953fefb6c695b85e0a2517b0ad3cca98e5d3"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: mobile app versions <= 4.2 on Android send the header name lowercase due to a WebView quirk; keep until those versions drop below 1% of sessions."
@@ -64,9 +58,7 @@
       "category": "workaround_rationale",
       "fixtureId": "api-gateway",
       "query": "Why does the Acme client bother parsing the response body even when Acme returns a 200 status?",
-      "relevantShas": [
-        "397fb43f03cc8c6b8157257fea92b8355958ff56"
-      ],
+      "relevantShas": ["397fb43f03cc8c6b8157257fea92b8355958ff56"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: Acme returns HTTP 200 with { error: \"rate_limited\" } in the body instead of 429 (confirmed via their support ticket #88213)."
@@ -85,9 +77,7 @@
       "category": "deleted_implementation",
       "fixtureId": "realtime-chat",
       "query": "What did the client SDK use to do for reconnect backoff before it was simplified?",
-      "relevantShas": [
-        "eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c"
-      ],
+      "relevantShas": ["eb126c85e3640c317d3fa211a6ba5d8a5c6dc63c"],
       "filter": null,
       "expectedEvidence": [
         "Commit removed a hand-rolled exponential backoff loop that lived inline in ChatSocket.connect()."
@@ -100,9 +90,7 @@
       "category": "deleted_implementation",
       "fixtureId": "task-queue",
       "query": "Did workers used to ask the queue for work on a timer instead of having work pushed to them?",
-      "relevantShas": [
-        "f149ceedf526492534143892c79ae8b33a1959c7"
-      ],
+      "relevantShas": ["f149ceedf526492534143892c79ae8b33a1959c7"],
       "filter": null,
       "expectedEvidence": [
         "src/worker/poll-legacy.js (removed): pollForWork() had idle workers poll for work every 50ms before submit() pushed work directly."
@@ -115,9 +103,7 @@
       "category": "migration",
       "fixtureId": "data-pipeline",
       "query": "Is the CSV export code still around, or was it removed after the streaming change?",
-      "relevantShas": [
-        "c46e31e33e1b938098ea54beb8024c8f694204f8"
-      ],
+      "relevantShas": ["c46e31e33e1b938098ea54beb8024c8f694204f8"],
       "filter": null,
       "expectedEvidence": [
         "buildCsv() deleted as a follow-up once every caller used streamNdjson()."
@@ -130,9 +116,7 @@
       "category": "migration",
       "fixtureId": "data-pipeline",
       "query": "Is there any Redis-based locking code left in the pipeline after the move to Postgres locks?",
-      "relevantShas": [
-        "e3c0c083793c1626bd7ec447e4efa038becd5fb0"
-      ],
+      "relevantShas": ["e3c0c083793c1626bd7ec447e4efa038becd5fb0"],
       "filter": null,
       "expectedEvidence": [
         "src/locking/redis-lock.js deleted once all callers moved to withAdvisoryLock()."
@@ -145,9 +129,7 @@
       "category": "exact_identifier",
       "fixtureId": "auth-platform",
       "query": "AuthSessionProvider cache miss metric",
-      "relevantShas": [
-        "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"
-      ],
+      "relevantShas": ["2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d"],
       "filter": null,
       "expectedEvidence": [
         "Emits auth_session_provider.cache_miss on a cache miss in AuthSessionProvider.getSession()."
@@ -166,13 +148,9 @@
       "category": "exact_identifier",
       "fixtureId": "auth-platform",
       "query": "AuthSessionProvider dispose cache",
-      "relevantShas": [
-        "946d9e04f9a3bdec489339bdf26d7fd2a8820ca3"
-      ],
+      "relevantShas": ["946d9e04f9a3bdec489339bdf26d7fd2a8820ca3"],
       "filter": null,
-      "expectedEvidence": [
-        "dispose() added to AuthSessionProvider to clear its internal cache."
-      ],
+      "expectedEvidence": ["dispose() added to AuthSessionProvider to clear its internal cache."],
       "whyDistractorsAreNotAnswers": [
         {
           "sha": "2b19b26ca0250ba2a9c10f835fcad4a0846a2f0d",
@@ -187,9 +165,7 @@
       "category": "number_version",
       "fixtureId": "data-pipeline",
       "query": "Is there a minimum Node version required specifically for the streaming export code?",
-      "relevantShas": [
-        "3e1966dceea7222210acaed94e318351478c28f0"
-      ],
+      "relevantShas": ["3e1966dceea7222210acaed94e318351478c28f0"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: Node 16's ReadableStream.from() drops the final chunk under backpressure; Node 18+ required for streamNdjson()."
@@ -208,9 +184,7 @@
       "category": "number_version",
       "fixtureId": "build-tooling",
       "query": "Did we ever remove support for building with webpack 4?",
-      "relevantShas": [
-        "416b61a68ef598dde37fa3a1226ef9d42c066699"
-      ],
+      "relevantShas": ["416b61a68ef598dde37fa3a1226ef9d42c066699"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: the webpack 4 compatibility branch in build.js had not been exercised by CI in three months; removed."
@@ -229,9 +203,7 @@
       "category": "rename",
       "fixtureId": "realtime-chat",
       "query": "Is PresenceTracker still called that, or was it renamed?",
-      "relevantShas": [
-        "a279f2a34173e452cbdbb80eadf863dc2266f4c6"
-      ],
+      "relevantShas": ["a279f2a34173e452cbdbb80eadf863dc2266f4c6"],
       "filter": {
         "paths": [
           {
@@ -254,9 +226,7 @@
       "category": "rename",
       "fixtureId": "api-gateway",
       "query": "The Acme client file used to be named just acme-client.js — where is it now?",
-      "relevantShas": [
-        "3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"
-      ],
+      "relevantShas": ["3f90efdbaa656b8bd0a792e99b2cf075b5a7e0e7"],
       "filter": {
         "paths": [
           {
@@ -279,9 +249,7 @@
       "category": "poor_message_rich_diff",
       "fixtureId": "api-gateway",
       "query": "There is a change to the Globex client around handling a 204 with a Retry-After header -- can you find it?",
-      "relevantShas": [
-        "a5ceeb29200e0183aacd2aa9ba6d5561734deeea"
-      ],
+      "relevantShas": ["a5ceeb29200e0183aacd2aa9ba6d5561734deeea"],
       "filter": null,
       "expectedEvidence": [
         "src/providers/globex-client.js: callGlobex() now waits out Retry-After on a 204 before retrying (subject was just \"fix 2\")."
@@ -294,9 +262,7 @@
       "category": "rich_message_skipped_patch",
       "fixtureId": "build-tooling",
       "query": "Why did the release-notes generator get bumped to a new major version?",
-      "relevantShas": [
-        "f24787847358c0c0b7fc0680803310567434ca7e"
-      ],
+      "relevantShas": ["f24787847358c0c0b7fc0680803310567434ca7e"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: the new major version writes per-version changelog files instead of rewriting one CHANGELOG.md, which plays better with the release script's diff-based sanity check."
@@ -349,9 +315,7 @@
       "category": "distractor_intent",
       "fixtureId": "api-gateway",
       "query": "Why does the Acme provider client check the response body for an error field even on a successful-looking status?",
-      "relevantShas": [
-        "397fb43f03cc8c6b8157257fea92b8355958ff56"
-      ],
+      "relevantShas": ["397fb43f03cc8c6b8157257fea92b8355958ff56"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: Acme returns 200 with { error: \"rate_limited\" } in the body instead of 429 (support ticket #88213)."
@@ -370,9 +334,7 @@
       "category": "distractor_intent",
       "fixtureId": "api-gateway",
       "query": "Why doesn't the gateway ever retry against Initech when it gets a 501?",
-      "relevantShas": [
-        "c67425023736d4f4fc6e3dffecc4e41304f09132"
-      ],
+      "relevantShas": ["c67425023736d4f4fc6e3dffecc4e41304f09132"],
       "filter": null,
       "expectedEvidence": [
         "Commit message: Initech uses 501 to mean \"billing account not yet provisioned\" (their docs section 9), which resolves over minutes/hours, not something a short retry backoff would ever catch."

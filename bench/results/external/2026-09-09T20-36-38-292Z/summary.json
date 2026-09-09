@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-09T20:36:38.291Z",
+  "repositories": [
+    {
+      "id": "expressjs-express",
+      "url": "https://github.com/expressjs/express",
+      "license": "MIT",
+      "cutoffSha": "bed501c695a61886399ee622875f3be933c716d8"
+    },
+    {
+      "id": "axios-axios",
+      "url": "https://github.com/axios/axios",
+      "license": "MIT",
+      "cutoffSha": "1226e6c53eeb0e9d7159bea83556c2ff117b5f2e"
+    }
+  ],
+  "totalCases": 12,
+  "answerableCases": 10,
+  "overall": {
+    "hit1": 0.6,
+    "hit3": 0.9,
+    "hit5": 0.9,
+    "mrr": 0.7333333333333333
+  },
+  "bySplit": [
+    {
+      "split": "dev",
+      "n": 6,
+      "hit5": 0.8333333333333334,
+      "mrr": 0.638888888888889
+    },
+    {
+      "split": "test",
+      "n": 4,
+      "hit5": 1,
+      "mrr": 0.875
+    }
+  ],
+  "notBlinded": "See bench/README.md: the same agent system that implements Git Why also authored this file. This is real-repository evidence, not a blinded held-out study."
+}

@@ -1,10 +1,5 @@
 {
-  "mustMentionAny": [
-    "SameSite",
-    "Safari 12",
-    "Safari 12.0",
-    "Safari 12.1"
-  ],
+  "mustMentionAny": ["SameSite", "Safari 12", "Safari 12.0", "Safari 12.1"],
   "mustMentionReasonForIntroduction": "Safari 12.0-12.1 silently drops SameSite=None cookies even when Secure is set",
   "mustMentionReasonForRemoval": "traffic from those Safari versions dropped below 0.01% for two quarters and those versions are unsupported",
   "mustCiteShaFromAllowedAncestry": true,

@@ -31,9 +31,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump uuid 1.5.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -43,9 +41,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin axios at 9.19.21",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -55,9 +51,7 @@
       "category": "distractor",
       "subsystem": "presence",
       "subject": "Add jitter to the presence heartbeat timer",
-      "files": [
-        "src/presence/heartbeat.js"
-      ],
+      "files": ["src/presence/heartbeat.js"],
       "note": "Plausible-looking but wrong distractor for the reconnect/duplicate-dispatch query: it touches timing, not delivery correctness."
     },
     {
@@ -67,9 +61,7 @@
       "category": "distractor",
       "subsystem": "client-sdk",
       "subject": "Avoid double-logging connection events",
-      "files": [
-        "src/client-sdk/logging.js"
-      ],
+      "files": ["src/client-sdk/logging.js"],
       "note": "Surface-similar (\"duplicate\") but about logs, not message dispatch; must not outrank the real fix."
     },
     {
@@ -79,9 +71,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Drop dead code path in src/relay/dispatch.js",
-      "files": [
-        "src/relay/dispatch.js"
-      ],
+      "files": ["src/relay/dispatch.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -91,9 +81,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Trim trailing whitespace in src/relay/dispatch.js",
-      "files": [
-        "src/relay/dispatch.js"
-      ],
+      "files": ["src/relay/dispatch.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -103,9 +91,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Normalize whitespace in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -115,9 +101,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump webpack 2.16.0",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -127,9 +111,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Update inline docs for src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -139,9 +121,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Minor cleanup in src/relay/dispatch.js",
-      "files": [
-        "src/relay/dispatch.js"
-      ],
+      "files": ["src/relay/dispatch.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -151,9 +131,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Rename local variable in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -163,9 +141,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade prettier to v4.6.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -175,9 +151,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump dotenv to 2.1.23",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -187,9 +161,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump express 4.19.1",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -199,9 +171,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update prettier dependency to 9.10.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -211,9 +181,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin moment at 7.15.8",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -223,9 +191,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Improve readability of src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -235,9 +201,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Trim trailing whitespace in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -247,9 +211,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin commander at 8.3.12",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -259,9 +221,7 @@
       "category": "deleted_implementation",
       "subsystem": "relay",
       "subject": "Remove the legacy polling dispatcher",
-      "files": [
-        "src/relay/polling-dispatcher.js"
-      ],
+      "files": ["src/relay/polling-dispatcher.js"],
       "note": "Removed file; the deleted implementation itself, not just the removal commit, is what a \"queue/dispatch before push\" query should surface.",
       "beatId": "relay.remove-polling-dispatcher"
     },
@@ -272,9 +232,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade lodash to v8.15.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -284,9 +242,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Fix typo in src/presence/roster-view.js comment",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -296,9 +252,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Align src/relay/socket-pool.js with lint rules",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -308,9 +262,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Update inline docs for src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -320,9 +272,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump moment to 6.15.12",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -332,9 +282,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump axios 4.9.7",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -344,9 +292,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Minor cleanup in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -356,9 +302,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump eslint 8.0.24",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -368,9 +312,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update chalk dependency to 4.17.1",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -380,9 +322,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump ws 3.6.19",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -392,9 +332,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump pg to 4.20.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -404,9 +342,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Consolidate constants in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -416,9 +352,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Add missing semicolon in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -428,9 +362,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade axios to v2.17.0",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -440,9 +372,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Consolidate constants in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -452,9 +382,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Simplify conditional in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -464,9 +392,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade pg to v8.7.2",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -476,9 +402,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin node-fetch at 6.18.8",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -488,9 +412,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade eslint to v8.12.23",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -500,9 +422,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update eslint dependency to 1.9.9",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -512,9 +432,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Align src/relay/dispatch.js with lint rules",
-      "files": [
-        "src/relay/dispatch.js"
-      ],
+      "files": ["src/relay/dispatch.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -524,9 +442,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Drop dead code path in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -536,9 +452,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Tidy up imports in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -548,9 +462,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Improve readability of src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -560,10 +472,7 @@
       "category": "rename",
       "subsystem": "relay",
       "subject": "Rename dispatch.js to fanout.js to match the \"fanout\" terminology used elsewhere",
-      "files": [
-        "src/relay/fanout.js",
-        "src/relay/dispatch.js"
-      ],
+      "files": ["src/relay/fanout.js", "src/relay/dispatch.js"],
       "note": "Single-change rename: a query about the old name (\"dispatch\") should resolve to this commit and the current path fanout.js.",
       "beatId": "relay.rename-dispatch-to-fanout"
     },
@@ -574,9 +483,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Extract helper in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -586,9 +493,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Improve readability of src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -598,9 +503,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Reorder function arguments in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -610,9 +513,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Update inline docs for src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -622,9 +523,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Extract helper in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -634,9 +533,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Minor cleanup in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -646,9 +543,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Add missing semicolon in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -658,9 +553,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Normalize whitespace in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -670,9 +563,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Simplify conditional in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -682,9 +573,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Extract helper in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -694,9 +583,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Rename local variable in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -706,9 +593,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Simplify conditional in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -718,9 +603,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Improve readability of docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -730,9 +613,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Consolidate constants in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -742,9 +623,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Update comment in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -754,9 +633,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -766,9 +643,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Small refactor of src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -778,9 +653,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -790,9 +663,7 @@
       "category": "synonym_mismatch",
       "subsystem": "relay",
       "subject": "Fix duplicate message dispatch after reconnect",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "The relevant fix for \"messages arriving twice after reconnect\" -- no literal word overlap with \"duplicate dispatch\" beyond domain terms.",
       "beatId": "relay.fix-duplicate-dispatch-on-reconnect"
     },
@@ -803,9 +674,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Tidy up imports in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -815,9 +684,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Fix typo in src/presence/roster-view.js comment",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -827,9 +694,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -839,9 +704,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Trim trailing whitespace in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -851,9 +714,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Improve readability of src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -863,9 +724,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Reorder function arguments in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -875,9 +734,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Small refactor of src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -887,9 +744,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Simplify conditional in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -899,9 +754,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Minor cleanup in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -911,9 +764,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Minor cleanup in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -923,9 +774,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Minor cleanup in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -935,9 +784,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Small refactor of src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -947,9 +794,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Add missing semicolon in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -959,9 +804,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Update comment in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -971,9 +814,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Normalize whitespace in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -983,9 +824,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Simplify conditional in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -995,9 +834,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Add missing semicolon in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1007,9 +844,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Tidy up imports in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1019,9 +854,7 @@
       "category": "synonym_mismatch",
       "subsystem": "presence",
       "subject": "Deduplicate names in the roster view",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Relevant fix for \"same person shows up twice in the online list\"; no literal overlap with \"duplicate\" or \"dispatch\".",
       "beatId": "presence.dedupe-roster-view"
     },
@@ -1032,9 +865,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Reorder function arguments in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1044,9 +875,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Simplify conditional in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1056,9 +885,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Extract helper in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1068,9 +895,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Consolidate constants in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1080,9 +905,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Drop dead code path in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1092,9 +915,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Small refactor of src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1104,9 +925,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Rename local variable in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1116,9 +935,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Update comment in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1128,9 +945,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Reformat src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1140,9 +955,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Remove unused variable in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1152,9 +965,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Fix typo in src/relay/fanout.js comment",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1164,9 +975,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Adjust logging verbosity in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1176,9 +985,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Reformat src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1188,9 +995,7 @@
       "category": "poor_message_rich_diff",
       "subsystem": "presence",
       "subject": "fix issue",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Subject gives no clue; the diff and its inline comment are the only evidence of \"duplicated listener registration\".",
       "beatId": "relay.fix-issue"
     },
@@ -1201,9 +1006,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Tidy up imports in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1213,9 +1016,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Reformat src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1225,9 +1026,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Normalize whitespace in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1237,9 +1036,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Add missing semicolon in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1249,9 +1046,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Fix typo in src/presence/tracker.js comment",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1261,9 +1056,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Fix typo in src/presence/roster-view.js comment",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1273,9 +1066,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Tidy up imports in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1285,9 +1076,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Tidy up imports in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1297,9 +1086,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Reformat src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1309,9 +1096,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Adjust logging verbosity in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1321,9 +1106,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Simplify conditional in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1333,9 +1116,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Rename local variable in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1345,9 +1126,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Reformat src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1357,9 +1136,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Extract helper in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1369,9 +1146,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Trim trailing whitespace in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1381,9 +1156,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Align src/client-sdk/socket.js with lint rules",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1393,9 +1166,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Rename local variable in docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1405,9 +1176,7 @@
       "category": "deleted_implementation",
       "subsystem": "client-sdk",
       "subject": "Remove the hand-rolled exponential backoff loop from ChatSocket",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "The removed inline backoff loop is the deleted implementation a \"how did reconnect retry used to work\" query should find.",
       "beatId": "sdk.remove-manual-reconnect-loop"
     },
@@ -1418,9 +1187,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Normalize whitespace in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1430,9 +1197,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Reformat src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1442,9 +1207,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Tidy up imports in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1454,9 +1217,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Tidy up imports in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1466,9 +1227,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Reorder function arguments in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1478,9 +1237,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Small refactor of src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1490,9 +1247,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1502,9 +1257,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Extract helper in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1514,9 +1267,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Rename local variable in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1526,9 +1277,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Trim trailing whitespace in src/presence/tracker.js",
-      "files": [
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/tracker.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1538,9 +1287,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Minor cleanup in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1550,9 +1297,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Simplify conditional in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1562,9 +1307,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Fix typo in src/client-sdk/socket.js comment",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1574,9 +1317,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Align src/client-sdk/socket.js with lint rules",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1586,10 +1327,7 @@
       "category": "rename",
       "subsystem": "presence",
       "subject": "Rename PresenceTracker to RoomPresence for consistency with RoomFanout",
-      "files": [
-        "src/presence/room-presence.js",
-        "src/presence/tracker.js"
-      ],
+      "files": ["src/presence/room-presence.js", "src/presence/tracker.js"],
       "note": "Rename case; old identifier \"PresenceTracker\" should resolve here.",
       "beatId": "presence.rename-tracker-class"
     },
@@ -1600,9 +1338,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Simplify conditional in src/presence/room-presence.js",
-      "files": [
-        "src/presence/room-presence.js"
-      ],
+      "files": ["src/presence/room-presence.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1612,9 +1348,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Consolidate constants in src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1624,9 +1358,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Update comment in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1636,9 +1368,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Small refactor of src/presence/room-presence.js",
-      "files": [
-        "src/presence/room-presence.js"
-      ],
+      "files": ["src/presence/room-presence.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1648,9 +1378,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Improve readability of src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1660,9 +1388,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Drop dead code path in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1672,9 +1398,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Small refactor of src/presence/roster-view.js",
-      "files": [
-        "src/presence/roster-view.js"
-      ],
+      "files": ["src/presence/roster-view.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1684,9 +1408,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1696,9 +1418,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Update inline docs for src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1708,9 +1428,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Reformat src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1720,9 +1438,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Simplify conditional in src/relay/fanout.js",
-      "files": [
-        "src/relay/fanout.js"
-      ],
+      "files": ["src/relay/fanout.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1732,9 +1448,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Adjust logging verbosity in src/presence/room-presence.js",
-      "files": [
-        "src/presence/room-presence.js"
-      ],
+      "files": ["src/presence/room-presence.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1744,9 +1458,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Adjust logging verbosity in src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1756,9 +1468,7 @@
       "category": "churn",
       "subsystem": "client-sdk",
       "subject": "Small refactor of src/client-sdk/socket.js",
-      "files": [
-        "src/client-sdk/socket.js"
-      ],
+      "files": ["src/client-sdk/socket.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1768,9 +1478,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Small refactor of docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1780,9 +1488,7 @@
       "category": "churn",
       "subsystem": "presence",
       "subject": "Update comment in src/presence/room-presence.js",
-      "files": [
-        "src/presence/room-presence.js"
-      ],
+      "files": ["src/presence/room-presence.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1792,9 +1498,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Simplify conditional in src/relay/socket-pool.js",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1804,9 +1508,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Small refactor of docs/CHANGELOG.md",
-      "files": [
-        "docs/CHANGELOG.md"
-      ],
+      "files": ["docs/CHANGELOG.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1816,9 +1518,7 @@
       "category": "churn",
       "subsystem": "relay",
       "subject": "Align src/relay/socket-pool.js with lint rules",
-      "files": [
-        "src/relay/socket-pool.js"
-      ],
+      "files": ["src/relay/socket-pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     }
   ]

@@ -34,9 +34,24 @@ export const VERSION_BUMP_SUBJECTS = [
 ];
 
 export const DEPENDENCIES = [
-  'lodash', 'axios', 'chalk', 'commander', 'dotenv', 'express',
-  'jest', 'eslint', 'prettier', 'webpack', 'babel-core', 'moment',
-  'uuid', 'ws', 'pg', 'ioredis', 'node-fetch', 'yargs',
+  'lodash',
+  'axios',
+  'chalk',
+  'commander',
+  'dotenv',
+  'express',
+  'jest',
+  'eslint',
+  'prettier',
+  'webpack',
+  'babel-core',
+  'moment',
+  'uuid',
+  'ws',
+  'pg',
+  'ioredis',
+  'node-fetch',
+  'yargs',
 ];
 
 export function semverLike(rng, randInt) {

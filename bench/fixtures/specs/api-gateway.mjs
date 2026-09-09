@@ -204,7 +204,7 @@ export async function callInitech(request) {
 `,
       },
     ],
-    note: 'Distractor_intent target for Initech, and also this fixture\'s first workaround_rationale case (specific documented upstream behavior).',
+    note: "Distractor_intent target for Initech, and also this fixture's first workaround_rationale case (specific documented upstream behavior).",
   },
   // --- rename #2 (test) ---
   {
@@ -348,7 +348,11 @@ const distractorBeats = [
     subject: 'Bump the Initech request timeout to 5s',
     body: 'Unrelated to the 501 no-retry rule: this only changes how long we wait before giving up, not what we do with the response.',
     files: [
-      { path: 'src/providers/initech-timeout.js', op: 'write', content: 'export const INITECH_TIMEOUT_MS = 5000;\n' },
+      {
+        path: 'src/providers/initech-timeout.js',
+        op: 'write',
+        content: 'export const INITECH_TIMEOUT_MS = 5000;\n',
+      },
     ],
     note: 'Distractor: same provider, unrelated concern (timeout vs. retry-on-status-code).',
   },

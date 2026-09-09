@@ -24,7 +24,13 @@ import {
   objectCount,
 } from './git.mjs';
 import { subRng, randInt, pick } from './rng.mjs';
-import { CHURN_SUBJECTS, VERSION_BUMP_SUBJECTS, DEPENDENCIES, semverLike, CHURN_COMMENT_LINES } from './wordbank.mjs';
+import {
+  CHURN_SUBJECTS,
+  VERSION_BUMP_SUBJECTS,
+  DEPENDENCIES,
+  semverLike,
+  CHURN_COMMENT_LINES,
+} from './wordbank.mjs';
 
 const SECONDS_PER_COMMIT = 3 * 60 * 60; // 3 hours apart, deterministic spacing
 
@@ -65,7 +71,9 @@ function fillerChurnBeat(rng, editableFiles) {
 function versionBumpBeat(rng) {
   const dep = pick(rng, DEPENDENCIES);
   const version = semverLike(rng, randInt);
-  const subject = pick(rng, VERSION_BUMP_SUBJECTS).replace('{dep}', dep).replace('{version}', version);
+  const subject = pick(rng, VERSION_BUMP_SUBJECTS)
+    .replace('{dep}', dep)
+    .replace('{version}', version);
   const path = 'package-lock.snapshot.txt';
   return {
     id: `filler.version.${dep}.${version}`,

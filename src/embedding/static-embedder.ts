@@ -144,7 +144,6 @@ export class StaticEmbedder implements Embedder {
     return this.embedOne(text);
   }
 
-   
   async dispose(): Promise<void> {
     this.disposed = true;
   }

@@ -28,9 +28,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Normalize whitespace in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -40,9 +38,7 @@
       "category": "distractor",
       "subsystem": "build",
       "subject": "Tune the build cache directory size limit",
-      "files": [
-        "scripts/build-cache.js"
-      ],
+      "files": ["scripts/build-cache.js"],
       "note": "Distractor: touches build tooling but is not about version support."
     },
     {
@@ -52,9 +48,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin express at 1.17.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -64,9 +58,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Fix typo in scripts/release.js comment",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -76,9 +68,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update inline docs for package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -88,9 +78,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update ws dependency to 3.20.28",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -100,9 +88,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update axios dependency to 9.3.13",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -112,9 +98,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Small refactor of package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -124,9 +108,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Adjust logging verbosity in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -136,9 +118,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -148,9 +128,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump express 2.4.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -160,9 +138,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update chalk dependency to 8.4.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -172,9 +148,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update comment in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -184,9 +158,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Fix typo in config/engines.json comment",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -196,9 +168,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Reorder function arguments in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -208,9 +178,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump jest 7.12.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -220,9 +188,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump pg to 4.9.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -232,9 +198,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Reformat config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -244,9 +208,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump chalk 2.6.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -256,9 +218,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump axios to 7.10.29",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -268,9 +228,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update express dependency to 1.19.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -280,9 +238,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin uuid at 4.7.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -292,9 +248,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin uuid at 5.6.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -304,9 +258,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin dotenv at 4.18.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -316,9 +268,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Normalize whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -328,9 +278,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Extract helper in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -340,9 +288,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update webpack dependency to 7.15.5",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -352,9 +298,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Drop dead code path in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -364,9 +308,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade commander to v1.20.23",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -376,9 +318,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin jest at 3.6.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -388,9 +328,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Small refactor of scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -400,9 +338,7 @@
       "category": "number_version",
       "subsystem": "config",
       "subject": "Require npm 9+ for the lockfile v3 format",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Real reason is the lockfile v3 format, not a generic \"newer npm is better\" preference.",
       "beatId": "config.require-npm-9"
     },
@@ -413,9 +349,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Trim trailing whitespace in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -425,9 +359,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Tidy up imports in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -437,9 +369,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump uuid to 9.18.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -449,9 +379,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin axios at 3.3.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -461,9 +389,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Remove unused variable in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -473,9 +399,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Fix typo in package-lock.snapshot.txt comment",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -485,9 +409,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Small refactor of package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -497,9 +419,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Rename local variable in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -509,9 +429,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade moment to v3.17.13",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -521,9 +439,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -533,9 +449,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Improve readability of scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -545,9 +459,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Adjust logging verbosity in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -557,9 +469,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade ioredis to v8.12.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -569,9 +479,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump webpack to 4.5.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -581,9 +489,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update express dependency to 5.3.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -593,9 +499,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Extract helper in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -605,9 +509,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump node-fetch to 9.0.1",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -617,9 +519,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Reorder function arguments in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -629,9 +529,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade babel-core to v2.13.24",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -641,9 +539,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin moment at 8.18.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -653,9 +549,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump commander to 8.20.30",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -665,9 +559,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update prettier dependency to 8.15.21",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -677,9 +569,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Extract helper in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -689,9 +579,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin axios at 9.16.11",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -701,9 +589,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin prettier at 1.9.26",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -713,9 +599,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin eslint at 1.11.24",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -725,9 +609,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Small refactor of config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -737,9 +619,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reformat package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -749,9 +629,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump uuid to 5.15.25",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -761,9 +639,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Update comment in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -773,9 +649,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Update inline docs for scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -785,9 +659,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump axios 2.14.11",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -797,9 +669,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade pg to v8.0.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -809,9 +679,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade ioredis to v9.14.28",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -821,9 +689,7 @@
       "category": "rich_message_skipped_patch",
       "subsystem": "deps",
       "subject": "Pin esbuild to 0.19.2 pending a Windows path-handling fix",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Message-only rationale surviving patch suppression; the \"patch\" here is an intentionally uninformative lockfile line.",
       "beatId": "deps.pin-esbuild"
     },
@@ -834,9 +700,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump babel-core to 4.20.9",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -846,9 +710,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump chalk to 2.7.29",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -858,9 +720,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump chalk 6.10.16",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -870,9 +730,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump node-fetch 8.15.2",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -882,9 +740,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Improve readability of scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -894,9 +750,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin lodash at 6.17.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -906,9 +760,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update ioredis dependency to 3.10.26",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -918,9 +770,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Adjust logging verbosity in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -930,9 +780,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Align config/engines.json with lint rules",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -942,9 +790,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Rename local variable in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -954,9 +800,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Fix typo in scripts/release.js comment",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -966,9 +810,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Remove unused variable in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -978,9 +820,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Align config/engines.json with lint rules",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -990,9 +830,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Small refactor of scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1002,9 +840,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Small refactor of scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1014,9 +850,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Update inline docs for scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1026,9 +860,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1038,9 +870,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Normalize whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1050,9 +880,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Tidy up imports in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1062,9 +890,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1074,9 +900,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Remove unused variable in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1086,9 +910,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Remove unused variable in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1098,9 +920,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Consolidate constants in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1110,9 +930,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update comment in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1122,9 +940,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reformat package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1134,9 +950,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reorder function arguments in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1146,9 +960,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Consolidate constants in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1158,9 +970,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Consolidate constants in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1170,9 +980,7 @@
       "category": "number_version",
       "subsystem": "build",
       "subject": "Drop the webpack 4 build path; require webpack 5",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "A second number/version case with its own distinct rationale, to be distinguished from the npm 9 case and from filler version bumps.",
       "beatId": "build.drop-webpack-4"
     },
@@ -1183,9 +991,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Drop dead code path in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1195,9 +1001,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Improve readability of config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1207,9 +1011,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Drop dead code path in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1219,9 +1021,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Drop dead code path in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1231,9 +1031,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Align package-lock.snapshot.txt with lint rules",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1243,9 +1041,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reformat package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1255,9 +1051,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Adjust logging verbosity in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1267,9 +1061,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Extract helper in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1279,9 +1071,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Fix typo in config/engines.json comment",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1291,9 +1081,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Extract helper in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1303,9 +1091,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Align scripts/release.js with lint rules",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1315,9 +1101,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1327,9 +1111,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Extract helper in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1339,9 +1121,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Drop dead code path in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1351,9 +1131,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Minor cleanup in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1363,9 +1141,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Reformat scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1375,9 +1151,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Update comment in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1387,9 +1161,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Update inline docs for scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1399,9 +1171,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Update inline docs for config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1411,9 +1181,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Extract helper in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1423,9 +1191,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Improve readability of scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1435,9 +1201,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Reorder function arguments in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1447,9 +1211,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Adjust logging verbosity in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1459,9 +1221,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Tidy up imports in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1471,9 +1231,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Remove unused variable in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1483,9 +1241,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Trim trailing whitespace in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1495,9 +1251,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1507,9 +1261,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Reorder function arguments in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1519,9 +1271,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Reformat config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1531,9 +1281,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Adjust logging verbosity in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1543,9 +1291,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Fix typo in package-lock.snapshot.txt comment",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1555,9 +1301,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Rename local variable in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1567,9 +1311,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Tidy up imports in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1579,9 +1321,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Update comment in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1591,9 +1331,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Add missing semicolon in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1603,9 +1341,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Simplify conditional in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1615,9 +1351,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Consolidate constants in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1627,9 +1361,7 @@
       "category": "rich_message_skipped_patch",
       "subsystem": "deps",
       "subject": "Bump the internal release-notes generator to its new major version",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Second rich-message/skipped-patch case: a dependency bump whose real motivation is entirely in the message.",
       "beatId": "deps.bump-release-tool-major"
     },
@@ -1640,9 +1372,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Minor cleanup in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1652,9 +1382,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Fix typo in config/engines.json comment",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1664,9 +1392,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Trim trailing whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1676,9 +1402,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Small refactor of package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1688,9 +1412,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Minor cleanup in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1700,9 +1422,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Consolidate constants in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1712,9 +1432,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Update comment in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1724,9 +1442,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Update inline docs for scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1736,9 +1452,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1748,9 +1462,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Rename local variable in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1760,9 +1472,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Remove unused variable in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1772,9 +1482,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Minor cleanup in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1784,9 +1492,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1796,9 +1502,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Consolidate constants in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1808,9 +1512,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Reformat scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1820,9 +1522,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Tidy up imports in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1832,9 +1532,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Remove unused variable in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1844,9 +1542,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Reorder function arguments in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1856,9 +1552,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Normalize whitespace in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1868,9 +1562,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Trim trailing whitespace in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1880,9 +1572,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Trim trailing whitespace in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1892,9 +1582,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Consolidate constants in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1904,9 +1592,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Extract helper in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1916,9 +1602,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Improve readability of config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1928,9 +1612,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1940,9 +1622,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Tidy up imports in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1952,9 +1632,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Extract helper in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1964,9 +1642,7 @@
       "category": "churn",
       "subsystem": "config",
       "subject": "Drop dead code path in config/engines.json",
-      "files": [
-        "config/engines.json"
-      ],
+      "files": ["config/engines.json"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1976,9 +1652,7 @@
       "category": "churn",
       "subsystem": "build",
       "subject": "Simplify conditional in scripts/build.js",
-      "files": [
-        "scripts/build.js"
-      ],
+      "files": ["scripts/build.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1988,9 +1662,7 @@
       "category": "churn",
       "subsystem": "release",
       "subject": "Rename local variable in scripts/release.js",
-      "files": [
-        "scripts/release.js"
-      ],
+      "files": ["scripts/release.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -2000,9 +1672,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Improve readability of package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     }
   ]

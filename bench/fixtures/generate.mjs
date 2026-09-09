@@ -49,7 +49,9 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const specs = args.only ? ALL_SPECS.filter((s) => args.only.includes(s.id)) : ALL_SPECS;
   if (specs.length === 0) {
-    console.error(`No fixture matched --only=${args.only?.join(',')}. Known ids: ${ALL_SPECS.map((s) => s.id).join(', ')}`);
+    console.error(
+      `No fixture matched --only=${args.only?.join(',')}. Known ids: ${ALL_SPECS.map((s) => s.id).join(', ')}`,
+    );
     process.exit(1);
   }
 
@@ -61,16 +63,24 @@ async function main() {
       fillerOverride: args.filler ?? undefined,
     });
     results.push({ id: spec.id, ...summarize(manifest), headSha: manifest.headSha });
-    console.log(`[${spec.id}] ${manifest.commitCount} commits, head ${manifest.headSha.slice(0, 12)}`);
+    console.log(
+      `[${spec.id}] ${manifest.commitCount} commits, head ${manifest.headSha.slice(0, 12)}`,
+    );
   }
 
   if (args.verifyDeterminism) {
     console.log('\nRe-running each fixture to verify the head SHA is reproducible...');
     for (const spec of specs) {
       const before = JSON.parse(readFileSync(join(MANIFEST_DIR, `${spec.id}.json`), 'utf8'));
-      const after = buildFixture(spec, { workDir: WORK_DIR, manifestDir: MANIFEST_DIR, fillerOverride: args.filler ?? undefined });
+      const after = buildFixture(spec, {
+        workDir: WORK_DIR,
+        manifestDir: MANIFEST_DIR,
+        fillerOverride: args.filler ?? undefined,
+      });
       if (before.headSha !== after.headSha) {
-        console.error(`NON-DETERMINISTIC: ${spec.id} produced ${before.headSha} then ${after.headSha}`);
+        console.error(
+          `NON-DETERMINISTIC: ${spec.id} produced ${before.headSha} then ${after.headSha}`,
+        );
         process.exitCode = 1;
       } else {
         console.log(`[${spec.id}] deterministic: ${after.headSha.slice(0, 12)}`);

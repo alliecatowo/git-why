@@ -27,9 +27,7 @@
       "category": "distractor",
       "subsystem": "oauth",
       "subject": "Add retry with jitter to the OAuth token exchange call",
-      "files": [
-        "src/oauth/retry.js"
-      ],
+      "files": ["src/oauth/retry.js"],
       "note": "Distractor for workaround_rationale: mentions the same OAuth call but addresses network retries, not the empty-token behavior."
     },
     {
@@ -39,9 +37,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump chalk to 6.2.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -51,9 +47,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin axios at 2.5.0",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -63,9 +57,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade yargs to v2.17.29",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -75,9 +67,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Extract helper in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -87,9 +77,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update express dependency to 5.9.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -99,9 +87,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade pg to v4.16.28",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -111,9 +97,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump uuid to 8.11.30",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -123,9 +107,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Update comment in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -135,9 +117,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade webpack to v4.7.8",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -147,9 +127,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Simplify conditional in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -159,9 +137,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Tidy up imports in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -171,9 +147,7 @@
       "category": "exact_identifier",
       "subsystem": "session",
       "subject": "Add refreshSession() to AuthSessionProvider",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Exact-identifier target: literal string \"AuthSessionProvider\" appears in subject and diff.",
       "beatId": "session.add-refresh-to-provider"
     },
@@ -184,9 +158,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin ioredis at 7.15.13",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -196,9 +168,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Reformat src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -208,9 +178,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Tidy up imports in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -220,9 +188,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Remove unused variable in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -232,9 +198,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Trim trailing whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -244,9 +208,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump prettier 7.5.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -256,9 +218,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump babel-core to 3.1.7",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -268,9 +228,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump commander to 2.3.1",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -280,9 +238,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Extract helper in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -292,9 +248,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump ioredis to 5.19.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -304,9 +258,7 @@
       "category": "workaround_rationale",
       "subsystem": "oauth",
       "subject": "Keep the empty-string token branch for the legacy IdP tenant",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Establishes the specific upstream behavior (empty string, specific tenant) that justifies keeping the branch.",
       "beatId": "oauth.keep-empty-token-branch"
     },
@@ -317,9 +269,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Improve readability of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -329,9 +279,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade babel-core to v6.11.4",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -341,9 +289,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade dotenv to v4.12.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -353,9 +299,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin express at 1.4.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -365,9 +309,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade uuid to v2.2.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -377,9 +319,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump eslint 4.6.13",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -389,9 +329,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Normalize whitespace in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -401,9 +339,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade express to v9.17.19",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -413,9 +349,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade commander to v5.2.11",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -425,9 +359,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Minor cleanup in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -437,9 +369,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Drop dead code path in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -449,9 +379,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update dotenv dependency to 7.3.1",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -461,9 +389,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump commander 6.12.14",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -473,9 +399,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin axios at 6.11.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -485,9 +409,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump dotenv 7.13.25",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -497,9 +419,7 @@
       "category": "exact_identifier",
       "subsystem": "session",
       "subject": "AuthSessionProvider: cache getSession() results for 30s",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Second exact-identifier commit for AuthSessionProvider.",
       "beatId": "session.provider-cache-ttl"
     },
@@ -510,9 +430,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Consolidate constants in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -522,9 +440,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Small refactor of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -534,9 +450,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Small refactor of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -546,9 +460,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Tidy up imports in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -558,9 +470,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Align src/compat/legacy-mobile.js with lint rules",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -570,9 +480,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Adjust logging verbosity in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -582,9 +490,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Reorder function arguments in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -594,9 +500,7 @@
       "category": "lifecycle_intro",
       "subsystem": "compat",
       "subject": "Work around Safari dropping SameSite=None cookies without Secure",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Introduction half of the lifecycle case; a query about the Safari cookie workaround should surface this commit as \"relevant\" for the introduction.",
       "beatId": "compat.safari-cookie-workaround-intro"
     },
@@ -607,9 +511,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Reorder function arguments in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -619,9 +521,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Fix typo in src/oauth/provider-client.js comment",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -631,9 +531,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Improve readability of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -643,9 +541,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Reformat src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -655,9 +551,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Remove unused variable in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -667,9 +561,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Improve readability of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -679,9 +571,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Add missing semicolon in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -691,9 +581,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Small refactor of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -703,9 +591,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Update inline docs for src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -715,9 +601,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Remove unused variable in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -727,9 +611,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Rename local variable in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -739,9 +621,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Tidy up imports in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -751,9 +631,7 @@
       "category": "workaround_rationale",
       "subsystem": "compat",
       "subject": "Accept lowercase \"authorization\" header from app versions <= 4.2",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Second workaround_rationale case: a distinct client quirk with its own specific justification.",
       "beatId": "compat.mobile-lowercase-header"
     },
@@ -764,9 +642,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Simplify conditional in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -776,9 +652,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Extract helper in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -788,9 +662,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Rename local variable in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -800,9 +672,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Reformat src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -812,9 +682,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Minor cleanup in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -824,9 +692,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Improve readability of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -836,9 +702,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Remove unused variable in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -848,9 +712,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Add missing semicolon in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -860,9 +722,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Improve readability of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -872,9 +732,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Small refactor of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -884,9 +742,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Extract helper in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -896,9 +752,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Update inline docs for src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -908,9 +762,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Remove unused variable in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -920,9 +772,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Rename local variable in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -932,9 +782,7 @@
       "category": "exact_identifier",
       "subsystem": "session",
       "subject": "Emit a metric from AuthSessionProvider on cache miss",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Third exact-identifier commit.",
       "beatId": "session.provider-metrics"
     },
@@ -945,9 +793,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Improve readability of src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -957,9 +803,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Add missing semicolon in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -969,9 +813,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Fix typo in src/compat/legacy-mobile.js comment",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -981,9 +823,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Extract helper in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -993,9 +833,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Small refactor of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1005,9 +843,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1017,9 +853,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1029,9 +863,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Minor cleanup in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1041,9 +873,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1053,9 +883,7 @@
       "category": "lifecycle_removal",
       "subsystem": "compat",
       "subject": "Remove the Safari 12.0-12.1 SameSite cookie workaround",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Removal half of the lifecycle case; both this and the introduction commit are relevant to the same lifecycle query.",
       "beatId": "compat.safari-cookie-workaround-removed"
     },
@@ -1066,9 +894,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Improve readability of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1078,9 +904,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Drop dead code path in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1090,9 +914,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Remove unused variable in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1102,9 +924,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Adjust logging verbosity in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1114,9 +934,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Improve readability of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1126,9 +944,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Drop dead code path in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1138,9 +954,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Drop dead code path in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1150,9 +964,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Reorder function arguments in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1162,9 +974,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Rename local variable in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1174,9 +984,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1186,9 +994,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Fix typo in src/oauth/provider-client.js comment",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1198,9 +1004,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1210,9 +1014,7 @@
       "category": "lifecycle_intro",
       "subsystem": "oauth",
       "subject": "Cache CORS preflight responses in-memory for IE11 clients",
-      "files": [
-        "src/oauth/ie11-preflight-cache.js"
-      ],
+      "files": ["src/oauth/ie11-preflight-cache.js"],
       "note": "Introduction half of the IE11 lifecycle case.",
       "beatId": "oauth.ie11-preflight-cache-intro"
     },
@@ -1223,9 +1025,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Update comment in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1235,9 +1035,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1247,9 +1045,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Small refactor of src/oauth/ie11-preflight-cache.js",
-      "files": [
-        "src/oauth/ie11-preflight-cache.js"
-      ],
+      "files": ["src/oauth/ie11-preflight-cache.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1259,9 +1055,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Align src/oauth/provider-client.js with lint rules",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1271,9 +1065,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Trim trailing whitespace in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1283,9 +1075,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Update inline docs for src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1295,9 +1085,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Remove unused variable in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1307,9 +1095,7 @@
       "category": "exact_identifier",
       "subsystem": "session",
       "subject": "Add dispose() to AuthSessionProvider to clear its cache",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Fourth exact-identifier commit.",
       "beatId": "session.provider-dispose"
     },
@@ -1320,9 +1106,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Simplify conditional in src/oauth/ie11-preflight-cache.js",
-      "files": [
-        "src/oauth/ie11-preflight-cache.js"
-      ],
+      "files": ["src/oauth/ie11-preflight-cache.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1332,9 +1116,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Simplify conditional in src/oauth/ie11-preflight-cache.js",
-      "files": [
-        "src/oauth/ie11-preflight-cache.js"
-      ],
+      "files": ["src/oauth/ie11-preflight-cache.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1344,9 +1126,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Rename local variable in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1356,9 +1136,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Align src/oauth/ie11-preflight-cache.js with lint rules",
-      "files": [
-        "src/oauth/ie11-preflight-cache.js"
-      ],
+      "files": ["src/oauth/ie11-preflight-cache.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1368,9 +1146,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Drop dead code path in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1380,9 +1156,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Reformat src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1392,9 +1166,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Remove unused variable in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1404,9 +1176,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Extract helper in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1416,9 +1186,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Update inline docs for src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1428,9 +1196,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Add missing semicolon in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1440,9 +1206,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Align src/session/auth-session-provider.js with lint rules",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1452,9 +1216,7 @@
       "category": "lifecycle_removal",
       "subsystem": "oauth",
       "subject": "Delete the IE11 preflight cache now that IE11 is unsupported",
-      "files": [
-        "src/oauth/ie11-preflight-cache.js"
-      ],
+      "files": ["src/oauth/ie11-preflight-cache.js"],
       "note": "Removal half of the IE11 lifecycle case.",
       "beatId": "oauth.ie11-preflight-cache-removed"
     },
@@ -1465,9 +1227,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Consolidate constants in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1477,9 +1237,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Improve readability of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1489,9 +1247,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Align src/compat/legacy-mobile.js with lint rules",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1501,9 +1257,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Normalize whitespace in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1513,9 +1267,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Simplify conditional in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1525,9 +1277,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Simplify conditional in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1537,9 +1287,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Small refactor of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1549,9 +1297,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Fix typo in src/session/auth-session-provider.js comment",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1561,9 +1307,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Small refactor of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1573,9 +1317,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Small refactor of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1585,9 +1327,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Improve readability of src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1597,9 +1337,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Drop dead code path in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1609,9 +1347,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Consolidate constants in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1621,9 +1357,7 @@
       "category": "lifecycle_intro",
       "subsystem": "compat",
       "subject": "Emit both \"success\" and \"sucess\" fields for app versions <= 3.0",
-      "files": [
-        "src/compat/legacy-response.js"
-      ],
+      "files": ["src/compat/legacy-response.js"],
       "note": "Introduction half of the third lifecycle case.",
       "beatId": "compat.legacy-sucess-field-intro"
     },
@@ -1634,9 +1368,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Trim trailing whitespace in src/compat/legacy-response.js",
-      "files": [
-        "src/compat/legacy-response.js"
-      ],
+      "files": ["src/compat/legacy-response.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1646,9 +1378,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Tidy up imports in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1658,9 +1388,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Adjust logging verbosity in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1670,9 +1398,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Minor cleanup in src/compat/legacy-response.js",
-      "files": [
-        "src/compat/legacy-response.js"
-      ],
+      "files": ["src/compat/legacy-response.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1682,9 +1408,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Extract helper in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1694,9 +1418,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Adjust logging verbosity in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1706,9 +1428,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Reformat src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1718,9 +1438,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Adjust logging verbosity in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1730,9 +1448,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Small refactor of src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1742,9 +1458,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Update comment in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1754,9 +1468,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Drop dead code path in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1766,9 +1478,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Reformat src/compat/legacy-response.js",
-      "files": [
-        "src/compat/legacy-response.js"
-      ],
+      "files": ["src/compat/legacy-response.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1778,9 +1488,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Minor cleanup in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1790,9 +1498,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Normalize whitespace in src/compat/legacy-response.js",
-      "files": [
-        "src/compat/legacy-response.js"
-      ],
+      "files": ["src/compat/legacy-response.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1802,9 +1508,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Small refactor of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1814,9 +1518,7 @@
       "category": "lifecycle_removal",
       "subsystem": "compat",
       "subject": "Stop emitting the \"sucess\" typo field",
-      "files": [
-        "src/compat/legacy-response.js"
-      ],
+      "files": ["src/compat/legacy-response.js"],
       "note": "Removal half of the third lifecycle case.",
       "beatId": "compat.legacy-sucess-field-removed"
     },
@@ -1827,9 +1529,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Consolidate constants in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1839,9 +1539,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Fix typo in src/session/auth-session-provider.js comment",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1851,9 +1549,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Trim trailing whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1863,9 +1559,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Update inline docs for src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1875,9 +1569,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Fix typo in src/compat/legacy-mobile.js comment",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1887,9 +1579,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1899,9 +1589,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Tidy up imports in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1911,9 +1599,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Update inline docs for src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1923,9 +1609,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Reorder function arguments in src/oauth/provider-client.js",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1935,9 +1619,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Small refactor of src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1947,9 +1629,7 @@
       "category": "churn",
       "subsystem": "oauth",
       "subject": "Fix typo in src/oauth/provider-client.js comment",
-      "files": [
-        "src/oauth/provider-client.js"
-      ],
+      "files": ["src/oauth/provider-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1959,9 +1639,7 @@
       "category": "churn",
       "subsystem": "compat",
       "subject": "Normalize whitespace in src/compat/legacy-mobile.js",
-      "files": [
-        "src/compat/legacy-mobile.js"
-      ],
+      "files": ["src/compat/legacy-mobile.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1971,9 +1649,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Normalize whitespace in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1983,9 +1659,7 @@
       "category": "churn",
       "subsystem": "session",
       "subject": "Trim trailing whitespace in src/session/auth-session-provider.js",
-      "files": [
-        "src/session/auth-session-provider.js"
-      ],
+      "files": ["src/session/auth-session-provider.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     }
   ]

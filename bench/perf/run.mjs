@@ -42,7 +42,7 @@ import { commitAll, writeRepoFile, git } from '../fixtures/lib/git.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..', '..');
-const DEFAULT_CLI = join(REPO_ROOT, 'dist', 'cli', 'main.js');
+
 const FIXTURES_MANIFEST_DIR = join(REPO_ROOT, 'bench', 'fixtures', 'manifests');
 const FIXTURES_WORK_DIR = join(REPO_ROOT, 'bench', 'work', 'fixtures');
 const PERF_WORK_DIR = join(REPO_ROOT, 'bench', 'work', 'perf');
@@ -65,7 +65,8 @@ function fail(msg) {
 
 function ensureBaseFixture(fixtureId) {
   const manifestPath = join(FIXTURES_MANIFEST_DIR, `${fixtureId}.json`);
-  if (!existsSync(manifestPath)) fail(`Unknown fixture "${fixtureId}" (no manifest at ${manifestPath}).`);
+  if (!existsSync(manifestPath))
+    fail(`Unknown fixture "${fixtureId}" (no manifest at ${manifestPath}).`);
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
   const dir = join(FIXTURES_WORK_DIR, fixtureId);
   const head = (() => {
@@ -76,7 +77,9 @@ function ensureBaseFixture(fixtureId) {
     }
   })();
   if (head !== manifest.headSha) {
-    fail(`Fixture "${fixtureId}" is missing or stale. Run: node bench/fixtures/generate.mjs --only=${fixtureId}`);
+    fail(
+      `Fixture "${fixtureId}" is missing or stale. Run: node bench/fixtures/generate.mjs --only=${fixtureId}`,
+    );
   }
   return { dir, manifest };
 }
@@ -114,7 +117,9 @@ async function main() {
     knownGaps: [
       'Per-phase timing breakdown is not part of the frozen --json contract; only total external wall time is measured.',
       'Loaded-process query loop is approximated via warm fresh-process calls, not a true in-process repeat.',
-      args.repo ? null : 'No pinned public repository was supplied (--repo=); reference corpus is a synthetic fixture, not the 10k-commit target scale.',
+      args.repo
+        ? null
+        : 'No pinned public repository was supplied (--repo=); reference corpus is a synthetic fixture, not the 10k-commit target scale.',
     ].filter(Boolean),
     workloads: {},
   };
@@ -126,16 +131,32 @@ async function main() {
   if (only('firstUse')) {
     const cacheDir = join(PERF_WORK_DIR, 'model-cache', runId);
     const cacheEnv = isolatedCacheEnv(cacheDir);
-    const missingModelRepo = cloneFixtureForPerf(baseFixtureDir, PERF_WORK_DIR, 'first-use-missing-model');
+    const missingModelRepo = cloneFixtureForPerf(
+      baseFixtureDir,
+      PERF_WORK_DIR,
+      'first-use-missing-model',
+    );
     rmSync(join(missingModelRepo, '.git', 'why'), { recursive: true, force: true }); // in case a stray index dir exists
     const before = dirSizeBytes(cacheDir);
-    const missing = runOnce(cliPath, [QUERY, '--json'], { cwd: missingModelRepo, env: cacheEnv, timeoutMs: 10 * 60_000 });
+    const missing = runOnce(cliPath, [QUERY, '--json'], {
+      cwd: missingModelRepo,
+      env: cacheEnv,
+      timeoutMs: 10 * 60_000,
+    });
     const after = dirSizeBytes(cacheDir);
     const cacheGrew = (after ?? 0) > (before ?? 0);
 
-    const cachedModelRepo = cloneFixtureForPerf(baseFixtureDir, PERF_WORK_DIR, 'first-use-cached-model');
+    const cachedModelRepo = cloneFixtureForPerf(
+      baseFixtureDir,
+      PERF_WORK_DIR,
+      'first-use-cached-model',
+    );
     rmSync(join(cachedModelRepo, '.git', 'why'), { recursive: true, force: true });
-    const cached = runOnce(cliPath, [QUERY, '--json'], { cwd: cachedModelRepo, env: cacheEnv, timeoutMs: 10 * 60_000 });
+    const cached = runOnce(cliPath, [QUERY, '--json'], {
+      cwd: cachedModelRepo,
+      env: cacheEnv,
+      timeoutMs: 10 * 60_000,
+    });
 
     results.workloads.firstUse = {
       cacheOverrideVerified: cacheGrew,
@@ -144,24 +165,46 @@ async function main() {
         : 'The isolated HOME/XDG_CACHE_HOME override did not visibly grow the temp cache dir. Either the model was ' +
           'already resident some other way, or the product does not key its cache off these env vars. Treat the ' +
           '"missing model" number below as UNVERIFIED, not as ground truth.',
-      missingModel: { totalMs: missing.elapsedMs, exitCode: missing.exitCode, error: missing.exitCode === 0 ? null : missing.stderr || missing.stdout },
-      cachedModel: { totalMs: cached.elapsedMs, exitCode: cached.exitCode, error: cached.exitCode === 0 ? null : cached.stderr || cached.stdout },
-      networkTransferDeltaMs: missing.exitCode === 0 && cached.exitCode === 0 ? missing.elapsedMs - cached.elapsedMs : null,
+      missingModel: {
+        totalMs: missing.elapsedMs,
+        exitCode: missing.exitCode,
+        error: missing.exitCode === 0 ? null : missing.stderr || missing.stdout,
+      },
+      cachedModel: {
+        totalMs: cached.elapsedMs,
+        exitCode: cached.exitCode,
+        error: cached.exitCode === 0 ? null : cached.stderr || cached.stdout,
+      },
+      networkTransferDeltaMs:
+        missing.exitCode === 0 && cached.exitCode === 0
+          ? missing.elapsedMs - cached.elapsedMs
+          : null,
     };
   }
 
   // ---- 3: fresh CLI process, current index (>=30 warm-cache samples) ----
   let warmRepo = null;
-  if (only('freshProcessCurrentIndex') || only('loadedProcessQueryLoop') || only('oneNewCommit') || only('tenNewCommits') || only('unchangedRefs') || only('renameRebaseBranchDeletion') || only('concurrentReaders') || only('readersPlusUpdater')) {
+  if (
+    only('freshProcessCurrentIndex') ||
+    only('loadedProcessQueryLoop') ||
+    only('oneNewCommit') ||
+    only('tenNewCommits') ||
+    only('unchangedRefs') ||
+    only('renameRebaseBranchDeletion') ||
+    only('concurrentReaders') ||
+    only('readersPlusUpdater')
+  ) {
     warmRepo = cloneFixtureForPerf(baseFixtureDir, PERF_WORK_DIR, 'warm-reference');
     rmSync(join(warmRepo, '.git', 'why'), { recursive: true, force: true });
     const build = runOnce(cliPath, [QUERY, '--json'], { cwd: warmRepo, timeoutMs: 10 * 60_000 });
-    if (build.exitCode !== 0) fail(`Could not build the warm reference index: ${build.stderr || build.stdout}`);
+    if (build.exitCode !== 0)
+      fail(`Could not build the warm reference index: ${build.stderr || build.stdout}`);
   }
 
   if (only('freshProcessCurrentIndex')) {
     const warmupRuns = 5;
-    for (let i = 0; i < warmupRuns; i++) runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: warmRepo });
+    for (let i = 0; i < warmupRuns; i++)
+      runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: warmRepo });
     const sampleCount = 30;
     const samples = [];
     for (let i = 0; i < sampleCount; i++) {
@@ -173,7 +216,8 @@ async function main() {
       requestedSamples: sampleCount,
       successfulSamples: samples.length,
       latencyMs: summarizeLatencies(samples),
-      targetNote: 'Section 24 initial target: warm-cache fresh-process CLI p95 under 1s on the reference corpus. This is a target, not an established result.',
+      targetNote:
+        'Section 24 initial target: warm-cache fresh-process CLI p95 under 1s on the reference corpus. This is a target, not an established result.',
     };
   }
 
@@ -185,7 +229,8 @@ async function main() {
       if (r.exitCode === 0) samples.push(r.elapsedMs);
     }
     results.workloads.loadedProcessQueryLoop = {
-      label: 'DIAGNOSTIC ONLY -- approximated via back-to-back fresh processes, NOT a true in-process query loop.',
+      label:
+        'DIAGNOSTIC ONLY -- approximated via back-to-back fresh processes, NOT a true in-process query loop.',
       latencyMs: summarizeLatencies(samples),
     };
   }
@@ -194,14 +239,21 @@ async function main() {
   if (only('oneNewCommit')) {
     const before = statusJson(cliPath, warmRepo).json;
     writeRepoFile(warmRepo, 'PERF_NOTES.md', `perf note ${Date.now()}\n`);
-    commitAll(warmRepo, { message: 'perf: add one ordinary commit', epochSeconds: Math.floor(Date.now() / 1000) });
-    const queryAfterCommit = runOnce(cliPath, [QUERY, '--json'], { cwd: warmRepo, timeoutMs: 60_000 });
+    commitAll(warmRepo, {
+      message: 'perf: add one ordinary commit',
+      epochSeconds: Math.floor(Date.now() / 1000),
+    });
+    const queryAfterCommit = runOnce(cliPath, [QUERY, '--json'], {
+      cwd: warmRepo,
+      timeoutMs: 60_000,
+    });
     const after = statusJson(cliPath, warmRepo).json;
     results.workloads.oneNewCommit = {
       totalMs: queryAfterCommit.elapsedMs,
       indexedCommitsBefore: before?.index?.indexedCommits ?? null,
       indexedCommitsAfter: after?.index?.indexedCommits ?? null,
-      targetNote: 'Section 24 initial target: one small incremental commit plus query within 3s on reference hardware.',
+      targetNote:
+        'Section 24 initial target: one small incremental commit plus query within 3s on reference hardware.',
     };
   }
 
@@ -209,7 +261,10 @@ async function main() {
   if (only('tenNewCommits')) {
     for (let i = 0; i < 10; i++) {
       writeRepoFile(warmRepo, `perf-batch-${i}.md`, `batch commit ${i}\n`);
-      commitAll(warmRepo, { message: `perf: batch commit ${i}`, epochSeconds: Math.floor(Date.now() / 1000) + i });
+      commitAll(warmRepo, {
+        message: `perf: batch commit ${i}`,
+        epochSeconds: Math.floor(Date.now() / 1000) + i,
+      });
     }
     const sampled = await runAsyncWithMemorySampling(cliPath, [QUERY, '--json'], { cwd: warmRepo });
     results.workloads.tenNewCommits = {
@@ -230,7 +285,8 @@ async function main() {
       queryTotalMs: r.elapsedMs,
       indexedAtBefore: first?.index?.indexedAt ?? null,
       indexedAtAfter: second?.index?.indexedAt ?? null,
-      noReembeddingInferred: first?.index?.indexedAt != null && first.index.indexedAt === second?.index?.indexedAt,
+      noReembeddingInferred:
+        first?.index?.indexedAt != null && first.index.indexedAt === second?.index?.indexedAt,
       note: 'indexedAt unchanged is used as the externally-observable proxy for "no document re-embedding"; query embedding of the incoming query text may still occur per spec.',
     };
   }
@@ -239,19 +295,34 @@ async function main() {
   if (only('renameRebaseBranchDeletion')) {
     const scenarioRepo = cloneFixtureForPerf(baseFixtureDir, PERF_WORK_DIR, 'rename-rebase-branch');
     rmSync(join(scenarioRepo, '.git', 'why'), { recursive: true, force: true });
-    const buildIdx = runOnce(cliPath, [QUERY, '--json'], { cwd: scenarioRepo, timeoutMs: 10 * 60_000 });
+    const buildIdx = runOnce(cliPath, [QUERY, '--json'], {
+      cwd: scenarioRepo,
+      timeoutMs: 10 * 60_000,
+    });
     const before = statusJson(cliPath, scenarioRepo).json;
 
     git(scenarioRepo, ['checkout', '-b', 'perf-scratch']);
     writeRepoFile(scenarioRepo, 'renamed-perf-file.md', 'renamed content\n');
-    commitAll(scenarioRepo, { message: 'perf: add file to rename', epochSeconds: Math.floor(Date.now() / 1000) });
+    commitAll(scenarioRepo, {
+      message: 'perf: add file to rename',
+      epochSeconds: Math.floor(Date.now() / 1000),
+    });
     git(scenarioRepo, ['mv', 'renamed-perf-file.md', 'renamed-perf-file-v2.md']);
-    commitAll(scenarioRepo, { message: 'perf: rename file', epochSeconds: Math.floor(Date.now() / 1000) + 1 });
-    const afterRename = runOnce(cliPath, [QUERY, '--json'], { cwd: scenarioRepo, timeoutMs: 60_000 });
+    commitAll(scenarioRepo, {
+      message: 'perf: rename file',
+      epochSeconds: Math.floor(Date.now() / 1000) + 1,
+    });
+    const afterRename = runOnce(cliPath, [QUERY, '--json'], {
+      cwd: scenarioRepo,
+      timeoutMs: 60_000,
+    });
 
     git(scenarioRepo, ['checkout', 'main']);
     git(scenarioRepo, ['branch', '-D', 'perf-scratch']);
-    const afterBranchDelete = runOnce(cliPath, [QUERY, '--json'], { cwd: scenarioRepo, timeoutMs: 60_000 });
+    const afterBranchDelete = runOnce(cliPath, [QUERY, '--json'], {
+      cwd: scenarioRepo,
+      timeoutMs: 60_000,
+    });
     const afterAll = statusJson(cliPath, scenarioRepo).json;
 
     results.workloads.renameRebaseBranchDeletion = {
@@ -269,7 +340,9 @@ async function main() {
     results.workloads.concurrentReaders = {};
     for (const n of [2, 4, 8]) {
       const runs = await Promise.all(
-        Array.from({ length: n }, () => runAsyncWithMemorySampling(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: warmRepo })),
+        Array.from({ length: n }, () =>
+          runAsyncWithMemorySampling(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: warmRepo }),
+        ),
       );
       const latencies = runs.map((r) => r.elapsedMs);
       const failures = runs.filter((r) => r.exitCode !== 0).length;
@@ -278,7 +351,7 @@ async function main() {
         latencyMs: summarizeLatencies(latencies),
         failures,
         aggregatePeakRssKb: peakRss.length ? Math.max(...peakRss) : null,
-        note: 'aggregatePeakRssKb samples each reader\'s own process tree independently; true simultaneous aggregate memory would require one shared sampler across all N processes at once, which this per-reader sampler approximates by taking the max of per-reader peaks (a lower bound on true simultaneous aggregate RSS).',
+        note: "aggregatePeakRssKb samples each reader's own process tree independently; true simultaneous aggregate memory would require one shared sampler across all N processes at once, which this per-reader sampler approximates by taking the max of per-reader peaks (a lower bound on true simultaneous aggregate RSS).",
       };
     }
   }
@@ -287,15 +360,23 @@ async function main() {
   if (only('readersPlusUpdater')) {
     const updaterPromise = (async () => {
       writeRepoFile(warmRepo, 'perf-updater-file.md', 'updater content\n');
-      commitAll(warmRepo, { message: 'perf: updater commit', epochSeconds: Math.floor(Date.now() / 1000) });
+      commitAll(warmRepo, {
+        message: 'perf: updater commit',
+        epochSeconds: Math.floor(Date.now() / 1000),
+      });
       return runOnce(cliPath, [QUERY, '--json'], { cwd: warmRepo, timeoutMs: 60_000 });
     })();
     const readerPromises = Array.from({ length: 4 }, () =>
       runAsyncWithMemorySampling(cliPath, [QUERY, '--json'], { cwd: warmRepo }),
     );
-    const [updaterResult, readerResults] = await Promise.all([updaterPromise, Promise.all(readerPromises)]);
+    const [updaterResult, readerResults] = await Promise.all([
+      updaterPromise,
+      Promise.all(readerPromises),
+    ]);
     const readerFailures = readerResults.filter((r) => r.exitCode !== 0).length;
-    const readerParseFailures = readerResults.filter((r) => r.exitCode === 0 && r.json === null).length;
+    const readerParseFailures = readerResults.filter(
+      (r) => r.exitCode === 0 && r.json === null,
+    ).length;
     results.workloads.readersPlusUpdater = {
       updater: { totalMs: updaterResult.elapsedMs, exitCode: updaterResult.exitCode },
       readers: {
@@ -316,13 +397,23 @@ async function main() {
     // .git/why state dir) -- not two different repos.
     rmSync(join(raceRepoA, '.git', 'why'), { recursive: true, force: true });
     const [first, second] = await Promise.all([
-      runAsyncWithMemorySampling(cliPath, [QUERY, '--json'], { cwd: raceRepoA, timeoutMs: 10 * 60_000 }),
-      runAsyncWithMemorySampling(cliPath, [QUERY, '--json'], { cwd: raceRepoA, timeoutMs: 10 * 60_000 }),
+      runAsyncWithMemorySampling(cliPath, [QUERY, '--json'], {
+        cwd: raceRepoA,
+        timeoutMs: 10 * 60_000,
+      }),
+      runAsyncWithMemorySampling(cliPath, [QUERY, '--json'], {
+        cwd: raceRepoA,
+        timeoutMs: 10 * 60_000,
+      }),
     ]);
     const finalStatus = statusJson(cliPath, raceRepoA).json;
 
     // Serial baseline for comparison: a single first-use build's record count.
-    const raceRepoSerial = cloneFixtureForPerf(baseFixtureDir, PERF_WORK_DIR, 'race-serial-baseline');
+    const raceRepoSerial = cloneFixtureForPerf(
+      baseFixtureDir,
+      PERF_WORK_DIR,
+      'race-serial-baseline',
+    );
     rmSync(join(raceRepoSerial, '.git', 'why'), { recursive: true, force: true });
     runOnce(cliPath, [QUERY, '--json'], { cwd: raceRepoSerial, timeoutMs: 10 * 60_000 });
     const serialStatus = statusJson(cliPath, raceRepoSerial).json;
@@ -335,14 +426,22 @@ async function main() {
       finalRecordCount: finalStatus?.index?.recordCount ?? null,
       serialBaselineRecordCount: serialStatus?.index?.recordCount ?? null,
       recordCountMatchesSerialBaseline:
-        finalStatus?.index?.recordCount != null && finalStatus.index.recordCount === serialStatus?.index?.recordCount,
-      coherenceNote: 'A coherent single index implies the raced final record count equals a normal serial first-use build\'s record count (no duplicate-record inflation).',
+        finalStatus?.index?.recordCount != null &&
+        finalStatus.index.recordCount === serialStatus?.index?.recordCount,
+      coherenceNote:
+        "A coherent single index implies the raced final record count equals a normal serial first-use build's record count (no duplicate-record inflation).",
     };
   }
 
   writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));
   console.log(`\n[bench/perf] wrote results to ${join(outDir, 'results.json')}`);
-  console.log(JSON.stringify({ knownGaps: results.knownGaps, workloadsRun: Object.keys(results.workloads) }, null, 2));
+  console.log(
+    JSON.stringify(
+      { knownGaps: results.knownGaps, workloadsRun: Object.keys(results.workloads) },
+      null,
+      2,
+    ),
+  );
 }
 
 main().catch((err) => {

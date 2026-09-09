@@ -38,7 +38,6 @@ test('SHA-1 repository: object format detected, 40-char OIDs', async () => {
 
 test('SHA-256 repository: object format detected, 64-char OIDs, empty tree resolved dynamically', async () => {
   if (!(await supportsObjectFormat('sha256'))) {
-     
     console.log('SKIP: installed Git does not support --object-format=sha256 on this machine');
     return;
   }

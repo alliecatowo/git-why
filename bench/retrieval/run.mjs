@@ -25,10 +25,16 @@ const FIXTURES_DIR = join(REPO_ROOT, 'bench', 'fixtures');
 const WORK_FIXTURES_DIR = join(REPO_ROOT, 'bench', 'work', 'fixtures');
 
 function parseArgs(argv) {
-  const args = { split: 'dev', candidates: join(HERE, 'candidates.json'), ablation: false, acceptFrozenHoldout: false };
+  const args = {
+    split: 'dev',
+    candidates: join(HERE, 'candidates.json'),
+    ablation: false,
+    acceptFrozenHoldout: false,
+  };
   for (const a of argv) {
     if (a.startsWith('--split=')) args.split = a.slice('--split='.length);
-    else if (a.startsWith('--candidates=')) args.candidates = resolve(a.slice('--candidates='.length));
+    else if (a.startsWith('--candidates='))
+      args.candidates = resolve(a.slice('--candidates='.length));
     else if (a === '--ablation') args.ablation = true;
     else if (a === '--i-accept-this-is-the-frozen-holdout') args.acceptFrozenHoldout = true;
   }
@@ -59,7 +65,9 @@ function resolveCliPath(candidate) {
 function ensureFixture(fixtureId) {
   const manifestPath = join(FIXTURES_DIR, 'manifests', `${fixtureId}.json`);
   if (!existsSync(manifestPath)) {
-    fail(`No manifest for fixture "${fixtureId}" at ${manifestPath}. Fixture specs are missing or renamed.`);
+    fail(
+      `No manifest for fixture "${fixtureId}" at ${manifestPath}. Fixture specs are missing or renamed.`,
+    );
   }
   const manifest = loadJson(manifestPath);
   const repoDir = join(WORK_FIXTURES_DIR, fixtureId);
@@ -72,7 +80,9 @@ function ensureFixture(fixtureId) {
       stdio: 'inherit',
     });
     if (gen.status !== 0) fail(`Fixture generation failed for "${fixtureId}".`);
-    const recheck = spawnSync('git', ['-C', repoDir, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout.trim();
+    const recheck = spawnSync('git', ['-C', repoDir, 'rev-parse', 'HEAD'], {
+      encoding: 'utf8',
+    }).stdout.trim();
     if (recheck !== manifest.headSha) {
       fail(
         `Fixture "${fixtureId}" regenerated to HEAD ${recheck}, expected ${manifest.headSha}. ` +
@@ -187,7 +197,10 @@ function runOneQuery(cliPath, repoDir, mode, testCase, env, limit, split) {
   const scored = scoreCase(rankedShas, testCase.relevantShas);
   record.scored = scored;
   if (!scored.applicable) {
-    record.noEvidenceObservation = { returnedTopK: rankedShas, anyResultsReturned: rankedShas.length > 0 };
+    record.noEvidenceObservation = {
+      returnedTopK: rankedShas,
+      anyResultsReturned: rankedShas.length > 0,
+    };
   }
   return record;
 }
@@ -202,7 +215,17 @@ function diffMetrics(a, b) {
   return out;
 }
 
-function runAblation({ candidate, cliPath, fixtureDirs, fixtureIds, dataset, modes, limit, split, outDir }) {
+function runAblation({
+  candidate,
+  cliPath,
+  fixtureDirs,
+  fixtureIds,
+  dataset,
+  modes,
+  limit,
+  split,
+  outDir,
+}) {
   for (const fixtureId of fixtureIds) {
     const repoDir = fixtureDirs[fixtureId];
     const primeMs = primeIndex(cliPath, repoDir, candidate.env);
@@ -244,7 +267,12 @@ function runAblation({ candidate, cliPath, fixtureDirs, fixtureIds, dataset, mod
   }
   const overallRows = Object.entries(overallByArmMode).map(([key, scoredList]) => {
     const [arm, mode] = key.split('::');
-    return { arm, mode, category: 'OVERALL_excl_exact_identifier_and_no_evidence', ...aggregate(scoredList) };
+    return {
+      arm,
+      mode,
+      category: 'OVERALL_excl_exact_identifier_and_no_evidence',
+      ...aggregate(scoredList),
+    };
   });
 
   // Diff table: summary+evidence minus summary-only, per mode+category and per mode overall.
@@ -291,9 +319,17 @@ function runAblation({ candidate, cliPath, fixtureDirs, fixtureIds, dataset, mod
     diffOverall,
   };
 
-  writeFileSync(join(outDir, `ablation-per-query-${candidate.label}.json`), JSON.stringify(perQuery, null, 2));
-  writeFileSync(join(outDir, `ablation-summary-${candidate.label}.json`), JSON.stringify(summary, null, 2));
-  console.log(`[bench/retrieval] ablation complete for "${candidate.label}": ${join(outDir, `ablation-summary-${candidate.label}.json`)}`);
+  writeFileSync(
+    join(outDir, `ablation-per-query-${candidate.label}.json`),
+    JSON.stringify(perQuery, null, 2),
+  );
+  writeFileSync(
+    join(outDir, `ablation-summary-${candidate.label}.json`),
+    JSON.stringify(summary, null, 2),
+  );
+  console.log(
+    `[bench/retrieval] ablation complete for "${candidate.label}": ${join(outDir, `ablation-summary-${candidate.label}.json`)}`,
+  );
   console.table(
     diffOverall.map((r) => ({
       mode: r.mode,
@@ -318,7 +354,8 @@ async function main() {
         'this protocol version -- see bench/protocol.json.',
     );
   }
-  if (args.split !== 'dev' && args.split !== 'test') fail(`--split must be "dev" or "test", got "${args.split}"`);
+  if (args.split !== 'dev' && args.split !== 'test')
+    fail(`--split must be "dev" or "test", got "${args.split}"`);
   if (args.ablation && args.split !== 'dev') {
     fail(
       'The summaries-only ablation is scoped to the development split only, per bench/protocol.json ' +
@@ -347,14 +384,26 @@ async function main() {
     const cliPath = resolveCliPath(candidate);
 
     if (args.ablation) {
-      runAblation({ candidate, cliPath, fixtureDirs, fixtureIds, dataset, modes, limit, split: args.split, outDir });
+      runAblation({
+        candidate,
+        cliPath,
+        fixtureDirs,
+        fixtureIds,
+        dataset,
+        modes,
+        limit,
+        split: args.split,
+        outDir,
+      });
       continue;
     }
 
     for (const fixtureId of fixtureIds) {
       const repoDir = fixtureDirs[fixtureId];
       const primeMs = primeIndex(cliPath, repoDir, candidate.env);
-      console.log(`[bench/retrieval] primed "${fixtureId}" for candidate "${candidate.label}" in ${primeMs.toFixed(0)}ms`);
+      console.log(
+        `[bench/retrieval] primed "${fixtureId}" for candidate "${candidate.label}" in ${primeMs.toFixed(0)}ms`,
+      );
     }
 
     for (const mode of modes) {
@@ -382,7 +431,10 @@ async function main() {
           record.stderr = res.stderr;
           record.omitted = true;
         } else {
-          const parsed = parseSearchResponse(res.stdout, `${candidate.label}/${mode}/${testCase.id}`);
+          const parsed = parseSearchResponse(
+            res.stdout,
+            `${candidate.label}/${mode}/${testCase.id}`,
+          );
           if (!parsed.ok) {
             record.error = parsed.error;
             record.omitted = true;
@@ -431,7 +483,12 @@ async function main() {
   }
   const overallRows = Object.entries(overallByKey).map(([key, scoredList]) => {
     const [candidate, mode] = key.split('::');
-    return { candidate, mode, category: 'OVERALL_excl_exact_identifier_and_no_evidence', ...aggregate(scoredList) };
+    return {
+      candidate,
+      mode,
+      category: 'OVERALL_excl_exact_identifier_and_no_evidence',
+      ...aggregate(scoredList),
+    };
   });
 
   const omittedCount = perQueryRecords.filter((r) => r.omitted).length;
@@ -456,11 +513,25 @@ async function main() {
   };
   writeFileSync(join(outDir, 'summary.json'), JSON.stringify(summary, null, 2));
 
-  console.log(`\n[bench/retrieval] wrote ${perQueryRecords.length} query records and summary to ${outDir}`);
+  console.log(
+    `\n[bench/retrieval] wrote ${perQueryRecords.length} query records and summary to ${outDir}`,
+  );
   if (omittedCount > 0) {
-    console.warn(`[bench/retrieval] WARNING: ${omittedCount} queries were omitted due to CLI errors -- see per-query.json`);
+    console.warn(
+      `[bench/retrieval] WARNING: ${omittedCount} queries were omitted due to CLI errors -- see per-query.json`,
+    );
   }
-  console.table(summaryRows.map((r) => ({ candidate: r.candidate, mode: r.mode, category: r.category, n: r.n, hit5: r.hit5, recall5: r.recall5, mrr: r.mrr })));
+  console.table(
+    summaryRows.map((r) => ({
+      candidate: r.candidate,
+      mode: r.mode,
+      category: r.category,
+      n: r.n,
+      hit5: r.hit5,
+      recall5: r.recall5,
+      mrr: r.mrr,
+    })),
+  );
 }
 
 main().catch((err) => {

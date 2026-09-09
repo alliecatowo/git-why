@@ -17,13 +17,7 @@ import {
   ZVecMetricType,
   isZVecError,
 } from '@zvec/zvec';
-import {
-  freshTmpDir,
-  rmDir,
-  runProbe,
-  record,
-  type ProbeResult,
-} from './util.ts';
+import { freshTmpDir, rmDir, runProbe, record, type ProbeResult } from './util.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CHILDREN = path.join(__dirname, 'children');

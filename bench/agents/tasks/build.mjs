@@ -8,7 +8,7 @@
 
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { buildTaskRepo } from './lib/task-engine.mjs';
 
 import t1 from './specs/t1.mjs';
@@ -45,7 +45,11 @@ function main() {
       writeFileSync(join(HIDDEN_DIR, spec.id, 'task.test.cjs'), spec.hiddenTestFile, 'utf8');
     }
     if (spec.rubric) {
-      writeFileSync(join(HIDDEN_DIR, spec.id, 'rubric.json'), JSON.stringify(spec.rubric, null, 2) + '\n', 'utf8');
+      writeFileSync(
+        join(HIDDEN_DIR, spec.id, 'rubric.json'),
+        JSON.stringify(spec.rubric, null, 2) + '\n',
+        'utf8',
+      );
     }
     writeFileSync(
       join(HIDDEN_DIR, spec.id, 'meta.json'),
@@ -66,7 +70,9 @@ function main() {
     );
     writeFileSync(join(HIDDEN_DIR, spec.id, 'prompt.md'), spec.taskPrompt.trim() + '\n', 'utf8');
 
-    console.log(`[${spec.id}] baseSha=${manifest.baseSha.slice(0, 12)} kind=${spec.kind} hiddenTest=${!!spec.hiddenTestFile} rubric=${!!spec.rubric}`);
+    console.log(
+      `[${spec.id}] baseSha=${manifest.baseSha.slice(0, 12)} kind=${spec.kind} hiddenTest=${!!spec.hiddenTestFile} rubric=${!!spec.rubric}`,
+    );
   }
 }
 

@@ -226,7 +226,13 @@ export const READ_CACHE_TIMEOUT_MS = 200;
     subsystem: SUBSYS.db,
     subject: 'Document Postgres 15 compatibility in the ops runbook',
     body: 'Documentation only; does not change MIN_POSTGRES_VERSION or drop support for anything.',
-    files: [{ path: 'docs/postgres-15-notes.md', op: 'write', content: '# Postgres 15 notes\n\nCompatible, no action needed.\n' }],
+    files: [
+      {
+        path: 'docs/postgres-15-notes.md',
+        op: 'write',
+        content: '# Postgres 15 notes\n\nCompatible, no action needed.\n',
+      },
+    ],
     note: 'Nearby-version distractor: mentions a different Postgres version number in an unrelated context.',
   },
 ];

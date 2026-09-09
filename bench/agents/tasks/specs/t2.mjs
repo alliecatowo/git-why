@@ -119,5 +119,6 @@ test('two distinct sockets both receive the message once each', () => {
 });
 `,
   rubric: null,
-  successNote: 'New reproduction (fastReconnect duplication) and the prior regression test (addSocket idempotency) both pass.',
+  successNote:
+    'New reproduction (fastReconnect duplication) and the prior regression test (addSocket idempotency) both pass.',
 };

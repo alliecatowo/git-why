@@ -82,5 +82,6 @@ test('retries on an idempotent endpoint give up after the retry budget', async (
 });
 `,
   rubric: null,
-  successNote: 'Correct retry behavior for idempotent endpoints and no double-effect risk on /charge.',
+  successNote:
+    'Correct retry behavior for idempotent endpoints and no double-effect risk on /charge.',
 };

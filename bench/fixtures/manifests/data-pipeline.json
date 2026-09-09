@@ -28,9 +28,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Improve readability of src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -40,9 +38,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade webpack to v6.11.23",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -52,9 +48,7 @@
       "category": "distractor",
       "subsystem": "locking",
       "subject": "Increase the Redis session-cache read timeout to 200ms",
-      "files": [
-        "src/locking/redis-cache-config.js"
-      ],
+      "files": ["src/locking/redis-cache-config.js"],
       "note": "Distractor for the \"why stop using redis locks\" migration query: same technology, unrelated subsystem."
     },
     {
@@ -64,9 +58,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump express to 1.1.1",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -76,9 +68,7 @@
       "category": "distractor",
       "subsystem": "deps",
       "subject": "Require Node 20; drop support for Node 18",
-      "files": [
-        ".node-version-snapshot.txt"
-      ],
+      "files": [".node-version-snapshot.txt"],
       "note": "Distractor for the \"why drop postgres 13\" number/version query: a different product with a similarly shaped version-drop message."
     },
     {
@@ -88,9 +78,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade moment to v7.6.5",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -100,9 +88,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump moment to 8.20.16",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -112,9 +98,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Align src/export/csv-export.js with lint rules",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -124,9 +108,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Adjust logging verbosity in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -136,9 +118,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Reorder function arguments in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -148,9 +128,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade node-fetch to v5.2.26",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -160,9 +138,7 @@
       "category": "distractor",
       "subsystem": "db",
       "subject": "Document Postgres 15 compatibility in the ops runbook",
-      "files": [
-        "docs/postgres-15-notes.md"
-      ],
+      "files": ["docs/postgres-15-notes.md"],
       "note": "Nearby-version distractor: mentions a different Postgres version number in an unrelated context."
     },
     {
@@ -172,9 +148,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin eslint at 1.5.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -184,9 +158,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Minor cleanup in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -196,9 +168,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump commander to 5.5.25",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -208,9 +178,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin eslint at 3.4.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -220,9 +188,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade webpack to v6.0.8",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -232,9 +198,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reorder function arguments in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -244,9 +208,7 @@
       "category": "migration",
       "subsystem": "locking",
       "subject": "Migrate batch locking from Redis to Postgres advisory locks",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Real migration constraint (failover data loss), not a generic \"we prefer Postgres\" statement.",
       "beatId": "locking.migrate-to-postgres-advisory-locks"
     },
@@ -257,9 +219,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade dotenv to v5.5.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -269,9 +229,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Simplify conditional in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -281,9 +239,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin ioredis at 1.17.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -293,9 +249,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin dotenv at 1.9.30",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -305,9 +259,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin chalk at 6.5.4",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -317,9 +269,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update jest dependency to 8.10.10",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -329,9 +279,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Remove unused variable in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -341,9 +289,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Update comment in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -353,9 +299,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Minor cleanup in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -365,9 +309,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump yargs to 3.8.0",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -377,9 +319,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump axios 9.0.4",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -389,9 +329,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reorder function arguments in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -401,9 +339,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update ws dependency to 4.11.25",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -413,9 +349,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update node-fetch dependency to 2.1.4",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -425,9 +359,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update uuid dependency to 3.11.6",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -437,9 +369,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump babel-core to 6.1.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -449,9 +379,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update webpack dependency to 3.3.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -461,9 +389,7 @@
       "category": "number_version",
       "subsystem": "db",
       "subject": "Require Postgres 14+; drop support for Postgres 13",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Must be distinguished from unrelated numeric distractors (Node version bumps, dependency versions) and from nearby Postgres versions (12, 15) mentioned only in filler.",
       "beatId": "db.drop-postgres-13"
     },
@@ -474,9 +400,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Consolidate constants in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -486,9 +410,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Tidy up imports in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -498,9 +420,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Rename local variable in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -510,9 +430,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump axios to 9.17.4",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -522,9 +440,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin prettier at 5.12.25",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -534,9 +450,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Extract helper in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -546,9 +460,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update comment in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -558,9 +470,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Drop dead code path in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -570,9 +480,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Normalize whitespace in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -582,9 +490,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump ioredis to 5.17.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -594,9 +500,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump yargs to 9.15.10",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -606,9 +510,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Tidy up imports in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -618,9 +520,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade jest to v3.6.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -630,9 +530,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump chalk 1.16.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -642,9 +540,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin express at 9.1.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -654,9 +550,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Add missing semicolon in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -666,9 +560,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin prettier at 9.20.24",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -678,9 +570,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Reformat src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -690,9 +580,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Reformat src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -702,9 +590,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump lodash 2.6.16",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -714,9 +600,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Drop dead code path in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -726,9 +610,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Minor cleanup in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -738,9 +620,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Rename local variable in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -750,9 +630,7 @@
       "category": "rich_message_skipped_patch",
       "subsystem": "deps",
       "subject": "Pin the pg driver to 8.11.3 to avoid a connection-pool leak",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "The message carries the entire rationale; a policy that skips lockfile patches must still let this be found and explained from the message alone.",
       "beatId": "deps.pin-pg-driver"
     },
@@ -763,9 +641,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Rename local variable in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -775,9 +651,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Remove unused variable in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -787,9 +661,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Adjust logging verbosity in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -799,9 +671,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Rename local variable in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -811,9 +681,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update inline docs for package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -823,9 +691,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Extract helper in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -835,9 +701,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Simplify conditional in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -847,9 +711,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Align package-lock.snapshot.txt with lint rules",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -859,9 +721,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Extract helper in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -871,9 +731,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Consolidate constants in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -883,9 +741,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -895,9 +751,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Align src/locking/postgres-lock.js with lint rules",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -907,9 +761,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Align src/export/csv-export.js with lint rules",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -919,9 +771,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Trim trailing whitespace in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -931,9 +781,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reformat package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -943,9 +791,7 @@
       "category": "migration",
       "subsystem": "export",
       "subject": "Replace in-memory CSV export with streaming NDJSON",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Real migration constraint (OOM at ~4M rows), distinct from the locking migration in the same fixture.",
       "beatId": "export.migrate-to-streaming-ndjson"
     },
@@ -956,9 +802,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Adjust logging verbosity in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -968,9 +812,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Consolidate constants in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -980,9 +822,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Normalize whitespace in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -992,9 +832,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Minor cleanup in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1004,9 +842,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Fix typo in src/export/csv-export.js comment",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1016,9 +852,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Add missing semicolon in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1028,9 +862,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Simplify conditional in src/export/csv-export.js",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1040,9 +872,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Reorder function arguments in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1052,9 +882,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Extract helper in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1064,9 +892,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Fix typo in package-lock.snapshot.txt comment",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1076,9 +902,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Adjust logging verbosity in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1088,9 +912,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Trim trailing whitespace in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1100,9 +922,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Simplify conditional in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1112,9 +932,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Add missing semicolon in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1124,9 +942,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Update comment in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1136,9 +952,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Minor cleanup in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1148,9 +962,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update comment in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1160,9 +972,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Trim trailing whitespace in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1172,9 +982,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Update comment in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1184,9 +992,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Trim trailing whitespace in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1196,9 +1002,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Minor cleanup in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1208,9 +1012,7 @@
       "category": "migration",
       "subsystem": "export",
       "subject": "Delete buildCsv() now that every caller uses streamNdjson()",
-      "files": [
-        "src/export/csv-export.js"
-      ],
+      "files": ["src/export/csv-export.js"],
       "note": "Completes the export migration story; relevant to a query about why CSV export was replaced.",
       "beatId": "export.remove-csv-export"
     },
@@ -1221,9 +1023,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Align src/locking/redis-lock.js with lint rules",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1233,9 +1033,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Consolidate constants in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1245,9 +1043,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Align src/locking/redis-lock.js with lint rules",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1257,9 +1053,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Minor cleanup in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1269,9 +1063,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Update inline docs for package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1281,9 +1073,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Update inline docs for src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1293,9 +1083,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Trim trailing whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1305,9 +1093,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Adjust logging verbosity in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1317,9 +1103,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Improve readability of package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1329,9 +1113,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Align src/db/schema.js with lint rules",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1341,9 +1123,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Minor cleanup in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1353,9 +1133,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Remove unused variable in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1365,9 +1143,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Tidy up imports in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1377,9 +1153,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Drop dead code path in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1389,9 +1163,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Update inline docs for src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1401,9 +1173,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Consolidate constants in src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1413,9 +1183,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Normalize whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1425,9 +1193,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Reorder function arguments in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1437,9 +1203,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Reformat src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1449,9 +1213,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Reformat src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1461,9 +1223,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Fix typo in package-lock.snapshot.txt comment",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1473,9 +1233,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Extract helper in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1485,9 +1243,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Normalize whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1497,9 +1253,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Small refactor of src/locking/redis-lock.js",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1509,9 +1263,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Add missing semicolon in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1521,9 +1273,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Tidy up imports in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1533,9 +1283,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Tidy up imports in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1545,9 +1293,7 @@
       "category": "migration",
       "subsystem": "locking",
       "subject": "Delete the Redis lock implementation now unused",
-      "files": [
-        "src/locking/redis-lock.js"
-      ],
+      "files": ["src/locking/redis-lock.js"],
       "note": "Fourth migration-category commit: completes the locking migration story.",
       "beatId": "locking.remove-redis-lock-file"
     },
@@ -1558,9 +1304,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Tidy up imports in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1570,9 +1314,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Remove unused variable in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1582,9 +1324,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Minor cleanup in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1594,9 +1334,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Adjust logging verbosity in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1606,9 +1344,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Extract helper in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1618,9 +1354,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Extract helper in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1630,9 +1364,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Update comment in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1642,9 +1374,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Reorder function arguments in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1654,9 +1384,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Simplify conditional in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1666,9 +1394,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Add missing semicolon in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1678,9 +1404,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Reorder function arguments in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1690,9 +1414,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Remove unused variable in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1702,9 +1424,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Update comment in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1714,9 +1434,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Small refactor of src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1726,9 +1444,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Simplify conditional in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1738,9 +1454,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Update comment in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1750,9 +1464,7 @@
       "category": "number_version",
       "subsystem": "export",
       "subject": "Require Node 18+ for the streaming export path",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Second number_version case in this fixture, distinguished from the Postgres 13 drop and from unrelated Node-version filler mentions.",
       "beatId": "export.require-node-18-streams"
     },
@@ -1763,9 +1475,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Fix typo in src/db/schema.js comment",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1775,9 +1485,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Normalize whitespace in package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1787,9 +1495,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Fix typo in src/export/streaming-export.js comment",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1799,9 +1505,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Extract helper in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1811,9 +1515,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Adjust logging verbosity in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1823,9 +1525,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Reorder function arguments in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1835,9 +1535,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Small refactor of src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1847,9 +1545,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Reorder function arguments in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1859,9 +1555,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Simplify conditional in src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1871,9 +1565,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Drop dead code path in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1883,9 +1575,7 @@
       "category": "churn",
       "subsystem": "locking",
       "subject": "Improve readability of src/locking/postgres-lock.js",
-      "files": [
-        "src/locking/postgres-lock.js"
-      ],
+      "files": ["src/locking/postgres-lock.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1895,9 +1585,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Remove unused variable in src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1907,9 +1595,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Reorder function arguments in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1919,9 +1605,7 @@
       "category": "churn",
       "subsystem": "db",
       "subject": "Consolidate constants in src/db/schema.js",
-      "files": [
-        "src/db/schema.js"
-      ],
+      "files": ["src/db/schema.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1931,9 +1615,7 @@
       "category": "churn",
       "subsystem": "export",
       "subject": "Small refactor of src/export/streaming-export.js",
-      "files": [
-        "src/export/streaming-export.js"
-      ],
+      "files": ["src/export/streaming-export.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1943,9 +1625,7 @@
       "category": "churn",
       "subsystem": "deps",
       "subject": "Improve readability of package-lock.snapshot.txt",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     }
   ]

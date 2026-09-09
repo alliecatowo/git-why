@@ -123,9 +123,7 @@ outright rather than deprecating, since nothing calls poll() anymore.`,
     subsystem: SUBSYS.relay,
     subject: 'Rename dispatch.js to fanout.js to match the "fanout" terminology used elsewhere',
     body: 'Purely a rename plus doc-comment touch-up; no behavior change.',
-    files: [
-      { path: 'src/relay/fanout.js', op: 'rename', fromPath: 'src/relay/dispatch.js' },
-    ],
+    files: [{ path: 'src/relay/fanout.js', op: 'rename', fromPath: 'src/relay/dispatch.js' }],
     note: 'Single-change rename: a query about the old name ("dispatch") should resolve to this commit and the current path fanout.js.',
   },
   // --- synonym_mismatch #1 (dev): "messages arriving twice after reconnect" ---

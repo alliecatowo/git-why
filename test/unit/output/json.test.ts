@@ -7,11 +7,7 @@ import {
   renderStatusErrorJson,
   renderStatusJson,
 } from '../../../src/output/json.js';
-import {
-  type CommitHit,
-  type IndexStatus,
-  type SearchResponse,
-} from '../../../src/types.js';
+import { type CommitHit, type IndexStatus, type SearchResponse } from '../../../src/types.js';
 import { validateAgainstSchema } from './schema-check.js';
 
 const searchSchema = JSON.parse(

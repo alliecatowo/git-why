@@ -8,7 +8,13 @@
 // Deterministic from each task's seed, same contract as bench/fixtures/lib.
 
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { initRepo, writeRepoFile, removeRepoFile, commitAll, git } from '../../../fixtures/lib/git.mjs';
+import {
+  initRepo,
+  writeRepoFile,
+  removeRepoFile,
+  commitAll,
+  git,
+} from '../../../fixtures/lib/git.mjs';
 
 export function buildTaskRepo(spec, { workDir, manifestDir }) {
   const dir = `${workDir}/${spec.id}`;
@@ -66,4 +72,3 @@ function applyFiles(dir, files) {
     }
   }
 }
-

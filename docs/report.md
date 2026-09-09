@@ -1,6 +1,6 @@
 # Git Why -- benchmark report
 
-Generated 2026-09-09T20:31:47.949Z by `bench/report.mjs` from raw files under `bench/results/`. No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.
+Generated 2026-09-09T20:38:34.526Z by `bench/report.mjs` from raw files under `bench/results/`. No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.
 
 ## Leading caveat: Hit@5 saturates on this dataset -- read MRR, not Hit@5
 
@@ -22,149 +22,7 @@ On both the dev split and the held-out test split, text-only and hybrid retrieva
 - Hardware: Apple M2, 8 cores, 8.6 GB RAM, darwin/arm64.
 - Toolchain: node v24.21.0, git version 2.50.1 (Apple Git-155).
 - Embedding model: `minishlab/potion-code-16M-v2` revision `e9d2a44ca6a05ac6685f3b23709ea57eb7352d5b`, fingerprint `m2v-sha256:9e51530c5a19d0147b884669fe4e0db7bfc7773c728e79eaf4c40ffc53b0fbf8`.
-- Code commit under test: `73efd914efa56ce89e9b6f65e77b4fcf0fa24cc5`. The working tree had 139 uncommitted path(s) at report time (this lane does not commit; see "reproduction" section for the exact files bench/ owns):
-
-```
-M README.md
- M bench/agents/grade.mjs
- M bench/agents/isolation.mjs
- M bench/agents/run.mjs
- M bench/agents/runner.mjs
- M bench/agents/tasks/build.mjs
- M bench/agents/tasks/hidden/T5/rubric.json
- M bench/agents/tasks/lib/task-engine.mjs
- M bench/agents/tasks/specs/t2.mjs
- M bench/agents/tasks/specs/t3.mjs
- M bench/agents/tasks/specs/t4.mjs
- M bench/agents/tasks/specs/t5.mjs
- M bench/agents/tasks/specs/t6.mjs
- M bench/agents/tasks/specs/t7.mjs
- M bench/agents/tasks/specs/t8.mjs
- M bench/agents/usage-cards/git-why.md
- M bench/dataset/dev.json
- M bench/dataset/external.json
- M bench/dataset/test.json
- M bench/fixtures/demo/build.mjs
- M bench/fixtures/generate.mjs
- M bench/fixtures/lib/engine.mjs
- M bench/fixtures/lib/git.mjs
- M bench/fixtures/lib/wordbank.mjs
- M bench/fixtures/manifests/api-gateway.json
- M bench/fixtures/manifests/auth-platform.json
- M bench/fixtures/manifests/build-tooling.json
- M bench/fixtures/manifests/data-pipeline.json
- M bench/fixtures/manifests/realtime-chat.json
- M bench/fixtures/manifests/task-queue.json
- M bench/fixtures/specs/api-gateway.mjs
- M bench/fixtures/specs/build-tooling.mjs
- M bench/fixtures/specs/data-pipeline.mjs
- M bench/fixtures/specs/realtime-chat.mjs
- M bench/perf/lib.mjs
- M bench/perf/run.mjs
- M bench/protocol.json
- M bench/report.mjs
- M bench/retrieval/candidates.json
- M bench/retrieval/run.mjs
- M docs/contributing.md
- M docs/decisions.md
- M docs/operations.md
- M eslint.config.js
- M schema/search-response.schema.json
- M schema/status-response.schema.json
- M scripts/doctor.mjs
- M scripts/postbuild.mjs
- M scripts/repo-create.mjs
- M scripts/verify-package.mjs
- M spike/children/concurrent-reader.ts
- M spike/children/concurrent-writer.ts
- M spike/children/lifecycle-reader.ts
- M spike/children/lifecycle-writer.ts
- M spike/children/lock-holder.ts
- M spike/lock-proto.ts
- M spike/run.ts
- M spike/util.ts
- M src/cli/args.ts
- M src/cli/main.ts
- M src/cli/paths.ts
- M src/cli/ports.ts
- M src/cli/wire.ts
- M src/embedding/cache.ts
- M src/embedding/candidates.ts
- M src/embedding/fake.ts
- M src/embedding/index.ts
- M src/embedding/static-embedder.ts
- M src/embedding/tokenizer.ts
- M src/git/exec.ts
- M src/git/extract.ts
- M src/git/repository.ts
- M src/git/snapshot.ts
- M src/history/chunk.ts
- M src/history/extract.ts
- M src/index/collection.ts
- M src/index/filter.ts
- M src/index/journal.ts
- M src/index/layout.ts
- M src/index/lock.ts
- M src/index/manifest.ts
- M src/index/refresh.ts
- M src/index/status.ts
- M src/output/human.ts
- M src/output/json.ts
- M src/search/evidence.ts
- M src/search/filters.ts
- M src/search/rank.ts
- M src/search/search.ts
- M src/types.ts
- M src/utils.cjs
- M test/fixtures/repo.ts
- M test/integration/cli/cli.test.ts
- M test/integration/cli/fixtures/fake-backend.mjs
- M test/integration/embedding/concurrent-download.test.ts
- M test/integration/embedding/fixtures/potion-code-16m-v2.reference.json
- M test/integration/embedding/reference-vectors.test.ts
- M test/integration/git/attribute-stability.test.ts
- M test/integration/git/extract-cases.test.ts
- M test/integration/git/join.test.ts
- M test/integration/git/object-format.test.ts
- M test/integration/git/paths.test.ts
- M test/integration/git/scope.test.ts
- M test/integration/git/shallow.test.ts
- M test/integration/index/child-script.ts
- M test/integration/index/collection.test.ts
- M test/integration/index/helpers.ts
- M test/integration/index/lock-child.ts
- M test/integration/index/lock.test.ts
- M test/integration/index/refresh-child.ts
- M test/integration/index/refresh.test.ts
- M test/repo-root.ts
- M test/unit/cli/args.test.ts
- M test/unit/cli/paths.test.ts
- M test/unit/embedding/cache.test.ts
- M test/unit/embedding/safetensors.test.ts
- M test/unit/embedding/static-embedder.test.ts
- M test/unit/git/patch.test.ts
- M test/unit/history/budget.test.ts
- M test/unit/history/chunk.test.ts
- M test/unit/history/extract.test.ts
- M test/unit/history/ids.test.ts
- M test/unit/history/pathkeys.test.ts
- M test/unit/history/text.test.ts
- M test/unit/index/filter.test.ts
- M test/unit/index/layout.test.ts
- M test/unit/index/manifest.test.ts
- M test/unit/index/status.test.ts
- M test/unit/output/human.test.ts
- M test/unit/output/json.test.ts
- M test/unit/output/sanitize.test.ts
- M test/unit/output/schema-check.ts
- M test/unit/search/evidence.test.ts
- M test/unit/search/filters.test.ts
- M test/unit/search/rank.test.ts
- M test/unit/search/search.test.ts
- M tsconfig.build.json
-?? bench/README.md
-?? docs/report.md
-```
+- Repository HEAD at report-generation time: `6d3205e3757aaa8bfdb5ffe80e0c9ffc61a8f5b4`. Working tree had 50 uncommitted path(s) at report time -- this is a shared, multi-lane working tree, so this count is a snapshot, not a stable input. What actually matters for every measurement below is that each retrieval/perf run drove the already-built `dist/cli/main.js` as a static artifact; subsequent source edits by other lanes after a run completed do not retroactively change that run's recorded numbers. bench/ owns only `bench/*`; this lane made no changes to `src/`, `package.json`, or `tsconfig*` and committed nothing.
 - Reference corpus for retrieval: 6 synthetic fixtures under `bench/work/fixtures/` (135-166 commits each), deterministically generated by `bench/fixtures/generate.mjs`.
 - Reference corpus for perf: `task-queue` (135 commits, synthetic). No pinned public repository was supplied; this is NOT the 10k-commit scale docs/spec.md section 24 ultimately targets.
 
@@ -268,6 +126,31 @@ Diff = (summary+evidence) minus (summary-only), overall (excludes `exact_identif
 
 **Verdict:** on this dev set, adding evidence (diff) records does **not** show a clear, consistently positive effect. In hybrid mode (the shipped default), evidence ingestion is worse on Hit@3/Hit@5/Recall@5 (0.111/0.111/0.111) and only marginally better on MRR (0.019) and worse on Hit@1 (-0.056). Text mode shows the same pattern (Hit@3/5/Recall@5 better summary-only, MRR essentially flat at -0.005). Semantic mode is the closest to a wash (MRR 0.028). On this synthetic, 24-case dev set, summary-only retrieval is at least as good as summary+evidence on every metric except a small MRR edge in two of three modes -- **this dataset does not demonstrate that diff/evidence ingestion earns its added complexity.** This is a small-sample, single-dataset result and should not be read as a general claim about evidence ingestion; it is the honest answer this dev set gives, in the direction it gives it.
 
+## 4b. External validity: real public repositories
+
+Run: `bench/results/external/2026-09-09T20-36-38-292Z`. Command: `node bench/retrieval/run-external.mjs --repos=<dir>`.
+
+Every fixture elsewhere in this report is synthetic and generated by the same system that built the tool. This section is the only measurement against histories Git Why did not author, and it is the one to weigh most heavily.
+
+| repository | license | cutoff SHA |
+|---|---|---|
+| https://github.com/expressjs/express | MIT | `bed501c695a61886399ee622875f3be933c716d8` |
+| https://github.com/axios/axios | MIT | `1226e6c53eeb0e9d7159bea83556c2ff117b5f2e` |
+
+Default hybrid mode, top-5, `--no-refresh` against a prebuilt index. 10 answerable cases; no-evidence controls are excluded from these metrics and reported separately below.
+
+| scope | n | Hit@1 | Hit@3 | Hit@5 | MRR |
+|---|---|---|---|---|---|
+| overall | 10 | 60.0% | 90.0% | 90.0% | 73.3% |
+| dev | 6 | -- | -- | 83.3% | 63.9% |
+| test | 4 | -- | -- | 100.0% | 87.5% |
+
+**Misses (1):**
+
+- `ext-d-axios-02` (exact_identifier, axios-axios): "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?" -- labelled relevant `b2bc3354ac22`, returned `72dd897bb584`, `5efca1ebbc9d`, `c51054f24d49`.
+
+Real histories are harder than the synthetic fixtures, and Hit@5 does not saturate here. Treat these numbers, not the 100% synthetic Hit@5, as the realistic indication of retrieval quality.
+
 ## 5. Agent benchmark (arms A/B/C/D)
 
 - Arm A (baseline) and Arm D (history / git why, no zg): runnable per protocol, since `dist/cli/main.js` now exists.
@@ -346,7 +229,7 @@ Caveat: aggregatePeakRssKb samples each reader's own process tree independently;
 
 - **Sample size.** Dev/test splits are 24 cases each (20 answerable per split after excluding no-evidence and, where noted, exact_identifier); a single-point Hit@k/MRR estimate at this N carries wide uncertainty. Per protocol: this is a provisional product-quality floor, not a statistical claim, and no confidence interval is reported that would imply more precision than the sample supports.
 - **All 6 retrieval fixtures are synthetic**, generated by `bench/fixtures/generate.mjs` (deterministic, seeded), not real-world repositories.
-- **Real-repository validation:** `bench/dataset/external.json` has `status: "collected"` -- Reachable and pinned via `gh api` (authenticated GitHub CLI) on 2026-09-09. Every relevantSha below was verified to exist in the named repository and to be an ancestor of that repository's pinned cutoffSha via `gh api repos/<owner>/<repo>/compare/<sha>...<cutoffSha>` returning status "ahead" (i.e. the cutoff is strictly ahead of, and reachable from, the candidate commit on the default branch). No repository content or model output was used to author these questions beyond ordinary GitHub search/read access; queries were written by a human-style task description first, then checked against the real history, not the reverse. That status means the 12 cases (6 dev / 6 test, against expressjs/express and axios/axios) were authored and their relevant SHAs verified reachable via the GitHub API. **It does not mean retrieval was run against those repositories**: `bench/retrieval/run.mjs` only supports `--split=dev`/`--split=test` against the 6 synthetic fixtures, no local clone of expressjs/express or axios/axios exists under `bench/work/fixtures/`, and no `bench/results/retrieval/external-*` directory exists. Real-repository retrieval performance has NOT been measured, only claimed-reachable case construction.
+- **Real-repository validation: EXECUTED.** 10 answerable cases (of 12; the rest are no-evidence controls) were run against real clones of https://github.com/expressjs/express @ bed501c695a6 and https://github.com/axios/axios @ 1226e6c53eeb, each verified to have HEAD exactly at its pinned cutoff so no post-cutoff commit is reachable. Unlike the synthetic split, real repositories do NOT saturate: Hit@5 90.0%, Hit@1 60.0%, MRR 73.3%. This is the most informative retrieval evidence in this report, and it is weaker than the synthetic numbers. Cases were still authored by the same agent system that built the tool, so this is real-repository evidence but not a blinded study.
 - **No-evidence handling has no refusal path.** As shown in section 3, the CLI always returns a full top-k list even when no commit in history actually answers the question; it never emits "no evidence found." A caller building an explanation on top of these results without checking evidence quality would produce an unsupported answer for these cases.
 - **Ablation is single-dataset, dev-only, 24 cases.** See section 4; do not generalize the "evidence ingestion doesn't clearly help" finding beyond this fixture set.
 - **Perf corpus is small.** 135 commits vs. the 10k-commit scale docs/spec.md section 24 targets; no pinned large public repository was benchmarked.
@@ -355,7 +238,7 @@ Caveat: aggregatePeakRssKb samples each reader's own process tree independently;
 
 ## 8. Exact reproduction commands
 
-All runs in this report were produced at code commit `73efd914efa56ce89e9b6f65e77b4fcf0fa24cc5` with the uncommitted working-tree changes listed in section 2 applied on top.
+Repository HEAD was `6d3205e3757aaa8bfdb5ffe80e0c9ffc61a8f5b4` at the time this report was generated (see section 2 for why that is a snapshot, not a per-run pin, in this shared working tree). Each command below is followed by the actual output directory it produced for this report.
 
 ```
 # Dev-split retrieval (text / semantic / hybrid, all categories)

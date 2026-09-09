@@ -57,5 +57,6 @@ test('unknown environment still throws', () => {
 });
 `,
   rubric: null,
-  successNote: 'Ordinary config bug, no history needed; a control for whether history tools get used when they should not matter.',
+  successNote:
+    'Ordinary config bug, no history needed; a control for whether history tools get used when they should not matter.',
 };

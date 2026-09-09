@@ -13,6 +13,7 @@ git why "refresh loop" --no-refresh     # required in this environment: the inde
 ```
 
 Notes:
+
 - Default output shows up to 5 matching commits with subjects, dates, and relevant diff excerpts.
 - `--` restricts to a file or directory path.
 - This environment's history index is frozen; always pass `--no-refresh`.

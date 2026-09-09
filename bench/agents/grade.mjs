@@ -30,7 +30,11 @@ export function gradeCodingTask({ trialWorkspaceDir, hiddenTestPath, scratchRoot
   const testFilePath = join(testDir, 'task.test.cjs');
   cpSync(hiddenTestPath, testFilePath);
 
-  const res = spawnSync('node', ['--test', testFilePath], { cwd: scratchDir, encoding: 'utf8', timeout: 60_000 });
+  const res = spawnSync('node', ['--test', testFilePath], {
+    cwd: scratchDir,
+    encoding: 'utf8',
+    timeout: 60_000,
+  });
   const passMatch = /^ℹ pass (\d+)$/m.exec(res.stdout);
   const failMatch = /^ℹ fail (\d+)$/m.exec(res.stdout);
   const totalMatch = /^ℹ tests (\d+)$/m.exec(res.stdout);
@@ -54,7 +58,10 @@ export function gradeCodingTask({ trialWorkspaceDir, hiddenTestPath, scratchRoot
 }
 
 function stableId(taskId, arm, repetition, salt) {
-  return createHash('sha256').update(`${taskId}::${arm}::${repetition}::${salt}`).digest('hex').slice(0, 16);
+  return createHash('sha256')
+    .update(`${taskId}::${arm}::${repetition}::${salt}`)
+    .digest('hex')
+    .slice(0, 16);
 }
 
 /**
@@ -66,15 +73,18 @@ function stableId(taskId, arm, repetition, salt) {
  * only) is equivalent to "exists in the allowed ancestry".
  */
 export function mechanicalRubricChecks({ trialWorkspaceDir, finalAnswer, rubric }) {
-  const shaTokens = [...new Set((finalAnswer.match(/\b[0-9a-f]{7,40}\b/g) ?? []))];
+  const shaTokens = [...new Set(finalAnswer.match(/\b[0-9a-f]{7,40}\b/g) ?? [])];
   const shaChecks = shaTokens.map((sha) => {
-    const exists = spawnSync('git', ['cat-file', '-e', sha], { cwd: trialWorkspaceDir }).status === 0;
+    const exists =
+      spawnSync('git', ['cat-file', '-e', sha], { cwd: trialWorkspaceDir }).status === 0;
     return { sha, existsInAllowedAncestry: exists };
   });
   const anyInventedSha = shaChecks.some((c) => !c.existsInAllowedAncestry);
 
   const keywordPool = rubric.mustMentionAny ?? [];
-  const mentionedKeywords = keywordPool.filter((kw) => finalAnswer.toLowerCase().includes(kw.toLowerCase()));
+  const mentionedKeywords = keywordPool.filter((kw) =>
+    finalAnswer.toLowerCase().includes(kw.toLowerCase()),
+  );
 
   return {
     citedShas: shaChecks,
@@ -92,7 +102,17 @@ export function mechanicalRubricChecks({ trialWorkspaceDir, finalAnswer, rubric 
  * it. The mapping from stableId back to (task, arm, repetition) is kept in
  * a SEPARATE, non-blinded index file the reviewer does not need to see.
  */
-export function writeBlindedReviewPacket({ reviewDir, taskId, arm, repetition, salt, finalAnswer, rubric, mechanicalChecks, promptText }) {
+export function writeBlindedReviewPacket({
+  reviewDir,
+  taskId,
+  arm,
+  repetition,
+  salt,
+  finalAnswer,
+  rubric,
+  mechanicalChecks,
+  promptText,
+}) {
   mkdirSync(reviewDir, { recursive: true });
   const id = stableId(taskId, arm, repetition, salt);
   const packet = {
@@ -131,7 +151,16 @@ export function mergeManualGrade(reviewDir, id, { humanGrade, humanJustification
  * runner's trial result. Returns the fields grade.mjs is responsible for
  * within the section-23 record: pass, hidden-test counts, evidence grade.
  */
-export function gradeTrial({ taskMeta, trialResult, trialWorkspaceDir, hiddenTestPath, rubric, scratchRoot, reviewDir, promptText }) {
+export function gradeTrial({
+  taskMeta,
+  trialResult,
+  trialWorkspaceDir,
+  hiddenTestPath,
+  rubric,
+  scratchRoot,
+  reviewDir,
+  promptText,
+}) {
   if (rubric) {
     const mechanicalChecks = mechanicalRubricChecks({
       trialWorkspaceDir,
@@ -159,7 +188,12 @@ export function gradeTrial({ taskMeta, trialResult, trialWorkspaceDir, hiddenTes
     };
   }
 
-  const coding = gradeCodingTask({ trialWorkspaceDir, hiddenTestPath, scratchRoot, trialLabel: `${taskMeta.taskId}-${trialResult.arm}-${trialResult.repetition}` });
+  const coding = gradeCodingTask({
+    trialWorkspaceDir,
+    hiddenTestPath,
+    scratchRoot,
+    trialLabel: `${taskMeta.taskId}-${trialResult.arm}-${trialResult.repetition}`,
+  });
   return {
     pass: coding.applicable ? coding.pass : null,
     hiddenTestsPassed: coding.hiddenTestsPassed,

@@ -62,7 +62,11 @@ export function runOnce(cliPath, args, { cwd, env = {}, timeoutMs = 120_000 }) {
  * aggregate RSS of the process tree (this process + any children it forks)
  * while it runs, via `ps`. macOS/BSD and Linux both support `ps -o rss=`.
  */
-export function runAsyncWithMemorySampling(cliPath, args, { cwd, env = {}, sampleIntervalMs = 50 }) {
+export function runAsyncWithMemorySampling(
+  cliPath,
+  args,
+  { cwd, env = {}, sampleIntervalMs = 50 },
+) {
   return new Promise((resolvePromise) => {
     const start = process.hrtime.bigint();
     const child = spawn('node', [cliPath, ...args], { cwd, env: { ...process.env, ...env } });
@@ -128,7 +132,10 @@ function sumRssKb(pids) {
 
 export function percentile(sortedAscending, p) {
   if (sortedAscending.length === 0) return null;
-  const idx = Math.min(sortedAscending.length - 1, Math.ceil((p / 100) * sortedAscending.length) - 1);
+  const idx = Math.min(
+    sortedAscending.length - 1,
+    Math.ceil((p / 100) * sortedAscending.length) - 1,
+  );
   return sortedAscending[Math.max(0, idx)];
 }
 

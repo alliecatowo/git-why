@@ -5,7 +5,7 @@ const { callProvider } = require('../src/gateway.cjs');
 test('a network error on the non-idempotent /charge endpoint is never retried', async () => {
   let calls = 0;
   const io = {
-    send: async (req) => {
+    send: async (_req) => {
       calls++;
       throw new Error('network_error');
     },
@@ -17,7 +17,7 @@ test('a network error on the non-idempotent /charge endpoint is never retried', 
 test('a network error on an idempotent endpoint is retried and can succeed', async () => {
   let calls = 0;
   const io = {
-    send: async (req) => {
+    send: async (_req) => {
       calls++;
       if (calls < 2) throw new Error('network_error');
       return { ok: true };

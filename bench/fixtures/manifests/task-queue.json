@@ -29,9 +29,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Fix typo in src/worker/pool.js comment",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -41,9 +39,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Tidy up imports in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -53,9 +49,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump chalk to 5.16.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -65,9 +59,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Reformat src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -77,9 +69,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin uuid at 5.11.23",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -89,9 +79,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Simplify conditional in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -101,9 +89,7 @@
       "category": "distractor",
       "subsystem": "metrics",
       "subject": "Refactor counters into a class for testability",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Looks like it could be \"the old counters implementation\" but is an unrelated refactor, not a deletion."
     },
     {
@@ -113,9 +99,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Small refactor of src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -125,9 +109,7 @@
       "category": "churn",
       "subsystem": "queue",
       "subject": "Minor cleanup in src/queue/array-queue.js",
-      "files": [
-        "src/queue/array-queue.js"
-      ],
+      "files": ["src/queue/array-queue.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -137,9 +119,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Trim trailing whitespace in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -149,9 +129,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade chalk to v9.8.30",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -161,9 +139,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin commander at 9.3.13",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -173,9 +149,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Align src/worker/pool.js with lint rules",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -185,9 +159,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Rename local variable in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -197,9 +169,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Improve readability of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -209,9 +179,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade chalk to v5.19.11",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -221,9 +189,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin yargs at 6.0.7",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -233,9 +199,7 @@
       "category": "churn",
       "subsystem": "queue",
       "subject": "Small refactor of src/queue/array-queue.js",
-      "files": [
-        "src/queue/array-queue.js"
-      ],
+      "files": ["src/queue/array-queue.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -245,9 +209,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade prettier to v2.10.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -257,9 +219,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade chalk to v3.16.12",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -269,9 +229,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump uuid 8.17.9",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -281,9 +239,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade jest to v3.12.27",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -293,9 +249,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Fix typo in src/metrics/counters.js comment",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -305,9 +259,7 @@
       "category": "churn",
       "subsystem": "queue",
       "subject": "Normalize whitespace in src/queue/array-queue.js",
-      "files": [
-        "src/queue/array-queue.js"
-      ],
+      "files": ["src/queue/array-queue.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -317,9 +269,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin commander at 4.10.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -329,9 +279,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin node-fetch at 1.7.10",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -341,9 +289,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Consolidate constants in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -353,9 +299,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump commander to 6.0.18",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -365,9 +309,7 @@
       "category": "churn",
       "subsystem": "queue",
       "subject": "Trim trailing whitespace in src/queue/array-queue.js",
-      "files": [
-        "src/queue/array-queue.js"
-      ],
+      "files": ["src/queue/array-queue.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -377,9 +319,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update jest dependency to 4.0.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -389,9 +329,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Update comment in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -401,9 +339,7 @@
       "category": "churn",
       "subsystem": "queue",
       "subject": "Reformat src/queue/array-queue.js",
-      "files": [
-        "src/queue/array-queue.js"
-      ],
+      "files": ["src/queue/array-queue.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -413,9 +349,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Small refactor of src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -425,9 +359,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update inline docs for src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -437,9 +369,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade axios to v1.4.9",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -449,9 +379,7 @@
       "category": "deleted_implementation",
       "subsystem": "queue",
       "subject": "Delete ArrayQueue now that WorkerPool handles all job intake",
-      "files": [
-        "src/queue/array-queue.js"
-      ],
+      "files": ["src/queue/array-queue.js"],
       "note": "The deleted queue implementation itself is the expected evidence for \"the queue before we moved to workers\".",
       "beatId": "queue.remove-array-queue"
     },
@@ -462,9 +390,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump babel-core to 6.11.10",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -474,9 +400,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update inline docs for src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -486,9 +410,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade commander to v1.7.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -498,9 +420,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Add missing semicolon in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -510,9 +430,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Remove unused variable in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -522,9 +440,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump prettier 8.6.17",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -534,9 +450,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Rename local variable in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -546,9 +460,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Drop dead code path in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -558,9 +470,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Small refactor of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -570,9 +480,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin uuid at 8.18.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -582,9 +490,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Reorder function arguments in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -594,9 +500,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Normalize whitespace in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -606,9 +510,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Extract helper in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -618,9 +520,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Improve readability of README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -630,9 +530,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update comment in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -642,9 +540,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update eslint dependency to 8.15.13",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -654,9 +550,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Add missing semicolon in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -666,9 +560,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Remove unused variable in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -678,9 +570,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Trim trailing whitespace in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -690,9 +580,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Small refactor of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -702,9 +590,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Align src/worker/poll-legacy.js with lint rules",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -714,9 +600,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Reorder function arguments in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -726,9 +610,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Small refactor of src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -738,9 +620,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Small refactor of src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -750,9 +630,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Tidy up imports in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -762,9 +640,7 @@
       "category": "poor_message_rich_diff",
       "subsystem": "worker",
       "subject": "wip",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Subject \"wip\" carries no signal; the guarded release() and its comment are the only evidence for a query about over-concurrent workers.",
       "beatId": "worker.fix-issue-2"
     },
@@ -775,9 +651,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Fix typo in src/metrics/counters.js comment",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -787,9 +661,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Rename local variable in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -799,9 +671,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Reformat README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -811,9 +681,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Minor cleanup in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -823,9 +691,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Add missing semicolon in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -835,9 +701,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Improve readability of README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -847,9 +711,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Trim trailing whitespace in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -859,9 +721,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Small refactor of README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -871,9 +731,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Fix typo in src/worker/poll-legacy.js comment",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -883,9 +741,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update comment in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -895,9 +751,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Drop dead code path in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -907,9 +761,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update comment in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -919,9 +771,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Trim trailing whitespace in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -931,9 +781,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Improve readability of src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -943,9 +791,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Rename local variable in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -955,9 +801,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Minor cleanup in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -967,9 +811,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update inline docs for src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -979,9 +821,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Small refactor of src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -991,9 +831,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Update inline docs for README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1003,9 +841,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Minor cleanup in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1015,9 +851,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Small refactor of src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1027,9 +861,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Minor cleanup in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1039,9 +871,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Fix typo in src/worker/pool.js comment",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1051,9 +881,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Rename local variable in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1063,9 +891,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Trim trailing whitespace in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1075,9 +901,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Reformat README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1087,9 +911,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Minor cleanup in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1099,9 +921,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Consolidate constants in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1111,9 +931,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Align src/worker/poll-legacy.js with lint rules",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1123,9 +941,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Consolidate constants in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1135,9 +951,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Drop dead code path in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1147,9 +961,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Small refactor of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1159,9 +971,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Small refactor of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1171,9 +981,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Normalize whitespace in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1183,9 +991,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Tidy up imports in src/worker/poll-legacy.js",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1195,9 +1001,7 @@
       "category": "deleted_implementation",
       "subsystem": "worker",
       "subject": "Remove WorkerPool.pollForWork(), replaced by push-based submit()",
-      "files": [
-        "src/worker/poll-legacy.js"
-      ],
+      "files": ["src/worker/poll-legacy.js"],
       "note": "A second deleted-implementation case in the same fixture, targeting a different removed function than the array queue.",
       "beatId": "worker.remove-polling-submit"
     },
@@ -1208,9 +1012,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Simplify conditional in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1220,9 +1022,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Minor cleanup in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1232,9 +1032,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Fix typo in src/worker/pool.js comment",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1244,9 +1042,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Update inline docs for README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1256,9 +1052,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Adjust logging verbosity in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1268,9 +1062,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Reorder function arguments in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1280,9 +1072,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Improve readability of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1292,9 +1082,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Trim trailing whitespace in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1304,9 +1092,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Consolidate constants in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1316,9 +1102,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Consolidate constants in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1328,9 +1112,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update inline docs for src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1340,9 +1122,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Tidy up imports in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1352,9 +1132,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Update comment in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1364,9 +1142,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Adjust logging verbosity in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1376,9 +1152,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Reorder function arguments in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1388,9 +1162,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Tidy up imports in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1400,9 +1172,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Adjust logging verbosity in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1412,9 +1182,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Remove unused variable in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1424,9 +1192,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Remove unused variable in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1436,9 +1202,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Rename local variable in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1448,9 +1212,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Drop dead code path in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1460,9 +1222,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Simplify conditional in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1472,9 +1232,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Simplify conditional in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1484,9 +1242,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Tidy up imports in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1496,9 +1252,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Add missing semicolon in README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1508,9 +1262,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Simplify conditional in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1520,9 +1272,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Extract helper in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1532,9 +1282,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Minor cleanup in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1544,9 +1292,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Add missing semicolon in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1556,9 +1302,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Drop dead code path in src/worker/pool.js",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1568,9 +1312,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Remove unused variable in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1580,9 +1322,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Small refactor of src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1592,9 +1332,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Simplify conditional in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1604,9 +1342,7 @@
       "category": "churn",
       "subsystem": "metrics",
       "subject": "Drop dead code path in src/metrics/counters.js",
-      "files": [
-        "src/metrics/counters.js"
-      ],
+      "files": ["src/metrics/counters.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1616,9 +1352,7 @@
       "category": "churn",
       "subsystem": "worker",
       "subject": "Fix typo in src/worker/pool.js comment",
-      "files": [
-        "src/worker/pool.js"
-      ],
+      "files": ["src/worker/pool.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1628,9 +1362,7 @@
       "category": "churn",
       "subsystem": "docs",
       "subject": "Reformat README.md",
-      "files": [
-        "README.md"
-      ],
+      "files": ["README.md"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     }
   ]

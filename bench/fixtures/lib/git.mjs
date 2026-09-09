@@ -59,7 +59,10 @@ export function renameRepoFile(dir, fromRel, toRel) {
  * dataset relies on: labeled SHAs stay stable without committing the
  * generated repository itself.
  */
-export function commitAll(dir, { message, epochSeconds, authorName, authorEmail, allowEmpty = false }) {
+export function commitAll(
+  dir,
+  { message, epochSeconds, authorName, authorEmail, allowEmpty = false },
+) {
   git(dir, ['add', '-A']);
   const dateStr = `${epochSeconds} ${FIXED_TZ_OFFSET}`;
   const env = {

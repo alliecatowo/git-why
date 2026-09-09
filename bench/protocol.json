@@ -50,10 +50,7 @@
       "tools": "Arm A + git why over the permitted history, without zg.",
       "status": "runnable once dist/cli/main.js exists; does not require zg."
     },
-    "primaryComparisons": [
-      "C vs B",
-      "D vs A"
-    ],
+    "primaryComparisons": ["C vs B", "D vs A"],
     "secondaryComparisons": [
       "B vs A (workspace retrieval alone)",
       "C vs A (combined package)",

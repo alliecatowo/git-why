@@ -96,7 +96,6 @@ test('non-UTF-8 byte path identity, where the platform permits creating one', as
     try {
       await repo.writeFile(weirdName, 'content\n');
     } catch (error) {
-       
       console.log(
         `SKIP: platform filesystem rejected a non-UTF-8 filename: ${(error as Error).message}`,
       );

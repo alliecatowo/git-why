@@ -28,9 +28,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -40,9 +38,7 @@
       "category": "distractor",
       "subsystem": "providers",
       "subject": "Bump the Initech request timeout to 5s",
-      "files": [
-        "src/providers/initech-timeout.js"
-      ],
+      "files": ["src/providers/initech-timeout.js"],
       "note": "Distractor: same provider, unrelated concern (timeout vs. retry-on-status-code)."
     },
     {
@@ -52,9 +48,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump jest to 6.1.26",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -64,9 +58,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Rename local variable in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -76,9 +68,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Improve readability of src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -88,9 +78,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/initech-client.js comment",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -100,9 +88,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Remove unused variable in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -112,9 +98,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Simplify conditional in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -124,9 +108,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Extract helper in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -136,9 +118,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Small refactor of src/retry/retry-policy.js",
-      "files": [
-        "src/retry/retry-policy.js"
-      ],
+      "files": ["src/retry/retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -148,9 +128,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Fix typo in src/retry/retry-policy.js comment",
-      "files": [
-        "src/retry/retry-policy.js"
-      ],
+      "files": ["src/retry/retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -160,9 +138,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump uuid 1.20.14",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -172,9 +148,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Add missing semicolon in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -184,9 +158,7 @@
       "category": "synonym_mismatch",
       "subsystem": "retry",
       "subject": "Avoid refreshing the auth token on every retry attempt",
-      "files": [
-        "src/retry/retry-policy.js"
-      ],
+      "files": ["src/retry/retry-policy.js"],
       "note": "Relevant fix for \"token refresh happening twice on retry\"; no literal overlap with the word \"duplicate\".",
       "beatId": "retry.fix-duplicate-token-refresh"
     },
@@ -197,9 +169,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update axios dependency to 1.15.28",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -209,9 +179,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump ws 9.20.19",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -221,9 +189,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update lodash dependency to 5.11.5",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -233,9 +199,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -245,9 +209,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump commander 1.6.9",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -257,9 +219,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump ws 1.17.24",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -269,9 +229,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -281,9 +239,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump ioredis 3.8.14",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -293,9 +249,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump moment 3.13.16",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -305,9 +259,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -317,9 +269,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update prettier dependency to 8.5.7",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -329,9 +279,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update eslint dependency to 7.20.16",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -341,9 +289,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin commander at 9.7.3",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -353,9 +299,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Remove unused variable in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -365,10 +309,7 @@
       "category": "rename",
       "subsystem": "retry",
       "subject": "Rename RetryPolicy to IdempotentRetryPolicy to be explicit about the assumption",
-      "files": [
-        "src/retry/idempotent-retry-policy.js",
-        "src/retry/retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js", "src/retry/retry-policy.js"],
       "note": "Single-change rename: a query about \"RetryPolicy\" should resolve here.",
       "beatId": "retry.rename-policy-idempotent"
     },
@@ -379,9 +320,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update lodash dependency to 6.6.22",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -391,9 +330,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump lodash to 4.9.12",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -403,9 +340,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update commander dependency to 1.0.27",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -415,9 +350,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Improve readability of src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -427,9 +360,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Bump uuid to 2.3.20",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -439,9 +370,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade ioredis to v9.11.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -451,9 +380,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Simplify conditional in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -463,9 +390,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Update lodash dependency to 5.18.21",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -475,9 +400,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Adjust logging verbosity in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -487,9 +410,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Tidy up imports in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -499,9 +420,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Add missing semicolon in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -511,9 +430,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Align src/providers/acme-client.js with lint rules",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -523,9 +440,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Upgrade ioredis to v1.0.12",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -535,9 +450,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump prettier 7.3.5",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -547,9 +460,7 @@
       "category": "distractor_intent",
       "subsystem": "providers",
       "subject": "Bump the Globex token expiry buffer from 30s to 90s",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Real reason is Globex-specific clock skew; Acme and Initech token/response changes below are plausible-looking distractors with their own unrelated reasons.",
       "beatId": "globex.bump-token-expiry-buffer"
     },
@@ -560,9 +471,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "Pin moment at 1.6.15",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -572,9 +481,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Add missing semicolon in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -584,9 +491,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -596,9 +501,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Simplify conditional in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -608,9 +511,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump pg 6.14.9",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -620,9 +521,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -632,9 +531,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Small refactor of src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -644,9 +541,7 @@
       "category": "version_distractor",
       "subsystem": "deps",
       "subject": "chore: bump ioredis 9.16.10",
-      "files": [
-        "package-lock.snapshot.txt"
-      ],
+      "files": ["package-lock.snapshot.txt"],
       "note": "Version-number distractor: an unrelated dependency bump that must not be confused with a real number/version query."
     },
     {
@@ -656,9 +551,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Improve readability of src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -668,9 +561,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Adjust logging verbosity in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -680,9 +571,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Consolidate constants in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -692,9 +581,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Normalize whitespace in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -704,9 +591,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -716,9 +601,7 @@
       "category": "distractor_intent",
       "subsystem": "providers",
       "subject": "Treat Acme 200 responses with an error field as failures",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Distractor for the Globex query and target for its own query: a different provider, different quirk, different reason.",
       "beatId": "acme.handle-200-with-error-body"
     },
@@ -729,9 +612,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Improve readability of src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -741,9 +622,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Drop dead code path in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -753,9 +632,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Consolidate constants in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -765,9 +642,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Minor cleanup in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -777,9 +652,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Align src/providers/initech-client.js with lint rules",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -789,9 +662,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Add missing semicolon in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -801,9 +672,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Simplify conditional in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -813,9 +682,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Fix typo in src/retry/idempotent-retry-policy.js comment",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -825,9 +692,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Rename local variable in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -837,9 +702,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Minor cleanup in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -849,9 +712,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Small refactor of src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -861,9 +722,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Drop dead code path in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -873,9 +732,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -885,9 +742,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Add missing semicolon in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -897,9 +752,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reformat src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -909,9 +762,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -921,9 +772,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/acme-client.js comment",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -933,9 +782,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Consolidate constants in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -945,9 +792,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Minor cleanup in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -957,9 +802,7 @@
       "category": "workaround_rationale",
       "subsystem": "providers",
       "subject": "Never retry Initech 501 responses",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Distractor_intent target for Initech, and also this fixture's first workaround_rationale case (specific documented upstream behavior).",
       "beatId": "initech.no-retry-on-501"
     },
@@ -970,9 +813,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Reorder function arguments in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -982,9 +823,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/acme-client.js comment",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -994,9 +833,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Add missing semicolon in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1006,9 +843,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Normalize whitespace in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1018,9 +853,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Consolidate constants in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1030,9 +863,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Simplify conditional in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1042,9 +873,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/acme-client.js comment",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1054,9 +883,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Update inline docs for src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1066,9 +893,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1078,9 +903,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reformat src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1090,9 +913,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/acme-client.js",
-      "files": [
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1102,9 +923,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Reformat src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1114,9 +933,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Consolidate constants in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1126,10 +943,7 @@
       "category": "rename",
       "subsystem": "providers",
       "subject": "Rename acme-client.js to acme-payments-client.js for clarity among providers",
-      "files": [
-        "src/providers/acme-payments-client.js",
-        "src/providers/acme-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js", "src/providers/acme-client.js"],
       "note": "Second rename case in this fixture.",
       "beatId": "providers.rename-acme-client-file"
     },
@@ -1140,9 +954,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Improve readability of src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1152,9 +964,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Extract helper in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1164,9 +974,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Tidy up imports in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1176,9 +984,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Fix typo in src/retry/idempotent-retry-policy.js comment",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1188,9 +994,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Trim trailing whitespace in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1200,9 +1004,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/initech-client.js comment",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1212,9 +1014,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Align src/providers/acme-payments-client.js with lint rules",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1224,9 +1024,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Simplify conditional in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1236,9 +1034,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Remove unused variable in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1248,9 +1044,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Simplify conditional in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1260,9 +1054,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1272,9 +1064,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Trim trailing whitespace in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1284,9 +1074,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Rename local variable in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1296,9 +1084,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Adjust logging verbosity in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1308,9 +1094,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Align src/providers/acme-payments-client.js with lint rules",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1320,9 +1104,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/acme-payments-client.js comment",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1332,9 +1114,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Minor cleanup in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1344,9 +1124,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reformat src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1356,9 +1134,7 @@
       "category": "synonym_mismatch",
       "subsystem": "retry",
       "subject": "Stop sending a request twice when the first attempt times out",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Second synonym_mismatch case; phrased around \"sending twice\" rather than \"duplicate\".",
       "beatId": "retry.fix-double-send-on-timeout"
     },
@@ -1369,9 +1145,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reformat src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1381,9 +1155,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1393,9 +1165,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Extract helper in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1405,9 +1175,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Trim trailing whitespace in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1417,9 +1185,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1429,9 +1195,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1441,9 +1205,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Tidy up imports in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1453,9 +1215,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Update comment in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1465,9 +1225,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Consolidate constants in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1477,9 +1235,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Consolidate constants in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1489,9 +1245,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Remove unused variable in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1501,9 +1255,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Tidy up imports in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1513,9 +1265,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1525,9 +1275,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Normalize whitespace in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1537,9 +1285,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Extract helper in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1549,9 +1295,7 @@
       "category": "poor_message_rich_diff",
       "subsystem": "providers",
       "subject": "fix 2",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Terse subject \"fix 2\"; the Retry-After handling is only visible in the diff.",
       "beatId": "providers.fix-2"
     },
@@ -1562,9 +1306,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Small refactor of src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1574,9 +1316,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Rename local variable in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1586,9 +1326,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Remove unused variable in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1598,9 +1336,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Small refactor of src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1610,9 +1346,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Reorder function arguments in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1622,9 +1356,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Remove unused variable in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1634,9 +1366,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1646,9 +1376,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reorder function arguments in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1658,9 +1386,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1670,9 +1396,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Rename local variable in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1682,9 +1406,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Extract helper in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1694,9 +1416,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Remove unused variable in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1706,9 +1426,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Reformat src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1718,9 +1436,7 @@
       "category": "workaround_rationale",
       "subsystem": "providers",
       "subject": "Keep sending X-Acme-Signature-V1 alongside V2",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Second workaround_rationale case: a specific, cited third-party dependency on the old behavior.",
       "beatId": "acme.keep-legacy-signature-header"
     },
@@ -1731,9 +1447,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Adjust logging verbosity in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1743,9 +1457,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Align src/retry/idempotent-retry-policy.js with lint rules",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1755,9 +1467,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/acme-payments-client.js comment",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1767,9 +1477,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Adjust logging verbosity in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1779,9 +1487,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Adjust logging verbosity in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1791,9 +1497,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reformat src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1803,9 +1507,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Reformat src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1815,9 +1517,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Small refactor of src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1827,9 +1527,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Rename local variable in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1839,9 +1537,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Adjust logging verbosity in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1851,9 +1547,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Fix typo in src/providers/acme-payments-client.js comment",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1863,9 +1557,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Reorder function arguments in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1875,9 +1567,7 @@
       "category": "churn",
       "subsystem": "retry",
       "subject": "Remove unused variable in src/retry/idempotent-retry-policy.js",
-      "files": [
-        "src/retry/idempotent-retry-policy.js"
-      ],
+      "files": ["src/retry/idempotent-retry-policy.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1887,9 +1577,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Simplify conditional in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1899,9 +1587,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1911,9 +1597,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Add missing semicolon in src/providers/globex-client.js",
-      "files": [
-        "src/providers/globex-client.js"
-      ],
+      "files": ["src/providers/globex-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1923,9 +1607,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Trim trailing whitespace in src/providers/initech-client.js",
-      "files": [
-        "src/providers/initech-client.js"
-      ],
+      "files": ["src/providers/initech-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1935,9 +1617,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Small refactor of src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     },
     {
@@ -1947,9 +1627,7 @@
       "category": "churn",
       "subsystem": "providers",
       "subject": "Update comment in src/providers/acme-payments-client.js",
-      "files": [
-        "src/providers/acme-payments-client.js"
-      ],
+      "files": ["src/providers/acme-payments-client.js"],
       "note": "Ordinary churn: cosmetic edit, not a relevant answer to any query."
     }
   ]

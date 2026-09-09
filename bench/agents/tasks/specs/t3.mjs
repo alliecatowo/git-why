@@ -125,5 +125,5 @@ test('concurrency limit is still respected when priority jobs are used', async (
 `,
   rubric: null,
   successNote:
-    'Priority behavior restored inside the new interface without exceeding the concurrency limit (the old queue\'s known defect: no concurrency control at all).',
+    "Priority behavior restored inside the new interface without exceeding the concurrency limit (the old queue's known defect: no concurrency control at all).",
 };

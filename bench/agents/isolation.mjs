@@ -75,7 +75,13 @@ export function exportCleanSeed(sourceRepoDir, baseSha, { workDir, label }) {
  * full source repository survives, and (c) no held-out SHA (if provided)
  * is reachable or fetchable.
  */
-export function materializeTrialWorkspace(bundlePath, baseSha, ancestors, { workDir, label, branchName }, heldOutShas = []) {
+export function materializeTrialWorkspace(
+  bundlePath,
+  baseSha,
+  ancestors,
+  { workDir, label, branchName },
+  heldOutShas = [],
+) {
   workDir = resolve(workDir);
   mkdirSync(workDir, { recursive: true });
   const cloneDir = join(workDir, `${label}-clone`);
@@ -99,12 +105,16 @@ export function materializeTrialWorkspace(bundlePath, baseSha, ancestors, { work
   const reachable = sh(cloneDir, ['rev-list', '--all']).split('\n').filter(Boolean);
   const leaked = reachable.filter((sha) => !ancestors.has(sha));
   if (leaked.length > 0) {
-    throw new Error(`Trial clone ${cloneDir} contains commits outside baseSha's ancestry: ${leaked.join(', ')}`);
+    throw new Error(
+      `Trial clone ${cloneDir} contains commits outside baseSha's ancestry: ${leaked.join(', ')}`,
+    );
   }
   for (const heldOutSha of heldOutShas) {
     const exists = spawnSync('git', ['cat-file', '-e', heldOutSha], { cwd: cloneDir }).status === 0;
     if (exists) {
-      throw new Error(`Trial clone ${cloneDir} can access held-out object ${heldOutSha}; isolation is broken.`);
+      throw new Error(
+        `Trial clone ${cloneDir} can access held-out object ${heldOutSha}; isolation is broken.`,
+      );
     }
   }
 
@@ -125,9 +135,18 @@ export function materializeTrialWorkspace(bundlePath, baseSha, ancestors, { work
  * (task, arm, trial) combination in one call. Each call gets its own clone
  * directory (never shared/reused across trials, even for the same task).
  */
-export function buildIsolatedTrialWorkspace({ sourceRepoDir, baseSha, goldSha, workRoot, trialLabel }) {
+export function buildIsolatedTrialWorkspace({
+  sourceRepoDir,
+  baseSha,
+  goldSha,
+  workRoot,
+  trialLabel,
+}) {
   const seedWorkDir = join(workRoot, 'seeds');
-  const { bundlePath, ancestors, branchName } = exportCleanSeed(sourceRepoDir, baseSha, { workDir: seedWorkDir, label: trialLabel });
+  const { bundlePath, ancestors, branchName } = exportCleanSeed(sourceRepoDir, baseSha, {
+    workDir: seedWorkDir,
+    label: trialLabel,
+  });
   const heldOutShas = goldSha ? [goldSha] : [];
   const { workspaceDir, verifiedAncestryCount } = materializeTrialWorkspace(
     bundlePath,

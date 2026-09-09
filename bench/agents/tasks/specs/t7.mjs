@@ -41,5 +41,6 @@ test('passes through in-range values unchanged', () => {
 });
 `,
   rubric: null,
-  successNote: 'Fully specified localized behavior; history is unnecessary and should not be needed to pass.',
+  successNote:
+    'Fully specified localized behavior; history is unnecessary and should not be needed to pass.',
 };

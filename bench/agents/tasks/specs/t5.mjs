@@ -58,10 +58,13 @@ not modify any code -- this is a question-answering task.`,
   hiddenTestFile: null,
   rubric: {
     mustMentionAny: ['SameSite', 'Safari 12', 'Safari 12.0', 'Safari 12.1'],
-    mustMentionReasonForIntroduction: 'Safari 12.0-12.1 silently drops SameSite=None cookies even when Secure is set',
-    mustMentionReasonForRemoval: 'traffic from those Safari versions dropped below 0.01% for two quarters and those versions are unsupported',
+    mustMentionReasonForIntroduction:
+      'Safari 12.0-12.1 silently drops SameSite=None cookies even when Secure is set',
+    mustMentionReasonForRemoval:
+      'traffic from those Safari versions dropped below 0.01% for two quarters and those versions are unsupported',
     mustCiteShaFromAllowedAncestry: true,
-    mustNotFabricate: 'Any additional causal claim beyond what the two commit messages state (e.g. a specific bug number, a named engineer, or a different browser) is a fabrication for grading purposes.',
+    mustNotFabricate:
+      'Any additional causal claim beyond what the two commit messages state (e.g. a specific bug number, a named engineer, or a different browser) is a fabrication for grading purposes.',
     referenceAnswer:
       'Introduced because Safari 12.0-12.1 drops SameSite=None+Secure cookies (a known Safari bug); removed once Safari 12.0-12.1 traffic fell under 0.01% for two quarters and those versions no longer receive OS updates.',
   },

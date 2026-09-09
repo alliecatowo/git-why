@@ -66,7 +66,11 @@ their repo), breaking our Windows CI job. 0.19.2 is the last version
 before the regression. This commit only touches the lockfile
 snapshot; there is no source change.`,
     files: [
-      { path: 'package-lock.snapshot.txt', op: 'write', content: 'esbuild@0.19.2\n# pinned, see commit message\n' },
+      {
+        path: 'package-lock.snapshot.txt',
+        op: 'write',
+        content: 'esbuild@0.19.2\n# pinned, see commit message\n',
+      },
     ],
     note: 'Message-only rationale surviving patch suppression; the "patch" here is an intentionally uninformative lockfile line.',
   },
@@ -108,7 +112,11 @@ plays much better with our release script's diff-based sanity check
 Only the lockfile snapshot changes here; the release script itself
 is updated in a follow-up commit.`,
     files: [
-      { path: 'package-lock.snapshot.txt', op: 'write', content: 'esbuild@0.19.2\n# pinned, see earlier commit\nrelease-notes-gen@3.0.0\n' },
+      {
+        path: 'package-lock.snapshot.txt',
+        op: 'write',
+        content: 'esbuild@0.19.2\n# pinned, see earlier commit\nrelease-notes-gen@3.0.0\n',
+      },
     ],
     note: 'Second rich-message/skipped-patch case: a dependency bump whose real motivation is entirely in the message.',
   },
@@ -121,7 +129,13 @@ const distractorBeats = [
     subsystem: SUBSYS.build,
     subject: 'Tune the build cache directory size limit',
     body: 'Unrelated performance tweak, not a version-support change.',
-    files: [{ path: 'scripts/build-cache.js', op: 'write', content: 'export const CACHE_LIMIT_MB = 512;\n' }],
+    files: [
+      {
+        path: 'scripts/build-cache.js',
+        op: 'write',
+        content: 'export const CACHE_LIMIT_MB = 512;\n',
+      },
+    ],
     note: 'Distractor: touches build tooling but is not about version support.',
   },
 ];
