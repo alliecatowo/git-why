@@ -1,0 +1,358 @@
+{
+  "status": "collected",
+  "collectionNote": "Anti-overfitting extension of bench/dataset/external.json (which covers only expressjs/express and axios/axios). Six additional repositories, chosen for language/domain/age/commit-culture diversity, cloned and pinned via the bundle-a-single-ref technique (git bundle create of one ref only, never --all) so no post-cutoff history is reachable. Every relevantSha below was checked with `git merge-base --is-ancestor <sha> <cutoffSha>` against the pinned single-ref clone before being recorded. Cases are authored using ORDINARY GIT ONLY (log/show/-S/-G/--follow/blame) and are written and saved BEFORE `git why` is ever run against that repository. A case is never revised after seeing tool output; a miss is kept as a result, not softened or dropped.",
+  "notBlinded": "See bench/README.md: the same agent system that implements Git Why also authored this file. This is real-repository evidence, not a blinded held-out study.",
+  "cardinalRule": "Author every case before ever running `git why` on that repository's clone; never revise a case after seeing what the tool returned.",
+  "repositories": [
+    {
+      "id": "curl-curl",
+      "url": "https://github.com/curl/curl",
+      "license": "curl (permissive, OSI-approved, MIT/ISC-like)",
+      "licenseUrl": "https://curl.se/docs/copyright.html",
+      "defaultBranch": "master",
+      "language": "C",
+      "domain": "library/tooling (HTTP client library + CLI)",
+      "commitCulture": "mixed: many terse one-line subjects, security fixes with explicit CVE references, some longer explanatory bodies",
+      "cutoffSha": "ee521a1c889f4cde6905c5db117959917568be9b",
+      "cutoffCapturedAt": "2026-09-09T21:00:00Z",
+      "cutoffCommitAuthoredAt": "2023-03-10T13:15:43-08:00",
+      "reachableCommitCount": 30000,
+      "isolationNote": "Cutoff chosen as HEAD~9694 from the live default branch (39694 commits at capture time) specifically to stay at/under the ~30k commit budget; bundled as a single ref, HEAD verified equal to cutoffSha in the clone."
+    },
+    {
+      "id": "redis-redis",
+      "url": "https://github.com/redis/redis",
+      "license": "BSD-3-Clause",
+      "licenseUrl": "https://github.com/redis/redis/blob/e64d91c37105bc2e23816b6f81b9ffc5e5d99801/LICENSE.txt",
+      "defaultBranch": "unstable",
+      "language": "C",
+      "domain": "infrastructure (in-memory database)",
+      "commitCulture": "essay-style: many long, detailed rationale-heavy commit messages (notably from antirez/Salvatore Sanfilippo)",
+      "cutoffSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+      "cutoffCapturedAt": "2026-09-09T21:00:00Z",
+      "cutoffCommitAuthoredAt": "2024-03-21T04:44:28+08:00",
+      "reachableCommitCount": 12110,
+      "isolationNote": "Cutoff deliberately pinned to the direct parent of 0b34396924eca4edc524469886dc5be6c77ec4ed (\"Change license from BSD-3 to dual RSALv2+SSPLv1\", 2024-03-20) so the entire pinned history is strictly BSD-3-Clause; bundled as a single ref, HEAD verified equal to cutoffSha."
+    },
+    {
+      "id": "psf-requests",
+      "url": "https://github.com/psf/requests",
+      "license": "Apache-2.0",
+      "licenseUrl": "https://github.com/psf/requests/blob/main/LICENSE",
+      "defaultBranch": "main",
+      "language": "Python",
+      "domain": "library (HTTP client)",
+      "commitCulture": "moderate-length messages, many referencing GitHub issues; project largely mature/stable since ~2019",
+      "cutoffSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+      "cutoffCapturedAt": "2026-09-09T21:00:00Z",
+      "cutoffCommitAuthoredAt": "2026-09-02T12:15:52-06:00",
+      "reachableCommitCount": 6494,
+      "isolationNote": "Cutoff = live HEAD at capture time (well under the 30k commit budget); bundled as a single ref, HEAD verified equal to cutoffSha."
+    },
+    {
+      "id": "burntsushi-ripgrep",
+      "url": "https://github.com/BurntSushi/ripgrep",
+      "license": "MIT OR Unlicense (dual)",
+      "licenseUrl": "https://github.com/BurntSushi/ripgrep/blob/master/LICENSE-MIT",
+      "defaultBranch": "master",
+      "language": "Rust",
+      "domain": "tooling (CLI search utility)",
+      "commitCulture": "terse: mostly one-line subjects, some with brief issue-referencing bodies",
+      "cutoffSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+      "cutoffCapturedAt": "2026-09-09T21:00:00Z",
+      "cutoffCommitAuthoredAt": "2026-08-04T10:00:08-04:00",
+      "reachableCommitCount": 2287,
+      "isolationNote": "Cutoff = live HEAD at capture time; bundled as a single ref, HEAD verified equal to cutoffSha."
+    },
+    {
+      "id": "caddyserver-caddy",
+      "url": "https://github.com/caddyserver/caddy",
+      "license": "Apache-2.0",
+      "licenseUrl": "https://github.com/caddyserver/caddy/blob/master/LICENSE",
+      "defaultBranch": "master",
+      "language": "Go",
+      "domain": "infrastructure (web server / reverse proxy)",
+      "commitCulture": "terse, largely Conventional-Commits style (fix:, feat:, chore:) with occasional longer bodies",
+      "cutoffSha": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+      "cutoffCapturedAt": "2026-09-09T21:00:00Z",
+      "cutoffCommitAuthoredAt": "2026-09-09T17:48:08+03:00",
+      "reachableCommitCount": 2680,
+      "isolationNote": "Cutoff = live HEAD at capture time; bundled as a single ref, HEAD verified equal to cutoffSha."
+    },
+    {
+      "id": "colinhacks-zod",
+      "url": "https://github.com/colinhacks/zod",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/colinhacks/zod/blob/main/LICENSE",
+      "defaultBranch": "main",
+      "language": "TypeScript",
+      "domain": "library (schema validation, not a web framework)",
+      "commitCulture": "moderate, mixed feature/fix messages; young project (started ~2020)",
+      "cutoffSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+      "cutoffCapturedAt": "2026-09-09T21:00:00Z",
+      "cutoffCommitAuthoredAt": "2026-09-09T12:45:49-07:00",
+      "reachableCommitCount": 3210,
+      "isolationNote": "Cutoff = live HEAD at capture time; bundled as a single ref, HEAD verified equal to cutoffSha."
+    }
+  ],
+  "cases": [
+    {
+      "id": "ext2-d-curl-01",
+      "split": "dev",
+      "repositoryId": "curl-curl",
+      "category": "migration",
+      "query": "Can curl print transfer stats as JSON with -w/--write-out? I thought I saw a -w \"%{json}\" example floating around.",
+      "relevantShas": ["04c03416e68fd635a15cae8201872f5c29fdcca8"],
+      "verification": "git log --oneline -i --grep=\"json output\" -> 04c03416e68fd635a15cae8201872f5c29fdcca8 2020-02-01T18:55:24+01:00 \"writeout: support to generate JSON output\" (body documents the new token, closes #4870); git merge-base --is-ancestor 04c03416e68fd635a15cae8201872f5c29fdcca8 ee521a1c889f4cde6905c5db117959917568be9b && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Commit body documents the new -w \"%{json}\" token (and the %{stderr}%{json} combination); diff reworks src/tool_writeout.c (~160 lines) plus docs/cmdline-opts/write-out.d and lib/version.c, consistent with adding a new write-out variable rather than a new CLI flag."
+      ],
+      "notes": "Paraphrased away from commit wording ('writeout', 'write-out variable'); a lexical search on 'json' alone hits many unrelated test commits, so the answer depends on ranking the feature commit above its own test follow-ups."
+    },
+    {
+      "id": "ext2-d-curl-02",
+      "split": "dev",
+      "repositoryId": "curl-curl",
+      "category": "regression",
+      "query": "There was a curl security bug where following a redirect could leak credentials to a different protocol or port — what did the fix change?",
+      "relevantShas": ["620ea21410030a9977396b4661806bc187231b79"],
+      "verification": "git log --oneline --grep=\"CVE-2022-27774\" -> 620ea21410030a9977396b4661806bc187231b79 2022-04-25T16:24:33+02:00 \"transfer: redirects to other protocols or ports clear auth\" (body cites Bug: https://curl.se/docs/CVE-2022-27774.html, Reported-by: Harry Sintonen, Closes #8748); git merge-base --is-ancestor 620ea21410030a9977396b4661806bc187231b79 ee521a1c889f4cde6905c5db117959917568be9b && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Single-file diff lib/transfer.c (+48/-1) clearing auth state on cross-protocol/port redirects unless explicitly permitted; commit body carries the CVE reference, reporter credit and issue link."
+      ],
+      "notes": "A sibling test-only commit (5295e8d64, 'tests: verify the fix for CVE-2022-27774') is deliberately NOT listed: it only adds test coverage for the same CVE and does not contain the fix itself."
+    },
+    {
+      "id": "ext2-t-curl-01",
+      "split": "test",
+      "repositoryId": "curl-curl",
+      "category": "exact_identifier",
+      "query": "When was HTTP/3 support first introduced in curl — what's the earliest commit that adds an HTTP version 3?",
+      "relevantShas": ["fd00e14adb11ee1ec4f39e01ce25041c7f4316b5"],
+      "verification": "git log --reverse --oneline -S \"CURL_HTTP_VERSION_3\" -> first result fd00e14adb11ee1ec4f39e01ce25041c7f4316b5 2019-08-07T09:49:18+02:00 \"curl.h: add CURL_HTTP_VERSION_3 to the version enum\"; git merge-base --is-ancestor fd00e14adb11ee1ec4f39e01ce25041c7f4316b5 ee521a1c889f4cde6905c5db117959917568be9b && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Diff adds CURL_HTTP_VERSION_3 to the version enum in include/curl/curl.h plus plumbing in lib/getinfo.c and lib/url.c (4 files, +8/-2); body notes it can be extracted via CURLINFO_HTTP_VERSION but not yet set via CURLOPT_HTTP_VERSION."
+      ],
+      "notes": "TEMPORAL PROBE, expected to possibly fail. Later, far more visible HTTP/3 commits (e.g. 13991d60e 'src: add --http3-only', plus dozens of ngtcp2/quiche stabilization commits) dominate any lexical search on 'http3', while the true first commit is a tiny 8-line enum addition whose subject never even spells out 'HTTP/3'."
+    },
+    {
+      "id": "ext2-d-redis-01",
+      "split": "dev",
+      "repositoryId": "redis-redis",
+      "category": "exact_identifier",
+      "query": "When did Redis first get the streams data type with commands like XADD?",
+      "relevantShas": ["79866a6361829ed0602dedff9cb378c66977227a"],
+      "verification": "git log --reverse --oneline -S \"XADD\" -> first result 79866a6361829ed0602dedff9cb378c66977227a 2017-08-30T12:40:27+02:00 \"Streams: 12 commits squashed into the initial Streams implementation.\"; git merge-base --is-ancestor 79866a6361829ed0602dedff9cb378c66977227a e64d91c37105bc2e23816b6f81b9ffc5e5d99801 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "12-file diff (+1323/-10) adding src/t_stream.c, src/stream.h, src/listpack.c and wiring into server.c/object.c — a whole new data type landing at once, not an incremental command addition."
+      ],
+      "notes": "TEMPORAL PROBE, expected to possibly fail. The commit message is a one-liner with no rationale; dozens of later, richly-worded streams commits (blocking XREAD, consumer groups, propagation fixes) share the same vocabulary and are far easier to rank above this terse squashed origin."
+    },
+    {
+      "id": "ext2-d-redis-02",
+      "split": "dev",
+      "repositoryId": "redis-redis",
+      "category": "rename",
+      "query": "The LPOS command has an option for which matching element to return — I remember it being called FIRST in early examples, but now everything says RANK. Did it get renamed?",
+      "relevantShas": ["a5a3a7bbc61203398ecc1d5b52c76214f5672776"],
+      "verification": "git log --reverse --oneline --grep=\"LPOS\" lists the design sequence including a5a3a7bbc61203398ecc1d5b52c76214f5672776 2020-06-24T09:07:17+02:00 \"LPOS: option FIRST renamed RANK.\"; git merge-base --is-ancestor a5a3a7bbc61203398ecc1d5b52c76214f5672776 e64d91c37105bc2e23816b6f81b9ffc5e5d99801 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Diff touches src/t_list.c (10 lines) and tests/unit/type/list.tcl (28 lines), mechanically renaming the option with no behavior change — a pure rename, not a semantic fix."
+      ],
+      "notes": "Nearby commits in the same sequence (a7936ef96 'LRANK: Add command (the command will be renamed LPOS)', e63a5ba12 'LPOS: implement the final design') are deliberately NOT listed: they cover the command's naming and design, not this specific option rename."
+    },
+    {
+      "id": "ext2-t-redis-01",
+      "split": "test",
+      "repositoryId": "redis-redis",
+      "category": "workaround_rationale",
+      "query": "Deleting a huge key used to block the whole Redis server — is there some background or non-blocking delete mechanism, and why was it added?",
+      "relevantShas": ["0c05436cef6f65cb2d62c8764522abefeb964314"],
+      "verification": "git log --reverse --oneline -S \"lazyfree\" -> first result 0c05436cef6f65cb2d62c8764522abefeb964314 2015-07-30T11:46:31+02:00 \"Lazyfree: a first implementation of non blocking DEL.\"; git merge-base --is-ancestor 0c05436cef6f65cb2d62c8764522abefeb964314 e64d91c37105bc2e23816b6f81b9ffc5e5d99801 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "New file src/lazyfree.c (+201 lines) plus hooks in db.c/dict.c/object.c/server.c (341 insertions across 8 files) — the birth of background reclamation behind DEL, later extended to UNLINK/FLUSHDB ASYNC and the LAZYFREE_THRESHOLD machinery."
+      ],
+      "notes": "The one-line message states what but not the latency rationale in detail; the 'why' (DEL blocking the event loop on large keys) is mostly in the code structure itself. A tool should surface the commit without inventing a fuller rationale than the message gives."
+    },
+    {
+      "id": "ext2-d-requests-01",
+      "split": "dev",
+      "repositoryId": "psf-requests",
+      "category": "migration",
+      "query": "Why did the requests library switch its default text-encoding guesser — wasn't it chardet before, and now it's something else?",
+      "relevantShas": ["2ed84f55b22f19a1e1e8eea2e50963dce62052d3"],
+      "verification": "git log --oneline -S \"charset_normalizer\" --reverse -> first result 2ed84f55b22f19a1e1e8eea2e50963dce62052d3 2021-07-07T00:55:02+01:00 \"Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\"; git merge-base --is-ancestor 2ed84f55b22f19a1e1e8eea2e50963dce62052d3 dae7ef63b4df6eded86637f251fc4e3a06c3b479 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Unusually explicit licensing rationale in the body: chardet's LGPL created bundling ambiguity for downstream single-binary distributors (docker-compose cited), so the dependency was swapped for MIT-licensed charset_normalizer with chardet kept as an opt-in 'escape hatch' extra (requests[lgpl])."
+      ],
+      "notes": "One of the few external cases where the commit body states the full 'why' (license ambiguity for downstream bundlers) rather than just the 'what'. Paraphrased to avoid the commit's distinctive \"LGPL'd\" wording."
+    },
+    {
+      "id": "ext2-d-requests-02",
+      "split": "dev",
+      "repositoryId": "psf-requests",
+      "category": "number_version",
+      "query": "Does requests still support Python 3.9, or was that version dropped?",
+      "relevantShas": ["0c2bbe73982a70623fb81bf16b2507ea0ca80b99"],
+      "verification": "git log --oneline -i --grep=\"drop\" -> 0c2bbe73982a70623fb81bf16b2507ea0ca80b99 2026-02-06T08:02:46-07:00 \"Drop support for Python 3.9 (#7196)\"; git merge-base --is-ancestor 0c2bbe73982a70623fb81bf16b2507ea0ca80b99 dae7ef63b4df6eded86637f251fc4e3a06c3b479 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Touches .github/workflows/run-tests.yml, README.md, pyproject.toml, setup.py and tox.ini (11 insertions/13 deletions) — a support-matrix change across packaging and CI, no library code touched."
+      ],
+      "notes": "Terse message with no rationale beyond the fact of dropping; sibling commit 2edca111 ('Add support for Python 3.14 and drop support for Python 3.8') is a different version drop and is NOT listed here."
+    },
+    {
+      "id": "ext2-t-requests-01",
+      "split": "test",
+      "repositoryId": "psf-requests",
+      "category": "workaround_rationale",
+      "query": "If I disable reading proxy and credential settings from the environment, does requests honor that when it follows a redirect — or could my env credentials leak to the redirected host?",
+      "relevantShas": ["d9f34c6848b9b313beefa7d3ce05f52fdea28c27"],
+      "verification": "git log --oneline -S \"trust_env\" -> includes d9f34c6848b9b313beefa7d3ce05f52fdea28c27 2014-01-31T07:36:44Z \"Respect trust_env on redirect.\"; git merge-base --is-ancestor d9f34c6848b9b313beefa7d3ce05f52fdea28c27 dae7ef63b4df6eded86637f251fc4e3a06c3b479 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "One-line diff in requests/sessions.py (1 insertion/1 deletion) — the fix is entirely in redirect handling, showing the original bug was specifically about re-applying environment settings on redirect rather than on the initial request."
+      ],
+      "notes": "A companion commit (459f8dfc, \"Don't repopulate proxies if we don't trust the env.\") addresses the same trust_env theme from a different angle and is deliberately NOT listed here; the question targets redirect behavior specifically."
+    },
+    {
+      "id": "ext2-d-ripgrep-03",
+      "split": "dev",
+      "repositoryId": "burntsushi-ripgrep",
+      "category": "migration",
+      "query": "Did ripgrep's special ignore-file name used to be something other than '.ignore'? I have a vague memory of it being called something else in the early days.",
+      "relevantShas": ["cc90511ab29d3c37e873acac0fd80f90473f54bb"],
+      "verification": "git show -s --format='%H %aI %s' cc90511ab29d3c37e873acac0fd80f90473f54bb -> 'cc90511ab29d3c37e873acac0fd80f90473f54bb 2016-09-23T22:44:17-04:00 Switch from .rgignore to .ignore.'. git merge-base --is-ancestor cc90511ab29d3c37e873acac0fd80f90473f54bb 3fce3b5bb0236da2df6d99672afb8a719642eca7 && echo ancestor-ok -> printed 'ancestor-ok'. Located via `git log --oneline --grep=\"rgignore\"` against the pinned clone.",
+      "expectedEvidence": [
+        "Touches doc/rg.1.md, src/args.rs, src/gitignore.rs, src/ignore.rs and tests/tests.rs (15 insertions / 9 deletions across 5 files).",
+        "Commit body states the rename is 'to put us in line with the silver searcher' (links ggreer/the_silver_searcher#974), keeps .rgignore working until the next semver bump, and closes 'Fixes #40'."
+      ],
+      "notes": "Genuine default-name migration with an explicit cross-project-consistency rationale in the message itself, plus an explicit deprecation-window statement rather than an abrupt break."
+    },
+    {
+      "id": "ext2-t-ripgrep-05",
+      "split": "test",
+      "repositoryId": "burntsushi-ripgrep",
+      "category": "no_evidence",
+      "query": "Why does ripgrep's compressed-file search (-z/--search-zip) work by shelling out to external programs like gzip and xz, instead of linking in a Rust library that handles those formats directly?",
+      "relevantShas": [],
+      "verification": "Searched with `git log --oneline -i --grep=\"decompress\\|search-zip\\|libarchive\"` and by reading the introducing and follow-up commits directly against the pinned clone. The introducing commit (f007f940c53a4818ead58f2fe2e0fac95cc3a40a, 2018-01-07, 'search: add support for searching compressed files', closes #539) and later format-addition commits state WHAT was added but none explains WHY the external-process approach was chosen over a linked library. `git merge-base --is-ancestor f007f940c53a4818ead58f2fe2e0fac95cc3a40a 3fce3b5bb0236da2df6d99672afb8a719642eca7 && echo ancestor-ok` -> ancestor-ok (cited only as the closest real distractor, not as an answer).",
+      "expectedEvidence": [],
+      "notes": "Real no-evidence case. A correct answer should surface the mechanism commits as the closest real evidence while stating that the design-choice rationale itself is not present in the commit history, rather than inventing a plausible-sounding justification (e.g. 'to avoid extra compiled dependencies') that the messages never actually state."
+    },
+    {
+      "id": "ext2-t-ripgrep-06",
+      "split": "test",
+      "repositoryId": "burntsushi-ripgrep",
+      "category": "exact_identifier",
+      "query": "When did ripgrep first gain the ability to match patterns that span multiple lines, like with some kind of multiline mode?",
+      "relevantShas": ["bb110c1ebeeda452046830b3991f705f5759da92"],
+      "verification": "git show -s --format='%H %aI %s' bb110c1ebeeda452046830b3991f705f5759da92 -> 'bb110c1ebeeda452046830b3991f705f5759da92 2018-08-03T17:26:22-04:00 ripgrep: migrate to libripgrep'. git merge-base --is-ancestor bb110c1ebeeda452046830b3991f705f5759da92 3fce3b5bb0236da2df6d99672afb8a719642eca7 && echo ancestor-ok -> printed 'ancestor-ok'. Confirmed via `git show bb110c1ebeeda452046830b3991f705f5759da92 -- src/app.rs | grep -n multiline` showing `fn flag_multiline` and the new `RGArg::switch(\"multiline\").short(\"U\")` added as new code.",
+      "expectedEvidence": [
+        "Massive diff (47 files changed, 3213 insertions(+), 5931 deletions(-)) rewriting ripgrep's core around new 'libripgrep' crates.",
+        "Within the diff to src/app.rs this commit adds `flag_multiline` and `flag_multiline_dotall` (new `-U`/`--multiline` and `--multiline-dotall`/`--no-multiline-dotall` switches) for the first time."
+      ],
+      "notes": "TEMPORAL PROBE, expected to possibly fail: the subject line ('ripgrep: migrate to libripgrep') never mentions the word 'multiline' at all. Sixteen days later, commit d5c0b0303002087504e956706c323073a1b09a2b ('changelog: massive update for libripgrep') is a pure CHANGELOG.md commit whose text explicitly lists 'Closes #176 (multiline search)'. A naive keyword search for 'multiline' is likely to rank d5c0b03 above bb110c1 even though d5c0b03 did no code work and merely records the earlier commit's already-shipped feature."
+    },
+    {
+      "id": "ext2-d-caddy-01",
+      "split": "dev",
+      "repositoryId": "caddyserver-caddy",
+      "category": "number_version",
+      "query": "Did caddy ever have to raise its minimum Go version specifically because of the HTTP/3 library it depends on?",
+      "relevantShas": ["f45a6de20dd19e82e58c85b37e03957b2203b544"],
+      "verification": "git show -s --format='%H %aI %s' f45a6de2 -> f45a6de20dd19e82e58c85b37e03957b2203b544 2023-07-21T21:00:48-07:00 \"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\". git merge-base --is-ancestor f45a6de20dd19e82e58c85b37e03957b2203b544 56ae39bdcc1d64661038683e30ea49cad0b0121d && echo ancestor-ok -> ancestor-ok. Also located via `git log --oneline --grep=\"Go 1.20\"` against the pinned clone.",
+      "expectedEvidence": [
+        "Squashed PR body with sub-bullets '* update quic-go to v0.37.0' immediately followed by '* Bump to Go 1.20' in the same commit, showing the two changes were bundled together; go.mod is the changed file."
+      ],
+      "notes": "Commit subject states both facts side by side ('Update quic-go to v0.37.0, bump to Go 1.20 minimum') but does not spell out that Go 1.20 was required BY quic-go rather than an independent choice -- a faithful tool should present the pairing as evidence, not assert a causal claim the commit doesn't explicitly make."
+    },
+    {
+      "id": "ext2-t-caddy-02",
+      "split": "test",
+      "repositoryId": "caddyserver-caddy",
+      "category": "exact_identifier",
+      "query": "When did the least_conn load-balancing selection policy for reverse_proxy first get added to caddy's v2 codebase?",
+      "relevantShas": ["026df7c5cb33331d223afc6a9599274e8c89dfd9"],
+      "verification": "git show -s --format='%H %aI %s' 026df7c5 -> 026df7c5cb33331d223afc6a9599274e8c89dfd9 2019-09-02T22:01:02-06:00 \"reverse_proxy: WIP refactor and support for FastCGI\". git merge-base --is-ancestor 026df7c5cb33331d223afc6a9599274e8c89dfd9 56ae39bdcc1d64661038683e30ea49cad0b0121d && echo ancestor-ok -> ancestor-ok. Located via `git log --reverse --oneline -S \"LeastConnSelection\"` (first result) against the pinned clone.",
+      "expectedEvidence": [
+        "Diff registers a brand-new module: `caddy.RegisterModule(LeastConnSelection{})`, defines `type LeastConnSelection struct{}`, its `CaddyModule()` method, and its `Select(pool HostPool, _ *http.Request) *Upstream` implementation, plus an interface guard `_ Selector = (*LeastConnSelection)(nil)` -- all new in this commit, none of it pre-existing."
+      ],
+      "notes": "TEMPORAL PROBE, expected to possibly fail. Lexical trap: `e8b8d4a8cdf116bf05345443e37a21ea7a37b8bb` (\"reverseproxy: Fix `least_conn` policy regression (#5862)\", 2023) mentions least_conn just as prominently in its subject and is far more recent/visible via keyword search, but it only flips one boolean operator in an existing function -- it is a bug-fix touch, not the introduction, and must NOT be listed as the answer to 'when was it added'. The true origin is buried inside a large, generically-named 'WIP refactor and support for FastCGI' commit from 2019."
+    },
+    {
+      "id": "ext2-t-caddy-05",
+      "split": "test",
+      "repositoryId": "caddyserver-caddy",
+      "category": "no_evidence",
+      "query": "Why does caddy's admin API default to port 2019 specifically -- is there some meaning behind that number?",
+      "relevantShas": [],
+      "verification": "Searched via `git log --oneline -S 'Listen: \"localhost:2019\"'` across the pinned clone. The introducing commit (a4bdf249dbfb0f35e0a35dad6a38db371b126800, 2019-06-28, \"Caddy 2 gets a CLI! And admin endpoint is now configurable via JSON\") hardcodes the default but its commit message and diff contain no comment or explanation for why 2019 was chosen. `git merge-base --is-ancestor a4bdf249dbfb0f35e0a35dad6a38db371b126800 56ae39bdcc1d64661038683e30ea49cad0b0121d && echo ancestor-ok` -> ancestor-ok (cited only as the closest real distractor, not as an answer).",
+      "expectedEvidence": [],
+      "notes": "Real no-evidence case. A correct answer should say the rationale isn't recorded in history rather than inventing a story about the coincidence with the year of Caddy 2 development."
+    },
+    {
+      "id": "ext2-d-zod-01",
+      "split": "dev",
+      "repositoryId": "colinhacks-zod",
+      "category": "migration",
+      "query": "I thought zod objects used to keep properties I didn't define — now extra keys just disappear. Did the default handling of unknown keys change?",
+      "relevantShas": ["18854492b4b6e1648499f2f920c615dab187ee1a"],
+      "verification": "git log --oneline --grep=\"strip unknown keys\" -> 18854492b4b6e1648499f2f920c615dab187ee1a 2020-09-17T13:20:45-07:00 \"strip unknown keys by default\"; git merge-base --is-ancestor 18854492b4b6e1648499f2f920c615dab187ee1a 62311eb2c4a93c7348a8b1c5abbde1ec77c66b67 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "Diff touches src/types/object.ts and src/parser.ts (one-line behavior flip) plus object tests (+21 lines) and README docs — a default-behavior migration, with .passthrough()/.strict()/.catchall() remaining as explicit opt-outs."
+      ],
+      "notes": "Terse message with no stated rationale; the neighboring commit 78a4832b ('implemented catchall', the day before) shows the team was actively redesigning unknown-key handling at the time, but this commit itself gives no 'why' and is deliberately the only relevant SHA here."
+    },
+    {
+      "id": "ext2-t-zod-01",
+      "split": "test",
+      "repositoryId": "colinhacks-zod",
+      "category": "exact_identifier",
+      "query": "How do I validate the leftover entries in an object when I don't know their names ahead of time — is there a catch-all schema for arbitrary extra keys?",
+      "relevantShas": ["78a4832b3c98ed94f55297fe15754a99f54fbbe3"],
+      "verification": "git log --reverse --oneline -S \".catchall\" -> first result 78a4832b3c98ed94f55297fe15754a99f54fbbe3 2020-09-16T13:49:29-07:00 \"implemented catchall\"; git merge-base --is-ancestor 78a4832b3c98ed94f55297fe15754a99f54fbbe3 62311eb2c4a93c7348a8b1c5abbde1ec77c66b67 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "33-file diff (+551/-264) centered on src/types/object.ts (+222 lines) implementing the catchall mechanism, with object tests (+94 lines) exercising it — a feature introduction, not a bug fix."
+      ],
+      "notes": "Phrased as a how-to rather than 'when was catchall introduced' so this does NOT count as one of the benchmark's temporal probes; the next day's commit (18854492, stripping unknown keys by default) is a closely-related neighbor and is deliberately NOT listed here."
+    },
+    {
+      "id": "ext2-t-zod-02",
+      "split": "test",
+      "repositoryId": "colinhacks-zod",
+      "category": "exact_identifier",
+      "query": "My API returns objects with a shared tag field — like kind: 'circle' versus kind: 'square' — where each variant has totally different fields. Does zod have a clean way to validate that kind of tagged union?",
+      "relevantShas": ["8232426e4822b0a36376079d7377ef7ea1822967"],
+      "verification": "git log --reverse --oneline -S \"discriminatedUnion\" -> first result 8232426e4822b0a36376079d7377ef7ea1822967 2022-01-30T18:40:14+01:00 \"discriminated union\"; git merge-base --is-ancestor 8232426e4822b0a36376079d7377ef7ea1822967 62311eb2c4a93c7348a8b1c5abbde1ec77c66b67 && echo ancestor-ok -> ancestor-ok.",
+      "expectedEvidence": [
+        "11-file diff (+826/-10) adding the discriminated-union implementation to src/types.ts plus a dedicated test file (src/__tests__/discriminatedUnions.test.ts, 144 lines) and benchmarks — a self-contained feature landing."
+      ],
+      "notes": "Deliberately NOT phrased as a 'when was it introduced' question, so it does not count toward the temporal-probe quota; the one-word message gives no rationale, and the evidence is the new test file plus the types.ts implementation appearing together."
+    }
+  ],
+  "distractorsForNoEvidenceCases": [
+    {
+      "caseId": "ext2-t-caddy-05",
+      "sha": "a4bdf249dbfb0f35e0a35dad6a38db371b126800",
+      "subject": "Caddy 2 gets a CLI! And admin endpoint is now configurable via JSON",
+      "reason": "Introduces the literal default `Listen: \"localhost:2019\"` but never explains why port 2019 specifically was chosen over any other port."
+    },
+    {
+      "caseId": "ext2-t-ripgrep-05",
+      "sha": "f007f940c53a4818ead58f2fe2e0fac95cc3a40a",
+      "subject": "search: add support for searching compressed files",
+      "reason": "Introduces the -z/--search-zip mechanism and states it spawns a new process per file, but gives no justification for choosing subprocess-based decompression over a linked library."
+    },
+    {
+      "caseId": "ext2-t-ripgrep-05",
+      "sha": "1d09d4d31ba3ac2eb09edf31e8ec46b2b5cec388",
+      "subject": "ripgrep: add support for lz4 decompression",
+      "reason": "Extends the same subprocess-based scheme to another format without revisiting or explaining the underlying design choice."
+    },
+    {
+      "caseId": "ext2-t-ripgrep-05",
+      "sha": "0b04553affdb4e15ffd4ef2a29840cad3fc4fc7a",
+      "subject": "grep-cli: support Brotli/Zstd decompression",
+      "reason": "One-line message ('Fixes #1099'); adds more formats to the same external-process approach with zero rationale given for the approach itself."
+    }
+  ]
+}

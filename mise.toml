@@ -68,3 +68,17 @@ run = "node bench/report.mjs"
 [tasks."repo:create"]
 description = "Idempotently create/verify and push the authorized public repository"
 run = "node scripts/repo-create.mjs"
+
+[tasks."site:install"]
+description = "Install the docs/marketing site's own dependencies (never touches the root dependency tree)"
+run = "npm install --prefix site --no-audit --fund=false"
+
+[tasks."site:dev"]
+description = "Run the VitePress site locally with hot reload"
+depends = ["site:install"]
+run = "npm run --prefix site dev"
+
+[tasks."site:build"]
+description = "Build the static site to site/.vitepress/dist"
+depends = ["site:install"]
+run = "npm run --prefix site build"

@@ -33,6 +33,12 @@ export default tseslint.config(
       'bench/work/**',
       'bench/results/**',
       'spike/out/**',
+      // Generated site output and the site's own, separately-installed
+      // dependency tree. The site's source files (site/**/*.ts) are still
+      // linted normally.
+      'site/.vitepress/dist/**',
+      'site/.vitepress/cache/**',
+      'site/node_modules/**',
     ],
   },
   js.configs.recommended,

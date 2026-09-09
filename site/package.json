@@ -1,0 +1,17 @@
+{
+  "name": "git-why-site",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Documentation and marketing site for Git Why. Not published; not a runtime dependency of the CLI package.",
+  "scripts": {
+    "predev": "node scripts/sync-install.mjs",
+    "dev": "vitepress dev",
+    "prebuild": "node scripts/sync-install.mjs",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

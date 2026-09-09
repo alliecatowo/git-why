@@ -1,0 +1,38 @@
+{
+  "stage": "smoke",
+  "runId": "2026-09-09T21-04-41-786Z",
+  "model": "opencode/big-pickle",
+  "zgAvailable": true,
+  "planned": 16,
+  "attempted": 16,
+  "blocked": 0,
+  "infrastructureFailedAfterRetry": 0,
+  "valid": 16,
+  "successful": 8,
+  "byArm": {
+    "A": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    },
+    "B": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    },
+    "C": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    },
+    "D": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    }
+  }
+}

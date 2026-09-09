@@ -56,6 +56,18 @@ function applySort(results: readonly CommitHit[], sort: ResultSort): CommitHit[]
   });
 }
 
+/**
+ * Detects "when was this first introduced?" style questions. The v2
+ * real-repository benchmark (docs/report.md 4c) shows these are the weak
+ * spot: terse origin commits lose to newer lexical traps under relevance
+ * ranking, and no post-hoc sort can rescue a commit that was never
+ * selected. The honest answer is the widen-then-order usage pattern, so a
+ * matching query with default relevance ordering gets a warning pointing
+ * at it. This never changes ranking or selection -- it is a hint only.
+ */
+const FIRST_INTRODUCTION_RE =
+  /\bwhen\s+(was|did)\b|\bfirst\s+(introduced|added|created|landed|merged|appeared)\b|\boriginally\b|\bearliest\b/i;
+
 function messageExcerptOf(subject: string, body: string): string {
   const combined = body.length > 0 ? `${subject}\n\n${body}` : subject;
   if (combined.length <= MAX_MESSAGE_EXCERPT_CHARS) return combined;
@@ -96,6 +108,11 @@ export async function search(
   const commits = await store.fetchCommits(top.map((r) => r.sha));
 
   const warnings: string[] = [];
+  if (request.sort === 'relevance' && FIRST_INTRODUCTION_RE.test(request.query)) {
+    warnings.push(
+      'This looks like a "when was this first introduced?" question. Relevance ranking favors recent, vocabulary-rich matches, so the originating commit may rank below the default result count. Try widening the candidate pool and ordering chronologically: -n 20 --sort=oldest.',
+    );
+  }
   const results: CommitHit[] = [];
   for (const r of top) {
     const commit = commits.get(r.sha);

@@ -1,0 +1,2474 @@
+[
+  {
+    "id": "ext-d-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+    "relevantShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb"
+    ],
+    "rankedShas": [
+      "9722202df964bfbfc0f579e4baeb5a4e1b43b344",
+      "51f52901eb1f00571e18d404e10b27310215234c",
+      "23f021a3e1643d72110de30925228350b4454d2e",
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb",
+      "23c22ce3fe2c298add7c06ac881ce0f17f73a6be"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 346,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.25
+  },
+  {
+    "id": "ext-d-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+    "relevantShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "rankedShas": [
+      "c3f71b33aa7306f1a37d28ef47f7fd62038ede67",
+      "8f4e61a4747fd611035eb491d9ce69b35db79167",
+      "4ed92d50e035ebd0cd2350fc03dd9ee78db17e8a",
+      "c937c797c2569b26e0bad76502b93d04bb0b34b8",
+      "5ed1544cabebdc742591293f47dc81a6a8494ebb"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 257,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+    "relevantShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d"
+    ],
+    "rankedShas": [
+      "9586ecfd585123a06b44c6b9f1ca269468a6da4c",
+      "0fbbc2963296832b41449eb21f873e0d314d359c",
+      "9f4dbe3a1332cd883069ba9b73a9eed99234cfc7",
+      "e29fa25bb49c8266041f36ceac90751706225338",
+      "c35cd7fcb78a09a11ba650cdd6b53e44deee74c5"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 232,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-t-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "regression",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+    "relevantShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"
+    ],
+    "rankedShas": [
+      "c0739bb8b7910a5df81900058d02f9c3f52c80e9",
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b",
+      "8368dc178af16b91b576c4c1d135f701a0007e5d",
+      "689d175b8b39d8860b81d723233fb83d15201827",
+      "75054e17cfd238b47fbbe94589cbbc326591b533"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 232,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "deleted_implementation",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+    "relevantShas": [
+      "4d1ee23f84de64a4f317384f61d1cd9925849107"
+    ],
+    "rankedShas": [
+      "51d33edb7973cb9ecec404d03e62d1ef9dff4a92",
+      "4d1ee23f84de64a4f317384f61d1cd9925849107",
+      "51f960f2977566f8d671fc0e8154466a1b3d78ca",
+      "eaf3318dd39a83ecfa014cbb073883c63f4ef608",
+      "85755e32d9d262db702bee84830462b5275c27e4"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 259,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+    "relevantShas": [],
+    "rankedShas": [
+      "a3c9eacaf149502f0fad38c2dec9bd5fbe0a5cd2",
+      "929dc703caabed1c44b8a123901a9c8c0fae416a",
+      "d1ce4c99235ccb35167f8456e7a68546ccf2a76a",
+      "58d522d82417c81b17bdf5572f2458f04c05b2ef",
+      "5ac631a270aa9d301bead847b531222fab7cb064"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 229,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "a3c9eacaf149502f0fad38c2dec9bd5fbe0a5cd2",
+        "929dc703caabed1c44b8a123901a9c8c0fae416a",
+        "d1ce4c99235ccb35167f8456e7a68546ccf2a76a",
+        "58d522d82417c81b17bdf5572f2458f04c05b2ef",
+        "5ac631a270aa9d301bead847b531222fab7cb064"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+    "relevantShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb"
+    ],
+    "rankedShas": [
+      "23f021a3e1643d72110de30925228350b4454d2e",
+      "8931b2311a096515a59398702c8898d88d21515c",
+      "02c753583eddabae2691b09a7babd747d449ca5f",
+      "146a13ede7c81d0131468e99b29d06940727bfea",
+      "1f70b76c453e9550545e9a5a91a97d5d0dba3e32"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 217,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+    "relevantShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "rankedShas": [
+      "d40c5e3aac2c2533ac910d7bcd07b14d46b374ee",
+      "14439731f968c1ec6015227d747ede32d3fbf676",
+      "14c95687b84d7b0b4131355dc803e5483f5951e8",
+      "2064f412cbadfe64e84f8a40f3edb0c2a98bb34d",
+      "ba00e236302e9f74d0d35c1dd8522580076cab9b"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 218,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+    "relevantShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d"
+    ],
+    "rankedShas": [
+      "ebcb1ca90e9cc768d2aeb3e858c59075634e348a",
+      "450c468d0469ea79c878084c623cd18642d7ad7d",
+      "9586ecfd585123a06b44c6b9f1ca269468a6da4c",
+      "dfc233110472ae41c56b8c1753f83535fc90680b",
+      "be9d66a574dc71b4bd1d127f8340eacadba57dc1"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 220,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "regression",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+    "relevantShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"
+    ],
+    "rankedShas": [
+      "c0739bb8b7910a5df81900058d02f9c3f52c80e9",
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b",
+      "d712fae2d7064056676d55e97ef28a75e0c15b95",
+      "91997e9c53db057667981d5f5ece6eb15a8d1059",
+      "61421a8c0c2abf011868d90df93813992e3c7563"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 225,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "deleted_implementation",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+    "relevantShas": [
+      "4d1ee23f84de64a4f317384f61d1cd9925849107"
+    ],
+    "rankedShas": [
+      "51d33edb7973cb9ecec404d03e62d1ef9dff4a92",
+      "4d1ee23f84de64a4f317384f61d1cd9925849107",
+      "e99434582f694e53632abae6dafde01df1abc444",
+      "ffb23d92c0bb98246400aea79b3c9c975830c70f",
+      "610e172fcf9306bd5812bb2bae8904c23e0e8043"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 221,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+    "relevantShas": [],
+    "rankedShas": [
+      "8940b6e5a32bd586cb39a63ebfcade3fb42a1e1b",
+      "fa8eec449bf406cebd7a92d376a098a39a804879",
+      "5ac631a270aa9d301bead847b531222fab7cb064",
+      "e3eca805847e0057ab1c83e7d61a6cc1c1ca47f1",
+      "b625132864ef40b1fb119ff7c7b984573a7974c6"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 220,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "8940b6e5a32bd586cb39a63ebfcade3fb42a1e1b",
+        "fa8eec449bf406cebd7a92d376a098a39a804879",
+        "5ac631a270aa9d301bead847b531222fab7cb064",
+        "e3eca805847e0057ab1c83e7d61a6cc1c1ca47f1",
+        "b625132864ef40b1fb119ff7c7b984573a7974c6"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+    "relevantShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb"
+    ],
+    "rankedShas": [
+      "8dc4ff26f9ae86d031a2af5e5faf6716d1045218",
+      "699ed4ee8544f6b85b0c175909e216aac929b2b3",
+      "5662a13d015c65fa1d95d8c29a4f3a17a1ddb8a9",
+      "285252424ab4a2abe422bdcb28cbc86c921bd53c",
+      "0ba3b114b03dc8e29063ee428afdc4e37cbfa9d3"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 595,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+    "relevantShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "rankedShas": [
+      "377056a33cddb130ac21d8611bf73e5c55ea634f",
+      "3b4ce91fa3c7bc95848493ce9ac8f6e0771eff00",
+      "17ddeef3ba0c07a80232446de925a8348c92f57e",
+      "6ebccb0518a13f90e1e849fbb17b98784dbb8afa",
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 506,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.2
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.2
+  },
+  {
+    "id": "ext-d-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+    "relevantShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d"
+    ],
+    "rankedShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d",
+      "5213bd9fe78a0c414966a79846ad58df413e754d",
+      "e29fa25bb49c8266041f36ceac90751706225338",
+      "a49e1f4f3d10e73df02d276fef3e8d70df404dc5",
+      "e44c874cab6ae251ef356ca6a7ee88e7e3acdb39"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 510,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "regression",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+    "relevantShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"
+    ],
+    "rankedShas": [
+      "631ada0c645dc84c6df8788f5a7eb2b8100acea5",
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b",
+      "708ac4cdf5cd0a658d62490a9f4d78d3e1ec6612",
+      "ec8daf0e7b020e5e597e7d7f85c88179a29a09cb",
+      "7f26cfca91f29a6a870be4c00d9507970efa6d51"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 507,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "deleted_implementation",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+    "relevantShas": [
+      "4d1ee23f84de64a4f317384f61d1cd9925849107"
+    ],
+    "rankedShas": [
+      "51d33edb7973cb9ecec404d03e62d1ef9dff4a92",
+      "eaf3318dd39a83ecfa014cbb073883c63f4ef608",
+      "4d1ee23f84de64a4f317384f61d1cd9925849107",
+      "c21226aa7c6ad61311c2b190fe63f2a7cd027b42",
+      "3e358458f436f2aaf04c406e34cfa99dd0e007e0"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 518,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext-t-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+    "relevantShas": [],
+    "rankedShas": [
+      "2603bb4c15fa13c81eeb6c9d1020cf6197b3db6c",
+      "fa8eec449bf406cebd7a92d376a098a39a804879",
+      "bd5e77133787ac72c8e7545028be78095b8d0c60",
+      "dca7e9bbd17e2d96a081754469d73f49d35a61c8",
+      "ab924008fb472d73fc62c77060f6e0aeff8fe594"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 506,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "2603bb4c15fa13c81eeb6c9d1020cf6197b3db6c",
+        "fa8eec449bf406cebd7a92d376a098a39a804879",
+        "bd5e77133787ac72c8e7545028be78095b8d0c60",
+        "dca7e9bbd17e2d96a081754469d73f49d35a61c8",
+        "ab924008fb472d73fc62c77060f6e0aeff8fe594"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+    "relevantShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb"
+    ],
+    "rankedShas": [
+      "8dc4ff26f9ae86d031a2af5e5faf6716d1045218",
+      "699ed4ee8544f6b85b0c175909e216aac929b2b3",
+      "5662a13d015c65fa1d95d8c29a4f3a17a1ddb8a9",
+      "0ba3b114b03dc8e29063ee428afdc4e37cbfa9d3",
+      "d6c843962d91e6fb58f406d36f1132c112fc860e"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 506,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+    "relevantShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "rankedShas": [
+      "2937309f006eeaac32b6d7005eca7a4beec10363",
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac",
+      "95fb5cc26848d4c2c57b0a7a74f088538d47d312",
+      "67ddb429e3d8ee8d6757eab79355699beea7f501",
+      "2064f412cbadfe64e84f8a40f3edb0c2a98bb34d"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 510,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-d-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+    "relevantShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d"
+    ],
+    "rankedShas": [
+      "a49e1f4f3d10e73df02d276fef3e8d70df404dc5",
+      "bc160209760b18f467e16fc986ff93160becef65",
+      "450c468d0469ea79c878084c623cd18642d7ad7d",
+      "64033fcfc2fd407a06801813cdfd8307efa2f48b",
+      "e44c874cab6ae251ef356ca6a7ee88e7e3acdb39"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 504,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext-t-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "regression",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+    "relevantShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"
+    ],
+    "rankedShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b",
+      "7f26cfca91f29a6a870be4c00d9507970efa6d51",
+      "1787fd1b525a2abb626a335754556a090c77bca1",
+      "1d97599f8b2f4ea6be0b7082ac1d9d93c8d00665",
+      "a3b5f6d07f880298a92164fe7f0519d736524dcf"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 507,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "deleted_implementation",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+    "relevantShas": [
+      "4d1ee23f84de64a4f317384f61d1cd9925849107"
+    ],
+    "rankedShas": [
+      "51d33edb7973cb9ecec404d03e62d1ef9dff4a92",
+      "4d1ee23f84de64a4f317384f61d1cd9925849107",
+      "327af123a1833239adf7eb47fee94542b692d451",
+      "b5d6f1ada594f6fb58c9a49d9df169ca52bc878c",
+      "3bcba79e2defda3a5a93c87a8f6d1ef08b3cfda2"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 513,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+    "relevantShas": [],
+    "rankedShas": [
+      "a751346b20edde459a53b6c335e3985b42e426fe",
+      "e5f5254877c2157303656bf29c7e2558d625413c",
+      "d1d3871550f5c9dacee2fe7d4e5bee654ab985b3",
+      "1906a38ec8739e44f70bdc570758eb5e4a766857",
+      "9205d632cc9bf42b9b38951bf7740f3406e6e228"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 509,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "a751346b20edde459a53b6c335e3985b42e426fe",
+        "e5f5254877c2157303656bf29c7e2558d625413c",
+        "d1d3871550f5c9dacee2fe7d4e5bee654ab985b3",
+        "1906a38ec8739e44f70bdc570758eb5e4a766857",
+        "9205d632cc9bf42b9b38951bf7740f3406e6e228"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+    "relevantShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb"
+    ],
+    "rankedShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb",
+      "5f916357e9d335728b956e9a0e9c7df99ea97208",
+      "8dc4ff26f9ae86d031a2af5e5faf6716d1045218",
+      "9722202df964bfbfc0f579e4baeb5a4e1b43b344",
+      "51f52901eb1f00571e18d404e10b27310215234c"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 521,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-d-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+    "relevantShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "rankedShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac",
+      "377056a33cddb130ac21d8611bf73e5c55ea634f",
+      "f14e39d4515c81c1e5c980b7ce31566eeeb84734",
+      "8f4e61a4747fd611035eb491d9ce69b35db79167",
+      "d12452fc4912b5fed65b7a1950084a090e480e06"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 535,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-d-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+    "relevantShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d"
+    ],
+    "rankedShas": [
+      "e29fa25bb49c8266041f36ceac90751706225338",
+      "450c468d0469ea79c878084c623cd18642d7ad7d",
+      "767bba9c044c2b2ba556412428fde2671a08f23f",
+      "0fbbc2963296832b41449eb21f873e0d314d359c",
+      "dcc4eaabe86a4309437db2a853c5ef788a854699"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 522,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "regression",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+    "relevantShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"
+    ],
+    "rankedShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b",
+      "708ac4cdf5cd0a658d62490a9f4d78d3e1ec6612",
+      "91997e9c53db057667981d5f5ece6eb15a8d1059",
+      "75054e17cfd238b47fbbe94589cbbc326591b533",
+      "7f26cfca91f29a6a870be4c00d9507970efa6d51"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 521,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "deleted_implementation",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+    "relevantShas": [
+      "4d1ee23f84de64a4f317384f61d1cd9925849107"
+    ],
+    "rankedShas": [
+      "51d33edb7973cb9ecec404d03e62d1ef9dff4a92",
+      "4d1ee23f84de64a4f317384f61d1cd9925849107",
+      "eaf3318dd39a83ecfa014cbb073883c63f4ef608",
+      "3e358458f436f2aaf04c406e34cfa99dd0e007e0",
+      "54a192a5c5e72a29a876f706c80afcdb5f63d277"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 522,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+    "relevantShas": [],
+    "rankedShas": [
+      "fa8eec449bf406cebd7a92d376a098a39a804879",
+      "5ac631a270aa9d301bead847b531222fab7cb064",
+      "b0e03eb8a83a1c9e9e0574890f6f5a52bdc525bd",
+      "3661922bb0fc78c739465b6add265c8a80e73449",
+      "2603bb4c15fa13c81eeb6c9d1020cf6197b3db6c"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 535,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "fa8eec449bf406cebd7a92d376a098a39a804879",
+        "5ac631a270aa9d301bead847b531222fab7cb064",
+        "b0e03eb8a83a1c9e9e0574890f6f5a52bdc525bd",
+        "3661922bb0fc78c739465b6add265c8a80e73449",
+        "2603bb4c15fa13c81eeb6c9d1020cf6197b3db6c"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Did Express used to support really old Node.js releases, like anything before Node 4?",
+    "relevantShas": [
+      "f6db4ee805a62edb066c5290f4c9c444f2aff6fb"
+    ],
+    "rankedShas": [
+      "afd70b64ed888e4096a96d7c83132900a4b3a91b",
+      "23f021a3e1643d72110de30925228350b4454d2e",
+      "8dc4ff26f9ae86d031a2af5e5faf6716d1045218",
+      "699ed4ee8544f6b85b0c175909e216aac929b2b3",
+      "8931b2311a096515a59398702c8898d88d21515c"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 511,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Is there still a way to set the response charset with something like res.charset, or was that removed?",
+    "relevantShas": [
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac"
+    ],
+    "rankedShas": [
+      "2064f412cbadfe64e84f8a40f3edb0c2a98bb34d",
+      "3228fd3cbc6486d1f60fff2789447077834aa9ac",
+      "2937309f006eeaac32b6d7005eca7a4beec10363",
+      "f14e39d4515c81c1e5c980b7ce31566eeeb84734",
+      "7d42ad00ffbd3a3fcf4b8b9fdb860a5dca35522c"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 507,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-d-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "dev",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Wasn't the default query-string parser something other than 'simple' at one point? What changed and why?",
+    "relevantShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d"
+    ],
+    "rankedShas": [
+      "450c468d0469ea79c878084c623cd18642d7ad7d",
+      "ebcb1ca90e9cc768d2aeb3e858c59075634e348a",
+      "be9d66a574dc71b4bd1d127f8340eacadba57dc1",
+      "a49e1f4f3d10e73df02d276fef3e8d70df404dc5",
+      "001c9380be1631ea44069745ee695a09083bfa2c"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 506,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-express-01",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "regression",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Was there ever a routing bug that only showed up when a single route had a very large number of stacked handlers?",
+    "relevantShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b"
+    ],
+    "rankedShas": [
+      "7ec5dd2b3c5e7379f68086dae72859f5573c8b9b",
+      "91997e9c53db057667981d5f5ece6eb15a8d1059",
+      "708ac4cdf5cd0a658d62490a9f4d78d3e1ec6612",
+      "1d97599f8b2f4ea6be0b7082ac1d9d93c8d00665",
+      "a3b5f6d07f880298a92164fe7f0519d736524dcf"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 512,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-express-02",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "deleted_implementation",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Did Express ever generate its own ETag headers instead of delegating to a separate etag package?",
+    "relevantShas": [
+      "4d1ee23f84de64a4f317384f61d1cd9925849107"
+    ],
+    "rankedShas": [
+      "51d33edb7973cb9ecec404d03e62d1ef9dff4a92",
+      "4d1ee23f84de64a4f317384f61d1cd9925849107",
+      "ffb23d92c0bb98246400aea79b3c9c975830c70f",
+      "e99434582f694e53632abae6dafde01df1abc444",
+      "48940e61202be07677659b3b9d87c967fc4e8bdc"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 508,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-t-express-03",
+    "repositoryId": "expressjs-express",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+    "relevantShas": [],
+    "rankedShas": [
+      "a751346b20edde459a53b6c335e3985b42e426fe",
+      "544d68833c7b2ee2e3afdc46e4204c954e0ea8ae",
+      "8c229a85606b71c38d7633da634348a957307ccf",
+      "fa8eec449bf406cebd7a92d376a098a39a804879",
+      "63efc6151787f05da40e1b5a79553bd8a0cfb0e6"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 516,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "a751346b20edde459a53b6c335e3985b42e426fe",
+        "544d68833c7b2ee2e3afdc46e4204c954e0ea8ae",
+        "8c229a85606b71c38d7633da634348a957307ccf",
+        "fa8eec449bf406cebd7a92d376a098a39a804879",
+        "63efc6151787f05da40e1b5a79553bd8a0cfb0e6"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "workaround_rationale",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+    "relevantShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc"
+    ],
+    "rankedShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc",
+      "923ae8f9c527310b02653bbd6b7a445b162a2862",
+      "1c35eaadc033b759d52e327f980b201f8cc1eead",
+      "84285c8f638815460340288dedc71bc06479d023",
+      "85b90158907ba7fa21a02edb4bb26bfa08bafa61"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 283,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-d-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+    "relevantShas": [
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061"
+    ],
+    "rankedShas": [
+      "31fbee888f1b5eb11e976e691a097f49e513a10b",
+      "72dd897bb584e2730980f5d211cf783186a2482b",
+      "5efca1ebbc9df85ff88758a9523480eccca531d7",
+      "216e2a6787fa836d0aeb0b000c2849ba88e2f462",
+      "7f1236652adb813ff884be008fe73ddf0590c664"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 226,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+    "relevantShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606"
+    ],
+    "rankedShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606",
+      "f3ca6371caa738ba5308d413433d9f676f2e0138",
+      "e270c70d4dba6b24263aa298debaa6ca5f92c299",
+      "32fc489632377d214db55bfa4e2c48486a7d7ce2",
+      "df6d3ce6cf10432b7920d8c3ac0efb7254989bc4"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 233,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+    "relevantShas": [
+      "945435fc51467303768202250debb8d4ae892593"
+    ],
+    "rankedShas": [
+      "945435fc51467303768202250debb8d4ae892593",
+      "05acca21c888e44e2125d4813be3311d32f72483",
+      "38ba1b3d2b0aa5ada0463a37a548feb83a84dfa1",
+      "e5540dcafe423909527c0af097fb6ae7f68c08f3",
+      "f8694341deaabd2e81059543fe03f9c791656903"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 228,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "exact_identifier",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+    "relevantShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b"
+    ],
+    "rankedShas": [
+      "7f1236652adb813ff884be008fe73ddf0590c664",
+      "c30252f685e8f4326722de84923fcbc8cf557f06",
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b",
+      "1a08f90f402336e4d00e9ee82f211c6adb1640b0",
+      "4918457aad892a32b2b0cd585c40d22870d48c4a"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 228,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext-t-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+    "relevantShas": [],
+    "rankedShas": [
+      "054c1f30fd1973a04e69b517e194fea5418d8169",
+      "88c24d85ee0d18a9d0c09ef229a76c4a796ccf89",
+      "8e3b50c56418b9070e22bc59fc9346ae4a7726c9",
+      "962c38b2a6780fb89dc66d3f2d5ed341d19a22b2",
+      "c497c4b2c364cae1f960f694e9a547cfbaa4485a"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 237,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "054c1f30fd1973a04e69b517e194fea5418d8169",
+        "88c24d85ee0d18a9d0c09ef229a76c4a796ccf89",
+        "8e3b50c56418b9070e22bc59fc9346ae4a7726c9",
+        "962c38b2a6780fb89dc66d3f2d5ed341d19a22b2",
+        "c497c4b2c364cae1f960f694e9a547cfbaa4485a"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "workaround_rationale",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+    "relevantShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc"
+    ],
+    "rankedShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc",
+      "923ae8f9c527310b02653bbd6b7a445b162a2862",
+      "85d4d0ea0aae91082f04e303dec46510d1b4e787",
+      "f21784ccb8b2a579df58128581d19905a7bb0d95",
+      "dc4bc49673943e35280e5df831f5c3d0347a9393"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 220,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-d-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+    "relevantShas": [
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061"
+    ],
+    "rankedShas": [
+      "31fbee888f1b5eb11e976e691a097f49e513a10b",
+      "de48c5d626e056d5e6056099c881b878103fc20e",
+      "e762cf77b3bb48c2086c67fe8c51bf376b50f73d",
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061",
+      "df9889b83c2cc37e9e6189675a73ab70c60f031f"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 218,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.25
+  },
+  {
+    "id": "ext-d-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+    "relevantShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606"
+    ],
+    "rankedShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606",
+      "fbdc1502b18e1bf7ef4c143b1f3503145a8bce91",
+      "495d5fb1333f2cb0c7e49ecfd6470dd1700ca96c",
+      "9d5a8781e3bb8828385485f2a4450277f274e7d9",
+      "f3ca6371caa738ba5308d413433d9f676f2e0138"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 220,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+    "relevantShas": [
+      "945435fc51467303768202250debb8d4ae892593"
+    ],
+    "rankedShas": [
+      "945435fc51467303768202250debb8d4ae892593",
+      "f2dc4495472071d3ed9a5637f35660226c8e44c6",
+      "fe7d09bb08fa1c0e414956b7fc760c80459b0a43",
+      "0ece97c7a949eca32af6aed1e4be08f01ad20e9f",
+      "92e15fa0d1847210ae04017c078c9248c29b82fe"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 217,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "exact_identifier",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+    "relevantShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b"
+    ],
+    "rankedShas": [
+      "205bd0f01d9b081e752acc2548b20b2438df4ec3",
+      "73a7c552820291ee491e4dd8fa901cef113ec800",
+      "006b60425c68d8b60df7ae85407b26cf0832343d",
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b",
+      "a501f100a774f8b382b0844fb7cdd168b90c4a31"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 249,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.25
+  },
+  {
+    "id": "ext-t-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "text",
+    "arm": "summary-only",
+    "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+    "relevantShas": [],
+    "rankedShas": [
+      "96956e30ba2768b754d53125af832c9ccf66a9cd",
+      "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+      "c918e85e91528da910836f0fa5c74ca3714daff1",
+      "183e59211d6f7d700de9b544b3956c3aaa8007b0",
+      "7821ed20892f478ca6aea929559bd02ffcc8b063"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 223,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+        "c918e85e91528da910836f0fa5c74ca3714daff1",
+        "183e59211d6f7d700de9b544b3956c3aaa8007b0",
+        "7821ed20892f478ca6aea929559bd02ffcc8b063"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "workaround_rationale",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+    "relevantShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc"
+    ],
+    "rankedShas": [
+      "84285c8f638815460340288dedc71bc06479d023",
+      "5e6e269b54c3b0f1579db9606f3a50f0efb899a1",
+      "a46beab1525f166417d3915fb28e150afb262b12",
+      "9fc94b7dcd30af78cd8346f8b7290ac6beb4897e",
+      "b0dccc6f1696446c79af54b306151c384afc5d51"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 542,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+    "relevantShas": [
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061"
+    ],
+    "rankedShas": [
+      "72dd897bb584e2730980f5d211cf783186a2482b",
+      "5efca1ebbc9df85ff88758a9523480eccca531d7",
+      "2033ef3ad01ae3c83dc0e39adddf682852b17939",
+      "c51054f24d49ecf76c6249c9e7a2d37a7d01376a",
+      "01a581a38d13adcca51d6424561e0b1e5b760869"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 510,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+    "relevantShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606"
+    ],
+    "rankedShas": [
+      "19cbca0c714d06fe26e521759ceec27f4dda396a",
+      "054c1f30fd1973a04e69b517e194fea5418d8169",
+      "af170334bdd02e39882a88a7cbd9690d5bc78606",
+      "07b177f3475f6be5935c721c30097e7867bed629",
+      "157efd5615890301824e3121cc6c9d2f9b21f94a"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 501,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext-t-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+    "relevantShas": [
+      "945435fc51467303768202250debb8d4ae892593"
+    ],
+    "rankedShas": [
+      "945435fc51467303768202250debb8d4ae892593",
+      "e5540dcafe423909527c0af097fb6ae7f68c08f3",
+      "bbfa7bfaccff368dd3666f32fb47773f863ec242",
+      "d676df772244726533ca320f42e967f5af056bac",
+      "e8904af03385b040e53f1263a444e825db4335d9"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 505,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "exact_identifier",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+    "relevantShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b"
+    ],
+    "rankedShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b",
+      "08119634a22f1d5b19f5c9ea0adccb6d3eebc3bc",
+      "78b290c57c978ed2ab420b90d97350231c9e5d74",
+      "f472e5da5fe76c72db703d6a0f5190e4ad31e642",
+      "7f1236652adb813ff884be008fe73ddf0590c664"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 505,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+    "relevantShas": [],
+    "rankedShas": [
+      "96956e30ba2768b754d53125af832c9ccf66a9cd",
+      "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+      "3edcfa25b7cda1319e03356a30ceea1b6f9402e7",
+      "5b5c19689209cfd4aa20b14274a6cb03c66ed749",
+      "9005a54a8b42be41ca49a31dcfda915d1a91c388"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 517,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+        "3edcfa25b7cda1319e03356a30ceea1b6f9402e7",
+        "5b5c19689209cfd4aa20b14274a6cb03c66ed749",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "workaround_rationale",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+    "relevantShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc"
+    ],
+    "rankedShas": [
+      "e50a08b2c392c6ce3b5a9dc85ebc860d50414529",
+      "2e0a76511a74591b461af58dc063e3cb5bfe3ccd",
+      "f21784ccb8b2a579df58128581d19905a7bb0d95",
+      "48549c8de72ad802d265c041ff5aa8f9c6a971dc",
+      "047501f7083665e0924f2680846fd8721e6de50d"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 502,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+    "relevantShas": [
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061"
+    ],
+    "rankedShas": [
+      "31fbee888f1b5eb11e976e691a097f49e513a10b",
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061",
+      "c51054f24d49ecf76c6249c9e7a2d37a7d01376a",
+      "a009842af9ce80133089f4517414d9205c92d0a5",
+      "216e2a6787fa836d0aeb0b000c2849ba88e2f462"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 497,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-d-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+    "relevantShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606"
+    ],
+    "rankedShas": [
+      "d81db4ab2b782e9c6b9d89cc242697da2ccb2e42",
+      "68f20aecd52068fc2fc6ec1886876a7f1baae86a",
+      "4ac0fbd1c1dc0c5f9ac290b635d6eee3783e355b",
+      "04cf64bd70ff3f7475b5b2c5301c20a11f9409e5",
+      "61617543268b024e42996e20ff0435b94a893c5d"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 506,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-t-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+    "relevantShas": [
+      "945435fc51467303768202250debb8d4ae892593"
+    ],
+    "rankedShas": [
+      "bbfa7bfaccff368dd3666f32fb47773f863ec242",
+      "21cf932d0f18ed4092d377394aed7791630697bf",
+      "28073866a5c10e039c233d9ae22fe8bb95442bb7",
+      "5266af94540552e99079caa66bb241bf35b42051",
+      "d74238e1513a57ce3bd2b3683f0e595ac00fa8d7"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 499,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-t-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "exact_identifier",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+    "relevantShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b"
+    ],
+    "rankedShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b",
+      "c4c30b22d6f62009fb97c77caf2e3d6c28f71124",
+      "d51accbea1faef6e3b74c7dfa636704a2332bfbb",
+      "6700a8adac06942205f6a7a21421ecb36c4e0852",
+      "7920d11144d228689df562827d6d11b18f4e547e"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 502,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "semantic",
+    "arm": "summary-only",
+    "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+    "relevantShas": [],
+    "rankedShas": [
+      "96956e30ba2768b754d53125af832c9ccf66a9cd",
+      "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+      "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+      "67a0fc3978f4cd787926235bef79a3054b2da786",
+      "eaaab30442e6d4206d03c7fe0961b37e7ca51424"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 505,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+        "67a0fc3978f4cd787926235bef79a3054b2da786",
+        "eaaab30442e6d4206d03c7fe0961b37e7ca51424"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "workaround_rationale",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+    "relevantShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc"
+    ],
+    "rankedShas": [
+      "84285c8f638815460340288dedc71bc06479d023",
+      "85b90158907ba7fa21a02edb4bb26bfa08bafa61",
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc",
+      "0b0ef29be08261cf84fc957125768f3507942f9e",
+      "1c35eaadc033b759d52e327f980b201f8cc1eead"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 523,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext-d-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+    "relevantShas": [
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061"
+    ],
+    "rankedShas": [
+      "72dd897bb584e2730980f5d211cf783186a2482b",
+      "5efca1ebbc9df85ff88758a9523480eccca531d7",
+      "c51054f24d49ecf76c6249c9e7a2d37a7d01376a",
+      "216e2a6787fa836d0aeb0b000c2849ba88e2f462",
+      "31fbee888f1b5eb11e976e691a097f49e513a10b"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 513,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext-d-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+    "relevantShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606"
+    ],
+    "rankedShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606",
+      "e270c70d4dba6b24263aa298debaa6ca5f92c299",
+      "32fc489632377d214db55bfa4e2c48486a7d7ce2",
+      "95df032fbd21ddf50e4147ad7a16bb8390423429",
+      "07b177f3475f6be5935c721c30097e7867bed629"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 523,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+    "relevantShas": [
+      "945435fc51467303768202250debb8d4ae892593"
+    ],
+    "rankedShas": [
+      "945435fc51467303768202250debb8d4ae892593",
+      "e5540dcafe423909527c0af097fb6ae7f68c08f3",
+      "05acca21c888e44e2125d4813be3311d32f72483",
+      "e8904af03385b040e53f1263a444e825db4335d9",
+      "bbfa7bfaccff368dd3666f32fb47773f863ec242"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 516,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "exact_identifier",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+    "relevantShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b"
+    ],
+    "rankedShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b",
+      "7f1236652adb813ff884be008fe73ddf0590c664",
+      "d51accbea1faef6e3b74c7dfa636704a2332bfbb",
+      "4918457aad892a32b2b0cd585c40d22870d48c4a",
+      "08119634a22f1d5b19f5c9ea0adccb6d3eebc3bc"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 518,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+    "relevantShas": [],
+    "rankedShas": [
+      "3edcfa25b7cda1319e03356a30ceea1b6f9402e7",
+      "054c1f30fd1973a04e69b517e194fea5418d8169",
+      "96956e30ba2768b754d53125af832c9ccf66a9cd",
+      "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+      "f7310ca083afe7270d6fbf16ec33fc977573a684"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 527,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "3edcfa25b7cda1319e03356a30ceea1b6f9402e7",
+        "054c1f30fd1973a04e69b517e194fea5418d8169",
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+        "f7310ca083afe7270d6fbf16ec33fc977573a684"
+      ],
+      "anyResultsReturned": true
+    }
+  },
+  {
+    "id": "ext-d-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "workaround_rationale",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Is there a config option to get axios's old withCredentials-driven XSRF header behavior back after it changed?",
+    "relevantShas": [
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc"
+    ],
+    "rankedShas": [
+      "f21784ccb8b2a579df58128581d19905a7bb0d95",
+      "e50a08b2c392c6ce3b5a9dc85ebc860d50414529",
+      "85b90158907ba7fa21a02edb4bb26bfa08bafa61",
+      "cff996779b272a5e94c2b52f5503ccf668bc42dc",
+      "2e0a76511a74591b461af58dc063e3cb5bfe3ccd"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 508,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.25
+  },
+  {
+    "id": "ext-d-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "When was request cancellation (the Cancel/CancelToken mechanism) first introduced in axios?",
+    "relevantShas": [
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061"
+    ],
+    "rankedShas": [
+      "31fbee888f1b5eb11e976e691a097f49e513a10b",
+      "b2bc3354ac22e76e129ef8ae5b9656fa555fa061",
+      "e762cf77b3bb48c2086c67fe8c51bf376b50f73d",
+      "de48c5d626e056d5e6056099c881b878103fc20e",
+      "4882ce5359c0ea5238de1cda21fb40a0584f9858"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 510,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext-d-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "dev",
+    "category": "deleted_implementation",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Can axios's request config still take separate username/password fields directly, or does auth have to be nested under an auth object now?",
+    "relevantShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606"
+    ],
+    "rankedShas": [
+      "af170334bdd02e39882a88a7cbd9690d5bc78606",
+      "d81db4ab2b782e9c6b9d89cc242697da2ccb2e42",
+      "eaaab30442e6d4206d03c7fe0961b37e7ca51424",
+      "fe52a611efe756328a93709bbf5265756275d70d",
+      "bd3816bf9eaff677c3e278df9b03bcd302e9177b"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 509,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-01",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Was there a security fix around how axios enforces maxContentLength for data: URLs?",
+    "relevantShas": [
+      "945435fc51467303768202250debb8d4ae892593"
+    ],
+    "rankedShas": [
+      "bbfa7bfaccff368dd3666f32fb47773f863ec242",
+      "f26e0c0e7afd7b6b675744c75f613e60215d829f",
+      "945435fc51467303768202250debb8d4ae892593",
+      "e452f761f7c9edbd9e4e73493373f427b0fb5141",
+      "0ece97c7a949eca32af6aed1e4be08f01ad20e9f"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 517,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext-t-axios-02",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "exact_identifier",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Is AxiosError actually a native Error subclass, or does it just look like one?",
+    "relevantShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b"
+    ],
+    "rankedShas": [
+      "1c6a86dd2c0623ee1af043a8491dbc96d40e883b",
+      "c4c30b22d6f62009fb97c77caf2e3d6c28f71124",
+      "d51accbea1faef6e3b74c7dfa636704a2332bfbb",
+      "006b60425c68d8b60df7ae85407b26cf0832343d",
+      "7920d11144d228689df562827d6d11b18f4e547e"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 506,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext-t-axios-03",
+    "repositoryId": "axios-axios",
+    "split": "test",
+    "category": "no_evidence",
+    "mode": "hybrid",
+    "arm": "summary-only",
+    "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+    "relevantShas": [],
+    "rankedShas": [
+      "96956e30ba2768b754d53125af832c9ccf66a9cd",
+      "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+      "67a0fc3978f4cd787926235bef79a3054b2da786",
+      "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+      "fe52a611efe756328a93709bbf5265756275d70d"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 514,
+    "scored": {
+      "applicable": false,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    "hit1": null,
+    "hit3": null,
+    "hit5": null,
+    "reciprocalRank": null,
+    "noEvidenceObservation": {
+      "returnedTopK": [
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+        "67a0fc3978f4cd787926235bef79a3054b2da786",
+        "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+        "fe52a611efe756328a93709bbf5265756275d70d"
+      ],
+      "anyResultsReturned": true
+    }
+  }
+]

@@ -7,3 +7,9 @@ bench/results/
 bench/raw/
 spike/out/
 *.jsonl
+
+# Generated site output and its separate dependency tree
+site/.vitepress/dist/
+site/.vitepress/cache/
+site/node_modules/
+site/public/install.sh

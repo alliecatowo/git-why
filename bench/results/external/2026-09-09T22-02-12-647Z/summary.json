@@ -1,0 +1,768 @@
+{
+  "generatedAt": "2026-09-09T22:02:12.642Z",
+  "datasetPath": "bench/dataset/external.json",
+  "modes": [
+    "text",
+    "semantic",
+    "hybrid"
+  ],
+  "ablationRun": true,
+  "repositories": [
+    {
+      "id": "expressjs-express",
+      "url": "https://github.com/expressjs/express",
+      "license": "MIT",
+      "cutoffSha": "bed501c695a61886399ee622875f3be933c716d8",
+      "scale": {
+        "indexedCommits": 6167,
+        "recordCount": 24698,
+        "diskBytes": 132395048,
+        "state": "current"
+      }
+    },
+    {
+      "id": "axios-axios",
+      "url": "https://github.com/axios/axios",
+      "license": "MIT",
+      "cutoffSha": "1226e6c53eeb0e9d7159bea83556c2ff117b5f2e",
+      "scale": {
+        "indexedCommits": 2185,
+        "recordCount": 11184,
+        "diskBytes": 84740147,
+        "state": "current"
+      }
+    }
+  ],
+  "totalCases": 12,
+  "answerableCases": 10,
+  "noEvidenceCases": 2,
+  "overallByMode": [
+    {
+      "mode": "text",
+      "n": 10,
+      "hit1": 0.3,
+      "hit3": 0.6,
+      "hit5": 0.7,
+      "recall5": 0.7,
+      "mrr": 0.4583333333333333
+    },
+    {
+      "mode": "semantic",
+      "n": 10,
+      "hit1": 0.3,
+      "hit3": 0.6,
+      "hit5": 0.7,
+      "recall5": 0.7,
+      "mrr": 0.4366666666666667
+    },
+    {
+      "mode": "hybrid",
+      "n": 10,
+      "hit1": 0.6,
+      "hit3": 0.9,
+      "hit5": 0.9,
+      "recall5": 0.9,
+      "mrr": 0.7333333333333333
+    }
+  ],
+  "bySplit": [
+    {
+      "split": "dev",
+      "mode": "text",
+      "n": 6,
+      "hit1": 0.3333333333333333,
+      "hit3": 0.3333333333333333,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.375
+    },
+    {
+      "split": "dev",
+      "mode": "semantic",
+      "n": 6,
+      "hit1": 0.16666666666666666,
+      "hit3": 0.3333333333333333,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.25555555555555554
+    },
+    {
+      "split": "dev",
+      "mode": "hybrid",
+      "n": 6,
+      "hit1": 0.5,
+      "hit3": 0.8333333333333334,
+      "hit5": 0.8333333333333334,
+      "recall5": 0.8333333333333334,
+      "mrr": 0.638888888888889
+    },
+    {
+      "split": "test",
+      "mode": "text",
+      "n": 4,
+      "hit1": 0.25,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5833333333333334
+    },
+    {
+      "split": "test",
+      "mode": "semantic",
+      "n": 4,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.7083333333333333
+    },
+    {
+      "split": "test",
+      "mode": "hybrid",
+      "n": 4,
+      "hit1": 0.75,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.875
+    }
+  ],
+  "byRepository": [
+    {
+      "repositoryId": "expressjs-express",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 6167,
+        "recordCount": 24698,
+        "diskBytes": 132395048,
+        "state": "current"
+      },
+      "n": 5,
+      "hit1": 0,
+      "hit3": 0.4,
+      "hit5": 0.6,
+      "recall5": 0.6,
+      "mrr": 0.25
+    },
+    {
+      "repositoryId": "expressjs-express",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 6167,
+        "recordCount": 24698,
+        "diskBytes": 132395048,
+        "state": "current"
+      },
+      "n": 5,
+      "hit1": 0.2,
+      "hit3": 0.6,
+      "hit5": 0.8,
+      "recall5": 0.8,
+      "mrr": 0.4066666666666666
+    },
+    {
+      "repositoryId": "expressjs-express",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 6167,
+        "recordCount": 24698,
+        "diskBytes": 132395048,
+        "state": "current"
+      },
+      "n": 5,
+      "hit1": 0.6,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.8
+    },
+    {
+      "repositoryId": "axios-axios",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 2185,
+        "recordCount": 11184,
+        "diskBytes": 84740147,
+        "state": "current"
+      },
+      "n": 5,
+      "hit1": 0.6,
+      "hit3": 0.8,
+      "hit5": 0.8,
+      "recall5": 0.8,
+      "mrr": 0.6666666666666667
+    },
+    {
+      "repositoryId": "axios-axios",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 2185,
+        "recordCount": 11184,
+        "diskBytes": 84740147,
+        "state": "current"
+      },
+      "n": 5,
+      "hit1": 0.4,
+      "hit3": 0.6,
+      "hit5": 0.6,
+      "recall5": 0.6,
+      "mrr": 0.4666666666666666
+    },
+    {
+      "repositoryId": "axios-axios",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 2185,
+        "recordCount": 11184,
+        "diskBytes": 84740147,
+        "state": "current"
+      },
+      "n": 5,
+      "hit1": 0.6,
+      "hit3": 0.8,
+      "hit5": 0.8,
+      "recall5": 0.8,
+      "mrr": 0.6666666666666666
+    }
+  ],
+  "byCategory": [
+    {
+      "category": "number_version",
+      "mode": "text",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    {
+      "category": "number_version",
+      "mode": "semantic",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "number_version",
+      "mode": "hybrid",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "deleted_implementation",
+      "mode": "text",
+      "n": 3,
+      "hit1": 0.3333333333333333,
+      "hit3": 0.6666666666666666,
+      "hit5": 0.6666666666666666,
+      "recall5": 0.6666666666666666,
+      "mrr": 0.5
+    },
+    {
+      "category": "deleted_implementation",
+      "mode": "semantic",
+      "n": 3,
+      "hit1": 0,
+      "hit3": 0.6666666666666666,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.2888888888888889
+    },
+    {
+      "category": "deleted_implementation",
+      "mode": "hybrid",
+      "n": 3,
+      "hit1": 0.6666666666666666,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.8333333333333334
+    },
+    {
+      "category": "migration",
+      "mode": "text",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "category": "migration",
+      "mode": "semantic",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "migration",
+      "mode": "hybrid",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "category": "regression",
+      "mode": "text",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "category": "regression",
+      "mode": "semantic",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "category": "regression",
+      "mode": "hybrid",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "no_evidence",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "text",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "semantic",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "hybrid",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "text",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.16666666666666666
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "semantic",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "hybrid",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    }
+  ],
+  "noEvidenceObservations": [
+    {
+      "id": "ext-t-express-03",
+      "repositoryId": "expressjs-express",
+      "mode": "text",
+      "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+      "returnedTopK": [
+        "a3c9eacaf149502f0fad38c2dec9bd5fbe0a5cd2",
+        "929dc703caabed1c44b8a123901a9c8c0fae416a",
+        "d1ce4c99235ccb35167f8456e7a68546ccf2a76a",
+        "58d522d82417c81b17bdf5572f2458f04c05b2ef",
+        "5ac631a270aa9d301bead847b531222fab7cb064"
+      ]
+    },
+    {
+      "id": "ext-t-express-03",
+      "repositoryId": "expressjs-express",
+      "mode": "semantic",
+      "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+      "returnedTopK": [
+        "2603bb4c15fa13c81eeb6c9d1020cf6197b3db6c",
+        "fa8eec449bf406cebd7a92d376a098a39a804879",
+        "bd5e77133787ac72c8e7545028be78095b8d0c60",
+        "dca7e9bbd17e2d96a081754469d73f49d35a61c8",
+        "ab924008fb472d73fc62c77060f6e0aeff8fe594"
+      ]
+    },
+    {
+      "id": "ext-t-express-03",
+      "repositoryId": "expressjs-express",
+      "mode": "hybrid",
+      "query": "Why is Express's default header named exactly 'X-Powered-By' instead of something Express-specific?",
+      "returnedTopK": [
+        "fa8eec449bf406cebd7a92d376a098a39a804879",
+        "5ac631a270aa9d301bead847b531222fab7cb064",
+        "b0e03eb8a83a1c9e9e0574890f6f5a52bdc525bd",
+        "3661922bb0fc78c739465b6add265c8a80e73449",
+        "2603bb4c15fa13c81eeb6c9d1020cf6197b3db6c"
+      ]
+    },
+    {
+      "id": "ext-t-axios-03",
+      "repositoryId": "axios-axios",
+      "mode": "text",
+      "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+      "returnedTopK": [
+        "054c1f30fd1973a04e69b517e194fea5418d8169",
+        "88c24d85ee0d18a9d0c09ef229a76c4a796ccf89",
+        "8e3b50c56418b9070e22bc59fc9346ae4a7726c9",
+        "962c38b2a6780fb89dc66d3f2d5ed341d19a22b2",
+        "c497c4b2c364cae1f960f694e9a547cfbaa4485a"
+      ]
+    },
+    {
+      "id": "ext-t-axios-03",
+      "repositoryId": "axios-axios",
+      "mode": "semantic",
+      "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+      "returnedTopK": [
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "1ccd4161c7b525bb5efb444232ffe7f15c590d60",
+        "3edcfa25b7cda1319e03356a30ceea1b6f9402e7",
+        "5b5c19689209cfd4aa20b14274a6cb03c66ed749",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388"
+      ]
+    },
+    {
+      "id": "ext-t-axios-03",
+      "repositoryId": "axios-axios",
+      "mode": "hybrid",
+      "query": "Why is axios's default request timeout 0 (no timeout) instead of a finite default like 30 seconds?",
+      "returnedTopK": [
+        "3edcfa25b7cda1319e03356a30ceea1b6f9402e7",
+        "054c1f30fd1973a04e69b517e194fea5418d8169",
+        "96956e30ba2768b754d53125af832c9ccf66a9cd",
+        "9005a54a8b42be41ca49a31dcfda915d1a91c388",
+        "f7310ca083afe7270d6fbf16ec33fc977573a684"
+      ]
+    }
+  ],
+  "ablation": {
+    "mechanism": "GIT_WHY_BENCH_RECORD_TYPES=commit restricts retrieval to commit-summary records; unset (summary+evidence) retrieves commit + evidence records. Index built once per repository (both record types always ingested); the env var only changes what a query is allowed to retrieve at read time. See src/search/search.ts benchRecordTypes().",
+    "overallByMode": [
+      {
+        "mode": "text",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0,
+          "hit3": 0,
+          "hit5": -0.10000000000000009,
+          "recall5": -0.10000000000000009,
+          "mrr": -0.041666666666666685
+        },
+        "summary+evidence": {
+          "n": 10,
+          "hit1": 0.3,
+          "hit3": 0.6,
+          "hit5": 0.7,
+          "recall5": 0.7,
+          "mrr": 0.4583333333333333
+        },
+        "summary-only": {
+          "n": 10,
+          "hit1": 0.3,
+          "hit3": 0.6,
+          "hit5": 0.8,
+          "recall5": 0.8,
+          "mrr": 0.5
+        }
+      },
+      {
+        "mode": "semantic",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0.09999999999999998,
+          "hit3": 0,
+          "hit5": 0.09999999999999998,
+          "recall5": 0.09999999999999998,
+          "mrr": 0.0533333333333334
+        },
+        "summary+evidence": {
+          "n": 10,
+          "hit1": 0.3,
+          "hit3": 0.6,
+          "hit5": 0.7,
+          "recall5": 0.7,
+          "mrr": 0.4366666666666667
+        },
+        "summary-only": {
+          "n": 10,
+          "hit1": 0.2,
+          "hit3": 0.6,
+          "hit5": 0.6,
+          "recall5": 0.6,
+          "mrr": 0.3833333333333333
+        }
+      },
+      {
+        "mode": "hybrid",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0.19999999999999996,
+          "hit3": 0.09999999999999998,
+          "hit5": 0,
+          "recall5": 0,
+          "mrr": 0.125
+        },
+        "summary+evidence": {
+          "n": 10,
+          "hit1": 0.6,
+          "hit3": 0.9,
+          "hit5": 0.9,
+          "recall5": 0.9,
+          "mrr": 0.7333333333333333
+        },
+        "summary-only": {
+          "n": 10,
+          "hit1": 0.4,
+          "hit3": 0.8,
+          "hit5": 0.9,
+          "recall5": 0.9,
+          "mrr": 0.6083333333333333
+        }
+      }
+    ],
+    "byRepositoryMode": [
+      {
+        "repositoryId": "expressjs-express",
+        "mode": "text",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0,
+          "hit3": -0.19999999999999996,
+          "hit5": 0,
+          "recall5": 0,
+          "mrr": -0.04999999999999999
+        },
+        "summary+evidence": {
+          "n": 5,
+          "hit1": 0,
+          "hit3": 0.4,
+          "hit5": 0.6,
+          "recall5": 0.6,
+          "mrr": 0.25
+        },
+        "summary-only": {
+          "n": 5,
+          "hit1": 0,
+          "hit3": 0.6,
+          "hit5": 0.6,
+          "recall5": 0.6,
+          "mrr": 0.3
+        }
+      },
+      {
+        "repositoryId": "expressjs-express",
+        "mode": "semantic",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0,
+          "hit3": -0.20000000000000007,
+          "hit5": 0,
+          "recall5": 0,
+          "mrr": -0.06
+        },
+        "summary+evidence": {
+          "n": 5,
+          "hit1": 0.2,
+          "hit3": 0.6,
+          "hit5": 0.8,
+          "recall5": 0.8,
+          "mrr": 0.4066666666666666
+        },
+        "summary-only": {
+          "n": 5,
+          "hit1": 0.2,
+          "hit3": 0.8,
+          "hit5": 0.8,
+          "recall5": 0.8,
+          "mrr": 0.4666666666666666
+        }
+      },
+      {
+        "repositoryId": "expressjs-express",
+        "mode": "hybrid",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0.19999999999999996,
+          "hit3": 0.19999999999999996,
+          "hit5": 0.19999999999999996,
+          "recall5": 0.19999999999999996,
+          "mrr": 0.20000000000000007
+        },
+        "summary+evidence": {
+          "n": 5,
+          "hit1": 0.6,
+          "hit3": 1,
+          "hit5": 1,
+          "recall5": 1,
+          "mrr": 0.8
+        },
+        "summary-only": {
+          "n": 5,
+          "hit1": 0.4,
+          "hit3": 0.8,
+          "hit5": 0.8,
+          "recall5": 0.8,
+          "mrr": 0.6
+        }
+      },
+      {
+        "repositoryId": "axios-axios",
+        "mode": "text",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0,
+          "hit3": 0.20000000000000007,
+          "hit5": -0.19999999999999996,
+          "recall5": -0.19999999999999996,
+          "mrr": -0.033333333333333215
+        },
+        "summary+evidence": {
+          "n": 5,
+          "hit1": 0.6,
+          "hit3": 0.8,
+          "hit5": 0.8,
+          "recall5": 0.8,
+          "mrr": 0.6666666666666667
+        },
+        "summary-only": {
+          "n": 5,
+          "hit1": 0.6,
+          "hit3": 0.6,
+          "hit5": 1,
+          "recall5": 1,
+          "mrr": 0.7
+        }
+      },
+      {
+        "repositoryId": "axios-axios",
+        "mode": "semantic",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0.2,
+          "hit3": 0.19999999999999996,
+          "hit5": 0.19999999999999996,
+          "recall5": 0.19999999999999996,
+          "mrr": 0.16666666666666663
+        },
+        "summary+evidence": {
+          "n": 5,
+          "hit1": 0.4,
+          "hit3": 0.6,
+          "hit5": 0.6,
+          "recall5": 0.6,
+          "mrr": 0.4666666666666666
+        },
+        "summary-only": {
+          "n": 5,
+          "hit1": 0.2,
+          "hit3": 0.4,
+          "hit5": 0.4,
+          "recall5": 0.4,
+          "mrr": 0.3
+        }
+      },
+      {
+        "repositoryId": "axios-axios",
+        "mode": "hybrid",
+        "diff_evidenceMinusSummaryOnly": {
+          "hit1": 0.19999999999999996,
+          "hit3": 0,
+          "hit5": -0.19999999999999996,
+          "recall5": -0.19999999999999996,
+          "mrr": 0.04999999999999993
+        },
+        "summary+evidence": {
+          "n": 5,
+          "hit1": 0.6,
+          "hit3": 0.8,
+          "hit5": 0.8,
+          "recall5": 0.8,
+          "mrr": 0.6666666666666666
+        },
+        "summary-only": {
+          "n": 5,
+          "hit1": 0.4,
+          "hit3": 0.8,
+          "hit5": 1,
+          "recall5": 1,
+          "mrr": 0.6166666666666667
+        }
+      }
+    ]
+  },
+  "notBlinded": "See bench/README.md: the same agent system that implements Git Why also authored this file. This is real-repository evidence, not a blinded held-out study."
+}

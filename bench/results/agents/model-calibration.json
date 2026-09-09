@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-09-09T21:04:41Z",
+  "note": "Spec section 21 calibration: confirm a zero-priced model is actually available and actually uses tools before spending the pilot budget on it.",
+  "opencodeVersion": "1.18.30",
+  "candidates": [
+    {
+      "providerModelId": "opencode/big-pickle",
+      "catalogCost": { "input": 0, "output": 0, "cache": { "read": 0, "write": 0 } },
+      "contextLimit": 200000,
+      "toolcallCapable": true,
+      "observed": {
+        "responded": true,
+        "usedTools": true,
+        "toolEvidence": "step-finish reason=tool-calls followed by a correct file-derived answer",
+        "answerCorrect": true,
+        "reportedCost": 0,
+        "task": "read a file and identify an injected bug without editing"
+      }
+    }
+  ],
+  "selected": "opencode/big-pickle",
+  "selectionReason": "Available at zero price, tool-capable in an executed probe, and answered a trivial neutral task correctly. Selected before any arm comparison, and NOT chosen by which model favours Git Why.",
+  "upstreamIdentityDisclosed": false,
+  "upstreamIdentityNote": "OpenCode Zen does not disclose a stable upstream model identity for this alias. A stealth alias is not a verified upstream model; recorded as such."
+}

@@ -10,6 +10,12 @@ spike/out/*.log
 .tmp/
 *.tgz
 
+# VitePress site build output and its separate dependency tree
+site/node_modules/
+site/.vitepress/cache/
+site/.vitepress/dist/
+site/public/install.sh
+
 # never publish
 .env
 .env.*

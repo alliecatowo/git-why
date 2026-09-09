@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Build, typecheck, lint, format-check and unit-test the CLI package.
+  #
+  # Integration tests are intentionally NOT run here: they drive a real
+  # model download (network access, ~minutes) and real Zvec collections.
+  # They self-skip when network is unavailable (see
+  # test/integration/embedding/*.test.ts), which makes them unsuitable as a
+  # required, always-green CI gate on every push/PR. Run them locally or in
+  # a dedicated job with `mise run test:integration`.
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.21.0'
+          cache: npm
+
+      # @zvec/zvec ships prebuilt native bindings as optionalDependencies
+      # (darwin/linux, x64/arm64), so `npm ci` on these runners installs a
+      # matching prebuilt binary; no compiler toolchain is required.
+      - run: npm ci
+
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run test:unit
+
+  # Smoke-test that the documentation site still builds. The real deploy
+  # happens in pages.yml, on pushes to main only.
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.21.0'
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install site dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Build site
+        working-directory: site
+        run: npm run build

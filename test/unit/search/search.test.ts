@@ -285,3 +285,13 @@ test('relevance remains the default and preserves rank order', async () => {
     'relevance order is descending rankScore',
   );
 });
+
+test('first-introduction queries explain the widen-then-order workflow', async () => {
+  const response = await search(
+    { ...baseRequest, query: 'when was streaming first introduced?' },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  assert.ok(response.warnings.some((warning) => warning.includes('-n 20 --sort=oldest')));
+});
