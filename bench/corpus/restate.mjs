@@ -97,36 +97,6 @@ for (let i = 0; i < cases.length; i += BATCH) {
   console.log(`[restate] ${Math.min(i + BATCH, cases.length)}/${cases.length}`);
 }
 
-/** recall/precision for one phrasing of the questions. */
-function score(getQuery, label) {
-  let h1 = 0;
-  let h5 = 0;
-  let r20 = 0;
-  let rr = 0;
-  let n = 0;
-  for (const c of restated) {
-    const out = run(process.execPath, [CLI, getQuery(c), '-n', '20', '--json', '--no-refresh'], {
-      cwd: repoDir,
-    });
-    let res = [];
-    try {
-      res = JSON.parse(out).results ?? [];
-    } catch {
-      continue;
-    }
-    n += 1;
-    const i = res.findIndex((r) => r.sha === c.relevantShas[0]);
-    if (i === 0) h1 += 1;
-    if (i >= 0 && i < 5) h5 += 1;
-    if (i >= 0) r20 += 1;
-    if (i >= 0) rr += 1 / (i + 1);
-  }
-  console.log(
-    `${label.padEnd(26)} n=${n}  Hit@1=${(h1 / n).toFixed(3)}  Hit@5=${(h5 / n).toFixed(3)}  MRR=${(rr / n).toFixed(3)}  recall@20=${(r20 / n).toFixed(3)}`,
-  );
-  return { label, n, hit1: h1 / n, hit5: h5 / n, mrr: rr / n, recall20: r20 / n };
-}
-
 /**
  * Scores both phrasings on the SAME cases.
  *
