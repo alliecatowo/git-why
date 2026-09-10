@@ -50,8 +50,40 @@ const PRIVATE_TASK_DIR = join(EVALUATOR_DIR, 'tasks');
 const WORK_ROOT = benchWorkSubdir('agents-runs');
 const RESULTS_DIR = join(REPO_ROOT, 'bench', 'results', 'agents');
 const USAGE_CARDS_DIR = join(HERE, 'usage-cards');
-const PACKAGED_TOOL_DIR = benchWorkSubdir('tools', 'git-why');
+/**
+ * Per-process, because `preparePackagedGitWhy()` deletes this directory and
+ * reinstalls into it on every invocation, with no lock. Two concurrent runs
+ * sharing one path will delete each other's packaged CLI mid-trial, and the
+ * damage is silent: the victim run either fails for an unrelated-looking
+ * reason or, worse, reports a clean pass produced against a half-installed
+ * tool. That happened -- a smoke run was started alongside another that was
+ * already in flight, and neither result could be trusted afterwards.
+ *
+ * A per-PID suffix makes concurrent runs independent instead of merely
+ * discouraged. `cleanupPackagedToolDirs()` sweeps directories left behind by
+ * processes that are no longer alive.
+ */
+const PACKAGED_TOOL_DIR = benchWorkSubdir('tools', `git-why-${process.pid}`);
 const INDEX_CACHE_ROOT = benchWorkSubdir('agent-index-cache');
+
+/**
+ * Removes packaged-tool directories belonging to processes that have exited.
+ * Called once at startup so a crashed run does not leak disk forever.
+ */
+function cleanupPackagedToolDirs() {
+  const root = benchWorkSubdir('tools');
+  if (!existsSync(root)) return;
+  for (const entry of readdirSync(root)) {
+    const pid = Number(entry.replace(/^git-why-/, ''));
+    if (!Number.isInteger(pid) || pid === process.pid) continue;
+    try {
+      // Signal 0 tests for existence without touching the process.
+      process.kill(pid, 0);
+    } catch {
+      rmSync(join(root, entry), { recursive: true, force: true });
+    }
+  }
+}
 const DASHBOARD_STATUS_FILE = join(REPO_ROOT, 'site', 'public', 'bench-status.json');
 
 const ARMS = ['A', 'B', 'C', 'D'];
@@ -921,6 +953,8 @@ async function main() {
     );
   }
 
+  // Sweep tool dirs from runs that are no longer alive before installing ours.
+  cleanupPackagedToolDirs();
   const toolPath = preparePackagedGitWhy();
   if (isSmoke) {
     const checks = smokePreflight({ toolPath, sandbox });
