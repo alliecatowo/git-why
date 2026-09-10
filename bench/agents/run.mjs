@@ -24,6 +24,7 @@ import { execFileSync } from 'node:child_process';
 import { buildIsolatedTrialWorkspace } from './isolation.mjs';
 import { createIsolatedProfile, inspectProfile, runTrial } from './runner.mjs';
 import { gradeTrial } from './grade.mjs';
+import { benchWorkSubdir } from '../lib/workdir.mjs';
 import { mulberry32, seedFromString, shuffle } from '../fixtures/lib/rng.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -31,8 +32,8 @@ const REPO_ROOT = resolve(HERE, '..', '..');
 const TASKS_DIR = join(HERE, 'tasks');
 const HIDDEN_DIR = join(TASKS_DIR, 'hidden');
 const MANIFEST_DIR = join(TASKS_DIR, 'manifests');
-const SOURCE_REPOS_DIR = join(REPO_ROOT, 'bench', 'work', 'agents-tasks');
-const WORK_ROOT = join(REPO_ROOT, 'bench', 'work', 'agents-runs');
+const SOURCE_REPOS_DIR = benchWorkSubdir('agents-tasks');
+const WORK_ROOT = benchWorkSubdir('agents-runs');
 const RESULTS_DIR = join(REPO_ROOT, 'bench', 'results', 'agents');
 const USAGE_CARDS_DIR = join(HERE, 'usage-cards');
 

@@ -7,9 +7,10 @@
 // trial ends, against a scratch copy of the trial's resulting worktree.
 
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join } from 'node:path';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { buildTaskRepo } from './lib/task-engine.mjs';
+import { benchWorkSubdir } from '../../lib/workdir.mjs';
 
 import t1 from './specs/t1.mjs';
 import t2 from './specs/t2.mjs';
@@ -21,8 +22,7 @@ import t7 from './specs/t7.mjs';
 import t8 from './specs/t8.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(HERE, '..', '..', '..');
-const WORK_DIR = join(REPO_ROOT, 'bench', 'work', 'agents-tasks');
+const WORK_DIR = benchWorkSubdir('agents-tasks');
 const MANIFEST_DIR = join(HERE, 'manifests');
 const HIDDEN_DIR = join(HERE, 'hidden');
 

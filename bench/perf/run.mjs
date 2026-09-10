@@ -39,13 +39,14 @@ import {
   dirSizeBytes,
 } from './lib.mjs';
 import { commitAll, writeRepoFile, git } from '../fixtures/lib/git.mjs';
+import { benchWorkSubdir } from '../lib/workdir.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..', '..');
 
 const FIXTURES_MANIFEST_DIR = join(REPO_ROOT, 'bench', 'fixtures', 'manifests');
-const FIXTURES_WORK_DIR = join(REPO_ROOT, 'bench', 'work', 'fixtures');
-const PERF_WORK_DIR = join(REPO_ROOT, 'bench', 'work', 'perf');
+const FIXTURES_WORK_DIR = benchWorkSubdir('fixtures');
+const PERF_WORK_DIR = benchWorkSubdir('perf');
 const RESULTS_DIR = join(REPO_ROOT, 'bench', 'results', 'perf');
 
 function parseArgs(argv) {

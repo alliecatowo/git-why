@@ -17,12 +17,13 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { scoreCase, aggregate } from './metrics.mjs';
+import { benchWorkSubdir } from '../lib/workdir.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..', '..');
 const RESULTS_DIR = join(REPO_ROOT, 'bench', 'results', 'retrieval');
 const FIXTURES_DIR = join(REPO_ROOT, 'bench', 'fixtures');
-const WORK_FIXTURES_DIR = join(REPO_ROOT, 'bench', 'work', 'fixtures');
+const WORK_FIXTURES_DIR = benchWorkSubdir('fixtures');
 
 function parseArgs(argv) {
   const args = {

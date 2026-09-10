@@ -20,7 +20,7 @@ method, candidate limits, dataset composition, arm definitions) and
   numbers as a frozen-protocol sanity check against tuning-after-the-fact,
   not as evidence the system generalizes to questions or repositories an
   unrelated party would construct.
-- **All six retrieval fixtures (`bench/work/fixtures/*`) are synthetic**,
+- **All six retrieval fixtures (`$BENCH_WORK_DIR/fixtures/*`) are synthetic**,
   generated deterministically by `bench/fixtures/generate.mjs`. They are
   not real-world repositories.
 - **`bench/dataset/external.json` is dataset _construction_ provenance, not
@@ -30,7 +30,7 @@ method, candidate limits, dataset composition, arm definitions) and
   does **not** mean Git Why's retrieval was ever run against those
   repositories -- `bench/retrieval/run.mjs` only supports the 6 synthetic
   fixtures today, and no local clone of either real repository exists under
-  `bench/work/fixtures/`.
+  `$BENCH_WORK_DIR/fixtures/`.
 - **Hit@5 saturates on this dataset and does not discriminate between
   retrieval modes.** Text-only and hybrid retrieval both reach 100% Hit@5 on
   dev and test; semantic is close behind. Read Mean Reciprocal Rank (MRR)
@@ -58,3 +58,21 @@ node bench/retrieval/run.mjs --split=test --i-accept-this-is-the-frozen-holdout 
 node bench/perf/run.mjs
 node bench/report.mjs   # writes docs/report.md from the files above
 ```
+
+## Where scratch state lives
+
+All benchmark working state — generated fixtures, task source repositories,
+trial clones, perf corpora — lives under `BENCH_WORK_DIR`, which defaults to
+`~/.cache/git-why-bench/<hash-of-repo-path>/`. Nothing under this repository's
+tree is used as a working directory.
+
+This is not tidiness. The 2026-09-09 agent pilot was invalidated because trial
+clones lived at `bench/work/agents-runs/**`, inside the git-why worktree:
+OpenCode re-rooted each session from the clone up to the outer repository, so
+agents searched the wrong history, could read hidden tests and rubrics, and
+wrote task answers into `src/`. Keeping scratch state outside any git worktree
+removes the re-rooting path entirely; `--dir`, sandboxing and the trajectory
+audit are enforced on top of it, not instead of it.
+
+Override the location with `BENCH_WORK_DIR=/some/path`. `test/unit/no-benchmark-artifacts.test.ts`
+fails the build if `bench/work/` reappears or if any task file lands in `src/`.

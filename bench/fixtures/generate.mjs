@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { buildFixture } from './lib/engine.mjs';
+import { benchWorkSubdir } from '../lib/workdir.mjs';
 
 import realtimeChat from './specs/realtime-chat.mjs';
 import taskQueue from './specs/task-queue.mjs';
@@ -22,7 +23,7 @@ import apiGateway from './specs/api-gateway.mjs';
 import buildTooling from './specs/build-tooling.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const WORK_DIR = join(HERE, '..', 'work', 'fixtures');
+const WORK_DIR = benchWorkSubdir('fixtures');
 const MANIFEST_DIR = join(HERE, 'manifests');
 
 const ALL_SPECS = [realtimeChat, taskQueue, authPlatform, dataPipeline, apiGateway, buildTooling];

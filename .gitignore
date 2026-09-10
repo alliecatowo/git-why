@@ -3,7 +3,9 @@ dist/
 *.tsbuildinfo
 .mise.local.toml
 
-# benchmark + spike outputs that are regenerated, not committed
+# benchmark + spike outputs that are regenerated, not committed.
+# Scratch state now lives under BENCH_WORK_DIR (default ~/.cache/git-why-bench/),
+# outside any git worktree; bench/work/ is listed only to catch a stale checkout.
 bench/work/
 bench/raw/opencode-models-raw.txt
 spike/out/*.log
