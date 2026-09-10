@@ -249,6 +249,17 @@ export function buildEvidenceDoc(input: EvidenceDocInput): ZVecDocInput {
  * `semanticText` as `''` (never valid after retrieval; only meaningful
  * during the index-time embedding pass that already ran).
  */
+/**
+ * Well under Zvec's hard 20,000-term ceiling for an `IN` list, leaving room
+ * for the rest of the filter expression.
+ */
+const FILTER_IN_CHUNK = 5000;
+
+/** Splits `items` into consecutive slices of at most `size`. */
+function* chunked<T>(items: readonly T[], size: number): Generator<readonly T[]> {
+  for (let i = 0; i < items.length; i += size) yield items.slice(i, i + size);
+}
+
 function payloadJson(record: CommitRecord | EvidenceRecord): string {
   const { semanticText: _semanticText, lexicalText: _lexicalText, ...rest } = record;
   return JSON.stringify(rest);
@@ -370,16 +381,24 @@ export class ZvecHistoryStore implements HistoryStore {
   async fetchCommits(shas: readonly string[]): Promise<ReadonlyMap<string, CommitRecord>> {
     const map = new Map<string, CommitRecord>();
     if (shas.length === 0) return map;
-    const expr = `${FIELD.type} = 'commit' AND ${FIELD.sha} IN (${shas.map((s) => quoteFilterLiteral(s)).join(', ')})`;
-    const docs = this.collection.querySync({
-      filter: expr,
-      topk: shas.length,
-      includeVector: false,
-      outputFields: [FIELD.payload, FIELD.lexicalText],
-    });
-    for (const doc of docs) {
-      const record = parsePayload<CommitRecord>(doc as unknown as RawZVecDoc);
-      map.set(record.sha, record);
+    // Zvec rejects an IN list longer than 20,000 terms outright, failing the
+    // whole query rather than degrading. Callers are expected to pass a
+    // bounded candidate set, but "expected to" is not a guarantee: structural
+    // expansion once passed every commit in a 30,000-commit repository and
+    // turned a ranking question into an INTERNAL error. Chunking here means a
+    // caller's bug costs an extra round trip instead of the entire result.
+    for (const chunk of chunked(shas, FILTER_IN_CHUNK)) {
+      const expr = `${FIELD.type} = 'commit' AND ${FIELD.sha} IN (${chunk.map((s) => quoteFilterLiteral(s)).join(', ')})`;
+      const docs = this.collection.querySync({
+        filter: expr,
+        topk: chunk.length,
+        includeVector: false,
+        outputFields: [FIELD.payload, FIELD.lexicalText],
+      });
+      for (const doc of docs) {
+        const record = parsePayload<CommitRecord>(doc as unknown as RawZVecDoc);
+        map.set(record.sha, record);
+      }
     }
     return map;
   }

@@ -12,6 +12,15 @@ import type { CommitExtraction, EvidenceRecord, LineageInterval, LineageStore } 
 import { LINEAGE_SCHEMA_VERSION } from '../types.js';
 import { pathMatchKeys } from './pathkeys.js';
 
+/**
+ * A path key is "hot" once more than this fraction of commits touch it. Tuned
+ * on the dev split only, like every other constant that shapes ranking.
+ */
+const HOT_PATH_FRACTION = 0.02;
+
+/** Floor so small repositories do not classify ordinary files as hot. */
+const HOT_PATH_MIN_COMMITS = 50;
+
 const MAX_TOKENS_PER_COMMIT = 256;
 const TOKEN_RE = /[A-Za-z_][A-Za-z0-9_]{2,}/g;
 
@@ -224,6 +233,7 @@ export function pruneLineageEvents(file: string, reachable: ReadonlySet<string>)
 
 export class JsonLineageStore implements LineageStore {
   readonly #events: readonly LineageEvent[];
+  #hotPathCache: ReadonlySet<string> | null = null;
   readonly #intervals: ReturnType<typeof buildIntervals>;
   constructor(private readonly file: string) {
     this.#events = readFile(file).events;
@@ -235,11 +245,40 @@ export class JsonLineageStore implements LineageStore {
   async lookupPath(pathKey: string): Promise<LineageInterval | null> {
     return this.#intervals.paths.get(pathKey) ?? null;
   }
+  /**
+   * Path keys touched by so many commits that linking through them says
+   * nothing. A changelog, a version header or a docs directory is edited by a
+   * large fraction of the history, so "shares a path with the seed" stops
+   * being evidence of a relationship and starts being evidence of nothing.
+   *
+   * Linking through them pulled hundreds of unrelated commits into the
+   * candidate pool on curl and drowned the real seeds. The cutoff is a
+   * document frequency rather than a name list, because which paths are hot is
+   * a property of each repository, not something that can be enumerated ahead
+   * of time.
+   */
+  #hotPathKeys(): ReadonlySet<string> {
+    if (this.#hotPathCache !== null) return this.#hotPathCache;
+    const counts = new Map<string, number>();
+    for (const event of this.#events) {
+      for (const key of new Set(event.paths)) counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    const cutoff = Math.max(
+      HOT_PATH_MIN_COMMITS,
+      Math.floor(this.#events.length * HOT_PATH_FRACTION),
+    );
+    const hot = new Set<string>();
+    for (const [key, count] of counts) if (count > cutoff) hot.add(key);
+    this.#hotPathCache = hot;
+    return hot;
+  }
+
   async linkedCommits(sha: string, maxHops: number): Promise<ReadonlyMap<string, number>> {
     const seed = this.#events.find((event) => event.sha === sha);
     if (seed === undefined || maxHops < 1) return new Map();
     const result = new Map<string, number>();
-    const pathSet = new Set(seed.paths);
+    const hot = this.#hotPathKeys();
+    const pathSet = new Set(seed.paths.filter((key) => !hot.has(key)));
     for (const event of this.#events) {
       if (event.sha === sha || !event.paths.some((key) => pathSet.has(key))) continue;
       result.set(event.sha, 1);

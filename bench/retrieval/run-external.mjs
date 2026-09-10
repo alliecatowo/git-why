@@ -83,12 +83,23 @@ const scaleOverrides = args.scale
   ? JSON.parse(fs.readFileSync(path.resolve(ROOT, args.scale), 'utf8'))
   : {};
 
-const dirFor = new Map(
-  dataset.repositories.map((r) => [
-    r.id,
-    path.join(String(args.repos), `${r.id.split('-').pop()}-cut`),
-  ]),
-);
+/**
+ * Resolves a repository's clone directory.
+ *
+ * Two naming schemes are in play: clones created by the maintenance scripts
+ * use the dataset's full `id` (`curl-curl`), while the original hand-made
+ * bundles used `<last-segment>-cut` (`curl-cut`). Trying the id first and
+ * falling back keeps both working, rather than silently skipping every
+ * repository because the convention drifted -- which is exactly what happened,
+ * and produced a run that scored zero rows and still exited 0.
+ */
+function resolveRepoDir(id) {
+  const root = String(args.repos);
+  const candidates = [path.join(root, id), path.join(root, `${id.split('-').pop()}-cut`)];
+  return candidates.find((dir) => fs.existsSync(path.join(dir, '.git'))) ?? candidates[0];
+}
+
+const dirFor = new Map(dataset.repositories.map((r) => [r.id, resolveRepoDir(r.id)]));
 
 /** Refuse to score against a working copy that can see past the cutoff. */
 function assertCutoff(repoDir, cutoffSha) {
@@ -348,6 +359,21 @@ console.log(
   `[bench/external] dataset=${summary.datasetPath} modes=${modes.join(',')} ablation=${args.ablation}`,
 );
 console.log(`[bench/external] wrote ${rows.length} rows to ${outDir}`);
+
+// A run that scored nothing is a failure, not a result. Exiting 0 with a table
+// of nulls reads as "the benchmark ran" to anyone downstream -- including the
+// report generator -- and that is how an absent measurement gets mistaken for
+// a measured absence.
+if (rows.length === 0) {
+  console.error(
+    `\n[bench/external] FAILED: scored 0 cases. Every repository was skipped, ` +
+      `so no clone was found under ${args.repos}. Check the directory names ` +
+      `against the dataset's repository ids, and run ` +
+      `\`node bench/verify-external-clones.mjs\` to confirm the clones are ` +
+      `present and pinned.`,
+  );
+  process.exit(1);
+}
 console.table(
   overallByMode.map((r) => ({
     mode: r.mode,

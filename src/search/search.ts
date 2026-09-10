@@ -58,10 +58,30 @@ async function selectInterval(
     const interval = await lineage.lookupPath(path.value);
     if (interval !== null) return { interval, viaToken: null, viaPath: path.value };
   }
+  // Prefer the RAREST token, not the first one in the sentence.
+  //
+  // Taking the first match keys the answer on whichever token happens to lead
+  // the query, and in a natural-language question that is almost always a
+  // generic one. "When was HTTP/3 support first introduced in curl" selected
+  // `http`, a token touched by a large share of curl's history, so the
+  // reported origin was effectively the start of the repository and structural
+  // expansion pulled in unrelated commits by the hundred.
+  //
+  // Chain length is a document frequency: the fewer commits a token appears
+  // in, the more specific it is to what the user asked about. This is the
+  // token filter the temporal dossier leaves open in section 6, resolved by
+  // selection rather than by a fixed stoplist -- a stoplist would have to know
+  // that `http` is generic in curl but highly specific in most other
+  // repositories.
+  let best: { interval: LineageInterval; token: string } | null = null;
   for (const token of queryTokens(core)) {
     const interval = await lineage.lookupToken(token);
-    if (interval !== null) return { interval, viaToken: token, viaPath: null };
+    if (interval === null) continue;
+    if (best === null || interval.chain.length < best.interval.chain.length) {
+      best = { interval, token };
+    }
   }
+  if (best !== null) return { interval: best.interval, viaToken: best.token, viaPath: null };
   return null;
 }
 
