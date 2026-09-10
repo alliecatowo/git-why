@@ -1,0 +1,50 @@
+{
+  "id": "b5be7f40493b1e5f",
+  "prompt": "Explain, based only on repository history, why the browser cookie compatibility behavior in src/cookies.cjs changed. Cite the commits you rely on. Do not modify code.\n",
+  "answer": "The preflight and `git why` checks both succeeded. Now let me investigate the repository history for `src/cookies.cjs`.\n\nLet me check for any related context in the repository—docs, tests, or linked commits that reference this behavior.\n\nNo further references exist in the repo. I now have the complete picture from git history and can answer.\n\n## Why the browser cookie compatibility behavior in `src/cookies.cjs` changed\n\nThe behavior change went through a full lifecycle in this repository's history — it was **introduced as a monitored rollout, then retired** once its trigger condition no longer held. There are four commits involved:\n\n### 1. `ed818d0` — \"Introduce browser cookie compatibility\" (2025-03-12, 00:26:40)\nCreated `src/cookies.cjs` with:\n```js\nfunction configured() { return 'browser cookie compatibility'; }\n```\nThe commit message gives the reason the compatibility mode existed at all: *\"The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\"* I.e., a browser stopped sending a required cookie attribute, which would have broken sessions, so a compatibility mode was introduced to keep those sessions working.\n\n### 2. `a531967` — \"Adjust browser cookie compatibility rollout\" (2025-03-12, 01:26:40)\nThis only removed a trailing blank line (a cosmetic change), but its message is key context: *\"The rollout was monitored before its final retirement.\"* This confirms the compatibility behavior was never meant to be permanent — it was an instrumented/monitored rollout that was expected to be retired eventually.\n\n### 3. `d85c97e` — \"Remove browser cookie compatibility\" (2025-03-12, 02:26:40) — **the actual behavior change**\nThe `configured()` function was changed so it now returns `'default'` instead of `'browser cookie compatibility'`:\n```diff\n-function configured() { return 'browser cookie compatibility'; }\n+function configured() { return 'default'; }\n```\nThe reason, per the commit message: *\"Usage of the affected browser family stayed below the retirement threshold for two quarters.\"* In plain terms: the browser family that triggered the compatibility need had fallen low enough (below the retirement threshold) for two consecutive quarters, so the compatibility mode was decommissioned and the module reverted to the default behavior.\n\n### 4. `42adaf0` — \"Current browser cookie compatibility state\" (current HEAD, 2025-03-12, 03:26:40)\nAn empty commit (no diff) that simply marks the current state; it makes no code changes.\n\n### Summary\nThe browser cookie compatibility behavior in `src/cookies.cjs` changed (from `'browser cookie compatibility'` to `'default'`) because it was a deliberately temporary, monitored compatibility mode: **introduced** (commit `ed818d0`) to preserve sessions when a browser dropped a required cookie attribute, **monitored** during its rollout (`a531967`), and then **removed** (commit `d85c97e`) once usage of the affected browser family stayed below the retirement threshold for two quarters. No code was modified during this investigation.",
+  "rubric": {
+    "mustMentionAny": [
+      "browser",
+      "cookies"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "The affected browser dropped a required attribute, so a compatibility mode preserved sessions.",
+      "removal": "Usage of the affected browser family stayed below the retirement threshold for two quarters.",
+      "temporalKind": null
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "ed818d0",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "a531967",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "d85c97e",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "42adaf0",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "browser",
+      "cookies"
+    ],
+    "mentionedKeywords": [
+      "browser",
+      "cookies"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

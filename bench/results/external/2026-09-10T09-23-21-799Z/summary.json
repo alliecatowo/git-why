@@ -1,0 +1,321 @@
+{
+  "generatedAt": "2026-09-10T09:23:21.799Z",
+  "datasetPath": "bench/dataset/external.json",
+  "modes": [
+    "text",
+    "semantic",
+    "hybrid"
+  ],
+  "ablationRun": false,
+  "repositories": [],
+  "totalCases": 12,
+  "answerableCases": 10,
+  "noEvidenceCases": 2,
+  "overallByMode": [
+    {
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "bySplit": [
+    {
+      "split": "dev",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "dev",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "dev",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "test",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "test",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "test",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "byRepository": [],
+  "byCategory": [
+    {
+      "category": "number_version",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "number_version",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "number_version",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "deleted_implementation",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "deleted_implementation",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "deleted_implementation",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "migration",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "migration",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "migration",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "regression",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "regression",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "regression",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "noEvidenceObservations": [],
+  "ablation": null,
+  "notBlinded": "See bench/README.md: the same agent system that implements Git Why also authored this file. This is real-repository evidence, not a blinded held-out study."
+}

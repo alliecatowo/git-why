@@ -1,0 +1,66 @@
+Environment verified. Now let me search the repository history for the `%{json}` write-out feature.
+
+The commit `04c0341` is the one that establishes `%{json}`. Let me examine it in detail.Let me look at the diff details, particularly the docs and the writeout.c changes.I have strong evidence. Let me also confirm the `VAR_JSON` case in the diff and what version this landed in.I have all the evidence needed. Here is my answer.
+
+## Answer: Yes
+
+curl **can** print transfer stats as JSON with `-w/--write-out`, via `-w "%{json}"` (the `%{json}` variable outputs a JSON object containing all available write-out keys).
+
+## Supporting commit
+
+**`04c03416e68fd635a15cae8201872f5c29fdcca8`** — "writeout: support to generate JSON output"
+- Author: Mathias Gumz
+- Committed: 2020-03-17 (by Daniel Stenberg), Closes #4870
+
+### Evidence from the commit message
+
+> ```
+> writeout: support to generate JSON output
+>
+> This commit adds support to generate JSON via the writeout feature:
+>
+>     -w "%{json}"
+>
+> It leverages the existing infrastructure as much as possible. Thus,
+> generating the JSON on STDERR is possible by:
+>
+>     -w "%{stderr}%{json}"
+> ```
+
+### Evidence from the diff
+
+The docs (`docs/cmdline-opts/write-out.d`) add the new `json` variable:
+
+```diff
+ .TP
++.B json
++A JSON object with all available keys.
++.TP
+ .B local_ip
+```
+
+The implementation (`src/tool_writeout.c`) adds the variable and its dispatch:
+
+```diff
++  {"json", VAR_JSON, 1,
++   0, JSON_NONE},
++  {NULL, VAR_NONE, 1,
++   0, JSON_NONE}
+...
+               case VAR_STDERR:
+                 stream = stderr;
+                 break;
++              case VAR_JSON:
++                ourWriteOutJSON(variables, curl, outs, stream);
+               default:
+                 break;
+```
+
+plus new files `src/tool_writeout_json.c` / `src/tool_writeout_json.h` (the JSON serializer) wired into `src/Makefile.inc`.
+
+### Related history (for context)
+
+- `4133a69f2` ("curl: add %{header_json} support in -w handling", 2022-03-22) later added `%{header_json}` for outputting response headers as a JSON object.
+- `65ca229` (2021-02-09) refactored write-out and JSON write-out into shared code.
+
+No files were modified; this was a read-only investigation.

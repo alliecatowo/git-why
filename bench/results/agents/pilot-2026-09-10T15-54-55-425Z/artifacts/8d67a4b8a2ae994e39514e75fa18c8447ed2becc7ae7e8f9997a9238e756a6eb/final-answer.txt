@@ -1,0 +1,50 @@
+## Answer
+
+The bug is **CVE-2022-27774** ("credential leak on redirect"). When curl followed a redirect, it would re‑use the credentials (user/password) from the original request even if the redirect went to a **different protocol** (e.g. HTTP → FTP) or a **different port** on the same host, potentially leaking them to a party that should never have seen them.
+
+**Fix commit:** `620ea21410030a9977396b4661806bc187231b79` — *"transfer: redirects to other protocols or ports clear auth"* (Daniel Stenberg, 2022‑04‑25). It is an ancestor of the pinned HEAD.
+
+The commit message itself establishes the answer:
+
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+The change is in `lib/transfer.c` inside `Curl_follow()`. It compares the redirect target's port against `data->info.conn_remote_port` and its scheme against `data->info.conn_protocol`, and when either differs it clears the stored credentials, unless `CURLOPT_UNRESTRICTED_AUTH` (`data->set.allow_auth_to_other_hosts`) is set:
+
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
++        ...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
+```
+
+So in short: **the fix made `Curl_follow()` discard the request's auth (`aptr.user`/`aptr.passwd`) on a redirect to a different port or protocol, retaining it only when the caller explicitly opted in via `CURLOPT_UNRESTRICTED_AUTH`.**
+
+Supporting regression tests are in commit `5295e8d64ac6949ecb3f9e564317a608f51b90d8` ("tests: verify the fix for CVE-2022-27774"), which adds tests 973–976 covering HTTP→FTP and HTTP→HTTP-different-port redirects, with and without permission to keep auth.
+
+No files were modified.

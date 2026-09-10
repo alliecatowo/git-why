@@ -1,0 +1,33 @@
+## Answer
+
+**Yes.** Caddy raised its minimum supported Go version specifically because of its HTTP/3 dependency (the `quic-go` library) — and it did so at least three times.
+
+The clearest single commit is:
+
+### `f45a6de20dd19e82e58c85b37e03957b2203b544`
+**"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)"** (Marten Seemann, Jul 21 2023)
+
+Its title directly pairs the HTTP/3 library upgrade with the Go minimum bump, and the diff confirms the causality in the same commit:
+
+```
+-go 1.19
++go 1.20
+...
+-	github.com/quic-go/quic-go v0.36.2
++	github.com/quic-go/quic-go v0.37.0
+...
+-	github.com/quic-go/qtls-go1-19 v0.3.2 // indirect
+-	github.com/quic-go/qtls-go1-20 v0.2.2 // indirect
++	github.com/quic-go/qtls-go1-20 v0.3.0 // indirect
+```
+
+The README requirement changed correspondingly (`Go 1.19 or newer` → `Go 1.20 or newer`).
+
+### Corroborating occurrences (same cause, different versions)
+
+- **`8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe`** — *"go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)"* (Feb 24 2023). README: `Go 1.18 or newer` → `Go 1.19 or newer`; go.mod replaces `qtls-go1-18` with `qtls-go1-19`.
+- **`697cc593a17fcb39087161b058fc1dba8b767060`** — *"chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)"* (Jan 25 2024). Diff: `-go 1.20` / `+go 1.21` and `-github.com/quic-go/quic-go v0.40.1` / `+github.com/quic-go/quic-go v0.41.0`, dropping the `qtls-go1-20` shim.
+
+So the answer is not merely "yes" — because of `quic-go`'s own Go-version floor, Caddy was forced to move its minimum from 1.18→1.19, 1.19→1.20, and 1.20→1.21 over the course of 2023–2024.
+
+*(No files were modified; only read-only git inspection was performed.)*

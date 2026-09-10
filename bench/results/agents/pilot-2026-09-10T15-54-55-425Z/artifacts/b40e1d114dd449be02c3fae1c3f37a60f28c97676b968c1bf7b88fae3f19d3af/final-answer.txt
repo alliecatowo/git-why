@@ -1,0 +1,34 @@
+## Answer
+
+Yes — the option was renamed. It was introduced as `FIRST` and later renamed to `RANK`. The commit that establishes this is:
+
+**`a5a3a7bbc61203398ecc1d5b52c76214f5672776`** — *"LPOS: option FIRST renamed RANK."* (antirez, 2020-06-24)
+
+Its commit message is explicit:
+
+```
+LPOS: option FIRST renamed RANK.
+```
+
+The diff renames the option in the command parser in `src/t_list.c`:
+
+```diff
+-/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]
++/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]
+ ...
+-        if (!strcasecmp(opt,"FIRST") && moreargs) {
++        if (!strcasecmp(opt,"RANK") && moreargs) {
+             j++;
+             if (getLongFromObjectOrReply(c, c->argv[j], &rank, NULL) != C_OK)
+                 return;
+             if (rank == 0) {
+-                addReplyError(c,"FIRST can't be zero: use 1 to start from "
++                addReplyError(c,"RANK can't be zero: use 1 to start from "
+                                 "the first match, 2 from the second, ...");
+```
+
+It also updates the tests in `tests/unit/type/list.tcl` from `FIRST 1` / `FIRST 2` / `FIRST -1` to `RANK 1` / `RANK 2` / `RANK -1`.
+
+For context, the command itself was first added under a different name as well: `a7936ef96d521ef7e28a255e5105934f820e774a` — *"LRANK: Add command (the command will be renamed LPOS)."* — but the `FIRST` → `RANK` option rename specifically is `a5a3a7bbc`.
+
+No files were modified (the only untracked entry, `.zvec-grep/`, is the pre-built search index).

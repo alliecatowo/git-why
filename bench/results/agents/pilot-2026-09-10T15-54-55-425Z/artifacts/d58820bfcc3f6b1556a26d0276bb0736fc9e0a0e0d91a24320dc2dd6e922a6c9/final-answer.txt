@@ -1,0 +1,51 @@
+Found a very relevant commit. Let me examine it in detail.This is the canonical commit. Let me verify it's in HEAD's ancestry and check whether later Zod 4 commits re-touched this default.Confirmed the current default. Let me check what introduced the brief "keep keys" default that the user remembers, to give full context.I have the full picture. Let me verify one last detail — the state of `create()` immediately before the change, to quote the exact before/after.## Answer
+
+Yes — the default handling of unknown keys changed, exactly once, and it has stayed that way ever since: **Zod objects now strip undeclared keys by default**, instead of keeping them.
+
+The commit that establishes this is:
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a` — "strip unknown keys by default"** (Colin McDonnell, Sep 17 2020, during Zod 2 development; verified to be an ancestor of HEAD `62311eb2`).
+
+### Supporting evidence from the diff
+
+The commit's message itself is the title, and the diff shows the default flip. In `src/types/object.ts`, the `ZodObject.create()` factory default changed from `'allow'` (keep) to `'strip'` (drop):
+
+```diff
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+The parser branch that copies unknown keys through was gated on the same mode:
+
+```diff
+       if (def.catchall instanceof ZodNever) {
+-        if (def.unknownKeys === 'allow') {
++        if (def.unknownKeys === 'passthrough') {
+           for (const key of extraKeys) {
+             objectPromises[key] = PseudoPromise.resolve(data[key]);
+           }
+```
+
+And the README documented the new behavior:
+
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+...
+ person.parse({
+   name: 'bob dylan',
+   extraKey: 61,
+ });
+-// => { name: "bob dylan", extraKey: 61 }
++// => { name: "bob dylan" }
+```
+
+The same commit renamed the escape hatches: `allowUnknown` → `passthrough()` (keeps extra keys), `stripUnknown` → `strip()`, with `.nonstrict()` kept as an alias for backwards compatibility.
+
+### Context for your memory
+
+Before this commit, a freshly created `z.object()` set `unknownKeys: 'allow'` (see `18854492^:src/types/object.ts:391`), so undeclared keys survived parsing — that is the behavior you remember. That "keep" default was itself a short-lived mid-development state on the Zod 2 branch; in released Zod 1, unknown keys made the object **throw** (the README at this commit notes "⚠️ Before version 2, Zod did NOT allow unknown keys by default"). The commit above settled on stripping before Zod 2 shipped, and no later commit reverted it — the current checkout (4.6.1) still documents strip as the default, with `.strip()`'s JSDoc reading "This is the default behavior." You can get the old behavior back with `.passthrough()`/`.loose()` (or `.catchall()` to validate rather than blindly keep).

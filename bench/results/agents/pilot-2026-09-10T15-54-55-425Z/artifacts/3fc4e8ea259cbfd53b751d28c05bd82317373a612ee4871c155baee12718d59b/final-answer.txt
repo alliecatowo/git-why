@@ -1,0 +1,52 @@
+The environment matches. Now let me research the question: can curl print transfer stats as JSON with `-w/--write-out` using `%{json}`?There are several relevant commits. Let me examine them in detail, checking which are ancestors of HEAD and their content.Excellent! `04c03416e` "writeout: support to generate JSON output" is an ancestor of HEAD. Let me look at the full commit message and relevant diff portions.The commit is confirmed. Let me verify the feature is present in the current checkout at HEAD.I have all the information needed. No files were modified. Here is my final answer.
+
+## Answer
+
+**Yes.** curl can print transfer stats as JSON with `-w/--write-out` using `-w "%{json}"`.
+
+## Supporting commit
+
+The commit that establishes this is:
+
+**`04c03416e68fd635a15cae8201872f5c29fdcca8`** — "writeout: support to generate JSON output"
+- Author: Mathias Gumz `<mg@2hoch5.com>` (Feb 1, 2020)
+- Committed by Daniel Stenberg on **Tue Mar 17 15:01:28 2020**
+- Closes [#4870](https://github.com/curl/curl/issues/4870)
+- Confirmed to be an ancestor of the pinned HEAD (`ee521a1c8`), and the feature exists in the current checkout (`docs/cmdline-opts/write-out.d` documents the `json` variable; `src/tool_writeout_json.c` exists).
+
+### Quote from the commit message
+
+> ```
+> writeout: support to generate JSON output
+>
+> This commit adds support to generate JSON via the writeout feature:
+>
+>     -w "%{json}"
+>
+> It leverages the existing infrastructure as much as possible. Thus,
+> generating the JSON on STDERR is possible by:
+>
+>     -w "%{stderr}%{json}"
+>
+> This implements a variant of
+> https://github.com/curl/curl/wiki/JSON#--write-out-json.
+>
+> Closes #4870
+> ```
+
+### Quote from the diff
+
+`docs/cmdline-opts/write-out.d` gained a new documented variable:
+
+> ```
+> +.B json
+> +A JSON object with all available keys.
+> ```
+
+The commit also added `src/tool_writeout_json.c` (181 lines) and `src/tool_writeout_json.h`, wired the new variable into `src/tool_writeout.c`, and bumped `lib/version.c`.
+
+### Subsequent history (for context)
+
+The `%{json}` output was refined by later ancestors of HEAD such as `ab9dc5ae2` ("writeout_json: add missing comma to fix the HTTP version"), `8d9802b0a`, `884de1a76`, `2f78be51e`, `65ca22946`, and `7631f2b75` ("test 970: verify --write-out '%{json}'"). A related `%{header_json}` variable was added later in `4133a69f2`.
+
+So your memory is correct: `-w "%{json}"` exists (introduced in curl 7.70.0, per the March 2020 commit date).

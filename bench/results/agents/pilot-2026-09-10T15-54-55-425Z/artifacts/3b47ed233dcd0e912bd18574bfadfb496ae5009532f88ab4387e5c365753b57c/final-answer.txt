@@ -1,0 +1,57 @@
+Found it. Commit `cc90511` is literally titled "Switch from .rgignore to .ignore." Let me examine it in detail.
+
+The answer is clear. Let me also confirm `.rgignore` was indeed the *original* name from the earliest days, to fully answer the question.
+
+Even more history: before `.rgignore`, when the tool was named `xrep`, the file was `.xrepignore`. Let me check the initial commit.
+
+I now have the complete picture. Let me verify no files were modified:
+
+## Answer
+
+**Yes.** ripgrep's special ignore-file name used to be `.rgignore` (and even earlier, `.xrepignore` when the tool was still named `xrep`). It was switched to `.ignore` in the pinned repository's history.
+
+### The establishing commit
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — *"Switch from .rgignore to .ignore."*
+
+Full commit message:
+
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+Supporting parts of the diff (from `src/ignore.rs` — the old name is shown as the removed `.rgignore` entry, replaced by adding `.ignore` while retaining `.rgignore` for compatibility):
+
+```rust
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+And from `src/args.rs`:
+
+```
+     --no-ignore
+-        Don't respect ignore files (.gitignore, .rgignore, etc.)
++        Don't respect ignore files (.gitignore, .ignore, etc.)
+```
+
+### Bonus: even earlier history
+
+Tracing back further confirms the older names and the rename chain:
+
+1. **`065c44998092906746f6585090bafbf36d98342b`** ("File path filtering works and is pretty fast.") introduced the special ignore file as **`.xrepignore`** (e.g., `$HOME/.xrepignore`, `id.path.join(".xrepignore")`) — while the tool was named `xrep`.
+2. **`a744ec1`** ("Rename xrep to ripgrep.") renamed **`.xrepignore` → `.rgignore`**.
+3. **`cc90511`** (cited above) then switched **`.rgignore` → `.ignore`**, keeping `.rgignore` working until the next semver bump.
+
+No files were modified.

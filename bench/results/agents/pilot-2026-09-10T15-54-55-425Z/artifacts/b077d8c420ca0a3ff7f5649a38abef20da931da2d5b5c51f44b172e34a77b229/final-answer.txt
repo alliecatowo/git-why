@@ -1,0 +1,63 @@
+The environment checks out. Now let me investigate the repository history for the credential-leak-on-redirect security fix.
+
+Found promising candidates. Let me examine them in detail.
+
+Excellent — these are exactly the relevant commits. Let me verify context: confirm they're in this repo's history, check the CVE, and look at related commits.
+
+Both commits are in HEAD's history. Let me get the full diff of the main fix and the test commit for completeness.
+
+I have the complete picture. Let me do a final verification of the CVE reference and check whether the docs in-repo mention it.
+
+I have everything needed to answer. Here is my summary.
+
+## Answer
+
+The bug is **CVE-2022-27774**: when following a redirect (e.g. an HTTP `Location:`-triggered follow), libcurl would leak the user:password credentials to the redirect target when that target used a **different protocol or port** than the original connection.
+
+### The commit that establishes the fix
+
+**`620ea21410030a9977396b4661806bc187231b79`** — *"transfer: redirects to other protocols or ports clear auth"* (Daniel Stenberg, 2022-04-25), which is an ancestor of the current checkout (`ee521a1c8`).
+
+Commit message:
+
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+### What the fix changed
+
+It modified `Curl_follow()` in `lib/transfer.c` (48 insertions, 1 deletion). After resolving the redirect URL, the code now clears the stored credentials whenever the redirect target's port or protocol differs from the current connection's — *unless* the user explicitly permitted it via `CURLOPT_UNRESTRICTED_AUTH` (`data->set.allow_auth_to_other_hosts`). Supporting quote from the diff:
+
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+       ...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
+       ...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+       ...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
+```
+
+So the fix's behavior: the redirect target's port is determined (with `CURLU_DEFAULT_PORT`, so a scheme's default port counts as its actual port) and its scheme's protocol is looked up; if the port differs from `data->info.conn_remote_port` or the protocol differs from `data->info.conn_protocol`, the pre-built auth strings `data->state.aptr.user` and `data->state.aptr.passwd` are freed, so no `Authorization`/credentials are sent to the redirect target. The companion tests commit **`5295e8d64`** (*"tests: verify the fix for CVE-2022-27774"*) adds tests 973–976 covering HTTP→FTP and HTTP→different-port redirects (both default clear-auth and `UNRESTRICTED_AUTH`-permitted variants).
+
+Note: a closely related same-day fix, **`6e6599939`** (*"http: avoid auth/cookie on redirects same host diff port"*, CVE-2022-27776), tightened the same idea on the header-output side in `lib/http.c` by adding a new `allow_auth_to_host()` helper that also requires the first request's port and protocol to match. But the commit that directly answers "redirect leaks credentials to a different protocol or port" is **`620ea2141`**.

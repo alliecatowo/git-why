@@ -1,0 +1,110 @@
+{
+  "task_id": "T17",
+  "task_stratum": "temporal",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "corpus_fingerprint": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:25:05.020Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "0df464d93526812abf09c1005872f54c5d5c77d139dfef8462eef2facdcbc554",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": "pending_blinded_review",
+  "wall_ms": 17700,
+  "tool_calls": 7,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 7738,
+  "output_tokens": 904,
+  "cache_read_tokens": 32512,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0008615200000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 19559,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T17-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "54490cb0b6450e7153f8341a33e624fad32f4ee081a8c18515a737b331d13bb9",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_7GJaHZSR0bx7ORUe0KIN8878",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -- src/session.cjs | head -50"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_Nncw67GkeG3vpNeS4uY94378",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20; echo \"---\"; ls -la src/ 2>&1 | head; echo \"---\"; git status"
+        },
+        "output": "aa15082 Current consent renewal handling state\n0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\nf6b9076 chore: relay follow-up 122\ndbaad29 chore: cache follow-up 121\n66916d6 chore: policy follow-up 120\n227d31e chore: worker follow-up 119\ncaed068 chore: adapter follow-up 118\n418f7b4 chore: queue follow-up 117\n3399992 chore: session follow-up 116\nd4d3327 chore: gateway follow-up 115\naeffee1 chore: relay follow-up 114\n3626d51 chore: cache follow-up 113\nd85fc77 chore: policy follow-up 112\n73e5383 chore: worker follow-up 111\n19b6e61 chore: adapter follow-up 110\n1e717e9 chore: queue follow-up 109\n15d127d chore: session follow-up 108\n2457235 chore: gateway follow-up 107\n---\ntotal 4\ndrwxr-xr-x 3 bench bench  96 Sep 10 08:25 .\ndrwxr-xr-x 5 bench bench 160 Sep 10 08:25 ..\n-rw-r--r-- 1 bench bench  77 Sep 10 08:25 session.cjs\n---\nHEAD detached at aa15082\nnothing to commit, working tree clean\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_g6LM9mDuwpKD3TSO0p8P2978",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- src/session.cjs; echo \"---branches---\"; git branch -a; echo \"---show HEAD file---\"; git show HEAD:src/session.cjs 2>&1 | head -5"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n---branches---\n* (HEAD detached at aa15082)\n---show HEAD file---\nfunction configured() { return 'default'; }\nmodule.exports = { configured };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_fl3dpgdEEM4fdDUM7Ess7630",
+        "status": "completed",
+        "input": {
+          "command": "for c in 86793c1 30e911d 0422e76; do echo \"=== $c ===\"; git show --stat --format='%H%n%an%n%ad%n%s%n%b' $c -- src/session.cjs; echo; git show $c -- src/session.cjs; done"
+        },
+        "output": "=== 86793c1 ===\n86793c1592ed4cfd8c54a3338d2eaded152ae263\nFixture Bot\nSun Mar 16 15:33:20 2025 +0000\nIntroduce consent renewal handling\nA legacy identity provider signals expired consent with a special token value.\n\n\n src/session.cjs | 3 +++\n 1 file changed, 3 insertions(+)\n\ncommit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..4d42b8c\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'consent renewal handling'; }\n+module.exports = { configured };\n+\n=== 30e911d ===\n30e911d204f0849b895a114f8c75a89cacdb30d5\nFixture Bot\nSun Mar 16 16:33:20 2025 +0000\nAdjust consent renewal handling rollout\nThe rollout was monitored before its final retirement.\n\n\n src/session.cjs | 1 -\n 1 file changed, 1 deletion(-)\n\ncommit 30e911d204f0849b895a114f8c75a89cacdb30d5\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 16:33:20 2025 +0000\n\n    Adjust consent renewal handling rollout\n    \n    The rollout was monitored before its final retirement.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 4d42b8c..dd7d198 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,3 +1,2 @@\n function configured() { return 'consent renewal handling'; }\n module.exports = { configured };\n-\n=== 0422e76 ===\n0422e76e94a3828eaf21512e7c77b1fb20385f0c\nFixture Bot\nSun Mar 16 17:33:20 2025 +0000\nRemove consent renewal handling\nThe legacy identity provider was retired.\n\n\n src/session.cjs | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\ncommit 0422e76e94a3828eaf21512e7c77b1fb20385f0c\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 17:33:20 2025 +0000\n\n    Remove consent renewal handling\n    \n    The legacy identity provider was retired.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex dd7d198..1c5cdca 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,2 +1,2 @@\n-function configured() { return 'consent renewal handling'; }\n+function configured() { return 'default'; }\n module.exports = { configured };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_1PYJHwlag6vLearaGLMG2313",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -S'consent renewal handling' -- src/session.cjs; echo \"--- message search across all history ---\"; git log --all --oneline --grep='consent renewal' ; echo \"--- first parent check ---\"; git log --oneline --diff-filter=A -- src/session.cjs"
+        },
+        "output": "0422e76 Remove consent renewal handling\n86793c1 Introduce consent renewal handling\n--- message search across all history ---\naa15082 Current consent renewal handling state\n0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n--- first parent check ---\n86793c1 Introduce consent renewal handling\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "aa150827a936441f92d851f180717a3ea0db14b2"
+    }
+  },
+  "review_packet_id": "58e5fea3690bf588",
+  "completed": true
+}

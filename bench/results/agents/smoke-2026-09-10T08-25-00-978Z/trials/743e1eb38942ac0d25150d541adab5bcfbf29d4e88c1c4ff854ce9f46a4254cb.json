@@ -1,0 +1,73 @@
+{
+  "task_id": "T21",
+  "task_stratum": "coding",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "96b308a20980554af509a525430daddfaa4b670e",
+  "corpus_fingerprint": "96b308a20980554af509a525430daddfaa4b670e",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:25:24.931Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "5d650413cfa0539a6d5fcb30769d904093e08bff785dd86b80e0f601c8fde69f",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 1,
+  "hidden_tests_total": 1,
+  "evidence_grade": null,
+  "wall_ms": 34412,
+  "tool_calls": 9,
+  "history_calls": 0,
+  "zg_calls": 1,
+  "git_why_calls": 0,
+  "input_tokens": 10645,
+  "output_tokens": 967,
+  "cache_read_tokens": 51456,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0011828099999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 18472,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T21-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "743e1eb38942ac0d25150d541adab5bcfbf29d4e88c1c4ff854ce9f46a4254cb",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  123 / 123 files\n  Entities    123\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "96b308a20980554af509a525430daddfaa4b670e"
+    }
+  },
+  "review_packet_id": null,
+  "completed": true
+}

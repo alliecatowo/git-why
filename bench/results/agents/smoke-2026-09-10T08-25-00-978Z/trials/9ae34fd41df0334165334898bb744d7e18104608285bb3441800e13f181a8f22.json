@@ -1,0 +1,123 @@
+{
+  "task_id": "T17",
+  "task_stratum": "temporal",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "corpus_fingerprint": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:26:23.794Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "b77797ab749a3263b1f0f03ee07e668420abd7e2f593b0785263636541cc7908",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": "pending_blinded_review",
+  "wall_ms": 45460,
+  "tool_calls": 10,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 2,
+  "input_tokens": 9468,
+  "output_tokens": 1191,
+  "cache_read_tokens": 54784,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00126424,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 27673,
+  "index_build_ms": 2101,
+  "model_download_ms": null,
+  "index_disk_bytes": 6052708,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T17-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "9ae34fd41df0334165334898bb744d7e18104608285bb3441800e13f181a8f22",
+  "indexed_commits": 126,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_6f5suxhg9nel8d4tikug0zyj",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --follow -- src/session.cjs"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ah8hph9dnritjrf81rogqiu9",
+        "status": "completed",
+        "input": {
+          "command": "git log --follow --format='%h %ad %s' --date=iso -- src/session.cjs"
+        },
+        "output": "0422e76 2025-03-16 17:33:20 +0000 Remove consent renewal handling\n30e911d 2025-03-16 16:33:20 +0000 Adjust consent renewal handling rollout\n86793c1 2025-03-16 15:33:20 +0000 Introduce consent renewal handling\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_yke1vowafzrqy22pkfpwcr4w",
+        "status": "completed",
+        "input": {
+          "command": "git show 86793c1 --format=fuller --stat"
+        },
+        "output": "commit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor:     Fixture Bot <fixture-bot@git-why.bench>\nAuthorDate: Sun Mar 16 15:33:20 2025 +0000\nCommit:     Fixture Bot <fixture-bot@git-why.bench>\nCommitDate: Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\n src/session.cjs | 3 +++\n 1 file changed, 3 insertions(+)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_u6sidgmc9tginrwolrlq3ky6",
+        "status": "completed",
+        "input": {
+          "command": "git show 86793c1 --format=fuller -- src/session.cjs"
+        },
+        "output": "commit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor:     Fixture Bot <fixture-bot@git-why.bench>\nAuthorDate: Sun Mar 16 15:33:20 2025 +0000\nCommit:     Fixture Bot <fixture-bot@git-why.bench>\nCommitDate: Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..4d42b8c\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'consent renewal handling'; }\n+module.exports = { configured };\n+\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3botbavp2plt7pyny837qr27",
+        "status": "completed",
+        "input": {
+          "command": "git log --format='%h %ad %s' --date=iso -S 'consent renewal handling' --all -- src/session.cjs"
+        },
+        "output": "0422e76 2025-03-16 17:33:20 +0000 Remove consent renewal handling\n86793c1 2025-03-16 15:33:20 +0000 Introduce consent renewal handling\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 20,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "aa150827a936441f92d851f180717a3ea0db14b2"
+    }
+  },
+  "review_packet_id": "83861624c296ffc5",
+  "completed": true
+}

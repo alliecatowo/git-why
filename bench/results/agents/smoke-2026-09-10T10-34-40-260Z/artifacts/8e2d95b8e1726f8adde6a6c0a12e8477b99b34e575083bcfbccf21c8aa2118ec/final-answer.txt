@@ -1,0 +1,29 @@
+The task is complete. I verified the repository identity first:
+
+```
+pwd                    -> /workspace
+git rev-parse --show-toplevel -> /workspace
+git rev-parse HEAD     -> aa150827a936441f92d851f180717a3ea0db14b2
+```
+
+All three match the expected values.
+
+## Finding
+
+The first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:
+
+**`86793c1592ed4cfd8c54a3338d2eaded152ae263`** — *"Introduce consent renewal handling"* (Fixture Bot, 2025-03-16)
+
+Evidence:
+
+- `git log --oneline -- src/session.cjs` shows exactly three commits for this file: `86793c1`, `30e911d`, `0422e76`.
+- `86793c1` is where `src/session.cjs` was **first created** (`new file mode 100644`), with the content:
+
+```js
+function configured() { return 'consent renewal handling'; }
+module.exports = { configured };
+```
+
+The two later commits only adjusted and then removed that behavior (`30e911d` "Adjust consent renewal handling rollout", `0422e76` "Remove consent renewal handling"), so `86793c1` is the origin of the behavior.
+
+No code was modified.

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T04:54:22.343Z",
+  "updatedAt": "2026-09-10T17:06:37.000Z",
   "retrieval": {
     "state": "completed",
     "runId": "2026-09-10T02-19-34-615Z",
@@ -11,10 +11,10 @@
   },
   "agent": {
     "state": "completed",
-    "stage": "Smoke",
-    "runId": "2026-09-10T04-47-23-486Z",
-    "planned": 16,
-    "completed": 16,
-    "note": "16 valid trials; 0 infrastructure-blocked."
+    "stage": "Pilot",
+    "runId": "2026-09-10T15-54-55-425Z",
+    "planned": 36,
+    "completed": 36,
+    "note": "33 valid trials; 0 infrastructure-blocked."
   }
 }

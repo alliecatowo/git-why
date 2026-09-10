@@ -1,0 +1,62 @@
+{
+  "id": "038c1216a26f3460",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "I completed the task. No code was modified.\n\n## Preflight\n```\npwd                     -> /workspace\ngit rev-parse --show-toplevel -> /workspace\ngit rev-parse HEAD      -> aa150827a936441f92d851f180717a3ea0db14b2\n```\nAll matched the required values.\n\n## Required `zg` check\n`zg query --fts function --limit 1` returned a hit:\n```\n#1 matchedBy=fts src/session.cjs:1\n1  function configured() { return 'default'; }\n```\n\n## Answer\n\nThe first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:\n\n**`86793c1592ed4cfd8c54a3338d2eaded152ae263`** — \"Introduce consent renewal handling\"\n- Author: Fixture Bot <fixture-bot@git-why.bench>\n- Date: Sun Mar 16 15:33:20 2025 +0000\n\nEvidence:\n- `git log --all --follow -- src/session.cjs` shows the file's full history as exactly three commits:\n  1. `86793c1` Introduce consent renewal handling\n  2. `30e911d` Adjust consent renewal handling rollout\n  3. `0422e76` Remove consent renewal handling\n- `86793c1` is the commit that **created** the file (`new file mode 100644`), adding `function configured() { return 'consent renewal handling'; }`. The parent commit `f6b9076` contains no `src/session.cjs`.\n- Later commits only tweak/remove that behavior (`0422e76` changes the return value to `'default'`), and `HEAD` (`aa15082`) is an empty commit, so neither introduced it.\n\nNo files were changed.",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "f6b9076",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "aa15082",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

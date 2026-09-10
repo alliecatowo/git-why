@@ -1,0 +1,52 @@
+## Answer
+
+Yes — ripgrep's special ignore-file name used to be **`.rgignore`**, not `.ignore`. (There was also a brief appearance of `.agignore`, borrowed from the silver searcher/ack lineage, which was removed shortly before.)
+
+### The commit that establishes this
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — *"Switch from .rgignore to .ignore."* (Andrew Gallant, Fri Sep 23 2016)
+
+Commit message:
+
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver
+> bump.
+>
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974
+>
+> Fixes #40
+
+Supporting diff changes — docs were rewritten to say `.ignore` instead of `.rgignore`:
+
+```diff
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+And `src/ignore.rs` added `.ignore` while *retaining* `.rgignore` for backward compatibility:
+
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+### Earlier names
+
+The history shows the lineage of the special ignore file names:
+
+- `7cefc55238bc23f8b329410520242046dea9ef33` — *"Remove .agignore from ignore file list."* (Sep 15 2016), which deleted `.agignore` from `IGNORE_NAMES`, leaving `.rgignore` as the ripgrep-specific name.
+- Then `cc90511` switched the canonical name from `.rgignore` to `.ignore` (keeping `.rgignore` as a deprecated alias until a semver bump).
+
+So the "something else in the early days" you remember is **`.rgignore`** (with a cameo by `.agignore`).
+
+No files were modified; `git status` is clean.

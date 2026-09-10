@@ -1,0 +1,54 @@
+{
+  "id": "318e5c20394da162",
+  "prompt": "Explain, based only on repository history, why the browser cookie compatibility behavior in src/cookies.cjs changed. Cite the commits you rely on. Do not modify code.\n",
+  "answer": "## Preflight\n\n```\npwd                          = /workspace                ✓\ngit rev-parse --show-toplevel = /workspace               ✓\ngit rev-parse HEAD            = 42adaf0b82df138b4f3344624fb12c5acab7ccb1 ✓\n```\n\n`zg query --fts function --limit 1` returned a hit (`src/cookies.cjs:1`, matchedBy=fts). No files were modified.\n\n## Why `src/cookies.cjs` changed, based only on repository history\n\nThe file's history is exactly three commits, and the commit messages state the rationale:\n\n1. **`ed818d0` — \"Introduce browser cookie compatibility\"**\n   Created the file and made `configured()` return `'browser cookie compatibility'`. Commit message rationale: *\"The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\"*\n   So the behavior was originally **added as a compatibility mode to keep sessions working** for a browser that had dropped a required attribute.\n\n2. **`a531967` — \"Adjust browser cookie compatibility rollout\"**\n   Only deleted a trailing blank line (`-` at end of file); the returned value stayed `'browser cookie compatibility'`. Rationale: *\"The rollout was monitored before its final retirement.\"* This commit is a monitoring/cleanup step, not a behavioral change.\n\n3. **`d85c97e` — \"Remove browser cookie compatibility\"**\n   Changed the return from `'browser cookie compatibility'` to `'default'`. Rationale: *\"Usage of the affected browser family stayed below the retirement threshold for two quarters.\"*\n   So the compatibility mode was **retired because usage of that browser family fell below the retirement threshold for two quarters**.\n\n`42adaf0` (\"Current browser cookie compatibility state\") is the current HEAD; it does **not** touch `src/cookies.cjs`, which still returns `'default'`.\n\n### Summary\nThe behavior changed in two functional steps: it was **introduced** (`ed818d0`) to preserve sessions for a browser that dropped a required attribute, then **removed/retired** (`d85c97e`) because that browser family's usage stayed below the retirement threshold for two quarters. The intermediate commit `a531967` only monitored the rollout (cosmetic whitespace change). The change is therefore driven by declining usage of the affected browser, not by a bug or regression.\n\nCommits relied on: `ed818d0`, `a531967`, `d85c97e` (and HEAD `42adaf0`).",
+  "rubric": {
+    "mustMentionAny": [
+      "browser",
+      "cookies"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "The affected browser dropped a required attribute, so a compatibility mode preserved sessions.",
+      "removal": "Usage of the affected browser family stayed below the retirement threshold for two quarters.",
+      "temporalKind": null
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "42adaf0b82df138b4f3344624fb12c5acab7ccb1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "ed818d0",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "a531967",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "d85c97e",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "42adaf0",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "browser",
+      "cookies"
+    ],
+    "mentionedKeywords": [
+      "browser",
+      "cookies"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

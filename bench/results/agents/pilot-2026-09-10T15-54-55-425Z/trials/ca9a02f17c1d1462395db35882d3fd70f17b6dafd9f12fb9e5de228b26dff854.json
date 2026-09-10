@@ -1,0 +1,198 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "b0c9185c5bb1c95b79ad1c944e18389a8e7d59ac",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T15:54:55.734Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "264714f9bd0ee73d714a4002a8695e1b80502de9babbd886e70204c225b817a8",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "79866a6361829ed0602dedff9cb378c66977227a",
+    "citedGoldSha": true,
+    "citedShaCount": 6,
+    "matchedTokens": [
+      "79866a6361829ed0602dedff9cb378c66977227a",
+      "79866a636"
+    ]
+  },
+  "wall_ms": 124612,
+  "tool_calls": 19,
+  "history_calls": 14,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 27799,
+  "output_tokens": 1835,
+  "cache_read_tokens": 112128,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0028855300000000007,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 67890,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T15-54-55-425Z/events/X-redis-01-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "ca9a02f17c1d1462395db35882d3fd70f17b6dafd9f12fb9e5de228b26dff854",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_7ab8aee0496e47f0bd73f410",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --grep=\"stream\" -i | head -50"
+        },
+        "output": "a8e745117 Xread last entry in stream (#7388) (#13117)\nf17381a38 Fix propagation of entries_read by calling streamPropagateGroupID unconditionally (#12898)\n820a4e45f Edit the history field of xinfo-consumers (#13078)\nca5cac998 xinfo-stream add minimum to seen-time, skip logreqres in fuzzer (#13056)\n32f44da51 Increase tolerance range to block reprocess tests to avoid timing issues (#13053)\n492021db9 Fix blocking commands timeout is reset due to re-processing command (#13004)\n45d331069 BITCOUNT: check for argument, before checking for key (#12394)\nce5f4ea3a Delete empty key if fails after moduleCreateEmptyKey() in module (#12129)\ne55568edb Add RM_RdbLoad and RM_RdbSave module API functions (#11852)\n9344f654c Implementing the WAITAOF command (issue #10505) (#11713)\n4ba47d2d2 Add reply_schema to command json files (internal for now) (#10273)\na7c9e5053 Fix test and improve assert_replication_stream print the whole stream (#11793)\n312654d5b Fix misleading error message in XREADGROUP (#11799)\n2bb29e4aa Always compact nodes in stream listpacks after creating new nodes (#11885)\n3b260149e adding the ability to add streams to the pre-defined redis-benchmark tests (#11762)\n383d902ce reprocess command when client is unblocked on keys (#11012)\ncd12cc2f5 solve race in replication test due to ping (#11609)\nb0250b450 Try to fix a race in psync2 test (#11553)\n72e90695e Stream consumers: Re-purpose seen-time, add active-time (#11099)\nc81813148 Add a special notification unlink available only for modules (#9406)\n7395e370e Fix XSETID with max_deleted_entry_id issue (#11444)\nb57fd0106 Blocked module clients should be aware when a key is deleted (#11310)\n3469c6509 Change compiler optimizations to -O3 -flto (#11207)\n6d2156019 Fix heap overflow vulnerability in XAUTOCLAIM (CVE-2022-35951) (#11301)\n5389fa62a Update group and consumer description in json file for Unifying Stream command format (#11190)\nc1bd61a4a Reverts most of the changes of #10969 (#11178)\n508a13888 Fix replication inconsistency on modules that uses key space notifications (#10969)\n6e1c3ff13 Update some comments in stream command docs (#10821)\n1067cfb34 Documentation fixes of `BITFIELD_RO` and `XINFO STREAM` (#10823)\nd7ae85874 Fix streamParseAddOrTrimArgsOrReply function minor comment issue (#10783)\ncb6933e34 Updated HDR histogram from upsteam after they merged our fix in #10606. (#10755)\n4a7a4e42d Fix memory leak in streamGetEdgeID (#10753)\na9d5cfa99 Optimize the call of prepareReplicasToWrite (#10588)\nfe1c096b1 Add RM_MallocSizeString, RM_MallocSizeDict (#10542)\n95050f268 solve corrupt dump fuzzer crash in streams (#10579)\na642947e0 Optimize stream id sds creation on XADD key * (~20% saved cpu cycles) (#10574)\n78bef6e1f optimize(remove) usage of client's pending_querybuf (#10413)\n2a2954086 XREADGROUP: Unblock client if stream is deleted (#10306)\ndff153ff2 Fix memory leak in RM_StreamIteratorStop and moduleFreeKeyIterator (#10353)\nc81c7f51c Add stream consumer group lag tracking and reporting (#9127)\n3c3e6cc1c X[AUTO]CLAIM should skip deleted entries (#10227)\n344e41c92 Fix PSYNC crash with wrong offset (#10243)\n7cd6a64d2 lpGetInteger returns int64_t, avoid overflow (#10068)\nb7f9e9ae3 Add tests for blocking XREAD[GROUP] when the stream ran dry (#10035)\n6add1b721 Add external test that runs without debug command (#9964)\nb93ccee45 Fix timing issue in strem blocking tests (#9927)\n7f0fae947 Santize dump payload: fix crash when stream with duplicate consumes (#9918)\nd56ded89c improvement of a blocking xread test (#9859)\ncea7809ce Fix race condition in psync2-pingoff test (#9712)\nc1718f9d8 Replication backlog and replicas use one global shared replication buffer (#9166)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_403256239f46430982b4a555",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | wc -l"
+        },
+        "output": "12110\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_e10bb759f32c4041a7b738a6",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --reverse --grep=\"stream\" -i | head -30"
+        },
+        "output": "cb598cdd5 Don't expire keys when loading an RDB after a SYNC\n7465ac7ab Emit SELECT to slaves in a centralized way.\n4b83ad4e1 Use replicationFeedSlaves() to send PING to slaves.\n7572dc47d Test: new functions to capture and analyze the replication stream.\n6b4635f4f REPLCONF ACK command.\n21648473a Auto-enter slaveMode when SYNC from redis-cli\nfdaab0234 Merge remote-tracking branch 'upstream/unstable' into unstable\n5ee2ccf48 Diskless replication: EOF:<mark> streaming support slave side.\nbb7fea0d5 Diskless SYNC: fix RDB EOF detection.\n606437108 Fix lua-cmsgpack 64 bit integer on 32 bit platform\n363c0f67b Test: fix attach_to_replication_stream to handle newlines.\n86f0a2ee8 CLIENT REPLY command implemented: ON, OFF and SKIP modes.\n2669fb836 PSYNC2: different improvements to Redis replication.\neab865a0a PSYNC2: stop sending newlines to sub-slaves when master is down.\n434e6b2da PSYNC2: Do not accept WAIT in slave instances.\n04542cff9 Replication: fix the infamous key leakage of writable slaves + EXPIRE.\n1f72ec7da Merge pull request #1 from antirez/unstable\n469d6e2b3 PSYNC2: fix master cleanup when caching it.\n365dd037d RDB modules values serialization format version 2.\ne74f0aa6d Fix replication of SLAVEOF inside transaction.\nb541ccef2 PSYNC2: make persisiting replication info more solid\nb8579c225 PSYNC2: clarify the scenario when repl_stream_db can be -1\n93037f764 PSYNC2: make repl_stream_db never be -1\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n100d43c1a Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n485014cc7 Streams: RDB saving.\nedd70c199 Streams: RDB loading. RDB saving modified.\ncd18f06e9 Streams: change listpack allocator to zmalloc.\n98d184db1 Streams: Save stream->length in RDB.\nec9bbe96b Streams: XLEN command.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_71f4e0581a664c4cbb079465",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --reverse --grep=\"XADD\" -i | head -30"
+        },
+        "output": "19b06935d Streams: fix XADD API and keyspace notifications.\n3a0b78bc5 Streams: rewrite XADD ID argument for AOF/slaves.\n7a41b402c Streams: basic XADD tests.\nfa707ca15 Streams: more advanced XADD and XRANGE tests.\n054080328 Streams: XADD MAXLEN implementation.\ne53c90308 Streams: add XADD + MAXLEN test.\n50595a588 Streams: fix XADD + MAXLEN propagation due to var shadowing.\n0381931b4 Streams: Update listpack to fix 32bit strings encoding error.\n267f7f2c9 Streams: fix error description for XADD when specified ID is small.\n07125b8d2 Bugfix: xadd comand <field,value> arity check\n3c20b3fc2 Bugfix: xadd command ID parse\n19ae80945 Streams: XADD, handle signaling of write in different ways.\n8a200b04c Merge pull request #4831 from 0xtonyxia/fix-xadd-arity-check\na60f553b6 Merge pull request #4832 from 0xtonyxia/fix-xadd-ID-parse\nfb9c1c3db Simplify XADD ID syntax error code path,.\n79a1c19ac XADD MAXLEN should return an error for values < 0.\n62f9ac6f4 Streams: Change XADD MAXLEN handling of values <= 0.\n20c6a7fe2 Streams: propagate original MAXLEN argument in XADD context\n60acac4cd Streams: add test cases for XADD/XTRIM maxlen\n8d24f8b46 Scripting & Streams: some commands need right flags\ne5f1de144 Merge pull request #5141 from soloestoy/fix-xtrim-inconsistency\n3e78344d8 Refactoring of XADD / XTRIM MAXLEN rewriting.\nc1689166b Streams: rewrite empty streams with XADD MAXLEN 0. Use XSETID.\nb4f826837 Tests modified to use XADD MAXLEN 0 + XSETID.\n4a12047c6 XADD with ID 0-0 stores an empty key\n70016f786 Merge pull request #6574 from guybe7/fix_xadd_empty_id\n1f75ce30d Stream: Handle streamID-related edge cases\na351e74fe Blocking XREAD[GROUP] should always reply with valid data (or timeout)\n3b29556a0 AOFRW on an empty stream created with MKSTREAM loads badkly\nf328194d1 support NOMKSTREAM option in xadd command (#7910)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_69b815189fac4c5692c6a050",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 79866a636 | head -60"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\n src/Makefile          |   2 +-\n src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/listpack.h        |  61 ++++\n src/listpack_malloc.h |  44 +++\n src/object.c          |   7 +\n src/rax.c             |  24 +-\n src/rax.h             |   1 +\n src/rdb.h             |   3 +-\n src/server.c          |   2 +\n src/server.h          |   9 +\n src/stream.h          |  21 ++\n src/t_stream.c        | 376 ++++++++++++++++++++++++\n 12 files changed, 1323 insertions(+), 10 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_1a940389ce6c4f408c3077d0",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format=\"%H%n%ai%n%s\" 79866a636"
+        },
+        "output": "79866a6361829ed0602dedff9cb378c66977227a\n2017-08-30 12:40:27 +0200\nStreams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_c15613ab34b74049aa76747e",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/t_stream.c | head -120"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/t_stream.c b/src/t_stream.c\nnew file mode 100644\nindex 000000000..c64f5059f\n--- /dev/null\n+++ b/src/t_stream.c\n@@ -0,0 +1,376 @@\n+/*\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n+ *     to endorse or promote products derived from this software without\n+ *     specific prior written permission.\n+ *\n+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\n+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\n+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n+ * POSSIBILITY OF SUCH DAMAGE.\n+ */\n+\n+/* TODO:\n+ * - After loading a stream, populate the last ID.\n+ */\n+\n+#include \"server.h\"\n+#include \"listpack.h\"\n+#include \"endianconv.h\"\n+#include \"stream.h\"\n+\n+#define STREAM_BYTES_PER_LISTPACK 4096\n+\n+/* -----------------------------------------------------------------------\n+ * Low level stream encoding: a radix tree of listpacks.\n+ * ----------------------------------------------------------------------- */\n+\n+/* Create a new stream data structure. */\n+stream *streamNew(void) {\n+    stream *s = zmalloc(sizeof(*s));\n+    s->rax = raxNew();\n+    s->length = 0;\n+    s->last_id.ms = 0;\n+    s->last_id.seq = 0;\n+    return s;\n+}\n+\n+/* Generate the next stream item ID given the previous one. If the current\n+ * milliseconds Unix time is greater than the previous one, just use this\n+ * as time part and start with sequence part of zero. Otherwise we use the\n+ * previous time (and never go backward) and increment the sequence. */\n+void streamNextID(streamID *last_id, streamID *new_id) {\n+    uint64_t ms = mstime();\n+    if (ms > last_id->ms) {\n+        new_id->ms = ms;\n+        new_id->seq = 0;\n+    } else {\n+        new_id->ms = last_id->ms;\n+        new_id->seq = last_id->seq+1;\n+    }\n+}\n+\n+/* This is just a wrapper for lpAppend() to directly use a 64 bit integer\n+ * instead of a string. */\n+unsigned char *lpAppendInteger(unsigned char *lp, int64_t value) {\n+    char buf[LONG_STR_SIZE];\n+    int slen = ll2string(buf,sizeof(buf),value);\n+    return lpAppend(lp,(unsigned char*)buf,slen);\n+}\n+\n+/* This is a wrapper function for lpGet() to directly get an integer value\n+ * from the listpack (that may store numbers as a string), converting\n+ * the string if needed. */\n+int64_t lpGetInteger(unsigned char *ele) {\n+    int64_t v;\n+    unsigned char *e = lpGet(ele,&v,NULL);\n+    if (e == NULL) return v;\n+    /* The following code path should never be used for how listpacks work:\n+     * they should always be able to store an int64_t value in integer\n+     * encoded form. However the implementation may change. */\n+    int retval = string2ll((char*)e,v,&v);\n+    serverAssert(retval != 0);\n+    return v;\n+}\n+\n+/* Convert the specified stream entry ID as a 128 bit big endian number, so\n+ * that the IDs can be sorted lexicographically. */\n+void streamEncodeID(void *buf, streamID *id) {\n+    uint64_t e[2];\n+    e[0] = htonu64(id->ms);\n+    e[1] = htonu64(id->seq);\n+    memcpy(buf,e,sizeof(e));\n+}\n+\n+/* This is the reverse of streamEncodeID(): the decoded ID will be stored\n+ * in the 'id' structure passed by reference. The buffer 'buf' must point\n+ * to a 128 bit big-endian encoded ID. */\n+void streamDecodeID(void *buf, streamID *id) {\n+    uint64_t e[2];\n+    memcpy(e,buf,sizeof(e));\n+    id->ms = ntohu64(e[0]);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_2375e08303e54d3ca0b9fd90",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/t_stream.c | grep -n \"xadd\\|XADD\\|commandTable\\|createCommand\\|streamCommand\" -i | head -40"
+        },
+        "output": "338:+/* XADD key [field value] [field value] ... */\n339:+void xaddCommand(client *c) {\n341:+        addReplyError(c,\"wrong number of arguments for XADD\");\n358:+    notifyKeyspaceEvent(NOTIFY_HASH,\"xadd\",c->argv[1],c->db->id);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_82ba4e4fe15840548dcb06d6",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/server.c | head -60"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/server.c b/src/server.c\nindex 7498a25fd..2c3647db6 100644\n--- a/src/server.c\n+++ b/src/server.c\n@@ -302,6 +302,8 @@ struct redisCommand redisCommandTable[] = {\n     {\"pfcount\",pfcountCommand,-2,\"r\",0,NULL,1,-1,1,0,0},\n     {\"pfmerge\",pfmergeCommand,-2,\"wm\",0,NULL,1,-1,1,0,0},\n     {\"pfdebug\",pfdebugCommand,-3,\"w\",0,NULL,0,0,0,0,0},\n+    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n+    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n     {\"post\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"host:\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"latency\",latencyCommand,-2,\"aslt\",0,NULL,0,0,0,0,0}\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_7a841dbf581447ba860205ad",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --reverse --format=\"%H %ai %s\" -- src/t_stream.c src/stream.h | head -20"
+        },
+        "output": "79866a6361829ed0602dedff9cb378c66977227a 2017-08-30 12:40:27 +0200 Streams: 12 commits squashed into the initial Streams implementation.\n100d43c1ac48e8e949bd622b302ba309ae498752 2017-09-05 12:13:16 +0200 Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n485014cc74d05436afc8257c5d7b05370410adc7 2017-09-05 13:14:13 +0200 Streams: RDB saving.\nec9bbe96bf47ae1f104c51cc6078eb72ca43cef0 2017-09-06 12:03:17 +0200 Streams: XLEN command.\n439120c62076718e8f7e7e602c623febaec6f04a 2017-09-06 13:11:47 +0200 Streams: implement stream object release.\n4086dff477cc3d979d39c6c4ba9457575fc67d3e 2017-09-07 09:30:50 +0200 Streams: augment client.bpop with XREAD specific fields.\ne65b4825f0216f526b71f41818a494b0853ce715 2017-09-07 16:48:20 +0200 Streams: XREAD arguments parsing.\nfa61720d30b6c3088329fd5921fd8173bcd0a368 2017-09-07 17:45:34 +0200 Streams: XREAD, first draft. Handling of blocked clients still missing.\n6a1c92d52dd7f3928795de910dc848f71dae5b3c 2017-09-08 12:09:02 +0200 Streams: synchronous xread fixes and improvements.\n0adb43b68febc4dfb2acc6818de36504a63162e4 2017-09-08 12:25:06 +0200 Streams: XREAD ability to block fixed.\nb5be5093fecd02f4ee537af5ad473899bb6d7a61 2017-09-08 20:48:28 +0200 Streams: fix XREAD timeout handling, zero is valid.\n6468cb2e825cf8258654f83e82324332e9879745 2017-09-09 11:10:59 +0200 Streams: fix XREAD ready-key signaling.\ndb89f7474d3f4c784bfd8757b2bd3321e3efd9a1 2017-09-11 11:20:36 +0200 Streams: When XREAD blocks without COUNT, set a default one.\n19b06935d59a39021330670776eb6b79002599c8 2017-09-11 18:02:57 +0200 Streams: fix XADD API and keyspace notifications.\n3a0b78bc52e30a8599203ef501ea548b96f08b89 2017-09-12 10:48:27 +0200 Streams: rewrite XADD ID argument for AOF/slaves.\n94af55c5ea55890ed5e3afdb9bb802d88d61eac7 2017-09-12 10:54:20 +0200 Streams: fix memory leak in freeStream().\n1a603e1a87d88500a9723460dcf60c9b57dc99d7 2017-09-12 16:19:26 +0200 Streams: fix bug in XREAD last received ID processing.\nb1ec3336337eabbd28b90832cebcaac4ffb69410 2017-09-13 18:05:34 +0200 Streams: stream iteration refactoring, WIP 1.\na58733cacf45259b3e18fc68724950aceb86831d 2017-09-14 14:23:27 +0200 Streams: stream iteration refactoring, WIP 2.\n9ed40f0fc35ce0050bd362a35c4f3f7fea189fb5 2017-09-14 14:46:31 +0200 Streams: implement streamReplyWithRange() in terms of the iterator.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_30c6836c6d4a455685c4583d",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format=\"%H%n%P%n%ai%n%s\" 9510d65dc8b0cff77402bd97078636680fe50da0"
+        },
+        "output": "9510d65dc8b0cff77402bd97078636680fe50da0\nab8232d0223a9983e5590998b6c44d9639dc8b56\n2012-04-02 12:31:44 +0200\nCRC64 implementation added to Redis code base.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_bbf99e6c8da74e63b0e8ee9d",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/t_stream.c | grep -n \"xaddCommand\\|streamNew\\|OBJ_STREAM\" | head"
+        },
+        "output": "46:stream *streamNew(void) {\n260:        if (o->type != OBJ_STREAM) {\n327:void xaddCommand(client *c) {\n373:        || checkType(c,o,OBJ_STREAM)) return;\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_fe58292ed7844142a186bd3e",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/server.h src/stream.h src/object.c"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/object.c b/src/object.c\nindex d2f8d53c5..8eeb5c6c1 100644\n--- a/src/object.c\n+++ b/src/object.c\n@@ -232,6 +232,13 @@ robj *createZsetZiplistObject(void) {\n     return o;\n }\n \n+robj *createStreamObject(void) {\n+    stream *s = streamNew();\n+    robj *o = createObject(OBJ_STREAM,s);\n+    o->encoding = OBJ_ENCODING_STREAM;\n+    return o;\n+}\n+\n robj *createModuleObject(moduleType *mt, void *value) {\n     moduleValue *mv = zmalloc(sizeof(*mv));\n     mv->type = mt;\ndiff --git a/src/server.h b/src/server.h\nindex 11eb36f3d..38a76d008 100644\n--- a/src/server.h\n+++ b/src/server.h\n@@ -59,6 +59,7 @@ typedef long long mstime_t; /* millisecond time type. */\n #include \"anet.h\"    /* Networking the easy way */\n #include \"ziplist.h\" /* Compact list data structure */\n #include \"intset.h\"  /* Compact integer set structure */\n+#include \"stream.h\"  /* Stream data type header file. */\n #include \"version.h\" /* Version macro */\n #include \"util.h\"    /* Misc functions useful in many places */\n #include \"latency.h\" /* Latency monitor API */\n@@ -451,6 +452,7 @@ typedef long long mstime_t; /* millisecond time type. */\n #define OBJ_SET 2\n #define OBJ_ZSET 3\n #define OBJ_HASH 4\n+#define OBJ_STREAM 5\n \n /* The \"module\" object type is a special one that signals that the object\n  * is one directly managed by a Redis module. In this case the value points\n@@ -575,6 +577,7 @@ typedef struct RedisModuleDigest {\n #define OBJ_ENCODING_SKIPLIST 7  /* Encoded as skiplist */\n #define OBJ_ENCODING_EMBSTR 8  /* Embedded sds string encoding */\n #define OBJ_ENCODING_QUICKLIST 9 /* Encoded as linked list of ziplists */\n+#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */\n \n #define LRU_BITS 24\n #define LRU_CLOCK_MAX ((1<<LRU_BITS)-1) /* Max value of obj->lru */\n@@ -1414,6 +1417,9 @@ void handleClientsBlockedOnLists(void);\n void popGenericCommand(client *c, int where);\n void signalListAsReady(redisDb *db, robj *key);\n \n+/* Stream data type. */\n+stream *streamNew(void);\n+\n /* MULTI/EXEC/WATCH... */\n void unwatchAllKeys(client *c);\n void initClientMultiState(client *c);\n@@ -1455,6 +1461,7 @@ robj *createIntsetObject(void);\n robj *createHashObject(void);\n robj *createZsetObject(void);\n robj *createZsetZiplistObject(void);\n+robj *createStreamObject(void);\n robj *createModuleObject(moduleType *mt, void *value);\n int getLongFromObjectOrReply(client *c, robj *o, long *target, const char *msg);\n int checkType(client *c, robj *o, int type);\n@@ -1992,6 +1999,8 @@ void pfdebugCommand(client *c);\n void latencyCommand(client *c);\n void moduleCommand(client *c);\n void securityWarningCommand(client *c);\n+void xaddCommand(client *c);\n+void xrangeCommand(client *c);\n \n #if defined(__GNUC__)\n void *calloc(size_t count, size_t size) __attribute__ ((deprecated));\ndiff --git a/src/stream.h b/src/stream.h\nnew file mode 100644\nindex 000000000..065c328eb\n--- /dev/null\n+++ b/src/stream.h\n@@ -0,0 +1,21 @@\n+#ifndef STREAM_H\n+#define STREAM_H\n+\n+#include \"rax.h\"\n+\n+/* Stream item ID: a 128 bit number composed of a milliseconds time and\n+ * a sequence counter. IDs generated in the same millisecond (or in a past\n+ * millisecond if the clock jumped backward) will use the millisecond time\n+ * of the latest generated ID and an incremented sequence. */\n+typedef struct streamID {\n+    uint64_t ms;        /* Unix time in milliseconds. */\n+    uint64_t seq;       /* Sequence number. */\n+} streamID;\n+\n+typedef struct stream {\n+    rax *rax;               /* The radix tree holding the stream. */\n+    uint64_t length;        /* Number of elements inside this stream. */\n+    streamID last_id;       /* Zero if there are yet no items. */\n+} stream;\n+\n+#endif\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_b266cb0015314de9852f817a",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --reverse -S \"OBJ_STREAM\" -- src/server.h | head -5"
+        },
+        "output": "79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n19a438e2c Streams: use non static macro node limits.\n18e72c5cc Converting more configs to use generic infra, and moving defaults to config.c\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/ca9a02f17c1d1462395db35882d3fd70f17b6dafd9f12fb9e5de228b26dff854",
+  "completed": true
+}

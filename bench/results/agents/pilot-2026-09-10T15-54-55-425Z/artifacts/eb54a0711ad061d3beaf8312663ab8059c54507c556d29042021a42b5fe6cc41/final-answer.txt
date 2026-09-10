@@ -1,0 +1,46 @@
+Verified: `/workspace`, `/workspace`, `e64d91c37105bc2e23816b6f81b9ffc5e5d99801`. Now let me investigate the history for the streams data type.## Answer
+
+Redis first got the streams data type, including `XADD`, in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`** — *"Streams: 12 commits squashed into the initial Streams implementation."*
+- Author: antirez, author date **Wed Aug 30 12:40:27 2017 +0200** (committed Fri Dec 1 10:24:24 2017 +0100)
+- Parent: `045d65c3af460a71d2b89b84f5e0b85d98320a77`
+- Verified to be an ancestor of the current `HEAD`.
+
+### Supporting evidence
+
+The commit message itself states it is the initial implementation:
+
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+The commit is the **first appearance in the entire repository** of both the stream object type and the `XADD` command (confirmed via `git log --all -S "OBJ_STREAM"` and `-S '{"xadd"'`, and via `--diff-filter=A` on `src/t_stream.c`). It creates `src/t_stream.c` and adds the new object type in `server.h`:
+
+```diff
+ #define OBJ_ZSET 3
+ #define OBJ_HASH 4
++#define OBJ_STREAM 5
+```
+
+and registers the command in `src/server.c`:
+
+```diff
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+The new `src/t_stream.c` contains the implementation:
+
+```c
+/* XADD key [field value] [field value] ... */
+void xaddCommand(client *c) {
+    if ((c->argc % 2) == 1) {
+        addReplyError(c,"wrong number of arguments for XADD");
+        return;
+    }
+    ...
+}
+```
+
+No files were modified.

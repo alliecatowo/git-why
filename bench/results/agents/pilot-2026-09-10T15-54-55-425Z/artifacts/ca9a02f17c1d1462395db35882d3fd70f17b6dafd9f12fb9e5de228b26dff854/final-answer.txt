@@ -1,0 +1,47 @@
+
+I have all the evidence needed. No files were modified.
+
+## Answer
+
+Redis first got the streams data type (with XADD) in commit **`79866a6361829ed0602dedff9cb378c66977227a`** — **"Streams: 12 commits squashed into the initial Streams implementation."**, authored by antirez on **2017-08-30**. This is the earliest commit in the repository's history to contain the streams data type, `OBJ_STREAM`, or the `xadd` command.
+
+### Supporting evidence from that commit
+
+**Commit message:**
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+**`src/server.c` — registers the first stream commands (XADD and XRANGE) in the command table:**
+```c
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+**`src/server.h` — introduces the new object type and encoding:**
+```c
++#define OBJ_STREAM 5
+...
++#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
+```
+
+**`src/stream.h` (new file) — defines the `stream` data structure:**
+```c
++typedef struct stream {
++    rax *rax;               /* The radix tree holding the stream. */
++    uint64_t length;        /* Number of elements inside this stream. */
++    streamID last_id;       /* Zero if there are yet no items. */
++} stream;
+```
+
+**`src/t_stream.c` (new file, 376 lines) — contains the initial implementation, including `xaddCommand`:**
+```c
++/* XADD key [field value] [field value] ... */
++void xaddCommand(client *c) {
+```
+
+Verification details:
+- `git log --reverse` over `src/t_stream.c`/`src/stream.h` confirms `79866a636` is the first streams commit; subsequent commits (`100d43c1a` "Streams: assign value of 6 to OBJ_STREAM", `485014cc7` "Streams: RDB saving", `ec9bbe96b` "Streams: XLEN command", etc.) build on top of it.
+- One caveat checked: a naive grep for "xadd" found an older 2012 commit (`9510d65dc`), but that is a false positive — it merely contains the hex literal `0xadd33a6183c78f1e` in CRC64 test vectors in `src/crc64.c`, unrelated to streams.
+
+So the streams data type and XADD arrived together in `79866a6361829ed0602dedff9cb378c66977227a` (August 30, 2017), and subsequent "Streams:" commits added RDB persistence, XLEN, XREAD, and more.

@@ -1,0 +1,62 @@
+I verified the environment first:
+- `pwd` → `/workspace`
+- `git rev-parse --show-toplevel` → `/workspace`
+- `git rev-parse HEAD` → `ee521a1c889f4cde6905c5db117959917568be9b`
+
+## Answer
+
+The bug is **CVE-2022-27774** ("Credential leak on redirect"), and the fix is:
+
+**Commit `620ea21410030a9977396b4661806bc187231b79`** — `transfer: redirects to other protocols or ports clear auth`
+
+It is an ancestor of the pinned `HEAD`, and its message directly states the security context:
+
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+### What the fix changed
+
+It modified `lib/transfer.c` inside `Curl_follow()`. Previously, when curl followed a `Location:` redirect, the credentials (`data->state.aptr.user` / `data->state.aptr.passwd`, i.e. username/password) were carried over to the new URL. The patch adds a check: unless `data->set.allow_auth_to_other_hosts` is set (i.e. `--location-trusted` / `CURLOPT_UNRESTRICTED_AUTH`) or the redirect is a "fake" redirect, curl now compares the redirect target's **port** and **protocol/scheme** against the original connection, and clears the credentials when they differ.
+
+Key part of the diff:
+
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
+...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
++    }
+```
+
+So the fix makes curl strip the user/password credentials whenever a redirect crosses to a different port or protocol, unless the user explicitly opts into sending credentials to other hosts.
+
+Supporting fixes/tests in the same series (also in this history):
+- `5295e8d64` — "tests: verify the fix for CVE-2022-27774" (tests 973–976 covering HTTP→FTP and HTTP→HTTP-different-port, both cleared and permitted).
+- `6e6599939` — a closely related fix for **CVE-2022-27776** ("http: avoid auth/cookie on redirects same host diff port"), which handles the same-host/different-port case at the HTTP auth/cookie-header layer.
+
+No files were modified.

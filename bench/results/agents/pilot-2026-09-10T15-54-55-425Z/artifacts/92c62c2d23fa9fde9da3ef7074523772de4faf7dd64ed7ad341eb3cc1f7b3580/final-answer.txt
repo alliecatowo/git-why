@@ -1,0 +1,40 @@
+I found the answer in the repository history. No files were modified.
+
+## Answer: Yes
+
+Caddy raised its minimum Go version **specifically because of quic-go**, the library that provides its HTTP/3 support. This happened more than once, but the clearest single commit is:
+
+**`f45a6de20dd19e82e58c85b37e03957b2203b544`** — *"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)"* (Marten Seemann, 2023‑07‑21)
+
+The commit message itself ties the two together, and the diff shows the dependency and the language minimum moving in lockstep:
+
+```
+-go 1.19
++go 1.20
+...
+-github.com/quic-go/quic-go v0.36.2
++github.com/quic-go/quic-go v0.37.0
+```
+```diff
+-- [Go 1.19 or newer](https://golang.org/dl/)
++- [Go 1.20 or newer](https://golang.org/dl/)
+```
+
+### Corroborating commits
+
+The same pattern occurred again later, which confirms it was driven by quic-go's own Go requirement:
+
+- **`697cc593a17fcb39087161b058fc1dba8b767060`** — *"chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)"* (2024‑01‑25). Diff:
+  ```
+  -go 1.20
+  +go 1.21
+  +toolchain go1.21.4
+  ...
+  -github.com/quic-go/quic-go v0.40.1
+  +github.com/quic-go/quic-go v0.41.0
+  ```
+  plus README "Go 1.20 or newer" → "Go 1.21 or newer".
+
+- **`8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe`** — *"go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)"* (2023‑02‑24), which bumped `quic-go` v0.32.0 → v0.33.0 and raised the documented requirement from Go 1.18 to Go 1.19.
+
+So the causal chain is explicit in the history: when quic-go moved to requiring a newer Go toolchain, Caddy followed. `f45a6de2` is the commit that most directly establishes this (quic-go v0.37.0 forcing the Go 1.20 minimum), with `697cc593` and `8cb1bb4a` as further instances.

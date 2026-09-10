@@ -1,0 +1,54 @@
+{
+  "id": "58e5fea3690bf588",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "The task is complete. I ran the required verification command first, and the outputs matched the expected values (`/workspace`, `/workspace`, `aa150827a936441f92d851f180717a3ea0db14b2`). I then examined the file's history without modifying any code.\n\n## Finding\n\nThe first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:\n\n- **Commit:** `86793c1592ed4cfd8c54a3338d2eaded152ae263` (short: `86793c1`)\n- **Author:** Fixture Bot `<fixture-bot@git-why.bench>`\n- **Date:** Sun Mar 16 15:33:20 2025 +0000\n- **Subject:** `Introduce consent renewal handling`\n- **Body:** \"A legacy identity provider signals expired consent with a special token value.\"\n\nThis is conclusively the *introduction* commit for several reasons:\n\n1. `git log --oneline -- src/session.cjs` lists it first (oldest of the three commits touching the file).\n2. `git show` for this commit reports `new file mode 100644`, i.e., it **created** `src/session.cjs`, with the content:\n   ```js\n   function configured() { return 'consent renewal handling'; }\n   module.exports = { configured };\n   ```\n3. `git log --diff-filter=A -- src/session.cjs` confirms `86793c1` as the add commit.\n\nThe later commits `30e911d` (\"Adjust consent renewal handling rollout\", removes a trailing newline) and `0422e76` (\"Remove consent renewal handling\", reverts the behavior to `'default'`) only modify/remove it, and are not the introduction.",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

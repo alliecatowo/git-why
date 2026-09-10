@@ -1,0 +1,46 @@
+## Answer
+
+Redis first got the streams data type with `XADD` in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`**
+
+> **Streams: 12 commits squashed into the initial Streams implementation.**
+> Author: antirez \<antirez@gmail.com\>
+> AuthorDate: Wed Aug 30 12:40:27 2017 +0200
+> CommitDate: Fri Dec 1 10:24:24 2017 +0100
+
+This is the establishing commit, and it is an ancestor of the checked-out `HEAD`.
+
+### Evidence from the commit
+
+The commit subject itself states it is the **initial Streams implementation**. Its diff adds the core files and wiring:
+
+- New files `src/stream.h`, `src/t_stream.c`, `src/listpack.c`, `src/listpack.h`, `src/listpack_malloc.h`
+- `src/server.h`: `#define OBJ_STREAM 5`, `#define OBJ_ENCODING_STREAM 10`, and `void xaddCommand(client *c);`
+- `src/server.c` registers the commands:
+
+```c
+{"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+{"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+- `src/t_stream.c` adds the `XADD` implementation with the comment `/* XADD key [field value] [field value] ... */` and the `xaddCommand(client *c)` function.
+
+`stream.h` defines the type:
+
+```c
+typedef struct stream {
+    rax *rax;               /* The radix tree holding the stream. */
+    uint64_t length;        /* Number of elements inside this stream. */
+    streamID last_id;       /* Zero if there are yet no items. */
+} stream;
+```
+
+A `git log -S "xaddCommand" --reverse -- src/` confirms `79866a636` is the earliest commit introducing the command.
+
+### Notes
+
+- The commit message notes the work was "12 commits squashed", so the feature was developed earlier in antirez's tree, but in *this repository's* history `79866a636` is the commit that establishes the streams data type and `XADD`.
+- Redis 5.0 (released Oct 2018) was the first stable release to ship Streams, but the code landed in the development tree at this December 2017 commit.
+
+No tracked files were modified.

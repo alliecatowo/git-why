@@ -1,0 +1,58 @@
+Environment verified. Now let me investigate the history of ripgrep's ignore-file name.
+
+The commit `cc90511 "Switch from .rgignore to .ignore."` looks like the key one. Let me examine it.
+
+Excellent! Found the key commit. Let me also check `7cefc55 "Remove .agignore from ignore file list."` — there may have been an even earlier name, `.agignore`.
+
+There were two prior names. Let me confirm when `.rgignore` was first introduced and check the earliest state of `src/ignore.rs`.
+
+Let me check what the ignore file was called before the `xrep` → `ripgrep` rename — possibly `.xrepignore`?
+
+The full picture is emerging. Let me find when `.xrepignore` was first introduced and check the very early history.
+
+I now have the full timeline. Let me verify the current state of the checkout to confirm `.ignore` is today's name.
+
+I have all the evidence needed. Here is my answer.
+
+## Answer
+
+**Yes.** ripgrep's special ignore file was not always called `.ignore`. It went through two earlier names:
+
+1. **`.xrepignore`** — the original name, back when the tool was called "xrep" (the earliest implementation, commit `065c449`, documented `$HOME/.xrepignore`).
+2. **`.rgignore`** — introduced when "xrep" was renamed to "ripgrep".
+3. **`.ignore`** — the current name, adopted in September 2016. (There was also `.agignore` in the list briefly, for Silver Searcher compatibility, later removed.)
+
+## The commit that establishes the answer
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — "Switch from .rgignore to .ignore." (Andrew Gallant, Fri Sep 23 2016)
+
+Its message and diff explicitly state the change:
+
+> **Switch from .rgignore to .ignore.**
+>
+> But don't actually remove support for .rgignore until the next semver bump.
+>
+> Note that this puts us in line with the silver searcher: ...
+>
+> Fixes #40
+
+And the diff in `src/ignore.rs`:
+
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+## Supporting detail: the even earlier name
+
+The rename to `.rgignore` happened in **`a744ec133d12e0c8d8e8b0486cd92e2b60ad61e6`** — "Rename xrep to ripgrep." (Sep 8 2016), whose diff renamed the ignore file in `src/ignore.rs`:
+
+```diff
+-    ".xrepignore",
++    ".rgignore",
+```
+
+So the memory is correct: ripgrep's special ignore file was originally `.xrepignore`, then `.rgignore`, and only later became `.ignore` (which is the name used in this checkout, `ignore-0.4.33`). No files were modified.

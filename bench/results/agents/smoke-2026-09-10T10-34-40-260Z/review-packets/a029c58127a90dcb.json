@@ -1,0 +1,54 @@
+{
+  "id": "a029c58127a90dcb",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "The task is complete. I verified the repository identity first:\n\n```\npwd                    -> /workspace\ngit rev-parse --show-toplevel -> /workspace\ngit rev-parse HEAD     -> aa150827a936441f92d851f180717a3ea0db14b2\n```\n\nAll three match the expected values.\n\n## Finding\n\nThe first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:\n\n**`86793c1592ed4cfd8c54a3338d2eaded152ae263`** — *\"Introduce consent renewal handling\"* (Fixture Bot, 2025-03-16)\n\nEvidence:\n\n- `git log --oneline -- src/session.cjs` shows exactly three commits for this file: `86793c1`, `30e911d`, `0422e76`.\n- `86793c1` is where `src/session.cjs` was **first created** (`new file mode 100644`), with the content:\n\n```js\nfunction configured() { return 'consent renewal handling'; }\nmodule.exports = { configured };\n```\n\nThe two later commits only adjusted and then removed that behavior (`30e911d` \"Adjust consent renewal handling rollout\", `0422e76` \"Remove consent renewal handling\"), so `86793c1` is the origin of the behavior.\n\nNo code was modified.",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

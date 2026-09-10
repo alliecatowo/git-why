@@ -1,0 +1,683 @@
+{
+  "generatedAt": "2026-09-10T09:39:18.688Z",
+  "datasetPath": "bench/dataset/external-v2.json",
+  "modes": [
+    "text",
+    "semantic",
+    "hybrid"
+  ],
+  "ablationRun": false,
+  "repositories": [
+    {
+      "id": "curl-curl",
+      "url": "https://github.com/curl/curl",
+      "license": "curl (permissive, OSI-approved, MIT/ISC-like)",
+      "cutoffSha": "ee521a1c889f4cde6905c5db117959917568be9b",
+      "scale": {
+        "indexedCommits": null,
+        "recordCount": null,
+        "diskBytes": null,
+        "state": "missing"
+      }
+    },
+    {
+      "id": "redis-redis",
+      "url": "https://github.com/redis/redis",
+      "license": "BSD-3-Clause",
+      "cutoffSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+      "scale": {
+        "indexedCommits": 12110,
+        "recordCount": 66588,
+        "diskBytes": 471702568,
+        "state": "current"
+      }
+    },
+    {
+      "id": "psf-requests",
+      "url": "https://github.com/psf/requests",
+      "license": "Apache-2.0",
+      "cutoffSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+      "scale": {
+        "indexedCommits": 6494,
+        "recordCount": 19741,
+        "diskBytes": 111292075,
+        "state": "current"
+      }
+    },
+    {
+      "id": "burntsushi-ripgrep",
+      "url": "https://github.com/BurntSushi/ripgrep",
+      "license": "MIT OR Unlicense (dual)",
+      "cutoffSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+      "scale": {
+        "indexedCommits": 2287,
+        "recordCount": 12865,
+        "diskBytes": 91396267,
+        "state": "current"
+      }
+    },
+    {
+      "id": "caddyserver-caddy",
+      "url": "https://github.com/caddyserver/caddy",
+      "license": "Apache-2.0",
+      "cutoffSha": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+      "scale": {
+        "indexedCommits": 2680,
+        "recordCount": 18988,
+        "diskBytes": 135796941,
+        "state": "current"
+      }
+    },
+    {
+      "id": "colinhacks-zod",
+      "url": "https://github.com/colinhacks/zod",
+      "license": "MIT",
+      "cutoffSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+      "scale": {
+        "indexedCommits": 3210,
+        "recordCount": 25369,
+        "diskBytes": 169429473,
+        "state": "current"
+      }
+    }
+  ],
+  "totalCases": 18,
+  "answerableCases": 16,
+  "noEvidenceCases": 2,
+  "overallByMode": [
+    {
+      "mode": "text",
+      "n": 9,
+      "hit1": 0.2222222222222222,
+      "hit3": 0.2222222222222222,
+      "hit5": 0.3333333333333333,
+      "recall5": 0.3333333333333333,
+      "mrr": 0.25
+    },
+    {
+      "mode": "semantic",
+      "n": 9,
+      "hit1": 0.4444444444444444,
+      "hit3": 0.4444444444444444,
+      "hit5": 0.5555555555555556,
+      "recall5": 0.5555555555555556,
+      "mrr": 0.4722222222222222
+    },
+    {
+      "mode": "hybrid",
+      "n": 9,
+      "hit1": 0.3333333333333333,
+      "hit3": 0.4444444444444444,
+      "hit5": 0.5555555555555556,
+      "recall5": 0.5555555555555556,
+      "mrr": 0.3925925925925926
+    }
+  ],
+  "bySplit": [
+    {
+      "split": "dev",
+      "mode": "text",
+      "n": 9,
+      "hit1": 0.2222222222222222,
+      "hit3": 0.2222222222222222,
+      "hit5": 0.3333333333333333,
+      "recall5": 0.3333333333333333,
+      "mrr": 0.25
+    },
+    {
+      "split": "dev",
+      "mode": "semantic",
+      "n": 9,
+      "hit1": 0.4444444444444444,
+      "hit3": 0.4444444444444444,
+      "hit5": 0.5555555555555556,
+      "recall5": 0.5555555555555556,
+      "mrr": 0.4722222222222222
+    },
+    {
+      "split": "dev",
+      "mode": "hybrid",
+      "n": 9,
+      "hit1": 0.3333333333333333,
+      "hit3": 0.4444444444444444,
+      "hit5": 0.5555555555555556,
+      "recall5": 0.5555555555555556,
+      "mrr": 0.3925925925925926
+    },
+    {
+      "split": "test",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "test",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "split": "test",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "byRepository": [
+    {
+      "repositoryId": "curl-curl",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": null,
+        "recordCount": null,
+        "diskBytes": null,
+        "state": "missing"
+      },
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "curl-curl",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": null,
+        "recordCount": null,
+        "diskBytes": null,
+        "state": "missing"
+      },
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "curl-curl",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": null,
+        "recordCount": null,
+        "diskBytes": null,
+        "state": "missing"
+      },
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "redis-redis",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 12110,
+        "recordCount": 66588,
+        "diskBytes": 471702568,
+        "state": "current"
+      },
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "repositoryId": "redis-redis",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 12110,
+        "recordCount": 66588,
+        "diskBytes": 471702568,
+        "state": "current"
+      },
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "repositoryId": "redis-redis",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 12110,
+        "recordCount": 66588,
+        "diskBytes": 471702568,
+        "state": "current"
+      },
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "repositoryId": "psf-requests",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 6494,
+        "recordCount": 19741,
+        "diskBytes": 111292075,
+        "state": "current"
+      },
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "repositoryId": "psf-requests",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 6494,
+        "recordCount": 19741,
+        "diskBytes": 111292075,
+        "state": "current"
+      },
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.625
+    },
+    {
+      "repositoryId": "psf-requests",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 6494,
+        "recordCount": 19741,
+        "diskBytes": 111292075,
+        "state": "current"
+      },
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6
+    },
+    {
+      "repositoryId": "burntsushi-ripgrep",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 2287,
+        "recordCount": 12865,
+        "diskBytes": 91396267,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "burntsushi-ripgrep",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 2287,
+        "recordCount": 12865,
+        "diskBytes": 91396267,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "burntsushi-ripgrep",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 2287,
+        "recordCount": 12865,
+        "diskBytes": 91396267,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "caddyserver-caddy",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 2680,
+        "recordCount": 18988,
+        "diskBytes": 135796941,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "repositoryId": "caddyserver-caddy",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 2680,
+        "recordCount": 18988,
+        "diskBytes": 135796941,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "repositoryId": "caddyserver-caddy",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 2680,
+        "recordCount": 18988,
+        "diskBytes": 135796941,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    {
+      "repositoryId": "colinhacks-zod",
+      "mode": "text",
+      "scale": {
+        "indexedCommits": 3210,
+        "recordCount": 25369,
+        "diskBytes": 169429473,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    {
+      "repositoryId": "colinhacks-zod",
+      "mode": "semantic",
+      "scale": {
+        "indexedCommits": 3210,
+        "recordCount": 25369,
+        "diskBytes": 169429473,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "repositoryId": "colinhacks-zod",
+      "mode": "hybrid",
+      "scale": {
+        "indexedCommits": 3210,
+        "recordCount": 25369,
+        "diskBytes": 169429473,
+        "state": "current"
+      },
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    }
+  ],
+  "byCategory": [
+    {
+      "category": "migration",
+      "mode": "text",
+      "n": 4,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0.25,
+      "recall5": 0.25,
+      "mrr": 0.0625
+    },
+    {
+      "category": "migration",
+      "mode": "semantic",
+      "n": 4,
+      "hit1": 0.25,
+      "hit3": 0.25,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.3125
+    },
+    {
+      "category": "migration",
+      "mode": "hybrid",
+      "n": 4,
+      "hit1": 0.25,
+      "hit3": 0.25,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.3
+    },
+    {
+      "category": "regression",
+      "mode": "text",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "regression",
+      "mode": "semantic",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "regression",
+      "mode": "hybrid",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "text",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "semantic",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "exact_identifier",
+      "mode": "hybrid",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "category": "rename",
+      "mode": "text",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "rename",
+      "mode": "semantic",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "rename",
+      "mode": "hybrid",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "workaround_rationale",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "number_version",
+      "mode": "text",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "category": "number_version",
+      "mode": "semantic",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "category": "number_version",
+      "mode": "hybrid",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "category": "no_evidence",
+      "mode": "text",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "semantic",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "category": "no_evidence",
+      "mode": "hybrid",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "noEvidenceObservations": [],
+  "ablation": null,
+  "notBlinded": "See bench/README.md: the same agent system that implements Git Why also authored this file. This is real-repository evidence, not a blinded held-out study."
+}

@@ -1,0 +1,14 @@
+Done.
+
+**Preflight:** `pwd` → `/workspace`, `git rev-parse --show-toplevel` → `/workspace`, `git rev-parse HEAD` → `96b308a20980554af509a525430daddfaa4b670e` — all matched. `zg query --fts function --limit 1` returned a hit at `src/utils.cjs:1-3`.
+
+**Implementation:** Updated `src/utils.cjs`:
+
+```js
+function clampDelay(value) {
+  return Math.min(5000, Math.max(100, value));
+}
+module.exports = { clampDelay };
+```
+
+It clamps values into the inclusive `[100, 5000]` range. Verified with node: `0→100`, `50→100`, `100→100`, `250→250`, `5000→5000`, `9999→5000`.

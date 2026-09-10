@@ -1,0 +1,1378 @@
+{
+  "status": "ran",
+  "candidate": "production",
+  "split": "dev",
+  "mechanism": "GIT_WHY_BENCH_RECORD_TYPES=commit restricts retrieval to commit-summary records; unset retrieves commit + evidence records. Index built once per fixture (both record types always ingested); the env var only changes what a query is allowed to retrieve. See src/search/search.ts benchRecordTypes().",
+  "totalQueries": 144,
+  "omittedCount": 0,
+  "byArmModeCategory": [
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.625
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.5
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0.5,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.16666666666666666
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "rename",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "migration",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 0.5,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "synonym_mismatch",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "workaround_rationale",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "deleted_implementation",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0.5,
+      "recall5": 0.5,
+      "mrr": 0.1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "migration",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "exact_identifier",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.75
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "number_version",
+      "n": 2,
+      "hit1": 0.5,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.6666666666666666
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "rename",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.41666666666666663
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "poor_message_rich_diff",
+      "n": 2,
+      "hit1": 0,
+      "hit3": 0,
+      "hit5": 0,
+      "recall5": 0,
+      "mrr": 0
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "rich_message_skipped_patch",
+      "n": 2,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "lifecycle",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "distractor_intent",
+      "n": 1,
+      "hit1": 1,
+      "hit3": 1,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 1
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "no_evidence",
+      "n": 0,
+      "hit1": null,
+      "hit3": null,
+      "hit5": null,
+      "recall5": null,
+      "mrr": null
+    }
+  ],
+  "overallByArmMode": [
+    {
+      "arm": "summary+evidence",
+      "mode": "text",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.4444444444444444,
+      "hit3": 0.8888888888888888,
+      "hit5": 1,
+      "recall5": 1,
+      "mrr": 0.663888888888889
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "semantic",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.5555555555555556,
+      "hit3": 0.8333333333333334,
+      "hit5": 0.8333333333333334,
+      "recall5": 0.8333333333333334,
+      "mrr": 0.6851851851851852
+    },
+    {
+      "arm": "summary+evidence",
+      "mode": "hybrid",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.5,
+      "hit3": 0.9444444444444444,
+      "hit5": 0.9444444444444444,
+      "recall5": 0.9444444444444444,
+      "mrr": 0.6944444444444445
+    },
+    {
+      "arm": "summary-only",
+      "mode": "text",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.6666666666666666,
+      "hit3": 0.8333333333333334,
+      "hit5": 0.8888888888888888,
+      "recall5": 0.8888888888888888,
+      "mrr": 0.7425925925925925
+    },
+    {
+      "arm": "summary-only",
+      "mode": "semantic",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.5,
+      "hit3": 0.7777777777777778,
+      "hit5": 0.7777777777777778,
+      "recall5": 0.7777777777777778,
+      "mrr": 0.6296296296296297
+    },
+    {
+      "arm": "summary-only",
+      "mode": "hybrid",
+      "category": "OVERALL_excl_exact_identifier_and_no_evidence",
+      "n": 18,
+      "hit1": 0.5,
+      "hit3": 0.7777777777777778,
+      "hit5": 0.8333333333333334,
+      "recall5": 0.8333333333333334,
+      "mrr": 0.6314814814814815
+    }
+  ],
+  "diffByModeCategory": [
+    {
+      "mode": "text",
+      "category": "synonym_mismatch",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.08333333333333337
+      }
+    },
+    {
+      "mode": "text",
+      "category": "workaround_rationale",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "text",
+      "category": "deleted_implementation",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.33333333333333337
+      }
+    },
+    {
+      "mode": "text",
+      "category": "migration",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.25
+      }
+    },
+    {
+      "mode": "text",
+      "category": "exact_identifier",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "text",
+      "category": "number_version",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": -0.5,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.04166666666666663
+      }
+    },
+    {
+      "mode": "text",
+      "category": "rename",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "text",
+      "category": "poor_message_rich_diff",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0.5,
+        "hit3": 1,
+        "hit5": 1,
+        "recall5": 1,
+        "mrr": 0.75
+      }
+    },
+    {
+      "mode": "text",
+      "category": "rich_message_skipped_patch",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -1,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.5
+      }
+    },
+    {
+      "mode": "text",
+      "category": "lifecycle",
+      "nSummaryEvidence": 1,
+      "nSummaryOnly": 1,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0.16666666666666669
+      }
+    },
+    {
+      "mode": "text",
+      "category": "distractor_intent",
+      "nSummaryEvidence": 1,
+      "nSummaryOnly": 1,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -1,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.6666666666666667
+      }
+    },
+    {
+      "mode": "text",
+      "category": "no_evidence",
+      "nSummaryEvidence": 0,
+      "nSummaryOnly": 0,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": null,
+        "hit3": null,
+        "hit5": null,
+        "recall5": null,
+        "mrr": null
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "synonym_mismatch",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0.25
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "workaround_rationale",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "deleted_implementation",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "migration",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.25
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "exact_identifier",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "number_version",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "rename",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "poor_message_rich_diff",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0.5,
+        "hit3": 0.5,
+        "hit5": 0.5,
+        "recall5": 0.5,
+        "mrr": 0.5
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "rich_message_skipped_patch",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "lifecycle",
+      "nSummaryEvidence": 1,
+      "nSummaryOnly": 1,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "distractor_intent",
+      "nSummaryEvidence": 1,
+      "nSummaryOnly": 1,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "semantic",
+      "category": "no_evidence",
+      "nSummaryEvidence": 0,
+      "nSummaryOnly": 0,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": null,
+        "hit3": null,
+        "hit5": null,
+        "recall5": null,
+        "mrr": null
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "synonym_mismatch",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "workaround_rationale",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "deleted_implementation",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0.5,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0.06666666666666665
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "migration",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.25
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "exact_identifier",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0.25
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "number_version",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "rename",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 1,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0.5833333333333334
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "poor_message_rich_diff",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0.5,
+        "hit3": 1,
+        "hit5": 1,
+        "recall5": 1,
+        "mrr": 0.6666666666666666
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "rich_message_skipped_patch",
+      "nSummaryEvidence": 2,
+      "nSummaryOnly": 2,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -0.5,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.25
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "lifecycle",
+      "nSummaryEvidence": 1,
+      "nSummaryOnly": 1,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": 0
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "distractor_intent",
+      "nSummaryEvidence": 1,
+      "nSummaryOnly": 1,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -1,
+        "hit3": 0,
+        "hit5": 0,
+        "recall5": 0,
+        "mrr": -0.5
+      }
+    },
+    {
+      "mode": "hybrid",
+      "category": "no_evidence",
+      "nSummaryEvidence": 0,
+      "nSummaryOnly": 0,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": null,
+        "hit3": null,
+        "hit5": null,
+        "recall5": null,
+        "mrr": null
+      }
+    }
+  ],
+  "diffOverall": [
+    {
+      "mode": "text",
+      "nSummaryEvidence": 18,
+      "nSummaryOnly": 18,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": -0.2222222222222222,
+        "hit3": 0.05555555555555547,
+        "hit5": 0.11111111111111116,
+        "recall5": 0.11111111111111116,
+        "mrr": -0.0787037037037035
+      }
+    },
+    {
+      "mode": "semantic",
+      "nSummaryEvidence": 18,
+      "nSummaryOnly": 18,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0.05555555555555558,
+        "hit3": 0.05555555555555558,
+        "hit5": 0.05555555555555558,
+        "recall5": 0.05555555555555558,
+        "mrr": 0.05555555555555558
+      }
+    },
+    {
+      "mode": "hybrid",
+      "nSummaryEvidence": 18,
+      "nSummaryOnly": 18,
+      "diff_evidenceMinusSummaryOnly": {
+        "hit1": 0,
+        "hit3": 0.16666666666666663,
+        "hit5": 0.11111111111111105,
+        "recall5": 0.11111111111111105,
+        "mrr": 0.062962962962963
+      }
+    }
+  ]
+}

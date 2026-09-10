@@ -1,0 +1,11 @@
+{
+  "runId": "2026-09-10T09-08-25-832Z",
+  "split": "dev",
+  "protocolHash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "generatedAt": "2026-09-10T09:09:26.854Z",
+  "totalQueries": 0,
+  "omittedCount": 0,
+  "byCandidateModeCategory": [],
+  "overall": [],
+  "noEvidenceObservations": []
+}

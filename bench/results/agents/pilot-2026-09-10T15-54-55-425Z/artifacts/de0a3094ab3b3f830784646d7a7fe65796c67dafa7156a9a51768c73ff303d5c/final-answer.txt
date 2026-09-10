@@ -1,0 +1,51 @@
+## Answer
+
+Yes. `z.object()` used to keep unknown keys; the default was changed to strip them. The commit that established this is:
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a`** — *"strip unknown keys by default"* (Colin McDonnell, 2020-09-17).
+
+The commit message is just that one line, and the diff shows the flip in `ZodObject.create` (note the two `create` overloads):
+
+```diff
+@@ -388,7 +388,7 @@ export class ZodObject<
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+@@ -402,7 +402,7 @@ export class ZodObject<
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+It also renamed the opt-in escape hatch, so keeping extras became explicit:
+
+```diff
+-  allowUnknown = (): ZodObject<T, 'allow', Catchall> =>
++  passthrough = (): ZodObject<T, 'passthrough', Catchall> =>
+     new ZodObject({
+       ...this._def,
+-      unknownKeys: 'allow',
++      unknownKeys: 'passthrough',
+     });
+```
+
+and rewrote the README line that documented the old behavior:
+
+```diff
+-- Object schemas now _allow_ unknown keys by default, instead of throwing an error
++- Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+### Nuance worth flagging
+
+The "keep unknown keys" behavior you remember was itself a short-lived Zod 2 pre-release state, not released Zod 1 behavior. The parent commit's `package.json` reads `"version": "2.0.0-beta.1"`. Before Zod 2, objects were strict by default — the README note in this same commit says *"Before version 2, Zod did NOT allow unknown keys by default."* The `allow`-by-default code was introduced only two days earlier in `2936e65b` ("Eliminated params from ZodObject", 2020-09-15) and replaced by `18854492` on 2020-09-17.
+
+Since then the strip-by-default behavior has held; the current v4 source still documents it (`packages/zod/src/v4/classic/from-json-schema.ts`: *"In Zod, objects strip unknown keys by default"*). To get the old behavior back, call `.passthrough()` (renamed from the old `.allowUnknown()` in this same commit).
+
+No files were modified (`git status` clean).

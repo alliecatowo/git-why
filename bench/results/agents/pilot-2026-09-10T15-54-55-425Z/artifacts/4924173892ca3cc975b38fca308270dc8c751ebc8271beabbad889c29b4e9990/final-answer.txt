@@ -1,0 +1,52 @@
+Environment verified. Now let me investigate the repository history for the ignore-file name.
+
+Found a very relevant commit: `cc90511 Switch from .rgignore to .ignore.` Let me examine it.
+
+The answer is confirmed. Let me also find when `.rgignore` was first introduced, to give a complete picture.
+
+Let me verify the earliest name (`.xrepignore`) and check the initial commit.
+
+I now have the complete picture. Let me verify the commit is reachable from HEAD and confirm the timeline.
+
+I have everything needed to answer the question. No files were modified.
+
+## Answer
+
+**Yes.** ripgrep's special ignore file was originally called something else. It was `.rgignore` (and before that, `.xrepignore`, back when the tool itself was named "xrep").
+
+### The establishing commit
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — *"Switch from .rgignore to .ignore."* (Andrew Gallant, 2016-09-23, fixes #40). This is the commit that changed the name to `.ignore` and is directly reachable from HEAD.
+
+The commit message states it plainly:
+
+> ```
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver
+> bump.
+>
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974
+>
+> Fixes #40
+> ```
+
+And the diff shows the name change in the ignore-file list in `src/ignore.rs`:
+
+> ```diff
+>  const IGNORE_NAMES: &'static [&'static str] = &[
+>      ".gitignore",
+> +    ".ignore",
+>      ".rgignore",
+>  ];
+> ```
+
+plus matching doc/README updates, e.g. `$HOME/.rgignore` → `$HOME/.ignore`.
+
+### For completeness — even earlier
+
+- **`a744ec133d12e0c8d8e8b0486cd92e2b60ad61e6`** — *"Rename xrep to ripgrep."* (2016-09-08) renamed `.xrepignore` → `.rgignore`, e.g. `-   $HOME/.xrepignore or on the command line.` → `+   $HOME/.rgignore or on the command line.` and `-    ".xrepignore",` → `+    ".rgignore",` in `src/ignore.rs`.
+- **`065c44998092906746f6585090bafbf36d98342b`** — *"File path filtering works and is pretty fast."* (2016-08-27) is where `.xrepignore` first appears, since the tool was then called "xrep".
+
+So the evolution was: `.xrepignore` → `.rgignore` → `.ignore`, with commit `cc90511` being the one that established the modern `.ignore` name.

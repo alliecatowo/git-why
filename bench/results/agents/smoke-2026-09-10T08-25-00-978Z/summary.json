@@ -1,0 +1,528 @@
+{
+  "stage": "smoke",
+  "runId": "2026-09-10T08-25-00-978Z",
+  "model": "llmgateway/deepseek-v4-flash",
+  "zgAvailable": true,
+  "planned": 16,
+  "attempted": 16,
+  "blocked": 0,
+  "infrastructureFailedAfterRetry": 0,
+  "valid": 16,
+  "successful": 8,
+  "byArm": {
+    "A": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    },
+    "B": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    },
+    "C": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    },
+    "D": {
+      "attempted": 4,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    }
+  },
+  "aggregate": {
+    "schemaVersion": 1,
+    "attempts": 16,
+    "logicalTrials": 16,
+    "valid": 16,
+    "successful": 8,
+    "byStratumArm": {
+      "coding": {
+        "A": {
+          "attempted": 2,
+          "valid": 2,
+          "numerator": 2,
+          "denominator": 2,
+          "rate": 1,
+          "unscoredValid": 0
+        },
+        "B": {
+          "attempted": 2,
+          "valid": 2,
+          "numerator": 2,
+          "denominator": 2,
+          "rate": 1,
+          "unscoredValid": 0
+        },
+        "C": {
+          "attempted": 2,
+          "valid": 2,
+          "numerator": 2,
+          "denominator": 2,
+          "rate": 1,
+          "unscoredValid": 0
+        },
+        "D": {
+          "attempted": 2,
+          "valid": 2,
+          "numerator": 2,
+          "denominator": 2,
+          "rate": 1,
+          "unscoredValid": 0
+        }
+      },
+      "rubric": {
+        "A": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        },
+        "B": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        },
+        "C": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        },
+        "D": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        }
+      },
+      "temporal": {
+        "A": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        },
+        "B": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        },
+        "C": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        },
+        "D": {
+          "attempted": 1,
+          "valid": 1,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 1
+        }
+      }
+    },
+    "byArm": {
+      "A": {
+        "attempted": 4,
+        "valid": 4,
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1,
+        "unscoredValid": 2
+      },
+      "B": {
+        "attempted": 4,
+        "valid": 4,
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1,
+        "unscoredValid": 2
+      },
+      "C": {
+        "attempted": 4,
+        "valid": 4,
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1,
+        "unscoredValid": 2
+      },
+      "D": {
+        "attempted": 4,
+        "valid": 4,
+        "numerator": 2,
+        "denominator": 2,
+        "rate": 1,
+        "unscoredValid": 2
+      }
+    },
+    "pairedPerTask": [
+      {
+        "taskId": "T1",
+        "stratum": "coding",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          }
+        }
+      },
+      {
+        "taskId": "T13",
+        "stratum": "rubric",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "T17",
+        "stratum": "temporal",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "T21",
+        "stratum": "coding",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          }
+        }
+      }
+    ],
+    "bootstrapCiByArm": {
+      "A": {
+        "clusters": 2,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      },
+      "B": {
+        "clusters": 2,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      },
+      "C": {
+        "clusters": 2,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      },
+      "D": {
+        "clusters": 2,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      }
+    },
+    "resources": {
+      "allAttempts": {
+        "n": 16,
+        "wall_ms": {
+          "total": 653874,
+          "mean": 40867.125,
+          "observed": 16
+        },
+        "tool_calls": {
+          "total": 205,
+          "mean": 12.8125,
+          "observed": 16
+        },
+        "history_calls": {
+          "total": 73,
+          "mean": 4.5625,
+          "observed": 16
+        },
+        "git_why_calls": {
+          "total": 10,
+          "mean": 0.625,
+          "observed": 16
+        },
+        "zg_calls": {
+          "total": 9,
+          "mean": 0.5625,
+          "observed": 16
+        },
+        "input_tokens": {
+          "total": 159734,
+          "mean": 9983.375,
+          "observed": 16
+        },
+        "output_tokens": {
+          "total": 21248,
+          "mean": 1328,
+          "observed": 16
+        },
+        "cache_read_tokens": {
+          "total": 1060480,
+          "mean": 66280,
+          "observed": 16
+        },
+        "cache_write_tokens": {
+          "total": 0,
+          "mean": 0,
+          "observed": 16
+        },
+        "actual_billed_cost": {
+          "total": 0.0223505,
+          "mean": 0.00139690625,
+          "observed": 16
+        },
+        "estimated_list_price_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_build_ms": {
+          "total": 17335,
+          "mean": 2166.875,
+          "observed": 8
+        },
+        "index_disk_bytes": {
+          "total": 48394072,
+          "mean": 6049259,
+          "observed": 8
+        }
+      },
+      "successfulOnly": {
+        "n": 8,
+        "wall_ms": {
+          "total": 333589,
+          "mean": 41698.625,
+          "observed": 8
+        },
+        "tool_calls": {
+          "total": 111,
+          "mean": 13.875,
+          "observed": 8
+        },
+        "history_calls": {
+          "total": 20,
+          "mean": 2.5,
+          "observed": 8
+        },
+        "git_why_calls": {
+          "total": 5,
+          "mean": 0.625,
+          "observed": 8
+        },
+        "zg_calls": {
+          "total": 5,
+          "mean": 0.625,
+          "observed": 8
+        },
+        "input_tokens": {
+          "total": 74492,
+          "mean": 9311.5,
+          "observed": 8
+        },
+        "output_tokens": {
+          "total": 10626,
+          "mean": 1328.25,
+          "observed": 8
+        },
+        "cache_read_tokens": {
+          "total": 598528,
+          "mean": 74816,
+          "observed": 8
+        },
+        "cache_write_tokens": {
+          "total": 0,
+          "mean": 0,
+          "observed": 8
+        },
+        "actual_billed_cost": {
+          "total": 0.011416279999999997,
+          "mean": 0.0014270349999999997,
+          "observed": 8
+        },
+        "estimated_list_price_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_build_ms": {
+          "total": 8764,
+          "mean": 2191,
+          "observed": 4
+        },
+        "index_disk_bytes": {
+          "total": 24180688,
+          "mean": 6045172,
+          "observed": 4
+        }
+      }
+    },
+    "invalidated": [],
+    "evidence": {
+      "A": {
+        "trialsWithGitWhy": 0,
+        "gitWhyCalls": 0,
+        "gitWhyEvidenceUsed": 0,
+        "zgCalls": 0
+      },
+      "B": {
+        "trialsWithGitWhy": 0,
+        "gitWhyCalls": 0,
+        "gitWhyEvidenceUsed": 0,
+        "zgCalls": 4
+      },
+      "C": {
+        "trialsWithGitWhy": 4,
+        "gitWhyCalls": 4,
+        "gitWhyEvidenceUsed": 4,
+        "zgCalls": 5
+      },
+      "D": {
+        "trialsWithGitWhy": 4,
+        "gitWhyCalls": 6,
+        "gitWhyEvidenceUsed": 6,
+        "zgCalls": 0
+      }
+    }
+  }
+}

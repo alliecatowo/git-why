@@ -1,0 +1,58 @@
+{
+  "id": "3a397dd7bd8c81a5",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "Preflight verified: `/workspace`, `/workspace`, `aa150827a936441f92d851f180717a3ea0db14b2`. Now the zg check:\n\nThe zg query returned a hit. Now let me examine the repository and the session.cjs file:\n\nLet me look at the history of `src/session.cjs` specifically:\n\nThe file history shows three commits. Let me verify what each commit did, including the HEAD commit:\n\nLet me examine the HEAD commit more closely and run `git why` for confirmation:\n\nThe HEAD commit is an empty marker commit. Let me do a final verification that no earlier commit introduced this behavior under a different filename or rename:\n\n## Answer\n\nThe first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:\n\n**`86793c1` — \"Introduce consent renewal handling\"**\n- Full SHA: `86793c1592ed4cfd8c54a3338d2eaded152ae263`\n- Author: Fixture Bot\n- Date: Sun Mar 16 15:33:20 2025 +0000\n- Message: *\"A legacy identity provider signals expired consent with a special token value.\"*\n\n### How I determined this\n\n1. **Preflight verified**: `pwd` = `/workspace`, `git rev-parse --show-toplevel` = `/workspace`, `git rev-parse HEAD` = `aa150827a936441f92d851f180717a3ea0db14b2`, and `zg query --fts function --limit 1` returned a hit in `src/session.cjs`.\n\n2. **File history** (`git log --follow --oneline -- src/session.cjs`) shows only three commits touching the file, in chronological order:\n   - `86793c1` **Introduce consent renewal handling** — created `src/session.cjs` with `function configured() { return 'consent renewal handling'; }` (the behavior's introduction)\n   - `30e911d` Adjust consent renewal handling rollout — only removed a trailing blank line\n   - `0422e76` Remove consent renewal handling — reverted the behavior to `'default'`\n\n3. **The commit diff** for `86793c1` shows the file being created (new file, 3 insertions) containing the consent-renewal behavior — i.e., this is where the behavior first appeared.\n\n4. **Cross-checks**:\n   - `git log -S \"consent renewal\"` confirms the string first appears in `86793c1` (and only later in the removal commit `0422e76`).\n   - No rename (`--diff-filter=R`) ever affected `src/session.cjs`, so the behavior wasn't moved in from an earlier path.\n   - `git why \"consent renewal handling\" --no-refresh` also surfaces `86793c1` as the commit whose diff introduces `+function configured() { return 'consent renewal handling'; }`.\n   - The current HEAD (`aa15082` \"Current consent renewal handling state\") is an empty marker commit that changed no files.\n\nNo code was modified.",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "aa15082",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

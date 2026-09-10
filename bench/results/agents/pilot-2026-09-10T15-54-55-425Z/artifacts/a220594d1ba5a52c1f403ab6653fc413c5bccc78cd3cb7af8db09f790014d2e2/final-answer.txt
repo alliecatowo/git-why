@@ -1,0 +1,37 @@
+The `git why` search surfaced a highly relevant commit. Let me examine it and the surrounding history in detail.
+
+The commit is confirmed. Let me verify the prior default in the parent commit to nail down the before/after.
+
+## Answer
+
+Yes — the default handling of unknown keys did change, exactly as you remember. It happened during Zod v2 development, in commit **`18854492b4b6e1648499f2f920c615dab187ee1a`**, titled **"strip unknown keys by default"** (Colin McDonnell, 2020-09-17).
+
+**Before this commit**, `z.object(...)` was created with `unknownKeys: 'allow'`, so undeclared keys were passed through into the parsed output. **After it**, the default is `unknownKeys: 'strip'`, so extra keys are removed. The supporting diff in `src/types/object.ts` (both `ZodObject.create` and the constructor's default type parameter):
+
+```diff
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+```
+
+The README in the same commit states it outright:
+
+```diff
+-Object schemas now _allow_ unknown keys by default, instead of throwing an error
++Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+```
+
+The same commit also renamed the opt-in methods (`.allowUnknown()`/`.nonstrict()`/`.stripUnknown()` → `.passthrough()`/`.strip()`), and flipped the parser branch from `'allow'` to `'passthrough'`:
+
+```diff
+-        if (def.unknownKeys === 'allow') {
++        if (def.unknownKeys === 'passthrough') {
+```
+
+So your memory is accurate: at one point in v2's history, unknown keys were preserved by default; commit `1885449` changed that to stripping, and the current checkout (4.6.1) still strips by default. If you want the old behavior, call `.passthrough()` on the object schema. (For completeness: even earlier, in Zod v1, unknown keys caused a parse error rather than being kept — that default "throw" was relaxed to "allow" in the v2 beta days before this commit.)
+
+No files were modified during this investigation.

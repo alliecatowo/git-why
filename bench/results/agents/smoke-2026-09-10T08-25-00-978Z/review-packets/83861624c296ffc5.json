@@ -1,0 +1,58 @@
+{
+  "id": "83861624c296ffc5",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "Preflight passed. Now let me investigate the history of `src/session.cjs` to find the first commit that introduced the consent renewal handling behavior.\n\nThe `git log --follow` shows three commits touching `src/session.cjs`. The oldest one listed (last in reverse-chronological order) is `86793c1` \"Introduce consent renewal handling\". Let me verify this in detail.\n\nConfirmed. The parent commit `f6b9076` has no `src/session.cjs` (the `ls-tree` returned nothing), so `86793c1` is where the file was created. Let me do a final check on the current file state for completeness.\n\n## Answer\n\n**The first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:**\n\n**`86793c1` — \"Introduce consent renewal handling\"** (full hash: `86793c1592ed4cfd8c54a3338d2eaded152ae263`, dated 2025-03-16 15:33:20 +0000 by Fixture Bot)\n\n### Evidence\n\n1. **Preflight** passed: `pwd` = `/workspace`, `git rev-parse --show-toplevel` = `/workspace`, `HEAD` = `aa150827a936441f92d851f180717a3ea0db14b2`. The `git why \"function\" --no-refresh -n 1` command returned a result.\n\n2. **File history** (`git log --follow -- src/session.cjs`) shows exactly three commits touching the file, in reverse chronological order:\n   - `0422e76` — Remove consent renewal handling (2025-03-16 17:33:20)\n   - `30e911d` — Adjust consent renewal handling rollout (2025-03-16 16:33:20)\n   - `86793c1` — **Introduce consent renewal handling** (2025-03-16 15:33:20) ← earliest\n\n3. **The commit itself** creates `src/session.cjs` as a brand-new file (`new file mode 100644`) containing:\n   ```js\n   function configured() { return 'consent renewal handling'; }\n   module.exports = { configured };\n   ```\n   Its parent (`f6b9076`) has no `src/session.cjs` (verified via `git ls-tree f6b9076 -- src/`, which returned nothing), so the behavior did not exist before this commit.\n\n4. **Corroboration**: `git log -S 'consent renewal handling'` only surfaces `86793c1` (introduction) and `0422e76` (removal), confirming `86793c1` is where the behavior was first introduced.\n\nNo code was modified — the task was purely investigative.",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "f6b9076",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

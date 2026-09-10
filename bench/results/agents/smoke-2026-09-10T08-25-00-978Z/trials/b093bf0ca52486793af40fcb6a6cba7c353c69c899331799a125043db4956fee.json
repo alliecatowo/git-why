@@ -1,0 +1,110 @@
+{
+  "task_id": "T17",
+  "task_stratum": "temporal",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "corpus_fingerprint": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:28:06.886Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "ea6b2cb22df9028dcb32a2e2d2320eefc534af98ff7f6bb5c1ae14997dd7a29b",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": "pending_blinded_review",
+  "wall_ms": 22149,
+  "tool_calls": 7,
+  "history_calls": 4,
+  "zg_calls": 1,
+  "git_why_calls": 0,
+  "input_tokens": 3605,
+  "output_tokens": 889,
+  "cache_read_tokens": 48896,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00087331,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 27221,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T17-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "b093bf0ca52486793af40fcb6a6cba7c353c69c899331799a125043db4956fee",
+  "zg_index_build_ms": 6708,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  123 / 123 files\n  Entities    123\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_01_942BrVZ2vC2BDgilzgxQ2633",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- src/session.cjs"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_qWEqLO9UWXCMbrsRb76a3238",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all; echo \"---\"; git show --stat 86793c1; echo \"===\"; git show 86793c1 -- src/session.cjs"
+        },
+        "output": "aa15082 Current consent renewal handling state\n0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\nf6b9076 chore: relay follow-up 122\ndbaad29 chore: cache follow-up 121\n66916d6 chore: policy follow-up 120\n227d31e chore: worker follow-up 119\ncaed068 chore: adapter follow-up 118\n418f7b4 chore: queue follow-up 117\n3399992 chore: session follow-up 116\nd4d3327 chore: gateway follow-up 115\naeffee1 chore: relay follow-up 114\n3626d51 chore: cache follow-up 113\nd85fc77 chore: policy follow-up 112\n73e5383 chore: worker follow-up 111\n19b6e61 chore: adapter follow-up 110\n1e717e9 chore: queue follow-up 109\n15d127d chore: session follow-up 108\n2457235 chore: gateway follow-up 107\n051f017 chore: relay follow-up 106\n0657b1d chore: cache follow-up 105\ncf8a3de chore: policy follow-up 104\n7c4337f chore: worker follow-up 103\n0e01cac chore: adapter follow-up 102\nc90420b chore: queue follow-up 101\ncab12af chore: session follow-up 100\ne0f9aa4 chore: gateway follow-up 099\na3b8081 chore: relay follow-up 098\ne5acda7 chore: cache follow-up 097\n65307f5 chore: policy follow-up 096\n2a073be chore: worker follow-up 095\nf2a5175 chore: adapter follow-up 094\n330b1b6 chore: queue follow-up 093\n06fe732 chore: session follow-up 092\n9f1fab0 chore: gateway follow-up 091\n2d13e07 chore: relay follow-up 090\n8327153 chore: cache follow-up 089\n3c99cc2 chore: policy follow-up 088\n9499235 chore: worker follow-up 087\n29e1e1b chore: adapter follow-up 086\n31f2f6f chore: queue follow-up 085\n98dae78 chore: session follow-up 084\n8a541a9 chore: gateway follow-up 083\n6e4b1d2 chore: relay follow-up 082\n51cce48 chore: cache follow-up 081\ncefa609 chore: policy follow-up 080\n28c2cb1 chore: worker follow-up 079\ndbf4d90 chore: adapter follow-up 078\nea9b9db chore: queue follow-up 077\n650e8e1 chore: session follow-up 076\n32271ae chore: gateway follow-up 075\nae4477a chore: relay follow-up 074\n95113be chore: cache follow-up 073\n7a44129 chore: policy follow-up 072\n3d074a9 chore: worker follow-up 071\n36063c7 chore: adapter follow-up 070\n3ba3ef7 chore: queue follow-up 069\n5d7212d chore: session follow-up 068\nf22abc8 chore: gateway follow-up 067\n9c7bce2 chore: relay follow-up 066\n7cc517f chore: cache follow-up 065\n4819a66 chore: policy follow-up 064\nf317782 chore: worker follow-up 063\nfb5ab39 chore: adapter follow-up 062\n2b2b844 chore: queue follow-up 061\na75fad0 chore: session follow-up 060\n7bfab65 chore: gateway follow-up 059\nd05d746 chore: relay follow-up 058\n0a49427 chore: cache follow-up 057\n63c6f67 chore: policy follow-up 056\nb9c6775 chore: worker follow-up 055\nf023964 chore: adapter follow-up 054\n20334f6 chore: queue follow-up 053\n85d9bf4 chore: session follow-up 052\nc79ce08 chore: gateway follow-up 051\n3f81aa3 chore: relay follow-up 050\n1304146 chore: cache follow-up 049\n69cf876 chore: policy follow-up 048\n4a42799 chore: worker follow-up 047\n3742eb9 chore: adapter follow-up 046\n6da782d chore: queue follow-up 045\n44cc717 chore: session follow-up 044\nb712906 chore: gateway follow-up 043\n2cc8018 chore: relay follow-up 042\n7d58ee6 chore: cache follow-up 041\n8edc849 chore: policy follow-up 040\n202719d chore: worker follow-up 039\n261a9bd chore: adapter follow-up 038\nf6bbaba chore: queue follow-up 037\n1bc83de chore: session follow-up 036\nb729f7a chore: gateway follow-up 035\nb6c5c82 chore: relay follow-up 034\n0d843b3 chore: cache follow-up 033\n6154f78 chore: policy follow-up 032\nddc6eca chore: worker follow-up 031\nfb19e63 chore: adapter follow-up 030\n7aa6855 chore: queue follow-up 029\n8443f03 chore: session follow-up 028\nad16729 chore: gateway follow-up 027\nc045986 chore: relay follow-up 026\n3259915 chore: cache follow-up 025\nb78b4e4 chore: policy follow-up 024\nc1527ff chore: worker follow-up 023\nccea3c0 chore: adapter follow-up 022\nc3dd043 chore: queue follow-up 021\n7b7d935 chore: session follow-up 020\nb9dde56 chore: gateway follow-up 019\n98b2f10 chore: relay follow-up 018\nbf54f9b chore: cache follow-up 017\n51aaec4 chore: policy follow-up 016\n3d66ff2 chore: worker follow-up 015\ne77f7e8 chore: adapter follow-up 014\nf230387 chore: queue follow-up 013\n430c057 chore: session follow-up 012\n80eeddf chore: gateway follow-up 011\n0348247 chore: relay follow-up 010\n75da68e chore: cache follow-up 009\n25921d7 chore: policy follow-up 008\nd89c067 chore: worker follow-up 007\n9d69651 chore: adapter follow-up 006\n2db6d1e chore: queue follow-up 005\n063edf4 chore: session follow-up 004\nd867f1b chore: gateway follow-up 003\n752f1be chore: relay follow-up 002\n5f7b4d8 chore: cache follow-up 001\n---\ncommit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\n src/session.cjs | 3 +++\n 1 file changed, 3 insertions(+)\n===\ncommit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..4d42b8c\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'consent renewal handling'; }\n+module.exports = { configured };\n+\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_HuLO4Cm9RMkzuuVndLRl2983",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --follow -- src/session.cjs; echo \"--- HEAD show ---\"; git show --stat HEAD; echo \"--- HEAD file ---\"; git show HEAD:src/session.cjs; echo \"--- branches/refs ---\"; git branch -a; git log --oneline -5 HEAD"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n--- HEAD show ---\ncommit aa150827a936441f92d851f180717a3ea0db14b2\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 18:33:20 2025 +0000\n\n    Current consent renewal handling state\n--- HEAD file ---\nfunction configured() { return 'default'; }\nmodule.exports = { configured };\n--- branches/refs ---\n* (HEAD detached at aa15082)\naa15082 Current consent renewal handling state\n0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\nf6b9076 chore: relay follow-up 122\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_XbdsClJWO8ILTQG9Rfav1295",
+        "status": "completed",
+        "input": {
+          "command": "echo \"--- 86793c1 parent tree ---\"; git ls-tree -r f6b9076 --name-only | grep -i session; echo \"(none if empty)\"; echo \"--- diffs ---\"; for c in 86793c1 30e911d 0422e76 aa15082; do echo \"### $c\"; git show $c --format=\"%h %s\" -- src/session.cjs; done"
+        },
+        "output": "--- 86793c1 parent tree ---\n(none if empty)\n--- diffs ---\n### 86793c1\n86793c1 Introduce consent renewal handling\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..4d42b8c\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'consent renewal handling'; }\n+module.exports = { configured };\n+\n### 30e911d\n30e911d Adjust consent renewal handling rollout\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 4d42b8c..dd7d198 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,3 +1,2 @@\n function configured() { return 'consent renewal handling'; }\n module.exports = { configured };\n-\n### 0422e76\n0422e76 Remove consent renewal handling\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex dd7d198..1c5cdca 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,2 +1,2 @@\n-function configured() { return 'consent renewal handling'; }\n+function configured() { return 'default'; }\n module.exports = { configured };\n### aa15082\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "aa150827a936441f92d851f180717a3ea0db14b2"
+    }
+  },
+  "review_packet_id": "038c1216a26f3460",
+  "completed": true
+}

@@ -1,0 +1,105 @@
+{
+  "task_id": "T21",
+  "task_stratum": "coding",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "96b308a20980554af509a525430daddfaa4b670e",
+  "corpus_fingerprint": "96b308a20980554af509a525430daddfaa4b670e",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:27:07.652Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "7e18f69c7ccbcf180134f5871241b50e631fd2193a0c75567b86ccf6013a0dc0",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 1,
+  "hidden_tests_total": 1,
+  "evidence_grade": null,
+  "wall_ms": 41796,
+  "tool_calls": 18,
+  "history_calls": 2,
+  "zg_calls": 2,
+  "git_why_calls": 1,
+  "input_tokens": 9911,
+  "output_tokens": 1713,
+  "cache_read_tokens": 91392,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00168227,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 40358,
+  "index_build_ms": 2108,
+  "model_download_ms": null,
+  "index_disk_bytes": 6039476,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T21-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "ec1f3fe515392aa1e2512be2bb4784519f165c5a0bd91aaeab9372543dcd9421",
+  "indexed_commits": 123,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  123 / 123 files\n  Entities    123\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_eLH5wu4OrOYXJNO9kS3k6255",
+        "status": "completed",
+        "input": {
+          "command": "ls -la && echo \"---\" && git log --oneline -10"
+        },
+        "output": "total 4\ndrwxr-xr-x   6 bench bench  192 Sep 10 08:27 .\ndrwxr-xr-x   1 root  root  4096 Sep 10 08:27 ..\ndrwxr-xr-x  14 bench bench  448 Sep 10 08:27 .git\ndrwxr-xr-x   6 bench bench  192 Sep 10 08:27 .zvec-grep\ndrwxr-xr-x 124 bench bench 3968 Sep 10 08:27 notes\ndrwxr-xr-x   3 bench bench   96 Sep 10 08:27 src\n---\n96b308a Add src/utils.cjs\n88b299c chore: relay follow-up 122\n3d3880e chore: cache follow-up 121\n01c7c17 chore: policy follow-up 120\n6079ffa chore: worker follow-up 119\n36d949a chore: adapter follow-up 118\n377910b chore: queue follow-up 117\n4c79a78 chore: session follow-up 116\ne5a56f8 chore: gateway follow-up 115\n05f41a8 chore: relay follow-up 114\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_0mTMAvQtCgmKzUGzkm9X6974",
+        "status": "completed",
+        "input": {
+          "command": "git show 96b308a --stat && echo \"===\" && git show 96b308a"
+        },
+        "output": "commit 96b308a20980554af509a525430daddfaa4b670e\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Mar 21 06:40:00 2025 +0000\n\n    Add src/utils.cjs\n\n src/utils.cjs | 4 ++++\n 1 file changed, 4 insertions(+)\n===\ncommit 96b308a20980554af509a525430daddfaa4b670e\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Mar 21 06:40:00 2025 +0000\n\n    Add src/utils.cjs\n\ndiff --git a/src/utils.cjs b/src/utils.cjs\nnew file mode 100644\nindex 0000000..9d0654e\n--- /dev/null\n+++ b/src/utils.cjs\n@@ -0,0 +1,4 @@\n+function clampDelay(value) {\n+  return undefined;\n+}\n+module.exports = { clampDelay };\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      }
+    ],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "96b308a20980554af509a525430daddfaa4b670e"
+    }
+  },
+  "review_packet_id": null,
+  "completed": true
+}

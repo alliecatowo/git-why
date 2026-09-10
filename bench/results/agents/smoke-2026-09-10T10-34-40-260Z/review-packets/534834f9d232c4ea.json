@@ -1,0 +1,54 @@
+{
+  "id": "534834f9d232c4ea",
+  "prompt": "Explain, based only on repository history, why the browser cookie compatibility behavior in src/cookies.cjs changed. Cite the commits you rely on. Do not modify code.\n",
+  "answer": "Verified: `/workspace`, `/workspace`, and `42adaf0b82df138b4f3344624fb12c5acab7ccb1`. Now let me investigate.I verified the environment (`/workspace`, `/workspace`, `42adaf0b82df138b4f3344624fb12c5acab7ccb1`) and investigated the repository history without modifying any code.\n\n## Answer\n\nOnly three commits ever touch `src/cookies.cjs`, and they tell the whole story (the current `HEAD` commit is a no-op snapshot):\n\n| Commit | Effect on behavior | Rationale (commit message) |\n|---|---|---|\n| `ed818d0` \"Introduce browser cookie compatibility\" (2025-03-12 00:26:40) | Created `src/cookies.cjs`, with `configured()` returning `'browser cookie compatibility'` | \"The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\" |\n| `a531967` \"Adjust browser cookie compatibility rollout\" (01:26:40) | Removed only a trailing blank line — no behavioral change | \"The rollout was monitored before its final retirement.\" |\n| `d85c97e` \"Remove browser cookie compatibility\" (02:26:40) | Changed `configured()` from `'browser cookie compatibility'` to `'default'` (compatibility retired) | \"Usage of the affected browser family stayed below the retirement threshold for two quarters.\" |\n| `42adaf0` \"Current browser cookie compatibility state\" (`HEAD`, 03:26:40) | Empty commit — `git diff HEAD^ HEAD` is empty; it only records the resulting state | — |\n\n### Why the behavior changed\n\n1. **It was added** (`ed818d0`) because an affected browser version **dropped a required cookie attribute**, which broke sessions; a compatibility mode was introduced to preserve them.\n2. **It was temporarily not altered** (`a531967`) — that commit is cosmetic (whitespace only) and explicitly describes the rollout as being monitored before retirement.\n3. **It was removed** (`d85c97e`) once **usage of the affected browser family stayed below the retirement threshold for two quarters**, so the now-unnecessary compatibility shim was dropped and the function reverted to `'default'`.\n\nThe current file (`src/cookies.cjs`) confirms the end state: `function configured() { return 'default'; }`. Note that the `HEAD` commit `42adaf0` (\"Current browser cookie compatibility state\") is an **empty commit** — it does not itself change anything; the actual behavioral change is `d85c97e`. I did not modify any code.",
+  "rubric": {
+    "mustMentionAny": [
+      "browser",
+      "cookies"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "The affected browser dropped a required attribute, so a compatibility mode preserved sessions.",
+      "removal": "Usage of the affected browser family stayed below the retirement threshold for two quarters.",
+      "temporalKind": null
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "42adaf0b82df138b4f3344624fb12c5acab7ccb1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "ed818d0",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "a531967",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "d85c97e",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "42adaf0",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "browser",
+      "cookies"
+    ],
+    "mentionedKeywords": [
+      "browser",
+      "cookies"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

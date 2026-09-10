@@ -1,0 +1,51 @@
+## Answer
+
+Yes — requests originally used **chardet** to guess `Response.text` encoding, and in requests 2.26 it switched its default estimator to **charset_normalizer**. The reason was **licensing**, not detection quality.
+
+The switch was made in commit:
+
+```
+2ed84f55b22f19a1e1e8eea2e50963dce62052d3
+"Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)"
+Ash Berlin-Taylor — Wed Jul 7 00:55:02 2021 +0100
+```
+
+I verified this commit is an ancestor of the pinned `HEAD` (`dae7ef63…`), and it is the first commit in the history to introduce `charset_normalizer` (`git log -S "charset_normalizer"`).
+
+### Supporting quote from the commit message
+
+> Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity.
+>
+> As an "escape hatch" I have made the code so that it will use chardet first if it is installed, but we no longer depend upon it directly, although there is a new extra added, `requests[lgpl]`…
+
+### Supporting diff evidence
+
+`setup.py` — chardet becomes optional / only for Python 2, and charset_normalizer becomes the Python 3 dependency:
+
+```diff
+ requires = [
+-    'chardet>=3.0.2,<5',
++    'charset_normalizer~=2.0.0; python_version >= "3"',
++    'chardet>=3.0.2,<5; python_version < "3"',
+```
+
+`requests/compat.py` — it now prefers chardet if present, otherwise falls back to charset_normalizer:
+
+```diff
+-import chardet
++try:
++    import chardet
++except ImportError:
++    import charset_normalizer as chardet
+```
+
+`requests/models.py` — the `apparent_encoding` / `text` docstrings were updated:
+
+```diff
+-        """The apparent encoding, provided by the chardet library."""
++        """The apparent encoding, provided by the charset_normalizer or chardet libraries."""
+```
+
+So the "something else" is **charset_normalizer** (MIT-licensed); chardet (LGPL) is still used if it happens to be installed, for backwards compatibility. No files were modified.

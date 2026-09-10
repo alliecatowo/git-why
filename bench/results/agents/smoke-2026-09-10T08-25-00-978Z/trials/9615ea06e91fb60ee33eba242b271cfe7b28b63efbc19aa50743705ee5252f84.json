@@ -1,0 +1,109 @@
+{
+  "task_id": "T1",
+  "task_stratum": "coding",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "55342b69a9650b00174fd47aa2a2b8946025a467",
+  "corpus_fingerprint": "55342b69a9650b00174fd47aa2a2b8946025a467",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:30:23.131Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "684a7ca57731eef95832725ec1a0be033e087855def96cb804e30d963bfbd17c",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 2,
+  "hidden_tests_total": 2,
+  "evidence_grade": null,
+  "wall_ms": 61273,
+  "tool_calls": 15,
+  "history_calls": 3,
+  "zg_calls": 1,
+  "git_why_calls": 1,
+  "input_tokens": 12461,
+  "output_tokens": 1514,
+  "cache_read_tokens": 108288,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0019467299999999998,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 40617,
+  "index_build_ms": 2279,
+  "model_download_ms": null,
+  "index_disk_bytes": 6050868,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T1-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "9615ea06e91fb60ee33eba242b271cfe7b28b63efbc19aa50743705ee5252f84",
+  "indexed_commits": 125,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  123 / 123 files\n  Entities    123\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_yig1sb6apwmquwxnxjw15cl2",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20"
+        },
+        "output": "55342b6 Revert compatibility branch during src/session.cjs cleanup\n7928fef Restore compatibility behavior for normalizeToken\n357cbf6 Introduce normalizeToken in the src/session.cjs adapter\n7cf041b chore: relay follow-up 122\naa8f349 chore: cache follow-up 121\n59a2aae chore: policy follow-up 120\n2b1f5d0 chore: worker follow-up 119\n0c7354a chore: adapter follow-up 118\nc5a91ca chore: queue follow-up 117\n15cc2ca chore: session follow-up 116\n7cbf04c chore: gateway follow-up 115\n245bbcd chore: relay follow-up 114\n932daf3 chore: cache follow-up 113\ncf3a696 chore: policy follow-up 112\n0a47cce chore: worker follow-up 111\n3dcee49 chore: adapter follow-up 110\na51c076 chore: queue follow-up 109\n91e462a chore: session follow-up 108\n0e395b6 chore: gateway follow-up 107\n96d1afa chore: relay follow-up 106\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_cokvz84e0gs5aqwjm2d7n63v",
+        "status": "completed",
+        "input": {
+          "command": "git show 357cbf6 --stat && git show 7928fef --stat && git show 55342b6 --stat"
+        },
+        "output": "commit 357cbf6f6a14d5cb7ee4640b80d7abc5b5e20786\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 03:06:40 2025 +0000\n\n    Introduce normalizeToken in the src/session.cjs adapter\n\n src/session.cjs | 5 +++++\n 1 file changed, 5 insertions(+)\ncommit 7928fef9513663bde805d8ac88ec40011fb5a188\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 04:06:40 2025 +0000\n\n    Restore compatibility behavior for normalizeToken\n    \n    A legacy identity provider uses an empty token to signal that consent must be renewed.\n\n src/session.cjs | 1 +\n 1 file changed, 1 insertion(+)\ncommit 55342b69a9650b00174fd47aa2a2b8946025a467\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 05:06:40 2025 +0000\n\n    Revert compatibility branch during src/session.cjs cleanup\n\n src/session.cjs | 1 -\n 1 file changed, 1 deletion(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_m0b6w5zjfxn8z5uew3wops3n",
+        "status": "completed",
+        "input": {
+          "command": "git show 357cbf6 && git show 7928fef && git show 55342b6"
+        },
+        "output": "commit 357cbf6f6a14d5cb7ee4640b80d7abc5b5e20786\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 03:06:40 2025 +0000\n\n    Introduce normalizeToken in the src/session.cjs adapter\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..873fce5\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,5 @@\n+function normalizeToken(value) {\n+  return value;\n+}\n+\n+module.exports = { normalizeToken };\ncommit 7928fef9513663bde805d8ac88ec40011fb5a188\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 04:06:40 2025 +0000\n\n    Restore compatibility behavior for normalizeToken\n    \n    A legacy identity provider uses an empty token to signal that consent must be renewed.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 873fce5..4225003 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,4 +1,5 @@\n function normalizeToken(value) {\n+  if (value === \"\") return null;\n   return value;\n }\n \ncommit 55342b69a9650b00174fd47aa2a2b8946025a467\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 05:06:40 2025 +0000\n\n    Revert compatibility branch during src/session.cjs cleanup\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 4225003..873fce5 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,5 +1,4 @@\n function normalizeToken(value) {\n-  if (value === \"\") return null;\n   return value;\n }\n \n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 4,
+        "evidence_used": true
+      }
+    ],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "55342b69a9650b00174fd47aa2a2b8946025a467"
+    }
+  },
+  "review_packet_id": null,
+  "completed": true
+}

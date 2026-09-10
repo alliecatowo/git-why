@@ -1,0 +1,40 @@
+
+The commit is confirmed. Let me verify the current state at HEAD for completeness:I have everything needed. Here is my final answer.
+
+## Answer
+
+Yes — before this change, requests used **`chardet`** (an **LGPL**-licensed library) as its default text-encoding guesser (used by `Response.apparent_encoding` and the fallback in `Response.text`). The library switched its default to **`charset_normalizer`**, an MIT-licensed library.
+
+### Supporting commit
+
+**`2ed84f55b22f19a1e1e8eea2e50963dce62052d3`** — *"Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)"* by Ash Berlin-Taylor, committed July 6/7, 2021 (shipped in requests 2.26.0). I verified this commit is an ancestor of the pinned HEAD.
+
+### Why (from the commit message)
+
+The reason was **license ambiguity**, not detection quality:
+
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity.
+>
+> As an "escape hatch" I have made the code so that it will use chardet first if it is installed, but we no longer depend upon it directly, although there is a new extra added, `requests[lgpl]`."
+
+### Supporting diff
+
+- `setup.py`: the hard `chardet` dependency was replaced with a Python 3-only `charset_normalizer` dependency (Python 2 kept chardet):
+  ```diff
+  requires = [
+  -    'chardet>=3.0.2,<5',
+  +    'charset_normalizer~=2.0.0; python_version >= "3"',
+  +    'chardet>=3.0.2,<5; python_version < "3"',
+  ```
+- `requests/__init__.py`: now imports `charset_normalizer` optionally (trying chardet first if installed) and compatibility-checking either library.
+- `requests/models.py`: `apparent_encoding` docstring changed from "provided by the chardet library" to "provided by the charset_normalizer or chardet libraries".
+- `HISTORY.md`:
+  > "Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3 to remove license ambiguity for projects bundling requests. If `chardet` is already installed on your machine it will be used instead of `charset_normalizer` to keep backwards compatibility."
+
+### Current state at HEAD
+
+At the pinned HEAD, this is still the case: `pyproject.toml` declares `"charset_normalizer>=2,<4"` as the default dependency, with `use_chardet_on_py3 = ["chardet>=3.0.2,<8"]` as an optional extra, and `src/requests/compat.py` resolves the guesser by trying `chardet` first, then `charset_normalizer` — preserving backward compatibility exactly as the commit intended. (A later commit, `e9b1217c` "added handling for chardet and charset_normalizer imports", refined the import handling, but `2ed84f55` is the commit that establishes the switch.)
+
+I did not modify any files.

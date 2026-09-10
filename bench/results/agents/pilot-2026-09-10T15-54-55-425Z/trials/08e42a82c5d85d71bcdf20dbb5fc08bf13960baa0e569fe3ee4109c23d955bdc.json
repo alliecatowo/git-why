@@ -1,0 +1,131 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "b0c9185c5bb1c95b79ad1c944e18389a8e7d59ac",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T16:39:52.465Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "69657b46244c595e0bb7a7ff3f748d643527961928e5dfd6f5c89c03d6790306",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+      "0c2bbe73"
+    ]
+  },
+  "wall_ms": 561027,
+  "tool_calls": 11,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 4864,
+  "output_tokens": 1258,
+  "cache_read_tokens": 64384,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0010525399999999998,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 35230,
+  "index_build_ms": 60560,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T15-54-55-425Z/events/X-requests-02-C-r1-a1.jsonl",
+  "exit_reason": "wall_clock_timeout",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "08e42a82c5d85d71bcdf20dbb5fc08bf13960baa0e569fe3ee4109c23d955bdc",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_7DPlQXQADnsH9wvEMy9r7983",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline -15 -S 'requires-python' -- pyproject.toml"
+        },
+        "output": "cb2c8005 Migrate build system to PEP 517 (#7012)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_mtyoLeuM99lL3fJC8Jo89159",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline -20 -S '3.9' -- pyproject.toml"
+        },
+        "output": "0c2bbe73 Drop support for Python 3.9 (#7196)\ncb2c8005 Migrate build system to PEP 517 (#7012)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_eP7NHq62QXXFiLdhCXFX8957",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 0c2bbe73 --stat --format=fuller"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor:     Nate Prewitt <nate.prewitt@gmail.com>\nAuthorDate: Fri Feb 6 08:02:46 2026 -0700\nCommit:     GitHub <noreply@github.com>\nCommitDate: Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\n .github/workflows/run-tests.yml | 10 +++++-----\n README.md                       |  2 +-\n pyproject.toml                  |  6 ++----\n setup.py                        |  4 ++--\n tox.ini                         |  2 +-\n 5 files changed, 11 insertions(+), 13 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_ET_HtH4hFzRgHpv5ry93Nye5584",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 0c2bbe73 -- pyproject.toml setup.py README.md tox.ini"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\ndiff --git a/README.md b/README.md\nindex 74adab80..66640ff0 100644\n--- a/README.md\n+++ b/README.md\n@@ -33,7 +33,7 @@ Requests is available on PyPI:\n $ python -m pip install requests\n ```\n \n-Requests officially supports Python 3.9+.\n+Requests officially supports Python 3.10+.\n \n ## Supported Features & Best–Practices\n \ndiff --git a/pyproject.toml b/pyproject.toml\nindex 8f4fe5ba..f9513bf0 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -14,7 +14,7 @@ maintainers = [\n     {name = \"Ian Stapleton Cordasco\", email=\"graffatcolmingov@gmail.com\"},\n     {name = \"Nate Prewitt\", email=\"nate.prewitt@gmail.com\"}\n ]\n-requires-python = \">=3.9\"\n+requires-python = \">=3.10\"\n dependencies = [\n     \"charset_normalizer>=2,<4\",\n     \"idna>=2.5,<4\",\n@@ -32,7 +32,6 @@ classifiers = [\n     \"Operating System :: OS Independent\",\n     \"Programming Language :: Python\",\n     \"Programming Language :: Python :: 3\",\n-    \"Programming Language :: Python :: 3.9\",\n     \"Programming Language :: Python :: 3.10\",\n     \"Programming Language :: Python :: 3.11\",\n     \"Programming Language :: Python :: 3.12\",\n@@ -85,8 +84,7 @@ select = [\n     \"UP\",     # pyupgrade\n     \"T10\",    # flake8-debugger (replaces debug-statements hook)\n ]\n-# UP036: Remove once Python 3.10 is the minimum supported version\n-ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\", \"UP036\"]\n+ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\"]\n per-file-ignores = {\"src/requests/__init__.py\" = [\"E402\", \"F401\"], \"src/requests/compat.py\" = [\"E402\", \"F401\"], \"tests/compat.py\" = [\"F401\"]}\n \n [tool.ruff.lint.isort]\ndiff --git a/setup.py b/setup.py\nindex f5f816ae..1095518a 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -1,7 +1,7 @@\n import sys\n \n-if sys.version_info < (3, 9):\n-    sys.stderr.write(\"Requests requires Python 3.9 or later.\\n\")\n+if sys.version_info < (3, 10):  # noqa: UP036\n+    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n     sys.exit(1)\n \n from setuptools import setup\ndiff --git a/tox.ini b/tox.ini\nindex 70c28551..b316359a 100644\n--- a/tox.ini\n+++ b/tox.ini\n@@ -1,5 +1,5 @@\n [tox]\n-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}\n+envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}\n \n [testenv]\n deps = -rrequirements-dev.txt\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_Yx7kYovmsWTSuB95ytGJ6979",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git merge-base --is-ancestor 0c2bbe73 HEAD && echo \"ANCESTOR: yes\" || echo \"ANCESTOR: no\"; git log --oneline -1 0c2bbe73; git describe --contains 0c2bbe73 2>/dev/null | head -1"
+        },
+        "output": "ANCESTOR: yes\n0c2bbe73 Drop support for Python 3.9 (#7196)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_5CUGz7LwsNspyN61J1Ge9848",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log -1 --format='%H %ci' HEAD; grep -n \"3.9\\|3.10\" README.md setup.py tox.ini"
+        },
+        "output": "dae7ef63b4df6eded86637f251fc4e3a06c3b479 2026-09-02 12:15:52 -0600\nREADME.md:38:Requests officially supports Python 3.10+.\nsetup.py:4:    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/08e42a82c5d85d71bcdf20dbb5fc08bf13960baa0e569fe3ee4109c23d955bdc",
+  "completed": true
+}

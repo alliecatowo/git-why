@@ -1,0 +1,47 @@
+Environment verified. Now let me search the git history for commits about Go version requirements related to HTTP/3 dependencies (quic-go).Several promising commits. Let me examine the ones that explicitly link a Go minimum bump with a quic-go (HTTP/3 library) upgrade.All three commits pair a quic-go upgrade with a Go minimum bump. Let me look at their diffs, especially the go.mod and README changes, for explicit statements that quic-go required the bump.All three show the same pattern: quic-go upgrade + Go minimum bump in one commit. Let me check a few more related commits to be thorough — the Go 1.18 bump, the Go 1.17 bump, and the later "downgrade minimum Go version" commit — plus look for any explicit text about quic-go requiring a Go version.Let me trace the full history of the `go` directive in go.mod to see every minimum-Go bump and tie it to quic-go commits.Let me check the earlier Go 1.18 minimum bump for any quic-go connection, and also try the `git why` tool as suggested in the task.The `git why` tool corroborates. Let me confirm the exact `go` directive change in the go.mod diff of 8cb1bb4a (the earliest of the three).The 8cb1bb4a go.mod diff has no `go` directive change — only the README. Let me check what the go.mod `go` directive said before/after that commit.The mechanism is now clear: quic-go maintains per-Go-version forks of crypto/tls (`qtls-go1-NN`), so each quic-go upgrade forces the Go minimum up. Let me quickly verify whether the earlier Go 1.17 bump (b4f1a713) also involved quic-go, to complete the picture.I have a complete, well-supported answer. Here it is.
+
+## Answer
+
+**Yes.** Caddy has raised its minimum Go version specifically because of quic-go (the library that provides its HTTP/3 support), and it did so at least three times. Each time, the Go minimum bump and the quic-go upgrade landed in the *same* commit, with the commit message explicitly tying them together. The reason is visible in the diffs: quic-go depends on a per-Go-version fork of `crypto/tls` (`quic-go/qtls-go1-NN` / formerly `marten-seemann/qtls-go1-NN`), so upgrading quic-go forces Caddy to require the matching new Go release.
+
+### Primary citing commit: `f45a6de20dd19e82e58c85b37e03957b2203b544`
+
+**"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)"** (Jul 21, 2023, authored by Marten Seemann — the quic-go maintainer, itself a strong signal this was driven by the HTTP/3 library).
+
+The commit message explicitly couples the two changes:
+
+```
+go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)
+
+* update quic-go to v0.37.0
+* Bump to Go 1.20
+```
+
+And the diff performs the bump of the `go` directive right alongside the quic-go upgrade and the removal of the old Go 1.19 TLS fork:
+
+```diff
+@@ go.mod
+-go 1.19
++go 1.20
+...
+-	github.com/quic-go/quic-go v0.36.2
++	github.com/quic-go/quic-go v0.37.0
+...
+-	github.com/quic-go/qtls-go1-19 v0.3.2 // indirect
+-	github.com/quic-go/qtls-go1-20 v0.2.2 // indirect
++	github.com/quic-go/qtls-go1-20 v0.3.0 // indirect
+
+@@ README.md
+-- [Go 1.19 or newer](https://golang.org/dl/)
++- [Go 1.20 or newer](https://golang.org/dl/)
+```
+
+### Same pattern, two other commits
+
+- `697cc593a17fcb39087161b058fc1dba8b767060` — **"chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)"** (Jan 25, 2024): `go 1.20` → `go 1.21` in go.mod, README → "Go 1.21 or newer", quic-go `v0.40.1` → `v0.41.0`, dropping `qtls-go1-20`.
+- `8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe` — **"go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)"** (Feb 24, 2023): quic-go `v0.32.0` → `v0.33.0`, README → "Go 1.19 or newer", dropping the `qtls-go1-18` fork. (This one raised the *documented* minimum in README and dropped the Go 1.18 TLS fork, while the go.mod `go` directive itself stayed at 1.18 until `f45a6de2`.)
+- Even the earlier Go 1.17 minimum bump, `b4f1a713978f44b6f26721bd4eaa355164e3e6f4` — **"chore: Bump minimum Go to 1.17 (#4662)"** (Mar 2022) — accompanied a quic-go `v0.26.0` bump and added the `qtls-go1-16/17/18` forks, showing the same coupling existed from the start.
+
+So the answer is definitively **yes**, and the cleanest single commit establishing it is `f45a6de2` — its own message and diff state that the quic-go update to v0.37.0 came with a bump of the minimum Go version to 1.20.
+
+No files were modified.

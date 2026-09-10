@@ -1,0 +1,37 @@
+## Answer
+
+Redis first got the streams data type with `XADD` in commit:
+
+```
+79866a6361829ed0602dedff9cb378c66977227a
+```
+
+**Author:** antirez <antirez@gmail.com>
+**Date:** Wed Aug 30 12:40:27 2017 +0200
+**Subject:** `Streams: 12 commits squashed into the initial Streams implementation.`
+
+### Supporting evidence
+
+I confirmed this is the earliest commit in the repository's history containing `XADD`/`xaddCommand` (`git log --all -S 'xaddCommand' --reverse` returns it first), and the first commit touching `src/t_stream.c`.
+
+The commit message itself states it is the initial implementation:
+
+> Streams: 12 commits squashed into the initial Streams implementation.
+
+Two parts of the diff support that `XADD` arrives with this commit.
+
+1. The new command is registered in the command table (`src/server.c`):
+
+```diff
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+2. A brand-new `src/t_stream.c` (376 lines) is added, introducing the stream data structure and append logic, including `streamNew`, `streamAppendItem`, etc. The stat:
+
+```
+ src/stream.h          |  21 ++
+ src/t_stream.c        | 376 ++++++++++++++++++++++++
+```
+
+So the answer: streams + `XADD` first appeared on **2017-08-30** in commit `79866a6361829ed0602dedff9cb378c66977227a` (this landed in Redis 4.0/5.0 development, streams shipping in Redis 5.0). No files were modified (`git status` is clean).

@@ -1,0 +1,74 @@
+{
+  "task_id": "T21",
+  "task_stratum": "coding",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "96b308a20980554af509a525430daddfaa4b670e",
+  "corpus_fingerprint": "96b308a20980554af509a525430daddfaa4b670e",
+  "implementation_sha": "82815ff9bf647447aee5fd4588f241b905d75bf6",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T08:30:20.798Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "e013019208eb43b8eb25850e6270edef3a196ead196e7251bf3e07d51df4d59a",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 1,
+  "hidden_tests_total": 1,
+  "evidence_grade": null,
+  "wall_ms": 28562,
+  "tool_calls": 13,
+  "history_calls": 1,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 2799,
+  "output_tokens": 1314,
+  "cache_read_tokens": 67072,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00107897,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 30256,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-10T08-25-00-978Z/events/T21-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "86baf0989eab9eca7b4f94a09ba1ee755bd91b5bb0a607ba40a02b9e8719f820",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_oXo18MrwJom1lEwxB9zm8449",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline | head -20; echo \"--- all files ever ---\"; git log --all --diff-filter=A --name-only --pretty=format: | sort -u | head -50"
+        },
+        "output": "96b308a Add src/utils.cjs\n88b299c chore: relay follow-up 122\n3d3880e chore: cache follow-up 121\n01c7c17 chore: policy follow-up 120\n6079ffa chore: worker follow-up 119\n36d949a chore: adapter follow-up 118\n377910b chore: queue follow-up 117\n4c79a78 chore: session follow-up 116\ne5a56f8 chore: gateway follow-up 115\n05f41a8 chore: relay follow-up 114\n78eaa00 chore: cache follow-up 113\n8c8318e chore: policy follow-up 112\nc948c82 chore: worker follow-up 111\n9e23aa4 chore: adapter follow-up 110\nfe6eae1 chore: queue follow-up 109\n71902e3 chore: session follow-up 108\n785cb8e chore: gateway follow-up 107\nfbd411a chore: relay follow-up 106\nb871e74 chore: cache follow-up 105\nf7c4815 chore: policy follow-up 104\n--- all files ever ---\n\nnotes/release-000.md\nnotes/release-001.md\nnotes/release-002.md\nnotes/release-003.md\nnotes/release-004.md\nnotes/release-005.md\nnotes/release-006.md\nnotes/release-007.md\nnotes/release-008.md\nnotes/release-009.md\nnotes/release-010.md\nnotes/release-011.md\nnotes/release-012.md\nnotes/release-013.md\nnotes/release-014.md\nnotes/release-015.md\nnotes/release-016.md\nnotes/release-017.md\nnotes/release-018.md\nnotes/release-019.md\nnotes/release-020.md\nnotes/release-021.md\nnotes/release-022.md\nnotes/release-023.md\nnotes/release-024.md\nnotes/release-025.md\nnotes/release-026.md\nnotes/release-027.md\nnotes/release-028.md\nnotes/release-029.md\nnotes/release-030.md\nnotes/release-031.md\nnotes/release-032.md\nnotes/release-033.md\nnotes/release-034.md\nnotes/release-035.md\nnotes/release-036.md\nnotes/release-037.md\nnotes/release-038.md\nnotes/release-039.md\nnotes/release-040.md\nnotes/release-041.md\nnotes/release-042.md\nnotes/release-043.md\nnotes/release-044.md\nnotes/release-045.md\nnotes/release-046.md\nnotes/release-047.md\nnotes/release-048.md\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "96b308a20980554af509a525430daddfaa4b670e"
+    }
+  },
+  "review_packet_id": null,
+  "completed": true
+}
