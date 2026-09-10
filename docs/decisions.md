@@ -275,3 +275,37 @@ found`). Per instructions, no attempt was made to install it. The
 - Spec section 13 leaves the "particular Node lock package" as a spike
   decision. **No package was needed or added**; the stdlib-only protocol
   above is what ships.
+
+## The constrained-budget test, and why it failed
+
+Accuracy saturated at the default 60-tool-call budget: every arm cited the
+verified commit on every graded trial. The effort measurement suggested a way
+past the ceiling -- the baseline needed a median of 16 tool calls and Git Why
+9 -- so the same nine questions were re-run at a budget of 10, chosen to sit
+between those figures.
+
+The prediction, recorded before the run: the baseline would exhaust the budget
+on several tasks while Git Why still fit, converting a measured effort
+difference into an accuracy difference.
+
+It did not. The budget was exceeded 5 times in arm A and 4 times in each of
+B, C and D, and every arm still scored 100% on the trials that completed.
+Median tool calls on completed trials fell to 7.5-9.5 for ALL arms, including
+the baseline: told it has ten calls, a capable model simply becomes more
+economical instead of running out. That possibility was stated before the run
+and is what happened.
+
+Two things follow, and the second is the more important one.
+
+The effort advantage is real but conditional. Git Why halves the work a model
+does when the work is unconstrained; it does not unlock answers the baseline
+cannot reach when the budget is tight, because the baseline adapts.
+
+And the ceiling is not an artifact to be engineered around. Two attempts have
+now been made to find an operating point where these questions separate the
+arms -- harder corpora, then a tighter budget -- and neither did. At some
+point the honest reading is that a capable model with ordinary Git commands
+answers this class of question, and the value of a retrieval tool here is cost
+and latency rather than capability. Further searching for a configuration that
+produces a positive result would be fitting the experiment to a desired
+conclusion.
