@@ -235,6 +235,12 @@ function loadTaskMeta(taskId) {
     stratum: manifest.stratum,
     baseSha: manifest.baseSha,
     goldSha: manifest.goldSha,
+    // The commit whose message carries the rationale, and which IS reachable
+    // from base. goldSha is the reapplied fix and is deliberately unreachable
+    // from any branch the agent can see, so grading citations against it can
+    // only ever score zero -- which is exactly what it did.
+    originalFixSha: manifest.labels?.originalFixSha ?? null,
+    introducedSha: manifest.labels?.introducedSha ?? null,
     sourceRepoDir: manifest.sourceRepoDir,
     promptText: readFileSync(promptPath, 'utf8'),
     hiddenTestPath: existsSync(hiddenTestPath) ? hiddenTestPath : null,

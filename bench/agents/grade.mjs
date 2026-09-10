@@ -162,6 +162,8 @@ export function mergeManualGrade(reviewDir, id, { humanGrade, humanJustification
  * citation in a code comment counts.
  */
 export function gradeEvidenceCitation({ goldSha, finalAnswer, finalPatch }) {
+  // Callers pass the rationale commit; the parameter keeps its name for the
+  // rubric path, which has no separate rationale commit.
   if (typeof goldSha !== 'string' || goldSha.length < 7) return null;
   const haystack = `${finalAnswer ?? ''}\n${finalPatch ?? ''}`;
   const cited = [...new Set(haystack.match(/\b[0-9a-f]{7,40}\b/g) ?? [])];
@@ -228,8 +230,14 @@ export function gradeTrial({
   // hidden tests saturate. It is reported ALONGSIDE pass rather than folded
   // into it, so "fixed the bug" and "recovered the reason" stay separable --
   // an agent can legitimately do the first without the second.
+  // Grade against the rationale commit in VISIBLE ancestry, not against
+  // goldSha. goldSha is the reapplied fix, held as a dangling commit in the
+  // source repo and never exported into a trial clone, so an agent cannot cite
+  // it however well it searches. Scoring against it produced a clean 0% in all
+  // four arms -- a number that looked like a finding about git why and was
+  // actually a property of the harness.
   const citation = gradeEvidenceCitation({
-    goldSha: taskMeta.goldSha,
+    goldSha: taskMeta.originalFixSha ?? taskMeta.goldSha,
     finalAnswer: trialResult.finalAnswer ?? '',
     finalPatch: trialResult.finalPatch ?? '',
   });
