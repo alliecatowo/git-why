@@ -476,6 +476,80 @@ Use a stable SHA tie-break for otherwise identical ranking values. Do not silent
 
 For FTS, compile the user's string as literal query terms using the supported native API. Do not interpret natural-language punctuation as database query syntax. Preserve exact identifier and numeric terms in tokenization tests. [Node FTS index options](https://zvec.org/api-reference/nodejs/interfaces/ZVecFtsIndexParams.html).
 
+### 14a. Temporal retrieval
+
+Added in protocol v2, after the v1 external-repository run showed 4 of 15
+Hit@1 on "when was X first introduced" probes. The full literature review is
+in `docs/research/temporal-retrieval-dossier.md`; this section states what the
+implementation must do.
+
+The failure v1 exposed is not a ranking failure. The originating commit is
+usually terse -- "add vquic", "initial streams" -- and never enters the
+candidate pool at all. Nothing applied after retrieval can recover it: not
+re-sorting, not a date filter, not a wider `n`. Two independent problems
+follow, and they get two independent mechanisms.
+
+**Vectors locate the topic; the commit DAG resolves time.** Timestamps are
+never embedded. A query decomposes into a temporally neutral core, which is
+what the retrieval branches actually see, and a `TemporalConstraint` of type
+`none`, `first`, `last`, `removed`, `changed_when`, `before`, `after`,
+`between`, `around`, or `timeline`, carrying an optional anchor and a
+confidence of `explicit` or `inferred`. Callers that can decompose the
+question themselves -- the CLI flags, an MCP client -- pass the constraint
+structurally; otherwise a rule-based parser fills it in.
+
+**`none` is the identity constraint, not a missing value.** Under `none` the
+temporal term is exactly 1, the exponent is 0, structural expansion is
+disabled, and ranking is bit-identical to the pre-temporal code path. A golden
+test asserts this. The reason is not caution: Re3 measures recall@1 falling
+from 0.742 to 0.268 when a fixed relevance/recency weight is applied to
+queries that do not want it. An always-on recency prior is a known way to
+break ordinary search, so this implementation does not ship one.
+
+**Semantic relevance stays in the final score.**
+
+```text
+final(c) = fusedRRF(c) * temporal(c) ** w        temporal(c) in [0, 1]
+w = 1.0 (explicit)   0.5 (inferred)   0 (none)
+```
+
+Confidence scales the exponent rather than gating the term, so a misparsed
+intent costs rank instead of destroying the result set. There is no
+filter-then-sort step anywhere: filtering assumes the user knows a date, which
+is precisely what they do not remember, and sorting discards the semantic
+signal that found the topic in the first place.
+
+**The candidate pool grows by structure, not by a wider top-k.** At index
+time a lineage table records, for each identifier-like token and each path
+key, the earliest and latest commit that added it and the earliest and latest
+that removed it, plus per-hunk path-key overlap links. At query time, commits
+linked to the top semantic seeds are pulled into the pool, tagged
+`matchedBy: 'linked'` with a hop-count `linkDistance`, and scored at the
+seed's fused score discounted by hops. This is how a terse originating commit
+becomes reachable at all. It runs only when a temporal constraint is present.
+
+**Ordinals come from ancestry, never from timestamps.** `first`, `last` and
+`removed` are resolved from lineage interval endpoints ordered
+topologically. Rebases and cherry-picks rewrite committer and author time
+freely, and they do it on exactly the repositories where the question is
+worth asking, so a timestamp comparison answers it wrongly there. The answer
+is returned in a separate `answer` field rather than as rank 1, because "this
+is where it first appears" is a different kind of claim from "these commits
+are relevant", and conflating them would let a confident wrong ordinal
+masquerade as a retrieval result.
+
+**Timeline mode retrieves for coverage, not similarity.** It returns the
+lineage chain in ancestry order with one evidence hunk per episode
+(introduced, modified, removed), not the five most similar commits. Query
+groups (`--group` repeatable, `--fuse`, fused by RRF at commit level) are the
+primitive that lets it sample anchors across a period.
+
+Tunable constants -- decay rates, the Gaussian sigma for `around`, the
+exponents, the expansion discount -- live in exactly one file,
+`src/search/temporal/tuning.ts`, and are tuned on `bench/dataset/dev.json`
+only. The held-out split must never inform any of them.
+
+
 ## 15. Evidence and JSON
 
 Human output contains direct message excerpts and source diffs, with omission markers where needed. A summary-only result is valid. Never attach an unrelated hunk just to make every result look substantive.
@@ -486,8 +560,9 @@ Stable machine envelope:
 
 ```json
 {
-  "schemaVersion": 1,
-  "query": "auth refresh loop",
+  "schemaVersion": 2,
+  "query": "when was the auth refresh loop first introduced",
+  "coreQuery": "auth refresh loop",
   "mode": "hybrid",
   "snapshot": {
     "scope": "branches-remotes-tags-worktree-heads",
@@ -507,7 +582,9 @@ Stable machine envelope:
       "parents": ["full-parent-object-id"],
       "messageExcerpt": "Provider X can return an empty refresh token...",
       "rankScore": 0.0325,
+      "scores": { "fused": 0.0325, "temporal": 1.0, "final": 0.0325 },
       "matchedBy": ["text", "semantic"],
+      "linkDistance": 0,
       "evidence": [
         {
           "recordId": "deterministic-record-id",
@@ -525,6 +602,21 @@ Stable machine envelope:
       ]
     }
   ],
+  "temporal": {
+    "intent": "first",
+    "confidence": "explicit",
+    "anchor": null,
+    "anchorEnd": null,
+    "w": 1.0
+  },
+  "answer": {
+    "sha": "full-git-object-id",
+    "kind": "introduced",
+    "viaToken": "refreshToken",
+    "viaPath": null,
+    "confidence": "explicit"
+  },
+  "timeline": null,
   "warnings": [],
   "outputTruncated": false,
   "candidateLimitReached": false
@@ -532,6 +624,31 @@ Stable machine envelope:
 ```
 
 The values above illustrate the schema. A result score has no fixed probability interpretation. Distinguish corpus coverage, an evidence record's indexing omissions, and output clipping.
+
+`schemaVersion` moved from 1 to 2 when the temporal fields landed, and the
+status envelope moved with it so a consumer sees one version across the whole
+surface. The additions:
+
+- `coreQuery` is the temporally neutral string the retrieval branches actually
+  saw. When there is no temporal intent it equals `query` exactly.
+- `scores` decomposes `rankScore` into `fused`, `temporal` and `final`, so a
+  bad ranking can be diagnosed from the output alone. `final` is what results
+  are ordered by, and equals `fused` whenever `temporal.intent` is `none`.
+- `linkDistance` is the hop count from the semantic seed for a commit whose
+  `matchedBy` includes `linked`, and 0 otherwise.
+- `temporal` echoes the parsed intent, the resolved anchors and the exponent
+  actually applied. It is present on every response, with `intent: "none"` and
+  `w: 0` for ordinary queries.
+- `answer` is the ordinal resolution for `first`, `last` and `removed`,
+  resolved from the lineage table by ancestry, and `null` otherwise. It is
+  deliberately not folded into `results`: "this is where it first appears" is
+  a different claim from "these commits are relevant", and merging them would
+  let a confident wrong ordinal pass as a retrieval result.
+- `timeline` is populated only in timeline mode, in ancestry order, with one
+  evidence hunk per episode.
+
+Absent fields are `null`, never omitted; a consumer never has to distinguish
+"missing" from "not applicable".
 
 With `--json`, stdout contains exactly one valid object. Progress and human diagnostics go to stderr. A failure uses the same schema version with `error: { code, message, hint }`, an empty results array, and the corresponding nonzero exit. Never interleave progress, native-library log lines, or model-download banners into JSON.
 
