@@ -69,10 +69,7 @@
       "tools": "Arm A + git why over the permitted history, without zg.",
       "status": "RUNNABLE. Requires a built dist/cli/main.js and a prebuilt index in the trial clone."
     },
-    "primaryComparisons": [
-      "C vs B",
-      "D vs A"
-    ],
+    "primaryComparisons": ["C vs B", "D vs A"],
     "secondaryComparisons": [
       "B vs A (workspace retrieval alone)",
       "C vs A (combined package)",

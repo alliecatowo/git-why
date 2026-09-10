@@ -94,18 +94,6 @@ function applySort(results: readonly CommitHit[], sort: ResultSort): CommitHit[]
   });
 }
 
-/**
- * Detects "when was this first introduced?" style questions. The v2
- * real-repository benchmark (docs/report.md 4c) shows these are the weak
- * spot: terse origin commits lose to newer lexical traps under relevance
- * ranking, and no post-hoc sort can rescue a commit that was never
- * selected. The honest answer is the widen-then-order usage pattern, so a
- * matching query with default relevance ordering gets a warning pointing
- * at it. This never changes ranking or selection -- it is a hint only.
- */
-const FIRST_INTRODUCTION_RE =
-  /\bwhen\s+(was|did)\b|\bfirst\s+(introduced|added|created|landed|merged|appeared)\b|\boriginally\b|\bearliest\b/i;
-
 function messageExcerptOf(subject: string, body: string): string {
   const combined = body.length > 0 ? `${subject}\n\n${body}` : subject;
   if (combined.length <= MAX_MESSAGE_EXCERPT_CHARS) return combined;
@@ -132,7 +120,15 @@ export async function search(
   const filter: StorageFilter = buildStorageFilter(request.filters, benchRecordTypes());
 
   const decomposition = decomposeQuery(request.query);
-  const coreQuery = request.temporal.type === 'none' ? request.query : decomposition.core;
+  // An explicitly supplied constraint (CLI flag or MCP field) always wins
+  // over the rule-based parser. Only when the caller passes the identity
+  // constraint (`NO_TEMPORAL_CONSTRAINT`, the CLI/MCP default when no
+  // temporal flag is given) does the parser's inferred reading take over.
+  // This is what makes a flagless natural-language query like "when was
+  // HTTP/3 support first introduced" actually take the temporal path
+  // instead of silently falling through to the pre-temporal one.
+  const constraint = request.temporal.type !== 'none' ? request.temporal : decomposition.constraint;
+  const coreQuery = constraint.type === 'none' ? request.query : decomposition.core;
   const rankFor = async (query: string): Promise<RankResult> => {
     const lexicalFetch: BranchFetch | null = wantsLexical
       ? (topK) => store.searchLexical(compileFtsQuery(query), filter, topK)
@@ -169,11 +165,11 @@ export async function search(
   // The ordinary path deliberately remains byte-identical: no table access,
   // no expansion, and the same top-N truncation as before temporal retrieval.
   const temporalRanksForExpansion =
-    request.temporal.type !== 'none' && lineage !== null
+    constraint.type !== 'none' && lineage !== null
       ? await expandStructuralCandidates(ranked, lineage)
       : ranked;
   const candidateRanks =
-    request.temporal.type === 'none' ? ranked.slice(0, request.limit) : temporalRanksForExpansion;
+    constraint.type === 'none' ? ranked.slice(0, request.limit) : temporalRanksForExpansion;
   const commits = await store.fetchCommits(candidateRanks.map((r) => r.sha));
 
   const warnings: string[] = [];
@@ -185,9 +181,15 @@ export async function search(
     }
   }
   if (
-    request.temporal.type === 'none' &&
-    request.sort === 'relevance' &&
-    FIRST_INTRODUCTION_RE.test(request.query)
+    // The parser's own confidence, not the flag/NL distinction: 'explicit'
+    // covers both an outright CLI flag and unambiguous phrasing ("first
+    // introduced"), which the temporal path below now handles directly
+    // (structural expansion, ordinal `answer`) -- no hint needed. 'inferred'
+    // is a softer reading ("origin of X", "where did X come from") that
+    // could be wrong, so the manual fallback is still worth surfacing.
+    constraint.type === 'first' &&
+    constraint.confidence === 'inferred' &&
+    request.sort === 'relevance'
   ) {
     warnings.push(
       'This looks like a "when was this first introduced?" question. Relevance ranking favors recent, vocabulary-rich matches, so the originating commit may rank below the default result count. Try widening the candidate pool and ordering chronologically: -n 20 --sort=oldest.',
@@ -232,7 +234,7 @@ export async function search(
   // Disconnected/incomplete candidate graphs still receive a stable DAG-free
   // fallback; timestamps are intentionally never used for ordinal ordering.
   for (const sha of [...bySha.keys()].sort()) if (!ordinal.has(sha)) ordinal.set(sha, ordinal.size);
-  const resolveAnchor = (anchor: typeof request.temporal.anchor): ResolvedAnchor | null => {
+  const resolveAnchor = (anchor: typeof constraint.anchor): ResolvedAnchor | null => {
     if (anchor === null) return null;
     if (anchor.kind === 'date') return { anchor, sha: null, epochSeconds: anchor.epochSeconds };
     if (anchor.kind === 'sha') {
@@ -245,9 +247,9 @@ export async function search(
     }
     return { anchor, sha: null, epochSeconds: null };
   };
-  const anchor = resolveAnchor(request.temporal.anchor);
-  const anchorEnd = resolveAnchor(request.temporal.anchorEnd);
-  const w = exponentFor(request.temporal);
+  const anchor = resolveAnchor(constraint.anchor);
+  const anchorEnd = resolveAnchor(constraint.anchorEnd);
+  const w = exponentFor(constraint);
   const temporalRanks = candidateCommits
     .map(({ rank, commit }) => {
       const temporal = temporalScore(
@@ -256,7 +258,7 @@ export async function search(
           ordinal: ordinal.get(commit.sha) ?? 0,
           committerTime: commit.committerTime,
         },
-        request.temporal,
+        constraint,
         {
           candidateCount: candidateCommits.length,
           anchorTime: anchor?.epochSeconds,
@@ -300,30 +302,30 @@ export async function search(
   if (selectedInterval !== null) {
     const { interval, viaToken, viaPath } = selectedInterval;
     const endpoint =
-      request.temporal.type === 'first'
+      constraint.type === 'first'
         ? interval.firstAddedSha
-        : request.temporal.type === 'last'
+        : constraint.type === 'last'
           ? interval.lastAddedSha
-          : request.temporal.type === 'removed'
+          : constraint.type === 'removed'
             ? interval.lastRemovedSha
             : null;
     if (endpoint !== null) {
       answer = {
         sha: endpoint,
         kind:
-          request.temporal.type === 'removed'
+          constraint.type === 'removed'
             ? 'removed'
-            : request.temporal.type === 'last'
+            : constraint.type === 'last'
               ? 'last_modified'
               : 'introduced',
         viaToken,
         viaPath,
-        confidence: request.temporal.confidence,
+        confidence: constraint.confidence,
       };
     }
   }
   let timeline: TimelineEpisode[] | null = null;
-  if (request.temporal.type === 'timeline' && selectedInterval !== null) {
+  if (constraint.type === 'timeline' && selectedInterval !== null) {
     const timelineCommits = await store.fetchCommits(selectedInterval.interval.chain);
     timeline = selectedInterval.interval.chain.flatMap((sha) => {
       const commit = timelineCommits.get(sha);
@@ -348,8 +350,8 @@ export async function search(
     snapshot,
     results: applySort(results, request.sort),
     temporal: {
-      intent: request.temporal.type,
-      confidence: request.temporal.confidence,
+      intent: constraint.type,
+      confidence: constraint.confidence,
       anchor,
       anchorEnd,
       w,

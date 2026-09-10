@@ -289,12 +289,59 @@ test('relevance remains the default and preserves rank order', async () => {
   );
 });
 
-test('first-introduction queries explain the widen-then-order workflow', async () => {
+test('soft first-introduction phrasing explains the widen-then-order workflow', async () => {
+  // "origin of X" is an INFERRED-confidence match (softer phrasing than
+  // "first introduced"), so the parser's guess could be wrong -- the manual
+  // fallback hint is still worth surfacing here even though the temporal
+  // path also runs.
   const response = await search(
-    { ...baseRequest, query: 'when was streaming first introduced?' },
+    { ...baseRequest, query: 'what is the origin of streaming support?' },
     makeStore(),
     makeEmbedder(),
     snapshot,
   );
+  assert.equal(response.temporal.intent, 'first');
+  assert.equal(response.temporal.confidence, 'inferred');
   assert.ok(response.warnings.some((warning) => warning.includes('-n 20 --sort=oldest')));
+});
+
+test('a flagless natural-language temporal query actually takes the temporal path', async () => {
+  // Regression test: `request.temporal` is `NO_TEMPORAL_CONSTRAINT` here --
+  // exactly what the CLI/MCP send when the caller supplies no explicit
+  // temporal flag. Before this fix, `search()` gated every downstream branch
+  // (core-query substitution, structural expansion, ordinal answer,
+  // timeline, the reported `temporal.intent`) on `request.temporal.type`
+  // itself rather than on the parser's inferred reading, so a bare
+  // natural-language question like this one silently fell through the
+  // pre-temporal path with `temporal.intent` always reported as "none".
+  const response = await search(
+    {
+      ...baseRequest,
+      query: 'when was streaming first introduced?',
+      temporal: NO_TEMPORAL_CONSTRAINT,
+    },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  assert.equal(response.temporal.intent, 'first');
+  // "first introduced" is unambiguous phrasing -- the parser's own
+  // EXPLICIT confidence tier, same as an outright CLI flag. This is
+  // distinct from "did the user pass a flag" (they didn't); it means the
+  // temporal path trusts its own reading enough to skip the manual-fallback
+  // hint (see the soft-phrasing test above, which uses inferred confidence).
+  assert.equal(response.temporal.confidence, 'explicit');
+  assert.equal(response.warnings.length, 0);
+});
+
+test('an ordinary non-temporal query still takes the byte-identical identity path', async () => {
+  // Companion to the regression test above: confirms the fix did not widen
+  // the temporal path to queries that were never meant to trigger it. Core
+  // string identity is asserted at the parser level
+  // (test/unit/search/temporal/intent.test.ts); this asserts the same
+  // guarantee survives through the full search() response.
+  const response = await search(baseRequest, makeStore(), makeEmbedder(), snapshot);
+  assert.equal(response.temporal.intent, 'none');
+  assert.equal(response.coreQuery, baseRequest.query);
+  assert.equal(response.warnings.length, 0);
 });
