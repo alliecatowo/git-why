@@ -566,3 +566,32 @@ against a different corpus.
 
 The path-weighting change did help the main corpus slightly on its own:
 Hit@5 0.183 to 0.200, MRR 0.128 to 0.131.
+
+### Fusing both phrasings: best recall, worst precision
+
+Restating helps Hit@1 and hurts recall, so fusing the natural question with
+its restatement should have captured both. `--group` with commit-level RRF
+already exists for this. Measured on the same 28 paired zod cases:
+
+| phrasing      | Hit@1 | Hit@5 | MRR   | recall@20 |
+| ------------- | ----- | ----- | ----- | --------- |
+| as asked      | 0.214 | 0.500 | 0.325 | 0.571     |
+| restated only | 0.321 | 0.321 | 0.329 | 0.393     |
+| fused (both)  | 0.250 | 0.286 | 0.293 | 0.607     |
+
+Fusing does deliver the best recall of the three, and the worst MRR. RRF
+spreads rank mass across two result sets, so the correct commit is found more
+often and sits lower when it is.
+
+That is worth knowing for a caller that will read every result -- an agent
+with twenty hits to skim gains from the extra recall -- but it is not a better
+default, and it is offered rather than adopted.
+
+Seven query-side and ranking-side techniques have now been measured: a
+prose-tuned embedding model, pseudo-relevance feedback, a prose-commit
+penalty, caller restatement, wider result windows, structural expansion, and
+phrase fusion. None improves MRR over asking the question plainly. The
+shipped default is the best configuration among everything tried, which is a
+duller result than a tuning win and a more useful one: there is no easy gain
+being left on the table, and the remaining headroom is in the embedding
+itself.
