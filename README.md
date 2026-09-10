@@ -89,13 +89,34 @@ Every number below is generated from raw run data, not typed by hand — see
 [`docs/report.md`](docs/report.md) for the full methodology, protocol, and
 caveats.
 
-| Measurement                                                         | Result                            |
-| ------------------------------------------------------------------- | --------------------------------- |
-| Index `expressjs/express` (6167 commits)                            | 126 MiB index                     |
-| Index `axios/axios` (2185 commits)                                  | 80.8 MiB index                    |
-| Warm query, fresh process (p50 / p95, 30 samples)                   | 496 ms / 509 ms                   |
-| Real-repository retrieval (10 hand-authored cases, express + axios) | Hit@5 90%, Hit@1 60%, MRR 0.733   |
-| Tests                                                               | 290 unit, 65 integration, passing |
+| Measurement                                             | Result                                     |
+| ------------------------------------------------------- | ------------------------------------------ |
+| Real-repository retrieval (16 cases, six pinned repos)  | hybrid Hit@5 55.6%, MRR 0.393              |
+| Index size across six real repos (56,781 commits total) | 5.50–6.98 KB/record, 1.91 GiB total        |
+| Index `curl` (30,000 commits, pinned)                   | 1.00 GiB, 5.74 KB/record                   |
+| Index `redis` (12,110 commits, pinned)                  | 450 MiB, 6.92 KB/record                    |
+| Warm query, fresh process (p50 / p95, n=30)             | 483 ms / 494 ms                            |
+| Diff/evidence ingestion, real-repository ablation       | earns its cost: ΔHit@5 +0.375, ΔMRR +0.280 |
+| Agent usefulness (36 trials, 4 arms, real repos)        | **no measurable benefit** — see below      |
+| Tests                                                   | 332 unit, 65 integration, passing          |
+
+### The agent pilot found no benefit
+
+On nine hand-authored archaeology questions against the six pinned real
+repositories, an agent with **no** retrieval tooling — only `git log`,
+`git log -S`, `git blame` and ripgrep — cited the correct commit on 9 of 9,
+including locating HTTP/3's introduction inside curl's 30,000 commits. Every
+arm reached 100% on graded trials, so Git Why could not show an advantage.
+
+The obvious explanation was tested and rejected: those questions overlap their
+target commit by only 1–3 terms and a naive `git log -S` returns 47–1,035
+candidates, which is precisely the regime hybrid retrieval is meant to win.
+The baseline solved them anyway.
+
+Read that as a bound on the claim, not a footnote: a capable model with
+ordinary Git commands already answers these questions. Retrieval quality, index
+efficiency and latency above are separately measured and stand on their own.
+Full method, limits and per-arm numbers in [`docs/report.md`](docs/report.md).
 
 Two honest caveats, spelled out fully in the report: the real-repository
 cases above were hand-authored by the same system that built the tool, so
