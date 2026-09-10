@@ -285,6 +285,54 @@ node bench/report.mjs
 # -> docs/report.md
 ```
 
+## Agent pilot on real repositories: a measured null result
+
+36 trials, 9 hand-authored archaeology questions x 4 arms x 1 repetition, on
+the six pinned real corpora (curl 30,000 commits, redis 12,110, requests
+6,494, zod 3,210, caddy 2,680, ripgrep 2,287). Model
+`llmgateway/deepseek-v4-flash`, total cost $0.0721. Zero trials invalidated,
+zero infrastructure-blocked.
+
+| arm             | completed | cited the verified commit | timeouts | git why calls | SHAs reaching the answer | median wall |
+| --------------- | --------- | ------------------------- | -------- | ------------- | ------------------------ | ----------- |
+| A baseline      | 9         | 9/9 (100%)                | 0        | 0             | 0                        | 50s         |
+| B + zg          | 8         | 8/8 (100%)                | 1        | 0             | 0                        | 40s         |
+| C + zg + gitwhy | 6         | 5/6 (83%)                 | 3        | 3             | 2                        | 65s         |
+| D + git why     | 9         | 8/9 (88%)                 | 0        | 6             | 4                        | 45s         |
+
+**Git Why shows no measurable benefit here, because the baseline never fails.**
+Arm A has no retrieval tooling at all -- only `git log`, `git log -S`,
+`git blame` and ripgrep -- and answered every question correctly, including
+locating HTTP/3's introduction inside curl's 30,000 commits. A control at
+ceiling cannot measure a treatment, and this time that is a fact about the
+questions and the model rather than about the harness.
+
+Two secondary observations, both descriptive:
+
+- Arm C is the worst performer: three timeouts and the only outright miss.
+  Giving an agent both tools cost wall-clock (median 65s against the
+  baseline's 50s) without buying accuracy.
+- All four timeouts fall in the tool-equipped arms. Setup and exploration
+  consume the per-trial budget.
+
+Scope and limits, stated so the number is not over-read:
+
+- Nine questions, one repetition, one model. Descriptive evidence only; no
+  significance is claimed and none can be.
+- The questions come from `bench/dataset/external-v2.json`, authored to be
+  answerable from history. That selects for findability and plausibly favours
+  the baseline.
+- `deepseek-v4-flash` proved genuinely capable at driving `git log -S`. A
+  weaker model, or a question whose vocabulary does not appear in any commit
+  message, could separate the arms where these did not.
+- Retrieval quality is measured separately in section 4 and is not affected by
+  this result: the pilot asks whether an agent NEEDS Git Why to answer these
+  questions, not whether Git Why retrieves well.
+
+This supersedes the earlier synthetic-task pilots, which saturated for a
+different and less interesting reason (the rationale commit sat one hop from
+HEAD in a 125-commit repository).
+
 ## Agent pilot: why it cannot currently demonstrate usefulness
 
 Two complete 48-trial runs (12 revert-and-reapply tasks x 4 arms x 1
