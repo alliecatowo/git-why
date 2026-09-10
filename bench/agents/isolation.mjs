@@ -17,7 +17,15 @@ import { mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 function sh(cwd, args) {
-  const res = spawnSync('git', args, { cwd, encoding: 'utf8', shell: false });
+  // External fixtures such as curl have thousands of reachable commits; the
+  // isolation proof intentionally enumerates them all, so the Node default
+  // 1 MiB stdout buffer is not a valid bound here.
+  const res = spawnSync('git', args, {
+    cwd,
+    encoding: 'utf8',
+    shell: false,
+    maxBuffer: 64 * 1024 * 1024,
+  });
   if (res.status !== 0) {
     throw new Error(`git ${args.join(' ')} (cwd=${cwd}) failed:\n${res.stdout}\n${res.stderr}`);
   }

@@ -224,17 +224,16 @@ function makeProgressListener(verbose: boolean): (event: ProgressEvent) => void 
 /**
  * `status --check-ready`'s readiness contract (docs/operations.md): an index
  * must exist, be current for the repository's current refs snapshot, and
- * have complete coverage under the current policy. This is a pure read of
+ * have complete coverage under the current policy. Policy-excluded content
+ * (generated, binary, lockfile, and bounded oversize slices) is deliberately
+ * outside the searchable corpus, so it is not an incomplete preparation;
+ * unavailable or failed eligible files are. This is a pure read of
  * fields `IndexStatus` already carries — it does not re-derive anything
  * `computeIndexStatus` (src/index/status.ts) didn't already decide.
  */
 function isIndexReady(status: IndexStatus): boolean {
   const cov = status.coverage;
-  const coverageComplete =
-    cov.excludedFiles === 0 &&
-    cov.unavailableFiles === 0 &&
-    cov.failedFiles === 0 &&
-    cov.reasons.length === 0;
+  const coverageComplete = cov.unavailableFiles === 0 && cov.failedFiles === 0;
   return status.state === 'current' && coverageComplete;
 }
 
