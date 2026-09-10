@@ -110,7 +110,26 @@ const DEFAULT_MODEL = process.env.BENCH_MODEL || 'llmgateway/deepseek-v4-flash';
 // can spend more text reasoning through a difficult history task without
 // being silently converted into a failed treatment. Wall-clock and tool-call
 // limits remain the bounded, protocol-visible safety controls.
-const BUDGETS = { wallClockMs: 8 * 60_000, toolCalls: 60, generatedTokens: null };
+/**
+ * Per-trial resource budget. `BENCH_TOOL_CALL_BUDGET` overrides the tool-call
+ * limit so the same tasks can be run at a tighter operating point.
+ *
+ * This exists because accuracy saturates at the default budget of 60: every
+ * arm answers every question, and a ceiling cannot show a difference. The
+ * effort measurement says the baseline needs a median of 16 tool calls and
+ * `git why` needs 9, so a budget between those figures asks a question the
+ * saturated run cannot: when there is not room for the baseline's usual path,
+ * does the retrieval tool still reach the answer?
+ *
+ * The threshold is derived from the observed effort distribution, not chosen
+ * blind, and any run using it must say so -- it is a different operating
+ * point, not a better measurement of the same one.
+ */
+const BUDGETS = {
+  wallClockMs: 8 * 60_000,
+  toolCalls: Number(process.env.BENCH_TOOL_CALL_BUDGET ?? 60),
+  generatedTokens: null,
+};
 const TOTAL_CONCURRENCY = 2;
 
 function parseArgs(argv) {
