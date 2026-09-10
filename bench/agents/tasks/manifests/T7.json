@@ -1,9 +1,8 @@
 {
+  "schemaVersion": 2,
   "taskId": "T7",
-  "seed": "git-why-bench::agents::T7::v1",
-  "kind": "simple_edit_control",
-  "baseSha": "56f456bd7bfcd41ba7bbf6e98f62e933e1a6f3b5",
-  "goldSha": null,
-  "priorShas": [],
-  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T7"
+  "kind": "revert_and_reapply",
+  "stratum": "coding",
+  "taskManifestVersion": "agent-corpus-v2",
+  "commitCount": 125
 }

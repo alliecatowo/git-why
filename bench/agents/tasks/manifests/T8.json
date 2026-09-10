@@ -1,18 +1,8 @@
 {
+  "schemaVersion": 2,
   "taskId": "T8",
-  "seed": "git-why-bench::agents::T8::v1",
-  "kind": "no_evidence_control",
-  "baseSha": "3da3a8321d915e8edac7f564a81afda63538a6ac",
-  "goldSha": null,
-  "priorShas": [
-    {
-      "sha": "516bc61017a2ba05d29f1f13a3fdcd9aa4d6b524",
-      "message": "Add AuthSessionProvider.getSession() with a 30s in-memory cache"
-    },
-    {
-      "sha": "35f70bcb6f3820a3693e5ed9338d8a86e9efddc6",
-      "message": "Document AuthSessionProvider caching behavior in the README"
-    }
-  ],
-  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T8"
+  "kind": "revert_and_reapply",
+  "stratum": "coding",
+  "taskManifestVersion": "agent-corpus-v2",
+  "commitCount": 125
 }

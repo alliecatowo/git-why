@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 2,
+  "taskId": "T28",
+  "kind": "external_history_question",
+  "stratum": "rubric",
+  "taskManifestVersion": "agent-corpus-v2",
+  "commitCount": 2287
+}

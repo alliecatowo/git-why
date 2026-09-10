@@ -1,17 +1,14 @@
 ## Extra tool available: `zg` (Zvec-Grep)
 
-`zg` searches the CURRENT workspace's source files by meaning, not just
-literal text, to help locate where relevant behavior lives today.
+`zg` searches the current workspace's source files by meaning, not just
+literal text, to help locate relevant behavior today. The runner builds the
+workspace index before this trial and verifies `zg status --check-ready`.
 
 ```sh
-zg search "retry logic for network errors"
-zg search "token refresh" --path src/
+zg query "retry logic for network errors"
+zg query --fts "AuthService"
+zg query --hybrid "retry logic" --fts "retry" --fuse
 ```
 
-NOT VERIFIED: `zg` is not installed in the harness-authoring environment, so
-this card's exact flags are inferred from general Zvec-Grep CLI conventions
-described in docs/spec.md, not from `zg --help` on an installed copy. Before
-running any real B/C trial, regenerate this card from `zg --help` on the
-actually-installed, pinned version, per docs/spec.md section 19 ("Verify
-exact invocation syntax through installed help because the published CLI has
-changed between releases"). Do not run B/C trials with an unverified card.
+Use `zg query --help` for the complete installed interface. The pinned CLI is
+Zvec-Grep 0.2.2; this card is generated from that installed CLI's help.

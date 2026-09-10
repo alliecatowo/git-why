@@ -1,18 +1,8 @@
 {
+  "schemaVersion": 2,
   "taskId": "T1",
-  "seed": "git-why-bench::agents::T1::v1",
-  "kind": "preserve_rationale",
-  "baseSha": "0863abc99b2c518221094d51239fc10d21b0a9f7",
-  "goldSha": null,
-  "priorShas": [
-    {
-      "sha": "63ad9a15daefbad08e5bdc42ba72daf9684c7aae",
-      "message": "Keep the empty-string token branch for the legacy IdP tenant\n\nOur upstream OAuth provider returns access_token: \"\" (an empty string,\nnot a missing field or null) for the \"legacy-tenant\" client ID when a\nuser's consent has expired, instead of the 400 the OAuth spec would\nsuggest. Treat empty string as \"reauth required\" rather than passing\nit through as a truthy value. Do not remove this branch without\nconfirming the legacy-tenant migration has completed."
-    },
-    {
-      "sha": "50fd4e76bed2794e8f8da1a34013b15475ec703c",
-      "message": "Quick patch: guard against a null access_token too"
-    }
-  ],
-  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T1"
+  "kind": "revert_and_reapply",
+  "stratum": "coding",
+  "taskManifestVersion": "agent-corpus-v2",
+  "commitCount": 125
 }

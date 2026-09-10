@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "taskId": "T6",
+  "taskId": "T12",
   "kind": "revert_and_reapply",
   "stratum": "coding",
   "taskManifestVersion": "agent-corpus-v2",

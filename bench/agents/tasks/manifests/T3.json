@@ -1,18 +1,8 @@
 {
+  "schemaVersion": 2,
   "taskId": "T3",
-  "seed": "git-why-bench::agents::T3::v1",
-  "kind": "deleted_approach",
-  "baseSha": "7cc725f83d13ee9a0a4819d6cf212fb92c3351b6",
-  "goldSha": null,
-  "priorShas": [
-    {
-      "sha": "a8a21da2928a5b0318cae7a7c86889e17b4a6e3c",
-      "message": "Add the initial in-process job queue"
-    },
-    {
-      "sha": "bad44fb029446034547f7a45840167daa3a5a65b",
-      "message": "Migrate job intake to a concurrent WorkerPool"
-    }
-  ],
-  "sourceRepoDir": "/Users/allie/Develop/git-why/bench/work/agents-tasks/T3"
+  "kind": "revert_and_reapply",
+  "stratum": "coding",
+  "taskManifestVersion": "agent-corpus-v2",
+  "commitCount": 125
 }

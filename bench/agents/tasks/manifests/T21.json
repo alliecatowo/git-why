@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
-  "taskId": "T6",
-  "kind": "revert_and_reapply",
+  "taskId": "T21",
+  "kind": "current_code_control",
   "stratum": "coding",
   "taskManifestVersion": "agent-corpus-v2",
-  "commitCount": 125
+  "commitCount": 123
 }

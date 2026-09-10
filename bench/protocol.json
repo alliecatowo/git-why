@@ -45,8 +45,8 @@
   "perRunBudgets": {
     "wallClockMinutes": 8,
     "toolCalls": 60,
-    "generatedTokens": 12000,
-    "generatedTokensNote": "Enforced only where the provider/harness exposes a usable stop condition or token count; OpenCode's documented CLI does not expose a token-limit flag (verified against `opencode run --help`, 1.18.30), so this is enforced by the runner truncating/aborting on observed usage after the fact, with documented event-boundary overshoot possible. Wall time and tool-call counts ARE actively enforced by the runner (bench/agents/runner.mjs) via a deadline timer and a tool-call counter over the parsed event stream.",
+    "generatedTokens": null,
+    "generatedTokensNote": "Generated and input tokens are summed across every step_finish event and recorded without an execution cap. Output length is a measured resource, not a reason to truncate an otherwise valid trial. Wall time and tool-call counts remain actively enforced by the runner (bench/agents/runner.mjs) via a deadline timer and a tool-call counter over the parsed event stream.",
     "appliesTo": "Each individual OpenCode trial (one arm x one task x one repetition) in Benchmark B."
   },
   "arms": {
@@ -69,7 +69,10 @@
       "tools": "Arm A + git why over the permitted history, without zg.",
       "status": "RUNNABLE. Requires a built dist/cli/main.js and a prebuilt index in the trial clone."
     },
-    "primaryComparisons": ["C vs B", "D vs A"],
+    "primaryComparisons": [
+      "C vs B",
+      "D vs A"
+    ],
     "secondaryComparisons": [
       "B vs A (workspace retrieval alone)",
       "C vs A (combined package)",
@@ -86,12 +89,12 @@
       "entersPilotAggregate": false
     },
     "pilot": {
-      "runs": "8 frozen tasks x 4 arms x 2 fresh trials = 64",
-      "purpose": "first paired usefulness comparison"
+      "runs": "28 frozen tasks (16 coding, 6 rubric, 6 temporal) x 4 arms x 2 fresh trials = 224",
+      "purpose": "first paired usefulness comparison across coding, blinded rubric, and temporal-history strata"
     },
     "optionalReplication": {
-      "runs": "same pilot with one selected DevPass model",
-      "status": "not run; requires opting into a paid route, budget currently zero"
+      "runs": "same 28-task pilot with one selected DevPass model",
+      "status": "authorized by the human for this evaluation cohort, subject to billedModelBudget"
     },
     "optionalLargerStudy": {
       "runs": "20 tasks x 4 arms x 3 trials = 240",
@@ -103,8 +106,12 @@
     "note": "Two concurrent OpenCode sessions TOTAL across all arms, not two per arm. Arm order is randomized within each task/trial block and arms are interleaved so time-of-day/provider load does not systematically favor any one arm."
   },
   "billedModelBudget": {
-    "amount": 0,
-    "note": "Zero billed-model spend. A rate limit does not authorize silently switching to a paid OpenCode model or an unknown metered endpoint. Any nonzero budget requires the human's explicit written approval recorded in this file, together with the provider/model id, the timestamp, and the catalog price at approval time. The calibrated model for the pilot is recorded in bench/results/agents/model-calibration.json and is selected BEFORE any arm comparison."
+    "amount": 50,
+    "currency": "USD",
+    "approvedAt": "2026-09-10T04:21:00Z",
+    "approvedBy": "human operator",
+    "approvedProviderRoute": "OpenCode DevPass credential mounted only into ephemeral per-trial Docker profiles",
+    "note": "Human explicitly authorized up to USD 50 for the full evaluation, with a preference for a materially cheaper run. This approval does not authorize a model/provider switch: the exact provider/model identifier, timestamp, and any observed catalog price must be recorded in each run manifest before results are interpreted. The calibrated model is selected before arm comparison."
   },
   "datasetComposition": {
     "totalCases": 48,
@@ -129,6 +136,17 @@
     ],
     "paraphraseRule": "Paraphrases of the same underlying change stay in the same split. This dataset does not include deliberate paraphrase pairs (each case targets a distinct underlying commit or commit pair); the rule is recorded here for any future dataset extension.",
     "externalValidity": "bench/dataset/external.json: 12 hand-verified cases over expressjs/express and axios/axios (both MIT-licensed), 6 dev / 6 test, pinned cutoff SHAs and ancestry-verified relevant SHAs. See that file's 'notBlinded' field."
+  },
+  "agentTaskCorpus": {
+    "version": "agent-corpus-v2",
+    "taskCount": 28,
+    "strata": {
+      "coding": 16,
+      "rubric": 6,
+      "temporal": 6
+    },
+    "historyFloor": "Every synthetic task fixture has at least 120 commits; pinned external fixtures have 2,287-30,000 commits.",
+    "visibility": "The committed public catalogs contain only task id/kind/stratum/version/commit count. Prompts, answer labels, hidden tests, private manifests, task repositories, and review packets are evaluator-only state outside the worktree."
   },
   "ablation": {
     "name": "summary-only vs summary+diff-evidence",
@@ -158,7 +176,7 @@
     "Vector only, per candidate embedding model",
     "Hybrid (RRF per this protocol), per candidate embedding model"
   ],
-  "protocolHash": "sha256:458142672d4746ff366fb22a9c0d44f4b0a82f7fbc3cc74c7f021a41dc5773df",
+  "protocolHash": "sha256:2ba4b5e19bc0666be483a5c08d937bef7ab6238206f6b8a4617e96fc261392a3",
   "supersedes": {
     "protocolVersion": 1,
     "recordedHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f",

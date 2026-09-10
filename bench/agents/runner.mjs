@@ -55,7 +55,7 @@ export function realAuthJsonPath() {
  * fresh profile per trial is the stronger isolation guarantee and is what
  * bench/agents/run.mjs uses).
  */
-export function createIsolatedProfile(profileRoot) {
+export function createIsolatedProfile(profileRoot, { toolPath = null } = {}) {
   // MUST be absolute: several downstream lookups (this process's own, and
   // opencode's internal HOME-relative resolution) depend on env.HOME being
   // usable regardless of any process's current working directory. A
@@ -85,6 +85,10 @@ export function createIsolatedProfile(profileRoot) {
     XDG_CACHE_HOME: join(profileRoot, '.cache'),
     XDG_STATE_HOME: join(profileRoot, '.local', 'state'),
   };
+  // The trial only needs the packaged CLI, not this checkout's source tree.
+  // Keep the product tool ahead of the ambient PATH so `git why` resolves to
+  // the frozen artifact whose index the harness prepared.
+  if (toolPath) env.PATH = `${toolPath}:${process.env.PATH ?? ''}`;
   return { profileRoot, env, credentialsCopied };
 }
 
@@ -168,13 +172,14 @@ export function runTrial({
   taskPrompt,
   usageCard,
   promptWorkDir,
-  budgets = { wallClockMs: 8 * 60_000, toolCalls: 60, generatedTokens: 12_000 },
+  sandbox = null,
+  budgets = { wallClockMs: 8 * 60_000, toolCalls: 60, generatedTokens: null },
 }) {
   const promptFilePath = buildPromptFile(promptWorkDir, { commonPreamble, taskPrompt, usageCard });
 
   return new Promise((resolvePromise) => {
     const startedAt = Date.now();
-    const args = [
+    const opencodeArgs = [
       'run',
       '--pure',
       '--agent',
@@ -183,15 +188,70 @@ export function runTrial({
       model,
       '--format',
       'json',
+      // OpenCode otherwise tries to discover a project above cwd.  Trial
+      // clones deliberately live outside this checkout, but make the
+      // boundary explicit and auditable as well.
+      '--dir',
+      sandbox ? '/workspace' : cwd,
       '--file',
-      promptFilePath,
+      sandbox ? '/prompt/task-prompt.md' : promptFilePath,
       '--auto', // required for non-interactive completion; applied identically to every arm
       'Complete the attached task using the permitted repository.',
     ];
 
-    const child = spawn('opencode', args, {
+    const containerName = sandbox ? `git-why-bench-${process.pid}-${Date.now()}` : null;
+    const command = sandbox ? 'docker' : 'opencode';
+    const args = sandbox
+      ? [
+          'run',
+          '--rm',
+          '--name',
+          containerName,
+          '--read-only',
+          '--tmpfs',
+          '/tmp:uid=10001,gid=10001,mode=1777',
+          '--tmpfs',
+          '/home/bench:uid=10001,gid=10001,mode=700',
+          '--cap-drop',
+          'ALL',
+          '--security-opt',
+          'no-new-privileges',
+          // The user explicitly authorized the configured DevPass credential
+          // for this local smoke. It is mounted read-only in the isolated
+          // profile, never copied into the image, command line, logs, or
+          // result artifacts. A scoped proxy can replace bridge networking
+          // later without changing the trial contract.
+          '--network',
+          sandbox.network ?? 'bridge',
+          '--mount',
+          `type=bind,src=${cwd},dst=/workspace`,
+          '--mount',
+          `type=bind,src=${promptWorkDir},dst=/prompt,readonly`,
+          '--mount',
+          `type=bind,src=${join(sandbox.profileRoot, '.config')},dst=/profile-config,readonly`,
+          '--mount',
+          `type=bind,src=${join(sandbox.profileRoot, '.local', 'share')},dst=/data`,
+          '--env',
+          'XDG_CONFIG_HOME=/profile-config',
+          '--env',
+          'XDG_DATA_HOME=/data',
+          '--env',
+          'XDG_CACHE_HOME=/tmp/cache',
+          '--env',
+          'XDG_STATE_HOME=/tmp/state',
+          sandbox.image,
+          ...opencodeArgs,
+        ]
+      : opencodeArgs;
+
+    const child = spawn(command, args, {
       cwd,
-      env: { ...process.env, ...profileEnv },
+      // Docker Desktop's selected context is user-scoped. Do not replace the
+      // host Docker client's HOME with the trial profile; the profile is
+      // mounted into the container explicitly above instead.
+      env: sandbox
+        ? { ...process.env, ...(sandbox.dockerHost ? { DOCKER_HOST: sandbox.dockerHost } : {}) }
+        : { ...process.env, ...profileEnv },
       stdio: ['ignore', 'pipe', 'pipe'],
       detached: true, // own process group, so a timeout kill takes descendants with it
     });
@@ -202,14 +262,25 @@ export function runTrial({
     const toolCalls = [];
     const parseWarnings = [];
     let sessionId = null;
-    let lastStepFinish = null;
+    const usageTotals = {
+      input: 0,
+      output: 0,
+      reasoning: 0,
+      cacheRead: 0,
+      cacheWrite: 0,
+      cost: 0,
+      costSeen: false,
+      seen: false,
+    };
     const textChunks = [];
 
     let toolCallBudgetExceeded = false;
+    let generatedTokenBudgetExceeded = false;
     let timedOut = false;
 
     const timeoutTimer = setTimeout(() => {
       timedOut = true;
+      if (containerName) spawnSync('docker', ['kill', containerName], { stdio: 'ignore' });
       killProcessGroup(child.pid);
     }, budgets.wallClockMs);
 
@@ -227,15 +298,43 @@ export function runTrial({
           tool: evt.part?.tool ?? evt.tool ?? null,
           callID: evt.part?.callID ?? null,
           status: evt.part?.state?.status ?? null,
+          input: evt.part?.state?.input ?? evt.part?.input ?? evt.input ?? null,
+          output: evt.part?.state?.output ?? evt.part?.output ?? evt.output ?? null,
         });
         if (toolCalls.length > budgets.toolCalls && !toolCallBudgetExceeded) {
           toolCallBudgetExceeded = true;
+          if (containerName) spawnSync('docker', ['kill', containerName], { stdio: 'ignore' });
           killProcessGroup(child.pid);
         }
       } else if (evt.type === 'text' && evt.part?.text) {
         textChunks.push(evt.part.text);
       } else if (evt.type === 'step_finish') {
-        lastStepFinish = evt.part ?? null;
+        const tokens = evt.part?.tokens;
+        if (tokens) {
+          usageTotals.seen = true;
+          usageTotals.input += Number(tokens.input ?? 0);
+          usageTotals.output += Number(tokens.output ?? 0);
+          usageTotals.reasoning += Number(tokens.reasoning ?? 0);
+          usageTotals.cacheRead += Number(tokens.cache?.read ?? 0);
+          usageTotals.cacheWrite += Number(tokens.cache?.write ?? 0);
+          if (
+            Number.isFinite(budgets.generatedTokens) &&
+            usageTotals.output > budgets.generatedTokens &&
+            !generatedTokenBudgetExceeded
+          ) {
+            generatedTokenBudgetExceeded = true;
+            if (containerName) spawnSync('docker', ['kill', containerName], { stdio: 'ignore' });
+            killProcessGroup(child.pid);
+          }
+        }
+        // A session commonly emits several step_finish events. Cost must
+        // follow the same aggregation rule as tokens; the final event alone
+        // is not a session total.
+        const cost = Number(evt.part?.cost);
+        if (Number.isFinite(cost)) {
+          usageTotals.cost += cost;
+          usageTotals.costSeen = true;
+        }
       }
     }
 
@@ -259,6 +358,7 @@ export function runTrial({
       let exitReason = 'completed';
       if (timedOut) exitReason = 'wall_clock_timeout';
       else if (toolCallBudgetExceeded) exitReason = 'tool_call_budget_exceeded';
+      else if (generatedTokenBudgetExceeded) exitReason = 'generated_token_budget_exceeded';
       else if (signal) exitReason = `signal_${signal}`;
       else if (exitCode !== 0) exitReason = 'nonzero_exit';
 
@@ -276,14 +376,16 @@ export function runTrial({
         toolCalls,
         toolCallCount: toolCalls.length,
         finalAnswer: textChunks.join(''),
-        usage: lastStepFinish?.tokens
+        // A session can emit many step_finish events.  Reporting just the
+        // last one was the source of the invalid pilot's 69k-vs-2.56M error.
+        usage: usageTotals.seen
           ? {
-              inputTokens: lastStepFinish.tokens.input ?? null,
-              outputTokens: lastStepFinish.tokens.output ?? null,
-              reasoningTokens: lastStepFinish.tokens.reasoning ?? null,
-              cacheReadTokens: lastStepFinish.tokens.cache?.read ?? null,
-              cacheWriteTokens: lastStepFinish.tokens.cache?.write ?? null,
-              totalTokens: lastStepFinish.tokens.total ?? null,
+              inputTokens: usageTotals.input,
+              outputTokens: usageTotals.output,
+              reasoningTokens: usageTotals.reasoning,
+              cacheReadTokens: usageTotals.cacheRead,
+              cacheWriteTokens: usageTotals.cacheWrite,
+              totalTokens: usageTotals.input + usageTotals.output + usageTotals.reasoning,
             }
           : {
               inputTokens: null,
@@ -295,7 +397,7 @@ export function runTrial({
             },
         // Never report missing cost as zero: only report it when a
         // step_finish event actually carried a cost field.
-        actualBilledCost: lastStepFinish && 'cost' in lastStepFinish ? lastStepFinish.cost : null,
+        actualBilledCost: usageTotals.costSeen ? usageTotals.cost : null,
         finalPatch: finalPatch.status === 0 ? finalPatch.stdout : null,
         workingTreeDirty: finalStatus.status === 0 ? finalStatus.stdout.trim().length > 0 : null,
         eventCount: events.length,

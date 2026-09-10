@@ -11,11 +11,17 @@
 //   node bench/agents/run.mjs --stage=pilot
 //   node bench/agents/run.mjs --stage=pilot --only=T1,T5
 //
-// zg (arms B/C) is not installed in this environment. Those trials are
-// recorded as infrastructure-blocked, not silently skipped or faked; the
-// exact same code path runs for real the moment `zg` appears on PATH.
-
-import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+  rmSync,
+  renameSync,
+  readdirSync,
+  cpSync,
+} from 'node:fs';
+import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
@@ -24,21 +30,30 @@ import { execFileSync } from 'node:child_process';
 import { buildIsolatedTrialWorkspace } from './isolation.mjs';
 import { createIsolatedProfile, inspectProfile, runTrial } from './runner.mjs';
 import { gradeTrial } from './grade.mjs';
+import { auditTrajectory } from './audit.mjs';
+import { aggregateAgentRecords } from './aggregate.mjs';
+import { printChecklist, smokePostflight, smokePreflight } from './smoke.mjs';
 import { benchWorkSubdir } from '../lib/workdir.mjs';
 import { mulberry32, seedFromString, shuffle } from '../fixtures/lib/rng.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..', '..');
 const TASKS_DIR = join(HERE, 'tasks');
-const HIDDEN_DIR = join(TASKS_DIR, 'hidden');
-const MANIFEST_DIR = join(TASKS_DIR, 'manifests');
-const SOURCE_REPOS_DIR = benchWorkSubdir('agents-tasks');
+// The committed task catalog intentionally has no prompt, base/gold SHA,
+// rubric, hidden test, or source-repository path. Those are evaluator-only
+// inputs outside the worktree, so no agent can reach them through a parent
+// directory or a Docker mount.
+const CATALOG_DIR = join(TASKS_DIR, 'manifests');
+const EVALUATOR_DIR = benchWorkSubdir('evaluator', 'agents');
+const PRIVATE_MANIFEST_DIR = join(EVALUATOR_DIR, 'manifests');
+const PRIVATE_TASK_DIR = join(EVALUATOR_DIR, 'tasks');
 const WORK_ROOT = benchWorkSubdir('agents-runs');
 const RESULTS_DIR = join(REPO_ROOT, 'bench', 'results', 'agents');
 const USAGE_CARDS_DIR = join(HERE, 'usage-cards');
+const PACKAGED_TOOL_DIR = benchWorkSubdir('tools', 'git-why');
+const INDEX_CACHE_ROOT = benchWorkSubdir('agent-index-cache');
+const DASHBOARD_STATUS_FILE = join(REPO_ROOT, 'site', 'public', 'bench-status.json');
 
-const ALL_TASK_IDS = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'];
-const SMOKE_TASK_IDS = ['T1', 'T5', 'T6', 'T8']; // one coding, one rubric, one control-with-history-unnecessary, one no-evidence rubric
 const ARMS = ['A', 'B', 'C', 'D'];
 
 // Model calibrated by a tiny neutral run during harness development
@@ -47,19 +62,100 @@ const ARMS = ['A', 'B', 'C', 'D'];
 // model availability changes.
 const DEFAULT_MODEL = 'opencode/big-pickle';
 
-const BUDGETS = { wallClockMs: 8 * 60_000, toolCalls: 60, generatedTokens: 12_000 };
+// Output tokens are measured in full but deliberately not capped. A model
+// can spend more text reasoning through a difficult history task without
+// being silently converted into a failed treatment. Wall-clock and tool-call
+// limits remain the bounded, protocol-visible safety controls.
+const BUDGETS = { wallClockMs: 8 * 60_000, toolCalls: 60, generatedTokens: null };
 const TOTAL_CONCURRENCY = 2;
 
 function parseArgs(argv) {
-  const args = { stage: 'smoke', only: null, model: DEFAULT_MODEL, repetitions: null };
+  const args = {
+    stage: 'smoke',
+    only: null,
+    model: DEFAULT_MODEL,
+    repetitions: null,
+    resume: null,
+  };
   for (const a of argv) {
     if (a.startsWith('--stage=')) args.stage = a.slice('--stage='.length);
     else if (a.startsWith('--only=')) args.only = a.slice('--only='.length).split(',');
     else if (a.startsWith('--model=')) args.model = a.slice('--model='.length);
     else if (a.startsWith('--repetitions='))
       args.repetitions = Number(a.slice('--repetitions='.length));
+    else if (a.startsWith('--resume=')) args.resume = a.slice('--resume='.length);
   }
   return args;
+}
+
+function sha256(...parts) {
+  return createHash('sha256').update(parts.join('\0')).digest('hex');
+}
+function atomicJson(path, value) {
+  const temp = `${path}.${process.pid}.${Date.now()}.tmp`;
+  writeFileSync(temp, JSON.stringify(value, null, 2) + '\n');
+  renameSync(temp, path);
+}
+function trialKey({
+  taskId,
+  arm,
+  repetition,
+  protocolHash,
+  implementationSha,
+  model,
+  manifestHash,
+}) {
+  return sha256(
+    taskId,
+    arm,
+    repetition,
+    protocolHash ?? '',
+    implementationSha ?? '',
+    model,
+    manifestHash ?? '',
+  );
+}
+function completedTrial(path) {
+  try {
+    const data = JSON.parse(readFileSync(path, 'utf8'));
+    return data.completed === true ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+// Agent executions have host shell access; only the benchmark image is a
+// valid execution environment.  Refuse to accidentally run an unsandboxed
+// paid/free session.  Image creation is deliberately external to this runner
+// because credentials/model egress policy are deployment-specific.
+function requireSandboxImage() {
+  const image = process.env.BENCH_SANDBOX_IMAGE;
+  const docker = spawnSync('docker', ['version', '--format', '{{.Server.Version}}'], {
+    encoding: 'utf8',
+  });
+  if (docker.status !== 0)
+    return { ok: false, reason: 'Docker daemon unavailable; no agent trial may run unsandboxed.' };
+  if (!image)
+    return {
+      ok: false,
+      reason:
+        'BENCH_SANDBOX_IMAGE is unset. Build the benchmark sandbox image with only a trial workspace mount and model-endpoint egress, then set it.',
+    };
+  const inspect = spawnSync('docker', ['image', 'inspect', image], { encoding: 'utf8' });
+  if (inspect.status !== 0) return { ok: false, reason: `sandbox image ${image} is unavailable.` };
+  const context = spawnSync(
+    'docker',
+    ['context', 'inspect', '--format', '{{.Endpoints.docker.Host}}'],
+    {
+      encoding: 'utf8',
+    },
+  );
+  return {
+    ok: true,
+    image,
+    dockerVersion: docker.stdout.trim(),
+    dockerHost: context.status === 0 ? context.stdout.trim() : undefined,
+  };
 }
 
 function fail(msg) {
@@ -72,20 +168,36 @@ export function checkZgAvailable() {
   return res.status === 0;
 }
 
+function catalogEntries() {
+  if (!existsSync(CATALOG_DIR))
+    fail('task catalog missing. Run: node bench/agents/tasks/build.mjs');
+  return readdirSync(CATALOG_DIR)
+    .filter((name) => /^T\d+\.json$/.test(name))
+    .map((name) => JSON.parse(readFileSync(join(CATALOG_DIR, name), 'utf8')))
+    .sort((a, b) => Number(a.taskId.slice(1)) - Number(b.taskId.slice(1)));
+}
+
+function privateManifestPath(taskId) {
+  return join(PRIVATE_MANIFEST_DIR, `${taskId}.json`);
+}
+
 function loadTaskMeta(taskId) {
-  const manifestPath = join(MANIFEST_DIR, `${taskId}.json`);
+  const manifestPath = privateManifestPath(taskId);
   if (!existsSync(manifestPath)) {
-    fail(`No manifest for task ${taskId}. Run: node bench/agents/tasks/build.mjs`);
+    fail(`No evaluator manifest for task ${taskId}. Run: node bench/agents/tasks/build.mjs`);
   }
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-  const promptPath = join(HIDDEN_DIR, taskId, 'prompt.md');
-  const hiddenTestPath = join(HIDDEN_DIR, taskId, 'task.test.cjs');
-  const rubricPath = join(HIDDEN_DIR, taskId, 'rubric.json');
+  const taskDir = join(PRIVATE_TASK_DIR, taskId);
+  const promptPath = join(taskDir, 'prompt.md');
+  const hiddenTestPath = join(taskDir, 'task.test.cjs');
+  const rubricPath = join(taskDir, 'rubric.json');
   return {
     taskId,
+    kind: manifest.kind,
+    stratum: manifest.stratum,
     baseSha: manifest.baseSha,
     goldSha: manifest.goldSha,
-    sourceRepoDir: join(SOURCE_REPOS_DIR, taskId),
+    sourceRepoDir: manifest.sourceRepoDir,
     promptText: readFileSync(promptPath, 'utf8'),
     hiddenTestPath: existsSync(hiddenTestPath) ? hiddenTestPath : null,
     rubric: existsSync(rubricPath) ? JSON.parse(readFileSync(rubricPath, 'utf8')) : null,
@@ -111,6 +223,255 @@ function usageCardFor(arm) {
 
 function armNeedsZg(arm) {
   return arm === 'B' || arm === 'C';
+}
+
+function preparePackagedGitWhy() {
+  const tarballsDir = benchWorkSubdir('tools', 'tarballs');
+  rmSync(PACKAGED_TOOL_DIR, { recursive: true, force: true });
+  mkdirSync(tarballsDir, { recursive: true });
+  const packed = execFileSync('npm', ['pack', '--pack-destination', tarballsDir, '--json'], {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+  });
+  const tarball = JSON.parse(packed)[0]?.filename;
+  if (typeof tarball !== 'string') throw new Error('npm pack did not report a tarball filename');
+  execFileSync(
+    'npm',
+    [
+      'install',
+      '--prefix',
+      PACKAGED_TOOL_DIR,
+      '--no-audit',
+      '--fund=false',
+      join(tarballsDir, tarball),
+    ],
+    { cwd: REPO_ROOT, stdio: 'inherit' },
+  );
+  const binDir = join(PACKAGED_TOOL_DIR, 'node_modules', '.bin');
+  if (!existsSync(join(binDir, 'git-why')))
+    throw new Error('packed git-why did not install its executable');
+  return binDir;
+}
+
+function indexCacheKey({ baseSha, implementationSha, protocolHash, treatment, toolVersion }) {
+  return sha256(
+    baseSha,
+    implementationSha ?? '',
+    protocolHash ?? '',
+    treatment,
+    toolVersion ?? 'unknown',
+  );
+}
+
+function cacheIndex({ key, kind, workspaceDir, relativePath, validate }) {
+  const cacheDir = join(INDEX_CACHE_ROOT, key, kind);
+  const target = join(workspaceDir, relativePath);
+  const restore = () => {
+    if (!existsSync(cacheDir)) return null;
+    try {
+      rmSync(target, { recursive: true, force: true });
+      cpSync(cacheDir, target, { recursive: true });
+      return validate();
+    } catch {
+      rmSync(target, { recursive: true, force: true });
+      return null;
+    }
+  };
+  const cached = restore();
+  if (cached) return { ...cached, cache: 'hit' };
+  return {
+    cache: 'miss',
+    store(value) {
+      const staging = `${cacheDir}.staging-${process.pid}-${Date.now()}`;
+      mkdirSync(join(INDEX_CACHE_ROOT, key), { recursive: true });
+      rmSync(staging, { recursive: true, force: true });
+      cpSync(target, staging, { recursive: true });
+      // Another concurrent arm may have completed this exact immutable key.
+      if (!existsSync(cacheDir)) renameSync(staging, cacheDir);
+      else rmSync(staging, { recursive: true, force: true });
+      return { ...value, cache: 'rebuilt' };
+    },
+  };
+}
+
+function gitWhyStatus(workspaceDir, toolPath) {
+  const executable = join(toolPath, 'git-why');
+  const env = { ...process.env, PATH: `${toolPath}:${process.env.PATH ?? ''}` };
+  const status = spawnSync(executable, ['status', '--json', '--check-ready'], {
+    cwd: workspaceDir,
+    env,
+    encoding: 'utf8',
+  });
+  if (status.status !== 0)
+    throw new Error(
+      `git why status --check-ready failed: ${status.stderr || status.stdout || `exit ${status.status}`}`,
+    );
+  const parsed = JSON.parse(status.stdout);
+  const indexed = parsed?.index?.indexedCommits;
+  const reachable = Number(
+    spawnSync('git', ['rev-list', '--count', 'HEAD'], {
+      cwd: workspaceDir,
+      encoding: 'utf8',
+    }).stdout.trim(),
+  );
+  if (indexed !== reachable)
+    throw new Error(`git why index coverage mismatch: indexed ${indexed}, reachable ${reachable}`);
+  return {
+    diskBytes: parsed?.index?.diskBytes ?? null,
+    corpusFingerprint: spawnSync('git', ['rev-parse', 'HEAD'], {
+      cwd: workspaceDir,
+      encoding: 'utf8',
+    }).stdout.trim(),
+    indexedCommits: indexed,
+  };
+}
+
+function gitWhyVersion(toolPath) {
+  const result = spawnSync(join(toolPath, 'git-why'), ['--version'], { encoding: 'utf8' });
+  return result.status === 0 ? result.stdout.trim() : null;
+}
+
+function buildFrozenGitWhyIndex(workspaceDir, toolPath) {
+  const started = Date.now();
+  const executable = join(toolPath, 'git-why');
+  const env = { ...process.env, PATH: `${toolPath}:${process.env.PATH ?? ''}` };
+  const result = spawnSync(executable, ['index'], { cwd: workspaceDir, env, encoding: 'utf8' });
+  if (result.status !== 0) {
+    throw new Error(
+      `git why index failed: ${result.stderr || result.stdout || `exit ${result.status}`}`,
+    );
+  }
+  const checked = gitWhyStatus(workspaceDir, toolPath);
+  return {
+    buildMs: Date.now() - started,
+    ...checked,
+  };
+}
+
+function buildFrozenZgIndex(workspaceDir, sandbox) {
+  const started = Date.now();
+  // A clone may only carry an index generated for this exact execution
+  // namespace. In particular, a host-generated zg collection records host
+  // absolute paths and cannot be reused under /workspace in Docker.
+  rmSync(join(workspaceDir, '.zvec-grep'), { recursive: true, force: true });
+  const inContainer = (args) =>
+    spawnSync(
+      'docker',
+      [
+        'run',
+        '--rm',
+        '--network',
+        sandbox.network ?? 'bridge',
+        '--mount',
+        `type=bind,src=${workspaceDir},dst=/workspace`,
+        '--workdir',
+        '/workspace',
+        '--entrypoint',
+        'zg',
+        sandbox.image,
+        ...args,
+      ],
+      {
+        // Preserve Docker Desktop's chosen context; the agent's credential
+        // profile is not involved in index construction.
+        env: { ...process.env, ...(sandbox.dockerHost ? { DOCKER_HOST: sandbox.dockerHost } : {}) },
+        encoding: 'utf8',
+      },
+    );
+  // zg persists absolute workspace paths in its collection. Building it on
+  // the host made a ready-looking index that was unusable from /workspace in
+  // the trial container. Build through the same container mount instead.
+  const index = inContainer([
+    'index',
+    '--embedding',
+    'local/potion-code-16m-v2',
+    '--glob',
+    '!bench/agents/**',
+  ]);
+  if (index.status !== 0)
+    throw new Error(`zg index failed: ${index.stderr || index.stdout || `exit ${index.status}`}`);
+  const status = inContainer(['status', '--check-ready']);
+  if (status.status !== 0)
+    throw new Error(
+      `zg status --check-ready failed: ${status.stderr || status.stdout || `exit ${status.status}`}`,
+    );
+  return { buildMs: Date.now() - started, status: status.stdout.trim() };
+}
+
+function validateZgIndex(workspaceDir, sandbox) {
+  const status = spawnSync(
+    'docker',
+    [
+      'run',
+      '--rm',
+      '--network',
+      sandbox.network ?? 'bridge',
+      '--mount',
+      `type=bind,src=${workspaceDir},dst=/workspace`,
+      '--workdir',
+      '/workspace',
+      '--entrypoint',
+      'zg',
+      sandbox.image,
+      'status',
+      '--check-ready',
+    ],
+    {
+      env: { ...process.env, ...(sandbox.dockerHost ? { DOCKER_HOST: sandbox.dockerHost } : {}) },
+      encoding: 'utf8',
+    },
+  );
+  if (status.status !== 0)
+    throw new Error(
+      `zg status --check-ready failed: ${status.stderr || status.stdout || `exit ${status.status}`}`,
+    );
+  return { status: status.stdout.trim() };
+}
+
+function commandInstrumentation(toolCalls, finalAnswer, finalPatch) {
+  const bash = toolCalls.filter((call) => call.tool === 'bash');
+  const text = (call) => JSON.stringify(call.input ?? '');
+  const history = bash.filter((call) =>
+    /\bgit\s+(?:log|show|blame)\b|\bgit\s+log\s+[^\n]*(?:-[SG])/.test(text(call)),
+  );
+  const gitWhy = bash
+    .filter((call) => /(?:\bgit\s+why\b|\bgit-why\b)/.test(text(call)))
+    .map((call) => {
+      const output = JSON.stringify(call.output ?? '');
+      const shas = output.match(/\b[0-9a-f]{7,40}\b/gi) ?? [];
+      const used = shas.some(
+        (sha) => (finalAnswer ?? '').includes(sha) || (finalPatch ?? '').includes(sha),
+      );
+      return { status: call.status, result_count: shas.length, evidence_used: used };
+    });
+  const zg = bash
+    .filter((call) => /\bzg\b/.test(text(call)))
+    .map((call) => {
+      const output = String(call.output ?? '');
+      const hits = output.match(/^#\d+\s/m)?.length ?? 0;
+      return { status: call.status, result_count: hits, output_nonempty: output.trim().length > 0 };
+    });
+  return { history, gitWhy, zg };
+}
+
+function forcedUseSatisfied(arm, instrumentation) {
+  const calls = armNeedsZg(arm) ? instrumentation.zg : arm === 'D' ? instrumentation.gitWhy : null;
+  if (calls === null) return true;
+  return calls.some((call) => call.status === 'completed' && call.result_count > 0);
+}
+
+function writeDashboardStatus(agent) {
+  let prior = {};
+  try {
+    prior = JSON.parse(readFileSync(DASHBOARD_STATUS_FILE, 'utf8'));
+  } catch {
+    // The dashboard is optional for headless benchmark use; its absence must
+    // never invalidate a benchmark result.
+  }
+  writeFileSync(
+    DASHBOARD_STATUS_FILE,
+    JSON.stringify({ ...prior, updatedAt: new Date().toISOString(), agent }, null, 2) + '\n',
+  );
 }
 
 /** Build the randomized, interleaved execution plan: within each
@@ -160,7 +521,18 @@ function isInfrastructureError(trialResult) {
 
 async function runOnePlannedTrial(
   planItem,
-  { taskMetaById, model, runRoot, reviewDir, zgAvailable, attempt },
+  {
+    taskMetaById,
+    model,
+    runRoot,
+    reviewDir,
+    zgAvailable,
+    toolPath,
+    sandbox,
+    attempt,
+    outDir,
+    isSmoke,
+  },
 ) {
   const { taskId, arm, repetition } = planItem;
   const taskMeta = taskMetaById[taskId];
@@ -168,11 +540,14 @@ async function runOnePlannedTrial(
 
   const record = {
     task_id: taskId,
-    task_stratum: taskMeta.rubric ? 'rubric' : 'coding',
+    task_stratum: taskMeta.stratum,
     arm,
     repetition,
     base_sha: taskMeta.baseSha,
-    corpus_fingerprint: null, // set once git-why/zg indexing is wired up for real trials
+    // Base SHA is the immutable corpus snapshot fingerprint for every arm,
+    // including baseline. Treatment preparation records the same value after
+    // its status assertion.
+    corpus_fingerprint: taskMeta.baseSha,
     implementation_sha: gitHeadOfThisRepoOrNull(),
     model_id: model,
     provider_id: 'opencode',
@@ -184,7 +559,9 @@ async function runOnePlannedTrial(
     profile_hash: null,
     prompt_hash: null,
     protocol_hash: loadProtocolHash(),
-    dependency_lock_hash: null,
+    dependency_lock_hash: existsSync(join(REPO_ROOT, 'package-lock.json'))
+      ? sha256(readFileSync(join(REPO_ROOT, 'package-lock.json'), 'utf8'))
+      : null,
     pass: null,
     hidden_tests_passed: null,
     hidden_tests_total: null,
@@ -204,18 +581,36 @@ async function runOnePlannedTrial(
     index_build_ms: null,
     model_download_ms: null,
     index_disk_bytes: null,
+    events_file: null,
     exit_reason: null,
     infrastructure_error: null,
     treatment_error: null,
     invalidation_reason: null,
     attempt,
   };
+  const manifestHash = sha256(readFileSync(privateManifestPath(taskId), 'utf8'));
+  record.key = trialKey({
+    taskId,
+    arm,
+    repetition,
+    protocolHash: record.protocol_hash,
+    implementationSha: record.implementation_sha,
+    model,
+    manifestHash,
+  });
+  const recordPath = join(outDir, 'trials', `${record.key}.json`);
+  mkdirSync(join(outDir, 'trials'), { recursive: true });
+  function finish() {
+    record.completed = true;
+    atomicJson(recordPath, record);
+    return record;
+  }
 
   if (armNeedsZg(arm) && !zgAvailable) {
     record.exit_reason = 'infrastructure_blocked';
     record.infrastructure_error =
       'zg not installed on PATH; arm requires zg per protocol. See bench/protocol.json arms.B/C.status.';
-    return record;
+    return finish();
   }
 
   let workspace;
@@ -230,21 +625,92 @@ async function runOnePlannedTrial(
   } catch (err) {
     record.exit_reason = 'infrastructure_blocked';
     record.infrastructure_error = `isolation failure: ${err.message}`;
-    return record;
+    return finish();
   }
 
-  const profile = createIsolatedProfile(join(runRoot, 'profiles', trialLabel));
+  if (arm === 'C' || arm === 'D') {
+    try {
+      const cache = cacheIndex({
+        key: indexCacheKey({
+          baseSha: taskMeta.baseSha,
+          implementationSha: record.implementation_sha,
+          protocolHash: record.protocol_hash,
+          treatment: 'git-why',
+          toolVersion: gitWhyVersion(toolPath),
+        }),
+        kind: 'git-why',
+        workspaceDir: workspace.workspaceDir,
+        relativePath: join('.git', 'why'),
+        validate: () => gitWhyStatus(workspace.workspaceDir, toolPath),
+      });
+      const prepared =
+        cache.cache === 'hit'
+          ? { ...cache, buildMs: 0 }
+          : cache.store(buildFrozenGitWhyIndex(workspace.workspaceDir, toolPath));
+      record.index_build_ms = prepared.buildMs;
+      record.index_disk_bytes = prepared.diskBytes;
+      record.corpus_fingerprint = prepared.corpusFingerprint;
+      record.indexed_commits = prepared.indexedCommits;
+      record.git_why_index_cache = prepared.cache;
+    } catch (err) {
+      record.exit_reason = 'infrastructure_blocked';
+      record.infrastructure_error = `git-why index preparation failure: ${err.message}`;
+      return finish();
+    }
+  }
+
+  if (armNeedsZg(arm)) {
+    try {
+      const cache = cacheIndex({
+        key: indexCacheKey({
+          baseSha: taskMeta.baseSha,
+          implementationSha: record.implementation_sha,
+          protocolHash: record.protocol_hash,
+          treatment: 'zg',
+          toolVersion: `${sandbox.image}:${record.zg_version ?? 'container-zg'}`,
+        }),
+        kind: 'zg',
+        workspaceDir: workspace.workspaceDir,
+        relativePath: '.zvec-grep',
+        validate: () => validateZgIndex(workspace.workspaceDir, sandbox),
+      });
+      const prepared =
+        cache.cache === 'hit'
+          ? { ...cache, buildMs: 0 }
+          : cache.store(buildFrozenZgIndex(workspace.workspaceDir, sandbox));
+      record.zg_index_build_ms = prepared.buildMs;
+      record.zg_status = prepared.status;
+      record.zg_index_cache = prepared.cache;
+    } catch (err) {
+      record.exit_reason = 'infrastructure_blocked';
+      record.infrastructure_error = `zg index preparation failure: ${err.message}`;
+      return finish();
+    }
+  }
+
+  const profile = createIsolatedProfile(join(runRoot, 'profiles', trialLabel), { toolPath });
   const inspection = inspectProfile(profile.env);
   if (!inspection.agentListStdout.includes('git-why-bench')) {
     record.exit_reason = 'infrastructure_blocked';
     record.infrastructure_error =
       'isolated profile did not recognize the git-why-bench agent; see profile inspection log.';
-    return record;
+    return finish();
   }
 
   const usageCard = usageCardFor(arm);
-  const commonPreamble =
-    'You are given a single task in the current repository. Source code and any permitted Git history are available; use your judgment about what to consult.';
+  const trialDir = sandbox ? '/workspace' : workspace.workspaceDir;
+  const forcedUse =
+    isSmoke && armNeedsZg(arm)
+      ? ' After that preflight, before the task, run `zg query --fts function --limit 1` and confirm it returns a hit.'
+      : isSmoke && arm === 'D'
+        ? ' After that preflight, before the task, run `git why "function" --no-refresh -n 1` and confirm it returns a result.'
+        : '';
+  const commonPreamble = `You are given a single task in the current repository. BEFORE any other shell command, run exactly one bash command that prints: pwd; git rev-parse --show-toplevel; git rev-parse HEAD. Verify they equal ${trialDir}, ${trialDir}, and ${taskMeta.baseSha}. Then work only inside this repository. Source code and permitted Git history are available; use your judgment about whether to consult it.${forcedUse}`;
+  // Hash only non-secret, trial-visible inputs. The profile credential is
+  // deliberately excluded: it is copied into an ephemeral mount and must
+  // never become benchmark data.
+  record.profile_hash = sha256(readFileSync(profile.agentPath, 'utf8'));
+  record.prompt_hash = sha256(commonPreamble, taskMeta.promptText, usageCard ?? '');
 
   const trialResult = await runTrial({
     taskId,
@@ -257,20 +723,31 @@ async function runOnePlannedTrial(
     taskPrompt: taskMeta.promptText,
     usageCard,
     promptWorkDir: join(runRoot, 'prompts', trialLabel),
+    sandbox: sandbox ? { ...sandbox, profileRoot: profile.profileRoot } : null,
     budgets: BUDGETS,
   });
 
   if (isInfrastructureError(trialResult)) {
     record.exit_reason = 'infrastructure_error';
     record.infrastructure_error = trialResult.stderr || 'no events received from opencode process';
-    return record;
+    return finish();
   }
 
   record.wall_ms = trialResult.wallMs;
   record.tool_calls = trialResult.toolCallCount;
-  record.history_calls = trialResult.toolCalls.filter((t) => t.tool === 'bash').length; // best-effort proxy; refine once git-why/zg are real bash invocations to grep for
-  record.git_why_calls = null; // requires parsing bash tool inputs for "git why" once the CLI exists; not fabricated here
-  record.zg_calls = null;
+  const instrumentation = commandInstrumentation(
+    trialResult.toolCalls,
+    trialResult.finalAnswer,
+    trialResult.finalPatch,
+  );
+  record.history_calls = instrumentation.history.length;
+  record.git_why_calls = instrumentation.gitWhy.length;
+  record.zg_calls = instrumentation.zg.length;
+  record.command_instrumentation = instrumentation;
+  record.forced_use_probe = isSmoke && arm !== 'A';
+  record.forced_use_passed = record.forced_use_probe
+    ? forcedUseSatisfied(arm, instrumentation)
+    : null;
   record.input_tokens = trialResult.usage.inputTokens;
   record.output_tokens = trialResult.usage.outputTokens;
   record.cache_read_tokens = trialResult.usage.cacheReadTokens;
@@ -281,6 +758,41 @@ async function runOnePlannedTrial(
   record.exit_reason = trialResult.exitReason;
   record.treatment_error =
     trialResult.exitCode !== 0 ? `opencode exited ${trialResult.exitCode}` : null;
+  if (record.forced_use_probe && !record.forced_use_passed) {
+    record.treatment_error =
+      'forced-use probe did not produce a successful non-empty treatment result';
+  }
+
+  const eventsDir = join(runRoot, 'events');
+  mkdirSync(eventsDir, { recursive: true });
+  const eventsFile = join(eventsDir, `${trialLabel}.jsonl`);
+  writeFileSync(
+    eventsFile,
+    trialResult.rawEvents.map((event) => JSON.stringify(event)).join('\n') + '\n',
+  );
+  record.events_file = eventsFile;
+  const artifactsDir = join(runRoot, 'artifacts');
+  mkdirSync(artifactsDir, { recursive: true });
+  writeFileSync(join(artifactsDir, `${trialLabel}.answer.txt`), trialResult.finalAnswer ?? '');
+  writeFileSync(join(artifactsDir, `${trialLabel}.patch.diff`), trialResult.finalPatch ?? '');
+  writeFileSync(join(artifactsDir, `${trialLabel}.stderr.txt`), trialResult.stderr ?? '');
+  const audit = auditTrajectory({
+    rawEvents: trialResult.rawEvents,
+    toolCalls: trialResult.toolCalls,
+    workspaceDir: workspace.workspaceDir,
+    executionWorkspaceDir: trialDir,
+    baseSha: taskMeta.baseSha,
+  });
+  record.trajectory_audit = audit;
+  record.invalidation_reason = audit.invalidation_reason;
+
+  // A model result is only gradeable after it completed cleanly and passed
+  // the trajectory audit. Running hidden tests against an unchanged clone
+  // after Docker/OpenCode failed made a broken trial look like a success.
+  if (record.treatment_error !== null || record.invalidation_reason !== null) {
+    record.pass = null;
+    return finish();
+  }
 
   const grading = gradeTrial({
     taskMeta,
@@ -298,7 +810,7 @@ async function runOnePlannedTrial(
   record.evidence_grade = grading.evidenceGrade;
   record.review_packet_id = grading.reviewPacketId ?? null;
 
-  return record;
+  return finish();
 }
 
 function gitHeadOfThisRepoOrNull() {
@@ -334,12 +846,31 @@ async function main() {
   const isPilot = args.stage === 'pilot';
   if (!isSmoke && !isPilot) fail(`--stage must be "smoke" or "pilot", got "${args.stage}"`);
 
-  const taskIds = args.only ?? (isSmoke ? SMOKE_TASK_IDS : ALL_TASK_IDS);
+  const catalog = catalogEntries();
+  const allTaskIds = catalog.map((entry) => entry.taskId);
+  // Smoke samples each behavioral stratum plus a direct current-code control.
+  // The public catalog carries enough non-sensitive metadata to choose these
+  // without opening evaluator material until the selected IDs are known.
+  const smokeKinds = [
+    'revert_and_reapply',
+    'evidence_question',
+    'temporal_history',
+    'current_code_control',
+  ];
+  const smokeTaskIds = smokeKinds.map((kind) => {
+    const entry = catalog.find((candidate) => candidate.kind === kind);
+    if (!entry) fail(`smoke corpus is missing required task kind: ${kind}`);
+    return entry.taskId;
+  });
+  const taskIds = args.only ?? (isSmoke ? smokeTaskIds : allTaskIds);
   const repetitions = args.repetitions ?? (isSmoke ? 1 : 2);
 
+  const sandbox = requireSandboxImage();
+
+  const taskMetaById = Object.fromEntries(taskIds.map((id) => [id, loadTaskMeta(id)]));
   for (const taskId of taskIds) {
-    const srcDir = join(SOURCE_REPOS_DIR, taskId);
-    if (!existsSync(srcDir))
+    const srcDir = taskMetaById[taskId].sourceRepoDir;
+    if (!srcDir || !existsSync(srcDir))
       fail(`Task source repo missing for ${taskId}. Run: node bench/agents/tasks/build.mjs`);
   }
 
@@ -351,7 +882,13 @@ async function main() {
     );
   }
 
-  const taskMetaById = Object.fromEntries(taskIds.map((id) => [id, loadTaskMeta(id)]));
+  const toolPath = preparePackagedGitWhy();
+  if (isSmoke) {
+    const checks = smokePreflight({ toolPath, sandbox });
+    if (!printChecklist(checks))
+      fail('smoke checklist has one or more failures; no agent trial was started.');
+  }
+  if (!sandbox.ok) fail(`sandbox gate: ${sandbox.reason}`);
 
   const plan = buildPlan({
     taskIds,
@@ -363,20 +900,46 @@ async function main() {
     `[bench/agents] planned ${plannedCount} trials (${taskIds.length} tasks x ${ARMS.length} arms x ${repetitions} repetitions)`,
   );
 
-  const runId = new Date().toISOString().replace(/[:.]/g, '-');
+  const runId = args.resume ?? new Date().toISOString().replace(/[:.]/g, '-');
   const runRoot = join(WORK_ROOT, `${args.stage}-${runId}`);
   const outDir = join(RESULTS_DIR, `${args.stage}-${runId}`);
   const reviewDir = join(outDir, 'review-packets');
   mkdirSync(outDir, { recursive: true });
 
-  const records = await pooledMap(plan, TOTAL_CONCURRENCY, (item) =>
+  writeDashboardStatus({
+    state: 'running',
+    stage: `${isSmoke ? 'Smoke' : 'Pilot'} · ${taskIds.join(', ')}`,
+    runId,
+    planned: plannedCount,
+    completed: 0,
+    note: 'Live isolated OpenCode trials are in progress.',
+  });
+
+  const resumable = plan.filter((item) => {
+    const manifestHash = sha256(readFileSync(privateManifestPath(item.taskId), 'utf8'));
+    const key = trialKey({
+      taskId: item.taskId,
+      arm: item.arm,
+      repetition: item.repetition,
+      protocolHash: loadProtocolHash(),
+      implementationSha: gitHeadOfThisRepoOrNull(),
+      model: args.model,
+      manifestHash,
+    });
+    return !args.resume || !completedTrial(join(outDir, 'trials', `${key}.json`));
+  });
+  const records = await pooledMap(resumable, TOTAL_CONCURRENCY, (item) =>
     runOnePlannedTrial(item, {
       taskMetaById,
       model: args.model,
       runRoot,
       reviewDir,
       zgAvailable,
+      toolPath,
+      sandbox,
       attempt: 1,
+      outDir,
+      isSmoke,
     }),
   );
 
@@ -393,7 +956,11 @@ async function main() {
         runRoot,
         reviewDir,
         zgAvailable,
+        toolPath,
+        sandbox,
         attempt: 2,
+        outDir,
+        isSmoke,
       }),
   );
 
@@ -404,7 +971,11 @@ async function main() {
   const blocked = allRecords.filter((r) => r.exit_reason === 'infrastructure_blocked').length;
 
   const valid = allRecords.filter(
-    (r) => r.exit_reason !== 'infrastructure_blocked' && r.exit_reason !== 'infrastructure_error',
+    (r) =>
+      r.exit_reason !== 'infrastructure_blocked' &&
+      r.exit_reason !== 'infrastructure_error' &&
+      r.invalidation_reason === null &&
+      r.treatment_error === null,
   ).length;
   const successful = allRecords.filter((r) => r.pass === true).length;
 
@@ -432,18 +1003,35 @@ async function main() {
             valid: armRecords.filter(
               (r) =>
                 r.exit_reason !== 'infrastructure_blocked' &&
-                r.exit_reason !== 'infrastructure_error',
+                r.exit_reason !== 'infrastructure_error' &&
+                r.invalidation_reason === null &&
+                r.treatment_error === null,
             ).length,
             pass: armRecords.filter((r) => r.pass === true).length,
           },
         ];
       }),
     ),
+    // Stable, report/dashboard-ready analysis derived solely from the same
+    // atomic records. Keep legacy top-level fields above for resume tooling.
+    aggregate: aggregateAgentRecords(allRecords),
   };
   writeFileSync(join(outDir, 'summary.json'), JSON.stringify(summary, null, 2));
+  writeDashboardStatus({
+    state: 'completed',
+    stage: isSmoke ? 'Smoke' : 'Pilot',
+    runId,
+    planned: plannedCount,
+    completed: attempted,
+    note: `${summary.valid} valid trials; ${summary.blocked} infrastructure-blocked.`,
+  });
 
   console.log(`\n[bench/agents] wrote ${attempted} trial records to ${outDir}`);
   console.log(JSON.stringify(summary, null, 2));
+  if (isSmoke) {
+    const checks = smokePostflight({ records: allRecords, expectedTrials: plannedCount });
+    if (!printChecklist(checks)) fail('smoke postflight checklist has one or more failures.');
+  }
 }
 
 // Guarded, unlike the other bench/*/run.mjs entry points: this one spawns

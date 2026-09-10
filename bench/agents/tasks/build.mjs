@@ -7,52 +7,75 @@
 // trial ends, against a scratch copy of the trial's resulting worktree.
 
 import { fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { buildTaskRepo } from './lib/task-engine.mjs';
 import { benchWorkSubdir } from '../../lib/workdir.mjs';
 
-import t1 from './specs/t1.mjs';
-import t2 from './specs/t2.mjs';
-import t3 from './specs/t3.mjs';
-import t4 from './specs/t4.mjs';
-import t5 from './specs/t5.mjs';
-import t6 from './specs/t6.mjs';
-import t7 from './specs/t7.mjs';
-import t8 from './specs/t8.mjs';
-
 const HERE = dirname(fileURLToPath(import.meta.url));
 const WORK_DIR = benchWorkSubdir('agents-tasks');
-const MANIFEST_DIR = join(HERE, 'manifests');
-const HIDDEN_DIR = join(HERE, 'hidden');
-
-const ALL_SPECS = [t1, t2, t3, t4, t5, t6, t7, t8];
+// Only a non-sensitive catalog is committed. Prompts, hidden tests, rubrics,
+// source locations, and held-out commits are evaluator material and belong
+// outside every repository tree.
+const CATALOG_DIR = join(HERE, 'manifests');
+const EVALUATOR_DIR = benchWorkSubdir('evaluator', 'agents');
+const PRIVATE_MANIFEST_DIR = join(EVALUATOR_DIR, 'manifests');
+const PRIVATE_TASK_DIR = join(EVALUATOR_DIR, 'tasks');
+const PRIVATE_CATALOG_PATH = join(EVALUATOR_DIR, 'specs', 'catalog.mjs');
 
 function parseArgs(argv) {
   const only = argv.find((a) => a.startsWith('--only='));
   return { only: only ? only.slice('--only='.length).split(',') : null };
 }
 
-function main() {
+async function main() {
+  if (!existsSync(PRIVATE_CATALOG_PATH)) {
+    throw new Error(
+      `Evaluator task specification package is missing: ${PRIVATE_CATALOG_PATH}. It is intentionally not kept in this repository.`,
+    );
+  }
+  const { default: allSpecs } = await import(pathToFileURL(PRIVATE_CATALOG_PATH).href);
   const { only } = parseArgs(process.argv.slice(2));
-  const specs = only ? ALL_SPECS.filter((s) => only.includes(s.id)) : ALL_SPECS;
+  const specs = only ? allSpecs.filter((s) => only.includes(s.id)) : allSpecs;
 
   for (const spec of specs) {
-    const manifest = buildTaskRepo(spec, { workDir: WORK_DIR, manifestDir: MANIFEST_DIR });
+    const manifest = spec.externalSource
+      ? buildExternalTask(spec)
+      : buildTaskRepo(spec, { workDir: WORK_DIR, manifestDir: PRIVATE_MANIFEST_DIR });
 
-    mkdirSync(join(HIDDEN_DIR, spec.id), { recursive: true });
+    mkdirSync(CATALOG_DIR, { recursive: true });
+    writeFileSync(
+      join(CATALOG_DIR, `${spec.id}.json`),
+      JSON.stringify(
+        {
+          schemaVersion: manifest.schemaVersion,
+          taskId: manifest.taskId,
+          kind: manifest.kind,
+          stratum: manifest.stratum,
+          taskManifestVersion: manifest.taskManifestVersion,
+          commitCount: manifest.commitCount,
+        },
+        null,
+        2,
+      ) + '\n',
+      'utf8',
+    );
+
+    mkdirSync(join(PRIVATE_TASK_DIR, spec.id), { recursive: true });
     if (spec.hiddenTestFile) {
-      writeFileSync(join(HIDDEN_DIR, spec.id, 'task.test.cjs'), spec.hiddenTestFile, 'utf8');
+      writeFileSync(join(PRIVATE_TASK_DIR, spec.id, 'task.test.cjs'), spec.hiddenTestFile, 'utf8');
     }
     if (spec.rubric) {
       writeFileSync(
-        join(HIDDEN_DIR, spec.id, 'rubric.json'),
+        join(PRIVATE_TASK_DIR, spec.id, 'rubric.json'),
         JSON.stringify(spec.rubric, null, 2) + '\n',
         'utf8',
       );
     }
     writeFileSync(
-      join(HIDDEN_DIR, spec.id, 'meta.json'),
+      join(PRIVATE_TASK_DIR, spec.id, 'meta.json'),
       JSON.stringify(
         {
           taskId: spec.id,
@@ -68,7 +91,11 @@ function main() {
       ) + '\n',
       'utf8',
     );
-    writeFileSync(join(HIDDEN_DIR, spec.id, 'prompt.md'), spec.taskPrompt.trim() + '\n', 'utf8');
+    writeFileSync(
+      join(PRIVATE_TASK_DIR, spec.id, 'prompt.md'),
+      spec.taskPrompt.trim() + '\n',
+      'utf8',
+    );
 
     console.log(
       `[${spec.id}] baseSha=${manifest.baseSha.slice(0, 12)} kind=${spec.kind} hiddenTest=${!!spec.hiddenTestFile} rubric=${!!spec.rubric}`,
@@ -76,4 +103,41 @@ function main() {
   }
 }
 
-main();
+function buildExternalTask(spec) {
+  const sourceRepoDir = benchWorkSubdir('external', spec.externalSource.repositoryId);
+  const count = spawnSync('git', ['rev-list', '--count', spec.externalSource.cutoffSha], {
+    cwd: sourceRepoDir,
+    encoding: 'utf8',
+  });
+  if (count.status !== 0) {
+    throw new Error(
+      `Pinned external clone unavailable for ${spec.id}: ${sourceRepoDir} at ${spec.externalSource.cutoffSha}`,
+    );
+  }
+  const manifest = {
+    schemaVersion: 2,
+    taskId: spec.id,
+    seed: spec.seed,
+    kind: spec.kind,
+    stratum: spec.stratum,
+    taskManifestVersion: spec.taskManifestVersion,
+    baseSha: spec.externalSource.cutoffSha,
+    goldSha: null,
+    priorShas: [],
+    commitCount: Number(count.stdout.trim()),
+    labels: { introducedSha: spec.externalSource.answerSha },
+    sourceRepoDir,
+    externalRepositoryId: spec.externalSource.repositoryId,
+  };
+  mkdirSync(PRIVATE_MANIFEST_DIR, { recursive: true });
+  writeFileSync(
+    join(PRIVATE_MANIFEST_DIR, `${spec.id}.json`),
+    JSON.stringify(manifest, null, 2) + '\n',
+  );
+  return manifest;
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

@@ -35,13 +35,14 @@ method, candidate limits, dataset composition, arm definitions) and
   retrieval modes.** Text-only and hybrid retrieval both reach 100% Hit@5 on
   dev and test; semantic is close behind. Read Mean Reciprocal Rank (MRR)
   as the primary quality signal in any report generated from these results.
-- **The agent usefulness pilot (arms A/B/C/D) has its own blockers**:
-  Arms B and C require `zg` (Zvec-Grep), which is not installed in this
-  environment and must not be installed by the evaluation lane. Those arms
-  are recorded as infrastructure-blocked, not silently skipped. As of the
-  last `bench/report.mjs` run, the 8-task pilot itself has not been
-  executed -- only harness smoke tests exist, and smoke tests never enter
-  the pilot aggregate per protocol.
+- **Agent results are only evidence after a pilot, never after smoke.** Smoke
+  runs are excluded from pilot aggregates. The runner records every attempt,
+  including invalidations and infrastructure retries. `bench/agents/aggregate.mjs`
+  selects the final attempt for each logical trial for outcome rates, reports
+  coding/rubric/temporal strata separately, and includes `pass: null` rubric
+  trials only as unscored valid trials. It reports raw all-attempt resource
+  use separately from successful-only resources; neither retries nor failed
+  treatment delivery disappear from audit accounting.
 - **No-evidence cases have no refusal path.** Git Why always returns a
   ranked top-k list, even for questions that no commit in history actually
   answers. A caller (human or agent) that treats a returned commit as _the_
@@ -58,6 +59,19 @@ node bench/retrieval/run.mjs --split=test --i-accept-this-is-the-frozen-holdout 
 node bench/perf/run.mjs
 node bench/report.mjs   # writes docs/report.md from the files above
 ```
+
+For an agent pilot, use the sandbox image and resumable run name recorded in
+the run manifest:
+
+```
+BENCH_SANDBOX_IMAGE=git-why-bench:local node bench/agents/run.mjs --stage=pilot --resume <run-name>
+node bench/report.mjs
+```
+
+The generated agent section gives per-stratum numerator/denominator, paired
+per-task outcomes, a task-cluster bootstrap interval (descriptive, not a
+significance test), tool adoption/evidence-use counts, resource totals, and
+every invalidated trial/reason.
 
 ## Where scratch state lives
 
@@ -76,3 +90,8 @@ audit are enforced on top of it, not instead of it.
 
 Override the location with `BENCH_WORK_DIR=/some/path`. `test/unit/no-benchmark-artifacts.test.ts`
 fails the build if `bench/work/` reappears or if any task file lands in `src/`.
+
+Agent treatment indexes are cached below `BENCH_WORK_DIR/agent-index-cache/`, never in the
+checkout. A cache entry is keyed by base/corpus SHA, implementation SHA, protocol hash, treatment,
+and tool version. It is copied into each disposable clone and must pass `status --check-ready` in
+that clone (for `zg`, at Docker's `/workspace`) before use; a missing or corrupt entry is rebuilt.

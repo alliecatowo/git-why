@@ -22,10 +22,29 @@ export function buildTaskRepo(spec, { workDir, manifestDir }) {
   let epoch = spec.baseEpochSeconds;
 
   const priorShas = [];
+  // A benchmark task must look like an actual repository, not a three-commit
+  // puzzle.  Padding is deliberately committed before the authored history:
+  // it gives lexical retrieval realistic near-misses without leaking a later
+  // answer into the trial head.
+  for (let i = 0; i < (spec.historyPadding ?? 0); i++) {
+    const topic = spec.distractorTerms?.[i % spec.distractorTerms.length] ?? 'maintenance';
+    const path = `notes/release-${String(i).padStart(3, '0')}.md`;
+    writeRepoFile(
+      dir,
+      path,
+      `# Change note ${i + 1}\n\nRoutine ${topic} follow-up for an unrelated subsystem.\n`,
+    );
+    const sha = commitAll(dir, {
+      message: `chore: ${topic} follow-up ${String(i + 1).padStart(3, '0')}`,
+      epochSeconds: epoch,
+    });
+    priorShas.push({ sha, message: `chore: ${topic} follow-up`, role: 'distractor' });
+    epoch += 3600;
+  }
   for (const step of spec.priorHistory ?? []) {
     applyFiles(dir, step.files);
     const sha = commitAll(dir, { message: step.message, epochSeconds: epoch });
-    priorShas.push({ sha, message: step.message });
+    priorShas.push({ sha, message: step.message, role: step.role ?? 'history', label: step.label });
     epoch += 3600;
   }
 
@@ -51,12 +70,19 @@ export function buildTaskRepo(spec, { workDir, manifestDir }) {
 
   mkdirSync(manifestDir, { recursive: true });
   const manifest = {
+    schemaVersion: 2,
     taskId: spec.id,
     seed: spec.seed,
     kind: spec.kind,
+    stratum: spec.stratum,
+    taskManifestVersion: 'agent-corpus-v2',
     baseSha,
     goldSha,
     priorShas,
+    commitCount: priorShas.length + 1,
+    labels: Object.fromEntries(
+      priorShas.filter((entry) => entry.label).map((entry) => [entry.label, entry.sha]),
+    ),
     sourceRepoDir: dir,
   };
   writeFileSync(`${manifestDir}/${spec.id}.json`, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');

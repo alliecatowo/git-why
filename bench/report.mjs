@@ -12,6 +12,7 @@ import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync, statSy
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { aggregateAgentRecords } from './agents/aggregate.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -136,6 +137,77 @@ const agentsResultsDir = join(RESULTS_DIR, 'agents');
 const agentRunDirs = existsSync(agentsResultsDir) ? readdirSync(agentsResultsDir) : [];
 const pilotDirs = agentRunDirs.filter((d) => d.startsWith('pilot-'));
 const smokeDirs = agentRunDirs.filter((d) => d.startsWith('smoke-'));
+
+function loadAgentRecords(runDir) {
+  const trialsDir = join(runDir, 'trials');
+  if (existsSync(trialsDir)) {
+    return readdirSync(trialsDir)
+      .filter((name) => name.endsWith('.json'))
+      .map((name) => readJson(join(trialsDir, name)));
+  }
+  const combined = join(runDir, 'trials.json');
+  return existsSync(combined) ? readJson(combined) : [];
+}
+
+function agentPilotSection(runNames) {
+  if (runNames.length === 0)
+    return '\n**The agent usefulness pilot has NOT been executed.** This report contains no task-level successes/regressions, no evidence-use analysis, and no A/B/C/D comparison numbers, because none exist yet. The existence of the harness (`bench/agents/*.mjs`) and a smoke test is not a result and is not presented as one. When the pilot is run, its result is descriptive evidence only -- **no significance claim** is made.\n\n';
+  const latest = runNames.sort().at(-1);
+  const runDir = join(agentsResultsDir, latest);
+  const aggregate = aggregateAgentRecords(loadAgentRecords(runDir));
+  let out = `\n**Pilot analyzed:** \`${latest}\`. This section is regenerated from its atomic trial records; smoke runs are excluded. Planned/attempted logical trials: ${aggregate.logicalTrials}; raw attempts: ${aggregate.attempts}; valid: ${aggregate.valid}; successful scored trials: ${aggregate.successful}; invalidated/treatment-error attempts: ${aggregate.invalidated.length}.\n\n`;
+  out +=
+    '**Outcome rates by stratum and arm** (numerator/denominator includes only valid trials with boolean `pass`; valid rubric trials with `pass: null` are reported as unscored and never enter a success rate):\n\n';
+  out +=
+    '| stratum | arm | pass | valid | unscored valid | rate |\n|---|---|---:|---:|---:|---:|\n';
+  for (const [stratum, arms] of Object.entries(aggregate.byStratumArm)) {
+    for (const arm of ['A', 'B', 'C', 'D']) {
+      const row = arms[arm];
+      out += `| ${stratum} | ${arm} | ${row.numerator}/${row.denominator} | ${row.valid} | ${row.unscoredValid} | ${pct(row.rate)} |\n`;
+    }
+  }
+  out +=
+    '\n**Paired per-task outcomes** (each cell is pass/denominator across repetitions; `n/a` means no boolean outcome, not a failure):\n\n';
+  out += '| task | stratum | A | B | C | D |\n|---|---|---|---|---|---|\n';
+  for (const task of aggregate.pairedPerTask) {
+    const cell = (arm) => {
+      const row = task.arms[arm];
+      return row.denominator === 0 ? 'n/a' : `${row.numerator}/${row.denominator}`;
+    };
+    out += `| ${task.taskId} | ${task.stratum} | ${cell('A')} | ${cell('B')} | ${cell('C')} | ${cell('D')} |\n`;
+  }
+  out +=
+    '\n**Task-cluster bootstrap interval for success-rate delta vs A** (95% percentile interval; clusters are tasks, so repeated trials from one task stay together; descriptive only):\n\n';
+  out += '| arm | task clusters | delta vs A | 95% interval |\n|---|---:|---:|---|\n';
+  for (const arm of ['A', 'B', 'C', 'D']) {
+    const ci = aggregate.bootstrapCiByArm[arm];
+    const interval = ci.low == null ? 'n/a' : `[${pct(ci.low)}, ${pct(ci.high)}]`;
+    out += `| ${arm} | ${ci.clusters} | ${pct(ci.estimate)} | ${interval} |\n`;
+  }
+  const resourceLine = (label, resource) =>
+    `- ${label} (n=${resource.n}): wall ${ms(resource.wall_ms.total)}, input tokens ${resource.input_tokens.total ?? 'n/a'}, output tokens ${resource.output_tokens.total ?? 'n/a'}, git-why calls ${resource.git_why_calls.total ?? 'n/a'}, zg calls ${resource.zg_calls.total ?? 'n/a'}, billed cost ${resource.actual_billed_cost.total ?? 'n/a'}.\n`;
+  out +=
+    '\n**Resources** (all attempts retains invalidated and retry cost; successful-only means valid boolean-pass successes):\n\n';
+  out += resourceLine('All attempts', aggregate.resources.allAttempts);
+  out += resourceLine('Successful-only', aggregate.resources.successfulOnly);
+  out += '\n**Tool adoption / evidence use:**\n\n';
+  out +=
+    '| arm | trials using git why | git why calls | calls with evidence used | zg calls |\n|---|---:|---:|---:|---:|\n';
+  for (const arm of ['A', 'B', 'C', 'D']) {
+    const row = aggregate.evidence[arm];
+    out += `| ${arm} | ${row.trialsWithGitWhy} | ${row.gitWhyCalls} | ${row.gitWhyEvidenceUsed} | ${row.zgCalls} |\n`;
+  }
+  out += '\n**Invalidated trials** (retained for audit, excluded from outcomes):\n\n';
+  if (aggregate.invalidated.length === 0) out += 'None.\n\n';
+  else {
+    out +=
+      '| task | stratum | arm | repetition | attempt | reason |\n|---|---|---|---:|---:|---|\n';
+    for (const row of aggregate.invalidated)
+      out += `| ${row.taskId} | ${row.stratum} | ${row.arm} | ${row.repetition} | ${row.attempt} | ${String(row.reason).replaceAll('|', '\\|')} |\n`;
+    out += '\n';
+  }
+  return out;
+}
 
 const headSha = sh(['git', 'rev-parse', 'HEAD']);
 const dirtyFiles = sh(['git', 'status', '--porcelain']).split('\n').filter(Boolean);
@@ -435,11 +507,9 @@ md += `- Arm B (workspace + zg) and Arm C (workspace + zg + git why): ${zgInstal
 md += `- Harness smoke-test runs present under \`bench/results/agents/\`: ${smokeDirs.length > 0 ? smokeDirs.join(', ') : 'none'}. Per protocol, smoke runs never enter the pilot aggregate.\n`;
 md += `- Pilot runs (8 frozen tasks x 4 arms x 2 trials = 64) present under \`bench/results/agents/\`: ${pilotDirs.length > 0 ? pilotDirs.join(', ') : 'none'}.\n`;
 if (pilotDirs.length === 0) {
-  md +=
-    '\n**The agent usefulness pilot has NOT been executed.** This report contains no task-level successes/regressions, no evidence-use analysis, and no A/B/C/D comparison numbers, because none exist yet. The existence of the harness (`bench/agents/*.mjs`) and a smoke test is not a result and is not presented as one. When the pilot is run, its 8-task N means any headline number it produces is descriptive evidence only -- report requirement: **no universal improvement percentage and no significance claim**, regardless of the direction the pilot points.\n\n';
+  md += agentPilotSection(pilotDirs);
 } else {
-  md +=
-    '\n(Pilot data present -- if you are seeing this branch, extend this generator to summarize `bench/results/agents/pilot-*` before treating any number here as final; this script does not currently parse pilot output.)\n\n';
+  md += agentPilotSection(pilotDirs);
 }
 
 // 6. CLI latency / index cost / memory / disk / parallel
