@@ -53,6 +53,8 @@ export interface ParsedSearch {
   readonly verbose: boolean;
   readonly temporalFlags: TemporalFlags;
   readonly groups: readonly string[];
+  /** `--owners`: aggregate matched commits by author. */
+  readonly ownersRequested: boolean;
 }
 
 export interface ParsedLifecycle {
@@ -82,6 +84,7 @@ const BOOLEAN_LONG_FLAGS = new Set([
   'version',
   'verbose',
   'check-ready',
+  'owners',
   'first',
   'last',
   'removed',
@@ -448,5 +451,6 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
     lockTimeoutSeconds,
     temporalFlags,
     groups,
+    ownersRequested: options.get('owners') === true,
   };
 }

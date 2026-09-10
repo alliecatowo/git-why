@@ -15,7 +15,8 @@
     "coreQuery",
     "temporal",
     "answer",
-    "timeline"
+    "timeline",
+    "owners"
   ],
   "additionalProperties": false,
   "properties": {
@@ -428,6 +429,53 @@
                 }
               }
             ]
+          }
+        }
+      }
+    },
+    "owners": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "email", "weight", "commits", "firstTime", "lastTime", "topCommits"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "commits": {
+            "type": "number"
+          },
+          "firstTime": {
+            "type": "number"
+          },
+          "lastTime": {
+            "type": "number"
+          },
+          "topCommits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["sha", "subject", "committerTime"],
+              "properties": {
+                "sha": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "committerTime": {
+                  "type": "number"
+                }
+              }
+            }
           }
         }
       }

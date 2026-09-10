@@ -158,6 +158,7 @@ const baseRequest: SearchRequest = {
   filters: NO_FILTERS,
   temporal: NO_TEMPORAL_CONSTRAINT,
   groups: [],
+  owners: false,
 };
 
 test('hybrid search returns ranked, distinct-commit results with attached evidence', async () => {

@@ -120,6 +120,7 @@ function defaultSearchResponse(request) {
     },
     answer: null,
     timeline: null,
+    owners: null,
     warnings: [],
     candidateLimitReached: false,
   };

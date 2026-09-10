@@ -392,6 +392,8 @@ export interface SearchRequest {
    * similar commits.
    */
   readonly groups: readonly string[];
+  /** Aggregate matched commits by author instead of only listing them. */
+  readonly owners: boolean;
 }
 
 /**
@@ -616,6 +618,38 @@ export interface SnapshotSummary {
   readonly generation: string;
 }
 
+/**
+ * One author's stake in a topic or area of the code.
+ *
+ * This exists because the two obvious answers to "who owns this" are both
+ * systematically wrong. `git blame` reports whoever touched a line LAST, so a
+ * formatting sweep or a licence-header change reassigns authorship wholesale.
+ * `git shortlog` counts commits, so whoever made the most small mechanical
+ * changes outranks whoever designed the thing. Neither reads what the commits
+ * were actually about.
+ *
+ * Ownership here is accumulated RELEVANCE: an author's stake is the summed
+ * ranking score of the commits that a search for the topic actually surfaced.
+ * One commit that defined a subsystem outweighs thirty that renamed variables
+ * in it, because relevance is what ranked them, not volume.
+ */
+export interface AuthorStake {
+  readonly name: string;
+  readonly email: string;
+  /** Summed rank score across matched commits. A ranking number, not a percentage. */
+  readonly weight: number;
+  /** How many of the matched commits were theirs. */
+  readonly commits: number;
+  readonly firstTime: number;
+  readonly lastTime: number;
+  /** Their most relevant commits, best first, for the reader to verify against. */
+  readonly topCommits: readonly {
+    readonly sha: string;
+    readonly subject: string;
+    readonly committerTime: number;
+  }[];
+}
+
 export interface SearchResponse {
   readonly query: string;
   /** The temporally neutral core actually sent to the retrieval branches. */
@@ -629,6 +663,8 @@ export interface SearchResponse {
   readonly answer: OrdinalAnswer | null;
   /** Set only in timeline mode. */
   readonly timeline: readonly TimelineEpisode[] | null;
+  /** Set only when ownership was requested; ordered by descending stake. */
+  readonly owners: readonly AuthorStake[] | null;
   readonly warnings: readonly string[];
   readonly candidateLimitReached: boolean;
 }

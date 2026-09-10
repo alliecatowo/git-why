@@ -357,6 +357,7 @@ async function runSearch(
       filters,
       temporal,
       groups: parsed.groups,
+      owners: parsed.ownersRequested,
     };
 
     const response = await backend.search(repo, request, {

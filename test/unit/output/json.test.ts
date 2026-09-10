@@ -64,6 +64,7 @@ function makeResponse(overrides: Partial<SearchResponse> = {}): SearchResponse {
     temporal: { intent: 'none', confidence: 'inferred', anchor: null, anchorEnd: null, w: 0 },
     answer: null,
     timeline: null,
+    owners: null,
     snapshot: {
       scope: 'branches-remotes-tags-worktree-heads',
       fingerprint: 'opaque-fingerprint',

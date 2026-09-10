@@ -110,6 +110,22 @@ function buildEnvelope(
             viaPath: response.answer.viaPath,
             confidence: response.answer.confidence,
           },
+    owners:
+      response.owners === null
+        ? null
+        : response.owners.map((o) => ({
+            name: o.name,
+            email: o.email,
+            weight: o.weight,
+            commits: o.commits,
+            firstTime: o.firstTime,
+            lastTime: o.lastTime,
+            topCommits: o.topCommits.map((c) => ({
+              sha: c.sha,
+              subject: c.subject,
+              committerTime: c.committerTime,
+            })),
+          })),
     timeline:
       response.timeline === null
         ? null
@@ -223,6 +239,7 @@ export function renderSearchErrorJson(input: JsonErrorInput): string {
     },
     answer: null,
     timeline: null,
+    owners: null,
     warnings: [],
     outputTruncated: false,
     candidateLimitReached: false,

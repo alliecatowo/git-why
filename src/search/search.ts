@@ -40,6 +40,7 @@ import { decomposeQuery } from './temporal/intent.js';
 import { applyTemporal, exponentFor, temporalScore } from './temporal/score.js';
 import { PROSE_ONLY_PENALTY } from './temporal/tuning.js';
 import { expandQuery, selectExpansionTerms } from './expansion.js';
+import { aggregateOwners } from './owners.js';
 import { expandStructuralCandidates } from './expand.js';
 import type { ExpandedRank } from './expand.js';
 
@@ -475,6 +476,9 @@ export async function search(
     },
     answer,
     timeline,
+    // Ownership is derived from the SAME ranked commits, so it inherits their
+    // relevance rather than counting churn the way shortlog does.
+    owners: request.owners ? aggregateOwners(results) : null,
     warnings,
     candidateLimitReached: rankResults.some((result) => result.candidateLimitReached),
   };

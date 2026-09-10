@@ -266,6 +266,7 @@ test('--max-bytes truncation produces valid, bounded JSON end-to-end', async () 
     temporal: { intent: 'none', confidence: 'inferred', anchor: null, anchorEnd: null, w: 0 },
     answer: null,
     timeline: null,
+    owners: null,
     warnings: [],
     candidateLimitReached: false,
   };
