@@ -1,0 +1,32 @@
+The provided commit SHA matches the expected value. I will now investigate the ripgrep repository's history to determine if the ignore-file name was ever different from '.ignore'. Since the task specifies that source code and permitted Git history are available, I will use Git history to find relevant commits. The `zg` tool is available, but the prompt asks to cite a commit SHA and quote supporting text from the commit message or diff, which suggests a direct Git history search is more appropriate than `zg`.
+
+I'll start by searching commit messages for terms related to ignore files, specifically looking for any mention of names other than '.ignore'.
+
+Given that the task explicitly mentions "Repository archaeology" and asks to cite commit SHAs, I will use `git log` to search through the commit history. I'll focus on commits that might have introduced or changed the handling of ignore files.The output of `git log --all --grep="ignore-file" --invert-grep --pretty=format:"%h - %an, %ar : %s"` shows many commits mentioning "ignore-file". However, the `--invert-grep` flag means it's excluding commits that *contain* "ignore-file". This is not what I want. I need to find commits that *mention* ignore files, and specifically look for changes to the ignore file's name.
+
+I will try searching for commits that mention ".ignore" and also look for changes that might indicate a rename.
+A more targeted approach would be to search for commits that explicitly talk about changing the ignore file name. I will search for commits that contain both ".ignore" and "rename" or "change".
+
+I'll try a different approach. I'll look for commits that *remove* or *change* the name of the ignore file. If the name was changed, there might be a commit message that indicates this. I will search for commits that contain "ignore" and keywords like "rename", "change", "old", "new".
+
+Alternatively, I can look at the history of the `ignore` crate, as that's where ignore file logic likely resides.
+
+Let's try searching for commits that mention ".ignore" and see if any of them discuss a change in its name.
+
+Actually, the prompt says "Did ripgrep's special ignore-file name used to be something other than '.ignore'?" This implies I should look for commits that *introduced* `.ignore` or *changed* it from something else.
+
+I will search for commits that mention "ignore" and "rename" or "change" or "old".
+The previous `git log` command was not useful. I need to find commits that *introduced* or *changed* the ignore file name.
+
+I'll try a broader search first, looking for commits that mention "ignore" and "file" and see if any context suggests a name change.
+If that doesn't work, I'll try searching for commits that *remove* the `.ignore` file name from configurations or code.
+
+Let's try searching for commits that are related to ignore files and look for keywords like "rename", "change", "old name".
+I will try to find commits that discuss the `rgignore` file, as this was mentioned in a commit message.
+The commit message `cc90511 - Andrew Gallant, 10 years ago : Switch from .rgignore to .ignore.` is highly relevant.
+This commit indicates that the ignore file was previously named `.rgignore` and was changed to `.ignore`.
+
+Commit SHA: `cc90511`
+Commit message: `Switch from .rgignore to .ignore.`
+
+This directly answers the question. The ignore-file name used to be `.rgignore` before it was changed to `.ignore`.The special ignore-file name used to be `.rgignore`. The commit that establishes this answer is `cc90511`, with the commit message: "Switch from .rgignore to .ignore."

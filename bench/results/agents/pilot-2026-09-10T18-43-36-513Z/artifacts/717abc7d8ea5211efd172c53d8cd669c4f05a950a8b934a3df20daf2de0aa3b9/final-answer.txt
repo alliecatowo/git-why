@@ -1,0 +1,29 @@
+I have verified the current directory, repository root, and commit hash.
+
+The question is whether Zod objects used to keep properties that were not explicitly defined, and if the default handling of unknown keys has changed. I need to find the commit that establishes this change and cite it, along with supporting evidence from the commit message or diff.
+
+I will use `zg` to search for information related to the handling of unknown keys in Zod objects.
+I am unable to use the `zg` tool as it is not available. I will proceed by using `git log` to examine the commit history for relevant changes related to the handling of unknown keys in Zod objects.The default handling of unknown keys in Zod objects has changed. Previously, Zod allowed unknown keys by default. In version 2, the default behavior was changed to strip unknown keys.
+
+The commit that establishes this change is `18854492b4b6e1648499f2f920c615dab187ee1a`.
+
+The relevant part of the commit message and diff is:
+
+**Commit Message Snippet:**
+```
+strip unknown keys by default
+```
+
+**Diff Snippet from README.md:**
+```diff
+- Object schemas now _allow_ unknown keys by default, instead of throwing an error
++ Object schemas now strip unknown keys by default, instead of throwing an error
+```
+and
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+ 
+-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
++> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+```

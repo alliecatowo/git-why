@@ -1,0 +1,31 @@
+The provided information confirms the current directory, repository root, and commit SHA. I will now proceed to investigate the curl security bug related to credential leakage during redirects. To do this, I will use the `zg` tool to search for relevant code changes.The `zg` search returned several results, but none directly point to a specific commit that addresses the described security vulnerability. The results are mostly documentation or code snippets related to protocols and ports in general, not specifically about credential leakage during redirects. I will try a more targeted search.This search is also not yielding a direct hit for the specific vulnerability. The results are too general or point to unrelated code. I will now try a more specific approach by looking for commits that modified how redirects are handled, specifically in relation to credentials. I will use `git log` with a relevant search term.The `git log -p --grep="redirect.*credentials"` command returned no output, indicating that there isn't a commit message that directly contains both "redirect" and "credentials" in this manner. This suggests that the vulnerability might be described differently in the commit history, or it might be a subtle change that wasn't explicitly captured in the commit messages with these keywords.
+
+I will try a broader search focusing on redirects and potential credential leakage, and also look at the `docs/libcurl/libcurl-security.3` file for any clues.The `git log` command with the provided filters has returned a significant amount of output related to redirects, protocols, ports, and credentials. This suggests the vulnerability is related to how curl handles these aspects.
+
+I've identified a few key areas that seem relevant:
+
+1.  **`stripcredentials` function:** There are changes related to a function called `stripcredentials`, which suggests that credentials were being mishandled or leaked.
+2.  **Protocol and Port Handling on Redirects:** Several entries mention "redirects to other protocols or ports clear auth" and "HTTP auth without redirection protocols," as well as changes to how custom port numbers are handled during redirects.
+3.  **`CURLOPT_REDIR_PROTOCOLS`:** There are numerous mentions of `CURLOPT_REDIR_PROTOCOLS` and how different protocols are allowed or disallowed during redirects.
+
+One particular commit message that stands out is:
+`transfer: redirects to other protocols or ports clear auth`
+`Reported-by: Harry Sintonen`
+
+This seems to directly address the core of the security bug described in the task. I will now try to find the specific commit SHA associated with this message.I have found a commit that seems to directly address the security bug:
+
+**Commit SHA:** `620ea21410030a9977396b4661806bc187231b79`
+
+**Relevant change:** The commit message states: "transfer: redirects to other protocols or ports clear auth". This indicates that the fix involved clearing authentication when a redirect occurred to a different protocol or port, preventing credential leakage.
+
+I will now retrieve the commit details to quote the specific part of the message or diff that supports this.The commit `620ea21410030a9977396b4661806bc187231b79` addresses the security bug where following a redirect could leak credentials to a different protocol or port.
+
+The change introduced in this commit, specifically in `lib/transfer.c`, implements logic to clear authentication credentials (`data->state.aptr.user` and `data->state.aptr.passwd`) if a redirect occurs to a different port number or a different protocol, provided that such behavior is not explicitly permitted by `data->set.allow_auth_to_other_hosts`.
+
+The commit message and the related bug report URL (`https://curl.se/docs/CVE-2022-27774.html`) clearly support that this commit is the fix for the described vulnerability.
+
+**Answer:**
+
+The curl security bug where following a redirect could leak credentials to a different protocol or port was fixed in commit `620ea21410030a9977396b4661806bc187231b79`.
+
+The fix implemented logic to clear authentication credentials if a redirect occurred to a different port or protocol, unless explicitly allowed. The relevant change is in `lib/transfer.c`, where the code now checks the destination port and protocol of a redirect and clears credentials if they differ from the original, as indicated by the commit message: "transfer: redirects to other protocols or ports clear auth".

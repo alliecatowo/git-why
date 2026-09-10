@@ -1,0 +1,43 @@
+I have the complete picture. Let me verify the exact quotes I want to cite.
+
+## Answer
+
+Yes — the default handling of unknown keys changed, and this repo's history pins it down precisely.
+
+**The supporting commit is `18854492b4b6e1648499f2f920c615dab187ee1a` — "strip unknown keys by default" (Colin McDonnell, Sep 17, 2020).**
+
+Before this commit, `z.object()` was constructed with `unknownKeys: 'allow'`, and the parser copied every extra key into the output — so objects *kept* properties you didn't define. The commit flipped the default. From the diff of `src/types/object.ts`:
+
+```diff
+   static create = <T extends z.ZodRawShape>(shape: T): ZodObject<T> => {
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+And from `README.md` in the same commit, the behavior change is stated outright:
+
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+```
+
+and
+
+```diff
+-Object schemas now _allow_ unknown keys by default, instead of throwing an error
++Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+The commit also renamed the opt-out: `.allowUnknown()` became `.passthrough()`, and `.stripUnknown()` became `.strip()`. From the same README diff:
+
+```diff
++If you want to pass through unknown keys, use `.passthrough()`. For backwards compatibility, you can also call `.nonstrict()` which behaves identically.
+```
+
+So the timeline is: before Zod 2, objects *rejected* unknown keys (strict — "⚠️ Before version 2, Zod did NOT allow unknown keys by default", as the same README diff notes). During early Zod 2 development there was a brief window where objects *kept* unknown keys (`unknownKeys: 'allow'`) — that's the behavior you remembered. Since `18854492`, the default has been to strip them, and keeping extra keys requires an explicit `.passthrough()`.
+
+For completeness on the current checkout: the same default was reaffirmed at the type level in v4 by `222a6637` ("Change ZodObject default to $strip"), which changed `ZodObject`'s config-type default to `core.$strip` — but the runtime stripping default itself was established by `18854492`.

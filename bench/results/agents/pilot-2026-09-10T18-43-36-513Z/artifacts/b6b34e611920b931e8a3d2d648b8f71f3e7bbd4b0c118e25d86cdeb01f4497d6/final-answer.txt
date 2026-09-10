@@ -1,0 +1,5 @@
+Yes, Caddy had to raise its minimum Go version specifically because of an update to the HTTP/3 library it depends on.
+
+The commit `697cc593` from January 25, 2024, establishes this. The commit message states: "chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)".
+
+This commit updated the `quic-go` dependency to version `v0.41.0` and simultaneously increased the minimum required Go version from 1.20 to 1.21. This is reflected in the `README.md` file, which was updated to state "Go 1.21 or newer", and in the `go.mod` file, which was changed from `go 1.20` to `go 1.21`.

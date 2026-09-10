@@ -1,0 +1,11 @@
+The provided information confirms that the current directory is `/workspace`, the repository root is `/workspace`, and the current commit hash is `3fce3b5bb0236da2df6d99672afb8a719642eca7`.
+
+The task is to determine if ripgrep's special ignore file name was ever different from `.ignore` and to cite the commit that establishes the answer.
+
+I will use the `git why` command to search the commit history for changes related to ignore files.The `git why` command output indicates that `.ignore` has been a recognized ignore file name since at least commit `12a6ca4` (dated 2019-01-26), which introduced the `--no-ignore-dot` flag. The output also shows mentions of `.rgignore` in commit `718a00f` (dated 2019-01-23). However, none of the provided commits suggest that the special ignore file name was *ever* something other than `.ignore` or `.rgignore`.
+
+Therefore, based on the available commit history, it appears that `.ignore` has always been the special ignore file name. The commit that establishes this is `12a6ca4`, which explicitly refers to `.ignore` files in its description and diff.
+
+**Answer:** No, ripgrep's special ignore file name has not been something other than `.ignore` (or `.rgignore`). The commit that establishes the use of `.ignore` files is `12a6ca4`. The relevant part of the commit message/diff is:
+`+ "--no-ignore-dot[don't respect .ignore files]"` and `+ $no'--ignore-dot[respect .ignore files]'`
+within the context of command-line argument completion for `_rg`.

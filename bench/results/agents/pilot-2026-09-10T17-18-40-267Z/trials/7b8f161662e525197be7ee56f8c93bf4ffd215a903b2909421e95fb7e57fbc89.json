@@ -1,0 +1,164 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "5546b7ee0850f05615fb88781e380ae50c06362f",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T17:57:36.829Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "853f9ccbc0d0d4269161407a2e7eaf7b75b17a20e768d251a679b172b0d8dd5d",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "79866a6361829ed0602dedff9cb378c66977227a",
+    "citedGoldSha": true,
+    "citedShaCount": 4,
+    "matchedTokens": [
+      "79866a6361829ed0602dedff9cb378c66977227a",
+      "79866a636"
+    ]
+  },
+  "wall_ms": 66770,
+  "tool_calls": 12,
+  "history_calls": 9,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 3954,
+  "output_tokens": 1293,
+  "cache_read_tokens": 70784,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00108594,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 31298,
+  "index_build_ms": 181601,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T17-18-40-267Z/events/X-redis-01-C-r1-a1.jsonl",
+  "exit_reason": "tool_call_budget_exceeded",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "7b8f161662e525197be7ee56f8c93bf4ffd215a903b2909421e95fb7e57fbc89",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_b0Gt0jww9w1FBkYZFzVT2107",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S'xaddCommand' -- src/ 2>/dev/null | tail -20"
+        },
+        "output": "1f76bb17d Reimplement cli hints based on command arg docs (#10515)\n867816003 Auto-generate the command table from JSON files (#9656)\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_wpAUNND4hdzD7kFouJrd9883",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S'XADD' 2>/dev/null | tail -20"
+        },
+        "output": "3094eb362 Streams: add tests for aof rewrite\nb3e80d2f6 Stream & AOF: rewrite stream in correct way\n60acac4cd Streams: add test cases for XADD/XTRIM maxlen\n2268d7e5d redis-cli inline help updated.\n6efb6c1e0 ZPOP: renaming to have explicit MIN/MAX score idea.\ne6b0e8d9e Streams: XTRIM command added.\n1392c83fb CG: AOF rewriting implemented.\nc2ecac474 CG: test XGROUPREAD abilities.\nc9d86c2b1 CG: More specific duplicated group error.\ne53c90308 Streams: add XADD + MAXLEN test.\n7d0d9693c Streams: modify tests to stress compression.\nae9065d80 Streams: tests for blocking and non-blocking XREAD.\nfa707ca15 Streams: more advanced XADD and XRANGE tests.\n7a41b402c Streams: basic XADD tests.\n26d4f8e3e Streams: AOF rewriting + minor iterator improvements.\n01ea018c4 Streams: export iteration API.\nb1ec33363 Streams: stream iteration refactoring, WIP 1.\n19b06935d Streams: fix XADD API and keyspace notifications.\n4a377cecd Streams: initial work to use blocking lists logic for streams XREAD.\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_jjNoSUK6geIfyhxRaKvy3506",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 79866a636 | head -60"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\n src/Makefile          |   2 +-\n src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/listpack.h        |  61 ++++\n src/listpack_malloc.h |  44 +++\n src/object.c          |   7 +\n src/rax.c             |  24 +-\n src/rax.h             |   1 +\n src/rdb.h             |   3 +-\n src/server.c          |   2 +\n src/server.h          |   9 +\n src/stream.h          |  21 ++\n src/t_stream.c        | 376 ++++++++++++++++++++++++\n 12 files changed, 1323 insertions(+), 10 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_MBQ3yPF6cayIZZbVchAo2434",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -5 79866a636^..79866a636; echo ---; git log --format='%H %ad %s' --date=iso -1 79866a636"
+        },
+        "output": "79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n---\n79866a6361829ed0602dedff9cb378c66977227a 2017-08-30 12:40:27 +0200 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_kjk7lcXXbh9dzXtnuSo22990",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/t_stream.c | grep -n -i 'xadd\\|streamType\\|streamAppendItem' | head -40"
+        },
+        "output": "127:+void streamAppendItem(stream *s, robj **argv, int numfields, streamID *added_id) {\n266:+robj *streamTypeLookupWriteOrCreate(client *c, robj *key) {\n338:+/* XADD key [field value] [field value] ... */\n339:+void xaddCommand(client *c) {\n341:+        addReplyError(c,\"wrong number of arguments for XADD\");\n348:+    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;\n353:+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);\n358:+    notifyKeyspaceEvent(NOTIFY_HASH,\"xadd\",c->argv[1],c->db->id);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_BtzQ7ZioXjitTLwsc0lx9604",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/server.c | grep -n -i 'xadd\\|xrange\\|xread' ; echo ---; git show 79866a636:src/server.h | grep -n -i 'xadd\\|stream'"
+        },
+        "output": "305:    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n306:    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n---\n62:#include \"stream.h\"  /* Stream data type header file. */\n306:#define SLAVE_CAPA_EOF (1<<0)    /* Can parse the RDB EOF streaming format. */\n455:#define OBJ_STREAM 5\n527:/* This is a wrapper for the 'rio' streams used inside rdb.c in Redis, so that\n532:    rio *rio;           /* Rio stream. */\n580:#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */\n685:                               yet not applied replication stream that we\n846: * select the correct DB and are able to accept the stream coming from the\n850:    int repl_stream_db;  /* DB to select in server.master client. */\n1420:/* Stream data type. */\n1421:stream *streamNew(void);\n1464:robj *createStreamObject(void);\n1488:void replicationFeedSlavesFromMasterStream(list *slaves, char *buf, size_t buflen);\n2002:void xaddCommand(client *c);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_J6VsUV261EYUA6ICjtiq5722",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 --format=fuller --no-patch"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor:     antirez <antirez@gmail.com>\nAuthorDate: Wed Aug 30 12:40:27 2017 +0200\nCommit:     antirez <antirez@gmail.com>\nCommitDate: Fri Dec 1 10:24:24 2017 +0100\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_UUNa1q3w8refysy5UE8h8874",
+        "status": "completed",
+        "input": {
+          "command": "git log --reverse --format='%H %ad %s' --date=short -S'xaddCommand' -- src/ | head -5"
+        },
+        "output": "79866a6361829ed0602dedff9cb378c66977227a 2017-08-30 Streams: 12 commits squashed into the initial Streams implementation.\n867816003ec214840c18754be9840f1ddf4192d1 2021-12-15 Auto-generate the command table from JSON files (#9656)\n1f76bb17ddcb2adc484bf82f1b839c45e264524f 2023-03-30 Reimplement cli hints based on command arg docs (#10515)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_KKWlazaNVwhaCSyIQxdN5359",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/t_stream.c | grep -A6 'XADD key' ; echo '=== server.c registration ==='; git show 79866a636 -- src/server.c | grep -n -A2 'xadd'"
+        },
+        "output": "+/* XADD key [field value] [field value] ... */\n+void xaddCommand(client *c) {\n+    if ((c->argc % 2) == 1) {\n+        addReplyError(c,\"wrong number of arguments for XADD\");\n+        return;\n+    }\n+\n=== server.c registration ===\n15:+    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n16-+    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n17-     {\"post\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/7b8f161662e525197be7ee56f8c93bf4ffd215a903b2909421e95fb7e57fbc89",
+  "completed": true
+}

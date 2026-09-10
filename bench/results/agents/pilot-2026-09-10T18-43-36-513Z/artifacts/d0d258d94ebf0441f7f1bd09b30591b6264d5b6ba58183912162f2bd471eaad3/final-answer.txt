@@ -1,0 +1,15 @@
+The provided commit SHA, repository root, and working directory match the expected values.
+
+I will now search for information regarding Caddy's minimum Go version being raised due to its HTTP/3 dependency.
+The search results indicate that Caddy added experimental HTTP/3 support in commit `0c8ad52` (September 10, 2019). This commit upgraded `golang.org/x/net` to a version compatible with HTTP/3.
+
+Later, in commit `c79c086` (August 15, 2022), HTTP/3 was enabled by default. The `go.mod` file was updated in this commit, including dependencies like `golang.org/x/mod` and `golang.org/x/tools`.
+
+Commit `8cb1bb4` (February 24, 2023) upgraded `quic-go` to v0.33.0, which required Go 1.19. This commit also updated the README to reflect the new minimum Go version.
+
+Therefore, Caddy did raise its minimum Go version, and this was related to its HTTP/3 library dependencies. The commit that explicitly raised the minimum Go version due to a dependency update (quic-go) is `8cb1bb4`. The commit message for `8cb1bb4` states: "go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)".
+Yes, Caddy had to raise its minimum Go version specifically because of its HTTP/3 library dependency.
+
+The commit `8cb1bb4` (dated Feb 24, 2023) upgraded the `quic-go` library to v0.33.0, which necessitated an upgrade of the minimum Go version to 1.19.
+
+The commit message states: `go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)`. The diff also shows the change in `go.mod` to reflect this, and the `README.md` was updated to state "[Go 1.19 or newer](https://golang.org/dl/)" as a requirement.

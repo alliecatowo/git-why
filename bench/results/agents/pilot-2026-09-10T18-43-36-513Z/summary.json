@@ -1,0 +1,669 @@
+{
+  "stage": "pilot",
+  "runId": "2026-09-10T18-43-36-513Z",
+  "model": "llmgateway/gemini-2.5-flash-lite",
+  "zgAvailable": true,
+  "planned": 36,
+  "attempted": 36,
+  "blocked": 0,
+  "infrastructureFailedAfterRetry": 0,
+  "valid": 34,
+  "successful": 0,
+  "byArm": {
+    "A": {
+      "attempted": 9,
+      "blocked": 0,
+      "valid": 8,
+      "pass": 0
+    },
+    "B": {
+      "attempted": 9,
+      "blocked": 0,
+      "valid": 9,
+      "pass": 0
+    },
+    "C": {
+      "attempted": 9,
+      "blocked": 0,
+      "valid": 9,
+      "pass": 0
+    },
+    "D": {
+      "attempted": 9,
+      "blocked": 0,
+      "valid": 8,
+      "pass": 0
+    }
+  },
+  "aggregate": {
+    "schemaVersion": 1,
+    "attempts": 36,
+    "logicalTrials": 36,
+    "valid": 34,
+    "successful": 0,
+    "byStratumArm": {
+      "archaeology": {
+        "A": {
+          "attempted": 9,
+          "valid": 8,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 8
+        },
+        "B": {
+          "attempted": 9,
+          "valid": 9,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 9
+        },
+        "C": {
+          "attempted": 9,
+          "valid": 9,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 9
+        },
+        "D": {
+          "attempted": 9,
+          "valid": 8,
+          "numerator": 0,
+          "denominator": 0,
+          "rate": null,
+          "unscoredValid": 8
+        }
+      }
+    },
+    "byArm": {
+      "A": {
+        "attempted": 9,
+        "valid": 8,
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null,
+        "unscoredValid": 8
+      },
+      "B": {
+        "attempted": 9,
+        "valid": 9,
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null,
+        "unscoredValid": 9
+      },
+      "C": {
+        "attempted": 9,
+        "valid": 9,
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null,
+        "unscoredValid": 9
+      },
+      "D": {
+        "attempted": 9,
+        "valid": 8,
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null,
+        "unscoredValid": 8
+      }
+    },
+    "pairedPerTask": [
+      {
+        "taskId": "X-caddy-01",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-curl-01",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-curl-02",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-redis-01",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-redis-02",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-requests-01",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-requests-02",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-ripgrep-03",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          }
+        }
+      },
+      {
+        "taskId": "X-zod-01",
+        "stratum": "archaeology",
+        "arms": {
+          "A": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "B": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "C": {
+            "attempted": 1,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 1
+          },
+          "D": {
+            "attempted": 1,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          }
+        }
+      }
+    ],
+    "bootstrapCiByArm": {
+      "A": {
+        "clusters": 0,
+        "estimate": null,
+        "low": null,
+        "high": null
+      },
+      "B": {
+        "clusters": 0,
+        "estimate": null,
+        "low": null,
+        "high": null
+      },
+      "C": {
+        "clusters": 0,
+        "estimate": null,
+        "low": null,
+        "high": null
+      },
+      "D": {
+        "clusters": 0,
+        "estimate": null,
+        "low": null,
+        "high": null
+      }
+    },
+    "resources": {
+      "allAttempts": {
+        "n": 36,
+        "wall_ms": {
+          "total": 4180240,
+          "mean": 116117.77777777778,
+          "observed": 36
+        },
+        "tool_calls": {
+          "total": 104,
+          "mean": 2.888888888888889,
+          "observed": 36
+        },
+        "history_calls": {
+          "total": 37,
+          "mean": 1.0277777777777777,
+          "observed": 36
+        },
+        "git_why_calls": {
+          "total": 17,
+          "mean": 0.4722222222222222,
+          "observed": 36
+        },
+        "zg_calls": {
+          "total": 4,
+          "mean": 0.1111111111111111,
+          "observed": 36
+        },
+        "input_tokens": {
+          "total": 747855,
+          "mean": 20773.75,
+          "observed": 36
+        },
+        "output_tokens": {
+          "total": 16659,
+          "mean": 462.75,
+          "observed": 36
+        },
+        "cache_read_tokens": {
+          "total": 357600,
+          "mean": 9933.333333333334,
+          "observed": 36
+        },
+        "cache_write_tokens": {
+          "total": 0,
+          "mean": 0,
+          "observed": 36
+        },
+        "actual_billed_cost": {
+          "total": 0.0906671,
+          "mean": 0.0025185305555555557,
+          "observed": 36
+        },
+        "estimated_list_price_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_build_ms": {
+          "total": 3528612,
+          "mean": 196034,
+          "observed": 18
+        },
+        "index_disk_bytes": {
+          "total": 7545701056,
+          "mean": 419205614.2222222,
+          "observed": 18
+        }
+      },
+      "successfulOnly": {
+        "n": 0,
+        "wall_ms": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "tool_calls": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "history_calls": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "git_why_calls": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "zg_calls": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "input_tokens": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "output_tokens": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "cache_read_tokens": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "cache_write_tokens": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "actual_billed_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "estimated_list_price_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_build_ms": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_disk_bytes": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        }
+      }
+    },
+    "invalidated": [
+      {
+        "taskId": "X-curl-02",
+        "stratum": "archaeology",
+        "arm": "A",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "07e2277446e34e81f85cf604b55e0a3197cfbffbf7619ad9cbfdfa99834a163f",
+        "reason": "opencode exited null"
+      },
+      {
+        "taskId": "X-zod-01",
+        "stratum": "archaeology",
+        "arm": "D",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "1ce014d05011ec76ecc9dc251f494539fd277cf0f2410076b5babdfbcdfacfc8",
+        "reason": "preflight_missing_or_not_first_bash_call"
+      }
+    ],
+    "evidence": {
+      "A": {
+        "trialsWithGitWhy": 0,
+        "gitWhyCalls": 0,
+        "gitWhyEvidenceUsed": 0,
+        "zgCalls": 0
+      },
+      "B": {
+        "trialsWithGitWhy": 0,
+        "gitWhyCalls": 0,
+        "gitWhyEvidenceUsed": 0,
+        "zgCalls": 4
+      },
+      "C": {
+        "trialsWithGitWhy": 7,
+        "gitWhyCalls": 8,
+        "gitWhyEvidenceUsed": 8,
+        "zgCalls": 0
+      },
+      "D": {
+        "trialsWithGitWhy": 8,
+        "gitWhyCalls": 9,
+        "gitWhyEvidenceUsed": 9,
+        "zgCalls": 0
+      }
+    }
+  }
+}

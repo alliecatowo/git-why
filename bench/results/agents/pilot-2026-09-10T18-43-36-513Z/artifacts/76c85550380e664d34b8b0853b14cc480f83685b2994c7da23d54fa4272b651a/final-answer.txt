@@ -1,0 +1,5 @@
+The commit `0c2bbe73` indicates that support for Python 3.9 was dropped. The commit message is "Drop support for Python 3.9 (#7196)". The diff shows changes in `.github/workflows/run-tests.yml`, `README.md`, `pyproject.toml`, `setup.py`, and `tox.ini` to reflect this change.
+
+Specifically, `pyproject.toml` and `setup.py` now state that the minimum required Python version is 3.10. The workflow and tox configuration files also remove Python 3.9 from the test matrices.
+
+Therefore, Requests no longer supports Python 3.9. The commit that establishes this is `0c2bbe73`. The supporting quote from the commit message is: "Drop support for Python 3.9".

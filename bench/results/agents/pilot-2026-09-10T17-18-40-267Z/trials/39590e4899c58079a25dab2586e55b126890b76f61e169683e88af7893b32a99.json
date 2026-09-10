@@ -1,0 +1,157 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "5546b7ee0850f05615fb88781e380ae50c06362f",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T17:44:40.374Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "30ec284b01c3b60e609c134cb4de3396e62e523c263682667b37b584c30b019c",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 25148,
+  "tool_calls": 11,
+  "history_calls": 10,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 7530,
+  "output_tokens": 594,
+  "cache_read_tokens": 35072,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0008124199999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 38094,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T17-18-40-267Z/events/X-redis-01-B-r1-a1.jsonl",
+  "exit_reason": "tool_call_budget_exceeded",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited null",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "39590e4899c58079a25dab2586e55b126890b76f61e169683e88af7893b32a99",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_e8t5gf7tdckw3bfepv6qln4e",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"stream\" -i | head -50"
+        },
+        "output": "a8e745117 Xread last entry in stream (#7388) (#13117)\nf17381a38 Fix propagation of entries_read by calling streamPropagateGroupID unconditionally (#12898)\n820a4e45f Edit the history field of xinfo-consumers (#13078)\nca5cac998 xinfo-stream add minimum to seen-time, skip logreqres in fuzzer (#13056)\n32f44da51 Increase tolerance range to block reprocess tests to avoid timing issues (#13053)\n492021db9 Fix blocking commands timeout is reset due to re-processing command (#13004)\n45d331069 BITCOUNT: check for argument, before checking for key (#12394)\nce5f4ea3a Delete empty key if fails after moduleCreateEmptyKey() in module (#12129)\ne55568edb Add RM_RdbLoad and RM_RdbSave module API functions (#11852)\n9344f654c Implementing the WAITAOF command (issue #10505) (#11713)\n4ba47d2d2 Add reply_schema to command json files (internal for now) (#10273)\na7c9e5053 Fix test and improve assert_replication_stream print the whole stream (#11793)\n312654d5b Fix misleading error message in XREADGROUP (#11799)\n2bb29e4aa Always compact nodes in stream listpacks after creating new nodes (#11885)\n3b260149e adding the ability to add streams to the pre-defined redis-benchmark tests (#11762)\n383d902ce reprocess command when client is unblocked on keys (#11012)\ncd12cc2f5 solve race in replication test due to ping (#11609)\nb0250b450 Try to fix a race in psync2 test (#11553)\n72e90695e Stream consumers: Re-purpose seen-time, add active-time (#11099)\nc81813148 Add a special notification unlink available only for modules (#9406)\n7395e370e Fix XSETID with max_deleted_entry_id issue (#11444)\nb57fd0106 Blocked module clients should be aware when a key is deleted (#11310)\n3469c6509 Change compiler optimizations to -O3 -flto (#11207)\n6d2156019 Fix heap overflow vulnerability in XAUTOCLAIM (CVE-2022-35951) (#11301)\n5389fa62a Update group and consumer description in json file for Unifying Stream command format (#11190)\nc1bd61a4a Reverts most of the changes of #10969 (#11178)\n508a13888 Fix replication inconsistency on modules that uses key space notifications (#10969)\n6e1c3ff13 Update some comments in stream command docs (#10821)\n1067cfb34 Documentation fixes of `BITFIELD_RO` and `XINFO STREAM` (#10823)\nd7ae85874 Fix streamParseAddOrTrimArgsOrReply function minor comment issue (#10783)\ncb6933e34 Updated HDR histogram from upsteam after they merged our fix in #10606. (#10755)\n4a7a4e42d Fix memory leak in streamGetEdgeID (#10753)\na9d5cfa99 Optimize the call of prepareReplicasToWrite (#10588)\nfe1c096b1 Add RM_MallocSizeString, RM_MallocSizeDict (#10542)\n95050f268 solve corrupt dump fuzzer crash in streams (#10579)\na642947e0 Optimize stream id sds creation on XADD key * (~20% saved cpu cycles) (#10574)\n78bef6e1f optimize(remove) usage of client's pending_querybuf (#10413)\n2a2954086 XREADGROUP: Unblock client if stream is deleted (#10306)\ndff153ff2 Fix memory leak in RM_StreamIteratorStop and moduleFreeKeyIterator (#10353)\nc81c7f51c Add stream consumer group lag tracking and reporting (#9127)\n3c3e6cc1c X[AUTO]CLAIM should skip deleted entries (#10227)\n344e41c92 Fix PSYNC crash with wrong offset (#10243)\n7cd6a64d2 lpGetInteger returns int64_t, avoid overflow (#10068)\nb7f9e9ae3 Add tests for blocking XREAD[GROUP] when the stream ran dry (#10035)\n6add1b721 Add external test that runs without debug command (#9964)\nb93ccee45 Fix timing issue in strem blocking tests (#9927)\n7f0fae947 Santize dump payload: fix crash when stream with duplicate consumes (#9918)\nd56ded89c improvement of a blocking xread test (#9859)\ncea7809ce Fix race condition in psync2-pingoff test (#9712)\nc1718f9d8 Replication backlog and replicas use one global shared replication buffer (#9166)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_oliu1078ssk41rkw1kjhosuu",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"XADD\" -i | head -50"
+        },
+        "output": "9d0158bf8 Reorder signalModifiedKey in xaddCommand. (#12895)\n3b260149e adding the ability to add streams to the pre-defined redis-benchmark tests (#11762)\n7395e370e Fix XSETID with max_deleted_entry_id issue (#11444)\n737a09051 Set errno in case XADD with partial ID fails (#11424)\na642947e0 Optimize stream id sds creation on XADD key * (~20% saved cpu cycles) (#10574)\n2a2954086 XREADGROUP: Unblock client if stream is deleted (#10306)\nc81c7f51c Add stream consumer group lag tracking and reporting (#9127)\n3c3e6cc1c X[AUTO]CLAIM should skip deleted entries (#10227)\nb93ccee45 Fix timing issue in strem blocking tests (#9927)\n21aa1d4b9 Adds auto-seq-only-generation via `XADD ... <ms>-*` (#9217)\nd56ded89c improvement of a blocking xread test (#9859)\n252981914 XADD - skip rewrite the id arg if it was given and is valid. (#9599)\nf5160ed0a improve latency when a client is unblocked by module timer (#9593)\nc5e6a6204 Fix ziplist and listpack overflows and truncations (CVE-2021-32627, CVE-2021-32628) (#9589)\n6476c8e85 Fix range issues in default value of LIMIT argument to XADD and XTRIM (#9147)\neaa7a7bb9 Fix XTRIM or XADD with LIMIT may delete more entries than Count. (#9048)\n91f3689bf XTRIM call streamParseAddOrTrimArgsOrReply use wrong arg xadd. (#9047)\n97108845e Fix crash unlinking a stream with groups rax and no groups (#8932)\n21316d570 XTRIM: Parse args before lookupKey (#8550)\nb164c4dec In XADD take deleted items into consideration when switch to new node (#8390)\n814aad65f XADD and XTRIM, Trim by MINID, and new LIMIT argument (#8169)\n0963edbc6 Adds tests for XADD/XTRIM's MAXLEN arguments (#8083)\nf328194d1 support NOMKSTREAM option in xadd command (#7910)\n3b29556a0 AOFRW on an empty stream created with MKSTREAM loads badkly\na351e74fe Blocking XREAD[GROUP] should always reply with valid data (or timeout)\n1f75ce30d Stream: Handle streamID-related edge cases\n70016f786 Merge pull request #6574 from guybe7/fix_xadd_empty_id\n4a12047c6 XADD with ID 0-0 stores an empty key\nb4f826837 Tests modified to use XADD MAXLEN 0 + XSETID.\nc1689166b Streams: rewrite empty streams with XADD MAXLEN 0. Use XSETID.\n3e78344d8 Refactoring of XADD / XTRIM MAXLEN rewriting.\ne5f1de144 Merge pull request #5141 from soloestoy/fix-xtrim-inconsistency\n8d24f8b46 Scripting & Streams: some commands need right flags\n60acac4cd Streams: add test cases for XADD/XTRIM maxlen\n20c6a7fe2 Streams: propagate original MAXLEN argument in XADD context\n62f9ac6f4 Streams: Change XADD MAXLEN handling of values <= 0.\n79a1c19ac XADD MAXLEN should return an error for values < 0.\nfb9c1c3db Simplify XADD ID syntax error code path,.\na60f553b6 Merge pull request #4832 from 0xtonyxia/fix-xadd-ID-parse\n8a200b04c Merge pull request #4831 from 0xtonyxia/fix-xadd-arity-check\n19ae80945 Streams: XADD, handle signaling of write in different ways.\n3c20b3fc2 Bugfix: xadd command ID parse\n07125b8d2 Bugfix: xadd comand <field,value> arity check\n267f7f2c9 Streams: fix error description for XADD when specified ID is small.\n0381931b4 Streams: Update listpack to fix 32bit strings encoding error.\n50595a588 Streams: fix XADD + MAXLEN propagation due to var shadowing.\ne53c90308 Streams: add XADD + MAXLEN test.\n054080328 Streams: XADD MAXLEN implementation.\nfa707ca15 Streams: more advanced XADD and XRANGE tests.\n7a41b402c Streams: basic XADD tests.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3lguj8ti7u5kyvreu0pxqlef",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"Stream\" -i --format=\"%h %ad %s\" --date=short | tail -40"
+        },
+        "output": "0adb43b68 2017-09-08 Streams: XREAD ability to block fixed.\n6a1c92d52 2017-09-08 Streams: synchronous xread fixes and improvements.\na7d898334 2017-09-08 Streams: XREAD get-key method fixed.\n110041825 2017-09-08 Streams: XREAD get-keys method.\nfa61720d3 2017-09-07 Streams: XREAD, first draft. Handling of blocked clients still missing.\ne65b4825f 2017-09-07 Streams: XREAD arguments parsing.\n4086dff47 2017-09-07 Streams: augment client.bpop with XREAD specific fields.\nf80dfbf46 2017-09-06 Streams: more internal preparation for blocking XREAD.\n4a377cecd 2017-09-06 Streams: initial work to use blocking lists logic for streams XREAD.\n439120c62 2017-09-06 Streams: implement stream object release.\nec9bbe96b 2017-09-06 Streams: XLEN command.\n98d184db1 2017-09-06 Streams: Save stream->length in RDB.\ncd18f06e9 2017-09-06 Streams: change listpack allocator to zmalloc.\nedd70c199 2017-09-05 Streams: RDB loading. RDB saving modified.\n485014cc7 2017-09-05 Streams: RDB saving.\n100d43c1a 2017-09-05 Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n79866a636 2017-08-30 Streams: 12 commits squashed into the initial Streams implementation.\n93037f764 2017-11-22 PSYNC2: make repl_stream_db never be -1\nb8579c225 2017-11-02 PSYNC2: clarify the scenario when repl_stream_db can be -1\nb541ccef2 2017-09-20 PSYNC2: make persisiting replication info more solid\ne74f0aa6d 2017-07-12 Fix replication of SLAVEOF inside transaction.\n365dd037d 2017-06-27 RDB modules values serialization format version 2.\n469d6e2b3 2017-04-27 PSYNC2: fix master cleanup when caching it.\n1f72ec7da 2017-02-10 Merge pull request #1 from antirez/unstable\n04542cff9 2016-12-13 Replication: fix the infamous key leakage of writable slaves + EXPIRE.\n434e6b2da 2016-12-02 PSYNC2: Do not accept WAIT in slave instances.\neab865a0a 2016-11-28 PSYNC2: stop sending newlines to sub-slaves when master is down.\n2669fb836 2016-11-09 PSYNC2: different improvements to Redis replication.\n86f0a2ee8 2015-10-21 CLIENT REPLY command implemented: ON, OFF and SKIP modes.\n363c0f67b 2015-10-07 Test: fix attach_to_replication_stream to handle newlines.\n606437108 2014-11-24 Fix lua-cmsgpack 64 bit integer on 32 bit platform\nbb7fea0d5 2014-11-11 Diskless SYNC: fix RDB EOF detection.\n5ee2ccf48 2014-10-16 Diskless replication: EOF:<mark> streaming support slave side.\nfdaab0234 2014-04-22 Merge remote-tracking branch 'upstream/unstable' into unstable\n21648473a 2014-02-10 Auto-enter slaveMode when SYNC from redis-cli\n6b4635f4f 2013-05-25 REPLCONF ACK command.\n7572dc47d 2013-03-27 Test: new functions to capture and analyze the replication stream.\n4b83ad4e1 2012-11-03 Use replicationFeedSlaves() to send PING to slaves.\n7465ac7ab 2012-11-02 Emit SELECT to slaves in a centralized way.\ncb598cdd5 2012-01-13 Don't expire keys when loading an RDB after a SYNC\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_bqvfiye9h8esdcbqhwyjf4da",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"XADD\" -i --format=\"%h %ad %s\" --date=short | tail -20"
+        },
+        "output": "8d24f8b46 2018-09-06 Scripting & Streams: some commands need right flags\n60acac4cd 2018-07-18 Streams: add test cases for XADD/XTRIM maxlen\n20c6a7fe2 2018-07-17 Streams: propagate original MAXLEN argument in XADD context\n62f9ac6f4 2018-06-18 Streams: Change XADD MAXLEN handling of values <= 0.\n79a1c19ac 2018-06-17 XADD MAXLEN should return an error for values < 0.\nfb9c1c3db 2018-05-25 Simplify XADD ID syntax error code path,.\na60f553b6 2018-05-25 Merge pull request #4832 from 0xtonyxia/fix-xadd-ID-parse\n8a200b04c 2018-05-24 Merge pull request #4831 from 0xtonyxia/fix-xadd-arity-check\n19ae80945 2018-04-19 Streams: XADD, handle signaling of write in different ways.\n3c20b3fc2 2018-04-10 Bugfix: xadd command ID parse\n07125b8d2 2018-04-10 Bugfix: xadd comand <field,value> arity check\n267f7f2c9 2018-02-18 Streams: fix error description for XADD when specified ID is small.\n0381931b4 2017-11-15 Streams: Update listpack to fix 32bit strings encoding error.\n50595a588 2017-09-29 Streams: fix XADD + MAXLEN propagation due to var shadowing.\ne53c90308 2017-09-29 Streams: add XADD + MAXLEN test.\n054080328 2017-09-29 Streams: XADD MAXLEN implementation.\nfa707ca15 2017-09-15 Streams: more advanced XADD and XRANGE tests.\n7a41b402c 2017-09-15 Streams: basic XADD tests.\n3a0b78bc5 2017-09-12 Streams: rewrite XADD ID argument for AOF/slaves.\n19b06935d 2017-09-11 Streams: fix XADD API and keyspace notifications.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_oz4s2j09gw5xt6smup6m9xkj",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 79866a636 | head -60"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\n src/Makefile          |   2 +-\n src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/listpack.h        |  61 ++++\n src/listpack_malloc.h |  44 +++\n src/object.c          |   7 +\n src/rax.c             |  24 +-\n src/rax.h             |   1 +\n src/rdb.h             |   3 +-\n src/server.c          |   2 +\n src/server.h          |   9 +\n src/stream.h          |  21 ++\n src/t_stream.c        | 376 ++++++++++++++++++++++++\n 12 files changed, 1323 insertions(+), 10 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_k88nz28xv41vrwdz4bd29oyh",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format=\"%H%n%an%n%ad%n%n%B\" 79866a636"
+        },
+        "output": "79866a6361829ed0602dedff9cb378c66977227a\nantirez\nWed Aug 30 12:40:27 2017 +0200\n\nStreams: 12 commits squashed into the initial Streams implementation.\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_l00zhct8hghg2qfxpzzc8xlr",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/t_stream.c | grep -n \"xaddCommand\\|XADD\" | head -30"
+        },
+        "output": "338:+/* XADD key [field value] [field value] ... */\n339:+void xaddCommand(client *c) {\n341:+        addReplyError(c,\"wrong number of arguments for XADD\");\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_vsw2gg6m4p8g5s9pk9vwzc32",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 -- src/server.c src/server.h | grep -n \"xadd\\|XADD\\|t_stream\" | head -30"
+        },
+        "output": "15:+    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n70:+void xaddCommand(client *c);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_l9ubhu6z7kd2qakaua5e8orf",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --follow --diff-filter=A -- src/t_stream.c | tail -5"
+        },
+        "output": "79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ltfj9yc8zraejbro5dsqdox0",
+        "status": "completed",
+        "input": {
+          "command": "git log --format=\"%h %ad %s\" --date=short -- src/t_stream.c | tail -5"
+        },
+        "output": "439120c62 2017-09-06 Streams: implement stream object release.\nec9bbe96b 2017-09-06 Streams: XLEN command.\n485014cc7 2017-09-05 Streams: RDB saving.\n100d43c1a 2017-09-05 Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n79866a636 2017-08-30 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "completed": true
+}

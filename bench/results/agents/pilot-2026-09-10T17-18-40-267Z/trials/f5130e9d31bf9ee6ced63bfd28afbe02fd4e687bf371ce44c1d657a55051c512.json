@@ -1,0 +1,131 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "5546b7ee0850f05615fb88781e380ae50c06362f",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T18:00:50.235Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "69657b46244c595e0bb7a7ff3f748d643527961928e5dfd6f5c89c03d6790306",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "0c2bbe73",
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+    ]
+  },
+  "wall_ms": 611973,
+  "tool_calls": 12,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 9635,
+  "output_tokens": 1314,
+  "cache_read_tokens": 62208,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0013541299999999998,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 41968,
+  "index_build_ms": 60742,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T17-18-40-267Z/events/X-requests-02-C-r1-a1.jsonl",
+  "exit_reason": "wall_clock_timeout",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "f5130e9d31bf9ee6ced63bfd28afbe02fd4e687bf371ce44c1d657a55051c512",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_q81r0ccbslfca66a67fguw0i",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -30"
+        },
+        "output": "dae7ef63 Bump https://github.com/astral-sh/ruff-pre-commit (#7616)\n5460f467 Update lock-issues.yml to latest dependencies (#7609)\n6af0b941 Bump https://github.com/astral-sh/ruff-pre-commit (#7608)\n8f8b212d Bump https://github.com/astral-sh/ruff-pre-commit (#7606)\n80683562 Bump https://github.com/astral-sh/ruff-pre-commit (#7603)\n1f6589ec Bump https://github.com/astral-sh/ruff-pre-commit (#7598)\n414f0513 Bump the actions group with 2 updates (#7596)\nded32878 Bump https://github.com/astral-sh/ruff-pre-commit (#7597)\n69f84847 Bump the actions group with 3 updates (#7591)\nb17c61b6 Bump https://github.com/astral-sh/ruff-pre-commit (#7590)\nf361ead0 Bump https://github.com/astral-sh/ruff-pre-commit (#7562)\nd38495c9 Fix link to AI Policy in CONTRIBUTING.md (#7576)\n4c800e9a Bump actions/setup-python from 6.2.0 to 6.3.0 in the actions group (#7561)\n23953c0c Bump https://github.com/astral-sh/ruff-pre-commit (#7551)\n4ed3d1b3 Bump actions/checkout from 6.0.2 to 7.0.0 in the actions group (#7540)\nd44b67eb Bump https://github.com/astral-sh/ruff-pre-commit (#7536)\n74c56d5f Inline pre-commit linting (#7539)\nd64b9ad4 Bump https://github.com/astral-sh/ruff-pre-commit (#7515)\n6f66281a Add hasattr checks for remaining protocol isinstance checks (#7505)\n6f205ff4 Fix `_encode_files` detection for `__getattr__`-based file wrappers (#7502)\n661970d1 Disable commonly ignored Pyright linting rules (#7497)\nfbd0eb37 Bump https://github.com/astral-sh/ruff-pre-commit (#7503)\n1190afd1 Add type annotation for `Request.hooks` (#7498)\ne50e5945 Improve static typing of 3rd party imports  (#7496)\n3be097d4 Bump https://github.com/astral-sh/ruff-pre-commit (#7493)\na634611d Bump github/codeql-action from 4.35.1 to 4.36.0 in the actions group (#7492)\nc4367f23 Add AI Policy\ncd90742e docs: indent continuation line in Session.get :param params: (#7460)\n6e83187b v2.34.2\n84d10f0b Move Request.headers back to Mapping (#7441)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_jv524gob5f2xxxkngom7miqz",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -i --grep=\"3\\.9\" --grep=\"drop.*python\" --grep=\"python.*drop\" | head -50"
+        },
+        "output": "0c2bbe73 Drop support for Python 3.9 (#7196)\n2edca111 Add support for Python 3.14 and drop support for Python 3.8 (#6993)\n579cd9f2 Drop pypy 3.9 and add pypy 3.11 support\n2d5f5477 Pin 3.8 and 3.9 runners back to macos-13 (#6688)\n7a13c041 Merge pull request #6642 from nateprewitt/drop_python_37\n58cea7a7 Drop support for CPython 3.7\n30222533 test on pypy 3.8 and pypy 3.9 on windows and macos (#6424)\nec5804c7 Python 3.3 has already been dropped (#4231)\n1c2022cf Merge pull request #4231 from Lukasa/drop-3.3-support\n0a2dc74e Drop Python 3.3 support\n94869e72 v0.13.9\nc40d6d05 Since requests 0.10.1 dropped Python5 support, to catch an exception and store the exception object in a variable the \"as\" keyword can be used so Python3 will not raise a SyntaxError\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_8tqyrtw3g710oz8m2vib16wq",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 0c2bbe73"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\n .github/workflows/run-tests.yml | 10 +++++-----\n README.md                       |  2 +-\n pyproject.toml                  |  6 ++----\n setup.py                        |  4 ++--\n tox.ini                         |  2 +-\n 5 files changed, 11 insertions(+), 13 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_qgd3nyst5dww5hu1c1drj7lx",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format='%H%n%an <%ae>%n%ad%n%n%B' 0c2bbe73"
+        },
+        "output": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nNate Prewitt <nate.prewitt@gmail.com>\nFri Feb 6 08:02:46 2026 -0700\n\nDrop support for Python 3.9 (#7196)\n\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_f2ikgirgt9g8mx3xs7b109tz",
+        "status": "completed",
+        "input": {
+          "command": "git show 0c2bbe73"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\ndiff --git a/.github/workflows/run-tests.yml b/.github/workflows/run-tests.yml\nindex 82bca72d..c9fd8100 100644\n--- a/.github/workflows/run-tests.yml\n+++ b/.github/workflows/run-tests.yml\n@@ -13,7 +13,7 @@ jobs:\n     strategy:\n       fail-fast: false\n       matrix:\n-        python-version: [\"3.9\", \"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\", \"3.15-dev\", \"pypy-3.11\"]\n+        python-version: [\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\", \"3.15-dev\", \"pypy-3.11\"]\n         os: [ubuntu-22.04, macOS-latest, windows-latest]\n         # Pypy-3.11 can't install openssl-sys with rust\n         # which prevents us from testing in GHA.\n@@ -45,10 +45,10 @@ jobs:\n \n     steps:\n       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd\n-      - name: 'Set up Python 3.9'\n+      - name: 'Set up Python 3.10'\n         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405\n         with:\n-          python-version: '3.9'\n+          python-version: '3.10'\n       - name: Install dependencies\n         run: |\n           make\n@@ -65,10 +65,10 @@ jobs:\n \n     steps:\n       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd\n-      - name: 'Set up Python 3.9'\n+      - name: 'Set up Python 3.10'\n         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405\n         with:\n-          python-version: '3.9'\n+          python-version: '3.10'\n       - name: Install dependencies\n         run: |\n           make\ndiff --git a/README.md b/README.md\nindex 74adab80..66640ff0 100644\n--- a/README.md\n+++ b/README.md\n@@ -33,7 +33,7 @@ Requests is available on PyPI:\n $ python -m pip install requests\n ```\n \n-Requests officially supports Python 3.9+.\n+Requests officially supports Python 3.10+.\n \n ## Supported Features & Best–Practices\n \ndiff --git a/pyproject.toml b/pyproject.toml\nindex 8f4fe5ba..f9513bf0 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -14,7 +14,7 @@ maintainers = [\n     {name = \"Ian Stapleton Cordasco\", email=\"graffatcolmingov@gmail.com\"},\n     {name = \"Nate Prewitt\", email=\"nate.prewitt@gmail.com\"}\n ]\n-requires-python = \">=3.9\"\n+requires-python = \">=3.10\"\n dependencies = [\n     \"charset_normalizer>=2,<4\",\n     \"idna>=2.5,<4\",\n@@ -32,7 +32,6 @@ classifiers = [\n     \"Operating System :: OS Independent\",\n     \"Programming Language :: Python\",\n     \"Programming Language :: Python :: 3\",\n-    \"Programming Language :: Python :: 3.9\",\n     \"Programming Language :: Python :: 3.10\",\n     \"Programming Language :: Python :: 3.11\",\n     \"Programming Language :: Python :: 3.12\",\n@@ -85,8 +84,7 @@ select = [\n     \"UP\",     # pyupgrade\n     \"T10\",    # flake8-debugger (replaces debug-statements hook)\n ]\n-# UP036: Remove once Python 3.10 is the minimum supported version\n-ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\", \"UP036\"]\n+ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\"]\n per-file-ignores = {\"src/requests/__init__.py\" = [\"E402\", \"F401\"], \"src/requests/compat.py\" = [\"E402\", \"F401\"], \"tests/compat.py\" = [\"F401\"]}\n \n [tool.ruff.lint.isort]\ndiff --git a/setup.py b/setup.py\nindex f5f816ae..1095518a 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -1,7 +1,7 @@\n import sys\n \n-if sys.version_info < (3, 9):\n-    sys.stderr.write(\"Requests requires Python 3.9 or later.\\n\")\n+if sys.version_info < (3, 10):  # noqa: UP036\n+    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n     sys.exit(1)\n \n from setuptools import setup\ndiff --git a/tox.ini b/tox.ini\nindex 70c28551..b316359a 100644\n--- a/tox.ini\n+++ b/tox.ini\n@@ -1,5 +1,5 @@\n [tox]\n-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}\n+envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}\n \n [testenv]\n deps = -rrequirements-dev.txt\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_b1ov23k7ong5r7plxhkbo9lk",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S \">=3.9\" -- pyproject.toml | head; echo \"---\"; git log --oneline -S \"3.9\" -- setup.py pyproject.toml README.md | head"
+        },
+        "output": "0c2bbe73 Drop support for Python 3.9 (#7196)\ncb2c8005 Migrate build system to PEP 517 (#7012)\n---\n0c2bbe73 Drop support for Python 3.9 (#7196)\ncb2c8005 Migrate build system to PEP 517 (#7012)\n2edca111 Add support for Python 3.14 and drop support for Python 3.8 (#6993)\n03957eb1 v2.25.0\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/f5130e9d31bf9ee6ced63bfd28afbe02fd4e687bf371ce44c1d657a55051c512",
+  "completed": true
+}

@@ -1,0 +1,81 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "94e9234684f05600bd1b3b476fb939ab6fdd39c6",
+  "model_id": "llmgateway/gemini-2.5-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T19:25:49.936Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "69657b46244c595e0bb7a7ff3f748d643527961928e5dfd6f5c89c03d6790306",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "0c2bbe7"
+    ]
+  },
+  "wall_ms": 554780,
+  "tool_calls": 2,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 12011,
+  "output_tokens": 114,
+  "cache_read_tokens": 5318,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00146268,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 12172,
+  "index_build_ms": 57618,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T18-43-36-513Z/events/X-requests-02-C-r1-a1.jsonl",
+  "exit_reason": "wall_clock_timeout",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "0dccb2b9f552c807486d610ae864e268a90e950b8d290572cb1ccb5861c5d069",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/0dccb2b9f552c807486d610ae864e268a90e950b8d290572cb1ccb5861c5d069",
+  "completed": true
+}

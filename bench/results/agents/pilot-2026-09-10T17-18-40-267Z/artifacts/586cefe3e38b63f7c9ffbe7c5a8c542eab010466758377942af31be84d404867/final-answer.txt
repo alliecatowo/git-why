@@ -1,0 +1,33 @@
+**Answer: Python 3.9 support was dropped. Requests no longer supports Python 3.9.**
+
+At the pinned commit, `pyproject.toml` declares `requires-python = ">=3.10"` and no longer lists the `Programming Language :: Python :: 3.9` classifier. The change was made in:
+
+**Commit `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`** — *"Drop support for Python 3.9 (#7196)"* by Nate Prewitt (Feb 6, 2026). It is an ancestor of the pinned HEAD (`dae7ef63...`).
+
+Supporting parts of that commit:
+
+- Commit subject:
+  > `Drop support for Python 3.9 (#7196)`
+
+- `README.md`:
+  > `-Requests officially supports Python 3.9+.`
+  > `+Requests officially supports Python 3.10+.`
+
+- `pyproject.toml`:
+  > `-requires-python = ">=3.9"`
+  > `+requires-python = ">=3.10"`
+  
+  and removal of the classifier:
+  > `-    "Programming Language :: Python :: 3.9",`
+
+- `setup.py`:
+  > `-if sys.version_info < (3, 9):`
+  > `-    sys.stderr.write("Requests requires Python 3.9 or later.\n")`
+  > `+if sys.version_info < (3, 10):  # noqa: UP036`
+  > `+    sys.stderr.write("Requests requires Python 3.10 or later.\n")`
+
+- `tox.ini`:
+  > `-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}`
+  > `+envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}`
+
+No files were modified (`git status --porcelain` is clean).

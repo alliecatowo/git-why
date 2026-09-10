@@ -1,0 +1,15 @@
+The commit `04c03416e68fd635a15cae8201872f5c29fdcca8` on March 17, 2020, by Mathias Gumz, introduced the ability to generate JSON output via the writeout feature using `-w "%{json}"`. The commit message states:
+
+"This commit adds support to generate JSON via the writeout feature:
+
+-w "%{json}"
+
+It leverages the existing infrastructure as much as possible. Thus, generating the JSON on STDERR is possible by:
+
+-w "%{stderr}%{json}"
+
+This implements a variant of https://github.com/curl/curl/wiki/JSON#--write-out-json."
+
+Therefore, curl can print transfer stats as JSON with -w/--write-out.
+
+The answer is yes, and the commit that establishes this is `04c03416e68fd635a15cae8201872f5c29fdcca8`.

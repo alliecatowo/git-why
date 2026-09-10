@@ -1,0 +1,19 @@
+The provided information confirms that the current directory is `/workspace`, the repository root is `/workspace`, and the current commit SHA is `dae7ef63b4df6eded86637f251fc4e3a06c3b479`, matching the requirements.
+
+The task is to investigate why the `requests` library switched its default text-encoding guesser from `chardet` to something else, and to cite the commit that established this change.
+
+I will start by searching the commit history for keywords related to "encoding", "chardet", and any potential replacements.The commit history shows several entries related to `chardet`. I need to find the specific commit where the switch to a different encoding guesser occurred.
+
+The commit `2ed84f55b22f19a1e1e8eea2e50963dce62052d3` seems most relevant, with the message "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)". This indicates a change from `chardet` to `charset_normalizer`.
+
+I will now retrieve the details of this commit to confirm and extract the supporting message.The commit `2ed84f55b22f19a1e1e8eea2e50963dce62052d3` establishes the change in the default text-encoding guesser for the `requests` library.
+
+The commit message states: "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)". This change was made to address licensing ambiguities with the LGPL-licensed `chardet` dependency, especially for projects that might bundle `requests`. The commit also introduced `charset_normalizer` (MIT-licensed) as the default for Python 3, while retaining `chardet` as a fallback if installed, and keeping `chardet` as the mandatory dependency for Python 2.
+
+The diff in `HISTORY.md` also confirms this: "Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3 to remove license ambiguity for projects bundling requests."
+
+Therefore, the `requests` library switched its default text-encoding guesser from `chardet` to `charset_normalizer` due to licensing concerns with `chardet` (LGPL), opting for the MIT-licensed `charset_normalizer` for Python 3 to provide more flexibility for downstream projects.
+
+The commit SHA that established this answer is `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`.
+
+The relevant quote from the commit message is: "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)".The requests library switched its default text-encoding guesser from `chardet` to `charset_normalizer` due to licensing considerations. The commit `2ed84f55b22f19a1e1e8eea2e50963dce62052d3` states: "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)". This change was made to avoid the complexities of the LGPL license associated with `chardet`, especially for projects that might bundle `requests`. For Python 3, `charset_normalizer` (licensed under MIT) became the default, while `chardet` remained a fallback if already installed. For Python 2, `chardet` continued to be a mandatory dependency.

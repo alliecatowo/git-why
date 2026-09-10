@@ -1,0 +1,55 @@
+Verified the checkout: `pwd` = `/workspace`, toplevel = `/workspace`, HEAD = `62311eb2c4a93c7348a8b1c5abbde1ec77c66b67`. No files were modified.
+
+## Answer
+
+Yes. Zod objects originally **preserved** unknown keys by default, and that default was changed to **strip** them.
+
+The commit that establishes this is:
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a`** — *"strip unknown keys by default"* (Colin McDonnell, 2020-09-17, on the Zod 2 development line; it is an ancestor of the current HEAD).
+
+### Supporting diff
+
+The change flips the default from `'allow'` (keep) to `'strip'` (drop) and renames the API accordingly:
+
+```diff
+-type UnknownKeysParam = 'allow' | 'strict' | 'strip';
++type UnknownKeysParam = 'passthrough' | 'strict' | 'strip';
+...
+-  UnknownKeys extends UnknownKeysParam = 'allow',
++  UnknownKeys extends UnknownKeysParam = 'passthrough',
+...
+-  stripUnknown = (): ZodObject<T, 'strip', Catchall> =>
++  strip = (): ZodObject<T, 'strip', Catchall> =>
+...
+-  allowUnknown = (): ZodObject<T, 'allow', Catchall> =>
++  passthrough = (): ZodObject<T, 'passthrough', Catchall> =>
+...
+-  nonstrict = this.allowUnknown;
++  nonstrict = this.passthrough;
+...
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+```
+
+The parser's runtime branch was updated to match the renamed mode:
+
+```diff
+-        if (def.unknownKeys === 'allow') {
++        if (def.unknownKeys === 'passthrough') {
+```
+
+And the README in the same commit documents the behavior change explicitly:
+
+```diff
+-Object schemas now _allow_ unknown keys by default, instead of throwing an error
++Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+### What this means
+
+- Before this commit, `ZodObject.create()` set `unknownKeys: 'allow'`, so keys not in the shape were carried through into the parsed result — matching the recollection "objects used to keep properties I didn't define."
+- After this commit, the default is `'strip'`, and the parse path no longer copies extra keys, so undeclared keys "just disappear."
+- Preserving them now requires opting in with `.passthrough()` (the renamed `.allowUnknown()`; `.nonstrict()` is now an alias of it), while `.strict()` still rejects unknown keys.
+
+So it wasn't a removal of a feature — the default flipped, and passthrough was preserved as an explicit opt-in method.

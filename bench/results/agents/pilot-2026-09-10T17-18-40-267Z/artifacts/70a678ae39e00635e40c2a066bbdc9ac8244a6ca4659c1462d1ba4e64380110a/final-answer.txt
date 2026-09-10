@@ -1,0 +1,63 @@
+Environment verified. Now let me investigate ripgrep's ignore-file name history.The environment matches and history is accessible. Let me search for the early ignore-file naming history.The key commit appears to be `cc90511` "Switch from .rgignore to .ignore." Let me examine it and the earlier history in detail.
+The answer is now clear. Let me also confirm the earlier `.xrepignore` → `.rgignore` rename for completeness.Interesting — even earlier there was `.agignore` too. Let me find when the ignore-name list was first introduced.I now have the complete picture. Let me get exact dates for the key commits to present a full timeline.## Answer
+
+**Yes.** ripgrep's special ignore-file name was not always `.ignore`. It used to be **`.rgignore`** — and even earlier, when the tool was called *xrep*, it was **`.xrepignore`** (with `.agignore` also briefly in the list alongside it).
+
+### The commit that establishes the answer
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — *"Switch from .rgignore to .ignore."* (Andrew Gallant, 2016-09-23)
+
+This is the commit that changed the canonical name from `.rgignore` to `.ignore`. Its full commit message states the switch directly:
+
+> ```
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver
+> bump.
+>
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974
+>
+> Fixes #40
+> ```
+
+And the diff itself shows the old name being replaced by the new one in the ignore-file list (`src/ignore.rs`):
+
+```rust
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+as well as in docs, e.g. `README.md`:
+
+```
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+(There's also a new test added in the same commit, `sherlock!(ignore_generic, ...)` creating a `.ignore` file.)
+
+### Supporting context: even earlier names
+
+- **`a744ec133d12e0c8d8e8b0486cd92e2b60ad61e6`** — *"Rename xrep to ripgrep."* (2016-09-08): the diff renames `$HOME/.xrepignore` → `$HOME/.rgignore` and `.xrepignore` → `.rgignore` in `IGNORE_NAMES`, confirming that before `.rgignore` the file was named after the original project name, *xrep*.
+- **`7cefc55238bc23f8b329410520242046dea9ef33`** — *"Remove .agignore from ignore file list."* (2016-09-15): shows `.agignore` was also once in the ignore-file list (alongside `.rgignore`).
+- The very first appearance of the ignore-name list, **`065c44998092906746f6585090bafbf36d98342b`** — *"File path filtering works and is pretty fast."* (2016-08-27), introduced `IGNORE_NAMES` containing `.gitignore`, `.agignore`, and `.xrepignore`.
+
+### Timeline summary
+
+| Name | Introduced/renamed by |
+|---|---|
+| `.xrepignore` (+ `.agignore`) | `065c449` (2016-08-27, project still named xrep) |
+| `.rgignore` | `a744ec1` (2016-09-08, rename xrep → ripgrep) |
+| `.agignore` removed | `7cefc55` (2016-09-15) |
+| `.ignore` becomes canonical (`.rgignore` kept for compatibility) | **`cc90511` (2016-09-23)** |
+
+No files were modified.

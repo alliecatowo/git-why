@@ -1,0 +1,78 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "94e9234684f05600bd1b3b476fb939ab6fdd39c6",
+  "model_id": "llmgateway/gemini-2.5-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T18:43:43.667Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "dc89ba07bb4405d2ba9bebcf5014908021c3fb61ffbeb95c92139309994f0a02",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "0c2bbe7"
+    ]
+  },
+  "wall_ms": 42412,
+  "tool_calls": 2,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 12654,
+  "output_tokens": 203,
+  "cache_read_tokens": 4258,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0014803799999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 13674,
+  "index_build_ms": 58877,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T18-43-36-513Z/events/X-requests-02-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "f49ba5cbe21a738331208c149d8d5a8c88647c11748cd52f732674cdd9623f65",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/f49ba5cbe21a738331208c149d8d5a8c88647c11748cd52f732674cdd9623f65",
+  "completed": true
+}

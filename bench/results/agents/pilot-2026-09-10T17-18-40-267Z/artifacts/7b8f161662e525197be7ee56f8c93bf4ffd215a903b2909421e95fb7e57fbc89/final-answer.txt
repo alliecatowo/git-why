@@ -1,0 +1,44 @@
+Verified: `/workspace`, `/workspace`, `e64d91c37105bc2e23816b6f81b9ffc5e5d99801`.
+
+Now let me investigate the streams/XADD history.I have the answer. Let me capture precise supporting excerpts.## Answer
+
+Redis first got the streams data type, including `XADD`, in the initial Streams implementation:
+
+**Commit:** `79866a6361829ed0602dedff9cb378c66977227a`
+**Author/Date:** antirez — authored 2017-08-30, committed 2017-12-01
+**Subject:** `Streams: 12 commits squashed into the initial Streams implementation.`
+
+This is confirmed as the earliest commit in the repository introducing `xaddCommand`:
+
+```
+$ git log --reverse -S'xaddCommand' -- src/
+79866a636... 2017-08-30 Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+### Supporting evidence from the commit
+
+The commit message itself is explicit that it is the *initial* implementation:
+
+> `Streams: 12 commits squashed into the initial Streams implementation.`
+
+The commit adds `src/t_stream.c` (plus `listpack`, `stream.h`, the new `OBJ_STREAM` type, and command table entries). It defines the `XADD` command:
+
+```diff
++/* XADD key [field value] [field value] ... */
++void xaddCommand(client *c) {
++    if ((c->argc % 2) == 1) {
++        addReplyError(c,"wrong number of arguments for XADD");
++        return;
++    }
+```
+
+and registers it in the command table:
+
+```diff
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+It also introduces the type itself (`#define OBJ_STREAM 5`, `#define OBJ_ENCODING_STREAM`, `streamTypeLookupWriteOrCreate`) and `streamAppendItem`.
+
+I verified that `79866a6361829ed0602dedff9cb378c66977227a` is an ancestor of the pinned `HEAD` (`e64d91c...`), so it genuinely lies in this repository's history. No files were modified.

@@ -1,0 +1,156 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "5546b7ee0850f05615fb88781e380ae50c06362f",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T17:35:08.497Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "f508f0f5f27a56928fb542c9c49737b4b6326cfd662a94f310f7b243fbad3468",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 39337,
+  "tool_calls": 11,
+  "history_calls": 9,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 23479,
+  "output_tokens": 694,
+  "cache_read_tokens": 47872,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00189197,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 49599,
+  "index_build_ms": 556023,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105075197,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T17-18-40-267Z/events/X-curl-02-C-r1-a1.jsonl",
+  "exit_reason": "tool_call_budget_exceeded",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited null",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "33fd6d724f9816f390ccda892a892a1fc00beb9ba79b3a3195bff36d02c12d48",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_186e73d74d5c433dbb1e435f",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"credentials\" -i | head -50"
+        },
+        "output": "093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\neeca818b1 openldap: implement SASL authentication\ncdc1da912 openldap: several minor improvements\n54e747501 schannel: Disable auto credentials; add an option to enable it\n33ddef361 ngtcp2+gnutls: clear credentials when freed\n605aa03ac http_proxy: only loop on 407 + close if we have credentials\n721428889 transfer: strip credentials from the auto-referer header field\n46620b974 http: use credentials from transfer, not connection\n3532262ed url: use blank credentials when using proxy w/o username and password\n2110b996a configure: repair the check if argv can be written to\nad829b21a url: accept \"any length\" credentials for proxy auth\n600a8cded url: make the updated credentials URL-encoded in the URL\ne1f3f3a14 url: reject too long input when parsing credentials\nd3dc0a07e urlapi: guess scheme correct even with credentials given\n34e6bc42b conn: do not reuse connection if SOCKS proxy credentials differ\n68fab35c7 http: fix use of credentials from URL when using HTTP proxy\n06ace0ba9 xattr: skip unittest on unsupported platforms\n98e662915 xattr: strip credentials from any URL that is stored\n6b6c2b8d5 schannel: client certificate store opening fix\n6f5ef24f0 auth: pick Bearer authentication whenever a token is available\nbc4b8c971 ntlm_sspi: fix authentication using Credential Manager\n36f0f4788 vauth: Fix typo\nb0989cd3a vtls: allow selecting which SSL backend to use at runtime\naf5fbb14b digest_sspi: Handle 'stale=TRUE' directive in HTTP digest\nc5cffce56 vauth: Fix memleak by freeing credentials if out of memory\n156b8287a krb5_gssapi: Only process challenge when present\n61152e7d9 krb5_sspi: Only process challenge when present\n228cd71c6 krb5_sspi: Only generate the output token when its not allocated\n2d2c67e3e krb5: Only generate a SPN when its not known\nd41dcba4e NTLM: Fix ConnectionExists to compare Proxy credentials\n24a8359b2 http: do not leak basic auth credentials on re-used connections\na3e5a4371 schannel: Add support for optional client certificates\n31be461c6 ConnectionExists: for NTLM re-use, require credentials to match\ned429b72d gtls: add check of return code\n0da4524a2 url.c: Fixed compilation warning when USE_NTLM is not defined\nf9b713217 smb: Don't try to connect with empty credentials\nf3fc3d021 sspi: Return CURLE_LOGIN_DENIED on AcquireCredentialsHandle() failure\nf7e24683c sasl_sspi: Allow DIGEST-MD5 to use current windows credentials\n0574196ac docs: Added Kerberos V5 to the --user SSPI current credentials usage\nf719a97e1 docs: Added Negotiate to the SSPI current credentials usage description\n313b274b9 test1134: verify CREDSPERREQUEST for HTTP\ndd07e7902 tests: Added SMTP with credentials test for RFC-821 based server\nfe260b75e smtp: Fixed login denied when server doesn't support AUTH capability\n517b06d65 url: Fixed connection re-use when using different log-in credentials\n638c6da9d proxy: make ConnectionExists() check credential of proxyconnections too\n488245f99 imap.c: Fixed bad state error when logging in with invalid credentials\n5538904d7 added --delegation\n5c314c6bb Curl_input_negotiate: do not delegate GSSAPI credentials\n3cffcba3d CURLE_TLSAUTH_FAILED: removed\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_9888d181f7f1472fb5058eb1",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"redirect\" -i | head -80"
+        },
+        "output": "cde8f2848 test1662: verify formpost, 301 redirect, no rewind possible\nfa0b92276 http: mark it 'this_is_a_follow' in the Location: logic\nf5e5384ec test644: verify --xattr (with redirect)\n3ab3c16b2 tool_xattr: save the original URL, not the final redirected one\n265fbd937 docs: update sourceforge project links [ci skip]\n846678541 urlapi: detect scheme better when not guessing\n07058f6ad transfer: maintain --path-as-is after redirects\n5394cbf57 test391: verify --path-as-is with redirect\n093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\n5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\nafe752e05 test898: verify the fix for CVE-2022-27776\n6e6599939 http: avoid auth/cookie on redirects same host diff port\n70ac27604 urlapi: handle \"redirects\" smarter\n519b62ccd docs: update IETF links to use datatracker\naceff6088 maketgz: redirect updatemanpages.pl output to /dev/null\na517378de CURLOPT_PREREQFUNCTION: add new callback\nb97718ab1 README.md: delete Codacy UTM parameters & follow permanent redirect [ci skip]\n74ec0e5ec TODO: provide timing info for each redirect\ne1655b247 docs: add missing Arg tag to --stderr\n648712eec httpauth: make multi-request auth work with custom port\n021f2c25f MANUAL: update examples to resolve without redirects\n259a81555 lib1560: verify \"redirect\" to double-slash leading URL\nd75e3ab74 CURLINFO_EFFECTIVE_METHOD: added\n8acfb932e tests: verify newline in username and password for HTTP\n95f2732e7 TODO: retry on the redirected-to URL\nc048dd0b7 KNOWN_BUGS: RTSP authentication breaks without redirect support\n600a8cded url: make the updated credentials URL-encoded in the URL\nc0e139a60 transfer: Switch PUT to GET/HEAD on 303 redirect\n9973dabeb test1270: a basic -w redirect_url test\nc6f250c4d redirect: when following redirects to an absolute URL, URL encode it\n44c988455 CURLINFO docs: mention that in redirects times are added\n7c31a8980 TODO/ROADMAP: remove \"refuse downgrade redirects\" and HTTP/3\n98c3f1487 alt-svc: send Alt-Used: in redirected requests\ne8442e4ff libcurl: Restrict redirect schemes (follow-up)\n797e549d0 libcurl: Add testcase for gopher redirects\n6080ea098 libcurl: Restrict redirect schemes\n3609ab314 docs: Fix links to OpenSSL docs\nd934059af Revert \"multi: support verbose conncache closure handle\"\ndbd32f324 zsh.pl: update regex to better match curl -h output\n1f30dc886 cookies: skip custom cookies when redirecting cross-site\n1945460d4 test1519: use lib1518 and test CURLINFO_REDIRECT_URL more\n435402cfe Curl_follow: extract the Location: header field unvalidated\n2c5ec339e Curl_follow: accept non-supported schemes for \"fake\" redirects\n1836d59ed HTTP: Don't attempt to needlessly decompress redirect body\nce2140a8c getinfo: add microsecond precise timers for various intervals\n9434194be examples/hiperfifo.c: improved\naf32cd385 http: prevent custom Authorization headers in redirects\n43d036e72 progress: Track total times following redirects\n6bde13a53 test1448: verify redirect to IDN using URL\nd6ecb2c85 redirect: skip URL encoding for host names\nf8f040e65 progress: prevent resetting t_starttransfer\n924cd3e25 CURLINFO_REDIRECT_URL.3: mention the CURLOPT_MAXREDIRS case\nbba59073c redirect: store the \"would redirect to\" URL when max redirs is reached\n4b9338219 CURLINFO_REDIRECT_URL.3: add example\n475c2583d http2: Fix assertion error on redirect with CL=0\nc2127b448 TODO: consider file name from the redirected URL with -O ?\n81e61cda3 gen: support 'redirect'\nb2dcf0347 curl-compilers.m4: improve detection of GCC's -fvisibility= flag\n5409e1d79 URL parser: allow URLs to use one, two or three slashes\ne1372418c libcurl-tlibcurl-thread: Update OpenSSL links\n00cf68c6e KNOWN_BUGS: 1.8 DNS timing is wrong for HTTP redirects\ne32644851 sshserver.pl: use quotes for given options\ne400a89b1 getredirect.c: fix variable name\n1c9298ff1 getredirect.c: a new example\n3f7b1bb89 http redirects: %-encode bytes outside of ascii range\n5dc556031 CURLINFO_REDIRECT_TIME.3: remove redundant '!'\n8a0ff1e52 CURLOPT_FOLLOWLOCATION.3: mention methods for redirects\n1f1f131e0 docs: Update the redirect protocols disabled by default\n496e96c24 LICENSE-MIXING: update URLs\n4e7c3c12d 5.6 Refuse \"downgrade\" redirects\n499024d20 curl.1: add warning when using -H and redirects\nc8996bab1 curl tool: Exclude SMB from the protocol redirect\nce2d84b3b libcurl: Exclude SMB from the protocol redirect\n84bd19ffd timers: fix timer regression involving redirects / reconnects\n13682d1a2 ipv6: strip off zone identifiers in redirects too\n49b63cf30 sockfilt.c: fixed and simplified Windows select function\n87ade5f0e secureserver.pl: added full support for tstunnel on Windows\n0192ad65b KNOWN_BUGS: refer to bug numbers with the existing number series\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_f2440a5ac598471dbe1a6e28",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"CVE\" -i | head -40"
+        },
+        "output": "8dfc93e57 cookie: reject cookies with \"control bytes\"\n3141062c2 connect: revert the use of IP*_RECVERR\n20f9dd6ba fopen: add Curl_fopen() for better overwriting of files\n48d7064a4 cookie: apply limits\n3a09fbb7f content_encoding: return error on too many compression steps\n6ecdf5136 krb5: return error properly on decode errors\n1645e9b44 url: check SSH config match on connection reuse\nf18af4f87 tls: check more TLS details for connection reuse\n7e92d12b4 cookies: make bad_domain() not consider a trailing dot fine\n8c7ee9083 post_per_transfer: remove the updated file name\nfae6fea20 hsts: ignore trailing dots when comparing hosts names\n914aaab91 urlapi: reject percent-decoding host name into separator bytes\n5c7da89d4 nss: return error if seemingly stuck in a cert loop\n5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\nafe752e05 test898: verify the fix for CVE-2022-27776\n6e6599939 http: avoid auth/cookie on redirects same host diff port\n058f98dc3 conncache: include the zone id in the \"bundle\" hashkey\n852aa5ad3 url: check sasl additional parameters for connection reuse.\n3c798b1db multi: remember connection_id before returning connection to pool\n8ef147c43 ftp,imap,pop3,smtp: reject STARTTLS server response pipelining\n364f17472 ftp,imap,pop3: do not ignore --ssl-reqd\n43157490a mqtt: clear the leftovers pointer when sending succeeds\n5ea314585 vtls: fix connection reuse checks for issuer cert and case sensitivity\nfd9b40bf8 sectransp: check for client certs by name first, then file\n894f6ec73 telnet: fix option parser to not send uninitialized contents\n7f4a9a9b2 openssl: associate/detach the transfer from connection\n39ce47f21 telnet: check sscanf() for correct number of matches\nbbb71507b schannel: don't use static to store selected ciphers\nb09c8ee15 vtls: add 'isproxy' argument to Curl_ssl_get/addsessionid()\n721428889 transfer: strip credentials from the auto-referer header field\nd13179db3 connect: on linux, enable reporting of all ICMP errors on UDP sockets\nd9d016727 openssl: make the OCSP verification verify the certificate id\n69a358f21 ftp: make wc_statemach loop instead of recurse\nec9cc725d ftp: CURLOPT_FTP_SKIP_PASV_IP by default\n3c9e021f8 Curl_easy: remember last connection by id, not by pointer\n8829703b5 mprintf: Fix stack overflows\n8236aba58 tool_getparam: -i is not OK if -J is used\n1b71bc532 file: on Windows, refuse paths that start with \\\\\n9069838b3 security:read_data fix bad realloc()\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_191c08cedab242af875868a3",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 620ea2141 | head -30"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\n lib/transfer.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-\n 1 file changed, 48 insertions(+), 1 deletion(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_308e15554dc94e948003a899",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 6e6599939 | head -30"
+        },
+        "output": "commit 6e659993952aa5f90f48864be84a1bbb047fc258\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 13:05:40 2022 +0200\n\n    http: avoid auth/cookie on redirects same host diff port\n    \n    CVE-2022-27776\n    \n    Reported-by: Harry Sintonen\n    Bug: https://curl.se/docs/CVE-2022-27776.html\n    Closes #8749\n\n lib/http.c    | 34 ++++++++++++++++++++++------------\n lib/urldata.h | 16 +++++++++-------\n 2 files changed, 31 insertions(+), 19 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_c370bfd73eab4b87ae75c603",
+        "status": "completed",
+        "input": {
+          "command": "git show 620ea2141"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\ndiff --git a/lib/transfer.c b/lib/transfer.c\nindex 53ef0b03b..315da876c 100644\n--- a/lib/transfer.c\n+++ b/lib/transfer.c\n@@ -1611,10 +1611,57 @@ CURLcode Curl_follow(struct Curl_easy *data,\n       return CURLE_OUT_OF_MEMORY;\n   }\n   else {\n-\n     uc = curl_url_get(data->state.uh, CURLUPART_URL, &newurl, 0);\n     if(uc)\n       return Curl_uc_to_curlcode(uc);\n+\n+    /* Clear auth if this redirects to a different port number or protocol,\n+       unless permitted */\n+    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {\n+      char *portnum;\n+      int port;\n+      bool clear = FALSE;\n+\n+      if(data->set.use_port && data->state.allow_port)\n+        /* a custom port is used */\n+        port = (int)data->set.use_port;\n+      else {\n+        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,\n+                          CURLU_DEFAULT_PORT);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+        port = atoi(portnum);\n+        free(portnum);\n+      }\n+      if(port != data->info.conn_remote_port) {\n+        infof(data, \"Clear auth, redirects to port from %u to %u\",\n+              data->info.conn_remote_port, port);\n+        clear = TRUE;\n+      }\n+      else {\n+        char *scheme;\n+        const struct Curl_handler *p;\n+        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+\n+        p = Curl_builtin_scheme(scheme);\n+        if(p && (p->protocol != data->info.conn_protocol)) {\n+          infof(data, \"Clear auth, redirects scheme from %s to %s\",\n+                data->info.conn_scheme, scheme);\n+          clear = TRUE;\n+        }\n+        free(scheme);\n+      }\n+      if(clear) {\n+        Curl_safefree(data->state.aptr.user);\n+        Curl_safefree(data->state.aptr.passwd);\n+      }\n+    }\n   }\n \n   if(type == FOLLOW_FAKE) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_565dffbdf686409ea3cb2771",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 5295e8d64 | head -30"
+        },
+        "output": "commit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\n tests/data/Makefile.inc |  2 +-\n tests/data/test973      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test974      | 87 ++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test975      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test976      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n 5 files changed, 352 insertions(+), 1 deletion(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_5518f8434b3b4c7a93d378cf",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -S \"allow_auth_to_other_hosts\" | head -20"
+        },
+        "output": "72652c061 http, vauth: always provide Curl_allow_auth_to_host() functionality\n620ea2141 transfer: redirects to other protocols or ports clear auth\n6e6599939 http: avoid auth/cookie on redirects same host diff port\naf32cd385 http: prevent custom Authorization headers in redirects\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_b6be9fa1620c48ebb4758f60",
+        "status": "completed",
+        "input": {
+          "command": "git merge-base --is-ancestor 620ea2141 HEAD && echo \"620ea2141 is in HEAD history\"; git log --oneline --all --grep=\"27774\" | head"
+        },
+        "output": "620ea2141 is in HEAD history\n5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "completed": true
+}

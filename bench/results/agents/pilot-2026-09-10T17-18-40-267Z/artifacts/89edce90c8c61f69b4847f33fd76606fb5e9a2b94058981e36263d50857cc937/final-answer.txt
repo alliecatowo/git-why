@@ -1,0 +1,44 @@
+## Answer
+
+Yes. Before it was `.ignore`, ripgrep's special ignore-file name was **`.rgignore`**.
+
+The commit that establishes this is:
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — *"Switch from .rgignore to .ignore."*
+
+Its message reads:
+
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver bump.
+>
+> Note that this puts us in line with the silver searcher: https://github.com/ggreer/the_silver_searcher/pull/974
+>
+> Fixes #40
+
+And the decisive part of the diff (`src/ignore.rs`) shows `.ignore` being added while the old name is kept for backwards compatibility:
+
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+The same commit updates the README, man page, and doc comments from `.rgignore` to `.ignore`.
+
+### Bonus historical context (earlier names still in the repo's history)
+
+The special name had actually changed twice before that:
+
+- **`a744ec133d12e0c8d8e8b0486cd92e2b60ad61e6`** — *"Rename xrep to ripgrep."* changed the tool's ignore file from **`.xrepignore`** to `.rgignore` (while also still honoring ag's `.agignore`):
+  ```diff
+  -        Don't respect ignore files (.gitignore, .xrepignore, etc.)
+  +        Don't respect ignore files (.gitignore, .rgignore, etc.)
+  ```
+- **`7cefc55238bc23f8b329410520242046dea9ef33`** — *"Remove .agignore from ignore file list."* dropped `.agignore`.
+
+So the lineage of ripgrep's own special ignore file name is `.xrepignore` → `.rgignore` → `.ignore`, with the switch to `.ignore` made in `cc90511`.
+
+No files were modified.

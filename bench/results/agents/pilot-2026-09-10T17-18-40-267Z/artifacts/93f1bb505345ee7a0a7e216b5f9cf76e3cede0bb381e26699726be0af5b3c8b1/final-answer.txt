@@ -1,0 +1,47 @@
+I verified the pinned environment first (`pwd` = `/workspace`, toplevel = `/workspace`, HEAD = `ee521a1c889f4cde6905c5db117959917568be9b`), then searched the history. No files were modified.
+
+## Answer
+
+The bug is **CVE-2022-27774** — curl would keep sending credentials (user/password) when a redirect pointed at a *different protocol* or a *different port*, potentially leaking them to an attacker-controlled destination.
+
+The fix is commit **`620ea21410030a9977396b4661806bc187231b79`**:
+> `transfer: redirects to other protocols or ports clear auth`
+> "... unless explicitly permitted."
+> `Bug: https://curl.se/docs/CVE-2022-27774.html`
+> `Reported-by: Harry Sintonen`
+> `Closes #8748`
+
+(it is an ancestor of HEAD, reachable via `git log`).
+
+### What the fix changed
+
+It added a block in `Curl_follow()` in `lib/transfer.c`. When a real (non-`FOLLOW_FAKE`) redirect is being set up, it now compares the redirect target's port (and, if the port matches, its scheme) against the port/protocol of the connection that was actually used, and clears the stored credentials when they differ. The key added logic:
+
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
++        ...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
+```
+
+So credentials are dropped when a redirect crosses a port or protocol boundary, unless the caller explicitly opted in via `CURLOPT_UNRESTRICTED_AUTH` / `allow_auth_to_other_hosts`. The companion test commit `5295e8d64` ("tests: verify the fix for CVE-2022-27774") adds tests 973–976 covering HTTP→FTP and HTTP→HTTP-different-port with auth both cleared and explicitly permitted.
+
+(Related but distinct: `6e6599939` fixes CVE-2022-27776, restricting auth/cookies on redirects to the same host on a different port in `lib/http.c`; the protocol/port credential-clearing fix asked about here is `620ea2141`.)

@@ -1,0 +1,27 @@
+I have verified that the current directory is `/workspace`, the repository root is `/workspace`, and the commit hash is `62311eb2c4a93c7348a8b1c5abbde1ec77c66b67`.
+
+The question is whether zod objects used to keep properties that were not explicitly defined, and if so, whether the default handling of unknown keys has changed. I will use `git why` to search the commit history for changes related to unknown keys in zod objects.I am unable to use the `git why` command as it is not available in this environment. I will proceed by searching the commit history using `git log` and `git show` commands.I could not find any relevant commits by searching for "unknown keys" in the commit messages. I will now try searching for changes related to unknown keys in the diffs.I found a commit that seems relevant: `aedcc06e`. This commit introduces `z.fromJSONSchema()` and also refactors `z.xor()` and object handling. The commit message and the diff indicate changes related to how unknown keys are handled, specifically in the context of JSON schema conversion and `z.xor()`.
+
+The diff shows that the `from-json-schema.ts` file was updated to explicitly handle `additionalProperties` and `patternProperties`. It now correctly maps JSON schema's `additionalProperties: false` to Zod's `.strict()` and `additionalProperties: true` to `.passthrough()`. It also introduces `.catchall()` when `additionalProperties` is an object.
+
+Furthermore, the `z.xor()` function's behavior is clarified and tested. The tests added in this commit demonstrate that when using `z.xor()` with object schemas, if one of the options doesn't have `.strict()` or `.catchall()` defined, it might implicitly allow unknown keys, leading to overlapping matches. This suggests that the default behavior of Zod objects, which is to strip unknown keys, is still the underlying mechanism, but how it interacts with `z.xor()` and schema conversion has been refined.
+
+The commit message for `aedcc06e` states: "Add `z.fromJSONSchema()`, `z.looseRecord()`, `z.xor()` (#5534)". The associated PR description in the diff mentions: "Object options overlap more often than you'd expect, since `z.object()` strips unknown keys instead of rejecting them. Below, an input with both keys matches *both* options — the first strips `version`, the second keeps it. Use `z.strictObject()` (or `.strict()`) on the narrower option to make the branches mutually exclusive".
+
+This indicates that the default behavior of Zod objects (stripping unknown keys) has not fundamentally changed, but its interaction with other features like `z.xor()` and `z.fromJSONSchema()` has been clarified and improved to handle potential overlaps.
+
+Therefore, the default handling of unknown keys in Zod objects has not changed in a way that would cause extra keys to disappear if they weren't defined. The behavior is consistent: unknown keys are stripped by default unless explicitly handled by `catchall`, `passthrough`, or `strict`. The changes in commit `aedcc06e` refine how these behaviors interact with `z.xor()` and JSON schema conversion.
+
+Here is the commit SHA: `aedcc06e53593938037920097178f1f05254e065`
+
+Here is the relevant part of the commit message/diff:
+"Object options overlap more often than you'd expect, since `z.object()` strips unknown keys instead of rejecting them. Below, an input with both keys matches *both* options — the first strips `version`, the second keeps it. Use `z.strictObject()` (or `.strict()`) on the narrower option to make the branches mutually exclusive"
+
+The default handling of unknown keys in Zod objects has not changed in a way that would cause extra keys to disappear if they weren't defined. The behavior is consistent: unknown keys are stripped by default unless explicitly handled by `catchall`, `passthrough`, or `strict`. The changes in commit `aedcc06e` refine how these behaviors interact with `z.xor()` and `z.fromJSONSchema()`.
+
+Commit SHA: `aedcc06e53593938037920097178f1f05254e065`
+
+Relevant diff excerpt:
+```
+Object options overlap more often than you'd expect, since `z.object()` strips unknown keys instead of rejecting them. Below, an input with both keys matches *both* options — the first strips `version`, the second keeps it. Use `z.strictObject()` (or `.strict()`) on the narrower option to make the branches mutually exclusive
+```

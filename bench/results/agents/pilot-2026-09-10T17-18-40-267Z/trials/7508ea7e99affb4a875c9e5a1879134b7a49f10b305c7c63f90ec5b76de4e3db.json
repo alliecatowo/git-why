@@ -1,0 +1,163 @@
+{
+  "task_id": "X-ripgrep-03",
+  "task_stratum": "archaeology",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "5546b7ee0850f05615fb88781e380ae50c06362f",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T17:55:12.768Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "e814906534fc12322262132f7ca9d9c14c23db6c6915189bd013d5ff7eaf7da8",
+  "protocol_hash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 19369,
+  "tool_calls": 13,
+  "history_calls": 11,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 7445,
+  "output_tokens": 749,
+  "cache_read_tokens": 48384,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00096519,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 38599,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T17-18-40-267Z/events/X-ripgrep-03-A-r1-a1.jsonl",
+  "exit_reason": "tool_call_budget_exceeded",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited null",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "7508ea7e99affb4a875c9e5a1879134b7a49f10b305c7c63f90ec5b76de4e3db",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_f25bd462eaa8402fac348fa0",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | head -50"
+        },
+        "output": "3fce3b5 ignore-0.4.33\n5055264 globset-0.4.20\n020687a ignore,globset: increase pool capacity\n7525479 ci: fix binary discovery\n5ed408e ignore-0.4.32\n435f59f ignore: skip loading unreachable ignore files\ndffd776 ci: attest build provenance for release archives\nf9c05a9 index: remove incorrect README\n8372866 index: add some initial indexing scaffolding\nd99ac34 core: add `index` module\nd57de83 nvim: enable all Cargo features\n2ed0c00 flags: disable many flags when indexing is enabled\n59e318f ignore-0.4.31\na9dc222 cargo: set `rust-version` on all crates\nbe739c7 index: add grep-index crate\nd958105 cargo: add new build-time `unstable-index` feature\n227381d ignore-0.4.30\nb621e65 ignore: add incremental checking\nc55818f ignore: more pathutil clean-up\n6e527e9 ignore: add routine for checking if a path is hidden or not\n626b895 ignore: refactor `is_hidden`\nc035d23 msrv: bump to Rust 1.96\nfc3dd04 doc: update OpenSubtitles benchmark corpus URL in README\n0d7054d ignore: fix deadlock when visitor panics\n5e16a5c changelog: start next section\nf91cde0 pkg/brew: update tap\ne89fff8 15.2.0\nd798261 deps: bump ignore version\n576005b grep-searcher-0.1.17\n432976d grep-pcre2-0.1.10\n41e0ae7 grep-matcher-0.1.9\n40ffc6e ignore-0.4.29\n28c687d globset-0.4.19\nf03c67e changelog: 15.2.0\ne988d4b deps: update everything\nd5b85d4 deps: bump to tikv-jemallocator 0.7.0\n324f7ef ignore-0.4.28\n241b87b ignore: support `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM` for `core.excludesFile`\nb6849da ignore/walk: add `WalkBuilder::empty` and `WalkBuilder::from_iter`\n8bca2eb doc: fix typo in man page\n61a9fd8 doc: fix typo\ne7b0f89 lint: use `cloned()` or `copied()` when we can\n767086d searcher: hint at sequential memory map reading\n9548e86 ignore/types: add PKGBUILD type\n3b62573 deps: upgrade the lower bound for termcolor from 1.1.0 to 1.4.0\nbc3ad92 ignore/types: add Rocq `.v` files\n93acfe2 ignore/types: add `proto` for filtering to protobuf files\n77d27e8 ignore/types: add Mojo type\nf55548b globset: fix `matches_all` false positives\n2c23e39 changelog: bring unreleased changes up to date\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_fcfa5601ba234f1e90f444af",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --follow -- crates/ignore/src/default.rs 2>/dev/null | tail -30"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_aef66e48acf14560b22a3879",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --diff-filter=A -S\".ignore\" -- '*.rs' | tail -20"
+        },
+        "output": "b621e65 ignore: add incremental checking\n082245d cli: replace clap with lexopt and supporting code\neb184d7 tests: re-tool integration tests\nd9ca529 libripgrep: initial commit introducing libripgrep\n92dc402 Switch from Docopt to Clap.\nd79add3 Move all gitignore matching to separate crate.\n812cdb1 Lots of progress:\n1c8379f Implementing core functionality.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_a8a6ce6b0afe4c9d848fbad1",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --reverse | head -30"
+        },
+        "output": "9d1e619 initial commit\n403bb72 beating 'grep -E' on some things\n883ceb3 add readme\n8996911 makefile\n3b76981 rename to xrep\n4ae67a8 progress\n79a5102 progress\nf1a9130 short matches\n07bff74 tweaks\n8d9d602 update\n0163b39 refactor progress\na3f6092 progress\n076eeff update\ne97d75c Refactor buffered test.\n61f49ba Remove the buffered reader.\n957f90c docs and small polish\nb55ecf3 globbing by regex\n065c449 File path filtering works and is pretty fast.\n1c8379f Implementing core functionality.\nc809679 Lots of improvements. Most notably, removal of memory maps for searching.\nd011cea The search code is a mess, but...\n03d9df4 tests and refactoring search\n79f6201 fix glob tests\n5aa3b9b struggling with printing contexts, what a mess\n5450aed Make \"before\" context work.\n7f0b1cc Before contexts seem to work.\n062aa5e Switch to Chase-Lev work stealing queue.\nc2b5577 progress on after contexts\n0bf278e making search work (finally)\n812cdb1 Lots of progress:\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_bc5ca205919a458286c87a18",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -S\".ignore\" | tail -40"
+        },
+        "output": "082245d cli: replace clap with lexopt and supporting code\ncad1f5f ignore: fix filtering when searching subdirectories\nf3241fd cli: '--no-ignore-dot' should also '.rgignore'\n9f0e88b ignore: fix gitignore parsing bug for trailing \\/\nc53c4c0 doc: explain ignore rules a bit more\ne6cac8b cli: print warning if nothing was searched\n297b428 cli: add --no-ignore-exclude flag\n931ab35 changelog: start work on 11.0.2 release\n052c857 doc: mention .ignore and .rgignore more prominently\n45d12ab changelog: small fixups\n09108b7 regex: make multi-literal searcher faster\nafb89bc fmt: shorten --ignore-file-case-insensitive description\n12a6ca4 config: add --no-ignore-dot flag\n718a00f ripgrep: add --ignore-file-case-insensitive\neb184d7 tests: re-tool integration tests\nbb110c1 ripgrep: migrate to libripgrep\nd9ca529 libripgrep: initial commit introducing libripgrep\n06438d5 changelog: update\n0ee0b16 logging: add new --no-ignore-messages flag\nb71a110 ignore: fix custom ignore name bug\nf3146f8 changelog: 0.8.0\n904c75b doc: overhaul documentation\n6553940 doc: generate man page\n3cb4d13 ignore: support custom file names\n03b0d83 Update app.rs (#707)\na5f82e8 ignore: add grouped toggle for standard filters\n398326b doc: note that ripgrep may terminate unexpectedly\n01358a1 man: synchronize man page with --help\nae863bc Improve docs for --glob flag.\n92dc402 Switch from Docopt to Clap.\nb272be2 Add parallel recursive directory iterator.\nd79add3 Move all gitignore matching to separate crate.\nbaebfd7 changelog 0.2.0\n8eeb0c0 Add --no-ignore-vcs flag.\n346bad7 Fix handling of absolute patterns in parent gitignore files.\ncc90511 Switch from .rgignore to .ignore.\n9948e0c Only create the Grep searcher once.\n812cdb1 Lots of progress:\n1c8379f Implementing core functionality.\n065c449 File path filtering works and is pretty fast.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_0d16f27e9b5d49f09de515b3",
+        "status": "completed",
+        "input": {
+          "command": "git show cc90511 --stat"
+        },
+        "output": "commit cc90511ab29d3c37e873acac0fd80f90473f54bb\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Fri Sep 23 22:44:17 2016 -0400\n\n    Switch from .rgignore to .ignore.\n    \n    But don't actually remove support for .rgignore until the next semver\n    bump.\n    \n    Note that this puts us in line with the silver searcher:\n    https://github.com/ggreer/the_silver_searcher/pull/974\n    \n    Fixes #40\n\n README.md        | 6 +++---\n doc/rg.1         | 4 ++--\n doc/rg.1.md      | 2 +-\n src/args.rs      | 2 +-\n src/gitignore.rs | 2 +-\n src/ignore.rs    | 3 ++-\n tests/tests.rs   | 5 +++++\n 7 files changed, 15 insertions(+), 9 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_d30aeaf2479c49aca34eb62a",
+        "status": "completed",
+        "input": {
+          "command": "git show cc90511 | head -200"
+        },
+        "output": "commit cc90511ab29d3c37e873acac0fd80f90473f54bb\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Fri Sep 23 22:44:17 2016 -0400\n\n    Switch from .rgignore to .ignore.\n    \n    But don't actually remove support for .rgignore until the next semver\n    bump.\n    \n    Note that this puts us in line with the silver searcher:\n    https://github.com/ggreer/the_silver_searcher/pull/974\n    \n    Fixes #40\n\ndiff --git a/README.md b/README.md\nindex 6332e60..2319503 100644\n--- a/README.md\n+++ b/README.md\n@@ -145,9 +145,9 @@ files, ignore hidden files and directories and skip binary files:\n $ rg foobar\n ```\n \n-The above command also respects all `.rgignore` files, including in parent\n-directories. `.rgignore` files can be used when `.gitignore` files are\n-insufficient. In all cases, `.rgignore` patterns take precedence over\n+The above command also respects all `.ignore` files, including in parent\n+directories. `.ignore` files can be used when `.gitignore` files are\n+insufficient. In all cases, `.ignore` patterns take precedence over\n `.gitignore`.\n \n To ignore all ignore files, use `-u`. To additionally search hidden files\ndiff --git a/doc/rg.1 b/doc/rg.1\nindex 300ad1b..9d47e27 100644\n--- a/doc/rg.1\n+++ b/doc/rg.1\n@@ -211,8 +211,8 @@ Never use memory maps, even when they might be faster.\n .RE\n .TP\n .B \\-\\-no\\-ignore\n-Don\\[aq]t respect ignore files (.gitignore, .rgignore, etc.) This\n-implies \\-\\-no\\-ignore\\-parent.\n+Don\\[aq]t respect ignore files (.gitignore, .ignore, etc.) This implies\n+\\-\\-no\\-ignore\\-parent.\n .RS\n .RE\n .TP\ndiff --git a/doc/rg.1.md b/doc/rg.1.md\nindex 81e974e..224ff1a 100644\n--- a/doc/rg.1.md\n+++ b/doc/rg.1.md\n@@ -137,7 +137,7 @@ the raw speed of grep.\n : Never use memory maps, even when they might be faster.\n \n --no-ignore\n-: Don't respect ignore files (.gitignore, .rgignore, etc.)\n+: Don't respect ignore files (.gitignore, .ignore, etc.)\n   This implies --no-ignore-parent.\n \n --no-ignore-parent\ndiff --git a/src/args.rs b/src/args.rs\nindex 777556d..4b5052a 100644\n--- a/src/args.rs\n+++ b/src/args.rs\n@@ -137,7 +137,7 @@ Less common options:\n         Never use memory maps, even when they might be faster.\n \n     --no-ignore\n-        Don't respect ignore files (.gitignore, .rgignore, etc.)\n+        Don't respect ignore files (.gitignore, .ignore, etc.)\n         This implies --no-ignore-parent.\n \n     --no-ignore-parent\ndiff --git a/src/gitignore.rs b/src/gitignore.rs\nindex 76e0be7..2bbebd6 100644\n--- a/src/gitignore.rs\n+++ b/src/gitignore.rs\n@@ -9,7 +9,7 @@ The motivation for this submodule is performance and portability:\n 2. We could shell out to a `git` sub-command like ls-files or status, but it\n    seems better to not rely on the existence of external programs for a search\n    tool. Besides, we need to implement this logic anyway to support things like\n-   an .rgignore file.\n+   an .ignore file.\n \n The key implementation detail here is that a single gitignore file is compiled\n into a single RegexSet, which can be used to report which globs match a\ndiff --git a/src/ignore.rs b/src/ignore.rs\nindex d784f99..0195420 100644\n--- a/src/ignore.rs\n+++ b/src/ignore.rs\n@@ -5,7 +5,7 @@ whether a *single* file path should be searched or not.\n In general, there are two ways to ignore a particular file:\n \n 1. Specify an ignore rule in some \"global\" configuration, such as a\n-   $HOME/.rgignore or on the command line.\n+   $HOME/.ignore or on the command line.\n 2. A specific ignore file (like .gitignore) found during directory traversal.\n \n The `IgnoreDir` type handles ignore patterns for any one particular directory\n@@ -24,6 +24,7 @@ use types::Types;\n \n const IGNORE_NAMES: &'static [&'static str] = &[\n     \".gitignore\",\n+    \".ignore\",\n     \".rgignore\",\n ];\n \ndiff --git a/tests/tests.rs b/tests/tests.rs\nindex e2aedc3..3823cee 100644\n--- a/tests/tests.rs\n+++ b/tests/tests.rs\n@@ -377,6 +377,11 @@ sherlock!(ignore_git, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n     wd.assert_err(&mut cmd);\n });\n \n+sherlock!(ignore_generic, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n+    wd.create(\".ignore\", \"sherlock\\n\");\n+    wd.assert_err(&mut cmd);\n+});\n+\n sherlock!(ignore_ripgrep, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n     wd.create(\".rgignore\", \"sherlock\\n\");\n     wd.assert_err(&mut cmd);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_77c7aa00dfa446dbabd34f41",
+        "status": "completed",
+        "input": {
+          "command": "git show cc90511^:src/ignore.rs | grep -A3 \"IGNORE_NAMES\""
+        },
+        "output": "const IGNORE_NAMES: &'static [&'static str] = &[\n    \".gitignore\",\n    \".rgignore\",\n];\n--\n        let mut ignore_names = IGNORE_NAMES.to_vec();\n        let mut ignore_dir_results = vec![];\n        while let Some(parent) = path.parent() {\n            if self.no_ignore {\n--\n        IgnoreDir::with_ignore_names(path, IGNORE_NAMES.iter())\n    }\n\n    /// Create a new matcher for the given directory using only the ignore\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_1af0979595e24977afcb3613",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -S\".rgignore\" | tail -10"
+        },
+        "output": "904c75b doc: overhaul documentation\n3cb4d13 ignore: support custom file names\nd79add3 Move all gitignore matching to separate crate.\nbaebfd7 changelog 0.2.0\ncc90511 Switch from .rgignore to .ignore.\n0ce8240 Switch over to the real README.\n49003e8 Add man page.\nf9bf1e4 draft\nf83cd63 Add integration tests.\na744ec1 Rename xrep to ripgrep.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_26356f0bf8b847dcb16704eb",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --reverse -S\".rgignore\" | head -5"
+        },
+        "output": "a744ec1 Rename xrep to ripgrep.\nf83cd63 Add integration tests.\nf9bf1e4 draft\n49003e8 Add man page.\n0ce8240 Switch over to the real README.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_a1a3cfeae5d94c179c3b868b",
+        "status": "completed",
+        "input": {
+          "command": "git show a744ec1 --stat | head -20; git show f9bf1e4 --stat | head -20"
+        },
+        "output": "commit a744ec133d12e0c8d8e8b0486cd92e2b60ad61e6\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Thu Sep 8 16:15:44 2016 -0400\n\n    Rename xrep to ripgrep.\n\n Cargo.toml          | 10 +++++-----\n appveyor.yml        |  4 ++--\n ci/before_deploy.sh |  2 +-\n ci/script.sh        |  2 +-\n grep/Cargo.toml     |  6 +++---\n src/args.rs         | 32 ++++++++++++++++----------------\n src/gitignore.rs    |  4 ++--\n src/ignore.rs       | 10 +++++-----\n src/sys.rs          |  2 +-\n 9 files changed, 36 insertions(+), 36 deletions(-)\ncommit f9bf1e4a2228e59a408a684169b79afa413973e6\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sat Sep 17 17:36:54 2016 -0400\n\n    draft\n\n README-NEW.md | 266 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 266 insertions(+)\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "completed": true
+}

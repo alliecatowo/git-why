@@ -1,0 +1,59 @@
+Both commands verified: cwd `/workspace`, repo root `/workspace`, HEAD `62311eb2c4a93c7348a8b1c5abbde1ec77c66b67`. I did not modify any files.
+
+## Answer
+
+Yes — the default handling of unknown keys changed. Earlier Zod object schemas **kept** undeclared properties in the parsed output; a later commit flipped the default to **strip** them (what you see today). The behavior change you remember vs. what you see now is real, and it happened in one commit.
+
+**Commit: `1885449` — "strip unknown keys by default"** (Colin McDonnell, 2020-09-17). It is an ancestor of the pinned HEAD, and nothing after it reverted the default.
+
+### What the diff shows
+
+Before this commit, the default object factory in `src/types/object.ts` was:
+
+```diff
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+       //  params: {
+```
+
+and the parser's `'allow'` branch copied every extra key verbatim into the output (`src/parser.ts`):
+
+```diff
+       if (def.catchall instanceof ZodNever) {
+-        if (def.unknownKeys === 'allow') {
++        if (def.unknownKeys === 'passthrough') {
+           for (const key of extraKeys) {
+             objectPromises[key] = PseudoPromise.resolve(data[key]);
+           }
+```
+
+So before, "allow" meant *allow and pass through*: `parse({ name: 'bob dylan', extraKey: 61 })` returned both keys. After, the default became `'strip'` — "do nothing" in the parser — so the extra key is silently dropped. The old mode was renamed `'allow'` → `'passthrough'` (with `.allowUnknown()` → `.passthrough()`, `.stripUnknown()` → `.strip()`) so you can opt back into keeping keys.
+
+The commit's own README edit states the change directly, with the "before" output on the left and "after" on the right:
+
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+ ...
+ person.parse({
+   name: 'bob dylan',
+   extraKey: 61,
+ });
+-// => { name: "bob dylan", extraKey: 61 }
++// => { name: "bob dylan" }
+```
+
+and the commit adds a regression test asserting the new default:
+
+```ts
+test('strip by default', () => {
+  const val = z.object({ points: z.number() }).parse(data);
+  expect(val).toEqual({ points: 2314 });
+});
+```
+
+(One historical footnote: this landed during the pre-2.0 v2 rewrite, where the default had been *changed to allow* keys a few commits earlier; `1885449` changed it again to strip, and that strip-by-default has been the behavior ever since — in v2, v3, and the v4 HEAD you're pinned at.)

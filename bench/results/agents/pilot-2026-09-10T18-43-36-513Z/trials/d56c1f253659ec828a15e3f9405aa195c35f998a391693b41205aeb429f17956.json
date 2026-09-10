@@ -1,0 +1,76 @@
+{
+  "task_id": "X-ripgrep-03",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "94e9234684f05600bd1b3b476fb939ab6fdd39c6",
+  "model_id": "llmgateway/gemini-2.5-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T18:45:28.919Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "fca5c9ff0baa137d44b83b391fe95ec4783f45b2ba52d63f129b22342e6a40eb",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "cc90511ab29d3c37e873acac0fd80f90473f54bb",
+    "citedGoldSha": false,
+    "citedShaCount": 3,
+    "matchedTokens": []
+  },
+  "wall_ms": 74409,
+  "tool_calls": 2,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 13900,
+  "output_tokens": 432,
+  "cache_read_tokens": 4261,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00168221,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 24372,
+  "index_build_ms": 30449,
+  "model_download_ms": null,
+  "index_disk_bytes": 91397716,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T18-43-36-513Z/events/X-ripgrep-03-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "d56c1f253659ec828a15e3f9405aa195c35f998a391693b41205aeb429f17956",
+  "indexed_commits": 2287,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/d56c1f253659ec828a15e3f9405aa195c35f998a391693b41205aeb429f17956",
+  "completed": true
+}

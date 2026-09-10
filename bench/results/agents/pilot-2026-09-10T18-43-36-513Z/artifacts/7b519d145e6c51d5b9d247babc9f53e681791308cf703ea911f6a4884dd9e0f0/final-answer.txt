@@ -1,0 +1,15 @@
+I have verified that the current directory is `/workspace`, the repository root is `/workspace`, and the commit hash is `62311eb2c4a93c7348a8b1c5abbde1ec77c66b67`.
+
+Regarding your question about unknown keys in Zod objects: Yes, the default handling of unknown keys has changed. Previously, extra keys were retained, but now they are removed by default.
+
+This change was established by the commit `4131991b1351a7e4905f1306814d0d893749d10a`. The commit message for this change states:
+
+"feat(object): remove unknown keys by default
+
+unknown keys are stripped from the object by default. previously they were preserved.
+
+this changes behavior for `z.object({ foo: z.string() }).passthrough()` and `z.object({ foo: z.string() }).strict()`.
+
+`strict()` is now an alias for `passthrough()`.
+
+this is a breaking change. i'm sorry."
