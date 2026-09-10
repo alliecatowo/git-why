@@ -4,7 +4,7 @@ Generated 2026-09-10T17:16:28.575Z by `bench/report.mjs` from raw files under `b
 
 ## Leading caveat: Hit@5 saturates on this dataset -- read MRR, not Hit@5
 
-On both the dev split and the held-out test split, text-only and hybrid retrieval reach 100% Hit@5 (and semantic is close behind). At Hit@5, the three retrieval modes are indistinguishable on this synthetic dataset -- **Hit@5 does not discriminate between modes here.** Mean Reciprocal Rank (MRR) still separates them because it credits *how high* the relevant commit ranks, not merely whether it appears in the top 5. Every comparative claim below leads with MRR for that reason; Hit@5/Recall@5 are reported alongside for completeness, not as the headline metric.
+On both the dev split and the held-out test split, text-only and hybrid retrieval reach 100% Hit@5 (and semantic is close behind). At Hit@5, the three retrieval modes are indistinguishable on this synthetic dataset -- **Hit@5 does not discriminate between modes here.** Mean Reciprocal Rank (MRR) still separates them because it credits _how high_ the relevant commit ranks, not merely whether it appears in the top 5. Every comparative claim below leads with MRR for that reason; Hit@5/Recall@5 are reported alongside for completeness, not as the headline metric.
 
 ## 1. Frozen question and protocol
 
@@ -32,39 +32,39 @@ Dev run: `dev-2026-09-10T09-18-20-584Z` (72 query records, protocol hash `sha256
 
 **Dev split -- overall (excludes `exact_identifier` and `no_evidence`, per protocol), MRR-led:**
 
-| mode | n | MRR | Hit@1 | Hit@3 | Hit@5 | Recall@5 |
-|---|---|---|---|---|---|---|
-| text | 18 | 0.664 | 44.4% | 88.9% | 100.0% | 100.0% |
-| semantic | 18 | 0.685 | 55.6% | 83.3% | 83.3% | 83.3% |
-| hybrid | 18 | 0.694 | 50.0% | 94.4% | 94.4% | 94.4% |
+| mode     | n   | MRR   | Hit@1 | Hit@3 | Hit@5  | Recall@5 |
+| -------- | --- | ----- | ----- | ----- | ------ | -------- |
+| text     | 18  | 0.664 | 44.4% | 88.9% | 100.0% | 100.0%   |
+| semantic | 18  | 0.685 | 55.6% | 83.3% | 83.3%  | 83.3%    |
+| hybrid   | 18  | 0.694 | 50.0% | 94.4% | 94.4%  | 94.4%    |
 
 **Dev split -- `exact_identifier` reported separately (per protocol; not folded into the overall row above):**
 
-| mode | n | MRR | Hit@1 | Hit@3 | Hit@5 | Recall@5 |
-|---|---|---|---|---|---|---|
-| text | 2 | 0.750 | 50.0% | 100.0% | 100.0% | 100.0% |
-| semantic | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| hybrid | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
+| mode     | n   | MRR   | Hit@1  | Hit@3  | Hit@5  | Recall@5 |
+| -------- | --- | ----- | ------ | ------ | ------ | -------- |
+| text     | 2   | 0.750 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| semantic | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| hybrid   | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
 
 **Dev split -- per-category (hybrid mode, the shipped default):**
 
-| category | n | MRR | Hit@1 | Hit@3 | Hit@5 | Recall@5 |
-|---|---|---|---|---|---|---|
-| synonym_mismatch | 2 | 0.750 | 50.0% | 100.0% | 100.0% | 100.0% |
-| workaround_rationale | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| deleted_implementation | 2 | 0.167 | 0.0% | 50.0% | 50.0% | 50.0% |
-| migration | 2 | 0.500 | 0.0% | 100.0% | 100.0% | 100.0% |
-| exact_identifier | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| number_version | 2 | 0.667 | 50.0% | 100.0% | 100.0% | 100.0% |
-| rename | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| poor_message_rich_diff | 2 | 0.667 | 50.0% | 100.0% | 100.0% | 100.0% |
-| rich_message_skipped_patch | 2 | 0.750 | 50.0% | 100.0% | 100.0% | 100.0% |
-| lifecycle | 1 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| distractor_intent | 1 | 0.500 | 0.0% | 100.0% | 100.0% | 100.0% |
+| category                   | n   | MRR   | Hit@1  | Hit@3  | Hit@5  | Recall@5 |
+| -------------------------- | --- | ----- | ------ | ------ | ------ | -------- |
+| synonym_mismatch           | 2   | 0.750 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| workaround_rationale       | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| deleted_implementation     | 2   | 0.167 | 0.0%   | 50.0%  | 50.0%  | 50.0%    |
+| migration                  | 2   | 0.500 | 0.0%   | 100.0% | 100.0% | 100.0%   |
+| exact_identifier           | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| number_version             | 2   | 0.667 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| rename                     | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| poor_message_rich_diff     | 2   | 0.667 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| rich_message_skipped_patch | 2   | 0.750 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| lifecycle                  | 1   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| distractor_intent          | 1   | 0.500 | 0.0%   | 100.0% | 100.0% | 100.0%   |
 
 **Dev split -- no-evidence cases (excluded from all metrics above; there is no relevant SHA to rank):**
 
-These queries describe design decisions the fixtures never actually made (no commit exists that answers them). The system has no "I don't know" response: it always returns its 5 closest-ranked commits regardless of whether any of them are actually relevant. A user reading those top-k results as an explanation would be reading an UNSUPPORTED answer -- the tool surfaced *something*, not *the reason*, because there is no reason recorded in this history.
+These queries describe design decisions the fixtures never actually made (no commit exists that answers them). The system has no "I don't know" response: it always returns its 5 closest-ranked commits regardless of whether any of them are actually relevant. A user reading those top-k results as an explanation would be reading an UNSUPPORTED answer -- the tool surfaced _something_, not _the reason_, because there is no reason recorded in this history.
 
 Observed across 12 no-evidence (case, mode) pairs in this run: 100% returned a full page of results (no case returned an empty list or a refusal).
 
@@ -72,45 +72,45 @@ Held-out run: `test-2026-09-09T20-21-00-051Z` (72 query records). Per bench/prot
 
 **Held-out test split -- overall (excludes `exact_identifier` and `no_evidence`, per protocol), MRR-led:**
 
-| mode | n | MRR | Hit@1 | Hit@3 | Hit@5 | Recall@5 |
-|---|---|---|---|---|---|---|
-| text | 18 | 0.891 | 83.3% | 94.4% | 100.0% | 100.0% |
-| semantic | 18 | 0.900 | 83.3% | 94.4% | 100.0% | 100.0% |
-| hybrid | 18 | 0.944 | 88.9% | 100.0% | 100.0% | 100.0% |
+| mode     | n   | MRR   | Hit@1 | Hit@3  | Hit@5  | Recall@5 |
+| -------- | --- | ----- | ----- | ------ | ------ | -------- |
+| text     | 18  | 0.891 | 83.3% | 94.4%  | 100.0% | 100.0%   |
+| semantic | 18  | 0.900 | 83.3% | 94.4%  | 100.0% | 100.0%   |
+| hybrid   | 18  | 0.944 | 88.9% | 100.0% | 100.0% | 100.0%   |
 
 **Held-out test split -- `exact_identifier` reported separately (per protocol; not folded into the overall row above):**
 
-| mode | n | MRR | Hit@1 | Hit@3 | Hit@5 | Recall@5 |
-|---|---|---|---|---|---|---|
-| text | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| semantic | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| hybrid | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
+| mode     | n   | MRR   | Hit@1  | Hit@3  | Hit@5  | Recall@5 |
+| -------- | --- | ----- | ------ | ------ | ------ | -------- |
+| text     | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| semantic | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| hybrid   | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
 
 **Held-out test split -- per-category (hybrid mode, the shipped default):**
 
-| category | n | MRR | Hit@1 | Hit@3 | Hit@5 | Recall@5 |
-|---|---|---|---|---|---|---|
-| synonym_mismatch | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| workaround_rationale | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| deleted_implementation | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| migration | 2 | 0.750 | 50.0% | 100.0% | 100.0% | 100.0% |
-| exact_identifier | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| number_version | 2 | 0.750 | 50.0% | 100.0% | 100.0% | 100.0% |
-| rename | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| poor_message_rich_diff | 1 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| rich_message_skipped_patch | 1 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| lifecycle | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
-| distractor_intent | 2 | 1.000 | 100.0% | 100.0% | 100.0% | 100.0% |
+| category                   | n   | MRR   | Hit@1  | Hit@3  | Hit@5  | Recall@5 |
+| -------------------------- | --- | ----- | ------ | ------ | ------ | -------- |
+| synonym_mismatch           | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| workaround_rationale       | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| deleted_implementation     | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| migration                  | 2   | 0.750 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| exact_identifier           | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| number_version             | 2   | 0.750 | 50.0%  | 100.0% | 100.0% | 100.0%   |
+| rename                     | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| poor_message_rich_diff     | 1   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| rich_message_skipped_patch | 1   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| lifecycle                  | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
+| distractor_intent          | 2   | 1.000 | 100.0% | 100.0% | 100.0% | 100.0%   |
 
 **Held-out test split -- no-evidence cases (excluded from all metrics above; there is no relevant SHA to rank):**
 
-These queries describe design decisions the fixtures never actually made (no commit exists that answers them). The system has no "I don't know" response: it always returns its 5 closest-ranked commits regardless of whether any of them are actually relevant. A user reading those top-k results as an explanation would be reading an UNSUPPORTED answer -- the tool surfaced *something*, not *the reason*, because there is no reason recorded in this history.
+These queries describe design decisions the fixtures never actually made (no commit exists that answers them). The system has no "I don't know" response: it always returns its 5 closest-ranked commits regardless of whether any of them are actually relevant. A user reading those top-k results as an explanation would be reading an UNSUPPORTED answer -- the tool surfaced _something_, not _the reason_, because there is no reason recorded in this history.
 
 Observed across 12 no-evidence (case, mode) pairs in this run: 100% returned a full page of results (no case returned an empty list or a refusal).
 
 **Dev vs. held-out (hybrid, MRR):** dev = 0.694, held-out = 0.944 (+0.250). The held-out split scored at least as well as dev; there is no held-out regression to explain away.
 
-Important sequencing note: the score-inversion bug (Zvec COSINE returns a *distance*, not a similarity; the semantic branch was ranking the least-relevant commits first before this fix) was found and fixed against **dev** data, strictly *before* the held-out run above was executed. That fix is a correctness bug fix, not tuning against the held-out set -- `bench/dataset/test.json` was never read or scored until the single frozen run recorded here.
+Important sequencing note: the score-inversion bug (Zvec COSINE returns a _distance_, not a similarity; the semantic branch was ranking the least-relevant commits first before this fix) was found and fixed against **dev** data, strictly _before_ the held-out run above was executed. That fix is a correctness bug fix, not tuning against the held-out set -- `bench/dataset/test.json` was never read or scored until the single frozen run recorded here.
 
 ## 4. Ablation: does diff/evidence ingestion earn its complexity?
 
@@ -118,11 +118,11 @@ Run: `dev-2026-09-10T09-08-25-832Z/ablation-summary-production.json`. Mechanism:
 
 Diff = (summary+evidence) minus (summary-only), overall (excludes `exact_identifier` and `no_evidence`):
 
-| mode | n (each arm) | dHit@1 | dHit@3 | dHit@5 | dRecall@5 | dMRR |
-|---|---|---|---|---|---|---|
-| text | 18 | -0.222 | 0.056 | 0.111 | 0.111 | -0.079 |
-| semantic | 18 | 0.056 | 0.056 | 0.056 | 0.056 | 0.056 |
-| hybrid | 18 | 0.000 | 0.167 | 0.111 | 0.111 | 0.063 |
+| mode     | n (each arm) | dHit@1 | dHit@3 | dHit@5 | dRecall@5 | dMRR   |
+| -------- | ------------ | ------ | ------ | ------ | --------- | ------ |
+| text     | 18           | -0.222 | 0.056  | 0.111  | 0.111     | -0.079 |
+| semantic | 18           | 0.056  | 0.056  | 0.056  | 0.056     | 0.056  |
+| hybrid   | 18           | 0.000  | 0.167  | 0.111  | 0.111     | 0.063  |
 
 **Verdict:** on this dev set, adding evidence (diff) records does **not** show a clear, consistently positive effect. In hybrid mode (the shipped default), evidence ingestion is worse on Hit@3/Hit@5/Recall@5 (0.167/0.111/0.111) and only marginally better on MRR (0.063) and worse on Hit@1 (0.000). Text mode shows the same pattern (Hit@3/5/Recall@5 better summary-only, MRR essentially flat at -0.079). Semantic mode is the closest to a wash (MRR 0.056). On this synthetic, 24-case dev set, summary-only retrieval is at least as good as summary+evidence on every metric except a small MRR edge in two of three modes -- **this dataset does not demonstrate that diff/evidence ingestion earns its added complexity.** This is a small-sample, single-dataset result and should not be read as a general claim about evidence ingestion; it is the honest answer this dev set gives, in the direction it gives it.
 
@@ -133,15 +133,15 @@ Run: `bench/results/external/2026-09-10T09-23-21-799Z`. Command: `node bench/ret
 Every fixture elsewhere in this report is synthetic and generated by the same system that built the tool. This section measures against histories Git Why did not author, and it is the one to weigh most heavily.
 
 | repository | license | cutoff SHA |
-|---|---|---|
+| ---------- | ------- | ---------- |
 
 Top-5, `--no-refresh` against a prebuilt index. 10 answerable cases; no-evidence controls are excluded from these metrics and reported separately below.
 
-| mode | n | Hit@1 | Hit@3 | Hit@5 | MRR |
-|---|---|---|---|---|---|
-| text | 0 | n/a | n/a | n/a | n/a |
-| semantic | 0 | n/a | n/a | n/a | n/a |
-| hybrid | 0 | n/a | n/a | n/a | n/a |
+| mode     | n   | Hit@1 | Hit@3 | Hit@5 | MRR |
+| -------- | --- | ----- | ----- | ----- | --- |
+| text     | 0   | n/a   | n/a   | n/a   | n/a |
+| semantic | 0   | n/a   | n/a   | n/a   | n/a |
+| hybrid   | 0   | n/a   | n/a   | n/a   | n/a |
 
 Real histories are harder than the synthetic fixtures, and Hit@5 does not saturate here. Treat these numbers, not the 100% synthetic Hit@5, as the realistic indication of retrieval quality.
 
@@ -149,31 +149,31 @@ Real histories are harder than the synthetic fixtures, and Hit@5 does not satura
 
 Run: `bench/results/external-v2/2026-09-10T09-39-18-692Z`. Dataset: `bench/dataset/external-v2.json` (18 cases, 16 answerable, 2 no-evidence). Cases were authored with ordinary git only and saved BEFORE any retrieval run against those clones; misses were kept, never softened.
 
-| repository | commits indexed | records | index disk |
-|---|---|---|---|
-| curl-curl | n/a | n/a | n/a |
-| redis-redis | 12110 | 66588 | 449.9 MiB |
-| psf-requests | 6494 | 19741 | 106.1 MiB |
-| burntsushi-ripgrep | 2287 | 12865 | 87.2 MiB |
-| caddyserver-caddy | 2680 | 18988 | 129.5 MiB |
-| colinhacks-zod | 3210 | 25369 | 161.6 MiB |
+| repository         | commits indexed | records | index disk |
+| ------------------ | --------------- | ------- | ---------- |
+| curl-curl          | n/a             | n/a     | n/a        |
+| redis-redis        | 12110           | 66588   | 449.9 MiB  |
+| psf-requests       | 6494            | 19741   | 106.1 MiB  |
+| burntsushi-ripgrep | 2287            | 12865   | 87.2 MiB   |
+| caddyserver-caddy  | 2680            | 18988   | 129.5 MiB  |
+| colinhacks-zod     | 3210            | 25369   | 161.6 MiB  |
 
-| mode | n | Hit@1 | Hit@3 | Hit@5 | MRR |
-|---|---|---|---|---|---|
-| text | 9 | 22.2% | 22.2% | 33.3% | 0.250 |
-| semantic | 9 | 44.4% | 44.4% | 55.6% | 0.472 |
-| hybrid | 9 | 33.3% | 44.4% | 55.6% | 0.393 |
+| mode     | n   | Hit@1 | Hit@3 | Hit@5 | MRR   |
+| -------- | --- | ----- | ----- | ----- | ----- |
+| text     | 9   | 22.2% | 22.2% | 33.3% | 0.250 |
+| semantic | 9   | 44.4% | 44.4% | 55.6% | 0.472 |
+| hybrid   | 9   | 33.3% | 44.4% | 55.6% | 0.393 |
 
 **Hybrid by repository:**
 
-| repository | n | Hit@5 | MRR |
-|---|---|---|---|
-| curl-curl | 2 | 0.0% | 0.000 |
-| redis-redis | 2 | 50.0% | 0.500 |
-| psf-requests | 2 | 100.0% | 0.600 |
-| burntsushi-ripgrep | 1 | 0.0% | 0.000 |
-| caddyserver-caddy | 1 | 100.0% | 0.333 |
-| colinhacks-zod | 1 | 100.0% | 1.000 |
+| repository         | n   | Hit@5  | MRR   |
+| ------------------ | --- | ------ | ----- |
+| curl-curl          | 2   | 0.0%   | 0.000 |
+| redis-redis        | 2   | 50.0%  | 0.500 |
+| psf-requests       | 2   | 100.0% | 0.600 |
+| burntsushi-ripgrep | 1   | 0.0%   | 0.000 |
+| caddyserver-caddy  | 1   | 100.0% | 0.333 |
+| colinhacks-zod     | 1   | 100.0% | 1.000 |
 
 **Misses (4):**
 
@@ -195,68 +195,68 @@ Run: `bench/results/external-v2/2026-09-10T09-39-18-692Z`. Dataset: `bench/datas
 
 **Outcome rates by stratum and arm** (numerator/denominator includes only valid trials with boolean `pass`; valid rubric trials with `pass: null` are reported as unscored and never enter a success rate):
 
-| stratum | arm | pass | valid | unscored valid | rate |
-|---|---|---:|---:|---:|---:|
-| archaeology | A | 0/0 | 9 | 9 | n/a |
-| archaeology | B | 0/0 | 9 | 9 | n/a |
-| archaeology | C | 0/0 | 7 | 7 | n/a |
-| archaeology | D | 0/0 | 8 | 8 | n/a |
+| stratum     | arm | pass | valid | unscored valid | rate |
+| ----------- | --- | ---: | ----: | -------------: | ---: |
+| archaeology | A   |  0/0 |     9 |              9 |  n/a |
+| archaeology | B   |  0/0 |     9 |              9 |  n/a |
+| archaeology | C   |  0/0 |     7 |              7 |  n/a |
+| archaeology | D   |  0/0 |     8 |              8 |  n/a |
 
 **Citation of the hand-verified commit** (archaeology stratum). Exit categories are kept separate on purpose: a trial that timed out or never started is not a wrong answer, and folding it into a rate silently shrinks the denominator. Every rate below is over COMPLETED trials only.
 
-| arm | cited/graded | rate | ungraded | timeouts | not started | git why calls |
-|---|---:|---:|---:|---:|---:|---:|
-| A | 9/9 | 100.0% | 0 | 0 | 0 | 0 |
-| B | 8/8 | 100.0% | 0 | 1 | 0 | 0 |
-| C | 5/5 | 100.0% | 0 | 3 | 0 | 2 |
-| D | 8/8 | 100.0% | 0 | 0 | 0 | 5 |
+| arm | cited/graded |   rate | ungraded | timeouts | not started | git why calls |
+| --- | -----------: | -----: | -------: | -------: | ----------: | ------------: |
+| A   |          9/9 | 100.0% |        0 |        0 |           0 |             0 |
+| B   |          8/8 | 100.0% |        0 |        1 |           0 |             0 |
+| C   |          5/5 | 100.0% |        0 |        3 |           0 |             2 |
+| D   |          8/8 | 100.0% |        0 |        0 |           0 |             5 |
 
 **Effort on trials that cited correctly** (like-for-like: same outcome, different amount of work). Accuracy saturates here, so this is where any effect of the treatment is visible.
 
-| arm | n | median tool calls | median wall (s) | median output tokens |
-|---|---:|---:|---:|---:|
-| A | 9 | 16 | 50.5 | 1587 |
-| B | 8 | 11 | 40.5 | 1359 |
-| C | 5 | 7 | 65.9 | 967 |
-| D | 8 | 9 | 45.9 | 1207 |
+| arm |   n | median tool calls | median wall (s) | median output tokens |
+| --- | --: | ----------------: | --------------: | -------------------: |
+| A   |   9 |                16 |            50.5 |                 1587 |
+| B   |   8 |                11 |            40.5 |                 1359 |
+| C   |   5 |                 7 |            65.9 |                  967 |
+| D   |   8 |                 9 |            45.9 |                 1207 |
 
 **Paired tool-call cost, arm A vs arm D**, on the 8 task(s) both solved. Arm D used fewer tool calls on 7 of 8.
 
-| task | A | D | delta |
-|---|---:|---:|---:|
-| X-caddy-01 | 17 | 23 | +6 |
-| X-curl-01 | 11 | 9 | -2 |
-| X-redis-01 | 19 | 8 | -11 |
-| X-redis-02 | 11 | 9 | -2 |
-| X-requests-01 | 16 | 8 | -8 |
-| X-requests-02 | 10 | 7 | -3 |
-| X-ripgrep-03 | 17 | 7 | -10 |
-| X-zod-01 | 16 | 15 | -1 |
+| task          |   A |   D | delta |
+| ------------- | --: | --: | ----: |
+| X-caddy-01    |  17 |  23 |    +6 |
+| X-curl-01     |  11 |   9 |    -2 |
+| X-redis-01    |  19 |   8 |   -11 |
+| X-redis-02    |  11 |   9 |    -2 |
+| X-requests-01 |  16 |   8 |    -8 |
+| X-requests-02 |  10 |   7 |    -3 |
+| X-ripgrep-03  |  17 |   7 |   -10 |
+| X-zod-01      |  16 |  15 |    -1 |
 
 Descriptive only: a handful of paired tasks, one repetition, one model. It shows a direction, not an effect size, and no significance is claimed.
 
 **Paired per-task outcomes** (each cell is pass/denominator across repetitions; `n/a` means no boolean outcome, not a failure):
 
-| task | stratum | A | B | C | D |
-|---|---|---|---|---|---|
-| X-caddy-01 | archaeology | n/a | n/a | n/a | n/a |
-| X-curl-01 | archaeology | n/a | n/a | n/a | n/a |
-| X-curl-02 | archaeology | n/a | n/a | n/a | n/a |
-| X-redis-01 | archaeology | n/a | n/a | n/a | n/a |
-| X-redis-02 | archaeology | n/a | n/a | n/a | n/a |
+| task          | stratum     | A   | B   | C   | D   |
+| ------------- | ----------- | --- | --- | --- | --- |
+| X-caddy-01    | archaeology | n/a | n/a | n/a | n/a |
+| X-curl-01     | archaeology | n/a | n/a | n/a | n/a |
+| X-curl-02     | archaeology | n/a | n/a | n/a | n/a |
+| X-redis-01    | archaeology | n/a | n/a | n/a | n/a |
+| X-redis-02    | archaeology | n/a | n/a | n/a | n/a |
 | X-requests-01 | archaeology | n/a | n/a | n/a | n/a |
 | X-requests-02 | archaeology | n/a | n/a | n/a | n/a |
-| X-ripgrep-03 | archaeology | n/a | n/a | n/a | n/a |
-| X-zod-01 | archaeology | n/a | n/a | n/a | n/a |
+| X-ripgrep-03  | archaeology | n/a | n/a | n/a | n/a |
+| X-zod-01      | archaeology | n/a | n/a | n/a | n/a |
 
 **Task-cluster bootstrap interval for success-rate delta vs A** (95% percentile interval; clusters are tasks, so repeated trials from one task stay together; descriptive only):
 
 | arm | task clusters | delta vs A | 95% interval |
-|---|---:|---:|---|
-| A | 0 | n/a | n/a |
-| B | 0 | n/a | n/a |
-| C | 0 | n/a | n/a |
-| D | 0 | n/a | n/a |
+| --- | ------------: | ---------: | ------------ |
+| A   |             0 |        n/a | n/a          |
+| B   |             0 |        n/a | n/a          |
+| C   |             0 |        n/a | n/a          |
+| D   |             0 |        n/a | n/a          |
 
 **Resources** (all attempts retains invalidated and retry cost; successful-only means valid boolean-pass successes):
 
@@ -266,19 +266,19 @@ Descriptive only: a handful of paired tasks, one repetition, one model. It shows
 **Tool adoption / evidence use:**
 
 | arm | trials using git why | git why calls | calls with evidence used | zg calls |
-|---|---:|---:|---:|---:|
-| A | 0 | 0 | 0 | 0 |
-| B | 0 | 0 | 0 | 0 |
-| C | 3 | 3 | 2 | 0 |
-| D | 5 | 6 | 4 | 0 |
+| --- | -------------------: | ------------: | -----------------------: | -------: |
+| A   |                    0 |             0 |                        0 |        0 |
+| B   |                    0 |             0 |                        0 |        0 |
+| C   |                    3 |             3 |                        2 |        0 |
+| D   |                    5 |             6 |                        4 |        0 |
 
 **Invalidated trials** (retained for audit, excluded from outcomes):
 
-| task | stratum | arm | repetition | attempt | reason |
-|---|---|---|---:|---:|---|
-| X-caddy-01 | archaeology | C | 1 | 1 | opencode exited null |
-| X-curl-02 | archaeology | D | 1 | 1 | network_fetch_attempt |
-| X-curl-01 | archaeology | C | 1 | 1 | network_fetch_attempt |
+| task       | stratum     | arm | repetition | attempt | reason                |
+| ---------- | ----------- | --- | ---------: | ------: | --------------------- |
+| X-caddy-01 | archaeology | C   |          1 |       1 | opencode exited null  |
+| X-curl-02  | archaeology | D   |          1 |       1 | network_fetch_attempt |
+| X-curl-01  | archaeology | C   |          1 |       1 | network_fetch_attempt |
 
 ## 6. CLI latency, first-index cost, memory, disk, parallel behavior
 
@@ -327,11 +327,11 @@ Perf run: `2026-09-10T09-09-26-934Z` on Apple M2 / 8 cores / 8.6 GB, against the
 
 ### Concurrent readers
 
-| readers | p50 | p95 | failures | "aggregate" peak RSS (see caveat) |
-|---|---|---|---|---|
-| 2 | 574 ms | 575 ms | 0 | 257.3 MB |
-| 4 | 726 ms | 726 ms | 0 | 222.5 MB |
-| 8 | 1367 ms | 1368 ms | 0 | 150.1 MB |
+| readers | p50     | p95     | failures | "aggregate" peak RSS (see caveat) |
+| ------- | ------- | ------- | -------- | --------------------------------- |
+| 2       | 574 ms  | 575 ms  | 0        | 257.3 MB                          |
+| 4       | 726 ms  | 726 ms  | 0        | 222.5 MB                          |
+| 8       | 1367 ms | 1368 ms | 0        | 150.1 MB                          |
 
 Caveat: aggregatePeakRssKb samples each reader's own process tree independently; true simultaneous aggregate memory would require one shared sampler across all N processes at once, which this per-reader sampler approximates by taking the max of per-reader peaks (a lower bound on true simultaneous aggregate RSS).
 
@@ -349,7 +349,7 @@ Caveat: aggregatePeakRssKb samples each reader's own process tree independently;
 
 - **Sample size.** Dev/test splits are 24 cases each (20 answerable per split after excluding no-evidence and, where noted, exact_identifier); a single-point Hit@k/MRR estimate at this N carries wide uncertainty. Per protocol: this is a provisional product-quality floor, not a statistical claim, and no confidence interval is reported that would imply more precision than the sample supports.
 - **All 6 retrieval fixtures are synthetic**, generated by `bench/fixtures/generate.mjs` (deterministic, seeded), not real-world repositories.
-- **Real-repository validation: EXECUTED (v1 + v2).** v1: 10 answerable cases over  (hybrid Hit@5 n/a, MRR n/a). v2: 16 answerable cases over curl-curl, redis-redis, psf-requests, burntsushi-ripgrep, caddyserver-caddy, colinhacks-zod (hybrid Hit@5 55.6%, MRR 0.393). Each clone verified HEAD-at-pinned-cutoff so no post-cutoff commit is reachable. Unlike the synthetic split, real repositories do NOT saturate. This is the most informative retrieval evidence in this report, and it is weaker than the synthetic numbers. Cases were still authored by the same agent system that built the tool, so this is real-repository evidence but not a blinded study.
+- **Real-repository validation: EXECUTED (v1 + v2).** v1: 10 answerable cases over (hybrid Hit@5 n/a, MRR n/a). v2: 16 answerable cases over curl-curl, redis-redis, psf-requests, burntsushi-ripgrep, caddyserver-caddy, colinhacks-zod (hybrid Hit@5 55.6%, MRR 0.393). Each clone verified HEAD-at-pinned-cutoff so no post-cutoff commit is reachable. Unlike the synthetic split, real repositories do NOT saturate. This is the most informative retrieval evidence in this report, and it is weaker than the synthetic numbers. Cases were still authored by the same agent system that built the tool, so this is real-repository evidence but not a blinded study.
 - **No-evidence handling has no refusal path.** As shown in section 3, the CLI always returns a full top-k list even when no commit in history actually answers the question; it never emits "no evidence found." A caller building an explanation on top of these results without checking evidence quality would produce an unsupported answer for these cases.
 - **Ablation verdict rests on synthetic dev (24 cases) + real v1 (10) + v2 (16).** Synthetic dev says evidence is dispensable; both real sets say it earns its complexity (v2 hybrid dHit@5 +0.375, dMRR +0.280). Decision recorded in 4c: KEEP. Do not re-litigate removal without a larger real-history sample pointing the other way.
 - **Perf corpus is small.** 135 commits vs. the 10k-commit scale docs/spec.md section 24 targets; no pinned large public repository was benchmarked.
