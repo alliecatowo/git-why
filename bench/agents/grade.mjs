@@ -12,7 +12,7 @@
 //     against the rubric out-of-band. The human grade is merged back in
 //     later via mergeManualGrade().
 
-import { spawnSync } from 'node:child_process';
+import { spawnSync, execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, cpSync, rmSync, readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
@@ -203,7 +203,6 @@ export function gradeTrapTask({ meta, finalAnswer, finalPatch, workspaceDir }) {
 
   const has = (terms) => terms.filter((t) => haystack.includes(String(t).toLowerCase()));
 
-  const trapHits = has(meta.trapTerms ?? []);
   const hazardHits = has(meta.hazardTerms ?? []);
 
   // Only the PATCH decides whether the approach was taken. Discussing retries
