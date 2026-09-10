@@ -27,6 +27,37 @@ function outsideWorkspace(candidate, workspace) {
   return rel.startsWith('..') || isAbsolute(rel);
 }
 
+/**
+ * Paths the harness itself puts inside the sandbox.
+ *
+ * The audit exists to catch an agent reaching outside its workspace, but the
+ * runner mounts the task prompt, the agent configuration and the installed
+ * `git why` tooling into the container on purpose. Reading them is the agent
+ * doing exactly what it was set up to do, and flagging them invalidated
+ * legitimate trials -- silently shrinking the denominator, which is worse than
+ * a missed violation because it biases the result rather than merely weakening
+ * it.
+ *
+ * This is an allowlist of the runner's own mounts, not a general escape hatch:
+ * anything outside the workspace that the harness did not put there is still a
+ * violation.
+ */
+const HARNESS_PATHS = [
+  '/prompt/',
+  '/profile-config/',
+  '/data/',
+  '/usr/local/share/man/',
+  '/usr/local/bin/',
+  '/usr/bin/',
+];
+
+function isHarnessPath(candidate) {
+  const normalized = candidate.replace(/\\/g, '/');
+  return HARNESS_PATHS.some(
+    (prefix) => normalized === prefix.slice(0, -1) || normalized.startsWith(prefix),
+  );
+}
+
 export function auditTrajectory({
   rawEvents,
   toolCalls,
@@ -60,6 +91,7 @@ export function auditTrajectory({
           path !== '//' &&
           path !== '/tmp' &&
           !path.startsWith('/tmp/') &&
+          !isHarnessPath(path) &&
           outsideWorkspace(path, workspace)
         )
           violations.push(`path_outside_workspace:${path}`);

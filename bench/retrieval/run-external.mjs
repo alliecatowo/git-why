@@ -43,7 +43,14 @@ const ROOT = path.resolve(HERE, '..', '..');
 const CLI = path.join(ROOT, 'dist', 'cli', 'main.js');
 
 function parseArgs(argv) {
-  const out = { repos: null, dataset: null, modes: 'hybrid', ablation: false, scale: null };
+  const out = {
+    repos: null,
+    dataset: null,
+    modes: 'hybrid',
+    ablation: false,
+    scale: null,
+    split: null,
+  };
   for (const a of argv) {
     const [kRaw, ...vRest] = a.replace(/^--/, '').split('=');
     const v = vRest.join('=');
@@ -52,6 +59,9 @@ function parseArgs(argv) {
     else if (kRaw === 'modes') out.modes = v;
     else if (kRaw === 'ablation') out.ablation = true;
     else if (kRaw === 'scale') out.scale = v;
+    // Restricts scoring to one split. Without it a "measure dev" run silently
+    // executes the held-out cases too, which is how a holdout stops being one.
+    else if (kRaw === 'split') out.split = v;
   }
   return out;
 }
@@ -212,7 +222,9 @@ for (const repo of dataset.repositories) {
     ...(scaleOverrides[repo.id] ?? {}),
   };
 
-  const casesForRepo = dataset.cases.filter((x) => x.repositoryId === repo.id);
+  const casesForRepo = dataset.cases.filter(
+    (x) => x.repositoryId === repo.id && (args.split === null || x.split === args.split),
+  );
   for (const mode of modes) {
     for (const arm of ARMS) {
       for (const c of casesForRepo) {
