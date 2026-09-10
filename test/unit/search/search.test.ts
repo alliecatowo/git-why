@@ -344,4 +344,15 @@ test('an ordinary non-temporal query still takes the byte-identical identity pat
   assert.equal(response.temporal.intent, 'none');
   assert.equal(response.coreQuery, baseRequest.query);
   assert.equal(response.warnings.length, 0);
+  // The gate itself, at the full-response level: `final` must be the exact
+  // fused RRF value, byte-for-bit, not merely "close" -- see docs/spec.md's
+  // hard gate that a non-temporal query ranks bit-identically to the
+  // pre-temporal path. (temporal === 1 and w === 0 are proven separately in
+  // test/unit/search/temporal/score.test.ts; this proves the full response
+  // actually uses them that way.)
+  for (const result of response.results) {
+    assert.equal(result.scores.temporal, 1);
+    assert.equal(result.scores.final, result.scores.fused);
+    assert.equal(result.rankScore, result.scores.fused);
+  }
 });
