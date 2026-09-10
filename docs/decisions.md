@@ -356,3 +356,39 @@ is measured separately in section 4 and holds up on real repositories. What
 the agent pilots measure is whether an agent NEEDS it, and on this question
 set, with these two models, the answer is no for a strong model and unproven
 for a weak one.
+
+## Re-measuring temporal retrieval after the defects were fixed
+
+The 3/15 figure that led to "temporal does not beat baseline" was measured
+against a temporal path that was demonstrably broken. Every temporal query on
+curl returned INTERNAL because structural expansion built a `sha IN (...)`
+filter over all 30,000 commits and exceeded the storage engine's 20,000-term
+limit; ordinal answers keyed on whichever token led the sentence, selecting
+`http` in curl; tokenization discarded `http3` and `h3` entirely; and linked
+commits could occupy every returned slot.
+
+Those were fixed and the measurement was never repeated. Re-running the same
+nine dev cases, same grading, with only the code changed:
+
+| mode     | Hit@1         | Hit@5         | MRR           |
+| -------- | ------------- | ------------- | ------------- |
+| text     | 0.222 → 0.333 | 0.333 → 0.444 | 0.250 → 0.361 |
+| semantic | 0.444 → 0.556 | 0.556 → 0.667 | 0.472 → 0.583 |
+| hybrid   | 0.333 → 0.444 | 0.556 → 0.667 | 0.393 → 0.504 |
+
+Hybrid MRR improves 28% relative. Each mode gains 0.111 on Hit@1 and Hit@5,
+which at n=9 is one case, so the Hit@k movement is a single question changing
+hands and should not be read as more than that. MRR moves across all three
+modes consistently, which is the stronger signal.
+
+Text mode improving is not an anomaly and is worth stating because it looks
+like one. Temporal scoring never touches the lexical branch. What changed is
+that query decomposition now feeds the retrieval branches a temporally neutral
+core -- "when was HTTP/3 support first introduced in curl" becomes "HTTP/3
+support in curl" -- so the FTS branch gets cleaner terms regardless of mode.
+The decomposition earns its place through the core extraction, independently
+of the scoring built on top of it.
+
+This is a re-measurement after fixing known defects, not a new configuration:
+the cases, split, grading and gold commits are unchanged, and the earlier run
+is superseded because the code under test was crashing.
