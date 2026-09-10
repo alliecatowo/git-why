@@ -60,7 +60,19 @@ const ARMS = ['A', 'B', 'C', 'D'];
 // (read a file, trivial edit, produce valid output) -- see bench/README.md.
 // Re-run calibration before trusting this choice for a real pilot; free
 // model availability changes.
-const DEFAULT_MODEL = 'opencode/big-pickle';
+// Set by the repository owner on 2026-09-10, recorded with the approval,
+// model id, timestamp and verification in bench/protocol.json's
+// `billedModelBudget`. This is a BILLED DevPass model, not the free cohort.
+//
+// It is also the fix for a hard blocker rather than a preference: the free
+// Console gateway returns HTTP 429 FreeUsageLimitError once a run burns its
+// quota, so a 224-trial pilot cannot complete on the free cohort no matter
+// how clean the harness is.
+//
+// Catalog price is deliberately NOT recorded anywhere, because `opencode
+// models` does not expose per-token pricing. Cost is measured from observed
+// token usage per trial; nothing may infer a price from its absence.
+const DEFAULT_MODEL = process.env.BENCH_MODEL || 'llmgateway/deepseek-v4-flash';
 
 // Output tokens are measured in full but deliberately not capped. A model
 // can spend more text reasoning through a difficult history task without
@@ -535,8 +547,7 @@ function isInfrastructureError(trialResult) {
   // outage before any step_finish) is infrastructure; a completed run with
   // a wrong/incomplete answer is a model outcome, not infrastructure.
   return (
-    (trialResult.exitCode === null && trialResult.eventCount === 0) ||
-    isRateLimitError(trialResult)
+    (trialResult.exitCode === null && trialResult.eventCount === 0) || isRateLimitError(trialResult)
   );
 }
 
