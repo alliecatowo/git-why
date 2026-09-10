@@ -1,0 +1,104 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b31b62c..53172be 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,7 +1,96 @@
+ // Delivers notifications to notify-service.
+-async function deliver(io, event) {
+-  const res = await io.post('/notify', event);
+-  return res;
++//
++// notify-service dedupes on the X-Event-Id header, so redelivering the
++// same event is a no-op and callers are safe to retry (docs/notify.md).
++// Intermittent 502s (and other transient failures) are therefore retried
++// with bounded exponential backoff + jitter so a blip on the service side
++// no longer turns into a silently missed notification.
++
++const DEFAULT_MAX_RETRIES = 3; // up to 4 attempts total
++const DEFAULT_BASE_DELAY_MS = 100;
++const DEFAULT_MAX_DELAY_MS = 2000;
++const DEFAULT_JITTER = true;
++
++function sleep(ms) {
++  return new Promise((resolve) => setTimeout(resolve, ms));
++}
++
++function backoffDelay(attempt, baseDelayMs, maxDelayMs, jitter) {
++  const exp = Math.min(baseDelayMs * 2 ** attempt, maxDelayMs);
++  if (!jitter) return exp;
++  // Full jitter: randomize within [0, exp) so a burst of retries after an
++  // outage doesn't all hit notify-service at the same instant.
++  return Math.floor(Math.random() * exp);
++}
++
++function statusOf(res) {
++  if (res == null) return undefined;
++  return res.status ?? res.statusCode;
++}
++
++// Transient failures are worth retrying: network errors (io.post throws)
++// and responses that indicate the request never committed server-side
++// (408/429/5xx). Client errors (4xx) are not retried -- they will fail
++// identically every time.
++function isTransientFailure(res) {
++  if (res == null) return true; // unknown outcome; retry is safe (dedup)
++  const status = statusOf(res);
++  if (typeof status !== 'number') return false; // assume success
++  return status === 408 || status === 429 || status >= 500;
++}
++
++function describeFailure(res) {
++  const status = statusOf(res);
++  return status === undefined ? 'empty response' : `status ${status}`;
++}
++
++// The idempotency key notify-service uses to deduplicate. Retries are only
++// safe as long as every attempt carries the same id.
++function eventId(event) {
++  if (event == null) return undefined;
++  if (typeof event.id === 'string') return event.id;
++  if (typeof event.eventId === 'string') return event.eventId;
++  return undefined;
++}
++
++function post(io, event) {
++  const id = eventId(event);
++  if (id) {
++    return io.post('/notify', event, { headers: { 'X-Event-Id': id } });
++  }
++  return io.post('/notify', event);
++}
++
++async function deliver(io, event, options = {}) {
++  const maxRetries = options.maxRetries ?? DEFAULT_MAX_RETRIES;
++  const baseDelayMs = options.baseDelayMs ?? DEFAULT_BASE_DELAY_MS;
++  const maxDelayMs = options.maxDelayMs ?? DEFAULT_MAX_DELAY_MS;
++  const jitter = options.jitter ?? DEFAULT_JITTER;
++
++  let lastError;
++
++  for (let attempt = 0; attempt <= maxRetries; attempt++) {
++    try {
++      const res = await post(io, event);
++      if (!isTransientFailure(res)) {
++        return res;
++      }
++      lastError = new Error(
++        `notify-service delivery failed (${describeFailure(res)})`
++      );
++    } catch (err) {
++      // io.post threw: network error, connection reset, timeout, etc.
++      // All are transient, so retry; if every attempt fails the error
++      // below surfaces to the caller.
++      lastError = err;
++    }
++
++    if (attempt < maxRetries) {
++      await sleep(backoffDelay(attempt, baseDelayMs, maxDelayMs, jitter));
++    }
++  }
++
++  throw lastError;
+ }
+ 
+ module.exports = { deliver };

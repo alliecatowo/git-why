@@ -1,0 +1,184 @@
+{
+  "task_id": "CTRL-retry",
+  "task_stratum": "trap",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "31720d26d1aba8812f0dabaa65a9e5053c037dd3",
+  "corpus_fingerprint": "31720d26d1aba8812f0dabaa65a9e5053c037dd3",
+  "implementation_sha": "bcf542ef294ba20ff8464498139a2eb5fbcc385e",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:17:08.585Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "8011608a0e2a8e99e388875978ee2ab10b8ef0701c532759f693fc477eb365dd",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "control",
+    "pass": true,
+    "usedApproach": [
+      "retry",
+      "retries",
+      "backoff",
+      "attempt"
+    ],
+    "engagedHazard": null,
+    "citedHistory": true,
+    "citedShas": [
+      "dca6906"
+    ]
+  },
+  "wall_ms": 112061,
+  "tool_calls": 24,
+  "history_calls": 9,
+  "zg_calls": 0,
+  "git_why_calls": 4,
+  "input_tokens": 26540,
+  "output_tokens": 3874,
+  "cache_read_tokens": 187648,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0042505799999999995,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 97587,
+  "index_build_ms": 2719,
+  "model_download_ms": null,
+  "index_disk_bytes": 6410388,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T21-16-13-185Z/events/CTRL-retry-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "802d358762ca15c2a1de775198bf5e8141217e032fbfb28e7daeaa71703b48bb",
+  "indexed_commits": 217,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_onqolpiixyj4j2qgpgbs8u3j",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20"
+        },
+        "output": "31720d2 chore: dispatcher comment\n1268cdc chore: follow-up maintenance 039\nca9adbd chore: follow-up maintenance 038\n55753bc chore: follow-up maintenance 037\n37bb523 chore: follow-up maintenance 036\n682d575 chore: follow-up maintenance 035\n685e127 chore: follow-up maintenance 034\n84ea51f chore: follow-up maintenance 033\nf695ddf chore: follow-up maintenance 032\nd65812c chore: follow-up maintenance 031\nbb2b22a chore: follow-up maintenance 030\n7868450 chore: follow-up maintenance 029\n5de6386 chore: follow-up maintenance 028\nf685195 chore: follow-up maintenance 027\n5a07ccc chore: follow-up maintenance 026\n5eab49e chore: follow-up maintenance 025\n64c5ccd chore: follow-up maintenance 024\nac587dc chore: follow-up maintenance 023\nf6a213b chore: follow-up maintenance 022\n06cd2a0 chore: follow-up maintenance 021\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ia5x6o105eeasf3lly8867up",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | head -30"
+        },
+        "output": "31720d2 chore: dispatcher comment\n1268cdc chore: follow-up maintenance 039\nca9adbd chore: follow-up maintenance 038\n55753bc chore: follow-up maintenance 037\n37bb523 chore: follow-up maintenance 036\n682d575 chore: follow-up maintenance 035\n685e127 chore: follow-up maintenance 034\n84ea51f chore: follow-up maintenance 033\nf695ddf chore: follow-up maintenance 032\nd65812c chore: follow-up maintenance 031\nbb2b22a chore: follow-up maintenance 030\n7868450 chore: follow-up maintenance 029\n5de6386 chore: follow-up maintenance 028\nf685195 chore: follow-up maintenance 027\n5a07ccc chore: follow-up maintenance 026\n5eab49e chore: follow-up maintenance 025\n64c5ccd chore: follow-up maintenance 024\nac587dc chore: follow-up maintenance 023\nf6a213b chore: follow-up maintenance 022\n06cd2a0 chore: follow-up maintenance 021\n9f9215e chore: follow-up maintenance 020\ne4190e8 chore: follow-up maintenance 019\n8df3627 chore: follow-up maintenance 018\n9ec0fd2 chore: follow-up maintenance 017\nfb36e27 chore: follow-up maintenance 016\n5576912 chore: follow-up maintenance 015\n17caae4 chore: follow-up maintenance 014\n533f8fe chore: follow-up maintenance 013\nedaeae7 chore: follow-up maintenance 012\n61ed520 chore: follow-up maintenance 011\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_uavpntt85qxgmevkp1ojur54",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- src/dispatcher.js"
+        },
+        "output": "31720d2 chore: dispatcher comment\n1268cdc chore: follow-up maintenance 039\nca9adbd chore: follow-up maintenance 038\n55753bc chore: follow-up maintenance 037\n37bb523 chore: follow-up maintenance 036\n682d575 chore: follow-up maintenance 035\n685e127 chore: follow-up maintenance 034\n84ea51f chore: follow-up maintenance 033\nf695ddf chore: follow-up maintenance 032\nd65812c chore: follow-up maintenance 031\nbb2b22a chore: follow-up maintenance 030\n7868450 chore: follow-up maintenance 029\n5de6386 chore: follow-up maintenance 028\nf685195 chore: follow-up maintenance 027\n5a07ccc chore: follow-up maintenance 026\n5eab49e chore: follow-up maintenance 025\n64c5ccd chore: follow-up maintenance 024\nac587dc chore: follow-up maintenance 023\nf6a213b chore: follow-up maintenance 022\n06cd2a0 chore: follow-up maintenance 021\n9f9215e chore: follow-up maintenance 020\ne4190e8 chore: follow-up maintenance 019\n8df3627 chore: follow-up maintenance 018\n9ec0fd2 chore: follow-up maintenance 017\nfb36e27 chore: follow-up maintenance 016\n5576912 chore: follow-up maintenance 015\n17caae4 chore: follow-up maintenance 014\n533f8fe chore: follow-up maintenance 013\nedaeae7 chore: follow-up maintenance 012\n61ed520 chore: follow-up maintenance 011\na014bab chore: follow-up maintenance 010\n1d133f8 chore: follow-up maintenance 009\n33a6c49 chore: follow-up maintenance 008\ne3476f9 chore: follow-up maintenance 007\n459a874 chore: follow-up maintenance 006\n0e0b87d chore: follow-up maintenance 005\n24a7634 chore: follow-up maintenance 004\n051b7c6 chore: follow-up maintenance 003\n9d4989b chore: follow-up maintenance 002\nd4b2bdd chore: follow-up maintenance 001\ne0af33e chore: follow-up maintenance 000\n08adc34 chore: routine upkeep pass 044\n7b98866 chore: routine upkeep pass 043\n010fa1f chore: routine upkeep pass 042\nc0b6425 chore: routine upkeep pass 041\n7138525 chore: routine upkeep pass 040\nc5919b6 chore: routine upkeep pass 039\ncc3d44a chore: routine upkeep pass 038\n240ed0c chore: routine upkeep pass 037\n6ce426f chore: routine upkeep pass 036\n1044d90 chore: routine upkeep pass 035\n873ad5a chore: routine upkeep pass 034\n98bcd22 chore: routine upkeep pass 033\nde79972 chore: routine upkeep pass 032\nd7359df chore: routine upkeep pass 031\n6ccf86b chore: routine upkeep pass 030\ne8ef2ea chore: routine upkeep pass 029\ne04804c chore: routine upkeep pass 028\n83b60bf chore: routine upkeep pass 027\nbe2a7e8 chore: routine upkeep pass 026\n6bf6baf chore: routine upkeep pass 025\n90545fe chore: routine upkeep pass 024\n9561973 chore: routine upkeep pass 023\ncf66dbd chore: routine upkeep pass 022\ndd8e136 chore: routine upkeep pass 021\naca9554 chore: routine upkeep pass 020\n358e51c chore: routine upkeep pass 019\n1eb97ec chore: routine upkeep pass 018\n6b0bd7f chore: routine upkeep pass 017\n67a7951 chore: routine upkeep pass 016\nf4109e3 chore: routine upkeep pass 015\n967e423 chore: routine upkeep pass 014\na9d2c21 chore: routine upkeep pass 013\nd5c80c0 chore: routine upkeep pass 012\n487b239 chore: routine upkeep pass 011\n2bacb3c chore: routine upkeep pass 010\nf12982c chore: routine upkeep pass 009\ndf4bf87 chore: routine upkeep pass 008\n747d786 chore: routine upkeep pass 007\nd55b787 chore: routine upkeep pass 006\neaa1d26 chore: routine upkeep pass 005\ndf9fd90 chore: routine upkeep pass 004\n6d832fa chore: routine upkeep pass 003\ne0aa860 chore: routine upkeep pass 002\n930666d chore: routine upkeep pass 001\n6ec9e42 chore: routine upkeep pass 000\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_og3gkc339ik8q1s01kl2yjd2",
+        "status": "completed",
+        "input": {
+          "command": "git show 31720d2 --stat && git show 1268cdc --stat"
+        },
+        "output": "commit 31720d26d1aba8812f0dabaa65a9e5053c037dd3\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Dec 17 01:46:40 2023 +0000\n\n    chore: dispatcher comment\n\n src/dispatcher.js | 175 ++----------------------------------------------------\n 1 file changed, 6 insertions(+), 169 deletions(-)\ncommit 1268cdc438055582199994224e0c5879855b8411\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Dec 17 00:46:40 2023 +0000\n\n    chore: follow-up maintenance 039\n\n src/dispatcher.js | 2 ++\n 1 file changed, 2 insertions(+)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_npaefx5ktsd1sbnxw1tvaei4",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --follow -- src/dispatcher.js | tail -20"
+        },
+        "output": "358e51c chore: routine upkeep pass 019\n1eb97ec chore: routine upkeep pass 018\n6b0bd7f chore: routine upkeep pass 017\n67a7951 chore: routine upkeep pass 016\nf4109e3 chore: routine upkeep pass 015\n967e423 chore: routine upkeep pass 014\na9d2c21 chore: routine upkeep pass 013\nd5c80c0 chore: routine upkeep pass 012\n487b239 chore: routine upkeep pass 011\n2bacb3c chore: routine upkeep pass 010\nf12982c chore: routine upkeep pass 009\ndf4bf87 chore: routine upkeep pass 008\n747d786 chore: routine upkeep pass 007\nd55b787 chore: routine upkeep pass 006\neaa1d26 chore: routine upkeep pass 005\ndf9fd90 chore: routine upkeep pass 004\n6d832fa chore: routine upkeep pass 003\ne0aa860 chore: routine upkeep pass 002\n930666d chore: routine upkeep pass 001\n6ec9e42 chore: routine upkeep pass 000\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3s6ek0elqlp5eh9ejn740q57",
+        "status": "completed",
+        "input": {
+          "command": "git show 6ec9e42:src/dispatcher.js"
+        },
+        "output": "\n// touched: pass 0\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_zjzuv2ttm95jrgxbi56o8ecq",
+        "status": "completed",
+        "input": {
+          "command": "git show 31720d2^:src/dispatcher.js | head -80"
+        },
+        "output": "\n// touched: pass 0\n\n// touched: pass 1\n\n// touched: pass 2\n\n// touched: pass 3\n\n// touched: pass 4\n\n// touched: pass 5\n\n// touched: pass 6\n\n// touched: pass 7\n\n// touched: pass 8\n\n// touched: pass 9\n\n// touched: pass 10\n\n// touched: pass 11\n\n// touched: pass 12\n\n// touched: pass 13\n\n// touched: pass 14\n\n// touched: pass 15\n\n// touched: pass 16\n\n// touched: pass 17\n\n// touched: pass 18\n\n// touched: pass 19\n\n// touched: pass 20\n\n// touched: pass 21\n\n// touched: pass 22\n\n// touched: pass 23\n\n// touched: pass 24\n\n// touched: pass 25\n\n// touched: pass 26\n\n// touched: pass 27\n\n// touched: pass 28\n\n// touched: pass 29\n\n// touched: pass 30\n\n// touched: pass 31\n\n// touched: pass 32\n\n// touched: pass 33\n\n// touched: pass 34\n\n// touched: pass 35\n\n// touched: pass 36\n\n// touched: pass 37\n\n// touched: pass 38\n\n// touched: pass 39\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ngx8jvqwwecw2ukr0hr9m6oi",
+        "status": "completed",
+        "input": {
+          "command": "git show dca6906 --stat && git show dca6906 --format=fuller -- docs/notify.md"
+        },
+        "output": "commit dca6906b5d2d9379a7eb8c6dcfb6059d3523f821\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Dec 15 08:46:40 2023 +0000\n\n    notify-service: document idempotent delivery semantics\n    \n    notify-service dedupes on the X-Event-Id header, so a redelivery of\n    the same event is a no-op. Callers are safe to retry.\n\n docs/notify.md | 3 +++\n 1 file changed, 3 insertions(+)\ncommit dca6906b5d2d9379a7eb8c6dcfb6059d3523f821\nAuthor:     Fixture Bot <fixture-bot@git-why.bench>\nAuthorDate: Fri Dec 15 08:46:40 2023 +0000\nCommit:     Fixture Bot <fixture-bot@git-why.bench>\nCommitDate: Fri Dec 15 08:46:40 2023 +0000\n\n    notify-service: document idempotent delivery semantics\n    \n    notify-service dedupes on the X-Event-Id header, so a redelivery of\n    the same event is a no-op. Callers are safe to retry.\n\ndiff --git a/docs/notify.md b/docs/notify.md\nnew file mode 100644\nindex 0000000..37a52c9\n--- /dev/null\n+++ b/docs/notify.md\n@@ -0,0 +1,3 @@\n+# notify-service\n+\n+Deduplicates on `X-Event-Id`. Retries are safe.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_18qldexwf46ioatr6uyw76wi",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -- docs/ | head; echo ---; ls -la /workspace/docs"
+        },
+        "output": "dca6906 notify-service: document idempotent delivery semantics\n---\ntotal 4\ndrwxr-xr-x 3 bench bench  96 Sep 10 21:17 .\ndrwxr-xr-x 6 bench bench 192 Sep 10 21:17 ..\n-rw-r--r-- 1 bench bench  66 Sep 10 21:17 notify.md\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "31720d26d1aba8812f0dabaa65a9e5053c037dd3"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/802d358762ca15c2a1de775198bf5e8141217e032fbfb28e7daeaa71703b48bb",
+  "completed": true
+}

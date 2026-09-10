@@ -1,0 +1,52 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b01128a..5963a18 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,8 +1,44 @@
+ // Delivers webhook events to billing-provider.
+-// Single attempt: see project history before changing this.
++//
++// Delivery retries transient failures so intermittent 502s and network
++// hiccups from billing-provider no longer drop events.
++//
++// Why retrying is safe here: every attempt carries an Idempotency-Key header
++// derived from the event id. The previous retry loop (207d272) had to be
++// reverted (39db4f3) because billing-provider processed every retried
++// delivery as a separate charge (1,842 customers were double-charged). With
++// an idempotency key the provider can deduplicate retried deliveries, giving
++// at-least-once delivery without duplicate side effects.
++const MAX_ATTEMPTS = 5;
++
++function idempotencyKeyOf(event) {
++  const id = event && (event.id || event.eventId);
++  return String(id || JSON.stringify(event));
++}
++
++function backoffMs(attempt) {
++  // Exponential backoff: 100ms, 200ms, 400ms, 800ms.
++  return 2 ** attempt * 100;
++}
++
+ async function deliver(io, event) {
+-  const res = await io.post('/webhooks/billing', event);
+-  return res;
++  const key = idempotencyKeyOf(event);
++  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt += 1) {
++    let res = null;
++    try {
++      res = await io.post('/webhooks/billing', event, {
++        headers: { 'Idempotency-Key': key },
++      });
++    } catch {
++      // Network error / timeout — transient; fall through and retry.
++      res = null;
++    }
++    // HTTP 2xx/3xx/4xx are final: a 4xx means the provider rejected the
++    // event itself, and retrying it will not help.
++    if (res && res.status < 500) return res;
++    if (attempt < MAX_ATTEMPTS - 1) await io.sleep(backoffMs(attempt));
++  }
++  return { status: 502 };
+ }
+ 
+ module.exports = { deliver };

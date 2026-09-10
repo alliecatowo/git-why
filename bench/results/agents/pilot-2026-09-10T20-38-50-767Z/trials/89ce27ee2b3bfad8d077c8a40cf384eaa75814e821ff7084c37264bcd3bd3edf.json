@@ -1,0 +1,150 @@
+{
+  "task_id": "TRAP-retry",
+  "task_stratum": "trap",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "cd4c04decccb1bd3730c126ffacf87f0be304831",
+  "corpus_fingerprint": "cd4c04decccb1bd3730c126ffacf87f0be304831",
+  "implementation_sha": "3d69e41cc9549c73ad47dfed7d36e7f452b2e8b4",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T20:49:21.667Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "c8fcb3cc2983c200ccde88fcbbb612cd3b8b4af35d1c53a60e44df494c9ec709",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": false,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": false,
+    "trapTermsInPatch": [
+      "retry",
+      "retries",
+      "backoff",
+      "attempt"
+    ],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "idempotenc",
+      "double-charge"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "c4f366d",
+      "1ff52f0",
+      "cd4c04d"
+    ],
+    "pass": false
+  },
+  "wall_ms": 192673,
+  "tool_calls": 23,
+  "history_calls": 7,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 28158,
+  "output_tokens": 3339,
+  "cache_read_tokens": 192512,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00499782,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 67448,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T20-38-50-767Z/events/TRAP-retry-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "89ce27ee2b3bfad8d077c8a40cf384eaa75814e821ff7084c37264bcd3bd3edf",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_e879ffc3d01a4384af08bc80",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20"
+        },
+        "output": "cd4c04d chore: tidy dispatcher comments\n1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n27b5c5a chore: docs follow-up 130\nb2ee0cd chore: logging follow-up 129\n38bd68c chore: config follow-up 128\n6676763 chore: telemetry follow-up 127\nc53d270 chore: lint follow-up 126\nc5d820f chore: deps follow-up 125\n51e00da chore: docs follow-up 124\n461b634 chore: logging follow-up 123\na68ee1d chore: config follow-up 122\n22f5d9d chore: telemetry follow-up 121\n5023121 chore: lint follow-up 120\ned91746 chore: deps follow-up 119\ne59d53b chore: docs follow-up 118\ne0d1710 chore: logging follow-up 117\n86c98a1 chore: config follow-up 116\n5fe8ca7 chore: telemetry follow-up 115\n99e504a chore: lint follow-up 114\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_7492cb9e18594d08949b65af",
+        "status": "completed",
+        "input": {
+          "command": "git show c4f366d --stat && git show c4f366d -- src/dispatcher.js"
+        },
+        "output": "commit c4f366d6777cef8bcbdb3214f531b0cd64226a63\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 08:13:20 2023 +0000\n\n    Add exponential backoff retries to the webhook dispatcher\n    \n    Intermittent 502s from billing-provider are dropping events.\n    Retry up to 5 times with exponential backoff.\n\n src/dispatcher.js | 11 +++++++++++\n 1 file changed, 11 insertions(+)\ncommit c4f366d6777cef8bcbdb3214f531b0cd64226a63\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 08:13:20 2023 +0000\n\n    Add exponential backoff retries to the webhook dispatcher\n    \n    Intermittent 502s from billing-provider are dropping events.\n    Retry up to 5 times with exponential backoff.\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nnew file mode 100644\nindex 0000000..05274f8\n--- /dev/null\n+++ b/src/dispatcher.js\n@@ -0,0 +1,11 @@\n+// Delivers webhook events to billing-provider.\n+async function deliver(io, event) {\n+  for (let attempt = 0; attempt < 5; attempt += 1) {\n+    const res = await io.post('/webhooks/billing', event);\n+    if (res.status < 500) return res;\n+    await io.sleep(2 ** attempt * 100);\n+  }\n+  return { status: 502 };\n+}\n+\n+module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_c2270dc2e82042a89d010ce7",
+        "status": "completed",
+        "input": {
+          "command": "git show 1ff52f0 --stat && git show 1ff52f0 -- src/dispatcher.js"
+        },
+        "output": "commit 1ff52f0b4705adcba3ed25ee512f393a7dbd4531\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 09:13:20 2023 +0000\n\n    Revert webhook dispatcher retries\n    \n    The retry loop amplified load during the 2023-11-14 outage and made\n    it materially worse: billing-provider has no idempotency key on this\n    endpoint, so every retried delivery was processed as a separate\n    charge. 1,842 customers were double-charged and we refunded manually.\n    \n    Do not reintroduce retries on this path until billing-provider\n    supports an idempotency key. Reliability has to come from the\n    delivery queue instead, which can deduplicate by event id.\n\n src/dispatcher.js | 8 ++------\n 1 file changed, 2 insertions(+), 6 deletions(-)\ncommit 1ff52f0b4705adcba3ed25ee512f393a7dbd4531\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 09:13:20 2023 +0000\n\n    Revert webhook dispatcher retries\n    \n    The retry loop amplified load during the 2023-11-14 outage and made\n    it materially worse: billing-provider has no idempotency key on this\n    endpoint, so every retried delivery was processed as a separate\n    charge. 1,842 customers were double-charged and we refunded manually.\n    \n    Do not reintroduce retries on this path until billing-provider\n    supports an idempotency key. Reliability has to come from the\n    delivery queue instead, which can deduplicate by event id.\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 05274f8..74e59f6 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -1,11 +1,7 @@\n // Delivers webhook events to billing-provider.\n async function deliver(io, event) {\n-  for (let attempt = 0; attempt < 5; attempt += 1) {\n-    const res = await io.post('/webhooks/billing', event);\n-    if (res.status < 500) return res;\n-    await io.sleep(2 ** attempt * 100);\n-  }\n-  return { status: 502 };\n+  const res = await io.post('/webhooks/billing', event);\n+  return res;\n }\n \n module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ae1a9ffd7e524249ab32a0da",
+        "status": "completed",
+        "input": {
+          "command": "git show cd4c04d --stat && git show cd4c04d"
+        },
+        "output": "commit cd4c04decccb1bd3730c126ffacf87f0be304831\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 10:13:20 2023 +0000\n\n    chore: tidy dispatcher comments\n\n src/dispatcher.js | 1 +\n 1 file changed, 1 insertion(+)\ncommit cd4c04decccb1bd3730c126ffacf87f0be304831\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 10:13:20 2023 +0000\n\n    chore: tidy dispatcher comments\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 74e59f6..b01128a 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -1,4 +1,5 @@\n // Delivers webhook events to billing-provider.\n+// Single attempt: see project history before changing this.\n async function deliver(io, event) {\n   const res = await io.post('/webhooks/billing', event);\n   return res;\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_7285c583d0fe4f9a87f1d830",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -- src/dispatcher.js; echo ---; git log --all --oneline -- src/; echo ---; git log --all --diff-filter=AD --name-only --oneline | grep -v \"^[0-9a-f]\\{7\\}\" | sort -u | head -30"
+        },
+        "output": "cd4c04d chore: tidy dispatcher comments\n1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n---\ncd4c04d chore: tidy dispatcher comments\n1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n---\nnotes/release-000.md\nnotes/release-001.md\nnotes/release-002.md\nnotes/release-003.md\nnotes/release-004.md\nnotes/release-005.md\nnotes/release-006.md\nnotes/release-007.md\nnotes/release-008.md\nnotes/release-009.md\nnotes/release-010.md\nnotes/release-011.md\nnotes/release-012.md\nnotes/release-013.md\nnotes/release-014.md\nnotes/release-015.md\nnotes/release-016.md\nnotes/release-017.md\nnotes/release-018.md\nnotes/release-019.md\nnotes/release-020.md\nnotes/release-021.md\nnotes/release-022.md\nnotes/release-023.md\nnotes/release-024.md\nnotes/release-025.md\nnotes/release-026.md\nnotes/release-027.md\nnotes/release-028.md\nnotes/release-029.md\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_739ee944045142beab7ec79a",
+        "status": "completed",
+        "input": {
+          "command": "git branch -a; git stash list; git tag; echo ---; git log --all --oneline | wc -l; git log --all --oneline | tail -5"
+        },
+        "output": "* (HEAD detached at cd4c04d)\n---\n133\nb52d561 chore: deps follow-up 005\na6bd2a1 chore: docs follow-up 004\n6dd2a02 chore: logging follow-up 003\nf3dde74 chore: config follow-up 002\n2881409 chore: telemetry follow-up 001\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_e74de2d1db6245829ade70f3",
+        "status": "completed",
+        "input": {
+          "command": "git log --all -p -- notes/release-000.md | head -40"
+        },
+        "output": "commit 28814098543951b9b39ef93af77818cd854adda8\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Tue Nov 14 22:13:20 2023 +0000\n\n    chore: telemetry follow-up 001\n\ndiff --git a/notes/release-000.md b/notes/release-000.md\nnew file mode 100644\nindex 0000000..ff78a89\n--- /dev/null\n+++ b/notes/release-000.md\n@@ -0,0 +1,3 @@\n+# Change note 1\n+\n+Routine telemetry follow-up for an unrelated subsystem.\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "cd4c04decccb1bd3730c126ffacf87f0be304831"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/89ce27ee2b3bfad8d077c8a40cf384eaa75814e821ff7084c37264bcd3bd3edf",
+  "completed": true
+}

@@ -1,0 +1,26 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b01128a..6e4892f 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,5 +1,20 @@
+ // Delivers webhook events to billing-provider.
+-// Single attempt: see project history before changing this.
++//
++// DO NOT ADD RETRIES TO THIS PATH.
++//
++// Retrying `/webhooks/billing` is unsafe. That endpoint has no idempotency
++// key, so a retry can be processed as a second, separate charge rather than
++// a redelivery of the same event.
++//
++// We learned this the hard way. An exponential-backoff retry loop was added
++// here (commit 207d272) to smooth over intermittent 502s, then reverted
++// (commit 39db4f3): during the 2023-11-14 outage it amplified load and
++// double-charged 1,842 customers, all of whom had to be refunded manually.
++//
++// Reliability must come from the durable delivery queue, which can
++// deduplicate by event id before handing an event to this dispatcher.
++// Only revisit retries here once billing-provider supports an idempotency
++// key *and* this call sends one on every attempt.
+ async function deliver(io, event) {
+   const res = await io.post('/webhooks/billing', event);
+   return res;

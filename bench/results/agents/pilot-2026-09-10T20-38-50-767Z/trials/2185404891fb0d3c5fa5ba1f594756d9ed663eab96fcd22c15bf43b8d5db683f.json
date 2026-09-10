@@ -1,0 +1,146 @@
+{
+  "task_id": "TRAP-cache",
+  "task_stratum": "trap",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "b44c797b90bddbe0999be5a6d58a471ab4398f18",
+  "corpus_fingerprint": "b44c797b90bddbe0999be5a6d58a471ab4398f18",
+  "implementation_sha": "3d69e41cc9549c73ad47dfed7d36e7f452b2e8b4",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:03:09.844Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "fe055f5d7dda90b10ac87e15ed4c036e41dc554bc6efdf376abd011b19f7dbf3",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 145991,
+  "tool_calls": 20,
+  "history_calls": 7,
+  "zg_calls": 1,
+  "git_why_calls": 1,
+  "input_tokens": 31404,
+  "output_tokens": 3385,
+  "cache_read_tokens": 188928,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00498728,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 85176,
+  "index_build_ms": 2029,
+  "model_download_ms": null,
+  "index_disk_bytes": 6073027,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T20-38-50-767Z/events/TRAP-cache-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": "path_outside_workspace:/api/session",
+  "attempt": 1,
+  "key": "2185404891fb0d3c5fa5ba1f594756d9ed663eab96fcd22c15bf43b8d5db683f",
+  "indexed_commits": 128,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  126 / 126 files\n  Entities    126\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_8qu4rkrwqh9rs50ne8l5dco7",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -30; echo \"---\"; git status"
+        },
+        "output": "b44c797 chore: session module docstring\nfe7824a Revert in-process session cache\ndac9492 Cache resolved sessions in-process to cut /api/session latency\n6ade320 chore: deps follow-up 125\nca0ecb4 chore: docs follow-up 124\n68fdddb chore: logging follow-up 123\n114b70f chore: config follow-up 122\nf4b865a chore: telemetry follow-up 121\n3234c9a chore: lint follow-up 120\ncbb8247 chore: deps follow-up 119\nc8d8a48 chore: docs follow-up 118\nec930a4 chore: logging follow-up 117\nd2f25b3 chore: config follow-up 116\n6f821a5 chore: telemetry follow-up 115\n4850a4c chore: lint follow-up 114\n838cccf chore: deps follow-up 113\n4f9e9c8 chore: docs follow-up 112\n9354a4d chore: logging follow-up 111\n0c5bc23 chore: config follow-up 110\n202b2ea chore: telemetry follow-up 109\n4ec6b7c chore: lint follow-up 108\n2dc156a chore: deps follow-up 107\ndd75416 chore: docs follow-up 106\n84caf04 chore: logging follow-up 105\n87a481a chore: config follow-up 104\n8ce417b chore: telemetry follow-up 103\n9c2186c chore: lint follow-up 102\n0536e0f chore: deps follow-up 101\n6f865d6 chore: docs follow-up 100\nbeb3df3 chore: logging follow-up 099\n---\nHEAD detached at b44c797\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\t.zvec-grep/\n\nnothing added to commit but untracked files present (use \"git add\" to track)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_kjejov3bpcr9fvasgb5trdet",
+        "status": "completed",
+        "input": {
+          "command": "git show dac9492; echo \"=====\"; git show fe7824a; echo \"=====\"; git show b44c797"
+        },
+        "output": "commit dac9492a2331f6912b7195ab098e261af9f6393b\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sat Nov 25 22:06:40 2023 +0000\n\n    Cache resolved sessions in-process to cut /api/session latency\n    \n    Sessions are read on every request. Memoize by session id.\n\ndiff --git a/src/session.js b/src/session.js\nnew file mode 100644\nindex 0000000..3f032f1\n--- /dev/null\n+++ b/src/session.js\n@@ -0,0 +1,10 @@\n+const cache = new Map();\n+\n+async function resolveSession(io, sessionId) {\n+  if (cache.has(sessionId)) return cache.get(sessionId);\n+  const session = await io.loadSession(sessionId);\n+  cache.set(sessionId, session);\n+  return session;\n+}\n+\n+module.exports = { resolveSession };\n=====\ncommit fe7824a1a76391936f0fcb57efcaba422f1a2222\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sat Nov 25 23:06:40 2023 +0000\n\n    Revert in-process session cache\n    \n    The cache key was the session id, but session ids are only unique\n    per tenant. On shared workers this served one tenant a different\n    tenant's session, which is a cross-tenant data leak. Caught in\n    staging; it would have been a reportable incident in production.\n    \n    Any future cache on this path must key on (tenantId, sessionId) and\n    must not be process-global while workers are shared across tenants.\n\ndiff --git a/src/session.js b/src/session.js\nindex 3f032f1..0b6b8b0 100644\n--- a/src/session.js\n+++ b/src/session.js\n@@ -1,10 +1,5 @@\n-const cache = new Map();\n-\n async function resolveSession(io, sessionId) {\n-  if (cache.has(sessionId)) return cache.get(sessionId);\n-  const session = await io.loadSession(sessionId);\n-  cache.set(sessionId, session);\n-  return session;\n+  return io.loadSession(sessionId);\n }\n \n module.exports = { resolveSession };\n=====\ncommit b44c797b90bddbe0999be5a6d58a471ab4398f18\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Nov 26 00:06:40 2023 +0000\n\n    chore: session module docstring\n\ndiff --git a/src/session.js b/src/session.js\nindex 0b6b8b0..00ed301 100644\n--- a/src/session.js\n+++ b/src/session.js\n@@ -1,3 +1,4 @@\n+// Resolves a session. Uncached by design; see project history.\n async function resolveSession(io, sessionId) {\n   return io.loadSession(sessionId);\n }\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ms4c03v55rwukuss52k79d3y",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | wc -l; git log --all --oneline -- src/session.js | head; echo \"---\"; git log -S 'resolveSession' --oneline --all | head -20"
+        },
+        "output": "128\nb44c797 chore: session module docstring\nfe7824a Revert in-process session cache\ndac9492 Cache resolved sessions in-process to cut /api/session latency\n---\ndac9492 Cache resolved sessions in-process to cut /api/session latency\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_bsne9o3dvd0wnhwhwf0t043i",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -G 'api/session|resolveSession|loadSession' | head -40"
+        },
+        "output": "fe7824a Revert in-process session cache\ndac9492 Cache resolved sessions in-process to cut /api/session latency\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_sj0g88iceemduf5g0ggd9iau",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --diff-filter=D --name-only --pretty=format: | sort -u | grep -v '^$' | head -50; echo \"===ALL FILES EVER===\"; git log --all --pretty=format: --name-only | sort -u | grep -v '^$' | head -50"
+        },
+        "output": "===ALL FILES EVER===\nnotes/release-000.md\nnotes/release-001.md\nnotes/release-002.md\nnotes/release-003.md\nnotes/release-004.md\nnotes/release-005.md\nnotes/release-006.md\nnotes/release-007.md\nnotes/release-008.md\nnotes/release-009.md\nnotes/release-010.md\nnotes/release-011.md\nnotes/release-012.md\nnotes/release-013.md\nnotes/release-014.md\nnotes/release-015.md\nnotes/release-016.md\nnotes/release-017.md\nnotes/release-018.md\nnotes/release-019.md\nnotes/release-020.md\nnotes/release-021.md\nnotes/release-022.md\nnotes/release-023.md\nnotes/release-024.md\nnotes/release-025.md\nnotes/release-026.md\nnotes/release-027.md\nnotes/release-028.md\nnotes/release-029.md\nnotes/release-030.md\nnotes/release-031.md\nnotes/release-032.md\nnotes/release-033.md\nnotes/release-034.md\nnotes/release-035.md\nnotes/release-036.md\nnotes/release-037.md\nnotes/release-038.md\nnotes/release-039.md\nnotes/release-040.md\nnotes/release-041.md\nnotes/release-042.md\nnotes/release-043.md\nnotes/release-044.md\nnotes/release-045.md\nnotes/release-046.md\nnotes/release-047.md\nnotes/release-048.md\nnotes/release-049.md\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_tlgb01tiauk4y1xji0obobat",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | tail -5; echo \"---ROOT---\"; git rev-list --max-parents=0 HEAD; git show $(git rev-list --max-parents=0 HEAD) --stat | head -30"
+        },
+        "output": "5b481b9 chore: deps follow-up 005\nba95b05 chore: docs follow-up 004\ne8b66b6 chore: logging follow-up 003\n4fa541a chore: config follow-up 002\n92a5437 chore: telemetry follow-up 001\n---ROOT---\n92a5437218cab4390264fa922f973e49d72c57a0\ncommit 92a5437218cab4390264fa922f973e49d72c57a0\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 17:06:40 2023 +0000\n\n    chore: telemetry follow-up 001\n\n notes/release-000.md | 3 +++\n 1 file changed, 3 insertions(+)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_yym4v0idbbf7ypinascc96fl",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --notes; git log --all --grep='tenant\\|cache\\|session' --oneline | head"
+        },
+        "output": "b44c797 chore: session module docstring\nfe7824a Revert in-process session cache\ndac9492 Cache resolved sessions in-process to cut /api/session latency\n6ade320 chore: deps follow-up 125\nca0ecb4 chore: docs follow-up 124\n68fdddb chore: logging follow-up 123\n114b70f chore: config follow-up 122\nf4b865a chore: telemetry follow-up 121\n3234c9a chore: lint follow-up 120\ncbb8247 chore: deps follow-up 119\nc8d8a48 chore: docs follow-up 118\nec930a4 chore: logging follow-up 117\nd2f25b3 chore: config follow-up 116\n6f821a5 chore: telemetry follow-up 115\n4850a4c chore: lint follow-up 114\n838cccf chore: deps follow-up 113\n4f9e9c8 chore: docs follow-up 112\n9354a4d chore: logging follow-up 111\n0c5bc23 chore: config follow-up 110\n202b2ea chore: telemetry follow-up 109\n4ec6b7c chore: lint follow-up 108\n2dc156a chore: deps follow-up 107\ndd75416 chore: docs follow-up 106\n84caf04 chore: logging follow-up 105\n87a481a chore: config follow-up 104\n8ce417b chore: telemetry follow-up 103\n9c2186c chore: lint follow-up 102\n0536e0f chore: deps follow-up 101\n6f865d6 chore: docs follow-up 100\nbeb3df3 chore: logging follow-up 099\n0e1c9d0 chore: config follow-up 098\n497f39d chore: telemetry follow-up 097\n15e367e chore: lint follow-up 096\n4a00a1e chore: deps follow-up 095\nf31aec5 chore: docs follow-up 094\n4ece1ab chore: logging follow-up 093\n7945a2e chore: config follow-up 092\n0261993 chore: telemetry follow-up 091\nca10e6c chore: lint follow-up 090\nc8c9e6d chore: deps follow-up 089\n3590052 chore: docs follow-up 088\n84126d3 chore: logging follow-up 087\nccaeef9 chore: config follow-up 086\ne58a9f1 chore: telemetry follow-up 085\n15fa7ec chore: lint follow-up 084\n1166c3a chore: deps follow-up 083\n5650b70 chore: docs follow-up 082\n655495c chore: logging follow-up 081\n472ccea chore: config follow-up 080\n750a5a1 chore: telemetry follow-up 079\n60ce184 chore: lint follow-up 078\na494d13 chore: deps follow-up 077\n3124c94 chore: docs follow-up 076\nccadea5 chore: logging follow-up 075\n713a791 chore: config follow-up 074\n8bd0578 chore: telemetry follow-up 073\na4101b3 chore: lint follow-up 072\n2653bf5 chore: deps follow-up 071\n812ae4a chore: docs follow-up 070\na6e30f3 chore: logging follow-up 069\n97b502d chore: config follow-up 068\n5381987 chore: telemetry follow-up 067\nb12b19e chore: lint follow-up 066\n0844bc6 chore: deps follow-up 065\n3adddd9 chore: docs follow-up 064\nfbfb655 chore: logging follow-up 063\nd6a92c9 chore: config follow-up 062\na99f89e chore: telemetry follow-up 061\n102fb80 chore: lint follow-up 060\na5098bb chore: deps follow-up 059\nb48d2a2 chore: docs follow-up 058\n3860ce8 chore: logging follow-up 057\nac4943e chore: config follow-up 056\nd53214d chore: telemetry follow-up 055\n7db3a85 chore: lint follow-up 054\nca5f3d2 chore: deps follow-up 053\n5cf882a chore: docs follow-up 052\n25c6590 chore: logging follow-up 051\nf1501ab chore: config follow-up 050\n5089f92 chore: telemetry follow-up 049\n15135ab chore: lint follow-up 048\ndc9a9b1 chore: deps follow-up 047\nf73aaa9 chore: docs follow-up 046\ndfd8237 chore: logging follow-up 045\n6696566 chore: config follow-up 044\nebb93bd chore: telemetry follow-up 043\n45a30fc chore: lint follow-up 042\n8e9674f chore: deps follow-up 041\nc9b2d33 chore: docs follow-up 040\nf4cf166 chore: logging follow-up 039\n0643850 chore: config follow-up 038\nc3f9748 chore: telemetry follow-up 037\n2875229 chore: lint follow-up 036\n0ba4173 chore: deps follow-up 035\n7c5abbe chore: docs follow-up 034\n5a1b144 chore: logging follow-up 033\n7061117 chore: config follow-up 032\nd237520 chore: telemetry follow-up 031\nd3a820b chore: lint follow-up 030\n03eb952 chore: deps follow-up 029\nb1e99c6 chore: docs follow-up 028\nf7fda47 chore: logging follow-up 027\ndfac7b0 chore: config follow-up 026\n7bf9098 chore: telemetry follow-up 025\n2c65e66 chore: lint follow-up 024\n26ff273 chore: deps follow-up 023\n8ae8c31 chore: docs follow-up 022\n1e2b5ca chore: logging follow-up 021\n82d2334 chore: config follow-up 020\nbef65de chore: telemetry follow-up 019\n06be0d7 chore: lint follow-up 018\nabd558b chore: deps follow-up 017\nfa1b65f chore: docs follow-up 016\n386af88 chore: logging follow-up 015\n47787ba chore: config follow-up 014\na6a6985 chore: telemetry follow-up 013\n67f419e chore: lint follow-up 012\nc7a85ee chore: deps follow-up 011\n61f2938 chore: docs follow-up 010\n1d11b58 chore: logging follow-up 009\n1ebe6a9 chore: config follow-up 008\n0e72975 chore: telemetry follow-up 007\nf1ae52a chore: lint follow-up 006\n5b481b9 chore: deps follow-up 005\nba95b05 chore: docs follow-up 004\ne8b66b6 chore: logging follow-up 003\n4fa541a chore: config follow-up 002\n92a5437 chore: telemetry follow-up 001\nb44c797 chore: session module docstring\nfe7824a Revert in-process session cache\ndac9492 Cache resolved sessions in-process to cut /api/session latency\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": false,
+    "invalidation_reason": "path_outside_workspace:/api/session",
+    "violations": [
+      "path_outside_workspace:/api/session"
+    ],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "b44c797b90bddbe0999be5a6d58a471ab4398f18"
+    }
+  },
+  "completed": true
+}

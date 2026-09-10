@@ -1,0 +1,33 @@
+I've confirmed the key history. Let me verify there are no tests or a lockfile that pins the SDK API.Done. Summary of what I did and why:
+
+## Investigation
+The repo's history was the key (`git why "stream uploads instead of buffering in memory" --no-refresh`):
+
+- **`32d4951` "Buffer uploads in memory instead of streaming"** explicitly states the buffering was a *workaround*, not a preference: blobstore‑sdk 1.x had no streaming write API, so `putObject` only accepted a `Buffer`. The commit says "Revisit when the SDK gains streaming."
+- **`89e117b` "deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)"** added `putObjectStream`, which takes a `Readable`. Its message notes "Nothing uses it yet; this upgrade is only to unblock adopting it."
+- **`e98b431`** (HEAD) only added a comment noting the memory ceiling.
+
+So the buffering was stale workaround code; the unblocking upgrade had already landed but nobody adopted it.
+
+## Change to `src/upload.js`
+Replaced the accumulate‑into‑`chunks`/`Buffer.concat`/`putObject` path with a direct pass‑through to the new streaming API:
+
+```js
+// Streams the upload straight to storage. blobstore-sdk 2.4 added
+// putObjectStream(Readable), so the old buffering workaround is no longer
+// needed and memory use no longer scales with upload size.
+async function upload(io, stream) {
+  return io.putObjectStream(stream);
+}
+```
+
+## Why
+- Memory usage no longer scales with upload size: the source stream is handed straight to the storage client instead of materializing the entire file (plus the extra `Buffer.concat` copy) in memory.
+- It removes the O(n) buffering and the duplicated allocation on top of the incoming chunks.
+- It uses the capability the dependency upgrade was made for, rather than a new workaround (e.g., temp files) that would ignore the history.
+
+## Verification
+- `node --check src/upload.js` passes.
+- A small simulation with a stub `io` confirms the incoming stream object is forwarded unchanged to `putObjectStream`, and the old buffering `putObject` path is no longer invoked.
+
+Note: `git status` shows an untracked `.zvec-grep/` directory (the prebuilt search index); I left it untouched.

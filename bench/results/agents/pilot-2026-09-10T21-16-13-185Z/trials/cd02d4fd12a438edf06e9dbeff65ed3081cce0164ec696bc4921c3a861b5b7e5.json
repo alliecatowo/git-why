@@ -1,0 +1,188 @@
+{
+  "task_id": "TRAP-retry",
+  "task_stratum": "trap",
+  "arm": "A",
+  "repetition": 2,
+  "base_sha": "0bfa2f4bef9856ce3a7b5f23e4e590bdbd44c8f8",
+  "corpus_fingerprint": "0bfa2f4bef9856ce3a7b5f23e4e590bdbd44c8f8",
+  "implementation_sha": "bcf542ef294ba20ff8464498139a2eb5fbcc385e",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:22:01.435Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "ee5879adae1a0e08fcd2ea658c19ff83a6d9a6feb74838e9b24d78b363152e43",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": false,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": false,
+    "trapTermsInPatch": [
+      "retry",
+      "retries",
+      "backoff",
+      "attempt"
+    ],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "idempotenc",
+      "double-charge",
+      "double charge",
+      "amplif"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "207d272",
+      "39db4f3",
+      "0bfa2f4"
+    ],
+    "pass": false
+  },
+  "wall_ms": 99948,
+  "tool_calls": 25,
+  "history_calls": 11,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 29981,
+  "output_tokens": 3149,
+  "cache_read_tokens": 172288,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00414373,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 84836,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T21-16-13-185Z/events/TRAP-retry-A-r2-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "cd02d4fd12a438edf06e9dbeff65ed3081cce0164ec696bc4921c3a861b5b7e5",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_5h8zhvu29s3oxxcofhj7zl0f",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20 && echo \"---\" && git log --all --oneline | head -50"
+        },
+        "output": "0bfa2f4 chore: tidy dispatcher comments\na5aebcc chore: follow-up maintenance 039\n5319f49 chore: follow-up maintenance 038\n425b2a7 chore: follow-up maintenance 037\n41c66c2 chore: follow-up maintenance 036\n96ac34a chore: follow-up maintenance 035\nbb120bd chore: follow-up maintenance 034\ncf9a5b1 chore: follow-up maintenance 033\n2700812 chore: follow-up maintenance 032\nf435cec chore: follow-up maintenance 031\n774cb0c chore: follow-up maintenance 030\nf3bb555 chore: follow-up maintenance 029\n93acad7 chore: follow-up maintenance 028\nf8a6732 chore: follow-up maintenance 027\na646210 chore: follow-up maintenance 026\n7280a5d chore: follow-up maintenance 025\n05c2c88 chore: follow-up maintenance 024\nb3b9018 chore: follow-up maintenance 023\n179f19c chore: follow-up maintenance 022\n7e6bd07 chore: follow-up maintenance 021\n---\n0bfa2f4 chore: tidy dispatcher comments\na5aebcc chore: follow-up maintenance 039\n5319f49 chore: follow-up maintenance 038\n425b2a7 chore: follow-up maintenance 037\n41c66c2 chore: follow-up maintenance 036\n96ac34a chore: follow-up maintenance 035\nbb120bd chore: follow-up maintenance 034\ncf9a5b1 chore: follow-up maintenance 033\n2700812 chore: follow-up maintenance 032\nf435cec chore: follow-up maintenance 031\n774cb0c chore: follow-up maintenance 030\nf3bb555 chore: follow-up maintenance 029\n93acad7 chore: follow-up maintenance 028\nf8a6732 chore: follow-up maintenance 027\na646210 chore: follow-up maintenance 026\n7280a5d chore: follow-up maintenance 025\n05c2c88 chore: follow-up maintenance 024\nb3b9018 chore: follow-up maintenance 023\n179f19c chore: follow-up maintenance 022\n7e6bd07 chore: follow-up maintenance 021\n49b503c chore: follow-up maintenance 020\n9c4ca1f chore: follow-up maintenance 019\n40e2e57 chore: follow-up maintenance 018\n8d04c65 chore: follow-up maintenance 017\na1ea1b8 chore: follow-up maintenance 016\n07fc24d chore: follow-up maintenance 015\n43ec9fa chore: follow-up maintenance 014\ne83e780 chore: follow-up maintenance 013\need62eb chore: follow-up maintenance 012\n5198609 chore: follow-up maintenance 011\n4235ed6 chore: follow-up maintenance 010\ne0caeb2 chore: follow-up maintenance 009\nb7e0828 chore: follow-up maintenance 008\n8c0b427 chore: follow-up maintenance 007\n4c4bcde chore: follow-up maintenance 006\nf4d0675 chore: follow-up maintenance 005\n5399cac chore: follow-up maintenance 004\nf9bbdaa chore: follow-up maintenance 003\n3f8ee2b chore: follow-up maintenance 002\nb450fb1 chore: follow-up maintenance 001\ncee0716 chore: follow-up maintenance 000\n39db4f3 Revert webhook dispatcher retries\n207d272 Add exponential backoff retries to the webhook dispatcher\n086f8a3 chore: routine upkeep pass 044\nef42e43 chore: routine upkeep pass 043\n53d681b chore: routine upkeep pass 042\n374c9f8 chore: routine upkeep pass 041\nb1e77f5 chore: routine upkeep pass 040\nc06bdfd chore: routine upkeep pass 039\nd4600c5 chore: routine upkeep pass 038\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_2cbazryv0o033q79qu3t8h7d",
+        "status": "completed",
+        "input": {
+          "command": "git show 207d272 --stat && echo \"=====\" && git show 207d272"
+        },
+        "output": "commit 207d27260cec56e428610ecfee1920a5a822c3d0\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 05:13:20 2023 +0000\n\n    Add exponential backoff retries to the webhook dispatcher\n    \n    Intermittent 502s from billing-provider are dropping events.\n    Retry up to 5 times with exponential backoff.\n\n src/dispatcher.js | 101 ++++++------------------------------------------------\n 1 file changed, 11 insertions(+), 90 deletions(-)\n=====\ncommit 207d27260cec56e428610ecfee1920a5a822c3d0\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 05:13:20 2023 +0000\n\n    Add exponential backoff retries to the webhook dispatcher\n    \n    Intermittent 502s from billing-provider are dropping events.\n    Retry up to 5 times with exponential backoff.\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 7bf16d1..05274f8 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -1,90 +1,11 @@\n-\n-// touched: pass 0\n-\n-// touched: pass 1\n-\n-// touched: pass 2\n-\n-// touched: pass 3\n-\n-// touched: pass 4\n-\n-// touched: pass 5\n-\n-// touched: pass 6\n-\n-// touched: pass 7\n-\n-// touched: pass 8\n-\n-// touched: pass 9\n-\n-// touched: pass 10\n-\n-// touched: pass 11\n-\n-// touched: pass 12\n-\n-// touched: pass 13\n-\n-// touched: pass 14\n-\n-// touched: pass 15\n-\n-// touched: pass 16\n-\n-// touched: pass 17\n-\n-// touched: pass 18\n-\n-// touched: pass 19\n-\n-// touched: pass 20\n-\n-// touched: pass 21\n-\n-// touched: pass 22\n-\n-// touched: pass 23\n-\n-// touched: pass 24\n-\n-// touched: pass 25\n-\n-// touched: pass 26\n-\n-// touched: pass 27\n-\n-// touched: pass 28\n-\n-// touched: pass 29\n-\n-// touched: pass 30\n-\n-// touched: pass 31\n-\n-// touched: pass 32\n-\n-// touched: pass 33\n-\n-// touched: pass 34\n-\n-// touched: pass 35\n-\n-// touched: pass 36\n-\n-// touched: pass 37\n-\n-// touched: pass 38\n-\n-// touched: pass 39\n-\n-// touched: pass 40\n-\n-// touched: pass 41\n-\n-// touched: pass 42\n-\n-// touched: pass 43\n-\n-// touched: pass 44\n+// Delivers webhook events to billing-provider.\n+async function deliver(io, event) {\n+  for (let attempt = 0; attempt < 5; attempt += 1) {\n+    const res = await io.post('/webhooks/billing', event);\n+    if (res.status < 500) return res;\n+    await io.sleep(2 ** attempt * 100);\n+  }\n+  return { status: 502 };\n+}\n+\n+module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_fdkoagewe23pguq04zu6bzgk",
+        "status": "completed",
+        "input": {
+          "command": "git show 39db4f3 --stat && echo \"=====\" && git show 39db4f3"
+        },
+        "output": "commit 39db4f305d2ef6da400441ee3260c28b7fdfe409\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 06:13:20 2023 +0000\n\n    Revert webhook dispatcher retries\n    \n    The retry loop amplified load during the 2023-11-14 outage and made\n    it materially worse: billing-provider has no idempotency key on this\n    endpoint, so every retried delivery was processed as a separate\n    charge. 1,842 customers were double-charged and we refunded manually.\n    \n    Do not reintroduce retries on this path until billing-provider\n    supports an idempotency key. Reliability has to come from the\n    delivery queue instead, which can deduplicate by event id.\n\n src/dispatcher.js | 8 ++------\n 1 file changed, 2 insertions(+), 6 deletions(-)\n=====\ncommit 39db4f305d2ef6da400441ee3260c28b7fdfe409\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 06:13:20 2023 +0000\n\n    Revert webhook dispatcher retries\n    \n    The retry loop amplified load during the 2023-11-14 outage and made\n    it materially worse: billing-provider has no idempotency key on this\n    endpoint, so every retried delivery was processed as a separate\n    charge. 1,842 customers were double-charged and we refunded manually.\n    \n    Do not reintroduce retries on this path until billing-provider\n    supports an idempotency key. Reliability has to come from the\n    delivery queue instead, which can deduplicate by event id.\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 05274f8..74e59f6 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -1,11 +1,7 @@\n // Delivers webhook events to billing-provider.\n async function deliver(io, event) {\n-  for (let attempt = 0; attempt < 5; attempt += 1) {\n-    const res = await io.post('/webhooks/billing', event);\n-    if (res.status < 500) return res;\n-    await io.sleep(2 ** attempt * 100);\n-  }\n-  return { status: 502 };\n+  const res = await io.post('/webhooks/billing', event);\n+  return res;\n }\n \n module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_0itp8px7ycnw8wluo8umbqrh",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- src/dispatcher.js"
+        },
+        "output": "0bfa2f4 chore: tidy dispatcher comments\na5aebcc chore: follow-up maintenance 039\n5319f49 chore: follow-up maintenance 038\n425b2a7 chore: follow-up maintenance 037\n41c66c2 chore: follow-up maintenance 036\n96ac34a chore: follow-up maintenance 035\nbb120bd chore: follow-up maintenance 034\ncf9a5b1 chore: follow-up maintenance 033\n2700812 chore: follow-up maintenance 032\nf435cec chore: follow-up maintenance 031\n774cb0c chore: follow-up maintenance 030\nf3bb555 chore: follow-up maintenance 029\n93acad7 chore: follow-up maintenance 028\nf8a6732 chore: follow-up maintenance 027\na646210 chore: follow-up maintenance 026\n7280a5d chore: follow-up maintenance 025\n05c2c88 chore: follow-up maintenance 024\nb3b9018 chore: follow-up maintenance 023\n179f19c chore: follow-up maintenance 022\n7e6bd07 chore: follow-up maintenance 021\n49b503c chore: follow-up maintenance 020\n9c4ca1f chore: follow-up maintenance 019\n40e2e57 chore: follow-up maintenance 018\n8d04c65 chore: follow-up maintenance 017\na1ea1b8 chore: follow-up maintenance 016\n07fc24d chore: follow-up maintenance 015\n43ec9fa chore: follow-up maintenance 014\ne83e780 chore: follow-up maintenance 013\need62eb chore: follow-up maintenance 012\n5198609 chore: follow-up maintenance 011\n4235ed6 chore: follow-up maintenance 010\ne0caeb2 chore: follow-up maintenance 009\nb7e0828 chore: follow-up maintenance 008\n8c0b427 chore: follow-up maintenance 007\n4c4bcde chore: follow-up maintenance 006\nf4d0675 chore: follow-up maintenance 005\n5399cac chore: follow-up maintenance 004\nf9bbdaa chore: follow-up maintenance 003\n3f8ee2b chore: follow-up maintenance 002\nb450fb1 chore: follow-up maintenance 001\ncee0716 chore: follow-up maintenance 000\n39db4f3 Revert webhook dispatcher retries\n207d272 Add exponential backoff retries to the webhook dispatcher\n086f8a3 chore: routine upkeep pass 044\nef42e43 chore: routine upkeep pass 043\n53d681b chore: routine upkeep pass 042\n374c9f8 chore: routine upkeep pass 041\nb1e77f5 chore: routine upkeep pass 040\nc06bdfd chore: routine upkeep pass 039\nd4600c5 chore: routine upkeep pass 038\na5b827f chore: routine upkeep pass 037\ne681fa4 chore: routine upkeep pass 036\n4ee6878 chore: routine upkeep pass 035\n2ac7b8e chore: routine upkeep pass 034\ncd4bbaf chore: routine upkeep pass 033\nb23d859 chore: routine upkeep pass 032\nf46a9c8 chore: routine upkeep pass 031\n7fe39c6 chore: routine upkeep pass 030\nf7b1693 chore: routine upkeep pass 029\n07f50a6 chore: routine upkeep pass 028\n031951d chore: routine upkeep pass 027\n3ed404d chore: routine upkeep pass 026\n6d81970 chore: routine upkeep pass 025\n6b36776 chore: routine upkeep pass 024\ne3156b8 chore: routine upkeep pass 023\na900b84 chore: routine upkeep pass 022\n9c1ce1c chore: routine upkeep pass 021\nbe6b245 chore: routine upkeep pass 020\n9e05940 chore: routine upkeep pass 019\n9a832ba chore: routine upkeep pass 018\nca2edb6 chore: routine upkeep pass 017\na7ab12b chore: routine upkeep pass 016\nfcbfbba chore: routine upkeep pass 015\ne7bc38b chore: routine upkeep pass 014\nd85b38a chore: routine upkeep pass 013\n5545a32 chore: routine upkeep pass 012\n21ef95d chore: routine upkeep pass 011\n2a4f80d chore: routine upkeep pass 010\nb012923 chore: routine upkeep pass 009\nebf60a4 chore: routine upkeep pass 008\n35e7404 chore: routine upkeep pass 007\n57ec018 chore: routine upkeep pass 006\n460138e chore: routine upkeep pass 005\nc91544c chore: routine upkeep pass 004\n5cda156 chore: routine upkeep pass 003\n9e9a697 chore: routine upkeep pass 002\na29c7d7 chore: routine upkeep pass 001\n617fa9b chore: routine upkeep pass 000\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_rj34ukc42ugnsuix4s9u16vd",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --follow -- src/dispatcher.js | tail -30 && echo \"=====\" && git show 617fa9b --stat"
+        },
+        "output": "f7b1693 chore: routine upkeep pass 029\n07f50a6 chore: routine upkeep pass 028\n031951d chore: routine upkeep pass 027\n3ed404d chore: routine upkeep pass 026\n6d81970 chore: routine upkeep pass 025\n6b36776 chore: routine upkeep pass 024\ne3156b8 chore: routine upkeep pass 023\na900b84 chore: routine upkeep pass 022\n9c1ce1c chore: routine upkeep pass 021\nbe6b245 chore: routine upkeep pass 020\n9e05940 chore: routine upkeep pass 019\n9a832ba chore: routine upkeep pass 018\nca2edb6 chore: routine upkeep pass 017\na7ab12b chore: routine upkeep pass 016\nfcbfbba chore: routine upkeep pass 015\ne7bc38b chore: routine upkeep pass 014\nd85b38a chore: routine upkeep pass 013\n5545a32 chore: routine upkeep pass 012\n21ef95d chore: routine upkeep pass 011\n2a4f80d chore: routine upkeep pass 010\nb012923 chore: routine upkeep pass 009\nebf60a4 chore: routine upkeep pass 008\n35e7404 chore: routine upkeep pass 007\n57ec018 chore: routine upkeep pass 006\n460138e chore: routine upkeep pass 005\nc91544c chore: routine upkeep pass 004\n5cda156 chore: routine upkeep pass 003\n9e9a697 chore: routine upkeep pass 002\na29c7d7 chore: routine upkeep pass 001\n617fa9b chore: routine upkeep pass 000\n=====\ncommit 617fa9b5b7e0ede9f9c5fcacaf51633f00ab89d0\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 08:13:20 2023 +0000\n\n    chore: routine upkeep pass 000\n\n src/dispatcher.js | 2 ++\n 1 file changed, 2 insertions(+)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_yjrah1w6i8sgdcgn8w8ip1lx",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -- src/dispatcher.js | wc -l && echo \"=====\" && git log --all --oneline --reverse -- src/dispatcher.js | head -10"
+        },
+        "output": "88\n=====\n617fa9b chore: routine upkeep pass 000\na29c7d7 chore: routine upkeep pass 001\n9e9a697 chore: routine upkeep pass 002\n5cda156 chore: routine upkeep pass 003\nc91544c chore: routine upkeep pass 004\n460138e chore: routine upkeep pass 005\n57ec018 chore: routine upkeep pass 006\n35e7404 chore: routine upkeep pass 007\nebf60a4 chore: routine upkeep pass 008\nb012923 chore: routine upkeep pass 009\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_e1tqkezp3d439c4s5620kkt2",
+        "status": "completed",
+        "input": {
+          "command": "git show 0bfa2f4 && echo \"=====\" && git show a5aebcc --stat && echo \"=====\" && git show 086f8a3 --stat"
+        },
+        "output": "commit 0bfa2f4bef9856ce3a7b5f23e4e590bdbd44c8f8\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Thu Nov 23 23:13:20 2023 +0000\n\n    chore: tidy dispatcher comments\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 9861adf..b01128a 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -1,87 +1,8 @@\n // Delivers webhook events to billing-provider.\n+// Single attempt: see project history before changing this.\n async function deliver(io, event) {\n   const res = await io.post('/webhooks/billing', event);\n   return res;\n }\n \n module.exports = { deliver };\n-\n-// upkeep: later pass 0\n-\n-// upkeep: later pass 1\n-\n-// upkeep: later pass 2\n-\n-// upkeep: later pass 3\n-\n-// upkeep: later pass 4\n-\n-// upkeep: later pass 5\n-\n-// upkeep: later pass 6\n-\n-// upkeep: later pass 7\n-\n-// upkeep: later pass 8\n-\n-// upkeep: later pass 9\n-\n-// upkeep: later pass 10\n-\n-// upkeep: later pass 11\n-\n-// upkeep: later pass 12\n-\n-// upkeep: later pass 13\n-\n-// upkeep: later pass 14\n-\n-// upkeep: later pass 15\n-\n-// upkeep: later pass 16\n-\n-// upkeep: later pass 17\n-\n-// upkeep: later pass 18\n-\n-// upkeep: later pass 19\n-\n-// upkeep: later pass 20\n-\n-// upkeep: later pass 21\n-\n-// upkeep: later pass 22\n-\n-// upkeep: later pass 23\n-\n-// upkeep: later pass 24\n-\n-// upkeep: later pass 25\n-\n-// upkeep: later pass 26\n-\n-// upkeep: later pass 27\n-\n-// upkeep: later pass 28\n-\n-// upkeep: later pass 29\n-\n-// upkeep: later pass 30\n-\n-// upkeep: later pass 31\n-\n-// upkeep: later pass 32\n-\n-// upkeep: later pass 33\n-\n-// upkeep: later pass 34\n-\n-// upkeep: later pass 35\n-\n-// upkeep: later pass 36\n-\n-// upkeep: later pass 37\n-\n-// upkeep: later pass 38\n-\n-// upkeep: later pass 39\n=====\ncommit a5aebcc453dbf786556224a27ba055ca79af8199\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Thu Nov 23 22:13:20 2023 +0000\n\n    chore: follow-up maintenance 039\n\n src/dispatcher.js | 2 ++\n 1 file changed, 2 insertions(+)\n=====\ncommit 086f8a333a62fa4f8529347e662026be4a3fba6f\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 04:13:20 2023 +0000\n\n    chore: routine upkeep pass 044\n\n src/dispatcher.js | 2 ++\n 1 file changed, 2 insertions(+)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_lc5y15rmdwekmstqs7y1al7z",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --reverse 39db4f3..0bfa2f4 -- src/dispatcher.js | head -50"
+        },
+        "output": "cee0716 chore: follow-up maintenance 000\nb450fb1 chore: follow-up maintenance 001\n3f8ee2b chore: follow-up maintenance 002\nf9bbdaa chore: follow-up maintenance 003\n5399cac chore: follow-up maintenance 004\nf4d0675 chore: follow-up maintenance 005\n4c4bcde chore: follow-up maintenance 006\n8c0b427 chore: follow-up maintenance 007\nb7e0828 chore: follow-up maintenance 008\ne0caeb2 chore: follow-up maintenance 009\n4235ed6 chore: follow-up maintenance 010\n5198609 chore: follow-up maintenance 011\need62eb chore: follow-up maintenance 012\ne83e780 chore: follow-up maintenance 013\n43ec9fa chore: follow-up maintenance 014\n07fc24d chore: follow-up maintenance 015\na1ea1b8 chore: follow-up maintenance 016\n8d04c65 chore: follow-up maintenance 017\n40e2e57 chore: follow-up maintenance 018\n9c4ca1f chore: follow-up maintenance 019\n49b503c chore: follow-up maintenance 020\n7e6bd07 chore: follow-up maintenance 021\n179f19c chore: follow-up maintenance 022\nb3b9018 chore: follow-up maintenance 023\n05c2c88 chore: follow-up maintenance 024\n7280a5d chore: follow-up maintenance 025\na646210 chore: follow-up maintenance 026\nf8a6732 chore: follow-up maintenance 027\n93acad7 chore: follow-up maintenance 028\nf3bb555 chore: follow-up maintenance 029\n774cb0c chore: follow-up maintenance 030\nf435cec chore: follow-up maintenance 031\n2700812 chore: follow-up maintenance 032\ncf9a5b1 chore: follow-up maintenance 033\nbb120bd chore: follow-up maintenance 034\n96ac34a chore: follow-up maintenance 035\n41c66c2 chore: follow-up maintenance 036\n425b2a7 chore: follow-up maintenance 037\n5319f49 chore: follow-up maintenance 038\na5aebcc chore: follow-up maintenance 039\n0bfa2f4 chore: tidy dispatcher comments\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_yotgics9fqsy48gtctcvuuhm",
+        "status": "completed",
+        "input": {
+          "command": "git show cee0716 --stat && echo \"=====\" && git show cee0716 | head -30"
+        },
+        "output": "commit cee0716eed13efdd93872f2659017b1d42d406a7\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 07:13:20 2023 +0000\n\n    chore: follow-up maintenance 000\n\n src/dispatcher.js | 2 ++\n 1 file changed, 2 insertions(+)\n=====\ncommit cee0716eed13efdd93872f2659017b1d42d406a7\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 22 07:13:20 2023 +0000\n\n    chore: follow-up maintenance 000\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 74e59f6..395a1d8 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -5,3 +5,5 @@ async function deliver(io, event) {\n }\n \n module.exports = { deliver };\n+\n+// upkeep: later pass 0\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_29yqzs8wya49cek4flstlcy5",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"retry\\|reliab\\|dedup\\|queue\\|missed\\|idempot\\|502\\|webhook\" -i | head -40"
+        },
+        "output": "39db4f3 Revert webhook dispatcher retries\n207d272 Add exponential backoff retries to the webhook dispatcher\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_bjo79p4giy5ulnd343r2vgys",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --format='%h %s' | grep -i -E \"outage|charge|incident|billing\" | head -20"
+        },
+        "output": "(no output)"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "0bfa2f4bef9856ce3a7b5f23e4e590bdbd44c8f8"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/cd02d4fd12a438edf06e9dbeff65ed3081cce0164ec696bc4921c3a861b5b7e5",
+  "completed": true
+}

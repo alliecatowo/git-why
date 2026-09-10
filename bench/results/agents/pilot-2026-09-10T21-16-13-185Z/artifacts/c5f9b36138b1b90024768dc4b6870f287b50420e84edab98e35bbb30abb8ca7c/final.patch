@@ -1,0 +1,58 @@
+diff --git a/src/session.js b/src/session.js
+index 00ed301..a238d5b 100644
+--- a/src/session.js
++++ b/src/session.js
+@@ -1,6 +1,51 @@
+-// Resolves a session. Uncached by design; see project history.
++// Session resolution cache.
++//
++// Session ids are only unique within a tenant, and workers are shared across
++// tenants. A previous process-global cache keyed on session id alone served one
++// tenant another tenant's session (cross-tenant data leak) and was reverted;
++// see commit 1a6c01e. This cache is therefore namespaced by the caller's
++// tenant-bound `io` context and, within it, by tenant id, so entries can never
++// be shared across tenants.
++const cachesByContext = new WeakMap();
++
++function cacheFor(io) {
++  let byTenant = cachesByContext.get(io);
++  if (byTenant === undefined) {
++    byTenant = new Map();
++    cachesByContext.set(io, byTenant);
++  }
++
++  // Defensive partition: even if one context serves several tenants, a
++  // session id collision cannot cross the tenant boundary.
++  const tenantId = io.tenantId ?? null;
++  let cache = byTenant.get(tenantId);
++  if (cache === undefined) {
++    cache = new Map();
++    byTenant.set(tenantId, cache);
++  }
++  return cache;
++}
++
+ async function resolveSession(io, sessionId) {
+-  return io.loadSession(sessionId);
++  const cache = cacheFor(io);
++
++  if (cache.has(sessionId)) {
++    return cache.get(sessionId);
++  }
++
++  // Cache the in-flight promise, not only the resolved value, so concurrent
++  // misses for the same session share a single load instead of stampeding the
++  // session store (the source of the latency under load). Failures are evicted
++  // so a transient error is never cached.
++  const pending = Promise.resolve()
++    .then(() => io.loadSession(sessionId))
++    .catch((error) => {
++      cache.delete(sessionId);
++      throw error;
++    });
++
++  cache.set(sessionId, pending);
++  return pending;
+ }
+ 
+ module.exports = { resolveSession };

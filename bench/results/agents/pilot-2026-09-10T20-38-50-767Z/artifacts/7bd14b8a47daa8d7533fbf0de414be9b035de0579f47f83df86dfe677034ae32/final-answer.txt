@@ -1,0 +1,34 @@
+Verified: `/workspace`, `/workspace`, `d2083539baf5d1415c7d9f346bae4f829f579c59`. Now let me explore the repository.
+
+The release notes are noise ("routine follow-up for an unrelated subsystem"). The key context is `docs/notify.md`: **notify-service dedupes on `X-Event-Id`, so retries are safe.** Let me check the runtime environment before editing.
+
+Node v22 is available. Now I'll rewrite `src/dispatcher.js` with retry-with-backoff, leveraging the documented idempotency semantics.
+
+Now let me verify the behavior with a quick mock-based sanity test (kept outside the repo):
+
+All scenarios pass. One quick re-check of the no-id path (the arrow-function `arguments` in the last test was mis-scoped):
+
+The no-id path preserves the original two-argument call. Let me review the final diff:
+
+Done. Here's a summary of the change to `src/dispatcher.js` and the reasoning.
+
+## What I changed
+
+The original dispatcher made a single fire-and-forget `io.post('/notify', event)` call, so any transient failure (like the intermittent 502s) silently dropped a notification. I rewrote it to:
+
+1. **Retry transient failures with bounded exponential backoff + jitter** — `io.post` is retried on:
+   - network-level errors (`io.post` throws: connection reset, timeout, etc.),
+   - HTTP `408`, `429`, and all `5xx` (including the reported `502 Bad Gateway`),
+   - empty/unknown responses (a retry is safe, see below).
+   
+   Client errors (`4xx`) are **not** retried since they will fail identically every time. Retries are bounded (default 3 retries → 4 attempts, all configurable via an optional `options` argument), and if the final attempt fails the last error is thrown so callers still learn the delivery ultimately failed instead of it being silently dropped.
+
+2. **Send the `X-Event-Id` idempotency key** when the event carries an `id`/`eventId`. `docs/notify.md` (added in commit `5dc5d6c`) states notify-service dedupes on `X-Event-Id` and "retries are safe." Sending the same key on every attempt is what actually makes those retries safe — without it, notify-service couldn't dedupe and a retry after a partially-processed request could double-deliver. The header is stable across all attempts of the same event.
+
+## Why this fixes the reported problem
+
+- **502s no longer lose notifications** — a transient gateway failure is retried a few times with backoff instead of being dropped after one attempt.
+- **Retries are safe by design** — the documented dedup semantics plus the stable `X-Event-Id` header mean retransmitting the same event is a no-op server-side, so users won't get duplicate notifications.
+- **Jitter prevents thundering herd** — when many deliveries fail during an outage and all retry at once, randomized backoff spreads the retries so notify-service isn't hammered by a synchronized burst (which could itself cause more 502s).
+
+I verified the behavior with a mock-based sanity test: first-try success, 502→502→200 recovers in 3 attempts with the header constant across attempts, always-502 throws after the retry budget, thrown network errors are retried, 4xx is not retried (single attempt), and the original two-argument call shape is preserved when the event has no id. Syntax also passes `node --check`.

@@ -1,0 +1,39 @@
+The history is unambiguous. The buffering was a workaround for `blobstore-sdk` 1.x lacking a streaming API; the SDK was later upgraded to 2.4.0 specifically because it adds `putObjectStream`, which takes a Readable. Now I'll rewrite `upload.js` to stream directly.
+
+Let me run a quick functional sanity check with a stub `io` to confirm the stream is consumed correctly:
+
+Done. Here's a summary of the change.
+
+## What I changed
+
+`src/upload.js` previously collected every chunk of the upload into an array and then concatenated them into a single `Buffer` before calling `io.putObject(Buffer.concat(chunks))` — so peak memory grew linearly with the file size (the whole file was held in memory).
+
+The new version streams the upload straight to storage:
+
+```js
+const { Readable } = require('stream');
+
+async function upload(io, stream) {
+  return io.putObjectStream(Readable.from(stream));
+}
+```
+
+Memory use is now bounded by chunk size / streaming buffers instead of the full file size.
+
+## Why this is the right fix (from repo history)
+
+- Commit `32d4951` ("Buffer uploads in memory instead of streaming") explains that buffering was only a **workaround**: `blobstore-sdk` 1.x had no streaming write API — `putObject` only accepted a `Buffer`.
+- Commit `89e117b` ("deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)") upgraded the dependency specifically because 2.x **adds `putObjectStream`, which takes a Readable**, noting "Nothing uses it yet; this upgrade is only to unblock adopting it."
+- The buffering comment at HEAD (`e98b431`) even says "Memory use scales with upload size; see project history before changing."
+
+So the stale workaround could finally be replaced with the streaming API the SDK now provides.
+
+## Details
+
+- I wrapped the input with `Readable.from(stream)` so it works whether callers pass a Node.js `Readable` or a plain async iterable (the original code consumed `stream` via `for await`, so the input wasn't guaranteed to be a `Readable`).
+- The return value passes through `io.putObjectStream(...)`'s promise, preserving the async contract of the original `upload`.
+
+## Verification
+
+- `node --check src/upload.js` passes.
+- Tested with a stub `io.putObjectStream` using both a `Readable` input and an async-generator input — data is delivered correctly in both cases, confirming no buffering is performed by `upload.js` itself.

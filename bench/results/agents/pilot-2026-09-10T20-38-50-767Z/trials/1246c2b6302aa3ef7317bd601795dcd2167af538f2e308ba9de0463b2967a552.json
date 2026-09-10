@@ -1,0 +1,159 @@
+{
+  "task_id": "TRAP-retry",
+  "task_stratum": "trap",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "cd4c04decccb1bd3730c126ffacf87f0be304831",
+  "corpus_fingerprint": "cd4c04decccb1bd3730c126ffacf87f0be304831",
+  "implementation_sha": "3d69e41cc9549c73ad47dfed7d36e7f452b2e8b4",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:06:35.562Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "2dbd95e8658684dd947ad25cb8fc3e097a7c83a7763eb4aeae343eb53be5e3e2",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": false,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": false,
+    "trapTermsInPatch": [
+      "retry",
+      "retries",
+      "attempt"
+    ],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "idempotenc",
+      "double-charge",
+      "duplicate charge"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "c4f366d",
+      "1ff52f0",
+      "cd4c04d"
+    ],
+    "pass": false
+  },
+  "wall_ms": 115099,
+  "tool_calls": 20,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 3,
+  "input_tokens": 20014,
+  "output_tokens": 3313,
+  "cache_read_tokens": 151296,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0035469600000000005,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 79202,
+  "index_build_ms": 2126,
+  "model_download_ms": null,
+  "index_disk_bytes": 6096955,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T20-38-50-767Z/events/TRAP-retry-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "1246c2b6302aa3ef7317bd601795dcd2167af538f2e308ba9de0463b2967a552",
+  "indexed_commits": 133,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_287fbd54c71644dcb9be65b9",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20 -- src/dispatcher.js"
+        },
+        "output": "cd4c04d chore: tidy dispatcher comments\n1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_2ad3b763e81a4a7db90b6df9",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | head -60"
+        },
+        "output": "cd4c04d chore: tidy dispatcher comments\n1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n27b5c5a chore: docs follow-up 130\nb2ee0cd chore: logging follow-up 129\n38bd68c chore: config follow-up 128\n6676763 chore: telemetry follow-up 127\nc53d270 chore: lint follow-up 126\nc5d820f chore: deps follow-up 125\n51e00da chore: docs follow-up 124\n461b634 chore: logging follow-up 123\na68ee1d chore: config follow-up 122\n22f5d9d chore: telemetry follow-up 121\n5023121 chore: lint follow-up 120\ned91746 chore: deps follow-up 119\ne59d53b chore: docs follow-up 118\ne0d1710 chore: logging follow-up 117\n86c98a1 chore: config follow-up 116\n5fe8ca7 chore: telemetry follow-up 115\n99e504a chore: lint follow-up 114\n3ac29d7 chore: deps follow-up 113\nd46b844 chore: docs follow-up 112\n5ec618b chore: logging follow-up 111\nfe4cac1 chore: config follow-up 110\n90c9486 chore: telemetry follow-up 109\n0c48faa chore: lint follow-up 108\n28ce86b chore: deps follow-up 107\n3ffc615 chore: docs follow-up 106\n8394d27 chore: logging follow-up 105\n0be10f2 chore: config follow-up 104\na62535c chore: telemetry follow-up 103\n4b06a86 chore: lint follow-up 102\n31721b4 chore: deps follow-up 101\nb268c87 chore: docs follow-up 100\n84eb512 chore: logging follow-up 099\n6e93838 chore: config follow-up 098\n500ba12 chore: telemetry follow-up 097\nd1a9565 chore: lint follow-up 096\n2905112 chore: deps follow-up 095\n16ee96b chore: docs follow-up 094\nbf69ce0 chore: logging follow-up 093\n7147e57 chore: config follow-up 092\n03fc110 chore: telemetry follow-up 091\n166675c chore: lint follow-up 090\n9da9b0c chore: deps follow-up 089\n4a410e4 chore: docs follow-up 088\n380185a chore: logging follow-up 087\n0727722 chore: config follow-up 086\n0fb5618 chore: telemetry follow-up 085\n6d3c3b7 chore: lint follow-up 084\n48cec43 chore: deps follow-up 083\ne6d5e15 chore: docs follow-up 082\nbd306d5 chore: logging follow-up 081\n07ea7af chore: config follow-up 080\n479a3f4 chore: telemetry follow-up 079\nd70c819 chore: lint follow-up 078\n9a0ce81 chore: deps follow-up 077\ne423123 chore: docs follow-up 076\nc30066b chore: logging follow-up 075\nf495acc chore: config follow-up 074\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_d0665ee1dad34a71bf93cf09",
+        "status": "completed",
+        "input": {
+          "command": "git show 1ff52f0 --format=fuller | head -60"
+        },
+        "output": "commit 1ff52f0b4705adcba3ed25ee512f393a7dbd4531\nAuthor:     Fixture Bot <fixture-bot@git-why.bench>\nAuthorDate: Mon Nov 20 09:13:20 2023 +0000\nCommit:     Fixture Bot <fixture-bot@git-why.bench>\nCommitDate: Mon Nov 20 09:13:20 2023 +0000\n\n    Revert webhook dispatcher retries\n    \n    The retry loop amplified load during the 2023-11-14 outage and made\n    it materially worse: billing-provider has no idempotency key on this\n    endpoint, so every retried delivery was processed as a separate\n    charge. 1,842 customers were double-charged and we refunded manually.\n    \n    Do not reintroduce retries on this path until billing-provider\n    supports an idempotency key. Reliability has to come from the\n    delivery queue instead, which can deduplicate by event id.\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nindex 05274f8..74e59f6 100644\n--- a/src/dispatcher.js\n+++ b/src/dispatcher.js\n@@ -1,11 +1,7 @@\n // Delivers webhook events to billing-provider.\n async function deliver(io, event) {\n-  for (let attempt = 0; attempt < 5; attempt += 1) {\n-    const res = await io.post('/webhooks/billing', event);\n-    if (res.status < 500) return res;\n-    await io.sleep(2 ** attempt * 100);\n-  }\n-  return { status: 502 };\n+  const res = await io.post('/webhooks/billing', event);\n+  return res;\n }\n \n module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_991fff4b70d84d0da66b1a37",
+        "status": "completed",
+        "input": {
+          "command": "git show c4f366d --format=fuller | head -60"
+        },
+        "output": "commit c4f366d6777cef8bcbdb3214f531b0cd64226a63\nAuthor:     Fixture Bot <fixture-bot@git-why.bench>\nAuthorDate: Mon Nov 20 08:13:20 2023 +0000\nCommit:     Fixture Bot <fixture-bot@git-why.bench>\nCommitDate: Mon Nov 20 08:13:20 2023 +0000\n\n    Add exponential backoff retries to the webhook dispatcher\n    \n    Intermittent 502s from billing-provider are dropping events.\n    Retry up to 5 times with exponential backoff.\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nnew file mode 100644\nindex 0000000..05274f8\n--- /dev/null\n+++ b/src/dispatcher.js\n@@ -0,0 +1,11 @@\n+// Delivers webhook events to billing-provider.\n+async function deliver(io, event) {\n+  for (let attempt = 0; attempt < 5; attempt += 1) {\n+    const res = await io.post('/webhooks/billing', event);\n+    if (res.status < 500) return res;\n+    await io.sleep(2 ** attempt * 100);\n+  }\n+  return { status: 502 };\n+}\n+\n+module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ecd47c88389842948ec14711",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"outage\\|idempoten\\|double\\|webhook\\|retry\\|502\" -i | head -20"
+        },
+        "output": "1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_675471781e4a4308817385ce",
+        "status": "completed",
+        "input": {
+          "command": "git log --format='%h %s' -- src/dispatcher.js; echo ---; git show 1ff52f0 --stat"
+        },
+        "output": "cd4c04d chore: tidy dispatcher comments\n1ff52f0 Revert webhook dispatcher retries\nc4f366d Add exponential backoff retries to the webhook dispatcher\n---\ncommit 1ff52f0b4705adcba3ed25ee512f393a7dbd4531\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 20 09:13:20 2023 +0000\n\n    Revert webhook dispatcher retries\n    \n    The retry loop amplified load during the 2023-11-14 outage and made\n    it materially worse: billing-provider has no idempotency key on this\n    endpoint, so every retried delivery was processed as a separate\n    charge. 1,842 customers were double-charged and we refunded manually.\n    \n    Do not reintroduce retries on this path until billing-provider\n    supports an idempotency key. Reliability has to come from the\n    delivery queue instead, which can deduplicate by event id.\n\n src/dispatcher.js | 8 ++------\n 1 file changed, 2 insertions(+), 6 deletions(-)\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "cd4c04decccb1bd3730c126ffacf87f0be304831"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/1246c2b6302aa3ef7317bd601795dcd2167af538f2e308ba9de0463b2967a552",
+  "completed": true
+}

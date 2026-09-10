@@ -1,0 +1,28 @@
+I found the key history. Before editing, let me confirm the full picture and check the current file once more.The history is now unambiguous: buffering was only a workaround for `blobstore-sdk` 1.x, and the repo already upgraded to 2.4, which added `putObjectStream(Readable)`. The "see history before changing" note points at a reason that is now stale. Let me make the change.Let me sanity-check the streaming behavior with a mock `io` and a `Readable`, including a large payload to confirm nothing is buffered by our code.Done. Here's a summary.
+
+## What I changed
+
+`src/upload.js` now streams the upload directly to storage instead of buffering the entire file in memory:
+
+```js
+async function upload(io, stream) {
+  return io.putObjectStream(stream);
+}
+```
+
+Before, it accumulated every chunk in an array and did `Buffer.concat(chunks)`, so peak memory scaled with the full upload size. Now the caller's `Readable` is handed straight to the storage client and only one chunk is in memory at a time.
+
+## Why this is safe — and why the comment was a red herring
+
+The file's comment said *"Memory use scales with upload size; see project history before changing."* So I checked the history before touching it:
+
+- **`d309e11` "Buffer uploads in memory instead of streaming"** — buffering was never a preference. It was a workaround because `blobstore-sdk` **1.x** had no streaming write API; `putObject` only accepted a `Buffer`. The commit explicitly said: *"Revisit when the SDK gains streaming."*
+- **`7747b86` "deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)"** — the SDK now provides `putObjectStream`, which takes a `Readable`. The commit noted nothing used it yet, *"only to unblock adopting it."*
+
+So the condition that justified buffering no longer holds: the repo already depends on `blobstore-sdk` `^2.4.0` (confirmed in `package.json`), and its streaming API is available. The "reason" in the history was **stale**, which is exactly why the task said to consult it rather than avoid the change.
+
+## Verification
+
+- `node --check src/upload.js` passes.
+- A mock test passed an 8 MiB `Readable` through `upload()`; the mock `putObjectStream` received the live `Readable` and consumed all 8,388,608 bytes intact, confirming no buffering occurs in our code.
+- `git status` shows only `src/upload.js` modified.

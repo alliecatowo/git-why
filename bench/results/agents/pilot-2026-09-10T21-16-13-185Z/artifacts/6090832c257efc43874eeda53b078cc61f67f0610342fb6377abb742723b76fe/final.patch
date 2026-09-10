@@ -1,0 +1,75 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b31b62c..794eb50 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,7 +1,67 @@
+ // Delivers notifications to notify-service.
+-async function deliver(io, event) {
+-  const res = await io.post('/notify', event);
+-  return res;
++//
++// notify-service deduplicates on the `X-Event-Id` header, so redelivering
++// the same event is a no-op and retries are safe. Transient failures (e.g.
++// 502 Bad Gateway from an upstream proxy or load balancer) are retried with
++// exponential backoff so notifications aren't silently dropped.
++
++const DEFAULT_MAX_ATTEMPTS = 3;
++const DEFAULT_BASE_DELAY_MS = 200;
++
++// Status codes that indicate a transient failure worth retrying.
++const RETRYABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
++
++function sleep(ms) {
++  return new Promise((resolve) => setTimeout(resolve, ms));
++}
++
++function isRetryable(res) {
++  // No response at all: transient network error.
++  if (!res) return true;
++  const status = res.status || res.statusCode;
++  return RETRYABLE_STATUS.has(status);
++}
++
++function eventIdOf(event) {
++  if (!event) return null;
++  return event.id ?? event.eventId ?? event.notificationId ?? null;
++}
++
++// Posts a notification to notify-service, retrying transient failures with
++// exponential backoff. Returns the last response received; throws the last
++// error if a request failed after all attempts.
++async function deliver(io, event, options = {}) {
++  const maxAttempts =
++    options.maxAttempts ??
++    (options.retries != null ? options.retries + 1 : DEFAULT_MAX_ATTEMPTS);
++  const baseDelayMs = options.baseDelayMs ?? DEFAULT_BASE_DELAY_MS;
++  const eventId = options.eventId ?? eventIdOf(event);
++
++  let lastRes = null;
++
++  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
++    try {
++      const res = await io.post('/notify', event, {
++        // Idempotency key: lets notify-service dedupe redeliveries.
++        headers: eventId == null ? undefined : { 'X-Event-Id': String(eventId) },
++      });
++
++      // Succeeded, or gave up (last attempt): hand the response back.
++      if (!isRetryable(res) || attempt === maxAttempts) {
++        return res;
++      }
++
++      lastRes = res;
++    } catch (err) {
++      // A thrown error (e.g. network failure) is treated as transient.
++      if (attempt === maxAttempts) throw err;
++      lastRes = null;
++    }
++
++    await sleep(baseDelayMs * 2 ** (attempt - 1));
++  }
++
++  return lastRes;
+ }
+ 
+ module.exports = { deliver };

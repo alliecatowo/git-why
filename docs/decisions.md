@@ -392,3 +392,48 @@ of the scoring built on top of it.
 This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
+
+## Where retrieval actually fails: the semantic gap, not indexing or ranking
+
+Three hypotheses were tested against the derived corpus. Two were wrong, and
+the third localises the problem precisely.
+
+**Ranking is not the bottleneck.** recall@20 and recall@50 are identical
+(0.250 aggregate). Widening the window recovers nothing, so re-ranking, RRF
+tuning and score penalties can only reorder the quarter of cases that were
+retrieved at all. The prose-only penalty confirmed this: a real improvement
+worth 0.005 MRR and nothing more.
+
+**The embedding model is not the bottleneck in the way expected.**
+potion-retrieval-32M is tuned for prose retrieval and the questions are prose,
+so it should have won. It lost on every metric (MRR 0.188 against 0.302,
+recall@50 0.489 against 0.532). Commit CONTENT is code, and that dominates
+what the embedder has to represent. Testing it did surface a real defect: the
+candidate shipped as `available: true` but could not load, because the
+tokenizer reader rejected a post_processor that Model2Vec ignores anyway.
+
+**Pseudo-relevance feedback made it worse.** Hit@1 fell from 0.213 to 0.170
+and recall@50 did not move at all. PRF needs a first pass that is roughly
+right; when three quarters of first passes miss, the harvested vocabulary
+comes from wrong documents and drags the second pass further away. Left
+implemented behind `GIT_WHY_EXPANSION=prf` and off by default, since the
+measurement is the useful part.
+
+**The bottleneck is the semantic gap, and it is measurable.** Querying with a
+commit's OWN subject retrieves it at recall@20 of 1.000 -- every commit is
+indexed and reachable. Querying with the paraphrased question retrieves it at
+0.280. Indexing is perfect and ranking is adequate; what fails is bridging
+"why did making lots of schemas suddenly get slow and memory-hungry" to "cut
+per-schema memory by moving methods to the prototype".
+
+That is not a defect to tune away inside the retrieval stack. A static 256-
+dimensional embedder cannot make that jump, and no re-ranking can recover a
+document that was never retrieved. The lever is on the QUERY side: a caller
+that restates the question in the vocabulary the codebase uses closes most of
+the gap, and the 1.000 self-query result is the ceiling that would be
+approached.
+
+This is why the agent-facing interface matters more than another ranking
+change, and it explains the earlier agent-pilot result where zg outperformed
+Git Why: an agent phrases queries in code vocabulary naturally when searching
+code, and had no reason to do so when searching history.

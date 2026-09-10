@@ -1,0 +1,164 @@
+{
+  "task_id": "TRAP-stale",
+  "task_stratum": "trap",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "ccc846114a521bb3ae999c5d0d4d217d397b95de",
+  "corpus_fingerprint": "ccc846114a521bb3ae999c5d0d4d217d397b95de",
+  "implementation_sha": "bcf542ef294ba20ff8464498139a2eb5fbcc385e",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:33:50.263Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "51134909b802a8931520b51bb5b76d58fc3f7dbd2d225d6baec1fec768dc6f38",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": true,
+    "trapTermsInPatch": [],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "putObjectStream",
+      "limitation",
+      "workaround"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "ccc846114a521bb3ae999c5d0d4d217d397b95de",
+      "d309e11",
+      "7747b86"
+    ],
+    "pass": true
+  },
+  "wall_ms": 58613,
+  "tool_calls": 19,
+  "history_calls": 9,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 8516,
+  "output_tokens": 2332,
+  "cache_read_tokens": 216192,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0033524199999999996,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 75711,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T21-16-13-185Z/events/TRAP-stale-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "4d5c1e5f89b2104dc0c275ff269d0bdeb1fe60f83a6df43209dfb231991effa5",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_QS2LkhpY3oO92KQrdPrA7632",
+        "status": "completed",
+        "input": {
+          "command": "ls -la; echo \"---\"; git log --oneline -10"
+        },
+        "output": "total 8\ndrwxr-xr-x   6 bench bench  192 Sep 10 21:33 .\ndrwxr-xr-x   1 root  root  4096 Sep 10 21:33 ..\ndrwxr-xr-x  13 bench bench  416 Sep 10 21:33 .git\ndrwxr-xr-x 130 bench bench 4160 Sep 10 21:33 notes\n-rw-r--r--   1 bench bench   98 Sep 10 21:33 package.json\ndrwxr-xr-x   3 bench bench   96 Sep 10 21:33 src\n---\nccc8461 chore: note the upload memory ceiling\ne5280e6 chore: follow-up maintenance 039\n56dff93 chore: follow-up maintenance 038\ndbfaa14 chore: follow-up maintenance 037\n9729172 chore: follow-up maintenance 036\n0fa60aa chore: follow-up maintenance 035\n72f5d21 chore: follow-up maintenance 034\nfacd820 chore: follow-up maintenance 033\nb278648 chore: follow-up maintenance 032\n0ec8938 chore: follow-up maintenance 031\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_FJt5Y1Szp1mDCSJxTSQV5133",
+        "status": "completed",
+        "input": {
+          "command": "git show HEAD --stat; echo \"===\"; git show HEAD"
+        },
+        "output": "commit ccc846114a521bb3ae999c5d0d4d217d397b95de\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Tue Dec 5 11:00:00 2023 +0000\n\n    chore: note the upload memory ceiling\n\n src/upload.js | 83 ++---------------------------------------------------------\n 1 file changed, 2 insertions(+), 81 deletions(-)\n===\ncommit ccc846114a521bb3ae999c5d0d4d217d397b95de\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Tue Dec 5 11:00:00 2023 +0000\n\n    chore: note the upload memory ceiling\n\ndiff --git a/src/upload.js b/src/upload.js\nindex 4775906..3990799 100644\n--- a/src/upload.js\n+++ b/src/upload.js\n@@ -1,4 +1,5 @@\n-// Buffers the upload, then writes. See history for why.\n+// Buffers the upload, then writes.\n+// Memory use scales with upload size; see project history before changing.\n async function upload(io, stream) {\n   const chunks = [];\n   for await (const chunk of stream) chunks.push(chunk);\n@@ -6,83 +7,3 @@ async function upload(io, stream) {\n }\n \n module.exports = { upload };\n-\n-// upkeep: later pass 0\n-\n-// upkeep: later pass 1\n-\n-// upkeep: later pass 2\n-\n-// upkeep: later pass 3\n-\n-// upkeep: later pass 4\n-\n-// upkeep: later pass 5\n-\n-// upkeep: later pass 6\n-\n-// upkeep: later pass 7\n-\n-// upkeep: later pass 8\n-\n-// upkeep: later pass 9\n-\n-// upkeep: later pass 10\n-\n-// upkeep: later pass 11\n-\n-// upkeep: later pass 12\n-\n-// upkeep: later pass 13\n-\n-// upkeep: later pass 14\n-\n-// upkeep: later pass 15\n-\n-// upkeep: later pass 16\n-\n-// upkeep: later pass 17\n-\n-// upkeep: later pass 18\n-\n-// upkeep: later pass 19\n-\n-// upkeep: later pass 20\n-\n-// upkeep: later pass 21\n-\n-// upkeep: later pass 22\n-\n-// upkeep: later pass 23\n-\n-// upkeep: later pass 24\n-\n-// upkeep: later pass 25\n-\n-// upkeep: later pass 26\n-\n-// upkeep: later pass 27\n-\n-// upkeep: later pass 28\n-\n-// upkeep: later pass 29\n-\n-// upkeep: later pass 30\n-\n-// upkeep: later pass 31\n-\n-// upkeep: later pass 32\n-\n-// upkeep: later pass 33\n-\n-// upkeep: later pass 34\n-\n-// upkeep: later pass 35\n-\n-// upkeep: later pass 36\n-\n-// upkeep: later pass 37\n-\n-// upkeep: later pass 38\n-\n-// upkeep: later pass 39\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_s7NFaZO6Q15YYspG7yRJ9059",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --follow -- src/upload.js | head -50; echo \"===\"; ls notes | head -40; echo \"...\"; ls notes | wc -l"
+        },
+        "output": "ccc8461 chore: note the upload memory ceiling\ne5280e6 chore: follow-up maintenance 039\n56dff93 chore: follow-up maintenance 038\ndbfaa14 chore: follow-up maintenance 037\n9729172 chore: follow-up maintenance 036\n0fa60aa chore: follow-up maintenance 035\n72f5d21 chore: follow-up maintenance 034\nfacd820 chore: follow-up maintenance 033\nb278648 chore: follow-up maintenance 032\n0ec8938 chore: follow-up maintenance 031\nb648ed6 chore: follow-up maintenance 030\nc4eb772 chore: follow-up maintenance 029\nc27f522 chore: follow-up maintenance 028\nae81bbe chore: follow-up maintenance 027\n7c27375 chore: follow-up maintenance 026\n2494131 chore: follow-up maintenance 025\nd4468bd chore: follow-up maintenance 024\nfd9aeaa chore: follow-up maintenance 023\n1d6536f chore: follow-up maintenance 022\n6b78add chore: follow-up maintenance 021\n75596a7 chore: follow-up maintenance 020\n21a23e4 chore: follow-up maintenance 019\nc4b91c9 chore: follow-up maintenance 018\n353b4ea chore: follow-up maintenance 017\ndc573c8 chore: follow-up maintenance 016\nc8f3485 chore: follow-up maintenance 015\na5024df chore: follow-up maintenance 014\nfe5f93b chore: follow-up maintenance 013\n2486c4a chore: follow-up maintenance 012\n576c347 chore: follow-up maintenance 011\ne02c1f5 chore: follow-up maintenance 010\n1e69b61 chore: follow-up maintenance 009\n1c672ee chore: follow-up maintenance 008\n2337162 chore: follow-up maintenance 007\n49f5573 chore: follow-up maintenance 006\n3423ec7 chore: follow-up maintenance 005\nd5f9fc5 chore: follow-up maintenance 004\n803334f chore: follow-up maintenance 003\nf262302 chore: follow-up maintenance 002\n0254e8c chore: follow-up maintenance 001\n318f54c chore: follow-up maintenance 000\nd309e11 Buffer uploads in memory instead of streaming\nf7b1efc chore: routine upkeep pass 044\n6bf3f78 chore: routine upkeep pass 043\nba472ea chore: routine upkeep pass 042\n01f22e3 chore: routine upkeep pass 041\ncf0a1e9 chore: routine upkeep pass 040\n66ed98a chore: routine upkeep pass 039\n73377dd chore: routine upkeep pass 038\nc1ac7fa chore: routine upkeep pass 037\n===\nrelease-000.md\nrelease-001.md\nrelease-002.md\nrelease-003.md\nrelease-004.md\nrelease-005.md\nrelease-006.md\nrelease-007.md\nrelease-008.md\nrelease-009.md\nrelease-010.md\nrelease-011.md\nrelease-012.md\nrelease-013.md\nrelease-014.md\nrelease-015.md\nrelease-016.md\nrelease-017.md\nrelease-018.md\nrelease-019.md\nrelease-020.md\nrelease-021.md\nrelease-022.md\nrelease-023.md\nrelease-024.md\nrelease-025.md\nrelease-026.md\nrelease-027.md\nrelease-028.md\nrelease-029.md\nrelease-030.md\nrelease-031.md\nrelease-032.md\nrelease-033.md\nrelease-034.md\nrelease-035.md\nrelease-036.md\nrelease-037.md\nrelease-038.md\nrelease-039.md\n...\n128\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_w344ibrKPbPHDcFNXGcl6485",
+        "status": "completed",
+        "input": {
+          "command": "git show d309e11; echo \"==========PARENT FILE==========\"; git show d309e11^:src/upload.js"
+        },
+        "output": "commit d309e1160b822f991a9adad2ecb753300edcfaa3\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Dec 3 17:00:00 2023 +0000\n\n    Buffer uploads in memory instead of streaming\n    \n    We would prefer to stream uploads straight to storage, but our\n    storage client (blobstore-sdk 1.x) has no streaming write API --\n    putObject only accepts a Buffer. Buffering is a workaround for that\n    limitation, not a preference. Revisit when the SDK gains streaming.\n\ndiff --git a/src/upload.js b/src/upload.js\nindex 7bf16d1..096bfc8 100644\n--- a/src/upload.js\n+++ b/src/upload.js\n@@ -1,90 +1,8 @@\n-\n-// touched: pass 0\n-\n-// touched: pass 1\n-\n-// touched: pass 2\n-\n-// touched: pass 3\n-\n-// touched: pass 4\n-\n-// touched: pass 5\n-\n-// touched: pass 6\n-\n-// touched: pass 7\n-\n-// touched: pass 8\n-\n-// touched: pass 9\n-\n-// touched: pass 10\n-\n-// touched: pass 11\n-\n-// touched: pass 12\n-\n-// touched: pass 13\n-\n-// touched: pass 14\n-\n-// touched: pass 15\n-\n-// touched: pass 16\n-\n-// touched: pass 17\n-\n-// touched: pass 18\n-\n-// touched: pass 19\n-\n-// touched: pass 20\n-\n-// touched: pass 21\n-\n-// touched: pass 22\n-\n-// touched: pass 23\n-\n-// touched: pass 24\n-\n-// touched: pass 25\n-\n-// touched: pass 26\n-\n-// touched: pass 27\n-\n-// touched: pass 28\n-\n-// touched: pass 29\n-\n-// touched: pass 30\n-\n-// touched: pass 31\n-\n-// touched: pass 32\n-\n-// touched: pass 33\n-\n-// touched: pass 34\n-\n-// touched: pass 35\n-\n-// touched: pass 36\n-\n-// touched: pass 37\n-\n-// touched: pass 38\n-\n-// touched: pass 39\n-\n-// touched: pass 40\n-\n-// touched: pass 41\n-\n-// touched: pass 42\n-\n-// touched: pass 43\n-\n-// touched: pass 44\n+// Buffers the upload, then writes. See history for why.\n+async function upload(io, stream) {\n+  const chunks = [];\n+  for await (const chunk of stream) chunks.push(chunk);\n+  return io.putObject(Buffer.concat(chunks));\n+}\n+\n+module.exports = { upload };\n==========PARENT FILE==========\n\n// touched: pass 0\n\n// touched: pass 1\n\n// touched: pass 2\n\n// touched: pass 3\n\n// touched: pass 4\n\n// touched: pass 5\n\n// touched: pass 6\n\n// touched: pass 7\n\n// touched: pass 8\n\n// touched: pass 9\n\n// touched: pass 10\n\n// touched: pass 11\n\n// touched: pass 12\n\n// touched: pass 13\n\n// touched: pass 14\n\n// touched: pass 15\n\n// touched: pass 16\n\n// touched: pass 17\n\n// touched: pass 18\n\n// touched: pass 19\n\n// touched: pass 20\n\n// touched: pass 21\n\n// touched: pass 22\n\n// touched: pass 23\n\n// touched: pass 24\n\n// touched: pass 25\n\n// touched: pass 26\n\n// touched: pass 27\n\n// touched: pass 28\n\n// touched: pass 29\n\n// touched: pass 30\n\n// touched: pass 31\n\n// touched: pass 32\n\n// touched: pass 33\n\n// touched: pass 34\n\n// touched: pass 35\n\n// touched: pass 36\n\n// touched: pass 37\n\n// touched: pass 38\n\n// touched: pass 39\n\n// touched: pass 40\n\n// touched: pass 41\n\n// touched: pass 42\n\n// touched: pass 43\n\n// touched: pass 44\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_vkIFDX56odOIB8RfhM2h4948",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | wc -l; echo \"===\"; git log --all --oneline --grep=\"stream\" -i; echo \"===sdk===\"; git log --all --oneline --grep=\"sdk\\|blobstore\\|putObject\" -i; echo \"===package===\"; git log --all --oneline -- package.json"
+        },
+        "output": "216\n===\n7747b86 deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\nd309e11 Buffer uploads in memory instead of streaming\n===sdk===\n7747b86 deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\nd309e11 Buffer uploads in memory instead of streaming\n===package===\n7747b86 deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_l8XWAV79mPRfgOGLa0Na0299",
+        "status": "completed",
+        "input": {
+          "command": "git show 7747b86; echo \"=== is ancestor? ===\"; git merge-base --is-ancestor 7747b86 HEAD && echo \"YES ancestor\" || echo \"NO not ancestor\"; echo \"=== branches ===\"; git branch -a; echo \"=== all refs ===\"; git for-each-ref --format='%(refname) %(objectname:short)' | head"
+        },
+        "output": "commit 7747b86bfc1f67c7afc92646d74dd99964d9deb3\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Dec 3 18:00:00 2023 +0000\n\n    deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n    \n    2.x adds putObjectStream, which takes a Readable. Nothing uses it\n    yet; this upgrade is only to unblock adopting it.\n\ndiff --git a/package.json b/package.json\nnew file mode 100644\nindex 0000000..a3e9eba\n--- /dev/null\n+++ b/package.json\n@@ -0,0 +1,5 @@\n+{\n+  \"name\": \"trap-stale\",\n+  \"version\": \"1.0.0\",\n+  \"dependencies\": { \"blobstore-sdk\": \"^2.4.0\" }\n+}\n=== is ancestor? ===\nYES ancestor\n=== branches ===\n* (HEAD detached at ccc8461)\n=== all refs ===\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_vtTXC1B2nlk5gv2oFELy6386",
+        "status": "completed",
+        "input": {
+          "command": "git rev-list --count HEAD; echo \"===\"; git log --oneline --graph --all | head -60"
+        },
+        "output": "216\n===\n* ccc8461 chore: note the upload memory ceiling\n* e5280e6 chore: follow-up maintenance 039\n* 56dff93 chore: follow-up maintenance 038\n* dbfaa14 chore: follow-up maintenance 037\n* 9729172 chore: follow-up maintenance 036\n* 0fa60aa chore: follow-up maintenance 035\n* 72f5d21 chore: follow-up maintenance 034\n* facd820 chore: follow-up maintenance 033\n* b278648 chore: follow-up maintenance 032\n* 0ec8938 chore: follow-up maintenance 031\n* b648ed6 chore: follow-up maintenance 030\n* c4eb772 chore: follow-up maintenance 029\n* c27f522 chore: follow-up maintenance 028\n* ae81bbe chore: follow-up maintenance 027\n* 7c27375 chore: follow-up maintenance 026\n* 2494131 chore: follow-up maintenance 025\n* d4468bd chore: follow-up maintenance 024\n* fd9aeaa chore: follow-up maintenance 023\n* 1d6536f chore: follow-up maintenance 022\n* 6b78add chore: follow-up maintenance 021\n* 75596a7 chore: follow-up maintenance 020\n* 21a23e4 chore: follow-up maintenance 019\n* c4b91c9 chore: follow-up maintenance 018\n* 353b4ea chore: follow-up maintenance 017\n* dc573c8 chore: follow-up maintenance 016\n* c8f3485 chore: follow-up maintenance 015\n* a5024df chore: follow-up maintenance 014\n* fe5f93b chore: follow-up maintenance 013\n* 2486c4a chore: follow-up maintenance 012\n* 576c347 chore: follow-up maintenance 011\n* e02c1f5 chore: follow-up maintenance 010\n* 1e69b61 chore: follow-up maintenance 009\n* 1c672ee chore: follow-up maintenance 008\n* 2337162 chore: follow-up maintenance 007\n* 49f5573 chore: follow-up maintenance 006\n* 3423ec7 chore: follow-up maintenance 005\n* d5f9fc5 chore: follow-up maintenance 004\n* 803334f chore: follow-up maintenance 003\n* f262302 chore: follow-up maintenance 002\n* 0254e8c chore: follow-up maintenance 001\n* 318f54c chore: follow-up maintenance 000\n* 7747b86 deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n* d309e11 Buffer uploads in memory instead of streaming\n* f7b1efc chore: routine upkeep pass 044\n* 6bf3f78 chore: routine upkeep pass 043\n* ba472ea chore: routine upkeep pass 042\n* 01f22e3 chore: routine upkeep pass 041\n* cf0a1e9 chore: routine upkeep pass 040\n* 66ed98a chore: routine upkeep pass 039\n* 73377dd chore: routine upkeep pass 038\n* c1ac7fa chore: routine upkeep pass 037\n* a998da3 chore: routine upkeep pass 036\n* 74092f3 chore: routine upkeep pass 035\n* 6bc64a2 chore: routine upkeep pass 034\n* 5760a0a chore: routine upkeep pass 033\n* ea379de chore: routine upkeep pass 032\n* 6663e76 chore: routine upkeep pass 031\n* 830fbd8 chore: routine upkeep pass 030\n* 67746de chore: routine upkeep pass 029\n* d37412e chore: routine upkeep pass 028\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_cziwWNfQxwnxoo7ltV9h4005",
+        "status": "completed",
+        "input": {
+          "command": "echo \"=== putObjectStream anywhere ===\"; git log --all --oneline -S \"putObjectStream\"; echo \"=== putObject ===\"; git log --all --oneline -S \"putObject\"; echo \"=== grep all blobs for putObjectStream ===\"; git rev-list --all --objects | wc -l"
+        },
+        "output": "=== putObjectStream anywhere ===\n=== putObject ===\nd309e11 Buffer uploads in memory instead of streaming\n=== grep all blobs for putObjectStream ===\n863\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_Dv0kdc06qtzH2aOOWlLY8366",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --format='%h%x09%s' | grep -Ei \"stream|buffer|memory|adopt|revert|put|upload|sdk|blob\" ; echo \"=== bodies with those words ===\"; git log --all --format='%h%x09%B' | grep -Ei \"putObjectStream|streaming|in memory|Buffer|workaround|immutable|sealed\" | head -40"
+        },
+        "output": "ccc8461\tchore: note the upload memory ceiling\n7747b86\tdeps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\nd309e11\tBuffer uploads in memory instead of streaming\n=== bodies with those words ===\n7747b86\tdeps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n2.x adds putObjectStream, which takes a Readable. Nothing uses it\nd309e11\tBuffer uploads in memory instead of streaming\nstorage client (blobstore-sdk 1.x) has no streaming write API --\nputObject only accepts a Buffer. Buffering is a workaround for that\nlimitation, not a preference. Revisit when the SDK gains streaming.\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ccc846114a521bb3ae999c5d0d4d217d397b95de"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/4d5c1e5f89b2104dc0c275ff269d0bdeb1fe60f83a6df43209dfb231991effa5",
+  "completed": true
+}

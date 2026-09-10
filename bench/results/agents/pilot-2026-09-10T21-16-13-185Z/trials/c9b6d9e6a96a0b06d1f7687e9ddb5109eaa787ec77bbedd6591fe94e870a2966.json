@@ -1,0 +1,233 @@
+{
+  "task_id": "TRAP-cache",
+  "task_stratum": "trap",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "9194016554eef8561af5d5d985dbc21cd124cb34",
+  "corpus_fingerprint": "9194016554eef8561af5d5d985dbc21cd124cb34",
+  "implementation_sha": "bcf542ef294ba20ff8464498139a2eb5fbcc385e",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:39:28.258Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "9495e8bc863caf6120fd0f0fdd8854c4ce8ba1284fa5e5d6d30f796e396f9200",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": false,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": false,
+    "trapTermsInPatch": [
+      "cache",
+      "memo",
+      "Map("
+    ],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "cross-tenant",
+      "cross tenant",
+      "tenant",
+      "leak"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "48ee78f",
+      "1a6c01e",
+      "9194016"
+    ],
+    "pass": false
+  },
+  "wall_ms": 137004,
+  "tool_calls": 37,
+  "history_calls": 12,
+  "zg_calls": 2,
+  "git_why_calls": 4,
+  "input_tokens": 18574,
+  "output_tokens": 4587,
+  "cache_read_tokens": 479872,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00787602,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 156232,
+  "index_build_ms": 2786,
+  "model_download_ms": null,
+  "index_disk_bytes": 6400236,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T21-16-13-185Z/events/TRAP-cache-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "c9b6d9e6a96a0b06d1f7687e9ddb5109eaa787ec77bbedd6591fe94e870a2966",
+  "indexed_commits": 213,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  126 / 126 files\n  Entities    126\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_CtB42hLSwgMQimK84V0b6007",
+        "status": "completed",
+        "input": {
+          "command": "ls -la; echo \"---\"; git log --oneline -10"
+        },
+        "output": "total 4\ndrwxr-xr-x   6 bench bench  192 Sep 10 21:39 .\ndrwxr-xr-x   1 root  root  4096 Sep 10 21:39 ..\ndrwxr-xr-x  14 bench bench  448 Sep 10 21:39 .git\ndrwxr-xr-x   6 bench bench  192 Sep 10 21:39 .zvec-grep\ndrwxr-xr-x 127 bench bench 4064 Sep 10 21:39 notes\ndrwxr-xr-x   3 bench bench   96 Sep 10 21:39 src\n---\n9194016 chore: session module docstring\n449c853 chore: follow-up maintenance 039\n0e14ddd chore: follow-up maintenance 038\n1f2f361 chore: follow-up maintenance 037\nd195467 chore: follow-up maintenance 036\n4cc6d05 chore: follow-up maintenance 035\nf79b3cd chore: follow-up maintenance 034\n1fb91e8 chore: follow-up maintenance 033\ndb0fdb8 chore: follow-up maintenance 032\n8e3a2e7 chore: follow-up maintenance 031\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_Ukhfz89Cg1IvreVZZV7w2362",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | wc -l; echo \"---\"; git log --oneline -40 -- src/session.js"
+        },
+        "output": "213\n---\n9194016 chore: session module docstring\n449c853 chore: follow-up maintenance 039\n0e14ddd chore: follow-up maintenance 038\n1f2f361 chore: follow-up maintenance 037\nd195467 chore: follow-up maintenance 036\n4cc6d05 chore: follow-up maintenance 035\nf79b3cd chore: follow-up maintenance 034\n1fb91e8 chore: follow-up maintenance 033\ndb0fdb8 chore: follow-up maintenance 032\n8e3a2e7 chore: follow-up maintenance 031\n5157550 chore: follow-up maintenance 030\n16cf8b0 chore: follow-up maintenance 029\n0950622 chore: follow-up maintenance 028\na51a306 chore: follow-up maintenance 027\n013b660 chore: follow-up maintenance 026\n01e86b7 chore: follow-up maintenance 025\nafc0952 chore: follow-up maintenance 024\nb356926 chore: follow-up maintenance 023\n2cbf8da chore: follow-up maintenance 022\naf1a7d0 chore: follow-up maintenance 021\n5554aa2 chore: follow-up maintenance 020\n8ca1b01 chore: follow-up maintenance 019\n0913493 chore: follow-up maintenance 018\n2f72731 chore: follow-up maintenance 017\n81347b3 chore: follow-up maintenance 016\n94b324c chore: follow-up maintenance 015\ne12a158 chore: follow-up maintenance 014\ne2ee42a chore: follow-up maintenance 013\n9ed1874 chore: follow-up maintenance 012\n2f8398a chore: follow-up maintenance 011\na1bec7d chore: follow-up maintenance 010\nf871f47 chore: follow-up maintenance 009\n8e4b447 chore: follow-up maintenance 008\n4b73940 chore: follow-up maintenance 007\n2ea5007 chore: follow-up maintenance 006\n3195ac3 chore: follow-up maintenance 005\nd27cce3 chore: follow-up maintenance 004\nce6bebf chore: follow-up maintenance 003\n77a9c63 chore: follow-up maintenance 002\n4e8f5ae chore: follow-up maintenance 001\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_H1OaZhRRCQYEE9se1pcX8253",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --follow -- src/session.js | tail -20; echo \"===first commit===\"; git log --oneline --follow -- src/session.js | tail -1"
+        },
+        "output": "4749281 chore: routine upkeep pass 019\n5e2f09a chore: routine upkeep pass 018\n55aabb8 chore: routine upkeep pass 017\n35cf911 chore: routine upkeep pass 016\ndfce469 chore: routine upkeep pass 015\n95d30b4 chore: routine upkeep pass 014\n2f6105d chore: routine upkeep pass 013\n4b67ac7 chore: routine upkeep pass 012\nb5d2d09 chore: routine upkeep pass 011\na67ca44 chore: routine upkeep pass 010\ne3a579a chore: routine upkeep pass 009\n9b82eb2 chore: routine upkeep pass 008\n150556d chore: routine upkeep pass 007\na3a148d chore: routine upkeep pass 006\n3df4752 chore: routine upkeep pass 005\n7379cff chore: routine upkeep pass 004\n70f93e4 chore: routine upkeep pass 003\n6db4b18 chore: routine upkeep pass 002\necf3213 chore: routine upkeep pass 001\n6a3eb08 chore: routine upkeep pass 000\n===first commit===\n6a3eb08 chore: routine upkeep pass 000\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_fCaE2OGbdeKQFKVr2ozc9826",
+        "status": "completed",
+        "input": {
+          "command": "git show 6a3eb08 --stat | head -40; echo \"=== diff session at 6a3eb08 ===\"; git show 6a3eb08 -- src/session.js"
+        },
+        "output": "commit 6a3eb08d9be09fe9c4912a5389989dfe7f92b36f\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sat Nov 25 22:06:40 2023 +0000\n\n    chore: routine upkeep pass 000\n\n src/session.js | 2 ++\n 1 file changed, 2 insertions(+)\n=== diff session at 6a3eb08 ===\ncommit 6a3eb08d9be09fe9c4912a5389989dfe7f92b36f\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sat Nov 25 22:06:40 2023 +0000\n\n    chore: routine upkeep pass 000\n\ndiff --git a/src/session.js b/src/session.js\nnew file mode 100644\nindex 0000000..f45338b\n--- /dev/null\n+++ b/src/session.js\n@@ -0,0 +1,2 @@\n+\n+// touched: pass 0\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_FzwSSg9hLomC68BlAkmf0327",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S \"cache\" -- src/session.js; echo \"=== finds ===\"; git log --oneline --all -S \"new Map()\" -- src/session.js"
+        },
+        "output": "9194016 chore: session module docstring\n1a6c01e Revert in-process session cache\n48ee78f Cache resolved sessions in-process to cut /api/session latency\n=== finds ===\n1a6c01e Revert in-process session cache\n48ee78f Cache resolved sessions in-process to cut /api/session latency\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_E7qWtUlayjac2dfv5H3V0606",
+        "status": "completed",
+        "input": {
+          "command": "git show -s --format=full 1a6c01e; echo \"=====48ee78f=====\"; git show -s --format=full 48ee78f"
+        },
+        "output": "commit 1a6c01ee65d2651c3da47b98dc5c70414c8a041a\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nCommit: Fixture Bot <fixture-bot@git-why.bench>\n\n    Revert in-process session cache\n    \n    The cache key was the session id, but session ids are only unique\n    per tenant. On shared workers this served one tenant a different\n    tenant's session, which is a cross-tenant data leak. Caught in\n    staging; it would have been a reportable incident in production.\n    \n    Any future cache on this path must key on (tenantId, sessionId) and\n    must not be process-global while workers are shared across tenants.\n=====48ee78f=====\ncommit 48ee78f6e7b5224fa7323dbd85fdb8c305a06e36\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nCommit: Fixture Bot <fixture-bot@git-why.bench>\n\n    Cache resolved sessions in-process to cut /api/session latency\n    \n    Sessions are read on every request. Memoize by session id.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_QtBfH7XarVbUvfDNtFuS2082",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S \"tenant\" | head -30; echo \"=== grep loadSession across history objects ===\"; git grep -n \"loadSession\" $(git rev-list --all) -- 2>/dev/null | head -40"
+        },
+        "output": "=== grep loadSession across history objects ===\n9194016554eef8561af5d5d985dbc21cd124cb34:src/session.js:3:  return io.loadSession(sessionId);\n449c853f460d93c6c20eed9a7c34e3d3de4ce4a3:src/session.js:2:  return io.loadSession(sessionId);\n0e14ddd52d8cc5253e8d39922c90d482607ef49a:src/session.js:2:  return io.loadSession(sessionId);\n1f2f3615ed9ce30812a7185a36acb99e9abf94ce:src/session.js:2:  return io.loadSession(sessionId);\nd195467776495fa17f37bf8c3d188d1a3b8b888a:src/session.js:2:  return io.loadSession(sessionId);\n4cc6d057e8bb2379764a2926026c902d2428e83b:src/session.js:2:  return io.loadSession(sessionId);\nf79b3cd39259995ca76de4bb4e6b4c08173e088b:src/session.js:2:  return io.loadSession(sessionId);\n1fb91e8dded669ec179b33c6ccc0e2c3aff71e6c:src/session.js:2:  return io.loadSession(sessionId);\ndb0fdb82985a79bd533f8df45f2de748fe432430:src/session.js:2:  return io.loadSession(sessionId);\n8e3a2e7f418993de147bc309a523f9eea506adc4:src/session.js:2:  return io.loadSession(sessionId);\n5157550521b1d9fe9afbeface83398b5bdd68901:src/session.js:2:  return io.loadSession(sessionId);\n16cf8b04e68d890af759511ee5f0f228e6f1f623:src/session.js:2:  return io.loadSession(sessionId);\n095062274cb584e96503711495754647f372a217:src/session.js:2:  return io.loadSession(sessionId);\na51a3062f3ec240f664e25e5bbb4047b4ec86ff0:src/session.js:2:  return io.loadSession(sessionId);\n013b660be5514f3bd41b0e33568c377b7e9f7872:src/session.js:2:  return io.loadSession(sessionId);\n01e86b70fa12c1d1a385a51e70199f6c05924bd6:src/session.js:2:  return io.loadSession(sessionId);\nafc0952bd2f46384cb8d6d2f8649b1238ef3379c:src/session.js:2:  return io.loadSession(sessionId);\nb356926a6f277e62d32e2636e486608fd9c52403:src/session.js:2:  return io.loadSession(sessionId);\n2cbf8da327bada11d6a54756a885be0cf9d41605:src/session.js:2:  return io.loadSession(sessionId);\naf1a7d09fc402d5d65e89c61a373ab75aabbd5a9:src/session.js:2:  return io.loadSession(sessionId);\n5554aa2b5350e7be76ac5915aafdc0f8fb39406c:src/session.js:2:  return io.loadSession(sessionId);\n8ca1b018ce15f77a6dc1b23f17201224a97b4c8a:src/session.js:2:  return io.loadSession(sessionId);\n0913493d51d5384ccd94ad4e603b63b5bd73bedf:src/session.js:2:  return io.loadSession(sessionId);\n2f72731e64fffb75f04f00fa1a14cbef9212bfd0:src/session.js:2:  return io.loadSession(sessionId);\n81347b3c95bb090454554c40da8c744957c87efb:src/session.js:2:  return io.loadSession(sessionId);\n94b324c7af08c8e868cd3612e6d6913e3ae54485:src/session.js:2:  return io.loadSession(sessionId);\ne12a15857317819ea8981bfeb0e156b566ce5642:src/session.js:2:  return io.loadSession(sessionId);\ne2ee42afd3933c34622cb276454ef8b4d0e26855:src/session.js:2:  return io.loadSession(sessionId);\n9ed1874f9d832d7698c203ff91ed6340d5243df3:src/session.js:2:  return io.loadSession(sessionId);\n2f8398af1e4c4fe73d4925cb597c807cd3fb7bb4:src/session.js:2:  return io.loadSession(sessionId);\na1bec7dd1915b41d9efec073d2b4fb736f7c18e3:src/session.js:2:  return io.loadSession(sessionId);\nf871f4760b102540e5ecd32c7d1435044c602f24:src/session.js:2:  return io.loadSession(sessionId);\n8e4b4473154ab529d4091f2f970d9da7c98624c9:src/session.js:2:  return io.loadSession(sessionId);\n4b739404437a3802ff518f559d7a309292d65892:src/session.js:2:  return io.loadSession(sessionId);\n2ea50071ce15401cbb421797bb429173f86ae230:src/session.js:2:  return io.loadSession(sessionId);\n3195ac3f5c4b1f5dec9dae999f17df8fe803d4af:src/session.js:2:  return io.loadSession(sessionId);\nd27cce38dc700ed56fcb568e280a8885388d7cae:src/session.js:2:  return io.loadSession(sessionId);\nce6bebf712803ea82d159bb6a68ae8d54b12c8e0:src/session.js:2:  return io.loadSession(sessionId);\n77a9c630332253eeb56da2754e38b08ac10c691a:src/session.js:2:  return io.loadSession(sessionId);\n4e8f5ae4d54d41fa3fc9162ad10e21dece50967d:src/session.js:2:  return io.loadSession(sessionId);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_XKo1ZAhdyKyex4k3blbD4546",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --name-only | sort -u | grep -v \"notes/\" | grep -v \"^$\" | sort -u | head -60"
+        },
+        "output": "013b660 chore: follow-up maintenance 026\n01e86b7 chore: follow-up maintenance 025\n0261993 chore: telemetry follow-up 091\n03eb952 chore: deps follow-up 029\n0536e0f chore: deps follow-up 101\n0643850 chore: config follow-up 038\n06be0d7 chore: lint follow-up 018\n0844bc6 chore: deps follow-up 065\n0913493 chore: follow-up maintenance 018\n0950622 chore: follow-up maintenance 028\n0ba4173 chore: deps follow-up 035\n0c5bc23 chore: config follow-up 110\n0e14ddd chore: follow-up maintenance 038\n0e1c9d0 chore: config follow-up 098\n0e72975 chore: telemetry follow-up 007\n102fb80 chore: lint follow-up 060\n114b70f chore: config follow-up 122\n1166c3a chore: deps follow-up 083\n150556d chore: routine upkeep pass 007\n15135ab chore: lint follow-up 048\n15e367e chore: lint follow-up 096\n15fa7ec chore: lint follow-up 084\n16cf8b0 chore: follow-up maintenance 029\n17b1677 chore: routine upkeep pass 037\n1a6c01e Revert in-process session cache\n1c34250 chore: routine upkeep pass 024\n1d11b58 chore: logging follow-up 009\n1e2b5ca chore: logging follow-up 021\n1ebe6a9 chore: config follow-up 008\n1f2f361 chore: follow-up maintenance 037\n1fb91e8 chore: follow-up maintenance 033\n202b2ea chore: telemetry follow-up 109\n25c6590 chore: logging follow-up 051\n2653bf5 chore: deps follow-up 071\n26ff273 chore: deps follow-up 023\n278d82c chore: routine upkeep pass 040\n2875229 chore: lint follow-up 036\n294f03b chore: routine upkeep pass 036\n2a3022e chore: routine upkeep pass 032\n2c65e66 chore: lint follow-up 024\n2cbf8da chore: follow-up maintenance 022\n2dc156a chore: deps follow-up 107\n2ea5007 chore: follow-up maintenance 006\n2f6105d chore: routine upkeep pass 013\n2f72731 chore: follow-up maintenance 017\n2f8398a chore: follow-up maintenance 011\n3124c94 chore: docs follow-up 076\n3195ac3 chore: follow-up maintenance 005\n3234c9a chore: lint follow-up 120\n3590052 chore: docs follow-up 088\n35cf911 chore: routine upkeep pass 016\n3860ce8 chore: logging follow-up 057\n386af88 chore: logging follow-up 015\n3adddd9 chore: docs follow-up 064\n3df4752 chore: routine upkeep pass 005\n3fcf7f9 chore: routine upkeep pass 028\n449c853 chore: follow-up maintenance 039\n45a30fc chore: lint follow-up 042\n46802b2 chore: routine upkeep pass 042\n472ccea chore: config follow-up 080\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_vd0SA0Ph4lYrUF00X33U4947",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"tenant\" -i; echo \"=== commit 9194016 ===\"; git show 9194016"
+        },
+        "output": "1a6c01e Revert in-process session cache\n=== commit 9194016 ===\ncommit 9194016554eef8561af5d5d985dbc21cd124cb34\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Nov 29 13:06:40 2023 +0000\n\n    chore: session module docstring\n\ndiff --git a/src/session.js b/src/session.js\nindex 564ecc8..00ed301 100644\n--- a/src/session.js\n+++ b/src/session.js\n@@ -1,85 +1,6 @@\n+// Resolves a session. Uncached by design; see project history.\n async function resolveSession(io, sessionId) {\n   return io.loadSession(sessionId);\n }\n \n module.exports = { resolveSession };\n-\n-// upkeep: later pass 0\n-\n-// upkeep: later pass 1\n-\n-// upkeep: later pass 2\n-\n-// upkeep: later pass 3\n-\n-// upkeep: later pass 4\n-\n-// upkeep: later pass 5\n-\n-// upkeep: later pass 6\n-\n-// upkeep: later pass 7\n-\n-// upkeep: later pass 8\n-\n-// upkeep: later pass 9\n-\n-// upkeep: later pass 10\n-\n-// upkeep: later pass 11\n-\n-// upkeep: later pass 12\n-\n-// upkeep: later pass 13\n-\n-// upkeep: later pass 14\n-\n-// upkeep: later pass 15\n-\n-// upkeep: later pass 16\n-\n-// upkeep: later pass 17\n-\n-// upkeep: later pass 18\n-\n-// upkeep: later pass 19\n-\n-// upkeep: later pass 20\n-\n-// upkeep: later pass 21\n-\n-// upkeep: later pass 22\n-\n-// upkeep: later pass 23\n-\n-// upkeep: later pass 24\n-\n-// upkeep: later pass 25\n-\n-// upkeep: later pass 26\n-\n-// upkeep: later pass 27\n-\n-// upkeep: later pass 28\n-\n-// upkeep: later pass 29\n-\n-// upkeep: later pass 30\n-\n-// upkeep: later pass 31\n-\n-// upkeep: later pass 32\n-\n-// upkeep: later pass 33\n-\n-// upkeep: later pass 34\n-\n-// upkeep: later pass 35\n-\n-// upkeep: later pass 36\n-\n-// upkeep: later pass 37\n-\n-// upkeep: later pass 38\n-\n-// upkeep: later pass 39\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_L7Rfk0eugc5O5sw9BgNb9254",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"cache\" -i; echo \"=== grep io. in history ===\"; git grep -n \"io\\.\" $(git rev-list --all) -- src/session.js 2>/dev/null | sort -u -t: -k3 | head -40"
+        },
+        "output": "1a6c01e Revert in-process session cache\n48ee78f Cache resolved sessions in-process to cut /api/session latency\n=== grep io. in history ===\n449c853f460d93c6c20eed9a7c34e3d3de4ce4a3:src/session.js:2:  return io.loadSession(sessionId);\n9194016554eef8561af5d5d985dbc21cd124cb34:src/session.js:3:  return io.loadSession(sessionId);\n48ee78f6e7b5224fa7323dbd85fdb8c305a06e36:src/session.js:5:  const session = await io.loadSession(sessionId);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_dToKaIuikgiluWmVhnfI2506",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | wc -l; echo \"--- non-filler commit subjects ---\"; git log --all --oneline | grep -v -iE \"follow-up|upkeep|routine|release\" | head -40"
+        },
+        "output": "213\n--- non-filler commit subjects ---\n9194016 chore: session module docstring\n1a6c01e Revert in-process session cache\n48ee78f Cache resolved sessions in-process to cut /api/session latency\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_GR8gshIJUxd23jDn2aMw8424",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --date=short --pretty=format:'%h %ad %s' -- src/session.js | grep -E \"48ee78f|1a6c01e|9194016\"; echo; echo \"=== parent of cache commit ===\"; git show -s --format='%h %s' 48ee78f^; echo \"=== revert full diff ===\"; git show 1a6c01e -- src/session.js"
+        },
+        "output": "9194016 2023-11-29 chore: session module docstring\n1a6c01e 2023-11-27 Revert in-process session cache\n48ee78f 2023-11-27 Cache resolved sessions in-process to cut /api/session latency\n\n=== parent of cache commit ===\n79e27ca chore: routine upkeep pass 044\n=== revert full diff ===\ncommit 1a6c01ee65d2651c3da47b98dc5c70414c8a041a\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Mon Nov 27 20:06:40 2023 +0000\n\n    Revert in-process session cache\n    \n    The cache key was the session id, but session ids are only unique\n    per tenant. On shared workers this served one tenant a different\n    tenant's session, which is a cross-tenant data leak. Caught in\n    staging; it would have been a reportable incident in production.\n    \n    Any future cache on this path must key on (tenantId, sessionId) and\n    must not be process-global while workers are shared across tenants.\n\ndiff --git a/src/session.js b/src/session.js\nindex 3f032f1..0b6b8b0 100644\n--- a/src/session.js\n+++ b/src/session.js\n@@ -1,10 +1,5 @@\n-const cache = new Map();\n-\n async function resolveSession(io, sessionId) {\n-  if (cache.has(sessionId)) return cache.get(sessionId);\n-  const session = await io.loadSession(sessionId);\n-  cache.set(sessionId, session);\n-  return session;\n+  return io.loadSession(sessionId);\n }\n \n module.exports = { resolveSession };\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 2,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      }
+    ],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "9194016554eef8561af5d5d985dbc21cd124cb34"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/c9b6d9e6a96a0b06d1f7687e9ddb5109eaa787ec77bbedd6591fe94e870a2966",
+  "completed": true
+}

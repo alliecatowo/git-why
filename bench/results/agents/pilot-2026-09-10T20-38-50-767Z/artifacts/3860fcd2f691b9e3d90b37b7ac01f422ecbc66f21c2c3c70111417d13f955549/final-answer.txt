@@ -1,0 +1,38 @@
+Verified: pwd=/workspace, toplevel=/workspace, HEAD=e98b431edc07072960269c50fbdfaa2f5d596fcc.The comment says to check project history. Let me investigate the relevant commits and the notes directory.The history is decisive:
+- `32d4951` buffered uploads as a workaround because **blobstore-sdk 1.x had no streaming write API** (`putObject` only accepts a `Buffer`).
+- `89e117b` upgraded to **blobstore-sdk ^2.4.0, which adds `putObjectStream` taking a `Readable`** — explicitly "to unblock adopting it."
+- `e98b431` added the stale comment warning to check history. The blocker is gone.
+
+So the correct improvement is to stream directly instead of concatenating chunks.Done. Here's what I changed and why.
+
+## Change
+
+`src/upload.js` now streams the upload directly to storage instead of accumulating chunks and concatenating them:
+
+```js
+// Streams the upload straight to storage, so memory use stays flat
+// regardless of upload size. Uses blobstore-sdk 2.x's putObjectStream
+// (added in 2.4); the in-memory buffering was only a workaround for 1.x,
+// which had no streaming write API.
+async function upload(io, stream) {
+  return io.putObjectStream(stream);
+}
+```
+
+## Why
+
+The old code did `chunks.push(chunk)` for the entire stream and then `Buffer.concat(chunks)`, so peak memory scaled with (and roughly doubled) the upload size.
+
+The code comment said to check project history before changing, and the Git history explains exactly why the buffering existed — and why it's now safe to remove:
+
+- **`32d4951` "Buffer uploads in memory instead of streaming"** — buffering was an explicit workaround: *"our storage client (blobstore-sdk 1.x) has no streaming write API -- putObject only accepts a Buffer... Revisit when the SDK gains streaming."*
+- **`89e117b` "deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)"** — upgraded `package.json` to `blobstore-sdk: ^2.4.0` and noted: *"2.x adds putObjectStream, which takes a Readable. Nothing uses it yet; this upgrade is only to unblock adopting it."*
+- **`e98b431`** added the "see project history before changing" comment, but the original blocker had already been removed.
+
+So the buffering was never a preference — just a stale workaround for a limitation that no longer exists (`package.json` declares `^2.4.0`). Switching to `putObjectStream(stream)` lets the SDK consume the `Readable` with normal backpressure, keeping memory flat.
+
+## Verification
+
+- `node --check src/upload.js` passes.
+- A functional test confirms the stream is passed through and consumed downstream (`1000` chunks / `1,024,000` bytes read), rather than buffered.
+- `git diff` shows only the intended change.

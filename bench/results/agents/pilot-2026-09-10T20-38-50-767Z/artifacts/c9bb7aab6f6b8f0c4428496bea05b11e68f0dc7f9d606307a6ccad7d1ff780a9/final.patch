@@ -1,0 +1,46 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b01128a..6f8f60f 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,7 +1,39 @@
+ // Delivers webhook events to billing-provider.
+-// Single attempt: see project history before changing this.
++//
++// Single attempt on purpose. An in-process retry loop was added (c4f366d)
++// and reverted (1ff52f0): billing-provider has no idempotency key on this
++// endpoint, so during the 2023-11-14 outage every retried delivery was
++// processed as a separate charge (1,842 customers double-charged). Do not
++// reintroduce retries here until billing-provider supports an
++// idempotency key.
++//
++// Reliability comes from the delivery queue, which deduplicates by event
++// id. To let the queue do its job we surface failures instead of hiding
++// them: transient (>= 500) responses throw an error carrying the event id
++// so the queue re-enqueues and redelivers the event (deduplicated, so no
++// double charge). 4xx responses are returned as-is: billing-provider
++// rejected the event, and re-enqueueing it would fail forever.
+ async function deliver(io, event) {
+-  const res = await io.post('/webhooks/billing', event);
++  let res;
++  try {
++    res = await io.post('/webhooks/billing', event);
++  } catch (err) {
++    // Transport-level failure (timeout, connection reset, ...): the
++    // request may never have reached billing-provider. Preserve the
++    // error but attach the event id for queue-side deduplication.
++    if (err && err.eventId === undefined) err.eventId = event && event.id;
++    throw err;
++  }
++
++  if (res.status >= 500) {
++    const err = new Error(
++      `billing-provider delivery failed with status ${res.status}`
++    );
++    err.status = res.status;
++    err.eventId = event && event.id;
++    throw err;
++  }
++
+   return res;
+ }
+ 

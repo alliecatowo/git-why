@@ -1,0 +1,85 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b31b62c..fd9d9de 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,7 +1,78 @@
+ // Delivers notifications to notify-service.
++//
++// notify-service deduplicates events on the `X-Event-Id` header, so
++// redelivering the same event is a no-op and retries are safe (see
++// docs/notify.md). Retrying transient failures with exponential backoff
++// makes delivery resilient to intermittent 5xx responses (e.g. 502 Bad
++// Gateway) and network errors that previously caused missed notifications.
++
++// Maximum number of retries after the initial attempt.
++const MAX_RETRIES = 4;
++// Base delay for exponential backoff, in milliseconds.
++const BASE_DELAY_MS = 100;
++// Upper bound on the backoff delay, in milliseconds.
++const MAX_DELAY_MS = 2000;
++
++// notify-service keys deduplication on the X-Event-Id header. Send the
++// event's id (when present) so retries of the same event are no-ops.
++function eventHeaders(event) {
++  const id = event && (event.id || event.eventId || event.event_id);
++  return id ? { 'X-Event-Id': String(id) } : undefined;
++}
++
++function statusOf(res) {
++  return res && (res.status || res.statusCode);
++}
++
++function isRetryable(status) {
++  // Retry server errors (5xx, e.g. 502) and rate limiting (429).
++  // 4xx responses are permanent client errors and are not retried.
++  return !status || status >= 500 || status === 429;
++}
++
++function sleep(ms) {
++  return new Promise((resolve) => setTimeout(resolve, ms));
++}
++
++// Exponential backoff: 100ms, 200ms, 400ms, ... capped at MAX_DELAY_MS.
++function backoffDelay(attempt) {
++  return Math.min(MAX_DELAY_MS, BASE_DELAY_MS * 2 ** attempt);
++}
++
+ async function deliver(io, event) {
+-  const res = await io.post('/notify', event);
+-  return res;
++  const headers = eventHeaders(event);
++
++  let lastError;
++  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
++    try {
++      const res = await io.post('/notify', event, headers ? { headers } : undefined);
++      const status = statusOf(res);
++      if (!isRetryable(status)) {
++        return res;
++      }
++      lastError = new Error(
++        'notify-service returned HTTP ' + status + ' for event ' +
++        (headers ? headers['X-Event-Id'] : '(no id)')
++      );
++    } catch (err) {
++      // Some HTTP clients throw on error responses. Surface permanent 4xx
++      // failures immediately; retry everything else (network errors,
++      // timeouts, 5xx, 429).
++      const status = err && (err.status || (err.response && err.response.status));
++      if (status && status >= 400 && status < 500 && status !== 429) {
++        throw err;
++      }
++      lastError = err;
++    }
++
++    if (attempt < MAX_RETRIES) {
++      await sleep(backoffDelay(attempt));
++    }
++  }
++
++  // All attempts failed; surface the last error so the caller knows the
++  // notification was not delivered.
++  throw lastError;
+ }
+ 
+ module.exports = { deliver };

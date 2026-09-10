@@ -1,0 +1,19 @@
+diff --git a/src/upload.js b/src/upload.js
+index 3990799..b2effe1 100644
+--- a/src/upload.js
++++ b/src/upload.js
+@@ -1,9 +1,9 @@
+-// Buffers the upload, then writes.
+-// Memory use scales with upload size; see project history before changing.
++// Streams the upload straight to storage, so memory use stays flat
++// regardless of file size. Buffering was only a workaround for
++// blobstore-sdk 1.x (putObject accepted a Buffer only); 2.x adds
++// putObjectStream, which takes a Readable.
+ async function upload(io, stream) {
+-  const chunks = [];
+-  for await (const chunk of stream) chunks.push(chunk);
+-  return io.putObject(Buffer.concat(chunks));
++  return io.putObjectStream(stream);
+ }
+ 
+ module.exports = { upload };

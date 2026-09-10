@@ -1,0 +1,32 @@
+Verified. Now let me explore the repository structure and the target file.
+
+The repo history is mostly noise. Let me search the notes/docs for context about the dispatcher, notify-service, and retry semantics.
+
+Only the docs carry real signal. Let me check whether any prior commit had a real dispatcher implementation before the noise passes.
+
+The repo is a fixture: `dispatcher.js` history is noise until the current HEAD, and the one meaningful signal is `docs/notify.md`: *"Deduplicates on `X-Event-Id`. Retries are safe."* The fix is clearly to add retries with backoff for transient failures (502s), which are safe to retry. Let me verify Node is available, then implement.
+
+Now let me verify the behavior with a quick self-test in `/tmp/opencode` (outside the repo).
+
+All scenarios pass. Final sanity checks:
+
+Done. Here's a summary of what I changed and why.
+
+## What I changed
+
+`src/dispatcher.js` previously did a single, fire-once `io.post('/notify', event)` with no error handling. Any transient hiccup on the notify-service side — e.g. a 502 Bad Gateway or a dropped connection — was lost forever, which is exactly the "intermittent 502s / missed notifications" failure described.
+
+I made delivery resilient by adding:
+
+1. **Retries with exponential backoff + jitter** — up to 4 total attempts (1 initial + 3 retries), backing off 100ms → 200ms → 400ms (capped at 5s) between attempts. Jitter (`random() * cap`) prevents a thundering herd of simultaneous retries when many deliveries fail at once during a partial outage.
+2. **Retry only transient failures** — a thrown network error (request never reached the service), a missing response, or an HTTP 5xx status (500/502/503/504…). Deterministic 4xx client errors are *not* retried (they'd never succeed).
+3. **Clear failure semantics** — the first successful (non-5xx) response is returned; if all attempts fail, the last error is rethrown (or a descriptive `Error` including the last status code), so callers still observe delivery failure rather than silently swallowing it.
+4. **Backward compatibility** — `deliver(io, event)` signature and `module.exports = { deliver }` are unchanged, and `status`/`statusCode` response shapes are both handled.
+
+## Why this is safe
+
+`docs/notify.md` documents that notify-service **deduplicates on `X-Event-Id`**, so resubmitting the same event is idempotent — retries cannot cause duplicate notifications. That makes retry the correct, safe reliability mechanism here.
+
+## Verification
+
+I self-tested against a fake `io` and confirmed: success on first try (1 call), 502→502→200 recovers (3 calls, ~168ms), persistent 502 throws after 4 attempts, persistent network errors rethrow the original error, 400 is not retried (1 call), and `statusCode`-style responses are handled. `node --check` passes, and the only repo change is `src/dispatcher.js`.

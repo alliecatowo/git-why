@@ -39,10 +39,14 @@ import {
 import { decomposeQuery } from './temporal/intent.js';
 import { applyTemporal, exponentFor, temporalScore } from './temporal/score.js';
 import { PROSE_ONLY_PENALTY } from './temporal/tuning.js';
+import { expandQuery, selectExpansionTerms } from './expansion.js';
 import { expandStructuralCandidates } from './expand.js';
 import type { ExpandedRank } from './expand.js';
 
 const MAX_MESSAGE_EXCERPT_CHARS = 280;
+
+/** Top documents whose vocabulary seeds the pseudo-relevance-feedback pass. */
+const PRF_SEED_DOCS = 5;
 
 function queryTokens(query: string): string[] {
   // Mirrors TOKEN_RE in src/history/lineage.ts: query tokens must be drawn
@@ -189,7 +193,31 @@ export async function search(
     }
     return rankCommits({ n: request.limit, lexicalFetch, semanticFetch });
   };
-  const rankResults = await Promise.all([rankFor(coreQuery), ...request.groups.map(rankFor)]);
+  const firstPass = await Promise.all([rankFor(coreQuery), ...request.groups.map(rankFor)]);
+
+  // Second retrieval pass with pseudo-relevance feedback. Off by default until
+  // it is shown to help; see src/search/expansion.ts for why recall, not
+  // ranking, is the thing that needs fixing.
+  let rankResults = firstPass;
+  if (process.env.GIT_WHY_EXPANSION === 'prf') {
+    const seedShas = firstPass[0]!.ranked.slice(0, PRF_SEED_DOCS).map((r) => r.sha);
+    const seedCommits = await store.fetchCommits(seedShas);
+    const sources = seedShas
+      .map((sha, rank) => {
+        const commit = seedCommits.get(sha);
+        return commit === undefined ? null : { text: `${commit.subject}\n${commit.body}`, rank };
+      })
+      .filter((v): v is { text: string; rank: number } => v !== null);
+    const terms = selectExpansionTerms(sources, coreQuery);
+    if (terms.length > 0) {
+      const second = await rankFor(expandQuery(coreQuery, terms));
+      // Fused rather than replaced: the first pass reflects what was actually
+      // asked, the second reflects vocabulary guessed from results that may be
+      // wrong. Neither should be able to overrule the other outright.
+      rankResults = [...firstPass, second];
+    }
+  }
+
   const rankResult = rankResults[0]!;
   // `--group ... --fuse` uses commit-level RRF across independently retrieved
   // groups. Evidence remains from the primary group, avoiding a misleading

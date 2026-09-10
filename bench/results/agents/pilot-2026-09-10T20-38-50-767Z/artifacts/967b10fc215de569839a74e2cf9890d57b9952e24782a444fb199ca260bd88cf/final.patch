@@ -1,0 +1,99 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b31b62c..80cc615 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,7 +1,92 @@
+ // Delivers notifications to notify-service.
++//
++// notify-service deduplicates on the `X-Event-Id` header, so redelivering
++// the same event is a safe no-op (see docs/notify.md). That idempotency
++// makes retries safe: delivery can fail intermittently with 502s (or other
++// transient 5xx / network errors), so we retry with bounded exponential
++// backoff + jitter instead of giving up on the first failure. Permanent
++// client errors (4xx) are never retried, since they would fail identically
++// on every attempt.
++
++const MAX_RETRIES = 3; // up to 4 delivery attempts total
++const BASE_RETRY_DELAY_MS = 50;
++const MAX_RETRY_DELAY_MS = 500;
++
++// Extract an HTTP status code from anything io.post may produce: a resolved
++// response, a thrown error from an http client (which often carries
++// `response.status` or a top-level `status`), or plain network errors
++// (which carry no status at all).
++function statusOf(result) {
++  if (result == null) return null;
++  if (typeof result.status === 'number') return result.status;
++  if (
++    result.response &&
++    typeof result.response.status === 'number'
++  ) {
++    return result.response.status;
++  }
++  return null;
++}
++
++// Statuses that make sense to retry: anything from a gateway/server (5xx,
++// including the intermittent 502s behind this issue) and rate limiting (429).
++// Request timeouts (408) are also transient.
++function isTransientStatus(status) {
++  return status !== null && (status >= 500 || status === 408 || status === 429);
++}
++
++// Exponential backoff with full jitter to avoid a thundering herd of
++// retries against a recovering service.
++function retryDelayMs(attempt) {
++  const base = Math.min(
++    BASE_RETRY_DELAY_MS * 2 ** attempt,
++    MAX_RETRY_DELAY_MS
++  );
++  return base + Math.floor(Math.random() * base);
++}
++
++function sleep(ms) {
++  return new Promise((resolve) => setTimeout(resolve, ms));
++}
++
+ async function deliver(io, event) {
+-  const res = await io.post('/notify', event);
+-  return res;
++  // Send the event id so notify-service can deduplicate retried deliveries.
++  const eventId =
++    event && event.id != null ? event.id : event && event.eventId;
++
++  let lastResult;
++  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
++    let res;
++    try {
++      if (eventId != null) {
++        res = await io.post('/notify', event, {
++          headers: { 'X-Event-Id': String(eventId) },
++        });
++      } else {
++        res = await io.post('/notify', event);
++      }
++    } catch (err) {
++      // A thrown error with a permanent client status (e.g. 400/404) is not
++      // transient: rethrow immediately. Errors with no status (transport
++      // failures) or transient statuses (5xx/429) are retried below.
++      const status = statusOf(err);
++      if (status !== null && !isTransientStatus(status)) throw err;
++      lastResult = err;
++      if (attempt === MAX_RETRIES) throw err; // exhausted: propagate like before
++      await sleep(retryDelayMs(attempt));
++      continue;
++    }
++
++    // Successful (or permanently-failing) responses are returned as-is.
++    const status = statusOf(res);
++    if (status === null || !isTransientStatus(status)) return res;
++    lastResult = res; // transient status (e.g. 502): keep for the final return
++
++    if (attempt === MAX_RETRIES) return res; // exhausted retries on transient statuses
++    await sleep(retryDelayMs(attempt));
++  }
++
++  return lastResult;
+ }
+ 
+ module.exports = { deliver };

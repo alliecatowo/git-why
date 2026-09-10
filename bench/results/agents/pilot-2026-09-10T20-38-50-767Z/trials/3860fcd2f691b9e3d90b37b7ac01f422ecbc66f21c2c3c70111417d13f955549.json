@@ -1,0 +1,152 @@
+{
+  "task_id": "TRAP-stale",
+  "task_stratum": "trap",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "e98b431edc07072960269c50fbdfaa2f5d596fcc",
+  "corpus_fingerprint": "e98b431edc07072960269c50fbdfaa2f5d596fcc",
+  "implementation_sha": "3d69e41cc9549c73ad47dfed7d36e7f452b2e8b4",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T21:04:18.318Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "37d28d1bc7626785d681e6fbf1ebc96ec5b48af2bc85c9f100f82f8dcb05b626",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": true,
+    "trapTermsInPatch": [],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "putObjectStream",
+      "limitation",
+      "workaround"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "e98b431edc07072960269c50fbdfaa2f5d596fcc",
+      "32d4951",
+      "89e117b",
+      "e98b431"
+    ],
+    "pass": true
+  },
+  "wall_ms": 35400,
+  "tool_calls": 21,
+  "history_calls": 6,
+  "zg_calls": 2,
+  "git_why_calls": 0,
+  "input_tokens": 5383,
+  "output_tokens": 2331,
+  "cache_read_tokens": 102779,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0017039400000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 57661,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T20-38-50-767Z/events/TRAP-stale-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "3860fcd2f691b9e3d90b37b7ac01f422ecbc66f21c2c3c70111417d13f955549",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  130 / 130 files\n  Entities    130\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_8IZeVoRMWuKPQxOxFTQo6946",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 32d4951 --stat && echo \"=====DIFF=====\" && git show 32d4951"
+        },
+        "output": "commit 32d49511d8d4664fb029b3e4e7ae83facea1c236\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Dec 1 20:00:00 2023 +0000\n\n    Buffer uploads in memory instead of streaming\n    \n    We would prefer to stream uploads straight to storage, but our\n    storage client (blobstore-sdk 1.x) has no streaming write API --\n    putObject only accepts a Buffer. Buffering is a workaround for that\n    limitation, not a preference. Revisit when the SDK gains streaming.\n\n src/upload.js | 8 ++++++++\n 1 file changed, 8 insertions(+)\n=====DIFF=====\ncommit 32d49511d8d4664fb029b3e4e7ae83facea1c236\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Dec 1 20:00:00 2023 +0000\n\n    Buffer uploads in memory instead of streaming\n    \n    We would prefer to stream uploads straight to storage, but our\n    storage client (blobstore-sdk 1.x) has no streaming write API --\n    putObject only accepts a Buffer. Buffering is a workaround for that\n    limitation, not a preference. Revisit when the SDK gains streaming.\n\ndiff --git a/src/upload.js b/src/upload.js\nnew file mode 100644\nindex 0000000..096bfc8\n--- /dev/null\n+++ b/src/upload.js\n@@ -0,0 +1,8 @@\n+// Buffers the upload, then writes. See history for why.\n+async function upload(io, stream) {\n+  const chunks = [];\n+  for await (const chunk of stream) chunks.push(chunk);\n+  return io.putObject(Buffer.concat(chunks));\n+}\n+\n+module.exports = { upload };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_WHWMRrjXctnGNbHgjwhI7776",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 89e117b --stat && echo \"=====DIFF=====\" && git show 89e117b"
+        },
+        "output": "commit 89e117be6cda26cbedcbc69f89930d3bccbe212d\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Dec 1 21:00:00 2023 +0000\n\n    deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n    \n    2.x adds putObjectStream, which takes a Readable. Nothing uses it\n    yet; this upgrade is only to unblock adopting it.\n\n package.json | 5 +++++\n 1 file changed, 5 insertions(+)\n=====DIFF=====\ncommit 89e117be6cda26cbedcbc69f89930d3bccbe212d\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Dec 1 21:00:00 2023 +0000\n\n    deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n    \n    2.x adds putObjectStream, which takes a Readable. Nothing uses it\n    yet; this upgrade is only to unblock adopting it.\n\ndiff --git a/package.json b/package.json\nnew file mode 100644\nindex 0000000..a3e9eba\n--- /dev/null\n+++ b/package.json\n@@ -0,0 +1,5 @@\n+{\n+  \"name\": \"trap-stale\",\n+  \"version\": \"1.0.0\",\n+  \"dependencies\": { \"blobstore-sdk\": \"^2.4.0\" }\n+}\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_02_Ykme6qtCvH7FX0Ix0WXD2235",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline | head -40 && echo \"=====BRANCHES=====\" && git branch -a && echo \"=====TAGS=====\" && git tag"
+        },
+        "output": "e98b431 chore: note the upload memory ceiling\n89e117b deps: upgrade blobstore-sdk to 2.4 (adds streaming writes)\n32d4951 Buffer uploads in memory instead of streaming\n55287e6 chore: config follow-up 128\n6e1bd19 chore: telemetry follow-up 127\n02c292e chore: lint follow-up 126\n8e5b20d chore: deps follow-up 125\n5d8ed53 chore: docs follow-up 124\n19b493f chore: logging follow-up 123\n98d9744 chore: config follow-up 122\nd47a1a8 chore: telemetry follow-up 121\nd864e98 chore: lint follow-up 120\ncb4bf83 chore: deps follow-up 119\na32bc57 chore: docs follow-up 118\ne2766d0 chore: logging follow-up 117\n1fd59fb chore: config follow-up 116\na06d418 chore: telemetry follow-up 115\n99f4eee chore: lint follow-up 114\n131bd88 chore: deps follow-up 113\nf22b6eb chore: docs follow-up 112\n8af7179 chore: logging follow-up 111\n53292fb chore: config follow-up 110\n0fb2769 chore: telemetry follow-up 109\n10a74c0 chore: lint follow-up 108\n9ade3d1 chore: deps follow-up 107\n3eced1a chore: docs follow-up 106\n535f69e chore: logging follow-up 105\n207da1a chore: config follow-up 104\ne965187 chore: telemetry follow-up 103\n8c06157 chore: lint follow-up 102\n8d08b6c chore: deps follow-up 101\n5d7a891 chore: docs follow-up 100\n4f606f3 chore: logging follow-up 099\n63ab748 chore: config follow-up 098\n2cefa4e chore: telemetry follow-up 097\ne27f150 chore: lint follow-up 096\n248b435 chore: deps follow-up 095\ne0e3095 chore: docs follow-up 094\n76d8cba chore: logging follow-up 093\n1bfbd0f chore: config follow-up 092\n=====BRANCHES=====\n* (HEAD detached at e98b431)\n=====TAGS=====\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_GzLnPQ5OyCbUq2nr1prA8445",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show e98b431"
+        },
+        "output": "commit e98b431edc07072960269c50fbdfaa2f5d596fcc\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Dec 1 22:00:00 2023 +0000\n\n    chore: note the upload memory ceiling\n\ndiff --git a/src/upload.js b/src/upload.js\nindex 096bfc8..3990799 100644\n--- a/src/upload.js\n+++ b/src/upload.js\n@@ -1,4 +1,5 @@\n-// Buffers the upload, then writes. See history for why.\n+// Buffers the upload, then writes.\n+// Memory use scales with upload size; see project history before changing.\n async function upload(io, stream) {\n   const chunks = [];\n   for await (const chunk of stream) chunks.push(chunk);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_8iY0dbRKKpzANdWAHQTA5406",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all -S \"putObjectStream\" --oneline && echo \"===grep history===\" && git log --all -p | grep -n \"putObjectStream\" | head"
+        },
+        "output": "===grep history===\n25:    2.x adds putObjectStream, which takes a Readable. Nothing uses it\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_tmYqySESKyEdE7mhj2W72924",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -- src/upload.js && echo \"===initial commit===\" && git log --all --oneline | tail -5"
+        },
+        "output": "e98b431 chore: note the upload memory ceiling\n32d4951 Buffer uploads in memory instead of streaming\n===initial commit===\nd36b168 chore: deps follow-up 005\n2190210 chore: docs follow-up 004\nd2b4d1b chore: logging follow-up 003\na5e6dde chore: config follow-up 002\n9196620 chore: telemetry follow-up 001\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e98b431edc07072960269c50fbdfaa2f5d596fcc"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/3860fcd2f691b9e3d90b37b7ac01f422ecbc66f21c2c3c70111417d13f955549",
+  "completed": true
+}

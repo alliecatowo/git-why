@@ -1,0 +1,40 @@
+I've confirmed the history. Now let me make the change.Done. Here's a summary.
+
+## What I did
+
+First, per the task instructions, I ran the single verification command:
+
+```
+pwd; git rev-parse --show-toplevel; git rev-parse HEAD
+→ /workspace, /workspace, ccc846114a521bb3ae999c5d0d4d217d397b95de
+```
+
+Then I consulted the Git history (as the code comment explicitly told me to) before touching `src/upload.js`.
+
+### What the history revealed
+- `d309e11` introduced buffering, with the message: the storage client **`blobstore-sdk` 1.x had no streaming write API** — `putObject` only accepts a `Buffer` — so buffering was a *workaround*, "not a preference," to be revisited "when the SDK gains streaming."
+- `7747b86` then ran: **`blobstore-sdk` upgraded to 2.4, which adds `putObjectStream`, taking a `Readable`.** Its message even says the upgrade is "only to unblock adopting it."
+- `package.json` on `HEAD` is `"blobstore-sdk": "^2.4.0"`, and every commit after the upgrade is unrelated maintenance.
+- The `notes/*.md` files are unrelated noise, not documentation.
+
+So the current "buffer everything" code was already stale: the constraint that justified it no longer exists.
+
+### The change
+Replaced the accumulate-then-concat implementation with a direct pass-through:
+
+```js
+async function upload(io, stream) {
+  return io.putObjectStream(stream);
+}
+```
+
+and updated the comment to explain the move to the streaming API.
+
+### Why
+- The old code did `chunks.push(chunk)` for every chunk and then `Buffer.concat(chunks)`, holding the entire upload (plus concatenation overhead) in memory — memory usage scaled with file size.
+- `blobstore-sdk` 2.4's `putObjectStream(Readable)` consumes the incoming stream incrementally, so peak memory no longer scales with the upload size.
+- I kept the function `async` so `upload` still always returns a Promise, preserving its existing contract.
+
+I verified the file parses cleanly with `node --check`.
+
+One caveat worth flagging: the upgrade note specifies `putObjectStream` takes a **Node `Readable`**. The old code tolerated any async iterable. If any caller passes a non-`Readable` async iterable, it would need `Readable.from(stream)`; with the information available (the parameter is named `stream`, and callers aren't in this repo), I passed it through directly rather than adding an unneeded wrapper.

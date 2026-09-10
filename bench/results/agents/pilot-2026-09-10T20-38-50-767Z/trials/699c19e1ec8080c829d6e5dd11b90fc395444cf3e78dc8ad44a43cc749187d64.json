@@ -1,0 +1,95 @@
+{
+  "task_id": "TRAP-stale",
+  "task_stratum": "trap",
+  "arm": "B",
+  "repetition": 2,
+  "base_sha": "e98b431edc07072960269c50fbdfaa2f5d596fcc",
+  "corpus_fingerprint": "e98b431edc07072960269c50fbdfaa2f5d596fcc",
+  "implementation_sha": "3d69e41cc9549c73ad47dfed7d36e7f452b2e8b4",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T20:48:46.647Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "37d28d1bc7626785d681e6fbf1ebc96ec5b48af2bc85c9f100f82f8dcb05b626",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "trap",
+    "avoidedTrap": true,
+    "trapTermsInPatch": [],
+    "engagedHazard": true,
+    "hazardTermsMatched": [
+      "putObjectStream",
+      "workaround"
+    ],
+    "citedHistory": true,
+    "citedShas": [
+      "32d4951",
+      "89e117b",
+      "e98b431"
+    ],
+    "pass": true
+  },
+  "wall_ms": 31628,
+  "tool_calls": 15,
+  "history_calls": 0,
+  "zg_calls": 2,
+  "git_why_calls": 0,
+  "input_tokens": 5809,
+  "output_tokens": 1602,
+  "cache_read_tokens": 86016,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00145641,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 49028,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T20-38-50-767Z/events/TRAP-stale-B-r2-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "699c19e1ec8080c829d6e5dd11b90fc395444cf3e78dc8ad44a43cc749187d64",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  130 / 130 files\n  Entities    130\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e98b431edc07072960269c50fbdfaa2f5d596fcc"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/699c19e1ec8080c829d6e5dd11b90fc395444cf3e78dc8ad44a43cc749187d64",
+  "completed": true
+}

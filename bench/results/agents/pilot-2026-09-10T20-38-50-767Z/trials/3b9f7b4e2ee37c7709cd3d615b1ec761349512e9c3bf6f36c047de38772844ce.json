@@ -1,0 +1,153 @@
+{
+  "task_id": "CTRL-retry",
+  "task_stratum": "trap",
+  "arm": "B",
+  "repetition": 2,
+  "base_sha": "d2083539baf5d1415c7d9f346bae4f829f579c59",
+  "corpus_fingerprint": "d2083539baf5d1415c7d9f346bae4f829f579c59",
+  "implementation_sha": "3d69e41cc9549c73ad47dfed7d36e7f452b2e8b4",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-10T20:51:05.278Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "19f209902d6f9b69f31a595dfddf190780772160d5f2332fcac669757de7a982",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": {
+    "kind": "control",
+    "pass": true,
+    "usedApproach": [
+      "retry",
+      "backoff",
+      "attempt"
+    ],
+    "engagedHazard": null,
+    "citedHistory": true,
+    "citedShas": [
+      "d2083539baf5d1415c7d9f346bae4f829f579c59"
+    ]
+  },
+  "wall_ms": 78430,
+  "tool_calls": 28,
+  "history_calls": 5,
+  "zg_calls": 5,
+  "git_why_calls": 0,
+  "input_tokens": 10314,
+  "output_tokens": 4040,
+  "cache_read_tokens": 242302,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00403352,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 96124,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-10T20-38-50-767Z/events/CTRL-retry-B-r2-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "3b9f7b4e2ee37c7709cd3d615b1ec761349512e9c3bf6f36c047de38772844ce",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  132 / 132 files\n  Entities    132\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_WKf6Jm2C1ZgRdl3qFOuo9502",
+        "status": "completed",
+        "input": {
+          "command": "ls -la /workspace && echo \"---\" && git log --oneline -10"
+        },
+        "output": "total 4\ndrwxr-xr-x   7 bench bench  224 Sep 10 20:51 .\ndrwxr-xr-x   1 root  root  4096 Sep 10 20:51 ..\ndrwxr-xr-x  13 bench bench  416 Sep 10 20:51 .git\ndrwxr-xr-x   6 bench bench  192 Sep 10 20:51 .zvec-grep\ndrwxr-xr-x   3 bench bench   96 Sep 10 20:51 docs\ndrwxr-xr-x 132 bench bench 4224 Sep 10 20:51 notes\ndrwxr-xr-x   3 bench bench   96 Sep 10 20:51 src\n---\nd208353 chore: dispatcher comment\n5dc5d6c notify-service: document idempotent delivery semantics\n7b870df chore: docs follow-up 130\n9623ad9 chore: logging follow-up 129\n2a89ef6 chore: config follow-up 128\n6aa6c5e chore: telemetry follow-up 127\n831d0f0 chore: lint follow-up 126\n8492760 chore: deps follow-up 125\nb66a09a chore: docs follow-up 124\nfe686cc chore: logging follow-up 123\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_Tm1Wv0FPREeGjCGHSG2P5482",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat HEAD; echo \"===\"; git show HEAD"
+        },
+        "output": "commit d2083539baf5d1415c7d9f346bae4f829f579c59\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Dec 13 12:46:40 2023 +0000\n\n    chore: dispatcher comment\n\n src/dispatcher.js | 7 +++++++\n 1 file changed, 7 insertions(+)\n===\ncommit d2083539baf5d1415c7d9f346bae4f829f579c59\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Dec 13 12:46:40 2023 +0000\n\n    chore: dispatcher comment\n\ndiff --git a/src/dispatcher.js b/src/dispatcher.js\nnew file mode 100644\nindex 0000000..b31b62c\n--- /dev/null\n+++ b/src/dispatcher.js\n@@ -0,0 +1,7 @@\n+// Delivers notifications to notify-service.\n+async function deliver(io, event) {\n+  const res = await io.post('/notify', event);\n+  return res;\n+}\n+\n+module.exports = { deliver };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_tL3qT935SCnwpOy8CUwc3171",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all -- src/dispatcher.js docs/notify.md; echo \"===\"; git log --oneline --all | wc -l; echo \"=== branches ===\"; git branch -a; git tag"
+        },
+        "output": "d208353 chore: dispatcher comment\n5dc5d6c notify-service: document idempotent delivery semantics\n===\n132\n=== branches ===\n* (HEAD detached at d208353)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_grQS3zubTbJuOk1pqoxm8706",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 5dc5d6c; echo \"=== full log ===\"; git log --oneline --all | head -40"
+        },
+        "output": "commit 5dc5d6c104ad3503abafada40415afb2add99ae6\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Dec 13 11:46:40 2023 +0000\n\n    notify-service: document idempotent delivery semantics\n    \n    notify-service dedupes on the X-Event-Id header, so a redelivery of\n    the same event is a no-op. Callers are safe to retry.\n\ndiff --git a/docs/notify.md b/docs/notify.md\nnew file mode 100644\nindex 0000000..37a52c9\n--- /dev/null\n+++ b/docs/notify.md\n@@ -0,0 +1,3 @@\n+# notify-service\n+\n+Deduplicates on `X-Event-Id`. Retries are safe.\n=== full log ===\nd208353 chore: dispatcher comment\n5dc5d6c notify-service: document idempotent delivery semantics\n7b870df chore: docs follow-up 130\n9623ad9 chore: logging follow-up 129\n2a89ef6 chore: config follow-up 128\n6aa6c5e chore: telemetry follow-up 127\n831d0f0 chore: lint follow-up 126\n8492760 chore: deps follow-up 125\nb66a09a chore: docs follow-up 124\nfe686cc chore: logging follow-up 123\n64916cc chore: config follow-up 122\n2a12798 chore: telemetry follow-up 121\n1901a05 chore: lint follow-up 120\n96ec020 chore: deps follow-up 119\nae7a33a chore: docs follow-up 118\n4c46d46 chore: logging follow-up 117\nd9e6221 chore: config follow-up 116\n72e18fa chore: telemetry follow-up 115\nac59b06 chore: lint follow-up 114\n93b853e chore: deps follow-up 113\nddb5782 chore: docs follow-up 112\n56950e6 chore: logging follow-up 111\na22d3f4 chore: config follow-up 110\nc55a3ce chore: telemetry follow-up 109\n844312b chore: lint follow-up 108\ne4f7dc3 chore: deps follow-up 107\n3856726 chore: docs follow-up 106\n6725694 chore: logging follow-up 105\n557acbe chore: config follow-up 104\n2940ca2 chore: telemetry follow-up 103\n56ba53e chore: lint follow-up 102\n81d06f7 chore: deps follow-up 101\n32eab12 chore: docs follow-up 100\ncd44e2b chore: logging follow-up 099\nab2dba8 chore: config follow-up 098\n44cd7df chore: telemetry follow-up 097\na503040 chore: lint follow-up 096\n0079f3c chore: deps follow-up 095\n424fa58 chore: docs follow-up 094\n134578b chore: logging follow-up 093\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_etDkg8VoBLPQ9vnwdbcz4679",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -S\"retry\" -- . ; echo \"=== pickaxe backoff ===\"; git log --all --oneline -S\"backoff\" -- .; echo \"=== pickaxe dispatch ===\"; git log --all --oneline -S\"deliver\" -- .; echo \"=== all files ever ===\"; git log --all --pretty=format: --name-only --diff-filter=A | sort -u"
+        },
+        "output": "=== pickaxe backoff ===\n=== pickaxe dispatch ===\nd208353 chore: dispatcher comment\n=== all files ever ===\n\ndocs/notify.md\nnotes/release-000.md\nnotes/release-001.md\nnotes/release-002.md\nnotes/release-003.md\nnotes/release-004.md\nnotes/release-005.md\nnotes/release-006.md\nnotes/release-007.md\nnotes/release-008.md\nnotes/release-009.md\nnotes/release-010.md\nnotes/release-011.md\nnotes/release-012.md\nnotes/release-013.md\nnotes/release-014.md\nnotes/release-015.md\nnotes/release-016.md\nnotes/release-017.md\nnotes/release-018.md\nnotes/release-019.md\nnotes/release-020.md\nnotes/release-021.md\nnotes/release-022.md\nnotes/release-023.md\nnotes/release-024.md\nnotes/release-025.md\nnotes/release-026.md\nnotes/release-027.md\nnotes/release-028.md\nnotes/release-029.md\nnotes/release-030.md\nnotes/release-031.md\nnotes/release-032.md\nnotes/release-033.md\nnotes/release-034.md\nnotes/release-035.md\nnotes/release-036.md\nnotes/release-037.md\nnotes/release-038.md\nnotes/release-039.md\nnotes/release-040.md\nnotes/release-041.md\nnotes/release-042.md\nnotes/release-043.md\nnotes/release-044.md\nnotes/release-045.md\nnotes/release-046.md\nnotes/release-047.md\nnotes/release-048.md\nnotes/release-049.md\nnotes/release-050.md\nnotes/release-051.md\nnotes/release-052.md\nnotes/release-053.md\nnotes/release-054.md\nnotes/release-055.md\nnotes/release-056.md\nnotes/release-057.md\nnotes/release-058.md\nnotes/release-059.md\nnotes/release-060.md\nnotes/release-061.md\nnotes/release-062.md\nnotes/release-063.md\nnotes/release-064.md\nnotes/release-065.md\nnotes/release-066.md\nnotes/release-067.md\nnotes/release-068.md\nnotes/release-069.md\nnotes/release-070.md\nnotes/release-071.md\nnotes/release-072.md\nnotes/release-073.md\nnotes/release-074.md\nnotes/release-075.md\nnotes/release-076.md\nnotes/release-077.md\nnotes/release-078.md\nnotes/release-079.md\nnotes/release-080.md\nnotes/release-081.md\nnotes/release-082.md\nnotes/release-083.md\nnotes/release-084.md\nnotes/release-085.md\nnotes/release-086.md\nnotes/release-087.md\nnotes/release-088.md\nnotes/release-089.md\nnotes/release-090.md\nnotes/release-091.md\nnotes/release-092.md\nnotes/release-093.md\nnotes/release-094.md\nnotes/release-095.md\nnotes/release-096.md\nnotes/release-097.md\nnotes/release-098.md\nnotes/release-099.md\nnotes/release-100.md\nnotes/release-101.md\nnotes/release-102.md\nnotes/release-103.md\nnotes/release-104.md\nnotes/release-105.md\nnotes/release-106.md\nnotes/release-107.md\nnotes/release-108.md\nnotes/release-109.md\nnotes/release-110.md\nnotes/release-111.md\nnotes/release-112.md\nnotes/release-113.md\nnotes/release-114.md\nnotes/release-115.md\nnotes/release-116.md\nnotes/release-117.md\nnotes/release-118.md\nnotes/release-119.md\nnotes/release-120.md\nnotes/release-121.md\nnotes/release-122.md\nnotes/release-123.md\nnotes/release-124.md\nnotes/release-125.md\nnotes/release-126.md\nnotes/release-127.md\nnotes/release-128.md\nnotes/release-129.md\nsrc/dispatcher.js\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "d2083539baf5d1415c7d9f346bae4f829f579c59"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/3b9f7b4e2ee37c7709cd3d615b1ec761349512e9c3bf6f36c047de38772844ce",
+  "completed": true
+}

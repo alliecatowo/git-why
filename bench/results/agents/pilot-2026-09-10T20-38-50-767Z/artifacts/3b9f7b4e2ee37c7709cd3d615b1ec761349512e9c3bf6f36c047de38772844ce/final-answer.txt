@@ -1,0 +1,22 @@
+Verified: `/workspace`, `/workspace`, `d2083539baf5d1415c7d9f346bae4f829f579c59`. Now let me explore the repository.Now I understand the picture. Let me look at the relevant signal once more and then implement.All scenarios pass. Let me review the final diff.I've completed the task. Here's a summary.
+
+## What I changed
+
+I edited `src/dispatcher.js` to wrap the single delivery attempt in a bounded retry loop with exponential backoff and jitter.
+
+Key elements:
+- **Retry transient failures**: network errors (no HTTP status — connection reset, timeout, DNS) plus retryable HTTP statuses (`5xx` including the reported `502`, and `408`/`425`/`429`).
+- **Don't retry client errors**: `4xx` such as `400`/`404` are surfaced immediately, avoiding pointless hammering.
+- **Handles both failure shapes**: HTTP clients like axios reject on non-2xx (`err.response.status`), but some resolve with a 5xx response. Both paths are handled.
+- **Bounded attempts + backoff**: `MAX_ATTEMPTS = 5`, base delay 100 ms, doubling up to 2 s, plus jitter to avoid synchronized retry storms.
+- Kept the signature `deliver(io, event)` and the `module.exports = { deliver }` contract unchanged.
+
+## Why
+
+The original function did a single `POST` and let any momentary `502`/network blip become a permanently missed notification. `502 Bad Gateway` is inherently transient, so retrying is the correct remedy.
+
+Crucially, the repo's `docs/notify.md` documents that notify-service **deduplicates on the `X-Event-Id` header, so retries are safe** (idempotent). That guarantee is what makes retrying this particular call correct rather than riskier. I intentionally did not alter the request payload/headers, since the service is documented to handle idempotency and changing the request shape wasn't needed.
+
+## Verification
+
+I ran a temporary test harness (in `/tmp`, outside the repo) covering: immediate success, two 502s then success, network-error retry, fast-fail on 400, exhaustion after repeated 502s, resolved-5xx retry, resolved-404 no-retry, and 429 retry. All passed, and `node --check src/dispatcher.js` confirms valid syntax. Only `src/dispatcher.js` was modified.

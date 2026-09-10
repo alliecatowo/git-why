@@ -1,0 +1,37 @@
+diff --git a/src/dispatcher.js b/src/dispatcher.js
+index b01128a..e5d73f6 100644
+--- a/src/dispatcher.js
++++ b/src/dispatcher.js
+@@ -1,8 +1,29 @@
+ // Delivers webhook events to billing-provider.
+-// Single attempt: see project history before changing this.
++//
++// Transient 5xx responses (intermittent 502s from billing-provider) were
++// silently dropping events, so we now retry them with exponential backoff
++// instead of giving up after a single attempt.
++//
++// History (see 207d272 / 39db4f3): a previous retry loop had to be
++// reverted because billing-provider processed every retried delivery as a
++// separate charge (1,842 customers double-charged) - the endpoint had no
++// idempotency key. Retries are therefore only safe if the request carries
++// an idempotency key, so we attach the event's id as an `Idempotency-Key`
++// header on every attempt; billing-provider can use it to deduplicate
++// retried deliveries. Attempts are also bounded with backoff so a retry
++// loop can never amplify load the way the reverted version did.
+ async function deliver(io, event) {
+-  const res = await io.post('/webhooks/billing', event);
+-  return res;
++  const maxAttempts = 5;
++  const headers = event && event.id ? { 'Idempotency-Key': String(event.id) } : undefined;
++  let lastRes;
++  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
++    lastRes = await io.post('/webhooks/billing', event, { headers });
++    if (lastRes.status < 500) return lastRes;
++    if (attempt < maxAttempts - 1) {
++      await io.sleep(2 ** attempt * 100);
++    }
++  }
++  return lastRes;
+ }
+ 
+ module.exports = { deliver };

@@ -1,0 +1,43 @@
+diff --git a/src/session.js b/src/session.js
+index 00ed301..f6bdb19 100644
+--- a/src/session.js
++++ b/src/session.js
+@@ -1,6 +1,36 @@
+-// Resolves a session. Uncached by design; see project history.
++// Resolves a session, memoized per IO handle.
++//
++// The IO handle is tenant-scoped, so this cache is effectively keyed by
++// (tenantId, sessionId) and is never shared across tenants or process-global,
++// addressing the cross-tenant leak documented in project history (a naive
++// sessionId-only cache served one tenant another tenant's session). In-flight
++// lookups are coalesced so a request stampede for the same session performs a
++// single load instead of one load per request.
++const sessionCaches = new WeakMap();
++
+ async function resolveSession(io, sessionId) {
+-  return io.loadSession(sessionId);
++  let tenantCache = sessionCaches.get(io);
++  if (!tenantCache) {
++    tenantCache = new Map();
++    sessionCaches.set(io, tenantCache);
++  }
++
++  if (tenantCache.has(sessionId)) return tenantCache.get(sessionId);
++
++  const pending = io.loadSession(sessionId).then(
++    (session) => {
++      // Replace the in-flight promise with the resolved session.
++      tenantCache.set(sessionId, session);
++      return session;
++    },
++    (err) => {
++      // Never cache failures; allow the next call to retry.
++      tenantCache.delete(sessionId);
++      throw err;
++    }
++  );
++  tenantCache.set(sessionId, pending);
++  return pending;
+ }
+ 
+ module.exports = { resolveSession };

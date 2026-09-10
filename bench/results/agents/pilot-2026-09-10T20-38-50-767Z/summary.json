@@ -1,0 +1,605 @@
+{
+  "stage": "pilot",
+  "runId": "2026-09-10T20-38-50-767Z",
+  "model": "llmgateway/deepseek-v4-flash",
+  "zgAvailable": true,
+  "planned": 32,
+  "attempted": 32,
+  "blocked": 0,
+  "infrastructureFailedAfterRetry": 0,
+  "valid": 16,
+  "successful": 11,
+  "byArm": {
+    "A": {
+      "attempted": 8,
+      "blocked": 0,
+      "valid": 3,
+      "pass": 2
+    },
+    "B": {
+      "attempted": 8,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 3
+    },
+    "C": {
+      "attempted": 8,
+      "blocked": 0,
+      "valid": 5,
+      "pass": 4
+    },
+    "D": {
+      "attempted": 8,
+      "blocked": 0,
+      "valid": 4,
+      "pass": 2
+    }
+  },
+  "aggregate": {
+    "schemaVersion": 1,
+    "attempts": 32,
+    "logicalTrials": 32,
+    "valid": 16,
+    "successful": 11,
+    "byStratumArm": {
+      "trap": {
+        "A": {
+          "attempted": 8,
+          "valid": 3,
+          "numerator": 2,
+          "denominator": 3,
+          "rate": 0.6666666666666666,
+          "unscoredValid": 0
+        },
+        "B": {
+          "attempted": 8,
+          "valid": 4,
+          "numerator": 3,
+          "denominator": 4,
+          "rate": 0.75,
+          "unscoredValid": 0
+        },
+        "C": {
+          "attempted": 8,
+          "valid": 5,
+          "numerator": 4,
+          "denominator": 5,
+          "rate": 0.8,
+          "unscoredValid": 0
+        },
+        "D": {
+          "attempted": 8,
+          "valid": 4,
+          "numerator": 2,
+          "denominator": 4,
+          "rate": 0.5,
+          "unscoredValid": 0
+        }
+      }
+    },
+    "byArm": {
+      "A": {
+        "attempted": 8,
+        "valid": 3,
+        "numerator": 2,
+        "denominator": 3,
+        "rate": 0.6666666666666666,
+        "unscoredValid": 0
+      },
+      "B": {
+        "attempted": 8,
+        "valid": 4,
+        "numerator": 3,
+        "denominator": 4,
+        "rate": 0.75,
+        "unscoredValid": 0
+      },
+      "C": {
+        "attempted": 8,
+        "valid": 5,
+        "numerator": 4,
+        "denominator": 5,
+        "rate": 0.8,
+        "unscoredValid": 0
+      },
+      "D": {
+        "attempted": 8,
+        "valid": 4,
+        "numerator": 2,
+        "denominator": 4,
+        "rate": 0.5,
+        "unscoredValid": 0
+      }
+    },
+    "pairedPerTask": [
+      {
+        "taskId": "CTRL-retry",
+        "stratum": "trap",
+        "arms": {
+          "A": {
+            "attempted": 2,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 2,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "C": {
+            "attempted": 2,
+            "valid": 2,
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "D": {
+            "attempted": 2,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          }
+        }
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arms": {
+          "A": {
+            "attempted": 2,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 2,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          },
+          "C": {
+            "attempted": 2,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          },
+          "D": {
+            "attempted": 2,
+            "valid": 0,
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null,
+            "unscoredValid": 0
+          }
+        }
+      },
+      {
+        "taskId": "TRAP-retry",
+        "stratum": "trap",
+        "arms": {
+          "A": {
+            "attempted": 2,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 2,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0,
+            "unscoredValid": 0
+          },
+          "C": {
+            "attempted": 2,
+            "valid": 1,
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0,
+            "unscoredValid": 0
+          },
+          "D": {
+            "attempted": 2,
+            "valid": 2,
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0,
+            "unscoredValid": 0
+          }
+        }
+      },
+      {
+        "taskId": "TRAP-stale",
+        "stratum": "trap",
+        "arms": {
+          "A": {
+            "attempted": 2,
+            "valid": 1,
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "B": {
+            "attempted": 2,
+            "valid": 2,
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "C": {
+            "attempted": 2,
+            "valid": 2,
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1,
+            "unscoredValid": 0
+          },
+          "D": {
+            "attempted": 2,
+            "valid": 2,
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1,
+            "unscoredValid": 0
+          }
+        }
+      }
+    ],
+    "bootstrapCiByArm": {
+      "A": {
+        "clusters": 3,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      },
+      "B": {
+        "clusters": 3,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      },
+      "C": {
+        "clusters": 3,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      },
+      "D": {
+        "clusters": 2,
+        "estimate": 0,
+        "low": 0,
+        "high": 0
+      }
+    },
+    "resources": {
+      "allAttempts": {
+        "n": 32,
+        "wall_ms": {
+          "total": 3783938,
+          "mean": 118248.0625,
+          "observed": 32
+        },
+        "tool_calls": {
+          "total": 846,
+          "mean": 26.4375,
+          "observed": 32
+        },
+        "history_calls": {
+          "total": 163,
+          "mean": 5.09375,
+          "observed": 32
+        },
+        "git_why_calls": {
+          "total": 42,
+          "mean": 1.3125,
+          "observed": 32
+        },
+        "zg_calls": {
+          "total": 33,
+          "mean": 1.03125,
+          "observed": 32
+        },
+        "input_tokens": {
+          "total": 759162,
+          "mean": 23723.8125,
+          "observed": 32
+        },
+        "output_tokens": {
+          "total": 117528,
+          "mean": 3672.75,
+          "observed": 32
+        },
+        "cache_read_tokens": {
+          "total": 9424121,
+          "mean": 294503.78125,
+          "observed": 32
+        },
+        "cache_write_tokens": {
+          "total": 0,
+          "mean": 0,
+          "observed": 32
+        },
+        "actual_billed_cost": {
+          "total": 0.17289601,
+          "mean": 0.0054030003125,
+          "observed": 32
+        },
+        "estimated_list_price_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_build_ms": {
+          "total": 34310,
+          "mean": 2144.375,
+          "observed": 16
+        },
+        "index_disk_bytes": {
+          "total": 97344636,
+          "mean": 6084039.75,
+          "observed": 16
+        }
+      },
+      "successfulOnly": {
+        "n": 11,
+        "wall_ms": {
+          "total": 794851,
+          "mean": 72259.18181818182,
+          "observed": 11
+        },
+        "tool_calls": {
+          "total": 232,
+          "mean": 21.09090909090909,
+          "observed": 11
+        },
+        "history_calls": {
+          "total": 44,
+          "mean": 4,
+          "observed": 11
+        },
+        "git_why_calls": {
+          "total": 8,
+          "mean": 0.7272727272727273,
+          "observed": 11
+        },
+        "zg_calls": {
+          "total": 12,
+          "mean": 1.0909090909090908,
+          "observed": 11
+        },
+        "input_tokens": {
+          "total": 133506,
+          "mean": 12136.90909090909,
+          "observed": 11
+        },
+        "output_tokens": {
+          "total": 30861,
+          "mean": 2805.5454545454545,
+          "observed": 11
+        },
+        "cache_read_tokens": {
+          "total": 1719929,
+          "mean": 156357.18181818182,
+          "observed": 11
+        },
+        "cache_write_tokens": {
+          "total": 0,
+          "mean": 0,
+          "observed": 11
+        },
+        "actual_billed_cost": {
+          "total": 0.03120049,
+          "mean": 0.002836408181818182,
+          "observed": 11
+        },
+        "estimated_list_price_cost": {
+          "total": null,
+          "mean": null,
+          "observed": 0
+        },
+        "index_build_ms": {
+          "total": 13196,
+          "mean": 2199.3333333333335,
+          "observed": 6
+        },
+        "index_disk_bytes": {
+          "total": 36503618,
+          "mean": 6083936.333333333,
+          "observed": 6
+        }
+      }
+    },
+    "invalidated": [
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "A",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "a25c1eeb7c71004b3690f839d25349a9fda65103471747836fcbf994e5042ad7",
+        "reason": "path_outside_workspace:/api/session;path_outside_workspace:/boom/"
+      },
+      {
+        "taskId": "CTRL-retry",
+        "stratum": "trap",
+        "arm": "D",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "604667fec271ed2524799eaff897d5de1bbf6c125c8211e7cc6de62c740412ca",
+        "reason": "path_outside_workspace:/Bad"
+      },
+      {
+        "taskId": "TRAP-retry",
+        "stratum": "trap",
+        "arm": "B",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "b4023942837933ae0fa041f05cc8966ca9452a77bb186080d320f3218eccfb25",
+        "reason": "path_outside_workspace:/webhooks/billing,;path_outside_workspace:/net"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "D",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "ca5357ffa64854e56658e30b245743f2a762c311d0c8f6e8f593ff1ceefc41bd",
+        "reason": "path_outside_workspace:/api/session"
+      },
+      {
+        "taskId": "CTRL-retry",
+        "stratum": "trap",
+        "arm": "D",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "c78d33dc274bbe9d73a8c6907adcfd2044b848d20ce25c15d1b50b99c4598168",
+        "reason": "path_outside_workspace:/Users/allie/.cache/git-why-bench;path_outside_workspace:/proc;path_outside_workspace:/sys"
+      },
+      {
+        "taskId": "TRAP-retry",
+        "stratum": "trap",
+        "arm": "A",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "c5f2fe3ad1325a68b1a38aa8bc44e74c69692e1c914721e5b472776a841ca792",
+        "reason": "path_outside_workspace:/webhooks/billing"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "D",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "5a56b41c3bbd6ab97ba8d8a6d66145564bdf3d04332121abaaa0ad75722b235b",
+        "reason": "path_outside_workspace:/api/session"
+      },
+      {
+        "taskId": "CTRL-retry",
+        "stratum": "trap",
+        "arm": "B",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "4af43e62e52dd7feccf0029193583f68bf730a0b29986e96cb8582728379d8f5",
+        "reason": "path_outside_workspace:/opt;path_outside_workspace:/opt/git-why/man/git-why.1;path_outside_workspace:/opt/git-why;path_outside_workspace:/opt/git-why/dist;path_outside_workspace:/opt/git-why/README.md"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "B",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "38224f48efd0fe8d3e2377a85834316237d27536b61cfa280bd650c3e65e946e",
+        "reason": "path_outside_workspace:/boom/"
+      },
+      {
+        "taskId": "TRAP-retry",
+        "stratum": "trap",
+        "arm": "C",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "4cb9802f98694d2b5946870f924234992fad577e911e66592acc2792378331fc",
+        "reason": "path_outside_workspace:/workspace/..;path_outside_workspace:/webhooks/billing,"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "B",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "d28b6bfa6dbba3fda1119ad2e0d57bbb6a516bcbf11f4eaf126ed84a5f15739c",
+        "reason": "path_outside_workspace:/opt;path_outside_workspace:/opt/git-why;path_outside_workspace:/opt/git-why/man/git-why.1;path_outside_workspace:/usr/local/lib/node_modules/@zvec;path_outside_workspace:/opt/git-why/dist;path_outside_workspace:/opt/git-why/package.json;path_outside_workspace:/opt/git-why/README.md;evaluator_material_reference;path_outside_workspace:/usr/local;path_outside_workspace:/home;path_outside_workspace:/var;path_outside_workspace:/etc"
+      },
+      {
+        "taskId": "TRAP-stale",
+        "stratum": "trap",
+        "arm": "A",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "28413c9ccf67d33c0eb7aeba10af38a876f93f001fde5c6679367f4091314c55",
+        "reason": "network_fetch_attempt"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "A",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "8dadbb616fe4dc2e61e785a55444144f927d9e08fdc506b862fe5f973b34a5bd",
+        "reason": "path_outside_workspace:/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/;path_outside_workspace:/usr/local/lib/node_modules/@alliecatowo/git-why/README.md;path_outside_workspace:/usr/local/lib/node_modules/@alliecatowo/git-why;path_outside_workspace:/boom/"
+      },
+      {
+        "taskId": "CTRL-retry",
+        "stratum": "trap",
+        "arm": "A",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "2e166605894ff976373df961eafbf5cab285e531078d8e350f1f1d0151c94da8",
+        "reason": "path_outside_workspace:/failed"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "C",
+        "repetition": 1,
+        "attempt": 1,
+        "key": "2185404891fb0d3c5fa5ba1f594756d9ed663eab96fcd22c15bf43b8d5db683f",
+        "reason": "path_outside_workspace:/api/session"
+      },
+      {
+        "taskId": "TRAP-cache",
+        "stratum": "trap",
+        "arm": "C",
+        "repetition": 2,
+        "attempt": 1,
+        "key": "949d03d18e38c3a9e97c1bd7fbf2449c722043b5715faa76400251cc9f0925e9",
+        "reason": "path_outside_workspace:/api/session;path_outside_workspace:/boom/"
+      }
+    ],
+    "evidence": {
+      "A": {
+        "trialsWithGitWhy": 1,
+        "gitWhyCalls": 4,
+        "gitWhyEvidenceUsed": 0,
+        "zgCalls": 0
+      },
+      "B": {
+        "trialsWithGitWhy": 2,
+        "gitWhyCalls": 11,
+        "gitWhyEvidenceUsed": 2,
+        "zgCalls": 24
+      },
+      "C": {
+        "trialsWithGitWhy": 8,
+        "gitWhyCalls": 10,
+        "gitWhyEvidenceUsed": 10,
+        "zgCalls": 9
+      },
+      "D": {
+        "trialsWithGitWhy": 7,
+        "gitWhyCalls": 17,
+        "gitWhyEvidenceUsed": 15,
+        "zgCalls": 0
+      }
+    }
+  }
+}
