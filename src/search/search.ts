@@ -38,6 +38,7 @@ import {
 } from './rank.js';
 import { decomposeQuery } from './temporal/intent.js';
 import { applyTemporal, exponentFor, temporalScore } from './temporal/score.js';
+import { PROSE_ONLY_PENALTY } from './temporal/tuning.js';
 import { expandStructuralCandidates } from './expand.js';
 import type { ExpandedRank } from './expand.js';
 
@@ -127,6 +128,24 @@ function messageExcerptOf(subject: string, body: string): string {
   const combined = body.length > 0 ? `${subject}\n\n${body}` : subject;
   if (combined.length <= MAX_MESSAGE_EXCERPT_CHARS) return combined;
   return `${combined.slice(0, MAX_MESSAGE_EXCERPT_CHARS)}…`;
+}
+
+/**
+ * True when every path a commit touched is prose: documentation, changelogs,
+ * release notes. Such a commit changed no behaviour, so it is a poor answer to
+ * a question about why the code behaves as it does. See PROSE_ONLY_PENALTY.
+ */
+function isProseOnlyCommit(commit: CommitRecord): boolean {
+  const paths = commit.changedPaths;
+  if (paths.length === 0) return false;
+  return paths.every((change) => {
+    const p = change.path.display.toLowerCase();
+    if (/\.(md|markdown|txt|rst|adoc|asciidoc|1|3)$/.test(p)) return true;
+    if (/(^|\/)(docs?|documentation|man)\//.test(p)) return true;
+    return /(^|\/)(changelog|changes|news|release[-_]?notes|authors|thanks|todo|known[-_]?bugs|readme|contribute|history)/.test(
+      p,
+    );
+  });
 }
 
 export async function search(
@@ -294,7 +313,14 @@ export async function search(
           anchorEndTime: anchorEnd?.epochSeconds,
         },
       );
-      return { rank, commit, temporal, final: applyTemporal(rank.score, temporal, w) };
+      // Prose-only commits are demoted, not dropped: see PROSE_ONLY_PENALTY.
+      const prose = isProseOnlyCommit(commit) ? PROSE_ONLY_PENALTY : 1;
+      return {
+        rank,
+        commit,
+        temporal,
+        final: applyTemporal(rank.score, temporal, w) * prose,
+      };
     })
     .sort((a, b) => b.final - a.final || (a.commit.sha < b.commit.sha ? -1 : 1));
 

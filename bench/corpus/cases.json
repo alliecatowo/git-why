@@ -1,0 +1,2105 @@
+{
+  "generatedAt": "2026-09-10T22:01:45.968Z",
+  "derivedFrom": "/Users/allie/Develop/git-why/bench/corpus/paraphrased.json",
+  "scopeLimit": "Every case here is one that `git log --grep` and `git log -S` FAIL to answer from the question's own words. That is the point -- Git Why exists for questions you cannot turn into a search term -- but it means these numbers describe hard cases, not a random sample of developer questions. Keyword search would win on the easy ones, and does: on the unparaphrased corpus `git log --grep --all-match` scores 1.000 MRR.",
+  "kept": 174,
+  "rejectedAsAnswerableBySearch": 84,
+  "byRepo": {
+    "curl-curl": 22,
+    "redis-redis": 62,
+    "psf-requests": 1,
+    "burntsushi-ripgrep": 22,
+    "caddyserver-caddy": 9,
+    "colinhacks-zod": 58
+  },
+  "cases": [
+    {
+      "id": "recall-curl-curl-fcee070c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that one test that only failed on the NSS builds with an unsupported-address error and we ended up disabling it",
+      "relevantShas": [
+        "fcee070cb110cd6cd2c52a5e2c4ccb5b10fcf75e"
+      ],
+      "subject": "CURLOPT_PROXY.3: curl+NSS does not handle HTTPS over unix domain socket",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "It results in error \"NSS error -5985 (PR_ADDRESS_NOT_SUPPORTED_ERROR)\" Disabled test 1470 for NSS builds and documented the restriction."
+    },
+    {
+      "id": "recall-curl-curl-842be672",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that bug where the very first header slot got visited twice when you walked through all of them",
+      "relevantShas": [
+        "842be672c8cf2e7f847863e3bb12fbf21adee90b"
+      ],
+      "subject": "tool_writeout_json. fix the output for duplicate header names",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Header entries with index != 0 are handled at the index 0 level so they should then be skipped when iterated over."
+    },
+    {
+      "id": "recall-curl-curl-05616379",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that thing that made it safe to call the header accessors in a loop without the returned values getting trashed",
+      "relevantShas": [
+        "05616379eed2f768ef20371cb4265a445b825fe9"
+      ],
+      "subject": "headers: make curl_easy_header and nextheader return different buffers",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "By letting curl_easy_header() and curl_easy_nextheader() store the header data in their own struct storage when they return a pointer to it, it makes it possible for applications to use them both in a loop."
+    },
+    {
+      "id": "recall-curl-curl-372b95f7",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that test calling the memory-free helper that newer compilers kept flagging under strict warning flags",
+      "relevantShas": [
+        "372b95f77f08ae7a64a5bca53cfb342ec5a8adc9"
+      ],
+      "subject": "doc: fix compiler warning in libcurl.m4",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Current test for curl_free() may produce warnings with strict compiler flags or even with default compiler flags with upcoming versions."
+    },
+    {
+      "id": "recall-curl-curl-1dd92967",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that change that made the request-header dump file open in read-write mode instead of plain write or append mode",
+      "relevantShas": [
+        "1dd929674e09093ca6abb069cd84d6b99d350656"
+      ],
+      "subject": "tool: dump headers even if file is write-only",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The fixes in #10079 brought a (seemingly unrelated) change of open mode from `wb`/`ab` to `wb+`/`ab+` for the headerfile."
+    },
+    {
+      "id": "recall-curl-curl-8cfc936f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that tweak to make the behavior line up with what the other build systems already did",
+      "relevantShas": [
+        "8cfc936f5c9d1fe9a99956a916f95e137476b27c"
+      ],
+      "subject": "cmake: fix enabling LDAPS on Windows",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This matches autotools and `Makefile.mk` behavior."
+    },
+    {
+      "id": "recall-curl-curl-e4dfe6fc",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that issue with handing libcurl a connection our app had already established itself through the socket-setup callback",
+      "relevantShas": [
+        "e4dfe6fc2f413fb66133a0744f04cb0057b36e76"
+      ],
+      "subject": "test1960: verify CURL_SOCKOPT_ALREADY_CONNECTED",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When returned from the CURLOPT_SOCKOPTFUNCTION, like when we have a custom socket connected in the app, passed in to libcurl."
+    },
+    {
+      "id": "recall-curl-curl-41dfb7f5",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that static analysis warning about a null value handed to a number parser in debug builds?",
+      "relevantShas": [
+        "41dfb7f516c8a9659782df695528c9d32b5653d6"
+      ],
+      "subject": "tool_operate: fix scanbuild compiler warning",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Prior to this change Azure CI scanbuild warned of a potential NULL pointer string passed to strtol when CURLDEBUG enabled, even though the way the code was written it wouldn't have happened."
+    },
+    {
+      "id": "recall-curl-curl-cab04024",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "why did upgrading the crypto library suddenly flood us with deprecation warnings?",
+      "relevantShas": [
+        "cab040248d3fba3600825d77d56383019066b447"
+      ],
+      "subject": "curl_setup: Suppress OpenSSL 3 deprecation warnings",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "OpenSSL 3 has deprecated some of the functions libcurl uses such as those with DES, MD5 and ENGINE prefix."
+    },
+    {
+      "id": "recall-curl-curl-6841f2ed",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was that issue a GitHub user reported that we eventually closed?",
+      "relevantShas": [
+        "6841f2ed5fb53a74b8d6a31d4035fd52221c4275"
+      ],
+      "subject": "curl: make --silent work stand-alone",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Reported-by: u20221022 on github Fixes #10535 Closes #10536"
+    },
+    {
+      "id": "recall-curl-curl-87ed650d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "why did a finished stream sometimes leave response data unread and hanging?",
+      "relevantShas": [
+        "87ed650d04dc1a6f7944a5d952f7d5b0934a19ac"
+      ],
+      "subject": "http2: set drain on stream end",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Ensure that on_frame_recv() stream end will trigger a read if there is pending data."
+    },
+    {
+      "id": "recall-curl-curl-964ff768",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what broke the build when a system header redefined one of our own types?",
+      "relevantShas": [
+        "964ff76863b63516fce94d547adbbbb7d0d5c7b2"
+      ],
+      "subject": "openssl: rename 'errcode_t' to 'sslerr_t'",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Turns out \"/usr/include/et/com_err.h\" typedefs this type (without proper variable scoping)."
+    },
+    {
+      "id": "recall-curl-curl-daf4e6a3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "why were a couple of our build switches acting like plain on/off toggles when they weren't?",
+      "relevantShas": [
+        "daf4e6a3a1045cfd09198fd816a9c8280cdb5cc5"
+      ],
+      "subject": "curl.1: make help, version and manual sections \"custom\"",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Instead of using \"multi: boolean\", as these are slightly special as in they do are not enable/disable ones."
+    },
+    {
+      "id": "recall-curl-curl-efbf0211",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "what was the case that only worked when we knew the length up front?",
+      "relevantShas": [
+        "efbf02111aa66bda9288506b7d5cc0226bf5453e"
+      ],
+      "subject": "smb: return error on upload without size",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The protocol needs to know the size ahead of time, this is now a known restriction and not a bug."
+    },
+    {
+      "id": "recall-curl-curl-5309e321",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "why were non-English filenames getting corrupted on Windows builds?",
+      "relevantShas": [
+        "5309e32141a144187dcdc97e61cf8f39c4288dea"
+      ],
+      "subject": "windows: always use curl's basename() implementation",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The `basename()` [1][2] implementation provided by mingw-w64 [3] makes assumptions about input encoding and may break with non-ASCII strings."
+    },
+    {
+      "id": "recall-curl-curl-1df2dfb5",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "why did the build warn about mismatched names when hunting for the compression library?",
+      "relevantShas": [
+        "1df2dfb514cd3943a2981425eda3ffb179c7d9e8"
+      ],
+      "subject": "cmake: fix dev warning due to mismatched arg",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The package name passed to find_package_handle_standard_args (BROTLI) does not match the name of the calling package (Brotli)."
+    },
+    {
+      "id": "recall-curl-curl-38262c94",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "where did we swap those raw error numbers for human-readable messages?",
+      "relevantShas": [
+        "38262c944d9c86594e3915ab3a7a5e17db6107f0"
+      ],
+      "subject": "rustls: improve error messages",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Changes numeric error codes into verbose error codes in two places."
+    },
+    {
+      "id": "recall-curl-curl-33866a31",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "Why did the help output show the short version of an option twice when I spelled it out too?",
+      "relevantShas": [
+        "33866a31c3ce14590b8d1f6039fefcde8460e577"
+      ],
+      "subject": "no-clobber.d: only use long form options in man page text",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "since they are expanded and the short-form gets mentioned automatically so if the short form is mentioned as well, it gets repeated."
+    },
+    {
+      "id": "recall-curl-curl-cace68e2",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "What was that build issue where the detected version line came out with empty parentheses?",
+      "relevantShas": [
+        "cace68e2999a7b007774f78eb2084aec937fb633"
+      ],
+      "subject": "openldap: fix missing sasl symbols at build in specific configs",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Example configuration targeted that could reproduce the problem: curl 7.87.1-DEV () libcurl/7.87.1-DEV ...."
+    },
+    {
+      "id": "recall-curl-curl-349c5391",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "Why did a badly formed web address sometimes get reported as an out-of-memory failure instead?",
+      "relevantShas": [
+        "349c5391f2121ee0338dcf5a61dafde7bc83be57"
+      ],
+      "subject": "tool_operate: Fix error codes on bad URL & OOM",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "curl would erroneously report CURLE_OUT_OF_MEMORY in some cases instead of CURLE_URL_MALFORMAT."
+    },
+    {
+      "id": "recall-curl-curl-7305ca63",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "Why was escaping web addresses so slow because of a formatting call repeated inside a loop?",
+      "relevantShas": [
+        "7305ca63e2b408a1fe9dc1c59f4e833bea942ee4"
+      ],
+      "subject": "urlapi: avoid Curl_dyn_addf() for hex outputs",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Inspired by the recent fixes to escape.c, we should avoid calling Curl_dyn_addf() in loops, perhaps in particular when adding something so simple as %HH codes - for performance reasons."
+    },
+    {
+      "id": "recall-curl-curl-9e93bd47",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "curl-curl",
+      "question": "What was the bug where an inner call wiped out data the outer one still needed and then it blew up?",
+      "relevantShas": [
+        "9e93bd47c29b647171fefbe1fb4f5e01da91c488"
+      ],
+      "subject": "vtls: Manage current easy handle in nested cfilter calls",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The previous implementation cleared `data` so the outer invocation lost its data, which could lead to a crash."
+    },
+    {
+      "id": "recall-redis-redis-763827c9",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that bug where asking the command line tool to show only a few results was ignored on older versions?",
+      "relevantShas": [
+        "763827c98144fa83b4fc50eb4cae7ec4d63e7925"
+      ],
+      "subject": "Fix redis-cli --count (for --scan, --bigkeys, etc) was ignored unless --pattern was also used (#13092)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The --count option for redis-cli has been released in redis 7.2."
+    },
+    {
+      "id": "recall-redis-redis-104b2076",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that bug where asking for zero bytes of memory behaved strangely?",
+      "relevantShas": [
+        "104b2076027fd5b0adb5742a9a2930afe180e412"
+      ],
+      "subject": "Fix size stat in malloc(0) and cleanups around zmalloc file (#13068)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In #8554, we added a MALLOC_MIN_SIZE to use a minimum allocation size when using malloc(0)."
+    },
+    {
+      "id": "recall-redis-redis-165afc5f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that bug where really huge values didn't get the compact storage treatment they should have?",
+      "relevantShas": [
+        "165afc5f2a2bc8ef18af85a6e5cb345c7af614ec"
+      ],
+      "subject": "Determine the large limit of the quicklist node based on fill (#12659)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Following #12568 In issue #9357, when inserting an element larger than 1GB, we currently store it in a plain node instead of a listpack."
+    },
+    {
+      "id": "recall-redis-redis-4e3be944",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that bug where a test that should have failed when a command hung just passed instead?",
+      "relevantShas": [
+        "4e3be944fc9abd9b9638ad17589ff3c916394883"
+      ],
+      "subject": "Fix timing issue in blockedclient test (#13071)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "It should be noted that in the previous `Busy module command` test, we also used assert_morethan_equal, so this should have been missed at the time."
+    },
+    {
+      "id": "recall-redis-redis-fc3a68d8",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that issue where stack traces were useless because the binary had been compiled too aggressively?",
+      "relevantShas": [
+        "fc3a68d8fb6c8f87485dd670f7af81feadd66635"
+      ],
+      "subject": "add -fno-omit-frame-pointer to default complication flags (#12973)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Currently redis uses O3 level optimization would remove the frame pointer in the target bin."
+    },
+    {
+      "id": "recall-redis-redis-dd92dd8f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that bug where reading numbers didn't stop when the input ran out?",
+      "relevantShas": [
+        "dd92dd8fb5c2cc5c9815b720128b3015382b8da4"
+      ],
+      "subject": "redis-cli - fix sscanf incorrect return-value check warnings (#13059)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "From CodeQL: The result of scanf is only checked against 0, but it can also return EOF."
+    },
+    {
+      "id": "recall-redis-redis-063de675",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the server crash with an out-of-memory panic when we sent a huge command with tons of arguments under memory pressure?",
+      "relevantShas": [
+        "063de675e0e20a0d060ffc6f7f5f7b074043344a"
+      ],
+      "subject": "zunionInterDiffGenericCommand use ztrycalloc to avoid OOM panic (#13052)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In low memory situations, sending a big number of arguments (sets) may cause OOM panic."
+    },
+    {
+      "id": "recall-redis-redis-e9c795e7",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the expiry table start sizing itself from the wrong count after that refactor?",
+      "relevantShas": [
+        "e9c795e777591a96a5e7b0d28fbda64325b27a0c"
+      ],
+      "subject": "Fix loading rdb opcode RDB_OPCODE_RESIZEDB (#13050)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Following the changes introduced by 8cd62f82c, the dbExpandExpires used the db_size instead of expires_size."
+    },
+    {
+      "id": "recall-redis-redis-7ca0b84a",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the expired-keys store start resizing based on the wrong table's numbers?",
+      "relevantShas": [
+        "7ca0b84af6129aaa1be4d78cf83222cfbd47966b"
+      ],
+      "subject": "Fix loading rdb opcode RDB_OPCODE_SLOT_INFO (#13049)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Following the changes introduced by 8cd62f82c, the kvstoreDictExpand for the expires kvstore used the slot_size instead of expires_slot_size."
+    },
+    {
+      "id": "recall-redis-redis-676f27ac",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the memory compaction tests only fall over when running in cluster mode?",
+      "relevantShas": [
+        "676f27acb0e2a61e96778bccfa1116e3f7eedaaf"
+      ],
+      "subject": "Fix the failure of defrag test under 32-bit (#13013)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "## Why defragment tests only failed with cluster The fowllowing is the result of `Active defrag eval scripts: cluster` test."
+    },
+    {
+      "id": "recall-redis-redis-493e31e3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that flaky test where the expiration sweep didn't properly skip over sparse buckets?",
+      "relevantShas": [
+        "493e31e3ad299c99cbb96b8581b7598b19b23892"
+      ],
+      "subject": "Add new DEBUG dict-resizing command to disable the dict resize (#13043)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The test fails here and there: ``` *** [err]: expire scan should skip dictionaries with lot's of empty buckets in tests/unit/expire.tcl scan didn't handle slot skipping logic."
+    },
+    {
+      "id": "recall-redis-redis-886b1170",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the background maintenance job start doing both shrinking and growing at once?",
+      "relevantShas": [
+        "886b117031031154ecfa496fc687c16e801169a2"
+      ],
+      "subject": "Fix dict don't rehash when there is child test (#13035)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The reason is that in #12819, in cron, in addition to trying to shrink, we will also tyring to expand."
+    },
+    {
+      "id": "recall-redis-redis-1f00c951",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did items sometimes vanish or get corrupted when we added and then immediately removed them from a list?",
+      "relevantShas": [
+        "1f00c951c27f0332fd8e703beaf9e28cb404a0b4"
+      ],
+      "subject": "Prevent LSET command from causing quicklist plain node size to exceed 4GB (#12955)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Since the inserted data is not a large element, we can't just replace it like a large element, first quicklistInsertAfter() and then quicklistDelIndex(), because the current node may be merged and invalidated in quicklistInsertAfter()."
+    },
+    {
+      "id": "recall-redis-redis-f20774ec",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why was the expiration sweep pointlessly looping even after it had already finished the database?",
+      "relevantShas": [
+        "f20774eced7eba5dfb9cf9b76ed5d6aa3950177c"
+      ],
+      "subject": "Fix active expire timeout when db done the scanning (#13030)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When db->expires_cursor==0, it means the DB is done the scanning, we should exit the loop to avoid the useless scanning."
+    },
+    {
+      "id": "recall-redis-redis-9a7d3118",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the background maintenance job start doing both shrinking and growing at once?",
+      "relevantShas": [
+        "9a7d3118551d505d7e86ed9d9f38f56429320f53"
+      ],
+      "subject": "Fix dict resize allow test (#13016)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The reason is that in #12819, in cron, in addition to trying to shrink, we will also tyring to expand."
+    },
+    {
+      "id": "recall-redis-redis-7c9f41b5",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did the tests keep timing out because a wait was set too short?",
+      "relevantShas": [
+        "7c9f41b52b3a664c07581c83f9256fbedb798dfe"
+      ],
+      "subject": "fix dict rehash tests introduced by #12802 broken by #12819 (#13009)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "tests consistently fail on timeout (sleep that's too short)."
+    },
+    {
+      "id": "recall-redis-redis-45a35a79",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did that feature break because some value was never assigned?",
+      "relevantShas": [
+        "45a35a79c761766d46b3d97169cf62969e2c9ff4"
+      ],
+      "subject": "Fix timeout not being set in module blockClient case (#13011)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This was introduced in #13004, missing this assignment."
+    },
+    {
+      "id": "recall-redis-redis-76adbf6f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "how do I set how long to wait when connecting to a server?",
+      "relevantShas": [
+        "76adbf6ff01c566c01d9c8530a19a83f0f2c059f"
+      ],
+      "subject": "Adds connection timeout option to redis-cli (#10609)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This allows specifying the timeout value for opening the TCP connection to a server."
+    },
+    {
+      "id": "recall-redis-redis-c5273cae",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that change letting extensions deal with running out of memory?",
+      "relevantShas": [
+        "c5273cae189f84197cea887419c67eeafce1fb58"
+      ],
+      "subject": "Add RM_TryCalloc() and RM_TryRealloc() (#12985)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Modules may want to handle allocation failures gracefully."
+    },
+    {
+      "id": "recall-redis-redis-e12f2dec",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what caused bad node details to spread around from corrupted memory?",
+      "relevantShas": [
+        "e12f2decc1cf7742878d516d89d38af178119b17"
+      ],
+      "subject": "Prevent nodes with invalid IDs from being propagated through gossip (#12921)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "There have been occasional instances of memory corruption (though code bugs or bit flips) leading to invalid node information being gossiped around."
+    },
+    {
+      "id": "recall-redis-redis-8d0156eb",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "how did we let extensions know which database an item came from while loading a dump?",
+      "relevantShas": [
+        "8d0156eb186e60a32be3f0210d79f7289fcc6e66"
+      ],
+      "subject": "Set the correct id for tempDb (#12947)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "background: some modules need to know the `dbid` information, such as the function used during RDB loading: ``` robj *rdbLoadObject(int rdbtype, rio *rdb, sds key, int dbid, int *error) { ...."
+    },
+    {
+      "id": "recall-redis-redis-85a239b3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the issue where a pitfall in the client list walker hid a client being freed early?",
+      "relevantShas": [
+        "85a239b363591a7f35f66eb8370cabead8545ffa"
+      ],
+      "subject": "Change dictGetSafeIterator to dictGetIterator in pubsub (#12931)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In #12838, we misuse the safe iterator of the client dict, so we can't catch the synchronous release of the client if there is a bug."
+    },
+    {
+      "id": "recall-redis-redis-29e6245a",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did removing a key start doing extra shrinking work every time?",
+      "relevantShas": [
+        "29e6245a05f414159932f71d971793df34566dfe"
+      ],
+      "subject": "Fix unexpected resize causing test failure (#12960)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Before #12850, we will only try to shrink the dict in serverCron, which we can control by using a child process, but now every time we delete a key, the shrink check will be called."
+    },
+    {
+      "id": "recall-redis-redis-14b1edfd",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the change that swapped a division for multiplying to dodge decimals?",
+      "relevantShas": [
+        "14b1edfd994991d22c2b766031f77c045b95c995"
+      ],
+      "subject": "Fix dict resize ratio checks, avoid precision loss from integer division (#12952)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This PR change it to multiplication to avoid floating point calculations."
+    },
+    {
+      "id": "recall-redis-redis-131d95f2",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why could the table never reach its target load after further deletions?",
+      "relevantShas": [
+        "131d95f203351b19f307072e6582fda91e149580"
+      ],
+      "subject": "Fix race in slot dict resize test (#12942)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Because there is not way to meet HASHTABLE_MIN_FILL in the subsequent dels."
+    },
+    {
+      "id": "recall-redis-redis-b351a04b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that test that never actually ran in CI because we didn't register it?",
+      "relevantShas": [
+        "b351a04b1ef5aa409b0fbe2b31fcadca07421400"
+      ],
+      "subject": "Add announced-endpoints test to all_tests and fix tls related tests (#12927)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The test was introduced in #10745, but we forgot to add it to the test_helper.tcl, so our CI did not actually run it."
+    },
+    {
+      "id": "recall-redis-redis-f7b1d028",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the bug where resizing a string forgot to fix the header type and overflowed the length?",
+      "relevantShas": [
+        "f7b1d0287d62ec9fac72bf14cf789e350d14e52b"
+      ],
+      "subject": "Fix possible corruption in sdsResize (CVE-2023-41056) (#12924)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "#11766 introduced a bug in sdsResize where it could forget to update the sds type in the sds header and then cause an overflow in sdsalloc."
+    },
+    {
+      "id": "recall-redis-redis-068051e3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that change meant to make a couple of failure cases easier to dig into?",
+      "relevantShas": [
+        "068051e378ceaea85a7fb011f1271587a17bd0e7"
+      ],
+      "subject": "Handle recursive serverAsserts and provide more information for recursive segfaults (#12857)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This change is trying to make two failure modes a bit easier to deep dive: 1."
+    },
+    {
+      "id": "recall-redis-redis-99c468c3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the bug where walking the list of connections never finished and blew up an assertion because an entry was left dangling?",
+      "relevantShas": [
+        "99c468c38c597400f84df2128153e3abebe5e9f0"
+      ],
+      "subject": "Fix crash caused by pubsubShardUnsubscribeAllChannelsInSlot not deleting the client (#12896)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The code does not delete the corresponding node when traversing clients, resulting in a loop, causing the dictDelete() == DICT_OK assertion to fail."
+    },
+    {
+      "id": "recall-redis-redis-5b1fe925",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did passing two addresses to the cluster command come back with an invalid configuration error?",
+      "relevantShas": [
+        "5b1fe925f214bdf7eee8dd4f35380559d8a85c5c"
+      ],
+      "subject": "Adjust redis-cli --cluster create arity from -2 to -1 (#12892)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When arity is -2, it allows us to input two nodes, but returns: ``` *** ERROR: Invalid configuration for cluster creation."
+    },
+    {
+      "id": "recall-redis-redis-bef57153",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the problem where regular (non-root) users on newer Ubuntu couldn't lower a process's out-of-memory score?",
+      "relevantShas": [
+        "bef5715374a2fe9700b690f152f314d15aa6eacd"
+      ],
+      "subject": "Fix oom-score-adj test due to no permission (#12887)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Fix #12792 On ubuntu 23(lunar), non-root users will not be allowed to change the oom_score_adj of a process to a value that is too low."
+    },
+    {
+      "id": "recall-redis-redis-baf5699d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the issue where the event loop's real behavior didn't line up with what its comment promised?",
+      "relevantShas": [
+        "baf5699d77e8573ccf5a2be17ee1dad9f4afe44f"
+      ],
+      "subject": "fix comment of aeProcessEvents (#12884)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The implementation of aeProcessEvents seems have different behavior from the top comment."
+    },
+    {
+      "id": "recall-redis-redis-e6423b7a",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the bug where the resizing details showed the wrong starting size at initialization?",
+      "relevantShas": [
+        "e6423b7a7e64af3d6622d8078415d81aace13074"
+      ],
+      "subject": "Fix rehashingStarted miscalculating bucket_count in dict initialization (#12846)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In the old dictRehashingInfo implementation, for the initialization scenario, it mistakenly directly set to_size to DICTHT_SIZE(DICT_HT_INITIAL_EXP), which is 4 in our code by default."
+    },
+    {
+      "id": "recall-redis-redis-b730404c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the bug where the database quit growing itself after it had already been expanded once during snapshot loading?",
+      "relevantShas": [
+        "b730404c2f6af3d3945957bae16a830afab9f314"
+      ],
+      "subject": "Fix multi dbs donot dbExpand when loading RDB (#12840)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Currently, during RDB loading, once a `dbExpand` is performed, the `should_expand_db` flag is set to 0."
+    },
+    {
+      "id": "recall-redis-redis-764838d6",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why was support first added for loading scripts out of the snapshot file?",
+      "relevantShas": [
+        "764838d66fabaf4c866b2f674625ee3486098765"
+      ],
+      "subject": "Check whether the client is NULL in luaCreateFunction (#12829)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "It was first added to load lua from RDB, see 28dfdca7."
+    },
+    {
+      "id": "recall-redis-redis-91309f79",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that change that was made jointly with another contributor?",
+      "relevantShas": [
+        "91309f79814e1742fc2ddfd573d089abf6f44456"
+      ],
+      "subject": "Fix compilation warning in KeySpace_ServerEventCallback and add CFLAGS=-Werror flag for module CI (#12786)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "--------- Co-authored-by: Viktor Söderqvist <viktor.soderqvist@est.tech>"
+    },
+    {
+      "id": "recall-redis-redis-22cc9b51",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that bug where our hash table wasn't resizing right because we stopped recalculating its next size often enough?",
+      "relevantShas": [
+        "22cc9b512250cf1b59403cb51c507e98185490de"
+      ],
+      "subject": "Use CLZ in _dictNextExp to get the next power of two (#12815)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In the past, we did not call _dictNextExp frequently."
+    },
+    {
+      "id": "recall-redis-redis-2e854bcc",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that bug where a signal arriving mid-operation made the process misbehave because the handler used unsafe calls?",
+      "relevantShas": [
+        "2e854bccc61c85146dd8aa487dc7516895d96d0a"
+      ],
+      "subject": "Fix async safety in signal handlers (#12658)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "see discussion from after https://github.com/redis/redis/pull/12453 was merged ---- This PR replaces signals that are not considered async-signal-safe (AS-safe) with safe calls."
+    },
+    {
+      "id": "recall-redis-redis-c9aa586b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that bug where things went wrong when a file ended up with handle number zero?",
+      "relevantShas": [
+        "c9aa586b6bf99ac51b2118484fab98006d59dfc5"
+      ],
+      "subject": "rdb.c: Avoid potential file handle leak (Coverity 404720) (#12795)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`open()` can return any non-negative integer on success, including zero."
+    },
+    {
+      "id": "recall-redis-redis-3d9c427f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that flaky test where the ping and pong counts got out of sync because a heartbeat was handled mid-command?",
+      "relevantShas": [
+        "3d9c427f8c017c62e3e62883c4dfe599f060f104"
+      ],
+      "subject": "Fix timing issue in CLUSTER SLAVE / REPLICAS consistent test (#12774)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "CI reports that this test failed, the reason is because during the command processing, the node processed PING/PONG, resulting in ping_sent or pong_received mismatch."
+    },
+    {
+      "id": "recall-redis-redis-fe363063",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that crash when we walked over a database while it was being changed?",
+      "relevantShas": [
+        "fe3630634031bde9c2b8a9cc8a3ab4e94ad8f680"
+      ],
+      "subject": "Fix DB iterator not resetting pauserehash causing dict being unable to rehash (#12757)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When using DB iterator, it will use dictInitSafeIterator to init a old safe dict iterator."
+    },
+    {
+      "id": "recall-redis-redis-0ffb9d2e",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that thing where modules started getting notified about key events?",
+      "relevantShas": [
+        "0ffb9d2ea9f5ea7d9840bfb77543b04a63303f9b"
+      ],
+      "subject": "Before evicted and before expired server events are not executed inside an execution unit. (#12733)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Redis 7.2 (#9406) introduced a new modules event, `RedisModuleEvent_Key`."
+    },
+    {
+      "id": "recall-redis-redis-7d68208a",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that bug where background memory compaction kept running and never stopped?",
+      "relevantShas": [
+        "7d68208a6ea7d57a58d9f3548ea5b11d2caed272"
+      ],
+      "subject": "Reset later item flag after defrag later is done (#12694)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Fixing issues described in #12672, started after #11695 Related to #12674 Fixes the `defrag didn't stop' issue."
+    },
+    {
+      "id": "recall-redis-redis-26eb4ce3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that bug where the memory compaction tests started failing in cluster mode?",
+      "relevantShas": [
+        "26eb4ce397411729be7abc6a9996dbda77df3c37"
+      ],
+      "subject": "Fix defrag test (#12674)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Fixing issues started after #11695 when the defrag tests are being executed in cluster mode too."
+    },
+    {
+      "id": "recall-redis-redis-f3bf8485",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that bug where scanning a hash table skipped or repeated entries because resizing grabbed the wrong one?",
+      "relevantShas": [
+        "f3bf8485d8c3f52cf05edc043f47c59e5c732305"
+      ],
+      "subject": "Fix resize hash table dictionary iterator (#12660)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Dictionary iterator logic in the `tryResizeHashTables` method is picking the next (incorrect) dictionary while the cursor is at a given slot."
+    },
+    {
+      "id": "recall-redis-redis-e5ef1613",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "Why did we start crashing when a newer node talked to an older one that never shared which group it belonged to?",
+      "relevantShas": [
+        "e5ef161374155bb84a5720387836415ef3217963"
+      ],
+      "subject": "Fix crash when running rebalance command in a mixed cluster of 7.0 and 7.2 (#12604)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In #10536, we introduced the assert, some older versions of servers (like 7.0) doesn't gossip shard_id, so we will not add the node to cluster->shards, and node->shard_id is filled in randomly and may not be found here."
+    },
+    {
+      "id": "recall-redis-redis-a2b0701d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "Why did the build break on some Mac releases because it checked the wrong version thing?",
+      "relevantShas": [
+        "a2b0701d2cf64c62f9bb41c01ad44586f01c2c5b"
+      ],
+      "subject": "Fix compile on macOS 13 (#12611)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Use the __MAC_OS_X_VERSION_MIN_REQUIRED macro to detect the macOS system version instead of using MAC_OS_X_VERSION_10_6."
+    },
+    {
+      "id": "recall-redis-redis-fe37e4fc",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that setting that let a plugin hear about changes made while it was already handling another change?",
+      "relevantShas": [
+        "fe37e4fc874a92dcf61b3b0de899ec6f674d2442"
+      ],
+      "subject": "Cleanup nested module keyspace notifications (#12630)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Recently we added a way for the module to declare that it wishes to receive nested KSN, by setting ALLOW_NESTED_KEYSPACE_NOTIFICATIONS."
+    },
+    {
+      "id": "recall-redis-redis-31c3172d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "Why were our safety checks quietly doing nothing in some builds?",
+      "relevantShas": [
+        "31c3172d9b205d12216c27493806b6ac2b4986bd"
+      ],
+      "subject": "Better standardize around assertions (#12539)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "We use the C standard assert() in various places in the codebase, which requires NDEBUG to be undefined."
+    },
+    {
+      "id": "recall-redis-redis-9d31768c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that commit that fixed the messed-up spacing?",
+      "relevantShas": [
+        "9d31768cbb1702aaf47b068e3146f572021098de"
+      ],
+      "subject": "Fix a couple of tabs that caused misindentation (#12541)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Fixed some usages of tabs which caused weird indentation in the code."
+    },
+    {
+      "id": "recall-redis-redis-2e0f6724",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "Why did that test sometimes miss the message it was waiting for in the logs?",
+      "relevantShas": [
+        "2e0f6724e0d6b821789f8936531bab63eac1777e"
+      ],
+      "subject": "Stabilization and improvements around aof tests (#12626)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In some tests, the code manually searches for a log message, and it uses tail -1 with a delay of 1 second, which can miss the expected line."
+    },
+    {
+      "id": "recall-redis-redis-cc2be639",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was the change that let us dump the stacks of every thread in the process?",
+      "relevantShas": [
+        "cc2be6399729c098357add2c3f1b264047b5ac9f"
+      ],
+      "subject": "Print stack trace from all threads in crash report (#12453)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In this PR we are adding the functionality to collect all the process's threads' backtraces."
+    },
+    {
+      "id": "recall-redis-redis-044e29dd",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "What was that option that let you pipe input into the benchmarking tool?",
+      "relevantShas": [
+        "044e29dd3472b6cbfca3915d445f484658effbb6"
+      ],
+      "subject": "redis-benchmark - add the support for binary strings (#9414)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Recently, the option of sending an argument from stdin using `-x` flag was added to redis-benchmark (this option is available in redis-cli as well)."
+    },
+    {
+      "id": "recall-redis-redis-4ba144a4",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was that freshly added test that kept breaking the response format checker",
+      "relevantShas": [
+        "4ba144a4eb26572caecfa080401a5e8a01d5763d"
+      ],
+      "subject": "Add logreqres:skip flag to new INFO obuf limit test (#12537)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The new test added in #12476 causes reply-schemas-validator to fail."
+    },
+    {
+      "id": "recall-redis-redis-b59f53ef",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "why did pulling the keys out of the read-only ordering command return nothing",
+      "relevantShas": [
+        "b59f53efb31b36d0a307809f5d33bf66d66a4447"
+      ],
+      "subject": "Fix sort_ro get-keys function return wrong key number (#12522)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Before： ``` 127.0.0.1:6379> command getkeys sort_ro key (empty array) 127.0.0.1:6379> ``` After: ``` 127.0.0.1:6379> command getkeys sort_ro key 1) \"key\" 127.0.0.1:6379> ```"
+    },
+    {
+      "id": "recall-redis-redis-1407ac1f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what happened when the bit-position lookup was pointed at a list instead of a string",
+      "relevantShas": [
+        "1407ac1f3ece8f7e4094f92e649e5d0b7c5e5bde"
+      ],
+      "subject": "BITCOUNT and BITPOS with non-existing key and illegal arguments should return error, not 0 (#11734)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "``` > lpush mylist a b c (integer) 3 > bitpos mylist 1 a b (error) WRONGTYPE Operation against a key holding the wrong kind of value ```"
+    },
+    {
+      "id": "recall-redis-redis-c98a28a8",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the problem with allowing an out-of-range count when deleting matching list entries",
+      "relevantShas": [
+        "c98a28a8480feeb00ccca80d23fcbe6d1718f6ed"
+      ],
+      "subject": "Fix LREM count LONG_MIN overflow minor issue (#12465)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Limit the range of LREM count to -LONG_MAX ~ LONG_MAX."
+    },
+    {
+      "id": "recall-redis-redis-965dc90b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the mismatch where a save helper returned a narrower signed type than the value it passed along",
+      "relevantShas": [
+        "965dc90b72a710b2400184e123316c8d1c8d4cf5"
+      ],
+      "subject": "change return type to be consistant (#12479)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Currently rdbSaveMillisecondTime, rdbSaveDoubleValue api's return type is int but they return the value directly from rdbWriteRaw function which has the return type of ssize_t."
+    },
+    {
+      "id": "recall-redis-redis-7c179f9b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what went wrong when adding a new access rule tried to strip out existing overlapping ones",
+      "relevantShas": [
+        "7c179f9bf4390512196b3a2b2ad6d0f4cb625c8a"
+      ],
+      "subject": "Fixed a bug where sequential matching ACL rules weren't compressed (#12472)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When adding a new ACL rule was added, an attempt was made to remove any \"overlapping\" rules."
+    },
+    {
+      "id": "recall-redis-redis-8226f39f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what caused the crash when a client used the while-busy flag while a script had already signalled waiting keys",
+      "relevantShas": [
+        "8226f39fb200a6a2d6f57d027ffc55319fb85d92"
+      ],
+      "subject": "do not call handleClientsBlockedOnKeys inside yielding command (#12459)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Fix the assertion when a busy script (timeout) signal ready keys (like LPUSH), and then an arbitrary client's `allow-busy` command steps into `handleClientsBlockedOnKeys` try wake up clients blocked on keys (like BLPOP)."
+    },
+    {
+      "id": "recall-redis-redis-da9c2804",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the overflow bug when assembling a JSON string",
+      "relevantShas": [
+        "da9c2804a5ce774099bc3aabc894a8fd8c7e1440"
+      ],
+      "subject": "Avoid mostly harmless integer overflow in cjson (#12456)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This PR mainly fixes a possible integer overflow in `json_append_string()`."
+    },
+    {
+      "id": "recall-redis-redis-90ab91f0",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "redis-redis",
+      "question": "what was the bug where the combining logic never checked whether it was already mid-merge",
+      "relevantShas": [
+        "90ab91f00b64843f6201bf352bb71aef743b6ca3"
+      ],
+      "subject": "fix false success and a memory leak for ACL selector with bad parenthesis combination (#12452)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When doing merge selector, we should check whether the merge has started (i.e., whether open_bracket_start is -1) every time."
+    },
+    {
+      "id": "recall-psf-requests-c0813a2d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "psf-requests",
+      "question": "why did a later request that wanted certificate checking reuse an old unchecked connection to the same host",
+      "relevantShas": [
+        "c0813a2d910ea6b4f8438b91d315b8d181302356"
+      ],
+      "subject": "Use TLS settings in selecting connection pool",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Previously, if someone made a request with `verify=False` then made a request where they expected verification to be enabled to the same host, they would potentially reuse a connection where TLS had not been verified."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-f55548ba",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "What was that bug where using the same matching style for several patterns could skip one?",
+      "relevantShas": [
+        "f55548ba9f24dda192880d4a3da2b52e90f6e194"
+      ],
+      "subject": "globset: fix `matches_all` false positives",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Make sure that we correctly check that all globs are matched, even if multiple globs use the same strategy."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-68b3c9e0",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "What was that slowdown on Windows from checking whether every single ignore file exists?",
+      "relevantShas": [
+        "68b3c9e0d95950cfc835fb07924457919a4ec07d"
+      ],
+      "subject": "ignore: fetch directory entry metadata in batches",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "On Windows probing the existence of each ignore file is very heavy."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-85edf4c7",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "why was fd issuing a ton of failed statx system calls while searching?",
+      "relevantShas": [
+        "85edf4c79671b00002123a2a43ff5238b6a27891"
+      ],
+      "subject": "ignore: only stat `.jj` if we actually care",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "I was comparing the work being done by fd and find and noticed (with `strace -f -c -S` calls) that fd was doing a ton of failed `statx` calls."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-d4b77a8d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "how come search time hardly changed no matter how much trailing context you asked for?",
+      "relevantShas": [
+        "d4b77a8d8967ce1bf701ec65ceb9a75e85e5f2e0"
+      ],
+      "subject": "searcher: fix a performance bug with `-A/--after-context`",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "But both commands remain roughly invariant in search time as `-A` is increased."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-de2567a4",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was that mess where the layering between components kept leaking and breaking things?",
+      "relevantShas": [
+        "de2567a4c76fa671005538d6cd841abc44932b9a"
+      ],
+      "subject": "printer: fix panic in replacements in look-around corner case",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The abstraction boundary fuck up is the gift that keeps on giving."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-91641585",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "why did all the bundled executables get resolved eagerly when running on Windows?",
+      "relevantShas": [
+        "916415857f084e63efda03cf25a67fe7f6d24244"
+      ],
+      "subject": "core: don't build decompression reader unless we intend to use it",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In particular, on Windows, the various binaries are eagerly resolved."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-924ba101",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "the thing where everyone just wanted paths given relative to the directory the command was set up for?",
+      "relevantShas": [
+        "924ba101eed70e4e096ba639382c73dec90c2c86"
+      ],
+      "subject": "test: fix `Command::current_dir` API",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Every single call site wants to pass a path relative to the directory the command was created for."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-9d8016d1",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what finished the work that was started in commit a6e0be3c?",
+      "relevantShas": [
+        "9d8016d10c94a5af2768eb6dd0440386a7d317a0"
+      ],
+      "subject": "printer: finish removal of `max_matches`",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This finishes what I started in commit a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-c45ec163",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where the reported number of matches varied depending on which counting flag we used, but only when the text we were hunting for ran across two lines?",
+      "relevantShas": [
+        "c45ec16360870bba60505489fb745ad245075a86"
+      ],
+      "subject": "doc: clarify `--multiline --count`",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Specifically, it is only equivalent to `--count-matches` when the pattern(s) given can match over multiple lines."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-1b07c661",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where asking only for the list of files that contained a hit also started treating binary files as hits?",
+      "relevantShas": [
+        "1b07c6616a5b06bd6c00f2a7d3418b9096f601f9"
+      ],
+      "subject": "cli: document that `-c/--count` can be inconsistent with `-l/--files-with-matches`",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This is unfortunate, but is a known bug that I don't think can be fixed without either making `-l/--files-with-matches` much slower or changing what \"binary filtering\" means by default."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-a6e0be3c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where capping the number of results could not be trusted anymore once surrounding lines were added to multi-line spellings?",
+      "relevantShas": [
+        "a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4"
+      ],
+      "subject": "searcher: move \"max matches\" from printer to searcher",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This is a bit of a brutal change, but I believe is necessary in order to fix a bug in how we handle the \"max matches\" limit in multi-line mode while simultaneously handling context lines correctly."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-74959a14",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where the manual page rendered an odd-looking dash under certain doc tools?",
+      "relevantShas": [
+        "74959a14cbcce19e2471b0d281ea5cdbd248527d"
+      ],
+      "subject": "man: escape all hyphens in flag names",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Apparently, if we don't do this, some roff renderers with use a special Unicode hyphen."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-fdfda9ae",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where the link we thought we'd repaired was still broken because the merged change wasn't the one that actually repaired it?",
+      "relevantShas": [
+        "fdfda9ae73bded4e1c2fc0103439a5a357c1f271"
+      ],
+      "subject": "doc: actually fix deb download link",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Amazingly, there were about a dozen PRs fixing this same thing, and I happened to choose the one that didn't actually fix the URL completely."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-126bbeab",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where the no-output switch still behaved as if it were about to list the matching filenames?",
+      "relevantShas": [
+        "126bbeab8c1cbbc1d6cb36b4c2d560574233856d"
+      ],
+      "subject": "printer: fix handling of `has_match` for summary printer",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Previously, `Quiet` mode in the summary printer always acted like \"print matching paths,\" except without the printing."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-4df12981",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where names ending in two dots were treated as though they had no filename at all?",
+      "relevantShas": [
+        "4df1298127695ed1e76937f16de1a0135677ccf5"
+      ],
+      "subject": "globset: fix bug where trailing `.` in file name was incorrectly handled",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "I'm not sure why I did this, but I think I was trying to imitate the contract of [`std::path::Path::file_name`]: > Returns None if the path terminates in `..`."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-4ab1862d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where our byte tally came out wrong whenever the search bailed out partway through?",
+      "relevantShas": [
+        "4ab1862dc04783b6615807d4b4511388c6b30364"
+      ],
+      "subject": "stats: fix case where \"bytes searched\" could be wrong",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Specifically, if the search was instructed to quit early, we might not have correctly marked the number of bytes consumed."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-5f5da483",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where our curly-brace file filters stopped finding anything inside those bundled folders?",
+      "relevantShas": [
+        "5f5da483079c61966ea34565387867609d4e22f2"
+      ],
+      "subject": "globset: support nested alternates",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "For example, `**/{node_modules/**/*/{ts,js},crates/**/*.{rs,toml}`."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-d199058e",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug where pointing the search at a blank pattern file gave the same outcome whether we inverted the match or not?",
+      "relevantShas": [
+        "d199058e77cbea419f072015373ab1beb0e508ee"
+      ],
+      "subject": "cli: make `rg -vf file` behave sensibly",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Previously, when `file` is empty (literally empty, as in, zero byte), `rg -f file` and `rg -vf file` would behave identically."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-53279db4",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was that dependency we bumped so the thing would finally build on that router firmware?",
+      "relevantShas": [
+        "53279db4143f4307c2b1b27f2cd32a43b0496205"
+      ],
+      "subject": "deps: switch to tikv-jemallocator",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "It is now a recommended crate for jemalloc and it contains an [important fix for compilation on riscv64gc-unknown-linux-musl][fix], I bumped into this when I was trying to [build ripgrep on OpenWrt][openwrt]."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-bfe2def1",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was the bug that only started showing up after we moved past that earlier release?",
+      "relevantShas": [
+        "bfe2def12183f66689f23f52d85100fbc4b42d1a"
+      ],
+      "subject": "tests: add test for filtering hidden files",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In particular, this didn't fail with ripgrep 14.1.1."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-e9abbc1a",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was that thing we got rid of because it kept breaking and caused nothing but trouble?",
+      "relevantShas": [
+        "e9abbc1a02de29dbe60e1b625d540c58759b23a6"
+      ],
+      "subject": "cargo: nuke 'simd-accel' from orbit",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This feature causes nothing but problems and is frequently broken."
+    },
+    {
+      "id": "recall-burntsushi-ripgrep-4a308193",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "burntsushi-ripgrep",
+      "question": "what was that change where we started treating anything that wasn't a folder as a file?",
+      "relevantShas": [
+        "4a30819302810a8772bd205970d41fe9b4e97333"
+      ],
+      "subject": "cli: tweak how \"is one file\" predicate works",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In effect, we switch from `path.is_file()` to `!path.is_dir()`."
+    },
+    {
+      "id": "recall-caddyserver-caddy-947087ca",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "What was that security thing where some header names that looked like the bad one still slipped through the filter?",
+      "relevantShas": [
+        "947087cadd596c6e391e0df09e7e975afd2b4cbc"
+      ],
+      "subject": "Merge commit from fork",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Caddy's underscore header filter (GHSA-f59h-q822-g45g) only checked for `_`."
+    },
+    {
+      "id": "recall-caddyserver-caddy-3be8dabc",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "What was that performance issue where using header names with unusual casing caused extra work every time you set them?",
+      "relevantShas": [
+        "3be8dabc89315f2f2a40855efe0a4d6e9e7acc9b"
+      ],
+      "subject": "caddyhttp: use canonical header key casing to avoid re-canonicalization (#7911)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Header.Get/Set re-canonicalize and allocate whenever the passed key isn't already in canonical MIME header form."
+    },
+    {
+      "id": "recall-caddyserver-caddy-9738f49b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "What was that change where loading a certificate started handing back several of them instead of just one?",
+      "relevantShas": [
+        "9738f49b952a337cdaf42175a0e92b01974c0e3c"
+      ],
+      "subject": "pki: Handle error immediately after reading root from disk (#7896)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In https://github.com/caddyserver/caddy/pull/7057, the behavior of `KeyPair.Load` was changed to return a certificate chain."
+    },
+    {
+      "id": "recall-caddyserver-caddy-b2be5482",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "What was that load-balancing bug where the random pick wasn't actually leaning toward the least-busy server?",
+      "relevantShas": [
+        "b2be548275c99cd061ec1c2f9c27eedae64a17b8"
+      ],
+      "subject": "reverseproxy: fix broken reservoir sampling in random_choose policy (#7873)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The random_choose selection policy is meant to implement power-of-d-choices: sample d available upstreams uniformly, then pick the least-loaded of that sample."
+    },
+    {
+      "id": "recall-caddyserver-caddy-0e8eb41b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "What was that bug where two matcher blocks that shared a name got merged into one stream instead of staying separate?",
+      "relevantShas": [
+        "0e8eb41b87ab60803d48cb2a183face3f4e4248e"
+      ],
+      "subject": "httpcaddyfile: fix incorrect error message on duplicate matchers (#7780)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Parse each matcher segment individually using NewDispenser(segment) instead of DispenseDirective(dir), which coalesced all same-name segments into one token stream."
+    },
+    {
+      "id": "recall-caddyserver-caddy-176b043b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "What was that bug where a rewrite ending in a literal question mark and a placeholder clients could control caused problems?",
+      "relevantShas": [
+        "176b043b0104cee3f894023cd5a598ac29e404bb"
+      ],
+      "subject": "rewrite: prevent placeholder re-expansion in injected query (#7761)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "When the rewrite URI template ends with a literal '?' and contains a placeholder that expands to client-controlled bytes (e.g."
+    },
+    {
+      "id": "recall-caddyserver-caddy-6a64bb2c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "what was that bug where restarting the server failed because a stale socket file got left behind by the old process?",
+      "relevantShas": [
+        "6a64bb2ce55b9a0aaf89f0372a7381aefdebd530"
+      ],
+      "subject": "listeners: clean up stale Unix socket files on Windows (#7676)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "If a previous Caddy instance didn't terminate properly, the chances it will leave behind a socket file are very high, breaking all subsequent starting attempts."
+    },
+    {
+      "id": "recall-caddyserver-caddy-7e83775e",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "what was that bug where the find-and-replace ran on things that weren't actually variable references?",
+      "relevantShas": [
+        "7e83775e3adea8b8da72fea3b159207bd71000dd"
+      ],
+      "subject": "Merge commit from fork",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Only apply repl.ReplaceAll() on values from literal variable names (e.g."
+    },
+    {
+      "id": "recall-caddyserver-caddy-88616e86",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "caddyserver-caddy",
+      "question": "what was that change where counting active requests caused lock contention under load?",
+      "relevantShas": [
+        "88616e86e6e656738426bb86b4a42dcc20a59f77"
+      ],
+      "subject": "api: Add all in-flight requests /reverse_proxy/upstreams (Fixes #7277) (#7517)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "This refactors the initial approach in PR #7281, replacing the UsagePool with a dedicated package-level sync.Map and atomic.Int64 to track in-flight requests without global lock contention."
+    },
+    {
+      "id": "recall-colinhacks-zod-741981ff",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that change that sped up per-error handling in both the interpreted and compiled paths?",
+      "relevantShas": [
+        "741981ffdbc8772cffc38cc4eaf84d5a45fa7384"
+      ],
+      "subject": "perf(compile): for-in record walk, cheaper issue finalization, and a generative compile differential (#6567)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Both changes are mode-invariant: they shorten the per-issue floor for the interpreter and the compiled issue path alike."
+    },
+    {
+      "id": "recall-colinhacks-zod-2ec972ec",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that change where we ran it against 35 cases on several TypeScript versions just to confirm nothing observable moved?",
+      "relevantShas": [
+        "2ec972ecc5a8af8135ed072d2d5b5363c27bb46f"
+      ],
+      "subject": "refactor: collapse toZod's enum leaf normalizer to a dummy union (#6533)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Differentially probed against the previous implementation across 35 cases (fixes, guarantees, numeric-enum nominality, classes with private members) on TypeScript 5.5, 6 and 7.0: observable behavior is identical."
+    },
+    {
+      "id": "recall-colinhacks-zod-319f47f4",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did importing that bundle choke or throw weird parse errors instead of giving us the right backfill later?",
+      "relevantShas": [
+        "319f47f44f40755773a9aa83b6fdaaad1ff01d77"
+      ],
+      "subject": "Emit a length-aware base64url pattern in toJSONSchema (#6527)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "regexes.base64url is now strict, mirroring regexes.base64, and isValidBase64URL keeps a flat charset test since the quantified form overflows the regex stack on multi-MB input."
+    },
+    {
+      "id": "recall-colinhacks-zod-40b4d0b3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did the page for the ecosystem viewer keep hitting GitHub and dying every once in a while?",
+      "relevantShas": [
+        "40b4d0b34d09b151505cf726581c908172368e35"
+      ],
+      "subject": "fix(ci): read zod's latest version with npm view when picking the backfill dist-tag",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The packument for zod/latest is now larger than one stdin chunk, so JSON.parse on the first chunk threw and the @zod/mini 4.5.2 backfill failed before publishing."
+    },
+    {
+      "id": "recall-colinhacks-zod-5ff95665",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did the docs page pretend to refresh every day when it never actually changed?",
+      "relevantShas": [
+        "5ff9566508e6c95873d2648a5bdcc3a371f1b757"
+      ],
+      "subject": "Stop re-exporting the compile internals from zod/v4/core (#6511)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "They now import the compile module by relative source path, which resolves to the same file under @zod/source and adds nothing to the export map."
+    },
+    {
+      "id": "recall-colinhacks-zod-81065739",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did the public API grow two helper functions that just say yes/no to whether some value fits a schema?",
+      "relevantShas": [
+        "810657394de9df48744463beb21e103a3ad04eef"
+      ],
+      "subject": "chore(docs): build with Turbopack",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Switch the build script to next build --turbopack and disable Turbopack scope hoisting: on 15.5 it overflows on the merged MDX module (vercel/next.js#82584) and the fix only shipped in Next 16, which fumadocs 15.1 does not allow."
+    },
+    {
+      "id": "recall-colinhacks-zod-908c9e17",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did validating something build a whole result object just to throw it away?",
+      "relevantShas": [
+        "908c9e1771befea20962b6eb2ea591983f45d725"
+      ],
+      "subject": "fix(docs): retry the GitHub stars fetch and log the real status",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "One production build on Vercel (7e24a24) died prerendering /ecosystem on a transient GitHub GraphQL failure."
+    },
+    {
+      "id": "recall-colinhacks-zod-019ae299",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did we clear those tables and it looked like nothing was stored anymore?",
+      "relevantShas": [
+        "019ae299cc75daa132bf1acf59086a520abf6b85"
+      ],
+      "subject": "fix(docs): drop ISR on the docs route so the home page hydrates",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The docs content is bundled at build time, so the daily revalidate bought nothing; the route is now fully static, like the blog routes already are."
+    },
+    {
+      "id": "recall-colinhacks-zod-9d5b20ef",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- what was that bug where the last character of a generated id could be one of two values that don't actually come from the data",
+      "relevantShas": [
+        "9d5b20ef6c9dbff29a0fa272de4203201b23aa50"
+      ],
+      "subject": "fix(v4): restrict the first ULID character to [0-7] (#6095)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "A ULID is 128 bits in 26 Crockford base32 characters, so the encoding carries two more bits than the value does."
+    },
+    {
+      "id": "recall-colinhacks-zod-7b612b53",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- what was that thing where combining two shapes printed out as a nested allOf block in the generated schema",
+      "relevantShas": [
+        "7b612b536d8bcb1dd160a705cc2d9a4109cb50b3"
+      ],
+      "subject": "fix(v4): fold an intersection of object schemas into one object (#6461)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`z.toJSONSchema()` emits `z.intersection(A, B)` as `allOf: [A, B]`."
+    },
+    {
+      "id": "recall-colinhacks-zod-badf0b78",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- the value given to a recovery handler looked like it had already been processed once and didn't match what we fed in",
+      "relevantShas": [
+        "badf0b7894a4f777d41fcd7ed2433e5f8c9c23ea"
+      ],
+      "subject": "fix(v4): build the catch context from the input that failed (#6192)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The context handed to a `.catch()` callback was assembled by spreading the payload after the inner schema had already run over it, and `_zod.run` mutates that payload in place."
+    },
+    {
+      "id": "recall-colinhacks-zod-a87ac366",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- whole-number fields were indistinguishable from fractional ones to TypeScript, so a type check couldn't tell them apart",
+      "relevantShas": [
+        "a87ac3665f90144aecf8860030a59eb45a41a2eb"
+      ],
+      "subject": "fix(v4)!: distinguish number and bigint formats at the type level (#6052)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`ZodInt`, `ZodFloat32`, `ZodFloat64`, `ZodInt32` and `ZodUInt32` were empty extensions of one base, so TypeScript treated all five as the same type and a conditional type could not tell them apart."
+    },
+    {
+      "id": "recall-colinhacks-zod-7cfc0122",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- why did that one kind of fallback get pushed through validation while the others were used as-is",
+      "relevantShas": [
+        "7cfc012238ca88ff4aa87a22e8fa08f5efb5b63d"
+      ],
+      "subject": "fix(v4): keep a wrapper's stored value only on the side it belongs to",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`.default()` and `.catch()` store an output-side value; `.prefault()` stores an input-side one, since it is fed through the schema rather than short-circuited."
+    },
+    {
+      "id": "recall-colinhacks-zod-53cec2a0",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- the generated schema and the validator disagreed about what the input side of a transform looked like until we lined them up",
+      "relevantShas": [
+        "53cec2a0d0941a69d8add934ac3a8695fb5fb14c"
+      ],
+      "subject": "fix(v4): resolve z.input past a preprocess transform",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "That is the resolution toJSONSchema already makes for this exact case, and the two now agree on what the input side of a preprocess looks like."
+    },
+    {
+      "id": "recall-colinhacks-zod-2125d30c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- a number that was plainly an exact multiple still got rejected as not being one, some kind of floating-point thing",
+      "relevantShas": [
+        "2125d30ce58f66170682d5a50ee4a3e2eac568e3"
+      ],
+      "subject": "fix(v4): accept exact decimal multiples in multipleOf (#6223)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`z.number().multipleOf(0.07)` rejected 2.03 even though 2.03 === 29 * 0.07."
+    },
+    {
+      "id": "recall-colinhacks-zod-168122fc",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- a recursive structure came out of a projection missing its lazy typing",
+      "relevantShas": [
+        "168122fca54452aa30d7261c83df79b703b258d7"
+      ],
+      "subject": "fix(v4): carry a pipe's own checks through z.output",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Carrying them mirrors how .check() clones, descriptors and all, so a lazy def on a recursive schema still survives the projection."
+    },
+    {
+      "id": "recall-colinhacks-zod-a0bfdb39",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- options changed in one build had no effect in the other, like there were two separate copies of the same settings",
+      "relevantShas": [
+        "a0bfdb39d0c5fdc066189da8e9786ebf4d6f12b1"
+      ],
+      "subject": "chore: drop dead code in core and fix a stale deprecation message (#6012)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Nothing imported it, and the live `config`/`globalConfig` pair in `core.ts` carries the `globalThis` singleton that keeps config shared across the CJS and ESM builds."
+    },
+    {
+      "id": "recall-colinhacks-zod-5825605e",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- just creating an error report was slow because building the error object itself captured a full stack trace",
+      "relevantShas": [
+        "5825605edb86ef27f1e7b1eae832303f15724130"
+      ],
+      "subject": "perf(v4): skip the eager stack capture when building a ZodError (#6450)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Constructing a ZodError runs the Error constructor, and V8 captures a structured stack trace there."
+    },
+    {
+      "id": "recall-colinhacks-zod-6574e784",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- adding a recovery step to a pipeline made it stop parsing altogether, which is the opposite of what it should do",
+      "relevantShas": [
+        "6574e7842b1a030f6987c80c268d713767df8b06"
+      ],
+      "subject": "fix(v4): stop catch resurrecting issues an optional already resolved (#6440)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Appending `.catch()` to a chain that parses could make it stop parsing, which is backwards — catch can only ever turn failure into success."
+    },
+    {
+      "id": "recall-colinhacks-zod-b63db248",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the bug where every layer kept tacking its own route onto the error until it belonged to the wrong thing?",
+      "relevantShas": [
+        "b63db248abfcfeb7e444687815834618cf26a04a"
+      ],
+      "subject": "fix(v4): keep a memoized node's cached issues private to the cache (#6443)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "An issue belongs to the payload it was raised into, and every receiver prefixes a path onto it in place."
+    },
+    {
+      "id": "recall-colinhacks-zod-830ba314",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that case where a malformed network address passed checking because the parser split it at a symbol and validated something else?",
+      "relevantShas": [
+        "830ba3147928b69fd80ef8e55341d4fd325b9c71"
+      ],
+      "subject": "fix(v4): validate the address, and return the string that was validated (#6442)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "new URL(\"http://[\" + value + \"]\") parses an authority, not an address, so `@` and `\\` re-delimit it and the parser validates something else: z.ipv6().parse(\"::@1\\\\\") passed against the host 0.0.0.1."
+    },
+    {
+      "id": "recall-colinhacks-zod-17d1227f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that recurring request from people insisting that because the standard allowed something we had to accept it?",
+      "relevantShas": [
+        "17d1227ff61ff7c27ea11cd4ce31f84959534c8c"
+      ],
+      "subject": "chore: document that format validators are deliberately narrower than their specs",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "\"The spec allows X, therefore Zod must accept X\" keeps arriving as a bug report and as an agent-authored PR."
+    },
+    {
+      "id": "recall-colinhacks-zod-260e5d4b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why did an element that wasn't allowed inside a wrapper get quietly let through instead of rejected?",
+      "relevantShas": [
+        "260e5d4bd3f2f1a395fce52d526383ba6181d318"
+      ],
+      "subject": "fix(v4): stop islanding a catch callback, which diverged silently",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "A container absorbs an unsupported child by running just that node through the runtime."
+    },
+    {
+      "id": "recall-colinhacks-zod-c9ec89e0",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what were the two additions that ballooned the package size, hitting the lightweight build worst?",
+      "relevantShas": [
+        "c9ec89e0025775eabc1528a311ad1c0e8b2051b9"
+      ],
+      "subject": "perf(core): drop the seal and the per-key WeakSet from the lazy internals (#6435)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Both cost bundle size, which lands hardest on zod/mini."
+    },
+    {
+      "id": "recall-colinhacks-zod-e125fd8d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the change that only had a handful of bytes of size budget left, so it couldn't fit?",
+      "relevantShas": [
+        "e125fd8d0c718622155fde6b4d7aa31bc66e85e8"
+      ],
+      "subject": "test(treeshake): widen the bundle ceilings to survive ordinary churn",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The first cut left 16-21 gzipped bytes of headroom, which was too tight to hold."
+    },
+    {
+      "id": "recall-colinhacks-zod-9f0a3d81",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why did a child type lose the ability to override what its parent had installed on the shared prototype?",
+      "relevantShas": [
+        "9f0a3d81221e3ab7c09ca4911ef35b54817869a4"
+      ],
+      "subject": "fix(core): restore defineLazy semantics lost in the internals move (#6429)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "A derived constructor could no longer override what its base installed on the shared `_zod` prototype, so `z.exactOptional(...)` carried a stray `undefined` in `values` and `z.templateLiteral` accepted input it should reject."
+    },
+    {
+      "id": "recall-colinhacks-zod-604464c3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the naming difference we settled on between the formats that describe one address and those that describe a whole block?",
+      "relevantShas": [
+        "604464c306f26b21aa77425b3de97d3467d23ae0"
+      ],
+      "subject": "fix(locales): da/nn/no/sv called an IP address a range (#6430)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "ipv4 and ipv6 name an address; cidrv4 and cidrv6 name the range."
+    },
+    {
+      "id": "recall-colinhacks-zod-ccc15144",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why were some of the newer languages still missing one particular word?",
+      "relevantShas": [
+        "ccc1514404929ce5df69f3ceb105a8ddd1ebdc07"
+      ],
+      "subject": "fix(locales): add the credit_card key to the seven locales missing it (#6424)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "#5931 backfilled credit_card across every locale that existed when it landed, so the only gaps are locales added after it: bn, ckb, hi, kn, nn, sk and tk."
+    },
+    {
+      "id": "recall-colinhacks-zod-45fdeda5",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that thing where the same little toggle meant two different things depending on who read it?",
+      "relevantShas": [
+        "45fdeda54fc610261f0d18acaf869f75d568487e"
+      ],
+      "subject": "fix(v4): refine optin into a three-rung ladder, retire the fallback payload flag (#6419)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`optin` was overloaded across two readers asking different questions."
+    },
+    {
+      "id": "recall-colinhacks-zod-5b34c0ce",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why did one language's error text come out with the field name mashed into the middle of it?",
+      "relevantShas": [
+        "5b34c0cebffcfb083bf068e553cd9e13542d7cdd"
+      ],
+      "subject": "Improve Portuguese localization and add Brazilian Portuguese (pt-BR) (#6076)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "In an article-aware locale the fall-through contracts onto the raw key and emits \"Formato dcredit_card inválido\" rather than degrading to untranslated text, so the key carries pt's existing translation."
+    },
+    {
+      "id": "recall-colinhacks-zod-536ee3b0",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why were a couple of validation messages showing up untranslated, one of them missing a word and using the wrong verb?",
+      "relevantShas": [
+        "536ee3b0be0a74b1dc1ab8ac0f4c739d15eb24c6"
+      ],
+      "subject": "Locales: added Slovak (sk) language (#6041)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Also add the two dictionary keys that were producing untranslated output: `map` in `Sizable` (without it the message loses its unit noun and switches verb) and `mac` in `FormatDictionary`."
+    },
+    {
+      "id": "recall-colinhacks-zod-83067994",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why did a triage sometimes just end by pointing at a file instead of actually saying anything?",
+      "relevantShas": [
+        "83067994b6708f0a7dc001a51962f8e59111b2a2"
+      ],
+      "subject": "chore(triage): require a chat summary and a drafted close comment",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The write-up on disk was the only stated deliverable, so a triage could end with a chat message that just pointed at a file path."
+    },
+    {
+      "id": "recall-colinhacks-zod-eb4682c9",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why did one version list the required fields while the other one stayed quiet about them?",
+      "relevantShas": [
+        "eb4682c930b9f3a9f4e721c99bfbad615bf1c766"
+      ],
+      "subject": "fix(json-schema): resolve tuple minItems past transform and catch in input mode (#6418)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The object equivalent already emitted required: [\"a\", \"b\"]."
+    },
+    {
+      "id": "recall-colinhacks-zod-4d6b5cd3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the crash where turning a schema into JSON blew up on a huge number default?",
+      "relevantShas": [
+        "4d6b5cd3eb36e650fec0586bc085ed7263d43ef4"
+      ],
+      "subject": "fix(json-schema): route unrepresentable default values through `unrepresentable`",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "A bigint `.default()` crashed `toJSONSchema` with a raw `JSON.stringify` TypeError before any hook could run."
+    },
+    {
+      "id": "recall-colinhacks-zod-942bf8cb",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why couldn't I catch the failure when my data had a loop in it?",
+      "relevantShas": [
+        "942bf8cb9a4085e66f785c04b5a9a3ed6877709c"
+      ],
+      "subject": "feat(v4): parse input containing reference cycles (#6387)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Today a cyclic input is a RangeError, safeParse included, so it isn't even catchable through the result."
+    },
+    {
+      "id": "recall-colinhacks-zod-4cc4053d",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "why did one code path skip that check while the other one didn't?",
+      "relevantShas": [
+        "4cc4053d28fe6879fa360e2780ab52226202904e"
+      ],
+      "subject": "fix: honor loose mode for closed record key schemas (#6157)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The open-key branch and z.object's catchall loop already skip it; mirror that."
+    },
+    {
+      "id": "recall-colinhacks-zod-69be843f",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the cleanup that shrank the generated code by folding together identical branches?",
+      "relevantShas": [
+        "69be843f4864a6c320fb02a4f58f0e700526553c"
+      ],
+      "subject": "fix(v4): stop the object JIT fastpass keeping a swallowed issue's value (#6407)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "While here, collapse the identical arms of the required-in branch's assignment — it shrinks the generated source by four lines per key."
+    },
+    {
+      "id": "recall-colinhacks-zod-b53e53cc",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that change that left every snapshot exactly the same?",
+      "relevantShas": [
+        "b53e53ccb3941bd3c8c651b4b1dcf1b5484726b0"
+      ],
+      "subject": "fix(v4): use exact flag in English locale too_small/too_big messages (#6177)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Output is unchanged; the existing snapshots pass as-is."
+    },
+    {
+      "id": "recall-colinhacks-zod-4c27fe87",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "What was that validation error that complained it found two matches when only one was allowed?",
+      "relevantShas": [
+        "4c27fe87976731e2347b0b9daa8f8d5fc8a19ac8"
+      ],
+      "subject": "fix(v4): give z.xor() a distinct error when multiple options match (#6376)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The issue now carries `matches`, the indices of the options that matched, and en reports \"expected exactly one matching option, received 2 (options 0, 1)\"."
+    },
+    {
+      "id": "recall-colinhacks-zod-a106fbe7",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did our array schemas accept extra items even though we'd set a fixed shape?",
+      "relevantShas": [
+        "a106fbe7ae574cbb7045606e173671aad3eb1cd6"
+      ],
+      "subject": "fix(v4): make fromJSONSchema tuples open-ended by default (#6020)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Positional array schemas are open-ended unless the schema closes them."
+    },
+    {
+      "id": "recall-colinhacks-zod-faf33a28",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why wouldn't a type annotation carry through into the published type definitions?",
+      "relevantShas": [
+        "faf33a2880f21910ef72e3f93636e4fc561fdea4"
+      ],
+      "subject": "fix: surface @deprecated on re-exported compat aliases (#6072)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Declare each as a standalone aliased declaration (matching inferFlattenedErrors/BRAND) so the tag propagates to the emitted types."
+    },
+    {
+      "id": "recall-colinhacks-zod-a1904fc2",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did a date field report its error against a number when we set a minimum?",
+      "relevantShas": [
+        "a1904fc238d8bcf1a45806bd73b0b0a8006cf77a"
+      ],
+      "subject": "fix(v4): report date origin for numeric min/max bounds (#6129)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The origin on a range issue is now derived from the value being validated rather than the bound, so `z.date().min(<timestamp>)` reports `origin: \"date\"` instead of `\"number\"`."
+    },
+    {
+      "id": "recall-colinhacks-zod-c8f06d36",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did Infinity get rejected by a number field with a message saying it expected a number?",
+      "relevantShas": [
+        "c8f06d36fc1b56b99c8a12b2a3270394387cb507"
+      ],
+      "subject": "fix(v4): clarify infinite number errors (#5906)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`z.number()` is finite-by-default in v4, so `Infinity` fails with an `invalid_type` issue — but the English message read \"Invalid input: expected number, received number\", which names the same type on both sides and tells the user nothing."
+    },
+    {
+      "id": "recall-colinhacks-zod-0a76f3d7",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Was there a built-in way to check card numbers, or did we have to roll our own?",
+      "relevantShas": [
+        "0a76f3d7ba299084e505b55fe7adf65262e86c79"
+      ],
+      "subject": "feat(v4): add z.creditCard() string format (#5931)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Adds `z.creditCard()` to Zod and Zod Mini."
+    },
+    {
+      "id": "recall-colinhacks-zod-9d20fdc3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did the input type on our preprocessed schemas disappear after that change?",
+      "relevantShas": [
+        "9d20fdc3c37207fa3fe77c9524a3421f4399cbf6"
+      ],
+      "subject": "fix(v4): preserve z.preprocess input narrowing (#5967)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "#5929 replaced `preprocess()`'s return type `ZodPipe<ZodTransform<A, B>, U>` with `ZodPreprocess<U>`, which pins `def.in` to a bare `$ZodTransform`."
+    },
+    {
+      "id": "recall-colinhacks-zod-3063993a",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did making lots of schemas suddenly get so slow and memory-hungry?",
+      "relevantShas": [
+        "3063993a3317ac8af7a244691b837fce3e53aa96"
+      ],
+      "subject": "perf(v4): cut per-schema memory ~90% by moving methods to the prototype (#6318)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Schema instances carried their methods as own properties, which put them past the point where V8 stops using inline slots for property storage."
+    },
+    {
+      "id": "recall-colinhacks-zod-2715c12e",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did every validation failure in the production bundle just say \"Invalid input\"?",
+      "relevantShas": [
+        "2715c12e76cf022d7dbdeb5852c09fddfe91a481"
+      ],
+      "subject": "fix(v4): preserve default English locale across tree-shaken bundles (#5959)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The top-level `config(en())` in `classic/external.ts` was dropped by any bundler honoring `sideEffects: false` on the stub package.json files from #5689, so every message fell through to the `\"Invalid input\"` fallback."
+    },
+    {
+      "id": "recall-colinhacks-zod-8ac9ae51",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "Why did all the docs links go to pages that didn't exist?",
+      "relevantShas": [
+        "8ac9ae5198315a2306629f94f8323e45774a72f5"
+      ],
+      "subject": "fix(docs-v3): serve the docsify SPA fallback on Vercel (#6378)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The v3 docs run docsify with routerMode: \"history\", so every in-page link resolves to an extensionless path like /ERROR_HANDLING."
+    },
+    {
+      "id": "recall-colinhacks-zod-e7029aa4",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that bug where object parsing complained twice about a prototype key it shouldn't have touched?",
+      "relevantShas": [
+        "e7029aa43b848a14d632bb99394a304a7f205bc9"
+      ],
+      "subject": "fix(v4): report own __proto__ key under .strict() (#6221)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Check keySet first; the shape loop already owns declared keys, and only an undeclared __proto__ should be reported."
+    },
+    {
+      "id": "recall-colinhacks-zod-9c540db8",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that one where a field literally named after the object prototype got saved under the wrong name?",
+      "relevantShas": [
+        "9c540db809d6f17f8f583d36f2a2564a5681abd9"
+      ],
+      "subject": "fix(v4): re-check the record key after the key schema runs (#6355)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The record parser skips an input key when the raw key is exactly __proto__, but it writes the parsed value under the key the key schema produced."
+    },
+    {
+      "id": "recall-colinhacks-zod-ead9fcb3",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the thing where reading a special property name into a plain object corrupted the result?",
+      "relevantShas": [
+        "ead9fcb310bf65a70427f92ca76545efe954037e"
+      ],
+      "subject": "fix(v4): write a declared __proto__ key as an own property (#6354)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "z.object() and z.record() build results into a fresh {} and assign validated values with output[key] = value."
+    },
+    {
+      "id": "recall-colinhacks-zod-f238fbd2",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that regex that hung forever when matching certain emoji because two character classes overlapped?",
+      "relevantShas": [
+        "f238fbd2d7ff2732b15813b35e650951a9c33b4c"
+      ],
+      "subject": "fix: remove exponential backtracking from the emoji regex (#6347)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`\\p{Extended_Pictographic}` and `\\p{Emoji_Component}` overlap on U+1F9B0-U+1F9B3, so `^(A|B)+$` had to re-explore 2^n ways of attributing the consumed characters whenever the overall match failed."
+    },
+    {
+      "id": "recall-colinhacks-zod-e6c213ec",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the bug where converting schemas with an awkward key name ended up overwriting something it shouldn't?",
+      "relevantShas": [
+        "e6c213ec5dd73fa397b94fdca334d238e289a195"
+      ],
+      "subject": "fix(json-schema): keep __proto__ keys as own properties in schema conversion (#6346)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Both JSON Schema converters build plain object dictionaries and fill them with `obj[key] = value`."
+    },
+    {
+      "id": "recall-colinhacks-zod-573fcb75",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that path-building code that silently used a built-in method instead of making a nested entry?",
+      "relevantShas": [
+        "573fcb75f7e08e8789cb9a1dbfa3a6128232d4af"
+      ],
+      "subject": "fix(errors): use own-property semantics in every error-tree walker (#6213)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The path walkers built their tree with `curr[el] = curr[el] || {...}`, so a path segment naming an inherited member resolved to the prototype instead of creating a node."
+    },
+    {
+      "id": "recall-colinhacks-zod-f722bcdd",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the breakage where installing the newest compiler package left core APIs undefined?",
+      "relevantShas": [
+        "f722bcddab2bb02bb7c2d801d736f042b99a2cfb"
+      ],
+      "subject": "ci: build with pinned TypeScript, add TS 6 and 7 legs (#6345)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "typescript@latest now resolves to 7.x, whose npm package no longer ships the classic compiler API (ts.sys and friends are undefined)."
+    },
+    {
+      "id": "recall-colinhacks-zod-6f5e99fd",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was that time our docs site's home page suddenly started 404ing in production but worked locally?",
+      "relevantShas": [
+        "6f5e99fd1cc9c35c52906e6987110acda3406ab6"
+      ],
+      "subject": "fix(docs-v3): rename README.md to home.md so Vercel serves it",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Vercel stopped serving root-level README.md from static deployments (deployments from identical source served it on May 4 but 404 it since May 19), which broke v3.zod.dev — docsify fetches the homepage markdown client-side."
+    },
+    {
+      "id": "recall-colinhacks-zod-ee7376ad",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the Windows issue where the library couldn't locate its native part and we had to ride a pre-release?",
+      "relevantShas": [
+        "ee7376ad3ac04ede2567a7074762d20b0de1de6d"
+      ],
+      "subject": "chore: bump recheck to 4.6.0-beta.3 for cross-platform path resolution",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "Pins to the prerelease that fixes the Windows backend resolution bug (makenowjust-labs/recheck#1616, fixed in #1620)."
+    },
+    {
+      "id": "recall-colinhacks-zod-fbe8ad1b",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "what was the case where we were generating a fallback value by calling the recovery function with nothing?",
+      "relevantShas": [
+        "fbe8ad1b709460fc45d88fdcb5eca591198de60d"
+      ],
+      "subject": "fix(v4): allow dynamic `.catch()` under `unrepresentable: \"any\"` (#5273) (#5925)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`catchProcessor` evaluates `def.catchValue(undefined)` to derive a static `default`."
+    }
+  ]
+}

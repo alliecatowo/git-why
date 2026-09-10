@@ -57,10 +57,28 @@ function assertSupportedShape(raw: RawTokenizerJson): void {
       `tokenizer.json: unsupported pre_tokenizer '${String(preTokenizerType)}' — only BertPreTokenizer is implemented`,
     );
   }
-  if (raw.post_processor !== null && raw.post_processor !== undefined) {
-    throw new Error(
-      'tokenizer.json: a post_processor is configured, but this reader assumes none (Model2Vec encodes with add_special_tokens=False)',
-    );
+  // A post_processor is IGNORED rather than rejected.
+  //
+  // Its whole job is to insert special tokens such as [CLS] and [SEP], and
+  // Model2Vec encodes with add_special_tokens=False, so whatever it would add
+  // is exactly what we already do not want. Rejecting it made
+  // potion-retrieval-32M unloadable despite being listed as an available
+  // candidate: the model shipped a TemplateProcessing block it never uses at
+  // inference. A post_processor that did something OTHER than add specials
+  // would be a real problem, so the shape is checked and anything unfamiliar
+  // still raises.
+  const postProcessor = raw.post_processor as { type?: unknown } | null | undefined;
+  if (postProcessor !== null && postProcessor !== undefined) {
+    const type = postProcessor.type;
+    if (
+      type !== 'TemplateProcessing' &&
+      type !== 'BertProcessing' &&
+      type !== 'RobertaProcessing'
+    ) {
+      throw new Error(
+        `tokenizer.json: unsupported post_processor '${String(type)}' — only special-token processors, which Model2Vec ignores, are safe to skip`,
+      );
+    }
   }
 }
 

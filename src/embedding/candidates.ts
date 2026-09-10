@@ -94,8 +94,39 @@ async function createGenericStaticEmbedder(
  * The one production path: load the shipped default embedder. This is the
  * only export of this module the CLI runtime should call.
  */
+/**
+ * The shipped default, overridable by `GIT_WHY_EMBEDDING` for evaluation.
+ *
+ * The override exists because the model choice was frozen before any
+ * real-repository corpus existed to judge it against. potion-code-16M-v2 is
+ * tuned for code tokens, while the questions people actually ask history are
+ * natural-language paraphrases that share little vocabulary with a terse
+ * commit message -- and measured recall@50 sat flat at 0.250, meaning three
+ * quarters of correct commits were never retrieved at any depth. That is a
+ * retrieval failure, not a ranking one, so the model is the thing to test.
+ *
+ * An unknown value is a hard error rather than a silent fallback: a benchmark
+ * that quietly measured the default while claiming to measure a candidate
+ * would be worse than no measurement.
+ */
 export async function loadDefaultEmbedder(options?: CacheOptions): Promise<Embedder> {
-  return createGenericStaticEmbedder(POTION_CODE_16M_V2, options);
+  const requested = process.env.GIT_WHY_EMBEDDING;
+  if (requested === undefined || requested === '' || requested === 'potion-code-16M-v2') {
+    return createGenericStaticEmbedder(POTION_CODE_16M_V2, options);
+  }
+  const candidate = MODEL_CANDIDATES.find((c) => c.name === requested);
+  if (candidate === undefined || candidate.pinned === undefined) {
+    throw new GitWhyError(
+      'INVALID_ARGUMENTS',
+      `GIT_WHY_EMBEDDING="${requested}" is not a known embedding candidate.`,
+      {
+        hint: `Known candidates: ${MODEL_CANDIDATES.filter((c) => c.pinned)
+          .map((c) => c.name)
+          .join(', ')}.`,
+      },
+    );
+  }
+  return createGenericStaticEmbedder(candidate.pinned, options);
 }
 
 /**

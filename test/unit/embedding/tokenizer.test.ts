@@ -110,14 +110,34 @@ test('unsupported tokenizer.json shapes are rejected rather than silently mis-to
       }),
     /BertPreTokenizer/,
   );
+  // An UNKNOWN post_processor still throws: it might transform tokens in a way
+  // that changes the encoding, and silently ignoring that would mis-tokenize.
   assert.throws(
     () =>
       loadTokenizer({
         model: { type: 'WordPiece', vocab: { '[UNK]': 0 }, unk_token: '[UNK]' },
         normalizer: { type: 'BertNormalizer' },
         pre_tokenizer: { type: 'BertPreTokenizer' },
-        post_processor: { type: 'TemplateProcessing' },
+        post_processor: { type: 'SomethingElse' },
       }),
     /post_processor/,
   );
+});
+
+test('a special-token post_processor is skipped, not rejected', () => {
+  // TemplateProcessing and friends exist to insert [CLS]/[SEP]. Model2Vec
+  // encodes with add_special_tokens=False, so what they would add is exactly
+  // what we do not want -- ignoring them is correct, and rejecting them made
+  // potion-retrieval-32M unloadable despite shipping as an available
+  // candidate. It carries a TemplateProcessing block it never uses.
+  for (const type of ['TemplateProcessing', 'BertProcessing', 'RobertaProcessing']) {
+    assert.doesNotThrow(() =>
+      loadTokenizer({
+        model: { type: 'WordPiece', vocab: { '[UNK]': 0, hello: 1 }, unk_token: '[UNK]' },
+        normalizer: { type: 'BertNormalizer' },
+        pre_tokenizer: { type: 'BertPreTokenizer' },
+        post_processor: { type },
+      }),
+    );
+  }
 });

@@ -74,3 +74,22 @@ export const BETWEEN_OUTSIDE_DECAY = 0.7;
  * originating commits is the entire reason expansion exists.
  */
 export const LINK_HOP_DISCOUNT = 0.6;
+
+/**
+ * Multiplier applied to commits that changed ONLY prose.
+ *
+ * Natural-language questions match natural-language commits. Asked "what was
+ * that bug where the first header slot got visited twice", retrieval returned
+ * "BUGS: revamped bug report documentation", "BUGS.md: improve language" and
+ * "help output: more gnu like output", while the actual fix -- "fix the output
+ * for duplicate header names" -- never surfaced. Documentation and changelog
+ * commits are long, prose-rich and lexically similar to any question a human
+ * phrases; real fixes are terse and technical.
+ *
+ * The prior is principled rather than fitted: a commit that changed only prose
+ * did not change behaviour, so it cannot be the causal answer to "why does the
+ * code do this". It is a penalty and not an exclusion because documentation
+ * sometimes IS the answer -- "why do we tell people not to use X" -- and a
+ * strong enough match should still be able to win.
+ */
+export const PROSE_ONLY_PENALTY = 0.25;
