@@ -223,8 +223,12 @@ function main() {
     } else {
       const manDir = path.join(prefix, 'share', 'man');
       const man1Dir = path.join(manDir, 'man1');
+      const manDestination = path.join(man1Dir, 'git-why.1');
       execFileSync('mkdir', ['-p', man1Dir]);
-      execFileSync('cp', [manSrc, path.join(man1Dir, 'git-why.1')]);
+      // Some npm versions already link package.json's `man` entry. Do not
+      // turn that successful state into a verifier failure by copying a file
+      // onto itself; install.sh's copy is only needed when no link exists.
+      if (!existsSync(manDestination)) execFileSync('cp', [manSrc, manDestination]);
       console.log('verify-package: git why --help (via PATH+MANPATH, through Git dispatch)...');
       const envWithMan = { ...env, MANPATH: manDir };
       const viaGitFullHelp = spawnSync('git', ['why', '--help'], {
