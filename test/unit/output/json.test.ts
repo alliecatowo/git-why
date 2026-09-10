@@ -90,6 +90,7 @@ function makeStatus(overrides: Partial<IndexStatus> = {}): IndexStatus {
     recordCount: 9000,
     model: { id: 'potion-code-16m-v2', revision: 'r1', fingerprint: 'fp' },
     diskBytes: 12345,
+    lineageBytes: null,
     indexedAt: '2026-09-09T17:03:13Z',
     objectFormat: 'sha1',
     shallow: false,
@@ -235,6 +236,7 @@ test('IndexStatus with a null model and null generation (a fresh "missing" index
       recordCount: null,
       model: null,
       diskBytes: null,
+      lineageBytes: null,
       indexedAt: null,
     }),
   );

@@ -6,11 +6,17 @@
   "required": ["schemaVersion", "command", "index"],
   "additionalProperties": false,
   "properties": {
-    "schemaVersion": { "const": 2 },
-    "command": { "enum": ["index", "status", "rebuild", "gc"] },
+    "schemaVersion": {
+      "const": 2
+    },
+    "command": {
+      "enum": ["index", "status", "rebuild", "gc"]
+    },
     "index": {
       "oneOf": [
-        { "type": "null" },
+        {
+          "type": "null"
+        },
         {
           "type": "object",
           "required": [
@@ -23,6 +29,7 @@
             "recordCount",
             "model",
             "diskBytes",
+            "lineageBytes",
             "indexedAt",
             "objectFormat",
             "shallow",
@@ -42,43 +49,90 @@
                 "rebuild_required"
               ]
             },
-            "indexPath": { "type": "string" },
-            "generation": { "type": ["string", "null"] },
-            "indexedCommits": { "type": ["number", "null"] },
-            "reachableCommits": { "type": ["number", "null"] },
-            "refsChanged": { "type": "boolean" },
-            "recordCount": { "type": ["number", "null"] },
+            "indexPath": {
+              "type": "string"
+            },
+            "generation": {
+              "type": ["string", "null"]
+            },
+            "indexedCommits": {
+              "type": ["number", "null"]
+            },
+            "reachableCommits": {
+              "type": ["number", "null"]
+            },
+            "refsChanged": {
+              "type": "boolean"
+            },
+            "recordCount": {
+              "type": ["number", "null"]
+            },
             "model": {
               "oneOf": [
-                { "type": "null" },
+                {
+                  "type": "null"
+                },
                 {
                   "type": "object",
                   "required": ["id", "revision", "fingerprint"],
                   "additionalProperties": false,
                   "properties": {
-                    "id": { "type": "string" },
-                    "revision": { "type": "string" },
-                    "fingerprint": { "type": "string" }
+                    "id": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "string"
+                    },
+                    "fingerprint": {
+                      "type": "string"
+                    }
                   }
                 }
               ]
             },
-            "diskBytes": { "type": ["number", "null"] },
-            "indexedAt": { "type": ["string", "null"] },
-            "objectFormat": { "enum": ["sha1", "sha256"] },
-            "shallow": { "type": "boolean" },
+            "diskBytes": {
+              "type": ["number", "null"]
+            },
+            "indexedAt": {
+              "type": ["string", "null"]
+            },
+            "objectFormat": {
+              "enum": ["sha1", "sha256"]
+            },
+            "shallow": {
+              "type": "boolean"
+            },
             "coverage": {
               "type": "object",
               "required": ["excludedFiles", "unavailableFiles", "failedFiles", "reasons"],
               "additionalProperties": false,
               "properties": {
-                "excludedFiles": { "type": "number" },
-                "unavailableFiles": { "type": "number" },
-                "failedFiles": { "type": "number" },
-                "reasons": { "type": "array", "items": { "type": "string" } }
+                "excludedFiles": {
+                  "type": "number"
+                },
+                "unavailableFiles": {
+                  "type": "number"
+                },
+                "failedFiles": {
+                  "type": "number"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
               }
             },
-            "warnings": { "type": "array", "items": { "type": "string" } }
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "lineageBytes": {
+              "type": ["number", "null"]
+            }
           }
         }
       ]
@@ -88,9 +142,15 @@
       "required": ["code", "message", "hint"],
       "additionalProperties": false,
       "properties": {
-        "code": { "type": "string" },
-        "message": { "type": "string" },
-        "hint": { "type": ["string", "null"] }
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "hint": {
+          "type": ["string", "null"]
+        }
       }
     }
   }

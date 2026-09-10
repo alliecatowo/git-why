@@ -250,6 +250,7 @@ function indexStatusToJson(status: IndexStatus): JsonValue {
         }
       : null,
     diskBytes: status.diskBytes,
+    lineageBytes: status.lineageBytes,
     indexedAt: status.indexedAt,
     objectFormat: status.objectFormat,
     shallow: status.shallow,

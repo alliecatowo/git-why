@@ -661,6 +661,13 @@ export interface IndexStatus {
     readonly fingerprint: string;
   } | null;
   readonly diskBytes: number | null;
+  /**
+   * Size of the lineage (validity-interval) table, reported separately from
+   * `diskBytes` because it is the part of the index whose growth is hardest
+   * to predict: it scales with distinct identifiers touched, not with commits.
+   * Null when no lineage table has been built for this generation.
+   */
+  readonly lineageBytes: number | null;
   readonly indexedAt: string | null;
   readonly objectFormat: ObjectFormat;
   readonly shallow: boolean;
