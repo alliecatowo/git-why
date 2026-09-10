@@ -241,12 +241,22 @@ export async function search(
           .sort((a, b) => b.score - a.score || (a.sha < b.sha ? -1 : 1));
   // The ordinary path deliberately remains byte-identical: no table access,
   // no expansion, and the same top-N truncation as before temporal retrieval.
+  // Structural expansion normally runs only under a temporal constraint, so
+  // that an ordinary query ranks byte-identically to the pre-temporal path.
+  // That guarantee also switched it off for cross-file causal questions --
+  // "why does external.ts need CompiledFn" -- which is precisely what
+  // expansion was built for: the explaining commit never touched the file
+  // being asked about. GIT_WHY_EXPAND_ALWAYS enables it everywhere so the
+  // trade-off can be measured before changing the default.
+  const expandAlways = process.env.GIT_WHY_EXPAND_ALWAYS === '1';
   const temporalRanksForExpansion =
-    constraint.type !== 'none' && lineage !== null
+    (constraint.type !== 'none' || expandAlways) && lineage !== null
       ? await expandStructuralCandidates(ranked, lineage)
       : ranked;
   const candidateRanks =
-    constraint.type === 'none' ? ranked.slice(0, request.limit) : temporalRanksForExpansion;
+    constraint.type === 'none' && !expandAlways
+      ? ranked.slice(0, request.limit)
+      : temporalRanksForExpansion;
   const commits = await store.fetchCommits(candidateRanks.map((r) => r.sha));
 
   const warnings: string[] = [];

@@ -484,3 +484,51 @@ What stands is the comparative result, which does not depend on any of this:
 on questions cheap search provably cannot answer, Git Why scores MRR 0.201
 against 0.026 for zg and 0.003 for `git log --grep`, and is the only approach
 that returns anything at all for nearly every question.
+
+## Archetype C: `git log -S` wins, and structural expansion never fires
+
+The cross-file causal case -- a consumer does something odd because a producer
+elsewhere changed, so the explaining commit never touched the file you are
+reading -- is what structural expansion was built for. Measured for the first
+time, on 20 mechanically extracted producer/consumer pairs in zod:
+
+| strategy                     | Hit@1 | Hit@10 |
+| ---------------------------- | ----- | ------ |
+| `git log -- <consumer file>` | 0.000 | 0.000  |
+| `git log -S<symbol>`         | 0.000 | 0.950  |
+| git why                      | 0.100 | 0.350  |
+
+Path-scoped history scores zero by construction, which is the archetype's
+definition rather than a finding. `git log -S` dominates, and the reason is
+plain: once you can NAME the symbol, pickaxe search is exactly the right
+instrument, and a developer reading the consumer can see the symbol in front
+of them. Git Why has no advantage over a tool given the exact literal.
+
+That inverts cleanly against archetype A and the two together are the honest
+product statement:
+
+- You cannot name the term (fuzzy recall): Git Why, MRR 0.201 against 0.003
+  for `git log --grep`.
+- You can name the term: `git log -S`, Hit@10 0.950 against 0.350.
+
+Two defects were found while measuring, and the first invalidated a whole run.
+
+The extractor initially accepted generic symbols (`schema`, `branch`) and
+documentation files as consumers, producing pairs like "why does api.mdx need
+schema" whose answer was an unrelated regex change. `-S` on a ubiquitous word
+matches coincidence, not causation. Symbols must now be distinctive (eight
+characters or more, mixed case, appearing in between two and twelve commits)
+and consumers must be source files.
+
+And structural expansion never fires at all. It is gated on
+`constraint.type !== 'none'`, so a question with no temporal phrasing -- which
+every cross-file question is -- takes the ordinary path. Lifting that gate
+behind GIT_WHY_EXPAND_ALWAYS changed nothing, because the hot-path filter
+excludes any path touched by more than 2% of commits: 64 commits in zod, and
+in a monorepo the main source files are edited far more often than that. Every
+candidate path is hot, so nothing links. The filter added to suppress noise
+suppressed the mechanism.
+
+That is a real defect with a named cause, not a limitation. Fixing it means a
+frequency cutoff that adapts to how a repository is laid out rather than one
+flat fraction, and the measurement above is the baseline it has to beat.

@@ -1,0 +1,105 @@
+{
+  "repo": "colinhacks-zod",
+  "pairs": 20,
+  "rows": [
+    {
+      "strategy": "git log -- <consumer file>",
+      "n": 20,
+      "hit1": 0,
+      "hit10": 0
+    },
+    {
+      "strategy": "git log -S<symbol>",
+      "n": 20,
+      "hit1": 0,
+      "hit10": 0.95
+    },
+    {
+      "strategy": "git why",
+      "n": 20,
+      "hit1": 0.1,
+      "hit10": 0.35
+    }
+  ],
+  "samples": [
+    {
+      "id": "crossfile-colinhacks-zod-81ded991",
+      "archetype": "cross_file_causal",
+      "repositoryId": "colinhacks-zod",
+      "symbol": "CompiledFn",
+      "producerSha": "81ded9918fe39d51b232be72f23ba0d5fb6a837e",
+      "producerFiles": [
+        "packages/zod/src/v4/classic/tests/validate.test.ts",
+        "packages/zod/src/v4/core/compile.ts",
+        "packages/zod/src/v4/core/parse.ts"
+      ],
+      "consumerSha": "213ee75d2ad6e41508587c3fab8246967f006993",
+      "consumerFile": "packages/zod/src/v4/classic/external.ts",
+      "producerSubject": "perf: answer z.validate from the compiled fast path on invalid input (#6538)",
+      "consumerSubject": "feat(compile): add z.withParser for externally generated parsers (#6575)"
+    },
+    {
+      "id": "crossfile-colinhacks-zod-bec73bea",
+      "archetype": "cross_file_causal",
+      "repositoryId": "colinhacks-zod",
+      "symbol": "validateAsync",
+      "producerSha": "bec73bea5a8ed19daec15655598fe5501bb797e7",
+      "producerFiles": [
+        "packages/treeshake/bundle-size.test.ts",
+        "packages/zod/src/v4/classic/tests/error.test.ts",
+        "packages/zod/src/v4/classic/tests/issue-schema.test.ts"
+      ],
+      "consumerSha": "62e6624bc72c4882968ac4ea2c4281b1a99a7ad4",
+      "consumerFile": "packages/zod/src/v4/classic/schemas.ts",
+      "producerSubject": "perf(v4): build the safeParse error on first read (#6519)",
+      "consumerSubject": "feat(v4): add .validate() and .validateAsync() to Zod Classic (#6547)"
+    },
+    {
+      "id": "crossfile-colinhacks-zod-bc1157e7",
+      "archetype": "cross_file_causal",
+      "repositoryId": "colinhacks-zod",
+      "symbol": "okResponse",
+      "producerSha": "bc1157e717c69168ab0b0d0ace27149f6dc3c138",
+      "producerFiles": [
+        "packages/docs/content/api.mdx",
+        "packages/docs/content/blog/zod-4-5.mdx"
+      ],
+      "consumerSha": "abfb38977dc28dc9993e3fa6a2ecc2f52a8d0c4c",
+      "consumerFile": "packages/zod/src/v4/classic/checks.ts",
+      "producerSubject": "docs: use a Response example for z.properties()",
+      "consumerSubject": "feat(v4): make z.properties() a schema, and give z.instanceof() a .properties() method (#6536)"
+    },
+    {
+      "id": "crossfile-colinhacks-zod-319f47f4",
+      "archetype": "cross_file_causal",
+      "repositoryId": "colinhacks-zod",
+      "symbol": "base64urlCharset",
+      "producerSha": "319f47f44f40755773a9aa83b6fdaaad1ff01d77",
+      "producerFiles": [
+        "packages/zod/src/v4/classic/tests/string.test.ts",
+        "packages/zod/src/v4/classic/tests/to-json-schema.test.ts",
+        "packages/zod/src/v4/core/regexes.ts"
+      ],
+      "consumerSha": "07c43e2a08f67082bd35c158d528d571a36094e0",
+      "consumerFile": "packages/zod/src/v4/core/json-schema-processors.ts",
+      "producerSubject": "Emit a length-aware base64url pattern in toJSONSchema (#6527)",
+      "consumerSubject": "Keep the runtime base64 regexes linear so composed parse paths cannot overflow (#6534)"
+    },
+    {
+      "id": "crossfile-colinhacks-zod-cd4f9a67",
+      "archetype": "cross_file_causal",
+      "repositoryId": "colinhacks-zod",
+      "symbol": "IssueBag",
+      "producerSha": "cd4f9a679238a5470620f74c2cc568e8865b3f01",
+      "producerFiles": [
+        "packages/treeshake/bundle-size.test.ts",
+        "packages/zod/src/v4/classic/tests/standard-schema.test.ts",
+        "packages/zod/src/v4/core/schemas.ts"
+      ],
+      "consumerSha": "bec73bea5a8ed19daec15655598fe5501bb797e7",
+      "consumerFile": "packages/zod/src/v4/core/parse.ts",
+      "producerSubject": "perf(v4): report Standard Schema issues without constructing a ZodError (#6509)",
+      "consumerSubject": "perf(v4): build the safeParse error on first read (#6519)"
+    }
+  ]
+}
