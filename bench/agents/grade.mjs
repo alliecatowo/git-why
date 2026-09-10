@@ -147,6 +147,36 @@ export function mergeManualGrade(reviewDir, id, { humanGrade, humanJustification
 }
 
 /**
+ * Did the agent actually surface the commit that explains the fix?
+ *
+ * The hidden tests only ask "is the symptom gone", and on a revert-and-reapply
+ * task every arm clears that bar -- an agent with no history tooling patches
+ * the symptom as readily as one that read the rationale. Measured on the
+ * partial pilot: 100% pass in all four arms, zero discriminative power. The
+ * question the benchmark exists to answer is not whether the agent can fix the
+ * code, it is whether history retrieval helped it recover WHY the code was
+ * that way, and that is what citing the originating commit demonstrates.
+ *
+ * Matching accepts any abbreviation of at least 7 characters, since agents
+ * quote short SHAs, and looks in the patch as well as the prose because a
+ * citation in a code comment counts.
+ */
+export function gradeEvidenceCitation({ goldSha, finalAnswer, finalPatch }) {
+  if (typeof goldSha !== 'string' || goldSha.length < 7) return null;
+  const haystack = `${finalAnswer ?? ''}\n${finalPatch ?? ''}`;
+  const cited = [...new Set(haystack.match(/\b[0-9a-f]{7,40}\b/g) ?? [])];
+  const matched = cited.filter(
+    (sha) => goldSha.startsWith(sha.toLowerCase()) || sha.toLowerCase().startsWith(goldSha),
+  );
+  return {
+    goldSha,
+    citedGoldSha: matched.length > 0,
+    citedShaCount: cited.length,
+    matchedTokens: matched,
+  };
+}
+
+/**
  * Top-level entry: grades one trial given its task spec metadata and the
  * runner's trial result. Returns the fields grade.mjs is responsible for
  * within the section-23 record: pass, hidden-test counts, evidence grade.
@@ -194,11 +224,20 @@ export function gradeTrial({
     scratchRoot,
     trialLabel: `${taskMeta.taskId}-${trialResult.arm}-${trialResult.repetition}`,
   });
+  // The citation check is the discriminating measure on coding tasks; the
+  // hidden tests saturate. It is reported ALONGSIDE pass rather than folded
+  // into it, so "fixed the bug" and "recovered the reason" stay separable --
+  // an agent can legitimately do the first without the second.
+  const citation = gradeEvidenceCitation({
+    goldSha: taskMeta.goldSha,
+    finalAnswer: trialResult.finalAnswer ?? '',
+    finalPatch: trialResult.finalPatch ?? '',
+  });
   return {
     pass: coding.applicable ? coding.pass : null,
     hiddenTestsPassed: coding.hiddenTestsPassed,
     hiddenTestsTotal: coding.hiddenTestsTotal,
-    evidenceGrade: null,
+    evidenceGrade: citation,
     reviewPacketId: null,
     coding,
   };

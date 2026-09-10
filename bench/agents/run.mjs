@@ -881,6 +881,32 @@ async function runOnePlannedTrial(
   record.evidence_grade = grading.evidenceGrade;
   record.review_packet_id = grading.reviewPacketId ?? null;
 
+  // Persist the raw material the grade was derived from, next to the record.
+  //
+  // Without it a grading change means re-running the whole pilot at full model
+  // cost: when the evidence-citation grade was added, 78 completed trials could
+  // not be re-scored offline because their answers and patches existed only
+  // inside the runner's memory. Artifacts are small relative to a trial and
+  // make grading reproducible after the fact by someone who did not run it.
+  try {
+    const artifactDir = join(outDir, 'artifacts', record.key);
+    mkdirSync(artifactDir, { recursive: true });
+    writeFileSync(join(artifactDir, 'final-answer.txt'), trialResult.finalAnswer ?? '', 'utf8');
+    writeFileSync(join(artifactDir, 'final.patch'), trialResult.finalPatch ?? '', 'utf8');
+    writeFileSync(join(artifactDir, 'stderr.txt'), trialResult.stderr ?? '', 'utf8');
+    if (Array.isArray(trialResult.rawEvents)) {
+      writeFileSync(
+        join(artifactDir, 'events.jsonl'),
+        trialResult.rawEvents.map((event) => JSON.stringify(event)).join('\n'),
+        'utf8',
+      );
+    }
+    record.artifacts_dir = join('artifacts', record.key);
+  } catch (err) {
+    // Never fail a completed trial because its artifacts could not be written.
+    record.artifacts_error = err instanceof Error ? err.message : String(err);
+  }
+
   return finish();
 }
 
