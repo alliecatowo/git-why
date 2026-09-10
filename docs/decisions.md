@@ -532,3 +532,37 @@ suppressed the mechanism.
 That is a real defect with a named cause, not a limitation. Fixing it means a
 frequency cutoff that adapts to how a repository is laid out rather than one
 flat fraction, and the measurement above is the baseline it has to beat.
+
+### Making expansion work, and finding it still does not help
+
+Two defects kept structural expansion from ever producing a result, and both
+are now fixed. It still loses, which is the useful part.
+
+The path filter excluded any key touched by more than 2% of commits. On zod
+that is 64, and its main source files are edited far more often, so every
+candidate path was excluded and `linkedCommits` had nothing to work with.
+Replaced with inverse-document-frequency weighting: sharing a rarely-touched
+path is strong evidence of a relationship, sharing a file everyone edits is
+almost none, and that is a gradient rather than a cliff.
+
+The deeper defect was arithmetic. A linked commit scores its seed's score
+times a hop discount, so it ranks BELOW the seed that produced it by
+construction. With enough seeds to fill the page -- the normal case -- links
+could never place, and a "cap" on how many could appear was meaningless
+because the cap was unreachable. Expansion had returned zero linked commits on
+every query ever asked of it. Links now get reserved slots and are judged
+against each other, since the entire point is to surface commits retrieval
+missed, and those cannot be expected to outrank the ones it found.
+
+With both fixed, expansion demonstrably fires: three linked commits in a
+ten-result page. Measured on the cross-file corpus it makes things WORSE,
+Hit@10 falling from 0.350 to 0.250, because the reserved slots displace seeds
+that contained the answer more often than the links do.
+
+So it stays off by default, which is where it already was -- but for a
+measured reason now rather than an accidental one. The machinery is correct
+and available behind GIT_WHY_EXPAND_ALWAYS for anyone who wants to re-test it
+against a different corpus.
+
+The path-weighting change did help the main corpus slightly on its own:
+Hit@5 0.183 to 0.200, MRR 0.128 to 0.131.

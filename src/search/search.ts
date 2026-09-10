@@ -378,16 +378,30 @@ export async function search(
   const isLinked = (entry: (typeof temporalRanksAll)[number]): boolean =>
     entry.rank.matchedBy.length === 1 && entry.rank.matchedBy[0] === 'linked';
   const linkedBudget = Math.max(1, Math.floor(request.limit / 2));
+
+  // Linked commits get RESERVED slots, not merely a ceiling.
+  //
+  // A link is scored as its seed's score times a hop discount, so it always
+  // ranks below the seed that produced it. With enough seeds to fill the page
+  // -- the normal case -- linked commits could never place at all, and
+  // structural expansion returned exactly zero results on every query ever
+  // asked of it. A cap alone is meaningless when the thing being capped
+  // cannot reach the cap.
+  //
+  // The point of expansion is to surface commits retrieval MISSED, so they
+  // have to be judged against each other rather than against the seeds that
+  // outrank them by construction. A third of the page is reserved when links
+  // exist; unused reservation falls back to seeds, so a query with no links
+  // is unaffected.
+  const linkedReserved = Math.min(linkedBudget, Math.max(1, Math.floor(request.limit / 3)));
+  const seeds = temporalRanksAll.filter((e) => !isLinked(e));
+  const links = temporalRanksAll.filter(isLinked);
   const chosen: typeof temporalRanksAll = [];
-  let linkedTaken = 0;
-  for (const entry of temporalRanksAll) {
-    if (chosen.length >= request.limit) break;
-    if (isLinked(entry)) {
-      if (linkedTaken >= linkedBudget) continue;
-      linkedTaken += 1;
-    }
-    chosen.push(entry);
-  }
+  const linkSlots = links.length > 0 ? Math.min(linkedReserved, links.length) : 0;
+  const seedSlots = request.limit - linkSlots;
+  for (const entry of seeds.slice(0, seedSlots)) chosen.push(entry);
+  for (const entry of links.slice(0, linkSlots)) chosen.push(entry);
+  chosen.sort((a, b) => b.final - a.final || (a.commit.sha < b.commit.sha ? -1 : 1));
   // If retrieval returned too few commits to fill the page, let links top it up
   // rather than returning a short result set.
   if (chosen.length < request.limit) {

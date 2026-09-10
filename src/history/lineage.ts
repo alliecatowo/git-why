@@ -13,13 +13,18 @@ import { LINEAGE_SCHEMA_VERSION } from '../types.js';
 import { pathMatchKeys } from './pathkeys.js';
 
 /**
- * A path key is "hot" once more than this fraction of commits touch it. Tuned
- * on the dev split only, like every other constant that shapes ranking.
+ * Minimum inverse-document-frequency weight for a path to link commits at all.
+ * A path touched by nearly every commit falls below this and contributes
+ * nothing, but the cutoff is on distinctiveness rather than a flat fraction of
+ * repository size, which is what broke on monorepos.
  */
-const HOT_PATH_FRACTION = 0.02;
+const MIN_PATH_LINK_WEIGHT = 0.25;
 
-/** Floor so small repositories do not classify ordinary files as hot. */
-const HOT_PATH_MIN_COMMITS = 50;
+/** Most distinctive paths of a seed that may produce links. */
+const MAX_SEED_PATHS = 6;
+
+/** Ceiling on path-derived links, so a shared file cannot flood the pool. */
+const MAX_PATH_LINKS = 400;
 
 const MAX_TOKENS_PER_COMMIT = 256;
 /**
@@ -247,7 +252,7 @@ export function pruneLineageEvents(file: string, reachable: ReadonlySet<string>)
 
 export class JsonLineageStore implements LineageStore {
   readonly #events: readonly LineageEvent[];
-  #hotPathCache: ReadonlySet<string> | null = null;
+  #pathCountCache: ReadonlyMap<string, number> | null = null;
   readonly #intervals: ReturnType<typeof buildIntervals>;
   constructor(private readonly file: string) {
     this.#events = readFile(file).events;
@@ -271,31 +276,63 @@ export class JsonLineageStore implements LineageStore {
    * a property of each repository, not something that can be enumerated ahead
    * of time.
    */
-  #hotPathKeys(): ReadonlySet<string> {
-    if (this.#hotPathCache !== null) return this.#hotPathCache;
+  /**
+   * How many commits touch each path key.
+   *
+   * Used to weight links by rarity rather than to exclude. A flat cutoff --
+   * "hot" meant touched by more than 2% of commits -- was catastrophic on a
+   * monorepo: 2% of zod's 3,210 commits is 64, and its main source files are
+   * edited far more often than that, so EVERY candidate path was hot, nothing
+   * linked, and structural expansion returned zero results on every query it
+   * was ever asked. The filter meant to suppress noise suppressed the feature.
+   */
+  #pathCounts(): ReadonlyMap<string, number> {
+    if (this.#pathCountCache !== null) return this.#pathCountCache;
     const counts = new Map<string, number>();
     for (const event of this.#events) {
       for (const key of new Set(event.paths)) counts.set(key, (counts.get(key) ?? 0) + 1);
     }
-    const cutoff = Math.max(
-      HOT_PATH_MIN_COMMITS,
-      Math.floor(this.#events.length * HOT_PATH_FRACTION),
-    );
-    const hot = new Set<string>();
-    for (const [key, count] of counts) if (count > cutoff) hot.add(key);
-    this.#hotPathCache = hot;
-    return hot;
+    this.#pathCountCache = counts;
+    return counts;
+  }
+
+  /**
+   * Link strength for sharing a path, by inverse document frequency.
+   *
+   * Sharing a rarely-touched path is strong evidence two commits are related;
+   * sharing a file everyone edits is almost none. Weighting expresses that as
+   * a gradient instead of a cliff, so a path stops mattering gradually as it
+   * becomes common and no path is ever silently removed from consideration.
+   */
+  #pathWeight(key: string): number {
+    const total = this.#events.length || 1;
+    const touching = this.#pathCounts().get(key) ?? 1;
+    // 1 for a path touched once; approaches 0 as it approaches ubiquity.
+    return Math.log(1 + total / touching) / Math.log(1 + total);
   }
 
   async linkedCommits(sha: string, maxHops: number): Promise<ReadonlyMap<string, number>> {
     const seed = this.#events.find((event) => event.sha === sha);
     if (seed === undefined || maxHops < 1) return new Map();
     const result = new Map<string, number>();
-    const hot = this.#hotPathKeys();
-    const pathSet = new Set(seed.paths.filter((key) => !hot.has(key)));
-    for (const event of this.#events) {
-      if (event.sha === sha || !event.paths.some((key) => pathSet.has(key))) continue;
-      result.set(event.sha, 1);
+
+    // Keep the seed's most distinctive paths and require a minimum strength,
+    // rather than excluding everything above a fixed frequency. On a monorepo
+    // the fixed rule removed every path and expansion never produced a single
+    // linked commit.
+    const seedPaths = [...new Set(seed.paths)]
+      .map((key) => ({ key, weight: this.#pathWeight(key) }))
+      .filter((p) => p.weight >= MIN_PATH_LINK_WEIGHT)
+      .sort((a, b) => b.weight - a.weight)
+      .slice(0, MAX_SEED_PATHS);
+    const pathSet = new Set(seedPaths.map((p) => p.key));
+
+    if (pathSet.size > 0) {
+      for (const event of this.#events) {
+        if (event.sha === sha || !event.paths.some((key) => pathSet.has(key))) continue;
+        result.set(event.sha, 1);
+        if (result.size >= MAX_PATH_LINKS) break;
+      }
     }
     for (const token of [...seed.additions, ...seed.removals])
       for (const endpoint of [
