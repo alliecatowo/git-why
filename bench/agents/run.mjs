@@ -670,9 +670,28 @@ async function runOnePlannedTrial(
   });
   const recordPath = join(outDir, 'trials', `${record.key}.json`);
   mkdirSync(join(outDir, 'trials'), { recursive: true });
+  // Declared before finish() so cleanup can reach it on every exit path.
+  let workspace;
   function finish() {
     record.completed = true;
     atomicJson(recordPath, record);
+    // Delete the trial's clone once its record is safely on disk.
+    //
+    // Every trial clones its task repository, and a curl clone is about a
+    // gigabyte. Keeping them all meant a 36-trial run needed tens of
+    // gigabytes: one run filled the disk completely and was killed at trial
+    // 19, which cost the whole comparison. The record and its artifacts are
+    // what the results are computed from; the clone is reproducible from the
+    // source repo and the base SHA recorded above.
+    //
+    // Set BENCH_KEEP_CLONES=1 to keep them when debugging a specific trial.
+    if (process.env.BENCH_KEEP_CLONES !== '1' && workspace?.workspaceDir) {
+      try {
+        rmSync(workspace.workspaceDir, { recursive: true, force: true });
+      } catch (err) {
+        record.cleanup_error = err instanceof Error ? err.message : String(err);
+      }
+    }
     return record;
   }
 
@@ -683,7 +702,6 @@ async function runOnePlannedTrial(
     return finish();
   }
 
-  let workspace;
   try {
     workspace = buildIsolatedTrialWorkspace({
       sourceRepoDir: taskMeta.sourceRepoDir,
