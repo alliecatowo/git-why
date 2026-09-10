@@ -11,6 +11,7 @@
 // Re-deriving is a deliberate act. It invalidates every prior held-out result
 // recorded against the old hash, which is the point.
 
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -48,6 +49,14 @@ const derived = deriveProtocolHash(protocol);
 if (process.argv.includes('--write')) {
   protocol.protocolHash = derived;
   writeFileSync(PROTOCOL_PATH, `${JSON.stringify(protocol, null, 2)}\n`);
+  // The hash covers canonical, key-sorted content rather than bytes, so
+  // reformatting cannot invalidate it. Formatting here keeps `--write` from
+  // leaving the file in a state that fails the repository's format check.
+  try {
+    execFileSync('npx', ['prettier', '--write', PROTOCOL_PATH], { stdio: 'ignore' });
+  } catch {
+    // Formatting is a convenience; a missing prettier must not fail a freeze.
+  }
   console.log(`protocol v${protocol.protocolVersion} frozen: ${derived}`);
 } else if (protocol.protocolHash !== derived) {
   console.error(

@@ -19,6 +19,7 @@ import {
   rmSync,
   renameSync,
   readdirSync,
+  statSync,
   cpSync,
 } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -321,14 +322,45 @@ function preparePackagedGitWhy() {
   return binDir;
 }
 
-function indexCacheKey({ baseSha, implementationSha, protocolHash, treatment, toolVersion }) {
-  return sha256(
-    baseSha,
-    implementationSha ?? '',
-    protocolHash ?? '',
-    treatment,
-    toolVersion ?? 'unknown',
-  );
+/**
+ * Identifies a cached index by what actually determines its CONTENT: the
+ * commit it was built from, the implementation that built it, and the tool
+ * version. `protocolHash` is deliberately excluded.
+ *
+ * It used to be included, which meant any edit to bench/protocol.json
+ * invalidated every cached index even when nothing about extraction changed.
+ * Recording a pre-registered hypothesis in the protocol therefore triggered a
+ * full re-index of all six corpora into fresh cache entries while the old ones
+ * stayed on disk, filled the disk, wedged Docker, and cost hours. A protocol
+ * note is not a reason to rebuild an index.
+ *
+ * The protocol still governs the RUN, and its hash is recorded on every trial
+ * record; it just does not decide whether a built index can be reused.
+ */
+function indexCacheKey({ baseSha, implementationSha, treatment, toolVersion }) {
+  return sha256(baseSha, implementationSha ?? '', treatment, toolVersion ?? 'unknown');
+}
+
+/**
+ * Drops cache entries not touched in a while, so superseded indexes are not
+ * kept forever. Each curl index is about a gigabyte, and nothing evicted them.
+ */
+function pruneIndexCache(maxEntries = 24) {
+  if (!existsSync(INDEX_CACHE_ROOT)) return;
+  const entries = readdirSync(INDEX_CACHE_ROOT)
+    .map((name) => {
+      const full = join(INDEX_CACHE_ROOT, name);
+      try {
+        return { full, mtime: statSync(full).mtimeMs };
+      } catch {
+        return null;
+      }
+    })
+    .filter((e) => e !== null)
+    .sort((a, b) => b.mtime - a.mtime);
+  for (const stale of entries.slice(maxEntries)) {
+    rmSync(stale.full, { recursive: true, force: true });
+  }
 }
 
 function cacheIndex({ key, kind, workspaceDir, relativePath, validate }) {
@@ -741,7 +773,6 @@ async function runOnePlannedTrial(
         key: indexCacheKey({
           baseSha: taskMeta.baseSha,
           implementationSha: record.implementation_sha,
-          protocolHash: record.protocol_hash,
           treatment: 'git-why',
           toolVersion: gitWhyVersion(toolPath),
         }),
@@ -772,7 +803,6 @@ async function runOnePlannedTrial(
         key: indexCacheKey({
           baseSha: taskMeta.baseSha,
           implementationSha: record.implementation_sha,
-          protocolHash: record.protocol_hash,
           treatment: 'zg',
           toolVersion: `${sandbox.image}:${record.zg_version ?? 'container-zg'}`,
         }),
@@ -1024,6 +1054,7 @@ async function main() {
 
   // Sweep tool dirs from runs that are no longer alive before installing ours.
   cleanupPackagedToolDirs();
+  pruneIndexCache();
   const toolPath = preparePackagedGitWhy();
   if (isSmoke) {
     const checks = smokePreflight({ toolPath, sandbox });
