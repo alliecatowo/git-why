@@ -69,7 +69,10 @@
       "tools": "Arm A + git why over the permitted history, without zg.",
       "status": "RUNNABLE. Requires a built dist/cli/main.js and a prebuilt index in the trial clone."
     },
-    "primaryComparisons": ["C vs B", "D vs A"],
+    "primaryComparisons": [
+      "C vs B",
+      "D vs A"
+    ],
     "secondaryComparisons": [
       "B vs A (workspace retrieval alone)",
       "C vs A (combined package)",
@@ -178,7 +181,7 @@
     "Vector only, per candidate embedding model",
     "Hybrid (RRF per this protocol), per candidate embedding model"
   ],
-  "protocolHash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
+  "protocolHash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
   "supersedes": {
     "protocolVersion": 1,
     "recordedHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f",
@@ -199,6 +202,20 @@
       "affects": "Benchmark B (agent pilot) ONLY.",
       "doesNotAffect": "Retrieval semantics: representation, embedding, ranking, candidate limits and temporal scoring constants are untouched. Retrieval results recorded against the immediately preceding v2 hash remain directly comparable and are NOT invalidated by this re-freeze.",
       "noPilotResultsInvalidated": "No valid agent-pilot trial existed at the time of this change -- every trial on disk was invalid -- so nothing was lost."
+    }
+  ],
+  "preregisteredHypotheses": [
+    {
+      "id": "H3-weaker-model",
+      "registeredAt": "2026-09-10T18:00:00Z",
+      "registeredBefore": "Any trial of this configuration was run.",
+      "motivation": "Accuracy saturated at 100% in every arm on the real-repository archaeology questions, at both a 60-call and a 10-call tool budget. Two attempts to find separation (harder corpora, tighter budget) failed. The remaining untested explanation is that the ceiling belongs to the MODEL rather than to the questions: llmgateway/deepseek-v4-flash is unusually capable at driving `git log -S`, `git log --grep` and blame.",
+      "hypothesis": "With a less capable agent, the baseline arm will fail on questions the git-why arms answer, so accuracy will separate where it did not for deepseek-v4-flash.",
+      "whatChanges": "The model only. Same nine questions, same six pinned corpora, same grading against the same hand-verified commits, same 60-call budget, same arms.",
+      "model": "llmgateway/gemini-2.5-flash-lite",
+      "prediction": "Arm A citation accuracy drops below 100%. Arms C and D score higher than A. If arm A stays at or near 100%, the hypothesis is false and the ceiling is a property of the question set, not of the model.",
+      "falsifiable": true,
+      "stoppingRule": "This is the third and final operating point to be tried. If accuracy does not separate here, the conclusion stands that Git Why's measured benefit on this question class is effort rather than capability, and no further configurations will be searched -- doing so would be fitting the experiment to a desired conclusion."
     }
   ]
 }
