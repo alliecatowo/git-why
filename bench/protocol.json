@@ -106,12 +106,17 @@
     "note": "Two concurrent OpenCode sessions TOTAL across all arms, not two per arm. Arm order is randomized within each task/trial block and arms are interleaved so time-of-day/provider load does not systematically favor any one arm."
   },
   "billedModelBudget": {
-    "amount": 50,
-    "currency": "USD",
-    "approvedAt": "2026-09-10T04:21:00Z",
-    "approvedBy": "human operator",
-    "approvedProviderRoute": "OpenCode DevPass credential mounted only into ephemeral per-trial Docker profiles",
-    "note": "Human explicitly authorized up to USD 50 for the full evaluation, with a preference for a materially cheaper run. This approval does not authorize a model/provider switch: the exact provider/model identifier, timestamp, and any observed catalog price must be recorded in each run manifest before results are interpreted. The calibrated model is selected before arm comparison."
+    "approved": true,
+    "approvedBy": "repository owner (alliecatowo), in-session, 2026-09-10",
+    "approvedAt": "2026-09-10T06:00:00Z",
+    "provider": "llmgateway (OpenCode DevPass cohort)",
+    "modelId": "llmgateway/deepseek-v4-flash",
+    "verified": "`opencode run --model llmgateway/deepseek-v4-flash` returns a response on this machine, 2026-09-10.",
+    "catalogPriceAtApproval": "not recorded by `opencode models`; the CLI does not expose per-token pricing. Cost is therefore measured from observed token usage per trial, not predicted. Recording it as unknown rather than inventing a figure.",
+    "supersedes": "The prior zero-spend rule and the opencode/big-pickle free-cohort calibration in bench/results/agents/model-calibration.json.",
+    "recalibrationRequired": true,
+    "recalibrationNote": "The pilot model changed, so the earlier calibration no longer describes the model under test. Recalibrate before the pilot and record the result. The calibration must still be performed BEFORE any arm comparison, so that the model is not chosen by which arm it happens to favour.",
+    "note": "A billed model does not relax any other rule. Token and cost accounting must still sum across ALL step_finish events and be cross-checked against the session row in the profile's opencode.db, and must be null rather than zero when unavailable -- a billed run recording zero cost is a reporting bug, not a free run."
   },
   "datasetComposition": {
     "totalCases": 48,
@@ -176,7 +181,7 @@
     "Vector only, per candidate embedding model",
     "Hybrid (RRF per this protocol), per candidate embedding model"
   ],
-  "protocolHash": "sha256:2ba4b5e19bc0666be483a5c08d937bef7ab6238206f6b8a4617e96fc261392a3",
+  "protocolHash": "sha256:533b2c2080181ec14a90346026063965d6c9afbdccda06baf26d5b6fd0806b40",
   "supersedes": {
     "protocolVersion": 1,
     "recordedHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f",
@@ -189,5 +194,14 @@
     "rubric": "Judged by a blinded rubric. pass is null and MUST NOT enter any pass-rate numerator or denominator. Mixing rubric trials into per-arm pass counts was defect 8 of the invalid v1 pilot.",
     "temporal": "When-introduced / when-removed / history-of questions, labelled with introducedSha, removedSha and an orderedChain in ancestry order.",
     "aggregationRule": "Every reported rate carries an explicit numerator and denominator, per stratum and per arm. No rate is reported over a mixed-stratum denominator."
-  }
+  },
+  "hashChangeLog": [
+    {
+      "at": "2026-09-10T06:00:00Z",
+      "change": "Recorded the owner's approval of billed DevPass model llmgateway/deepseek-v4-flash for the agent pilot, replacing the zero-spend rule.",
+      "affects": "Benchmark B (agent pilot) ONLY.",
+      "doesNotAffect": "Retrieval semantics: representation, embedding, ranking, candidate limits and temporal scoring constants are untouched. Retrieval results recorded against the immediately preceding v2 hash remain directly comparable and are NOT invalidated by this re-freeze.",
+      "noPilotResultsInvalidated": "No valid agent-pilot trial existed at the time of this change -- every trial on disk was invalid -- so nothing was lost."
+    }
+  ]
 }
