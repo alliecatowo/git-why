@@ -126,21 +126,15 @@ function completedTrial(path) {
 
 // Agent executions have host shell access; only the benchmark image is a
 // valid execution environment.  Refuse to accidentally run an unsandboxed
-// paid/free session.  Image creation is deliberately external to this runner
-// because credentials/model egress policy are deployment-specific.
+// paid/free session. `git-why-bench:local` is the reproducible image built
+// from bench/agents/Dockerfile; deployments may override it explicitly.
 function requireSandboxImage() {
-  const image = process.env.BENCH_SANDBOX_IMAGE;
+  const image = process.env.BENCH_SANDBOX_IMAGE || 'git-why-bench:local';
   const docker = spawnSync('docker', ['version', '--format', '{{.Server.Version}}'], {
     encoding: 'utf8',
   });
   if (docker.status !== 0)
     return { ok: false, reason: 'Docker daemon unavailable; no agent trial may run unsandboxed.' };
-  if (!image)
-    return {
-      ok: false,
-      reason:
-        'BENCH_SANDBOX_IMAGE is unset. Build the benchmark sandbox image with only a trial workspace mount and model-endpoint egress, then set it.',
-    };
   const inspect = spawnSync('docker', ['image', 'inspect', image], { encoding: 'utf8' });
   if (inspect.status !== 0) return { ok: false, reason: `sandbox image ${image} is unavailable.` };
   const context = spawnSync(
