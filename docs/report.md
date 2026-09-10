@@ -333,6 +333,37 @@ This supersedes the earlier synthetic-task pilots, which saturated for a
 different and less interesting reason (the rationale commit sat one hop from
 HEAD in a 125-commit repository).
 
+### The obvious explanation for the null was tested, and it failed
+
+The natural way to discount this result is to say the questions were lexically
+easy -- that the baseline won because the query's words appear in the target
+commit's message, so `git log -S` finds it directly. That would make the null
+a property of the question set rather than of the tool.
+
+It is not what the data shows. Measuring the term overlap between each
+question and its verified commit, and how many commits a naive `git log -S` on
+the query's rarest term returns:
+
+| case        | overlapping terms | `git log -S` candidates | gold subject                                    | arm A |
+| ----------- | ----------------- | ----------------------- | ----------------------------------------------- | ----- |
+| redis-01    | 1                 | 729                     | Streams: 12 commits squashed into the initial   | HIT   |
+| requests-02 | 2                 | 1035                    | Drop support for Python 3.9 (#7196)             | HIT   |
+| zod-01      | 3                 | 146                     | strip unknown keys by default                   | HIT   |
+| curl-02     | 1                 | 138                     | transfer: redirects to other protocols or ports | HIT   |
+| ripgrep-03  | 1                 | 47                      | Switch from .rgignore to .ignore.               | HIT   |
+
+These are terse, vocabulary-mismatched commit subjects with hundreds of
+lexical candidates -- precisely the regime section 1 of the temporal dossier
+describes as the motivating failure, and precisely where hybrid retrieval is
+supposed to win. The baseline answered all of them anyway, by combining
+`git log --grep`, path-scoped history, blame and reading the code rather than
+by a single `-S` sweep.
+
+So the null does not rest on an easy question set. A capable model with
+ordinary Git commands solves real repository archaeology at 30,000-commit
+scale. That is the finding, and it is a harder one for this project than a
+simple "the benchmark was badly built".
+
 ## Agent pilot: why it cannot currently demonstrate usefulness
 
 Two complete 48-trial runs (12 revert-and-reapply tasks x 4 arms x 1
