@@ -284,3 +284,54 @@ node bench/perf/run.mjs
 node bench/report.mjs
 # -> docs/report.md
 ```
+
+## Agent pilot: why it cannot currently demonstrate usefulness
+
+Two complete 48-trial runs (12 revert-and-reapply tasks x 4 arms x 1
+repetition, `llmgateway/deepseek-v4-flash`, $0.064 and $0.067) produced no
+separation between arms:
+
+| arm           | n   | hidden tests | cited rationale commit | git why calls | SHAs reaching the answer |
+| ------------- | --- | ------------ | ---------------------- | ------------- | ------------------------ |
+| A baseline    | 12  | 12/12 (100%) | 12/12 (100%)           | 0             | 0                        |
+| B +zg         | 12  | 12/12 (100%) | 12/12 (100%)           | 0             | 0                        |
+| C +zg+git why | 12  | 12/12 (100%) | 12/12 (100%)           | 8             | 8                        |
+| D +git why    | 12  | 12/12 (100%) | 12/12 (100%)           | 11            | 11                       |
+
+Zero invalidated trials. The treatments were delivered and used: every single
+`git why` call in arms C and D returned a SHA that appeared in the agent's
+final answer or patch.
+
+The benchmark still cannot answer the question, and the reason is task
+difficulty rather than anything about the tool. In arm A, with no retrieval
+tooling at all, the model wrote:
+
+> The history shows a revert commit at HEAD. [...] The story is clear: commit
+> `7928fef` added compatibility behavior (`""` -> `null`), but commit
+> `55342b6` (HEAD) reverted it during cleanup.
+
+The rationale commit is one hop from HEAD in a 125-commit repository with
+descriptive commit messages, and `git log -S normalizeToken` returns two
+results. Plain Git solves it. A ceiling at 100% in the control arm cannot
+measure a treatment, so these numbers are reported as a null result about the
+TASKS, not as evidence about Git Why.
+
+Two grading defects were found and fixed on the way here, both of which
+produced clean, confident, meaningless numbers:
+
+- Citations were first graded against `goldSha`, the reapplied fix. The task
+  engine resets `main` back to base after creating it, so it exists only as a
+  dangling commit in the source repo and is never exported into a trial clone
+  (`git cat-file -e` fails for it inside the workspace). The metric was pinned
+  at 0% by construction, in every arm, and read exactly like "history
+  retrieval does not help".
+- The trajectory audit flagged the harness's own mounts (`/prompt/`,
+  `/profile-config/`, the installed man page) as escapes and invalidated those
+  trials, shrinking the denominator rather than adding noise.
+
+What a discriminating pilot needs is a corpus where the baseline cannot
+already win: the pinned real histories (curl at 30,000 commits, redis at
+12,110) where the originating commit is thousands of commits back and the
+messages are terse. That is the regime Git Why is designed for and the regime
+`bench/retrieval/` already measures. The synthetic agent tasks do not
+reproduce it.
