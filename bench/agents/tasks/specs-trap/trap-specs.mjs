@@ -15,6 +15,10 @@ const FILLER = ['telemetry', 'config', 'logging', 'docs', 'deps', 'lint'];
 export const TRAP_SPECS = [
   {
     id: 'TRAP-retry',
+    // Churn so `git log -- <file>` is a haystack, not a three-line answer.
+    filechurn: 45,
+    filechurnAfter: 40,
+    churnPaths: ['src/dispatcher.js'],
     kind: 'repeat_the_mistake',
     seed: 'git-why::trap::retry::v1',
     baseEpochSeconds: 1_700_000_000,
@@ -109,6 +113,10 @@ module.exports = { deliver };
 
   {
     id: 'TRAP-cache',
+    // Churn so `git log -- <file>` is a haystack, not a three-line answer.
+    filechurn: 45,
+    filechurnAfter: 40,
+    churnPaths: ['src/session.js'],
     kind: 'repeat_the_mistake',
     seed: 'git-why::trap::cache::v1',
     baseEpochSeconds: 1_700_500_000,
@@ -201,6 +209,10 @@ module.exports = { resolveSession };
 
   {
     id: 'TRAP-stale',
+    // Churn so `git log -- <file>` is a haystack, not a three-line answer.
+    filechurn: 45,
+    filechurnAfter: 40,
+    churnPaths: ['src/upload.js'],
     kind: 'stale_constraint',
     seed: 'git-why::trap::stale::v1',
     baseEpochSeconds: 1_701_000_000,
@@ -304,6 +316,10 @@ module.exports = { upload };
 export const CONTROL_SPECS = [
   {
     id: 'CTRL-retry',
+    // Churn so `git log -- <file>` is a haystack, not a three-line answer.
+    filechurn: 45,
+    filechurnAfter: 40,
+    churnPaths: ['src/dispatcher.js'],
     kind: 'control_no_hazard',
     seed: 'git-why::ctrl::retry::v1',
     baseEpochSeconds: 1_702_000_000,

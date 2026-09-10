@@ -7,7 +7,7 @@
 //
 // Deterministic from each task's seed, same contract as bench/fixtures/lib.
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import {
   initRepo,
   writeRepoFile,
@@ -41,10 +41,48 @@ export function buildTaskRepo(spec, { workDir, manifestDir }) {
     priorShas.push({ sha, message: `chore: ${topic} follow-up`, role: 'distractor' });
     epoch += 3600;
   }
+  // Churn on the files the task will ask about, committed BEFORE the
+  // authored history.
+  //
+  // Without it, `git log -- src/dispatcher.js` returned three commits and the
+  // second was the revert that explains everything, so the hazard was one
+  // plain command away and the task measured nothing. Real files carry
+  // hundreds of commits; the reason a revert is hard to find is that it sits
+  // in a haystack, and the rationale lives in a message body that
+  // `--oneline` does not show.
+  for (let i = 0; i < (spec.filechurn ?? 0); i += 1) {
+    for (const path of spec.churnPaths ?? []) {
+      writeRepoFile(dir, path, `${readIfExists(dir, path)}\n// touched: pass ${i}\n`);
+    }
+    const sha = commitAll(dir, {
+      message: `chore: routine upkeep pass ${String(i).padStart(3, '0')}`,
+      epochSeconds: epoch,
+    });
+    priorShas.push({ sha, message: 'chore: routine upkeep', role: 'churn' });
+    epoch += 3600;
+  }
+
   for (const step of spec.priorHistory ?? []) {
     applyFiles(dir, step.files);
     const sha = commitAll(dir, { message: step.message, epochSeconds: epoch });
     priorShas.push({ sha, message: step.message, role: step.role ?? 'history', label: step.label });
+    epoch += 3600;
+  }
+
+  // Churn AFTER the hazard, so the revert is buried mid-history rather than
+  // sitting two lines from HEAD. Pre-hazard churn alone left
+  // `git log -- <file>` showing the revert as its second entry, which is
+  // still one glance away. A real warning is old and has had traffic on top
+  // of it since.
+  for (let i = 0; i < (spec.filechurnAfter ?? 0); i += 1) {
+    for (const path of spec.churnPaths ?? []) {
+      writeRepoFile(dir, path, `${readIfExists(dir, path)}\n// upkeep: later pass ${i}\n`);
+    }
+    const sha = commitAll(dir, {
+      message: `chore: follow-up maintenance ${String(i).padStart(3, '0')}`,
+      epochSeconds: epoch,
+    });
+    priorShas.push({ sha, message: 'chore: follow-up maintenance', role: 'churn' });
     epoch += 3600;
   }
 
@@ -87,6 +125,15 @@ export function buildTaskRepo(spec, { workDir, manifestDir }) {
   };
   writeFileSync(`${manifestDir}/${spec.id}.json`, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   return manifest;
+}
+
+/** Current content of a file, or empty string when it does not exist yet. */
+function readIfExists(dir, path) {
+  try {
+    return readFileSync(`${dir}/${path}`, 'utf8');
+  } catch {
+    return '';
+  }
 }
 
 function applyFiles(dir, files) {
