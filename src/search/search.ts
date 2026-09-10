@@ -136,17 +136,31 @@ export async function search(
       parents: commit.parents,
       messageExcerpt: messageExcerptOf(commit.subject, commit.body),
       rankScore: r.score,
+      // The temporal layer replaces these when a constraint is in force. With
+      // the identity constraint, `final` is exactly the fused RRF value.
+      scores: { fused: r.score, temporal: 1, final: r.score },
       matchedBy: r.matchedBy,
       evidence,
+      linkDistance: 0,
     });
   }
 
   return {
     query: request.query,
+    coreQuery: request.query,
     mode: request.mode,
     sort: request.sort,
     snapshot,
     results: applySort(results, request.sort),
+    temporal: {
+      intent: request.temporal.type,
+      confidence: request.temporal.confidence,
+      anchor: null,
+      anchorEnd: null,
+      w: 0,
+    },
+    answer: null,
+    timeline: null,
     warnings,
     candidateLimitReached: rankResult.candidateLimitReached,
   };

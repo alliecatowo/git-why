@@ -12,6 +12,7 @@ import {
   type GitWhyErrorCode,
   type IndexStatus,
   type SearchResponse,
+  type ResolvedAnchor,
 } from '../types.js';
 
 export interface JsonRenderOptions {
@@ -45,6 +46,17 @@ function evidenceToJson(ev: EvidenceHit): JsonValue {
   return out;
 }
 
+/** A resolved anchor flattened for the envelope; null when there is no anchor. */
+function anchorToJson(resolved: ResolvedAnchor | null): JsonValue {
+  if (resolved === null) return null;
+  return {
+    kind: resolved.anchor.kind,
+    raw: resolved.anchor.raw,
+    sha: resolved.sha,
+    epochSeconds: resolved.epochSeconds,
+  };
+}
+
 function buildEnvelope(
   response: SearchResponse,
   outputTruncated: boolean,
@@ -52,6 +64,7 @@ function buildEnvelope(
   return {
     schemaVersion: JSON_SCHEMA_VERSION,
     query: response.query,
+    coreQuery: response.coreQuery,
     mode: response.mode,
     sort: response.sort,
     snapshot: {
@@ -71,9 +84,42 @@ function buildEnvelope(
       parents: [...hit.parents],
       messageExcerpt: hit.messageExcerpt,
       rankScore: hit.rankScore,
+      scores: {
+        fused: hit.scores.fused,
+        temporal: hit.scores.temporal,
+        final: hit.scores.final,
+      },
       matchedBy: [...hit.matchedBy],
+      linkDistance: hit.linkDistance,
       evidence: hit.evidence.map(evidenceToJson),
     })),
+    temporal: {
+      intent: response.temporal.intent,
+      confidence: response.temporal.confidence,
+      anchor: anchorToJson(response.temporal.anchor),
+      anchorEnd: anchorToJson(response.temporal.anchorEnd),
+      w: response.temporal.w,
+    },
+    answer:
+      response.answer === null
+        ? null
+        : {
+            sha: response.answer.sha,
+            kind: response.answer.kind,
+            viaToken: response.answer.viaToken,
+            viaPath: response.answer.viaPath,
+            confidence: response.answer.confidence,
+          },
+    timeline:
+      response.timeline === null
+        ? null
+        : response.timeline.map((episode) => ({
+            sha: episode.sha,
+            kind: episode.kind,
+            committerTime: episode.committerTime,
+            subject: episode.subject,
+            evidence: episode.evidence === null ? null : evidenceToJson(episode.evidence),
+          })),
     warnings: [...response.warnings],
     outputTruncated,
     candidateLimitReached: response.candidateLimitReached,
@@ -163,10 +209,20 @@ export function renderSearchErrorJson(input: JsonErrorInput): string {
   const envelope: { [key: string]: JsonValue } = {
     schemaVersion: JSON_SCHEMA_VERSION,
     query: input.query,
+    coreQuery: input.query,
     mode: input.mode,
     sort: input.sort ?? 'relevance',
     snapshot: null,
     results: [],
+    temporal: {
+      intent: 'none',
+      confidence: 'inferred',
+      anchor: null,
+      anchorEnd: null,
+      w: 0,
+    },
+    answer: null,
+    timeline: null,
     warnings: [],
     outputTruncated: false,
     candidateLimitReached: false,

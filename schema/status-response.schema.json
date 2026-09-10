@@ -6,7 +6,7 @@
   "required": ["schemaVersion", "command", "index"],
   "additionalProperties": false,
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "command": { "enum": ["index", "status", "rebuild", "gc"] },
     "index": {
       "oneOf": [

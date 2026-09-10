@@ -11,12 +11,16 @@
     "results",
     "warnings",
     "outputTruncated",
-    "candidateLimitReached"
+    "candidateLimitReached",
+    "coreQuery",
+    "temporal",
+    "answer",
+    "timeline"
   ],
   "additionalProperties": false,
   "properties": {
     "schemaVersion": {
-      "const": 1
+      "const": 2
     },
     "query": {
       "type": "string"
@@ -70,7 +74,9 @@
           "messageExcerpt",
           "rankScore",
           "matchedBy",
-          "evidence"
+          "evidence",
+          "scores",
+          "linkDistance"
         ],
         "additionalProperties": false,
         "properties": {
@@ -114,7 +120,7 @@
           "matchedBy": {
             "type": "array",
             "items": {
-              "enum": ["text", "semantic"]
+              "enum": ["text", "semantic", "linked"]
             }
           },
           "evidence": {
@@ -184,6 +190,26 @@
                 }
               }
             }
+          },
+          "scores": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fused", "temporal", "final"],
+            "properties": {
+              "fused": {
+                "type": "number"
+              },
+              "temporal": {
+                "type": "number"
+              },
+              "final": {
+                "type": "number"
+              }
+            }
+          },
+          "linkDistance": {
+            "type": "number",
+            "minimum": 0
           }
         }
       }
@@ -220,6 +246,191 @@
       "type": "string",
       "enum": ["relevance", "newest", "oldest"],
       "description": "Deterministic ordering applied to the selected commits. Never changes which commits are returned."
+    },
+    "coreQuery": {
+      "type": "string"
+    },
+    "temporal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intent", "confidence", "anchor", "anchorEnd", "w"],
+      "properties": {
+        "intent": {
+          "enum": [
+            "none",
+            "first",
+            "last",
+            "removed",
+            "changed_when",
+            "before",
+            "after",
+            "between",
+            "around",
+            "timeline"
+          ]
+        },
+        "confidence": {
+          "enum": ["explicit", "inferred"]
+        },
+        "anchor": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["kind", "raw", "sha", "epochSeconds"],
+          "properties": {
+            "kind": {
+              "enum": ["date", "tag", "sha", "query"]
+            },
+            "raw": {
+              "type": "string"
+            },
+            "sha": {
+              "type": ["string", "null"]
+            },
+            "epochSeconds": {
+              "type": ["number", "null"]
+            }
+          }
+        },
+        "anchorEnd": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["kind", "raw", "sha", "epochSeconds"],
+          "properties": {
+            "kind": {
+              "enum": ["date", "tag", "sha", "query"]
+            },
+            "raw": {
+              "type": "string"
+            },
+            "sha": {
+              "type": ["string", "null"]
+            },
+            "epochSeconds": {
+              "type": ["number", "null"]
+            }
+          }
+        },
+        "w": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "answer": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["sha", "kind", "viaToken", "viaPath", "confidence"],
+      "properties": {
+        "sha": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": ["introduced", "last_modified", "removed"]
+        },
+        "viaToken": {
+          "type": ["string", "null"]
+        },
+        "viaPath": {
+          "type": ["string", "null"]
+        },
+        "confidence": {
+          "enum": ["explicit", "inferred"]
+        }
+      }
+    },
+    "timeline": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sha", "kind", "committerTime", "subject", "evidence"],
+        "properties": {
+          "sha": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": ["introduced", "modified", "removed"]
+          },
+          "committerTime": {
+            "type": "number"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "evidence": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "recordId",
+                  "kind",
+                  "path",
+                  "oldPath",
+                  "changeType",
+                  "oldStart",
+                  "oldCount",
+                  "newStart",
+                  "newCount",
+                  "excerpt",
+                  "truncated",
+                  "omissionReasons"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "recordId": {
+                    "type": "string"
+                  },
+                  "kind": {
+                    "enum": ["hunk", "file_change"]
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "pathBytesBase64": {
+                    "type": "string"
+                  },
+                  "oldPath": {
+                    "type": ["string", "null"]
+                  },
+                  "oldPathBytesBase64": {
+                    "type": "string"
+                  },
+                  "changeType": {
+                    "enum": ["A", "C", "D", "M", "R", "T", "U", "X"]
+                  },
+                  "oldStart": {
+                    "type": ["number", "null"]
+                  },
+                  "oldCount": {
+                    "type": ["number", "null"]
+                  },
+                  "newStart": {
+                    "type": ["number", "null"]
+                  },
+                  "newCount": {
+                    "type": ["number", "null"]
+                  },
+                  "excerpt": {
+                    "type": "string"
+                  },
+                  "truncated": {
+                    "type": "boolean"
+                  },
+                  "omissionReasons": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   }
 }

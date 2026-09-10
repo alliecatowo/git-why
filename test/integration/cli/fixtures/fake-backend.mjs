@@ -85,6 +85,7 @@ function defaultStatus() {
 function defaultSearchResponse(request) {
   return {
     query: request.query,
+    coreQuery: request.query,
     mode: request.mode,
     snapshot: {
       scope: 'branches-remotes-tags-worktree-heads',
@@ -104,10 +105,21 @@ function defaultSearchResponse(request) {
         parents: [],
         messageExcerpt: 'This is a fake commit used only by test/integration/cli.',
         rankScore: 0.5,
+        scores: { fused: 0.5, temporal: 1, final: 0.5 },
         matchedBy: request.mode === 'hybrid' ? ['text', 'semantic'] : [request.mode],
+        linkDistance: 0,
         evidence: [],
       },
     ],
+    temporal: {
+      intent: request.temporal?.type ?? 'none',
+      confidence: request.temporal?.confidence ?? 'inferred',
+      anchor: null,
+      anchorEnd: null,
+      w: 0,
+    },
+    answer: null,
+    timeline: null,
     warnings: [],
     candidateLimitReached: false,
   };

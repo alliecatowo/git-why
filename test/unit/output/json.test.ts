@@ -27,7 +27,9 @@ function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
     parents: ['b'.repeat(40)],
     messageExcerpt: 'Provider X can return an empty refresh token...',
     rankScore: 0.0325,
+    scores: { fused: 0.0325, temporal: 1, final: 0.0325 },
     matchedBy: ['text', 'semantic'],
+    linkDistance: 0,
     evidence: [
       {
         recordId: 'record-1',
@@ -56,8 +58,12 @@ function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
 function makeResponse(overrides: Partial<SearchResponse> = {}): SearchResponse {
   return {
     query: 'auth refresh loop',
+    coreQuery: 'auth refresh loop',
     mode: 'hybrid',
     sort: 'relevance',
+    temporal: { intent: 'none', confidence: 'inferred', anchor: null, anchorEnd: null, w: 0 },
+    answer: null,
+    timeline: null,
     snapshot: {
       scope: 'branches-remotes-tags-worktree-heads',
       fingerprint: 'opaque-fingerprint',
@@ -188,7 +194,7 @@ test('the failure envelope matches the schema and carries the error code', () =>
     hint: 'Try again shortly, or increase --lock-timeout.',
   });
   const parsed = JSON.parse(text);
-  assert.equal(parsed.schemaVersion, 1);
+  assert.equal(parsed.schemaVersion, 2);
   assert.deepEqual(parsed.results, []);
   assert.equal(parsed.error.code, 'INDEX_BUSY');
   const result = validateAgainstSchema(parsed, searchSchema);
@@ -198,7 +204,7 @@ test('the failure envelope matches the schema and carries the error code', () =>
 test('a status response matches the status schema', () => {
   const text = renderStatusJson('status', makeStatus());
   const parsed = JSON.parse(text);
-  assert.equal(parsed.schemaVersion, 1);
+  assert.equal(parsed.schemaVersion, 2);
   assert.equal(parsed.command, 'status');
   const result = validateAgainstSchema(parsed, statusSchema);
   assert.deepEqual(result.errors, []);

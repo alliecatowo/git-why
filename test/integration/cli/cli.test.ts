@@ -112,7 +112,7 @@ test('an empty query with --json still produces exactly one valid JSON error obj
   const result = await runCli(['--json'], { cwd: repo.dir, needsBackend: false });
   assert.equal(result.code, 2);
   const parsed = JSON.parse(result.stdout.trim());
-  assert.equal(parsed.schemaVersion, 1);
+  assert.equal(parsed.schemaVersion, 2);
   assert.equal(parsed.error.code, 'EMPTY_QUERY');
   assert.deepEqual(parsed.results, []);
 });
@@ -131,7 +131,7 @@ test('--json search output is exactly one valid JSON object on stdout; progress 
   const result = await runCli(['fake query', '--json'], { cwd: repo.dir, config: {} });
   assert.equal(result.code, 0);
   const parsed = JSON.parse(result.stdout.trim()); // throws if stdout has anything but one object
-  assert.equal(parsed.schemaVersion, 1);
+  assert.equal(parsed.schemaVersion, 2);
   assert.equal(parsed.query, 'fake query');
   assert.equal(parsed.results.length, 1);
   assert.match(result.stderr, /reconcile:/);
@@ -201,7 +201,7 @@ test('status --json produces the status envelope, not a search response', async 
   const result = await runCli(['status', '--json'], { cwd: repo.dir, config: {} });
   assert.equal(result.code, 0);
   const parsed = JSON.parse(result.stdout.trim());
-  assert.equal(parsed.schemaVersion, 1);
+  assert.equal(parsed.schemaVersion, 2);
   assert.equal(parsed.command, 'status');
   assert.ok(parsed.index);
   assert.equal(parsed.index.state, 'current');
@@ -224,6 +224,7 @@ test('gc runs and reports a status', async () => {
 test('--max-bytes truncation produces valid, bounded JSON end-to-end', async () => {
   const bigResponse = {
     query: 'fake query',
+    coreQuery: 'fake query',
     mode: 'hybrid',
     snapshot: {
       scope: 'branches-remotes-tags-worktree-heads',
@@ -242,7 +243,9 @@ test('--max-bytes truncation produces valid, bounded JSON end-to-end', async () 
       parents: [],
       messageExcerpt: 'x'.repeat(200),
       rankScore: 0.5,
+      scores: { fused: 0.5, temporal: 1, final: 0.5 },
       matchedBy: ['text'],
+      linkDistance: 0,
       evidence: [
         {
           recordId: `r${i}`,
@@ -260,6 +263,9 @@ test('--max-bytes truncation produces valid, bounded JSON end-to-end', async () 
         },
       ],
     })),
+    temporal: { intent: 'none', confidence: 'inferred', anchor: null, anchorEnd: null, w: 0 },
+    answer: null,
+    timeline: null,
     warnings: [],
     candidateLimitReached: false,
   };

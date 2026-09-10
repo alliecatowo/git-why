@@ -30,6 +30,7 @@ import {
   type ResultSort,
   type SearchMode,
   type SearchRequest,
+  NO_TEMPORAL_CONSTRAINT,
 } from '../types.js';
 
 const HELP_TEXT = `Usage: git why <query> [-- <path>...] [options]
@@ -280,6 +281,8 @@ async function runSearch(
       sort: parsed.sort,
       limit: parsed.limit,
       filters,
+      temporal: NO_TEMPORAL_CONSTRAINT,
+      groups: [],
     };
 
     const response = await backend.search(repo, request, {

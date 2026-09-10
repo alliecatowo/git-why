@@ -18,10 +18,16 @@ export const MANIFEST_VERSION = 1;
 export const RECORD_SCHEMA_VERSION = 1;
 export const EXTRACTION_POLICY_VERSION = 1;
 export const LEXICAL_NORMALIZATION_VERSION = 1;
-export const RANKING_VERSION = 1;
+export const RANKING_VERSION = 2;
 export const DOC_ID_VERSION = 1;
+/**
+ * Version of the lineage (validity-interval) table written beside a
+ * generation. Bumping it forces the table to be rebuilt; it does not
+ * invalidate the vector or FTS collections.
+ */
+export const LINEAGE_SCHEMA_VERSION = 1;
 /** Version of the `--json` envelope. */
-export const JSON_SCHEMA_VERSION = 1;
+export const JSON_SCHEMA_VERSION = 2;
 
 /* ------------------------------------------------------------------ *
  * Errors
@@ -371,9 +377,196 @@ export interface SearchRequest {
   /** Distinct commits to return, 1-50. */
   readonly limit: number;
   readonly filters: SearchFilters;
+  /**
+   * The temporal constraint. `NO_TEMPORAL_CONSTRAINT` is the default and must
+   * leave ranking untouched. Callers that can decompose the question
+   * themselves -- the MCP client, the CLI flags -- pass it structurally;
+   * otherwise the rule-based parser fills it in.
+   */
+  readonly temporal: TemporalConstraint;
+  /**
+   * Additional query groups, borrowed from `zg --fuse`. Each runs the full
+   * hybrid pipeline and the per-group rankings are fused by RRF at the commit
+   * level. Timeline mode uses this to sample anchors across a period so that
+   * every sub-period is represented, rather than returning the five most
+   * similar commits.
+   */
+  readonly groups: readonly string[];
 }
 
-export type MatchedBy = 'text' | 'semantic';
+/**
+ * How a commit entered the result set. `linked` means it was not matched by
+ * either retrieval branch directly: it was pulled in by structural expansion
+ * from a semantic seed along the lineage table, which is how terse
+ * originating commits ("add vquic") become reachable at all.
+ */
+export type MatchedBy = 'text' | 'semantic' | 'linked';
+
+/* ------------------------------------------------------------------ *
+ * Temporal retrieval
+ * ------------------------------------------------------------------ */
+
+/**
+ * The shape of the time question being asked, in the sense of the temporal-QA
+ * survey literature: ordinal (first, last, removed), relative (before, after,
+ * between, around), interval (timeline), or absent (none).
+ *
+ * `none` is not a missing value. It is the identity constraint, and it must
+ * produce a temporal score of exactly 1 for every commit so that an ordinary
+ * query ranks byte-identically to the pre-temporal code path. Shipping an
+ * always-on recency prior is the single most common way temporal IR systems
+ * regress their non-temporal queries.
+ */
+export type TemporalConstraintType =
+  | 'none'
+  | 'first'
+  | 'last'
+  | 'removed'
+  | 'changed_when'
+  | 'before'
+  | 'after'
+  | 'between'
+  | 'around'
+  | 'timeline';
+
+/**
+ * `explicit` means the user (or a calling model) stated the constraint:
+ * a `--first` flag, a structured MCP field, or unambiguous phrasing such as
+ * "when was X first introduced". `inferred` means it was guessed from softer
+ * phrasing. The distinction is not cosmetic -- it sets the exponent applied
+ * to the temporal term, so a wrong guess degrades ranking gently instead of
+ * destroying it.
+ */
+export type TemporalConfidence = 'explicit' | 'inferred';
+
+/** A point in history a relative constraint is measured against. */
+export type TemporalAnchor =
+  | { readonly kind: 'date'; readonly raw: string; readonly epochSeconds: number }
+  | { readonly kind: 'tag'; readonly raw: string; readonly name: string }
+  | { readonly kind: 'sha'; readonly raw: string; readonly sha: string }
+  /** "before we migrated to the new client" -- resolved by a nested search. */
+  | { readonly kind: 'query'; readonly raw: string; readonly query: string };
+
+/** An anchor after resolution against the repository. */
+export interface ResolvedAnchor {
+  readonly anchor: TemporalAnchor;
+  /** Null when the anchor is a bare date with no commit at that point. */
+  readonly sha: string | null;
+  readonly epochSeconds: number | null;
+}
+
+export interface TemporalConstraint {
+  readonly type: TemporalConstraintType;
+  readonly confidence: TemporalConfidence;
+  readonly anchor: TemporalAnchor | null;
+  /** Only set for `between`. */
+  readonly anchorEnd: TemporalAnchor | null;
+}
+
+/** The identity constraint. Ranking must be unchanged when this is in force. */
+export const NO_TEMPORAL_CONSTRAINT: TemporalConstraint = {
+  type: 'none',
+  confidence: 'inferred',
+  anchor: null,
+  anchorEnd: null,
+};
+
+/**
+ * A query split into a temporally neutral core, which is what actually gets
+ * embedded and searched, and the constraint that shapes scoring. Embedding
+ * the timestamp itself is deliberately not done: vectors locate the topic,
+ * the commit DAG resolves time.
+ */
+export interface QueryDecomposition {
+  readonly core: string;
+  readonly constraint: TemporalConstraint;
+}
+
+export type OrdinalKind = 'introduced' | 'last_modified' | 'removed';
+
+/**
+ * The direct answer to an ordinal question, resolved from validity intervals
+ * on the commit DAG rather than from the ranked list. It is reported
+ * separately from `results` because it is a different kind of claim: the
+ * ranked list is "these commits are relevant", this is "this is the commit
+ * where it first appears".
+ */
+export interface OrdinalAnswer {
+  readonly sha: string;
+  readonly kind: OrdinalKind;
+  /** Exactly one of these is set, naming what the interval was keyed on. */
+  readonly viaToken: string | null;
+  readonly viaPath: string | null;
+  readonly confidence: TemporalConfidence;
+}
+
+export interface TimelineEpisode {
+  readonly sha: string;
+  readonly kind: 'introduced' | 'modified' | 'removed';
+  readonly committerTime: number;
+  readonly subject: string;
+  /** One hunk per episode, not the top-k most similar. */
+  readonly evidence: EvidenceHit | null;
+}
+
+/**
+ * The three numbers behind a result's position, kept separate so a bad
+ * ranking can be diagnosed without re-running anything: `final = fused *
+ * temporal ** w`. When the constraint is `none`, `temporal` is 1 and `final`
+ * equals `fused`.
+ */
+export interface HitScores {
+  readonly fused: number;
+  readonly temporal: number;
+  readonly final: number;
+}
+
+/** What the temporal layer decided, echoed back for auditability. */
+export interface TemporalSummary {
+  readonly intent: TemporalConstraintType;
+  readonly confidence: TemporalConfidence;
+  readonly anchor: ResolvedAnchor | null;
+  readonly anchorEnd: ResolvedAnchor | null;
+  /** Exponent applied to the temporal term. 0 when the constraint is `none`. */
+  readonly w: number;
+}
+
+/* ------------------------------------------------------------------ *
+ * Lineage (validity intervals over the commit DAG)
+ * ------------------------------------------------------------------ */
+
+/**
+ * Where a token or path first and last appears, and where it goes away,
+ * resolved by ancestry rather than by timestamp. Rebases and cherry-picks
+ * rewrite committer time freely, so a timestamp comparison answers "when was
+ * this first introduced" wrongly on exactly the repositories that matter.
+ */
+export interface LineageInterval {
+  /** The token or path key this interval is about. */
+  readonly key: string;
+  readonly kind: 'token' | 'path';
+  readonly firstAddedSha: string | null;
+  readonly lastAddedSha: string | null;
+  readonly firstRemovedSha: string | null;
+  readonly lastRemovedSha: string | null;
+  /** Commits that touched the key, in ancestry order. */
+  readonly chain: readonly string[];
+}
+
+export interface LineageStore {
+  /** Intervals for an exact token, or null when the token is not indexed. */
+  lookupToken(token: string): Promise<LineageInterval | null>;
+  lookupPath(pathKey: string): Promise<LineageInterval | null>;
+  /**
+   * Commits structurally linked to `sha`: same path key with overlapping line
+   * ranges, plus the interval endpoints of tokens in its evidence. Used to
+   * grow the candidate pool by structure instead of by a wider top-k.
+   */
+  linkedCommits(sha: string, maxHops: number): Promise<ReadonlyMap<string, number>>;
+  /** Total on-disk size, reported by `git why status`. */
+  diskBytes(): Promise<number>;
+  close(): Promise<void>;
+}
 
 export interface EvidenceHit {
   readonly recordId: string;
@@ -398,10 +591,16 @@ export interface CommitHit {
   readonly committerTime: number;
   readonly parents: readonly string[];
   readonly messageExcerpt: string;
-  /** RRF value. A ranking number, never a confidence. */
+  /**
+   * The number this commit was ordered by, equal to `scores.final`. A ranking
+   * number, never a confidence.
+   */
   readonly rankScore: number;
+  readonly scores: HitScores;
   readonly matchedBy: readonly MatchedBy[];
   readonly evidence: readonly EvidenceHit[];
+  /** Hops from the semantic seed when `matchedBy` includes `linked`; else 0. */
+  readonly linkDistance: number;
 }
 
 export type Freshness = 'current' | 'stale' | 'unknown';
@@ -419,10 +618,17 @@ export interface SnapshotSummary {
 
 export interface SearchResponse {
   readonly query: string;
+  /** The temporally neutral core actually sent to the retrieval branches. */
+  readonly coreQuery: string;
   readonly mode: SearchMode;
   readonly sort: ResultSort;
   readonly snapshot: SnapshotSummary;
   readonly results: readonly CommitHit[];
+  readonly temporal: TemporalSummary;
+  /** Set only for ordinal constraints, and independent of `results`. */
+  readonly answer: OrdinalAnswer | null;
+  /** Set only in timeline mode. */
+  readonly timeline: readonly TimelineEpisode[] | null;
   readonly warnings: readonly string[];
   readonly candidateLimitReached: boolean;
 }

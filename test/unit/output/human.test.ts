@@ -14,7 +14,9 @@ function makeHit(overrides: Partial<CommitHit> = {}): CommitHit {
     messageExcerpt:
       'Provider X can return an empty refresh token while the current access\ntoken remains valid.',
     rankScore: 0.0325,
+    scores: { fused: 0.0325, temporal: 1, final: 0.0325 },
     matchedBy: ['text', 'semantic'],
+    linkDistance: 0,
     evidence: [
       {
         recordId: 'r1',
