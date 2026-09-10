@@ -179,6 +179,77 @@ export function gradeEvidenceCitation({ goldSha, finalAnswer, finalPatch }) {
 }
 
 /**
+ * Grades a trap task on what the agent DID, not on what it cited.
+ *
+ * The earlier task sets asked "which commit introduced X", which a code-search
+ * tool answers by finding the file and letting `git log` do the rest. Trap
+ * tasks instead hide the decisive fact in history only: an approach was tried,
+ * caused a named failure, and was reverted, so it is absent from the checkout.
+ *
+ * Three signals, kept separate because they mean different things:
+ *  - `avoidedTrap`: did the patch steer clear of the dangerous approach.
+ *  - `engagedHazard`: did the answer name the actual consequence, which is the
+ *    difference between knowing why and guessing cautiously.
+ *  - `citedHistory`: did a real commit SHA back it up.
+ *
+ * On a CONTROL task (`expectTrapTerms`) the polarity flips: the trap approach
+ * is correct there, so USING it is the pass. Without that inversion an agent
+ * that simply refuses anything risky would score as insightful.
+ */
+export function gradeTrapTask({ meta, finalAnswer, finalPatch, workspaceDir }) {
+  const answer = String(finalAnswer ?? '');
+  const patch = String(finalPatch ?? '');
+  const haystack = `${answer}\n${patch}`.toLowerCase();
+
+  const has = (terms) => terms.filter((t) => haystack.includes(String(t).toLowerCase()));
+
+  const trapHits = has(meta.trapTerms ?? []);
+  const hazardHits = has(meta.hazardTerms ?? []);
+
+  // Only the PATCH decides whether the approach was taken. Discussing retries
+  // and then not implementing them is not walking into the trap.
+  const patchLower = patch.toLowerCase();
+  const trapInPatch = (meta.trapTerms ?? []).filter((t) =>
+    patchLower.includes(String(t).toLowerCase()),
+  );
+
+  const cited = [...new Set(answer.match(/\b[0-9a-f]{7,40}\b/g) ?? [])];
+  const citedReal = cited.filter((sha) => {
+    try {
+      execFileSync('git', ['cat-file', '-e', sha], { cwd: workspaceDir, stdio: 'ignore' });
+      return true;
+    } catch {
+      return false;
+    }
+  });
+
+  if (meta.expectTrapTerms === true) {
+    // Control: the approach is correct here; using it is the pass.
+    return {
+      kind: 'control',
+      pass: trapInPatch.length > 0,
+      usedApproach: trapInPatch,
+      engagedHazard: null,
+      citedHistory: citedReal.length > 0,
+      citedShas: citedReal,
+    };
+  }
+
+  return {
+    kind: 'trap',
+    avoidedTrap: trapInPatch.length === 0,
+    trapTermsInPatch: trapInPatch,
+    engagedHazard: hazardHits.length > 0,
+    hazardTermsMatched: hazardHits,
+    citedHistory: citedReal.length > 0,
+    citedShas: citedReal,
+    // The headline: avoided the wall AND knows why it is there. Avoiding it
+    // without naming the consequence is recorded but is not the same claim.
+    pass: trapInPatch.length === 0 && hazardHits.length > 0,
+  };
+}
+
+/**
  * Top-level entry: grades one trial given its task spec metadata and the
  * runner's trial result. Returns the fields grade.mjs is responsible for
  * within the section-23 record: pass, hidden-test counts, evidence grade.
@@ -193,6 +264,22 @@ export function gradeTrial({
   reviewDir,
   promptText,
 }) {
+  if (taskMeta.stratum === 'trap' || taskMeta.kind === 'control_no_hazard') {
+    const trap = gradeTrapTask({
+      meta: taskMeta,
+      finalAnswer: trialResult.finalAnswer ?? '',
+      finalPatch: trialResult.finalPatch ?? '',
+      workspaceDir: trialWorkspaceDir,
+    });
+    return {
+      pass: trap.pass,
+      hiddenTestsPassed: null,
+      hiddenTestsTotal: null,
+      evidenceGrade: trap,
+      reviewPacketId: null,
+    };
+  }
+
   if (rubric) {
     const mechanicalChecks = mechanicalRubricChecks({
       trialWorkspaceDir,

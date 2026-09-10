@@ -253,6 +253,10 @@ function loadTaskMeta(taskId) {
     taskId,
     kind: manifest.kind,
     stratum: manifest.stratum,
+    // Trap tasks are graded behaviourally from these; see gradeTrapTask.
+    hazardTerms: manifest.hazardTerms ?? [],
+    trapTerms: manifest.trapTerms ?? [],
+    expectTrapTerms: manifest.expectTrapTerms === true,
     baseSha: manifest.baseSha,
     goldSha: manifest.goldSha,
     // The commit whose message carries the rationale, and which IS reachable
