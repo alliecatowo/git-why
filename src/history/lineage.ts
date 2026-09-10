@@ -22,7 +22,21 @@ const HOT_PATH_FRACTION = 0.02;
 const HOT_PATH_MIN_COMMITS = 50;
 
 const MAX_TOKENS_PER_COMMIT = 256;
-const TOKEN_RE = /[A-Za-z_][A-Za-z0-9_]{2,}/g;
+/**
+ * Identifier-like tokens.
+ *
+ * Two shapes are accepted. Three-or-more characters starting with a letter or
+ * underscore is the ordinary case. Short letter+digit mixes (`h3`, `h2`, `v2`,
+ * `ip6`) are accepted at two characters because they are the most specific
+ * terms a protocol or version question can key on, and a flat three-character
+ * floor silently discarded exactly those: "when was HTTP/3 support first
+ * introduced" lost `h3` -- curl's actual identifier for the feature -- and
+ * fell back to `http`, which most of the history touches.
+ *
+ * Pure two-letter words are still excluded; the digit is what makes a short
+ * token specific rather than noise.
+ */
+const TOKEN_RE = /[A-Za-z_][A-Za-z0-9_]{2,}|[A-Za-z]+[0-9]+/g;
 
 export interface LineageEvent {
   readonly sha: string;

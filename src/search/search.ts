@@ -44,9 +44,18 @@ import type { ExpandedRank } from './expand.js';
 const MAX_MESSAGE_EXCERPT_CHARS = 280;
 
 function queryTokens(query: string): string[] {
-  return (query.toLowerCase().match(/[a-z_][a-z0-9_]{2,}/g) ?? []).filter(
-    (token, index, values) => values.indexOf(token) === index,
+  // Mirrors TOKEN_RE in src/history/lineage.ts: query tokens must be drawn
+  // from the same alphabet as the indexed ones, or a lookup can never hit.
+  // `HTTP/3` splits on the slash, so both `http` and `http3` are produced and
+  // the rarer one wins in selectInterval.
+  const lowered = query.toLowerCase();
+  const direct = lowered.match(/[a-z_][a-z0-9_]{2,}|[a-z]+[0-9]+/g) ?? [];
+  // Rejoin letter/digit pairs separated by a delimiter: "http/3" -> "http3",
+  // which is how the same concept is usually spelled inside code.
+  const joined = [...lowered.matchAll(/([a-z]{2,})[/\-.]([0-9]+)/g)].map(
+    (match) => `${match[1]}${match[2]}`,
   );
+  return [...direct, ...joined].filter((token, index, values) => values.indexOf(token) === index);
 }
 
 async function selectInterval(
@@ -270,7 +279,7 @@ export async function search(
   const anchor = resolveAnchor(constraint.anchor);
   const anchorEnd = resolveAnchor(constraint.anchorEnd);
   const w = exponentFor(constraint);
-  const temporalRanks = candidateCommits
+  const temporalRanksAll = candidateCommits
     .map(({ rank, commit }) => {
       const temporal = temporalScore(
         {
@@ -287,8 +296,42 @@ export async function search(
       );
       return { rank, commit, temporal, final: applyTemporal(rank.score, temporal, w) };
     })
-    .sort((a, b) => b.final - a.final || (a.commit.sha < b.commit.sha ? -1 : 1))
-    .slice(0, request.limit);
+    .sort((a, b) => b.final - a.final || (a.commit.sha < b.commit.sha ? -1 : 1));
+
+  // Cap how much of the result set structural expansion may occupy.
+  //
+  // A `linked` commit was never matched by either retrieval branch; it was
+  // inferred from the lineage table. Under an ordinal constraint the temporal
+  // term rewards being early, and an early commit that merely shares a token
+  // with a seed can beat a genuinely relevant later one -- on curl this filled
+  // every slot with unrelated commits and pushed real matches off the page.
+  //
+  // Surfacing an origin commit that retrieval alone would miss is the entire
+  // point of expansion, so linked commits are not banned; they are limited to
+  // half the returned results. The `answer` field carries the ordinal claim
+  // regardless, and it is not subject to this cap.
+  const isLinked = (entry: (typeof temporalRanksAll)[number]): boolean =>
+    entry.rank.matchedBy.length === 1 && entry.rank.matchedBy[0] === 'linked';
+  const linkedBudget = Math.max(1, Math.floor(request.limit / 2));
+  const chosen: typeof temporalRanksAll = [];
+  let linkedTaken = 0;
+  for (const entry of temporalRanksAll) {
+    if (chosen.length >= request.limit) break;
+    if (isLinked(entry)) {
+      if (linkedTaken >= linkedBudget) continue;
+      linkedTaken += 1;
+    }
+    chosen.push(entry);
+  }
+  // If retrieval returned too few commits to fill the page, let links top it up
+  // rather than returning a short result set.
+  if (chosen.length < request.limit) {
+    for (const entry of temporalRanksAll) {
+      if (chosen.length >= request.limit) break;
+      if (!chosen.includes(entry)) chosen.push(entry);
+    }
+  }
+  const temporalRanks = chosen;
   const results: CommitHit[] = [];
   for (const { rank: r, commit, temporal, final } of temporalRanks) {
     const evidence = await chooseEvidence(
