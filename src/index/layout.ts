@@ -22,6 +22,8 @@ export const MANIFEST_FILE_NAME = 'manifest.json';
 export const COLLECTION_DIR_NAME = 'collection';
 export const COMMITS_FILE_NAME = 'commits.jsonl';
 export const PENDING_FILE_NAME = 'pending.json';
+/** Materialised validity intervals and structural links for temporal search. */
+export const LINEAGE_FILE_NAME = 'lineage.json';
 
 /** Generation and staging ids are filesystem path segments. Keep them narrow. */
 const ID_PATTERN = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/;
@@ -77,6 +79,7 @@ export interface GenerationPaths {
   readonly collectionDir: string;
   readonly commitsFile: string;
   readonly pendingFile: string;
+  readonly lineageFile: string;
 }
 
 function generationPathsIn(root: string, id: string): GenerationPaths {
@@ -89,6 +92,7 @@ function generationPathsIn(root: string, id: string): GenerationPaths {
     collectionDir: path.join(dir, COLLECTION_DIR_NAME),
     commitsFile: path.join(dir, COMMITS_FILE_NAME),
     pendingFile: path.join(dir, PENDING_FILE_NAME),
+    lineageFile: path.join(dir, LINEAGE_FILE_NAME),
   };
 }
 

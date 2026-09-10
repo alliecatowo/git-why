@@ -30,6 +30,7 @@ export default tseslint.config(
       'dist/**',
       'node_modules/**',
       '.tmp/**',
+      '.tmp-*.mjs',
       'bench/work/**',
       'bench/results/**',
       'spike/out/**',

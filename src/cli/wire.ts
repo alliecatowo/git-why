@@ -30,6 +30,8 @@ import {
 } from '../index/refresh.js';
 import type { ManifestOmissionCounts } from '../index/manifest.js';
 import { computeIndexStatus } from '../index/status.js';
+import { generationPaths, layoutFor } from '../index/layout.js';
+import { JsonLineageStore } from '../history/lineage.js';
 import { search as runSearch } from '../search/search.js';
 import {
   GitWhyError,
@@ -140,9 +142,22 @@ async function statusOf(handle: RepositoryHandle, _options: StatusOptions): Prom
   const { identity } = handle;
   let fingerprint: string | null = null;
   let refsChanged = false;
+  let reachableCommits: number | null = null;
   try {
     const snapshot = await captureSnapshot(identity);
     fingerprint = snapshot.fingerprint;
+    try {
+      // `enumerateReachable` is a plain `git rev-list --stdin` walk over
+      // already-resolved tip OIDs: no model load, no index read or write.
+      // It is a property of the repository, not of the index, so `status`
+      // can report it even when no index has ever been built — and must
+      // never report "unknown" for a number it can cheaply compute. A
+      // failure here is kept independent of fingerprint capture: it must
+      // not be misreported as the refs having moved.
+      reachableCommits = (await enumerateReachable(identity, snapshot.tipOids)).length;
+    } catch {
+      // leave reachableCommits null; the rest of the status is still valid.
+    }
   } catch {
     // A snapshot we cannot capture is reported as an unknown view rather than
     // as a broken index; status never repairs anything.
@@ -154,7 +169,29 @@ async function statusOf(handle: RepositoryHandle, _options: StatusOptions): Prom
     shallow: identity.isShallow,
     currentSnapshotFingerprint: fingerprint,
     refsChanged,
+    reachableCommits,
   });
+}
+
+/**
+ * `openReadOnlyStore` (owned by the storage lane) raises bare `INDEX_MISSING`
+ * with no hint. The CLI contract requires both the human and JSON error
+ * forms to tell the user exactly what to do, so the hint is attached here at
+ * the CLI/backend seam rather than upstream.
+ */
+async function withIndexMissingHint<T>(work: Promise<T>): Promise<T> {
+  try {
+    return await work;
+  } catch (err) {
+    if (err instanceof GitWhyError && err.code === 'INDEX_MISSING' && err.hint === undefined) {
+      throw new GitWhyError('INDEX_MISSING', err.message, {
+        exitCode: err.exitCode,
+        hint: 'run `git why index` (or drop --no-refresh)',
+        cause: err.cause,
+      });
+    }
+    throw err;
+  }
 }
 
 class RealBackend implements Backend {
@@ -177,9 +214,14 @@ class RealBackend implements Backend {
     const needsEmbedder = request.mode !== 'text';
 
     if (options.noRefresh) {
-      const opened = await openReadOnlyStore(repo.identity, refreshOptions(options));
+      const opened = await withIndexMissingHint(
+        openReadOnlyStore(repo.identity, refreshOptions(options)),
+      );
       try {
         const embedder = needsEmbedder ? await loadEmbedder(options) : null;
+        const lineage = new JsonLineageStore(
+          generationPaths(layoutFor(repo.identity.commonDir), opened.generationId).lineageFile,
+        );
         const snapshot = await captureSnapshot(repo.identity);
         const fresh = snapshot.fingerprint === opened.manifest.snapshotFingerprint;
         const summary = toSnapshotSummary(
@@ -189,7 +231,7 @@ class RealBackend implements Backend {
           fresh ? 'current' : 'stale',
           coverageSummaryOf(opened.manifest.omissions),
         );
-        return await runSearch(request, opened.store, embedder, summary);
+        return await runSearch(request, opened.store, embedder, summary, lineage);
       } finally {
         await opened.store.close();
         opened.lock.release();
@@ -206,8 +248,13 @@ class RealBackend implements Backend {
       refreshOptions(options),
     );
 
-    const opened = await openReadOnlyStore(repo.identity, refreshOptions(options));
+    const opened = await withIndexMissingHint(
+      openReadOnlyStore(repo.identity, refreshOptions(options)),
+    );
     try {
+      const lineage = new JsonLineageStore(
+        generationPaths(layoutFor(repo.identity.commonDir), opened.generationId).lineageFile,
+      );
       const summary = toSnapshotSummary(
         snapshot,
         ensured.generationId,
@@ -215,7 +262,13 @@ class RealBackend implements Backend {
         'current',
         coverageSummaryOf(ensured.manifest.omissions),
       );
-      return await runSearch(request, opened.store, needsEmbedder ? deps.embedder : null, summary);
+      return await runSearch(
+        request,
+        opened.store,
+        needsEmbedder ? deps.embedder : null,
+        summary,
+        lineage,
+      );
     } finally {
       await opened.store.close();
       opened.lock.release();

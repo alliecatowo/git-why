@@ -209,7 +209,7 @@ export function buildCommitDoc(input: CommitDocInput): ZVecDocInput {
       [FIELD.authorSearch]: authorSearchValue(record.author),
       [FIELD.pathKeys]: keys,
       [FIELD.lexicalText]: record.lexicalText,
-      [FIELD.payload]: JSON.stringify(record),
+      [FIELD.payload]: payloadJson(record),
     },
     vectors: { [VECTOR_FIELD]: vector },
   };
@@ -230,10 +230,28 @@ export function buildEvidenceDoc(input: EvidenceDocInput): ZVecDocInput {
       [FIELD.authorSearch]: authorSearchValue(author),
       [FIELD.pathKeys]: keys,
       [FIELD.lexicalText]: record.lexicalText,
-      [FIELD.payload]: JSON.stringify(record),
+      [FIELD.payload]: payloadJson(record),
     },
     vectors: { [VECTOR_FIELD]: vector },
   };
+}
+
+/**
+ * `semanticText` and `lexicalText` are dropped from the persisted payload:
+ * `semanticText` is a write-only input to the embedder (see
+ * `src/index/refresh.ts`) that nothing reads back after indexing, and
+ * `lexicalText` is already stored (and indexed for FTS) as its own scalar
+ * field (`FIELD.lexicalText`) — keeping a second copy inside `payload` was
+ * pure duplication. Measured on a real 3210-commit repo (colinhacks/zod):
+ * these two fields alone accounted for ~48MB of a ~101MB evidence payload
+ * total (see docs/report.md's "Index disk overhead" section). `parsePayload`
+ * reconstructs both fields on read: `lexicalText` from the dedicated field,
+ * `semanticText` as `''` (never valid after retrieval; only meaningful
+ * during the index-time embedding pass that already ran).
+ */
+function payloadJson(record: CommitRecord | EvidenceRecord): string {
+  const { semanticText: _semanticText, lexicalText: _lexicalText, ...rest } = record;
+  return JSON.stringify(rest);
 }
 
 interface RawZVecDoc {
@@ -271,18 +289,35 @@ function toScoredRecord(
   return { id: doc.id, type, sha, score: transform(doc.score) };
 }
 
-function parsePayload<T>(doc: RawZVecDoc): T {
+/**
+ * Reconstructs a full `CommitRecord`/`EvidenceRecord` from a doc whose
+ * `payload` was written by `payloadJson` (so it is missing `lexicalText`
+ * and `semanticText` by design — see that function's comment). The caller
+ * must have requested `FIELD.lexicalText` in `outputFields` alongside
+ * `FIELD.payload`, or this throws `INDEX_CORRUPT` rather than silently
+ * returning a record with an empty `lexicalText`.
+ */
+function parsePayload<T extends { lexicalText: string; semanticText: string }>(doc: RawZVecDoc): T {
   const payload = doc.fields[FIELD.payload];
   if (typeof payload !== 'string') {
     throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} is missing its payload field`);
   }
+  const lexicalText = doc.fields[FIELD.lexicalText];
+  if (typeof lexicalText !== 'string') {
+    throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} is missing its lexicalText field`);
+  }
+  let parsed: Omit<T, 'lexicalText' | 'semanticText'>;
   try {
-    return JSON.parse(payload) as T;
+    parsed = JSON.parse(payload) as Omit<T, 'lexicalText' | 'semanticText'>;
   } catch (err) {
     throw new GitWhyError('INDEX_CORRUPT', `document ${doc.id} has an unparsable payload`, {
       cause: err,
     });
   }
+  // `semanticText` is never read after indexing (it only ever fed the
+  // embedder); reconstructing it as '' rather than persisting it is the
+  // whole point of the space saving. See `payloadJson`.
+  return { ...parsed, lexicalText, semanticText: '' } as T;
 }
 
 /** The `HistoryStore` boundary (`src/types.ts`) implemented against a real Zvec collection. */
@@ -340,7 +375,7 @@ export class ZvecHistoryStore implements HistoryStore {
       filter: expr,
       topk: shas.length,
       includeVector: false,
-      outputFields: [FIELD.payload],
+      outputFields: [FIELD.payload, FIELD.lexicalText],
     });
     for (const doc of docs) {
       const record = parsePayload<CommitRecord>(doc as unknown as RawZVecDoc);
@@ -355,7 +390,7 @@ export class ZvecHistoryStore implements HistoryStore {
     const docs = this.collection.fetchSync({
       ids: [...ids],
       includeVector: false,
-      outputFields: [FIELD.payload],
+      outputFields: [FIELD.payload, FIELD.lexicalText],
     });
     for (const [id, doc] of Object.entries(docs)) {
       map.set(id, parsePayload<EvidenceRecord>({ id, score: doc.score, fields: doc.fields }));
@@ -379,7 +414,7 @@ export class ZvecHistoryStore implements HistoryStore {
       filter: expr,
       topk: limit,
       includeVector: false,
-      outputFields: [FIELD.payload],
+      outputFields: [FIELD.payload, FIELD.lexicalText],
     });
     return docs.map((doc) => parsePayload<EvidenceRecord>(doc as unknown as RawZVecDoc));
   }

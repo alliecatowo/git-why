@@ -62,6 +62,11 @@ import {
 } from './collection.js';
 import { ZVecOpen, isZVecError } from '@zvec/zvec';
 import type { ZVecCollection } from '@zvec/zvec';
+import {
+  lineageEventFromExtraction,
+  pruneLineageEvents,
+  writeLineageEvents,
+} from '../history/lineage.js';
 
 /**
  * The complete reachable commit SHA set for a snapshot's tips (spec step
@@ -220,6 +225,8 @@ interface BatchOutcome {
   readonly unavailableFiles: number;
   readonly failedFiles: number;
   readonly reasons: Set<OmissionReason>;
+  /** Only successful extractions may enter the sidecar lineage table. */
+  readonly lineageEvents: readonly ReturnType<typeof lineageEventFromExtraction>[];
 }
 
 async function applyBatch(
@@ -287,6 +294,7 @@ async function applyBatch(
   let excludedFiles = 0;
   let unavailableFiles = 0;
   let failedFiles = 0;
+  const lineageEvents: ReturnType<typeof lineageEventFromExtraction>[] = [];
   const appliedSet = new Set(result.appliedShas);
   for (const extraction of extractions) {
     if (!appliedSet.has(extraction.commit.sha)) continue;
@@ -304,6 +312,7 @@ async function applyBatch(
       complete,
       updatedAt: new Date().toISOString(),
     });
+    lineageEvents.push(lineageEventFromExtraction(extraction));
   }
 
   return {
@@ -313,6 +322,7 @@ async function applyBatch(
     unavailableFiles,
     failedFiles,
     reasons,
+    lineageEvents,
   };
 }
 
@@ -344,6 +354,10 @@ async function reconcile(
 
   const catalog = readCatalog(paths.commitsFile);
   const pending = readPendingBatch(paths.pendingFile);
+  // A generation written before the lineage sidecar existed must be
+  // re-extracted once. Merely declaring it current would make ordinal
+  // queries silently fall back to relevance, which is a false treatment.
+  const lineageMissing = !fs.existsSync(paths.lineageFile);
 
   const reachableSet = new Set(reachable.shas);
   const newShas = reachable.shas.filter((sha) => !catalog.has(sha));
@@ -356,7 +370,10 @@ async function reconcile(
   const recoveryShas =
     pending !== null ? pending.commitShas.filter((sha) => reachableSet.has(sha)) : [];
 
-  const toProcess = [...new Set([...recoveryShas, ...newShas, ...retryShas])];
+  const lineageRebuildShas = lineageMissing ? [...catalog.keys()] : [];
+  const toProcess = [
+    ...new Set([...recoveryShas, ...newShas, ...retryShas, ...lineageRebuildShas]),
+  ];
 
   const collection = openOrCreateHistoryCollection(paths.collectionDir, {
     embeddingDimension: deps.embedder.dimension,
@@ -383,6 +400,13 @@ async function reconcile(
       unavailableFiles += outcome.unavailableFiles;
       failedFiles += outcome.failedFiles;
       for (const r of outcome.reasons) omissionReasons.add(r);
+
+      // The sidecar is updated only after Zvec's batch journal was applied.
+      // If the process dies before this write, a later refresh replays the
+      // same SHA and repairs it; it can never make an interval claim for a
+      // commit absent from the primary collection.
+      if (outcome.lineageEvents.length > 0)
+        writeLineageEvents(paths.lineageFile, outcome.lineageEvents);
 
       writeCatalogAtomic(paths.commitsFile, catalog);
       manifest = {
@@ -433,11 +457,20 @@ async function reconcile(
 
     manifest = {
       ...manifest,
+      // A policy/sidecar-only reconciliation can have no embedding batches.
+      // Still stamp the current identities, otherwise the generation remains
+      // permanently `rebuild_required` despite a successful repair.
+      ...currentPolicyIdentities(),
       snapshotFingerprint: snapshot.fingerprint,
       counts: countsOf(catalog),
       updatedAt: new Date().toISOString(),
       state: 'clean',
     };
+    // Snapshot-complete reconciliation may have removed unreachable commits
+    // from the catalog/collection. Keep the answer sidecar in exactly the
+    // same reachability scope before publishing the clean manifest.
+    if (reachable.complete) pruneLineageEvents(paths.lineageFile, reachableSet);
+    if (!fs.existsSync(paths.lineageFile)) writeLineageEvents(paths.lineageFile, []);
     writeManifestAtomic(paths.manifestFile, manifest);
     clearPendingBatch(paths.pendingFile);
     return manifest;
@@ -479,7 +512,10 @@ export async function ensureCurrentGeneration(
       const paths = generationPaths(layout, generationId);
       const manifest = readManifest(paths.manifestFile);
       const pending = manifest === null ? null : readPendingBatch(paths.pendingFile);
-      if (isAlreadyCurrent(manifest, pending !== null, snapshot)) {
+      if (
+        isAlreadyCurrent(manifest, pending !== null, snapshot) &&
+        fs.existsSync(paths.lineageFile)
+      ) {
         return { generationId, manifest: manifest! };
       }
     }
@@ -503,7 +539,10 @@ export async function ensureCurrentGeneration(
       paths = generationPaths(layout, generationId);
       const manifest = readManifest(paths.manifestFile);
       const pending = manifest === null ? null : readPendingBatch(paths.pendingFile);
-      if (isAlreadyCurrent(manifest, pending !== null, snapshot)) {
+      if (
+        isAlreadyCurrent(manifest, pending !== null, snapshot) &&
+        fs.existsSync(paths.lineageFile)
+      ) {
         return { generationId, manifest: manifest! };
       }
     } else {

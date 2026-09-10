@@ -9,6 +9,7 @@
  */
 
 import { GitWhyError, type ResultSort, type SearchMode } from '../types.js';
+import type { TemporalFlags } from '../search/temporal/intent.js';
 
 export const RESERVED_COMMANDS = ['index', 'status', 'rebuild', 'gc'] as const;
 export type LifecycleCommand = (typeof RESERVED_COMMANDS)[number];
@@ -49,6 +50,9 @@ export interface ParsedSearch {
   readonly offline: boolean;
   readonly maxBytes: number;
   readonly lockTimeoutSeconds: number;
+  readonly verbose: boolean;
+  readonly temporalFlags: TemporalFlags;
+  readonly groups: readonly string[];
 }
 
 export interface ParsedLifecycle {
@@ -58,6 +62,11 @@ export interface ParsedLifecycle {
   readonly offline: boolean;
   readonly useDefaultModel: boolean;
   readonly lockTimeoutSeconds: number;
+  readonly verbose: boolean;
+  /** `--no-refresh`/`--refresh=off` on a lifecycle command; only `status` accepts it (read-only). */
+  readonly noRefresh: boolean;
+  /** `status --check-ready` only; false, and meaningless, for every other command. */
+  readonly checkReady: boolean;
 }
 
 export type ParsedInvocation = ParsedHelp | ParsedVersion | ParsedSearch | ParsedLifecycle;
@@ -71,6 +80,12 @@ const BOOLEAN_LONG_FLAGS = new Set([
   'use-default-model',
   'help',
   'version',
+  'verbose',
+  'check-ready',
+  'first',
+  'last',
+  'removed',
+  'timeline',
 ]);
 
 const VALUE_LONG_FLAGS = new Set([
@@ -81,7 +96,38 @@ const VALUE_LONG_FLAGS = new Set([
   'max-bytes',
   'lock-timeout',
   'sort',
+  'refresh',
+  'between',
+  'around',
+  'group',
 ]);
+
+const REFRESH_MODES = ['off', 'wait'] as const;
+type RefreshMode = (typeof REFRESH_MODES)[number];
+
+/**
+ * `--no-refresh` predates `--refresh=off|wait` and stays fully supported (it
+ * is documented and muscle-memory for existing users); it is exactly
+ * `--refresh=off`. `--refresh=wait` is the explicit spelling of the default
+ * (refresh, waiting on the index lock as usual) for scripts that want to say
+ * so without relying on the absence of a flag meaning something.
+ */
+function parseRefresh(options: Map<string, string | true>): boolean {
+  const raw = options.get('refresh');
+  const noRefreshFlag = options.get('no-refresh') === true;
+  if (raw === undefined) return noRefreshFlag;
+  if (raw === true || !REFRESH_MODES.includes(raw as RefreshMode)) {
+    invalid(
+      `--refresh must be one of ${REFRESH_MODES.join(', ')}, got ${JSON.stringify(raw)}.`,
+      '--refresh=off is equivalent to --no-refresh.',
+    );
+  }
+  const off = raw === 'off';
+  if (noRefreshFlag && !off) {
+    invalid('--no-refresh and --refresh=wait are contradictory.');
+  }
+  return off || noRefreshFlag;
+}
 
 const RESULT_SORTS: readonly ResultSort[] = ['relevance', 'newest', 'oldest'];
 
@@ -106,6 +152,7 @@ interface Scanned {
   readonly positionals: string[];
   readonly options: Map<string, string | true>;
   readonly rawPaths: string[];
+  readonly groups: string[];
 }
 
 function invalid(message: string, hint?: string): never {
@@ -115,6 +162,7 @@ function invalid(message: string, hint?: string): never {
 function scan(head: readonly string[]): Scanned {
   const positionals: string[] = [];
   const options = new Map<string, string | true>();
+  const groups: string[] = [];
 
   for (let i = 0; i < head.length; i += 1) {
     const token = head[i] as string;
@@ -140,7 +188,8 @@ function scan(head: readonly string[]): Scanned {
         if (!BOOLEAN_LONG_FLAGS.has(name) && !VALUE_LONG_FLAGS.has(name)) {
           invalid(`Unknown option: --${name}`);
         }
-        options.set(name, value);
+        if (name === 'group') groups.push(value);
+        else options.set(name, value);
         continue;
       }
 
@@ -152,7 +201,8 @@ function scan(head: readonly string[]): Scanned {
       if (VALUE_LONG_FLAGS.has(name)) {
         const value = head[i + 1];
         if (value === undefined) invalid(`--${name} requires a value.`);
-        options.set(name, value);
+        if (name === 'group') groups.push(value);
+        else options.set(name, value);
         i += 1;
         continue;
       }
@@ -166,7 +216,7 @@ function scan(head: readonly string[]): Scanned {
     positionals.push(token);
   }
 
-  return { positionals, options, rawPaths: [] };
+  return { positionals, options, rawPaths: [], groups };
 }
 
 function parseLimit(raw: string | true | undefined): number {
@@ -184,6 +234,14 @@ function parseLimit(raw: string | true | undefined): number {
 
 const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
 const DATE_TIME_TZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
+
+function isTemporalCliAnchor(raw: string): boolean {
+  return (
+    /\s/.test(raw) ||
+    /^[0-9a-f]{7,40}$/i.test(raw) ||
+    /^v?\d+\.\d+(?:\.\d+)?(?:[-.][0-9A-Za-z.-]+)?$/.test(raw)
+  );
+}
 
 function parseDateBoundary(
   flag: '--after' | '--before',
@@ -242,13 +300,21 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
   const head = sepIndex === -1 ? argv : argv.slice(0, sepIndex);
   const rawPaths = sepIndex === -1 ? [] : argv.slice(sepIndex + 1);
 
-  const { positionals, options } = scan(head);
+  const { positionals, options, groups } = scan(head);
 
   if (options.get('help') === true) return { kind: 'help' };
   if (options.get('version') === true) return { kind: 'version' };
 
+  // `git why help` is the bare-word spelling of `--help`. Like the reserved
+  // lifecycle words below, it only claims the word when it is the entire,
+  // unadorned query — `--query help` still searches for the literal text.
+  if (positionals.length === 1 && positionals[0] === 'help' && !options.has('query')) {
+    return { kind: 'help' };
+  }
+
   const jsonFlag = options.get('json') === true;
   const offlineFlag = options.get('offline') === true;
+  const verboseFlag = options.get('verbose') === true;
   const lockTimeoutSeconds = parseLockTimeout(options.get('lock-timeout'));
 
   const isLifecycle =
@@ -270,16 +336,20 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
       invalid('--use-default-model is only valid with "rebuild".');
     }
 
-    const disallowed = [
-      'text',
-      'semantic',
-      'no-refresh',
-      'author',
-      'after',
-      'before',
-      'query',
-      'sort',
-    ].filter((name) => options.has(name));
+    const checkReady = options.get('check-ready') === true;
+    if (checkReady && command !== 'status') {
+      invalid('--check-ready is only valid with "status".');
+    }
+
+    // `no-refresh`/`refresh` is deliberately absent from this list: it is
+    // valid on every lifecycle command syntactically, but only `status` (a
+    // read-only report) can actually honour it. `index`/`rebuild`/`gc`
+    // reject it themselves once `noRefresh` reaches the backend, each with
+    // a command-specific hint (see src/cli/wire.ts) — a generic parse-time
+    // rejection here would say less than that.
+    const disallowed = ['text', 'semantic', 'author', 'after', 'before', 'query', 'sort'].filter(
+      (name) => options.has(name),
+    );
     if (disallowed.length > 0) {
       invalid(`--${disallowed[0]} is not valid with the "${command}" command.`);
     }
@@ -294,6 +364,9 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
       offline: offlineFlag,
       useDefaultModel,
       lockTimeoutSeconds,
+      verbose: verboseFlag,
+      noRefresh: parseRefresh(options),
+      checkReady,
     };
   }
 
@@ -320,7 +393,32 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
   const mode: SearchMode = textFlag ? 'text' : semanticFlag ? 'semantic' : 'hybrid';
   const sort = parseSort(options.get('sort'));
 
-  const noRefresh = options.get('no-refresh') === true;
+  const noRefresh = parseRefresh(options);
+  const betweenRaw = asStringOption(options, 'between');
+  let between: readonly [string, string] | undefined;
+  if (betweenRaw !== undefined) {
+    const parts = betweenRaw.split(',').map((part) => part.trim());
+    if (parts.length !== 2 || !parts[0] || !parts[1]) {
+      invalid('--between must be two anchors separated by a comma.', '--between=<start>,<end>');
+    }
+    between = [parts[0]!, parts[1]!];
+  }
+  const temporalFlags: TemporalFlags = {
+    first: options.get('first') === true,
+    last: options.get('last') === true,
+    removed: options.get('removed') === true,
+    timeline: options.get('timeline') === true,
+    before: (() => {
+      const raw = asStringOption(options, 'before');
+      return raw !== undefined && isTemporalCliAnchor(raw) ? raw : undefined;
+    })(),
+    after: (() => {
+      const raw = asStringOption(options, 'after');
+      return raw !== undefined && isTemporalCliAnchor(raw) ? raw : undefined;
+    })(),
+    between,
+    around: asStringOption(options, 'around'),
+  };
 
   return {
     kind: 'search',
@@ -329,13 +427,26 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
     sort,
     limit: parseLimit(options.get('n')),
     rawPaths,
-    after: parseDateBoundary('--after', options.get('after')),
-    before: parseDateBoundary('--before', options.get('before')),
+    after: (() => {
+      const raw = options.get('after');
+      return typeof raw === 'string' && isTemporalCliAnchor(raw)
+        ? null
+        : parseDateBoundary('--after', raw);
+    })(),
+    before: (() => {
+      const raw = options.get('before');
+      return typeof raw === 'string' && isTemporalCliAnchor(raw)
+        ? null
+        : parseDateBoundary('--before', raw);
+    })(),
     author: asStringOption(options, 'author') ?? null,
     json: jsonFlag,
+    verbose: verboseFlag,
     noRefresh,
     offline: offlineFlag,
     maxBytes: parseMaxBytes(options.get('max-bytes')),
     lockTimeoutSeconds,
+    temporalFlags,
+    groups,
   };
 }

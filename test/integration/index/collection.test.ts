@@ -178,12 +178,22 @@ test('fetchCommits and fetchEvidence round-trip full records and never include e
     const c0 = commits.get(specs[0]!.sha)!;
     assert.equal(c0.subject, 'Fix null pointer in AuthSessionProvider');
     assert.ok(!('vector' in c0) && !('embedding' in c0));
+    // `lexicalText` is not duplicated inside the stored payload (it already
+    // has its own indexed field); it must still round-trip byte-for-byte.
+    assert.equal(c0.lexicalText, `${specs[0]!.subject} ${specs[0]!.paths.join(' ')}`);
+    // `semanticText` is index-time-only (it only ever fed the embedder) and
+    // is deliberately NOT persisted; a retrieved record always reports ''
+    // rather than a stale or duplicated copy. See collection.ts's `payloadJson`.
+    assert.equal(c0.semanticText, '');
 
     const evidence = await store.evidenceForCommit(specs[2]!.sha, filterFor(['evidence']), 10);
     assert.equal(evidence.length, 1);
+    assert.equal(evidence[0]!.semanticText, '');
+    assert.ok(evidence[0]!.lexicalText.length > 0);
     const byId = await store.fetchEvidence(evidence.map((e) => e.id));
     assert.equal(byId.size, 1);
     assert.equal(byId.get(evidence[0]!.id)!.sha, specs[2]!.sha);
+    assert.equal(byId.get(evidence[0]!.id)!.lexicalText, evidence[0]!.lexicalText);
 
     await store.close();
   } finally {

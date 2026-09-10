@@ -26,16 +26,18 @@ import {
 import {
   ExitCode,
   GitWhyError,
+  type IndexStatus,
   type SearchFilters,
   type ResultSort,
   type SearchMode,
   type SearchRequest,
-  NO_TEMPORAL_CONSTRAINT,
 } from '../types.js';
+import { constraintFromFlags, decomposeQuery } from '../search/temporal/intent.js';
 
 const HELP_TEXT = `Usage: git why <query> [-- <path>...] [options]
        git why --query <query> [options]
        git why index|status|rebuild|gc [options]
+       git why help
 
 Search Git history for the commits that explain the code.
 
@@ -45,23 +47,37 @@ Options:
   --semantic            Vector search only (default is hybrid)
   --sort=<order>        relevance (default), oldest, or newest. Reorders the
                         selected commits; never changes which are returned
+  --first --last --removed
+                        Resolve/order an introduction, last change, or removal
+  --timeline            Return the history-oriented retrieval view
+  --before=<anchor>     Temporal anchor when non-ISO (tags, SHA, or a query);
+                        ISO dates remain history filters
+  --after=<anchor>      Temporal anchor when non-ISO (tags, SHA, or a query)
+  --between=<a>,<b>     Prefer commits between two temporal anchors
+  --around=<anchor>     Prefer commits near a date, tag, or SHA
+  --group <query>       Additional retrieval group; fuse groups at commit level
   --after=<date>        Only commits at or after this date (UTC, ISO-8601)
   --before=<date>       Only commits strictly before this date (UTC, ISO-8601)
   --author=<substring>  Case-insensitive substring of author name or email
   --json                Emit the versioned JSON envelope on stdout
-  --no-refresh          Never create, mutate, or repair the index; requires one to exist
+  --refresh=<mode>      off: never create, mutate, or repair the index; requires
+                        one to exist. wait: refresh normally (the default);
+                        spelled out for scripts that want to say so explicitly
+  --no-refresh          Alias for --refresh=off
   --offline             Also forbid model downloads
   --max-bytes=<n>       Bound rendered output, including JSON framing (default 16384)
   --lock-timeout=<sec>  Seconds to wait for another process (default 30)
+  --verbose             Also report model loading and download progress on stderr
   --query <text>        Explicit query text, for text that looks like a command or option
   --help                Show this help
   --version             Show the version
 
 Commands:
   index                 Create or reconcile the index
-  status                Report index state without mutating anything
+  status                Report index state without mutating anything [--check-ready]
   rebuild               Replace derived index data [--use-default-model]
   gc                    Reconcile and compact without downloading embeddings
+  help                  Show this help
 `;
 
 function readVersion(): string {
@@ -187,8 +203,39 @@ process.on('SIGINT', () => {
   }
 });
 
-function makeProgressListener(): (event: ProgressEvent) => void {
-  return (event) => writeStderr(`${event.stage}: ${event.message}\n`);
+/**
+ * The 'model' stage (model load + one line per ~25% download step, see
+ * `src/cli/wire.ts`'s `loadEmbedder`) is by far the noisiest stage and the
+ * one benchmark/agent harnesses most often mis-parse as an error because it
+ * shows up on stderr unconditionally. Every other stage (reconcile,
+ * extraction, embedding, compaction, gc, recovery) is what a user is
+ * actually waiting on and keeps reporting unconditionally; 'model' is opt-in
+ * via --verbose. Errors and warnings never go through this path at all —
+ * they're written directly by `writeErrorHuman`/`handleError` — so this
+ * gating cannot hide a real failure.
+ */
+function makeProgressListener(verbose: boolean): (event: ProgressEvent) => void {
+  return (event) => {
+    if (event.stage === 'model' && !verbose) return;
+    writeStderr(`${event.stage}: ${event.message}\n`);
+  };
+}
+
+/**
+ * `status --check-ready`'s readiness contract (docs/operations.md): an index
+ * must exist, be current for the repository's current refs snapshot, and
+ * have complete coverage under the current policy. This is a pure read of
+ * fields `IndexStatus` already carries — it does not re-derive anything
+ * `computeIndexStatus` (src/index/status.ts) didn't already decide.
+ */
+function isIndexReady(status: IndexStatus): boolean {
+  const cov = status.coverage;
+  const coverageComplete =
+    cov.excludedFiles === 0 &&
+    cov.unavailableFiles === 0 &&
+    cov.failedFiles === 0 &&
+    cov.reasons.length === 0;
+  return status.state === 'current' && coverageComplete;
 }
 
 function lifecycleContext(parsed: ParsedLifecycle): ErrorContext {
@@ -210,18 +257,21 @@ async function runLifecycle(
   repo: RepositoryHandle,
   parsed: ParsedLifecycle,
 ): Promise<number> {
-  const onProgress = makeProgressListener();
+  const onProgress = makeProgressListener(parsed.verbose);
   const lockTimeoutMs = parsed.lockTimeoutSeconds * 1000;
   const signal = controller.signal;
   try {
     const status = await (() => {
       switch (parsed.command) {
         case 'status':
+          // Status is read-only regardless of `noRefresh`; StatusOptions has
+          // no such field to pass. Parsing still accepts --no-refresh/
+          // --refresh=off here (see args.ts) so it composes for scripts.
           return backend.getStatus(repo, { lockTimeoutMs, signal });
         case 'index':
           return backend.index(repo, {
             offline: parsed.offline,
-            noRefresh: false,
+            noRefresh: parsed.noRefresh,
             lockTimeoutMs,
             signal,
             onProgress,
@@ -229,7 +279,7 @@ async function runLifecycle(
         case 'rebuild':
           return backend.rebuild(repo, {
             offline: parsed.offline,
-            noRefresh: false,
+            noRefresh: parsed.noRefresh,
             lockTimeoutMs,
             signal,
             onProgress,
@@ -238,7 +288,7 @@ async function runLifecycle(
         case 'gc':
           return backend.gc(repo, {
             offline: parsed.offline,
-            noRefresh: false,
+            noRefresh: parsed.noRefresh,
             lockTimeoutMs,
             signal,
             onProgress,
@@ -250,6 +300,9 @@ async function runLifecycle(
       writeStdout(renderStatusJson(parsed.command, status) + '\n');
     } else {
       writeStdout(renderStatusHuman(status));
+    }
+    if (parsed.command === 'status' && parsed.checkReady) {
+      return isIndexReady(status) ? ExitCode.OK : ExitCode.NO_REPOSITORY;
     }
     return ExitCode.OK;
   } catch (err) {
@@ -263,7 +316,7 @@ async function runSearch(
   parsed: ParsedSearch,
   cwd: string,
 ): Promise<number> {
-  const onProgress = makeProgressListener();
+  const onProgress = makeProgressListener(parsed.verbose);
   try {
     const paths = resolvePathRestrictions(parsed.rawPaths, {
       worktreeRoot: repo.identity.worktreeRoot,
@@ -275,14 +328,16 @@ async function runSearch(
       before: parsed.before,
       author: parsed.author,
     };
+    const decomposition = decomposeQuery(parsed.query);
+    const temporal = constraintFromFlags(parsed.temporalFlags) ?? decomposition.constraint;
     const request: SearchRequest = {
       query: parsed.query,
       mode: parsed.mode,
       sort: parsed.sort,
       limit: parsed.limit,
       filters,
-      temporal: NO_TEMPORAL_CONSTRAINT,
-      groups: [],
+      temporal,
+      groups: parsed.groups,
     };
 
     const response = await backend.search(repo, request, {

@@ -10,6 +10,14 @@
  *   - The tarball excludes credentials, test repositories, transcripts,
  *     benchmark caches, indexes, model weights and development worktrees.
  *   - The shebang and executable file mode survive packing.
+ *   - The man page ships in the tarball at the path `install.sh` expects
+ *     (`<npm root -g>/@alliecatowo/git-why/man/git-why.1`) and, once copied
+ *     into place the same way `install.sh` copies it, `git why --help` —
+ *     which Git itself intercepts and redirects to `man git-why` — resolves
+ *     through it. npm's own "man" package.json field is NOT relied on here:
+ *     bin-links@7 (npm >= 7) stopped linking man pages for any package
+ *     (see bin-links/lib/index.js's own comment to that effect), which is
+ *     exactly why `install.sh` copies the file manually instead.
  *
  * Everything happens under a temporary directory; nothing here touches the
  * project's own `node_modules` or lockfile.
@@ -47,6 +55,7 @@ const ALLOWED_TOP_LEVEL = new Set([
   'NOTICE',
   'dist',
   'schema',
+  'man',
 ]);
 
 function fail(message) {
@@ -185,20 +194,50 @@ function main() {
       console.log(`verify-package: git why --version -> ${viaGit.stdout.trim()}`);
     }
 
-    // NOTE: `git <cmd> --help` as the literal first argument is intercepted
-    // by Git itself (git.c redirects to `git help <cmd>`, looking for a man
-    // page) for ANY subcommand, built-in or external — verified with
-    // GIT_TRACE=1 against a throwaway `git-foo` script. Git does not
-    // execute the external command in that case, regardless of what it
-    // does. Only `-h`, or `--help` in a non-first position, is passed
-    // through. Shipping a man page to satisfy `git why --help` is out of
-    // scope for V1 packaging, so this check uses `-h`, which Git always
-    // forwards, plus a direct `git-why --help` check above that does not
-    // go through Git's dispatch at all.
+    // `git <cmd> --help` as the literal first argument is intercepted by Git
+    // itself (git.c rewrites it to `git help <cmd> --exclude-guides`, which
+    // looks for a `git-<cmd>` man page) for ANY subcommand, built-in or
+    // external — verified with GIT_TRACE=1 against a throwaway `git-foo`
+    // script. Git does not execute the external command in that case. `-h`,
+    // or `--help` in a non-first position, is passed through regardless, so
+    // that is checked too, but the real fix is the man page.
     console.log('verify-package: git why -h (via PATH discovery)...');
     const viaGitHelp = spawnSync('git', ['why', '-h'], { cwd: elsewhere, env, encoding: 'utf8' });
     if (viaGitHelp.status !== 0 || !viaGitHelp.stdout.includes('Usage: git why')) {
       fail(`git why -h failed: status=${viaGitHelp.status} stderr=${viaGitHelp.stderr}`);
+    }
+
+    // Confirmed empirically against the npm actually on PATH in this repo's
+    // toolchain (npm 12.0.2, bundling bin-links@7.0.0): `npm install
+    // --global` does NOT link package.json's "man" field anywhere anymore;
+    // bin-links@7's link-mans step was removed outright. So this checks the
+    // real contract instead: the man page ships inside the installed
+    // package at the path `install.sh` reads it from, and copying it the
+    // same way `install.sh` does makes `git why --help` resolve through
+    // Git's own man dispatch.
+    console.log('verify-package: man page ships at the path install.sh expects...');
+    const npmRoot = run('npm', ['root', '--global', '--prefix', prefix], { cwd: work }).trim();
+    const manSrc = path.join(npmRoot, '@alliecatowo', 'git-why', 'man', 'git-why.1');
+    if (!existsSync(manSrc)) {
+      fail(`expected the installed package to ship a man page at ${manSrc}`);
+    } else {
+      const manDir = path.join(prefix, 'share', 'man');
+      const man1Dir = path.join(manDir, 'man1');
+      execFileSync('mkdir', ['-p', man1Dir]);
+      execFileSync('cp', [manSrc, path.join(man1Dir, 'git-why.1')]);
+      console.log('verify-package: git why --help (via PATH+MANPATH, through Git dispatch)...');
+      const envWithMan = { ...env, MANPATH: manDir };
+      const viaGitFullHelp = spawnSync('git', ['why', '--help'], {
+        cwd: elsewhere,
+        env: envWithMan,
+        encoding: 'utf8',
+      });
+      if (viaGitFullHelp.status !== 0 || !viaGitFullHelp.stdout.includes('git-why')) {
+        fail(
+          `git why --help (through Git's man dispatch) failed: status=${viaGitFullHelp.status} ` +
+            `stdout=${viaGitFullHelp.stdout} stderr=${viaGitFullHelp.stderr}`,
+        );
+      }
     }
 
     if (process.exitCode !== 1) {

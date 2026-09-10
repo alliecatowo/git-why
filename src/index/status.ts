@@ -24,6 +24,16 @@ export interface ComputeStatusInput {
   readonly currentSnapshotFingerprint: string | null;
   /** Whether a cheap ref comparison detected any tip movement since the manifest's recorded fingerprint. */
   readonly refsChanged: boolean;
+  /**
+   * The size of the full ancestry closure of the current tips, when the
+   * caller already paid for `enumerateReachable` (a plain `git rev-list
+   * --stdin` walk — read-only, no model, no index access). Optional and
+   * defaulting to `null` so existing callers that only have a fingerprint
+   * are not forced to pay for a walk they don't need. This is a property of
+   * the repository, not of the index, so it is reported even when no index
+   * exists yet.
+   */
+  readonly reachableCommits?: number | null;
 }
 
 function directorySizeBytes(dir: string): number {
@@ -54,7 +64,7 @@ function missingStatus(input: ComputeStatusInput, indexPath: string): IndexStatu
     indexPath,
     generation: null,
     indexedCommits: null,
-    reachableCommits: null,
+    reachableCommits: input.reachableCommits ?? null,
     refsChanged: input.refsChanged,
     recordCount: null,
     model: null,
@@ -140,7 +150,7 @@ export function computeIndexStatus(input: ComputeStatusInput): IndexStatus {
     indexPath: layout.stateDir,
     generation: generationId,
     indexedCommits: manifest.counts.commits,
-    reachableCommits: input.currentSnapshotFingerprint !== null ? null : null,
+    reachableCommits: input.reachableCommits ?? null,
     refsChanged: input.refsChanged,
     recordCount: manifest.counts.commits + manifest.counts.evidence,
     model: {
@@ -149,7 +159,13 @@ export function computeIndexStatus(input: ComputeStatusInput): IndexStatus {
       fingerprint: manifest.embeddingFingerprint,
     },
     diskBytes,
-    lineageBytes: null,
+    lineageBytes: (() => {
+      try {
+        return fs.statSync(gp.lineageFile).size;
+      } catch {
+        return null;
+      }
+    })(),
     indexedAt: manifest.updatedAt,
     objectFormat: manifest.objectFormat,
     shallow: input.shallow,

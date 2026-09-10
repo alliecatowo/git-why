@@ -12,13 +12,23 @@
  */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 import { findRepoRoot } from '../repo-root.js';
 
 const repoRoot = findRepoRoot(path.dirname(new URL(import.meta.url).pathname));
-const specsDir = path.join(repoRoot, 'bench', 'agents', 'tasks', 'specs');
+const benchWorkDir =
+  process.env.BENCH_WORK_DIR ||
+  path.join(
+    os.homedir(),
+    '.cache',
+    'git-why-bench',
+    createHash('sha256').update(repoRoot).digest('hex').slice(0, 12),
+  );
+const evaluatorManifestsDir = path.join(benchWorkDir, 'evaluator', 'agents', 'manifests');
 
 /**
  * Task specs are ESM modules with deeply nested template literals, so they are
@@ -26,17 +36,26 @@ const specsDir = path.join(repoRoot, 'bench', 'agents', 'tasks', 'specs');
  * working even if a spec fails to evaluate. The same key is used for HTTP
  * routes inside task fixtures, so leading-slash values are dropped.
  */
-function taskPathsFromSpecs(): Set<string> {
+function taskPathsFromEvaluator(): Set<string> {
   const found = new Set<string>();
-  if (!fs.existsSync(specsDir)) return found;
-  for (const entry of fs.readdirSync(specsDir)) {
-    if (!entry.endsWith('.mjs')) continue;
-    const source = fs.readFileSync(path.join(specsDir, entry), 'utf8');
-    for (const match of source.matchAll(/\bpath:\s*'([^']+)'/g)) {
-      const value = match[1]!;
-      if (value.startsWith('/')) continue;
-      found.add(value);
-    }
+  if (!fs.existsSync(evaluatorManifestsDir)) return found;
+  for (const entry of fs.readdirSync(evaluatorManifestsDir)) {
+    if (!/^T\d+\.json$/.test(entry)) continue;
+    const manifest = JSON.parse(
+      fs.readFileSync(path.join(evaluatorManifestsDir, entry), 'utf8'),
+    ) as { baseSha: string; goldSha: string | null; sourceRepoDir: string };
+    // Pure history/rubric questions intentionally have no patch gold. They
+    // cannot introduce a product-tree implementation artifact.
+    if (!manifest.goldSha) continue;
+    const changed = execFileSync(
+      'git',
+      ['diff', '--name-only', manifest.baseSha, manifest.goldSha],
+      {
+        cwd: manifest.sourceRepoDir,
+        encoding: 'utf8',
+      },
+    );
+    for (const value of changed.split('\n')) if (value) found.add(value);
   }
   return found;
 }
@@ -52,8 +71,8 @@ function trackedPaths(): Set<string> {
 }
 
 test('no benchmark task artifact exists in the product tree', () => {
-  const taskPaths = taskPathsFromSpecs();
-  assert.ok(taskPaths.size > 0, 'expected to find task file paths in bench/agents/tasks/specs');
+  const taskPaths = taskPathsFromEvaluator();
+  assert.ok(taskPaths.size > 0, 'expected evaluator task manifests with changed file paths');
 
   // Some task paths collide with ordinary repository files by name -- T8 writes
   // a `README.md`, and so does every project. Tracked files are therefore

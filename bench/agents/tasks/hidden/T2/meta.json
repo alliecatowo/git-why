@@ -1,9 +1,0 @@
-{
-  "taskId": "T2",
-  "kind": "recurrent_regression",
-  "baseSha": "4c75450935ac514bc1956c36d214c97a7b13d994",
-  "goldSha": null,
-  "successNote": "New reproduction (fastReconnect duplication) and the prior regression test (addSocket idempotency) both pass.",
-  "hasHiddenTest": true,
-  "hasRubric": false
-}

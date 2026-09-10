@@ -62,6 +62,34 @@ const tools = [
         limit: { type: 'number', minimum: 1, maximum: 50 },
         sort: { type: 'string', enum: ['relevance', 'oldest', 'newest'] },
         mode: { type: 'string', enum: ['hybrid', 'text', 'semantic'] },
+        temporal: {
+          type: 'object',
+          description:
+            'Optional temporal retrieval constraint. Query decomposition is performed by the CLI when omitted.',
+          properties: {
+            type: {
+              type: 'string',
+              enum: [
+                'first',
+                'last',
+                'removed',
+                'changed_when',
+                'before',
+                'after',
+                'between',
+                'around',
+                'timeline',
+              ],
+            },
+            anchor: { type: 'string' },
+            anchorEnd: { type: 'string' },
+          },
+        },
+        groups: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Additional query groups to fuse by commit-level RRF.',
+        },
       },
       required: ['query'],
     },
@@ -102,6 +130,17 @@ rl.on('line', async (line) => {
         if (args.sort) cliArgs.push(`--sort=${String(args.sort)}`);
         if (args.mode === 'text') cliArgs.push('--text');
         if (args.mode === 'semantic') cliArgs.push('--semantic');
+        const temporal = args.temporal as Record<string, unknown> | undefined;
+        if (temporal?.type) {
+          const type = String(temporal.type);
+          if (['first', 'last', 'removed', 'timeline'].includes(type)) cliArgs.push(`--${type}`);
+          else if (type === 'between' && temporal.anchor && temporal.anchorEnd)
+            cliArgs.push(`--between=${String(temporal.anchor)},${String(temporal.anchorEnd)}`);
+          else if (['before', 'after', 'around'].includes(type) && temporal.anchor)
+            cliArgs.push(`--${type}=${String(temporal.anchor)}`);
+        }
+        if (Array.isArray(args.groups))
+          for (const group of args.groups) cliArgs.push('--group', String(group));
         const result = await runCli(cliArgs, args.cwd ? String(args.cwd) : undefined);
         reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
       } else if (name === 'git_why_status') {

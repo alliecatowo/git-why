@@ -1,9 +1,0 @@
-{
-  "taskId": "T4",
-  "kind": "architecture_constraint",
-  "baseSha": "6599a6f72e307a44cdf3f2f18eb184dada36eace",
-  "goldSha": null,
-  "successNote": "Correct retry behavior for idempotent endpoints and no double-effect risk on /charge.",
-  "hasHiddenTest": true,
-  "hasRubric": false
-}

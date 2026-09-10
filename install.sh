@@ -121,7 +121,34 @@ say ""
 
 npm install -g "${PACKAGE}@${VERSION}"
 
-# --- 5. Verify ---------------------------------------------------------
+# --- 5. Man page -----------------------------------------------------------
+#
+# `git why --help` (the literal first argument) is intercepted by Git itself
+# and rewritten to `man git-why`, not passed through to the `git-why`
+# executable at all — so `--help` only works through Git's own dispatch if a
+# real man page is installed. npm stopped doing this automatically as of
+# npm v7 (its `bin-links` dependency says so outright: "no longer installs
+# man pages into the system man path for any package"), so this script does
+# it itself. `git-why --help` and `git why -h` do not depend on this step —
+# they never go through Git's man dispatch — so a failure here is reported
+# but does not fail the install.
+man_src="$(npm root -g)/${PACKAGE}/man/git-why.1"
+man_dir="$npm_prefix/share/man/man1"
+
+if [ -f "$man_src" ]; then
+  if mkdir -p "$man_dir" 2>/dev/null && cp "$man_src" "$man_dir/git-why.1" 2>/dev/null; then
+    say "Installed man page: $man_dir/git-why.1"
+    if command -v man >/dev/null 2>&1 && ! MANPATH="$npm_prefix/share/man" man -w git-why >/dev/null 2>&1; then
+      say "It is not on your MANPATH yet, so 'git why --help' may still say \"No manual entry\"."
+      say "Add this to your shell profile if you want it to work:"
+      say "  export MANPATH=\"$npm_prefix/share/man:\$MANPATH\""
+    fi
+  else
+    say "Could not install the man page to $man_dir (non-fatal: 'git-why --help' and 'git why -h' still work either way)."
+  fi
+fi
+
+# --- 6. Verify ---------------------------------------------------------
 
 if ! command -v git-why >/dev/null 2>&1; then
   fail "installed ${PACKAGE}, but the 'git-why' executable is not on PATH ($npm_prefix/bin). Add it to PATH and re-run 'git why -h'."

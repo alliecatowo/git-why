@@ -1,9 +1,0 @@
-{
-  "taskId": "T7",
-  "kind": "simple_edit_control",
-  "baseSha": "56f456bd7bfcd41ba7bbf6e98f62e933e1a6f3b5",
-  "goldSha": null,
-  "successNote": "Fully specified localized behavior; history is unnecessary and should not be needed to pass.",
-  "hasHiddenTest": true,
-  "hasRubric": false
-}
