@@ -309,3 +309,50 @@ answers this class of question, and the value of a retrieval tool here is cost
 and latency rather than capability. Further searching for a configuration that
 produces a positive result would be fitting the experiment to a desired
 conclusion.
+
+## The weaker-model test: the ceiling was the model, but Git Why is not the winner
+
+Pre-registered in `bench/protocol.json` before any trial ran, with the
+prediction and its falsifier both stated. Only the model changed:
+`llmgateway/gemini-2.5-flash-lite` in place of `deepseek-v4-flash`, against
+the same nine questions, six pinned corpora, grading, gold commits and budget.
+
+**The prediction held.** Arm A fell from 100% to 28%, so the saturation seen
+earlier was a property of the model rather than of the question set. Every
+tool-equipped arm beat the baseline.
+
+| arm             | cited/graded | rate |
+| --------------- | ------------ | ---- |
+| A baseline      | 2/7          | 28%  |
+| B + zg          | 7/9          | 77%  |
+| C + zg + gitwhy | 3/7          | 42%  |
+| D + git why     | 4/7          | 57%  |
+
+Two things complicate that, and the aggregate flatters Git Why without them.
+
+**The paired evidence for Git Why is one task wide.** On tasks where both arms
+produced a verdict, D beat A on `redis-01` and `redis-02`, lost on
+`requests-01`, and tied three times: net +1 across six pairs. The 28% to 57%
+gap reads as decisive and is not; it rests on a single task's margin at n=7.
+
+**`zg`, not Git Why, is the strongest arm.** B scores 77%, and paired against
+A it wins 3, loses 0 and ties 4 -- net +3, the cleanest signal in the run.
+That is general code search rather than history retrieval. And C, holding both
+tools, scores 42%: worse than either alone, matching the earlier finding that
+additional tooling costs more than it returns.
+
+So the honest conclusion, across three operating points:
+
+- A capable model needs no retrieval tooling for these questions and is about
+  twice as efficient with Git Why (16 to 9 median tool calls).
+- A weaker model does benefit from retrieval tooling, but this run attributes
+  the benefit mostly to `zg`, with Git Why's advantage over baseline resting
+  on one task.
+- The registered stopping rule applies: three operating points have now been
+  tried, and no further configurations will be searched.
+
+What this does NOT say is that Git Why retrieves badly. Its retrieval quality
+is measured separately in section 4 and holds up on real repositories. What
+the agent pilots measure is whether an agent NEEDS it, and on this question
+set, with these two models, the answer is no for a strong model and unproven
+for a weak one.
