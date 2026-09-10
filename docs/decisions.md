@@ -437,3 +437,50 @@ This is why the agent-facing interface matters more than another ranking
 change, and it explains the earlier agent-pilot result where zg outperformed
 Git Why: an agent phrases queries in code vocabulary naturally when searching
 code, and had no reason to do so when searching history.
+
+## Query restatement does not close the semantic gap either
+
+The obvious fix for the semantic gap was to have the caller restate the
+question in the codebase's vocabulary, and the first measurement looked
+emphatic: Hit@1 0.296 against 0.556. It was wrong. The two rows had scored
+different subsets (n=27 against n=36) because cases whose output failed to
+parse were dropped independently from each, so the rows described different
+questions.
+
+Scored PAIRED, on identical cases:
+
+| phrasing           | Hit@1 | Hit@5 | MRR   | recall@20 |
+| ------------------ | ----- | ----- | ----- | --------- |
+| as asked           | 0.214 | 0.500 | 0.325 | 0.571     |
+| restated by caller | 0.321 | 0.321 | 0.329 | 0.393     |
+
+Per case: restating helped 9, hurt 8, left 11 unchanged. A coin flip.
+
+Restating sharpens the top result and destroys recall. A technical query is
+narrower, so it misses documents the fuzzy question would have swept in, and
+the two effects cancel: MRR moves 0.325 to 0.329.
+
+Two claims made earlier in this session are withdrawn on this evidence.
+
+The MCP tool description is NOT defective for inviting natural-language
+questions. Natural phrasing has strictly better recall (0.571 against 0.393),
+so instructing callers to restate would make retrieval worse, not better.
+
+And the 1.000 self-query result does not bound anything reachable. Retrieving
+a commit by its own subject line requires already knowing the subject, which
+is the answer. It measures that indexing works; it does not describe a
+ceiling any caller can approach.
+
+Four approaches to the semantic gap have now been measured and none helped: a
+prose-tuned embedding model, pseudo-relevance feedback, a prose-commit
+penalty worth 0.005 MRR, and caller-side restatement. The gap looks like a
+property of what a 256-dimensional static embedder can represent, not
+something reachable by query or ranking changes. Closing it would mean a
+larger model or a learned reranker, both of which are outside the current
+dependency budget and should be proposed as such rather than smuggled in as
+tuning.
+
+What stands is the comparative result, which does not depend on any of this:
+on questions cheap search provably cannot answer, Git Why scores MRR 0.201
+against 0.026 for zg and 0.003 for `git log --grep`, and is the only approach
+that returns anything at all for nearly every question.

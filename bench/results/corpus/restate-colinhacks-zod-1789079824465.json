@@ -1,0 +1,89 @@
+{
+  "repo": "colinhacks-zod",
+  "model": "llmgateway/deepseek-v4-flash",
+  "rows": [
+    {
+      "label": "as asked",
+      "n": 27,
+      "hit1": 0.2962962962962963,
+      "hit5": 0.5185185185185185,
+      "mrr": 0.39384319384319394,
+      "recall20": 0.7037037037037037
+    },
+    {
+      "label": "restated by the caller",
+      "n": 36,
+      "hit1": 0.5555555555555556,
+      "hit5": 0.5833333333333334,
+      "mrr": 0.5781746031746031,
+      "recall20": 0.6666666666666666
+    }
+  ],
+  "samples": [
+    {
+      "id": "recall-colinhacks-zod-badf0b78",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- the value given to a recovery handler looked like it had already been processed once and didn't match what we fed in",
+      "relevantShas": [
+        "badf0b7894a4f777d41fcd7ed2433e5f8c9c23ea"
+      ],
+      "subject": "fix(v4): build the catch context from the input that failed (#6192)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "The context handed to a `.catch()` callback was assembled by spreading the payload after the inner schema had already run over it, and `_zod.run` mutates that payload in place.",
+      "restated": "distinguish number and bigint formats at the type level ZodInt ZodFloat32"
+    },
+    {
+      "id": "recall-colinhacks-zod-a87ac366",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- whole-number fields were indistinguishable from fractional ones to TypeScript, so a type check couldn't tell them apart",
+      "relevantShas": [
+        "a87ac3665f90144aecf8860030a59eb45a41a2eb"
+      ],
+      "subject": "fix(v4)!: distinguish number and bigint formats at the type level (#6052)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`ZodInt`, `ZodFloat32`, `ZodFloat64`, `ZodInt32` and `ZodUInt32` were empty extensions of one base, so TypeScript treated all five as the same type and a conditional type could not tell them apart.",
+      "restated": "keep a wrapper's stored value only on the side it belongs to default catch prefault input-side"
+    },
+    {
+      "id": "recall-colinhacks-zod-7cfc0122",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- why did that one kind of fallback get pushed through validation while the others were used as-is",
+      "relevantShas": [
+        "7cfc012238ca88ff4aa87a22e8fa08f5efb5b63d"
+      ],
+      "subject": "fix(v4): keep a wrapper's stored value only on the side it belongs to",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`.default()` and `.catch()` store an output-side value; `.prefault()` stores an input-side one, since it is fed through the schema rather than short-circuited.",
+      "restated": "resolve z.input past a preprocess transform toJSONSchema input side"
+    },
+    {
+      "id": "recall-colinhacks-zod-53cec2a0",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- the generated schema and the validator disagreed about what the input side of a transform looked like until we lined them up",
+      "relevantShas": [
+        "53cec2a0d0941a69d8add934ac3a8695fb5fb14c"
+      ],
+      "subject": "fix(v4): resolve z.input past a preprocess transform",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "That is the resolution toJSONSchema already makes for this exact case, and the two now agree on what the input side of a preprocess looks like.",
+      "restated": "accept exact decimal multiples in multipleOf floating-point"
+    },
+    {
+      "id": "recall-colinhacks-zod-2125d30c",
+      "archetype": "ambiguous_recall",
+      "repositoryId": "colinhacks-zod",
+      "question": "- a number that was plainly an exact multiple still got rejected as not being one, some kind of floating-point thing",
+      "relevantShas": [
+        "2125d30ce58f66170682d5a50ee4a3e2eac568e3"
+      ],
+      "subject": "fix(v4): accept exact decimal multiples in multipleOf (#6223)",
+      "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
+      "originalSentence": "`z.number().multipleOf(0.07)` rejected 2.03 even though 2.03 === 29 * 0.07.",
+      "restated": "carry a pipe's own checks through z.output lazy recursive schema projection"
+    }
+  ]
+}

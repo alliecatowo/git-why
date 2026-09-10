@@ -127,15 +127,85 @@ function score(getQuery, label) {
   return { label, n, hit1: h1 / n, hit5: h5 / n, mrr: rr / n, recall20: r20 / n };
 }
 
+/**
+ * Scores both phrasings on the SAME cases.
+ *
+ * Scoring them independently and skipping failures dropped different subsets
+ * from each row (27 against 36), which makes the comparison meaningless: the
+ * rows would describe different questions. Only cases where BOTH phrasings
+ * returned parseable results are counted, so every difference is attributable
+ * to the phrasing rather than to which cases happened to survive.
+ */
+function scorePaired() {
+  const rank = (query) => {
+    const out = run(process.execPath, [CLI, query, '-n', '20', '--json', '--no-refresh'], {
+      cwd: repoDir,
+    });
+    try {
+      return JSON.parse(out).results ?? null;
+    } catch {
+      return null;
+    }
+  };
+  const acc = {
+    asked: { h1: 0, h5: 0, r20: 0, rr: 0 },
+    restated: { h1: 0, h5: 0, r20: 0, rr: 0 },
+  };
+  let n = 0;
+  const perCase = [];
+  for (const c of restated) {
+    const a = rank(c.question);
+    const b = rank(c.restated);
+    if (a === null || b === null) continue;
+    n += 1;
+    const gold = c.relevantShas[0];
+    const rec = {};
+    for (const [key, res] of [
+      ['asked', a],
+      ['restated', b],
+    ]) {
+      const i = res.findIndex((r) => r.sha === gold);
+      if (i === 0) acc[key].h1 += 1;
+      if (i >= 0 && i < 5) acc[key].h5 += 1;
+      if (i >= 0) acc[key].r20 += 1;
+      if (i >= 0) acc[key].rr += 1 / (i + 1);
+      rec[key] = i;
+    }
+    perCase.push({ id: c.id, askedRank: rec.asked, restatedRank: rec.restated });
+  }
+  const row = (key, label) => ({
+    label,
+    n,
+    hit1: acc[key].h1 / n,
+    hit5: acc[key].h5 / n,
+    mrr: acc[key].rr / n,
+    recall20: acc[key].r20 / n,
+  });
+  const rows = [row('asked', 'as asked'), row('restated', 'restated by the caller')];
+  for (const r of rows) {
+    console.log(
+      `${r.label.padEnd(26)} n=${r.n}  Hit@1=${r.hit1.toFixed(3)}  Hit@5=${r.hit5.toFixed(3)}  MRR=${r.mrr.toFixed(3)}  recall@20=${r.recall20.toFixed(3)}`,
+    );
+  }
+  const better = perCase.filter(
+    (p) => p.restatedRank >= 0 && (p.askedRank < 0 || p.restatedRank < p.askedRank),
+  ).length;
+  const worse = perCase.filter(
+    (p) => p.askedRank >= 0 && (p.restatedRank < 0 || p.restatedRank > p.askedRank),
+  ).length;
+  console.log(
+    `paired: restating helped ${better}, hurt ${worse}, unchanged ${perCase.length - better - worse} (n=${perCase.length})`,
+  );
+  return { rows, perCase };
+}
+
 console.log('');
-const rows = [
-  score((c) => c.question, 'as asked'),
-  score((c) => c.restated, 'restated by the caller'),
-];
+const paired = scorePaired();
+const rows = paired.rows;
 
 writeFileSync(
   join(ROOT, 'bench/results/corpus', `restate-${ONLY}-${Date.now()}.json`),
-  `${JSON.stringify({ repo: ONLY, model: MODEL, rows, samples: restated.slice(0, 5) }, null, 2)}\n`,
+  `${JSON.stringify({ repo: ONLY, model: MODEL, rows, perCase: paired.perCase, restated }, null, 2)}\n`,
 );
 console.log('\nsample restatements:');
 for (const c of restated.slice(0, 3)) {
