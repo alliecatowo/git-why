@@ -166,6 +166,51 @@ function agentPilotSection(runNames) {
       out += `| ${stratum} | ${arm} | ${row.numerator}/${row.denominator} | ${row.valid} | ${row.unscoredValid} | ${pct(row.rate)} |\n`;
     }
   }
+  // Archaeology tasks ask a question rather than for a code change, so `pass`
+  // is null for all of them and the boolean table above is empty. Their
+  // measured outcome is whether the agent cited the hand-verified commit,
+  // which is computed here from the same records rather than typed in.
+  const records = loadAgentRecords(runDir);
+  const cite = { A: null, B: null, C: null, D: null };
+  for (const arm of ['A', 'B', 'C', 'D']) {
+    const armRecords = records.filter((r) => r.arm === arm && !r.invalidation_reason);
+    const completed = armRecords.filter((r) => r.exit_reason === 'completed');
+    const graded = completed.filter((r) => r.evidence_grade && r.evidence_grade.goldSha);
+    if (graded.length === 0) continue;
+    cite[arm] = {
+      hits: graded.filter((r) => r.evidence_grade.citedGoldSha).length,
+      graded: graded.length,
+      timeouts: armRecords.filter((r) => r.exit_reason === 'wall_clock_timeout').length,
+      blocked: armRecords.filter(
+        (r) => r.exit_reason !== 'completed' && r.exit_reason !== 'wall_clock_timeout',
+      ).length,
+      gitWhyCalls: completed.reduce((n, r) => n + (r.git_why_calls ?? 0), 0),
+      // Completed, but grading never produced a citation verdict. Counting
+      // these as misses overstates failure; dropping them silently overstates
+      // success. Both were done at different points while reading this run,
+      // and both were wrong, so the column is explicit.
+      ungraded: completed.length - graded.length,
+    };
+  }
+  if (Object.values(cite).some((v) => v !== null)) {
+    out +=
+      '\n**Citation of the hand-verified commit** (archaeology stratum). Exit categories are ' +
+      'kept separate on purpose: a trial that timed out or never started is not a wrong answer, ' +
+      'and folding it into a rate silently shrinks the denominator. Every rate below is over ' +
+      'COMPLETED trials only.\n\n';
+    out +=
+      '| arm | cited/graded | rate | ungraded | timeouts | not started | git why calls |\n' +
+      '|---|---:|---:|---:|---:|---:|---:|\n';
+    for (const arm of ['A', 'B', 'C', 'D']) {
+      const c = cite[arm];
+      if (c === null) {
+        out += `| ${arm} | n/a | n/a | n/a | n/a | n/a | n/a |\n`;
+        continue;
+      }
+      out += `| ${arm} | ${c.hits}/${c.graded} | ${pct(c.graded === 0 ? null : c.hits / c.graded)} | ${c.ungraded} | ${c.timeouts} | ${c.blocked} | ${c.gitWhyCalls} |\n`;
+    }
+  }
+
   out +=
     '\n**Paired per-task outcomes** (each cell is pass/denominator across repetitions; `n/a` means no boolean outcome, not a failure):\n\n';
   out += '| task | stratum | A | B | C | D |\n|---|---|---|---|---|---|\n';
