@@ -231,10 +231,30 @@ function makeProgressListener(verbose: boolean): (event: ProgressEvent) => void 
  * fields `IndexStatus` already carries — it does not re-derive anything
  * `computeIndexStatus` (src/index/status.ts) didn't already decide.
  */
+/**
+ * Readiness means "this index is built and current for the current refs", not
+ * "every file in history was ingested".
+ *
+ * Requiring zero omissions made `--check-ready` unsatisfiable on real
+ * repositories: the extraction policy deliberately skips lockfiles, binaries,
+ * generated and oversized files, so a healthy zod index reports 4,611 excluded
+ * and 550 failed and would never be "ready". That blocked 10 of 36 trials in
+ * an agent pilot as `infrastructure_blocked` -- the treatment silently never
+ * being applied, which is precisely the failure this flag exists to prevent.
+ *
+ * `failedFiles` counts blobs the policy expected to read and could not, so it
+ * is surfaced as a warning by `status`, not as unreadiness. What actually
+ * makes an index unusable is being stale, or not covering every reachable
+ * commit, and both are checked here.
+ */
 function isIndexReady(status: IndexStatus): boolean {
-  const cov = status.coverage;
-  const coverageComplete = cov.unavailableFiles === 0 && cov.failedFiles === 0;
-  return status.state === 'current' && coverageComplete;
+  if (status.state !== 'current' || status.refsChanged) return false;
+  // Null means the count could not be established, which is not evidence of
+  // readiness. Requiring both to be known and equal keeps a partially built
+  // index from passing.
+  const { indexedCommits, reachableCommits } = status;
+  if (indexedCommits === null || reachableCommits === null) return false;
+  return indexedCommits === reachableCommits;
 }
 
 function lifecycleContext(parsed: ParsedLifecycle): ErrorContext {
