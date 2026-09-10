@@ -1,0 +1,20 @@
+{
+  "updatedAt": "2026-09-10T04:54:22.343Z",
+  "retrieval": {
+    "state": "completed",
+    "runId": "2026-09-10T02-19-34-615Z",
+    "totalQueries": 72,
+    "hybrid": {
+      "hit5": 1,
+      "mrr": 0.7777777777777778
+    }
+  },
+  "agent": {
+    "state": "completed",
+    "stage": "Smoke",
+    "runId": "2026-09-10T04-47-23-486Z",
+    "planned": 16,
+    "completed": 16,
+    "note": "16 valid trials; 0 infrastructure-blocked."
+  }
+}
