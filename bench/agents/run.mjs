@@ -703,7 +703,12 @@ async function runOnePlannedTrial(
   // Hash only non-secret, trial-visible inputs. The profile credential is
   // deliberately excluded: it is copied into an ephemeral mount and must
   // never become benchmark data.
-  record.profile_hash = sha256(readFileSync(profile.agentPath, 'utf8'));
+  record.profile_hash = sha256(
+    readFileSync(
+      join(profile.profileRoot, '.config', 'opencode', 'agent', 'git-why-bench.md'),
+      'utf8',
+    ),
+  );
   record.prompt_hash = sha256(commonPreamble, taskMeta.promptText, usageCard ?? '');
 
   const trialResult = await runTrial({
