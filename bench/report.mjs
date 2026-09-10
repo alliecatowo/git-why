@@ -211,6 +211,61 @@ function agentPilotSection(runNames) {
     }
   }
 
+  // Accuracy saturates on this question set, which hides any effect in how
+  // HARD each arm had to work to get there. Effort is compared only across
+  // trials that cited correctly, so it is like-for-like: same outcome,
+  // different amount of work.
+  const median = (xs) => {
+    const v = xs.filter((n) => typeof n === 'number').sort((a, b) => a - b);
+    return v.length === 0 ? null : v[Math.floor(v.length / 2)];
+  };
+  const correct = {};
+  for (const arm of ['A', 'B', 'C', 'D']) {
+    correct[arm] = records.filter(
+      (r) =>
+        r.arm === arm &&
+        !r.invalidation_reason &&
+        r.exit_reason === 'completed' &&
+        r.evidence_grade &&
+        r.evidence_grade.citedGoldSha,
+    );
+  }
+  if (Object.values(correct).some((v) => v.length > 0)) {
+    out +=
+      '\n**Effort on trials that cited correctly** (like-for-like: same outcome, ' +
+      'different amount of work). Accuracy saturates here, so this is where any ' +
+      'effect of the treatment is visible.\n\n';
+    out +=
+      '| arm | n | median tool calls | median wall (s) | median output tokens |\n|---|---:|---:|---:|---:|\n';
+    for (const arm of ['A', 'B', 'C', 'D']) {
+      const v = correct[arm];
+      const tc = median(v.map((r) => r.tool_calls));
+      const w = median(v.map((r) => r.wall_ms));
+      const ot = median(v.map((r) => r.output_tokens));
+      out += `| ${arm} | ${v.length} | ${tc ?? 'n/a'} | ${w === null ? 'n/a' : (w / 1000).toFixed(1)} | ${ot ?? 'n/a'} |\n`;
+    }
+    // Paired only where both arms solved the same task, so task difficulty
+    // cannot drive the comparison.
+    const callsOf = (arm) =>
+      new Map(correct[arm].map((r) => [r.task_id, r.tool_calls]).filter(([, n]) => n != null));
+    const a = callsOf('A');
+    const d = callsOf('D');
+    const shared = [...a.keys()].filter((t) => d.has(t)).sort();
+    if (shared.length > 0) {
+      const favourD = shared.filter((t) => d.get(t) < a.get(t)).length;
+      out += `\n**Paired tool-call cost, arm A vs arm D**, on the ${shared.length} task(s) both solved. `;
+      out += `Arm D used fewer tool calls on ${favourD} of ${shared.length}.\n\n`;
+      out += '| task | A | D | delta |\n|---|---:|---:|---:|\n';
+      for (const t of shared) {
+        const delta = d.get(t) - a.get(t);
+        out += `| ${t} | ${a.get(t)} | ${d.get(t)} | ${delta > 0 ? '+' : ''}${delta} |\n`;
+      }
+      out +=
+        '\nDescriptive only: a handful of paired tasks, one repetition, one model. ' +
+        'It shows a direction, not an effect size, and no significance is claimed.\n';
+    }
+  }
+
   out +=
     '\n**Paired per-task outcomes** (each cell is pass/denominator across repetitions; `n/a` means no boolean outcome, not a failure):\n\n';
   out += '| task | stratum | A | B | C | D |\n|---|---|---|---|---|---|\n';

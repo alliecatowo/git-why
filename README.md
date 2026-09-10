@@ -89,18 +89,19 @@ Every number below is generated from raw run data, not typed by hand — see
 [`docs/report.md`](docs/report.md) for the full methodology, protocol, and
 caveats.
 
-| Measurement                                             | Result                                     |
-| ------------------------------------------------------- | ------------------------------------------ |
-| Real-repository retrieval (16 cases, six pinned repos)  | hybrid Hit@5 55.6%, MRR 0.393              |
-| Index size across six real repos (56,781 commits total) | 5.50–6.98 KB/record, 1.91 GiB total        |
-| Index `curl` (30,000 commits, pinned)                   | 1.00 GiB, 5.74 KB/record                   |
-| Index `redis` (12,110 commits, pinned)                  | 450 MiB, 6.92 KB/record                    |
-| Warm query, fresh process (p50 / p95, n=30)             | 483 ms / 494 ms                            |
-| Diff/evidence ingestion, real-repository ablation       | earns its cost: ΔHit@5 +0.375, ΔMRR +0.280 |
-| Agent usefulness (36 trials, 4 arms, real repos)        | **no measurable benefit** — see below      |
-| Tests                                                   | 332 unit, 65 integration, passing          |
+| Measurement                                             | Result                                                     |
+| ------------------------------------------------------- | ---------------------------------------------------------- |
+| Real-repository retrieval (16 cases, six pinned repos)  | hybrid Hit@5 55.6%, MRR 0.393                              |
+| Index size across six real repos (56,781 commits total) | 5.50–6.98 KB/record, 1.91 GiB total                        |
+| Index `curl` (30,000 commits, pinned)                   | 1.00 GiB, 5.74 KB/record                                   |
+| Index `redis` (12,110 commits, pinned)                  | 450 MiB, 6.92 KB/record                                    |
+| Warm query, fresh process (p50 / p95, n=30)             | 483 ms / 494 ms                                            |
+| Diff/evidence ingestion, real-repository ablation       | earns its cost: ΔHit@5 +0.375, ΔMRR +0.280                 |
+| Agent usefulness — accuracy (36 trials, 4 arms)         | no benefit: every arm 100% on graded trials                |
+| Agent usefulness — effort, same-accuracy trials         | **16 → 9 median tool calls** (A vs D), 7 of 8 paired tasks |
+| Tests                                                   | 332 unit, 65 integration, passing                          |
 
-### The agent pilot found no benefit
+### The agent pilot: no accuracy gain, but roughly half the work
 
 On nine hand-authored archaeology questions against the six pinned real
 repositories, an agent with **no** retrieval tooling — only `git log`,
@@ -113,9 +114,19 @@ target commit by only 1–3 terms and a naive `git log -S` returns 47–1,035
 candidates, which is precisely the regime hybrid retrieval is meant to win.
 The baseline solved them anyway.
 
-Read that as a bound on the claim, not a footnote: a capable model with
-ordinary Git commands already answers these questions. Retrieval quality, index
-efficiency and latency above are separately measured and stand on their own.
+The accuracy ceiling hid the actual effect. Comparing only trials that cited
+correctly — like for like, same outcome — the baseline needed a median of 16
+tool calls; with Git Why it took 9. On the 8 tasks both arms solved, Git Why
+used fewer tool calls on 7, by as much as 11 (`redis-01`: 19 → 8). Output
+tokens fell about a quarter.
+
+So the honest summary is narrower than "it helps" and more useful than "it
+doesn't": on these questions Git Why does not make a capable agent more
+_accurate_, because plain Git already answers them. It makes it get there with
+roughly half the work. That is a real effect on cost and latency, measured on
+a handful of paired tasks with one model and one repetition — a direction, not
+an effect size, and no significance is claimed.
+
 Full method, limits and per-arm numbers in [`docs/report.md`](docs/report.md).
 
 Two honest caveats, spelled out fully in the report: the real-repository
