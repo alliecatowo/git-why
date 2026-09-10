@@ -46,11 +46,12 @@
     "format": "prettier --write .",
     "test:unit": "npm run build:test && node --test --test-concurrency=4 \".tmp/tsc-test/test/unit/**/*.test.js\"",
     "test:integration": "npm run build:test && node --test --test-concurrency=2 --test-timeout=600000 \".tmp/tsc-test/test/integration/**/*.test.js\"",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:unit",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run bench:freeze && npm run test:unit",
     "build:test": "tsc -p tsconfig.test.json && node scripts/copy-test-assets.mjs",
     "site:install": "npm install --prefix site",
     "site:dev": "npm run --prefix site dev",
-    "site:build": "npm run --prefix site build"
+    "site:build": "npm run --prefix site build",
+    "bench:freeze": "node bench/freeze-protocol.mjs"
   },
   "dependencies": {
     "@zvec/zvec": "0.7.1"

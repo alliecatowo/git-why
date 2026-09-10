@@ -1,8 +1,8 @@
 {
-  "protocolVersion": 1,
-  "frozenAt": "2026-09-09T00:00:00Z",
-  "frozenBy": "evaluation lane, before any retrieval tuning against bench/dataset/test.json",
-  "status": "This file is written BEFORE tuning. Any change to representation, embedding, ranking, thresholds, candidate limits, or dataset composition requires bumping protocolVersion and re-deriving protocolHash, and invalidates prior held-out results against the old holdout. If bench/dataset/test.json is ever read by a tuning script, the holdout is burned and a new, unused holdout must be constructed before any further claim is made.",
+  "protocolVersion": 2,
+  "frozenAt": "2026-09-10T01:30:00Z",
+  "frozenBy": "implementation lane, before tuning temporal retrieval against bench/dataset/dev.json and before any protocol-v2 held-out run",
+  "status": "This file is written BEFORE tuning. Any change to representation, embedding, ranking, thresholds, candidate limits, temporal scoring constants, or dataset composition requires bumping protocolVersion and re-deriving protocolHash via `node bench/freeze-protocol.mjs --write`, and invalidates prior held-out results against the old hash. If bench/dataset/test.json is ever read by a tuning script, the holdout is burned and a new, unused holdout must be constructed before any further claim is made.",
   "developmentTarget": {
     "statement": "At least 75% Hit@5 on answerable (non no-evidence) semantic-archaeology cases in bench/dataset/dev.json, with exact-identifier (category=exact_identifier) performance reported SEPARATELY and not folded into the 75% figure.",
     "isA": "A provisional product-quality floor used to pick a default configuration before the held-out run.",
@@ -14,7 +14,26 @@
     "rrfConstant": 60,
     "rrfConstantRationale": "60 is the constant from the original Cormack et al. RRF paper and is the de facto default in hybrid-search literature; not tuned against this dataset. Changing it would require re-freezing this protocol.",
     "formula": "score(doc) = sum over branches b where doc appears in b's ranked list of 1 / (rrfConstant + rank_b(doc)), 1-indexed rank.",
-    "commitCollapse": "Evidence-level hits are grouped to their owning commit before RRF; a commit's rankScore is computed from its best rank in each branch, per docs/spec.md section 14. This file does not restate the grouping algorithm -- src/search/ owns it -- it only pins the constant and candidate limits used when bench measures it."
+    "commitCollapse": "Evidence-level hits are grouped to their owning commit before RRF; a commit's rankScore is computed from its best rank in each branch, per docs/spec.md section 14. This file does not restate the grouping algorithm -- src/search/ owns it -- it only pins the constant and candidate limits used when bench measures it.",
+    "temporal": {
+      "formula": "final(c) = fusedRRF(c) * temporal(c) ** w",
+      "identityConstraint": "When no temporal intent is detected the constraint type is 'none', temporal(c) is exactly 1 for every commit, and w is 0, so final(c) is bit-identical to fusedRRF(c). A golden test asserts that a non-temporal query produces byte-identical ranking to the pre-temporal code path.",
+      "exponent": {
+        "explicit": 1,
+        "inferred": 0.5,
+        "none": 0
+      },
+      "exponentRationale": "Confidence scales the temporal term rather than gating it, so a misparsed intent costs rank instead of destroying the result set.",
+      "noRecencyPrior": "There is no always-on recency boost. Re3 (arXiv:2509.01306) measures recall@1 falling from 0.742 to 0.268 under a fixed relevance/recency weight; a fixed prior is a known failure mode, not a conservative default.",
+      "ordinalsFromAncestry": "first/last/removed answers are resolved from validity intervals ordered by commit ancestry (topological order), never by committer or author timestamp, because rebases and cherry-picks rewrite timestamps.",
+      "tunableConstantsLocation": "src/search/temporal/tuning.ts",
+      "tunedOn": "bench/dataset/dev.json ONLY. The held-out split must never inform a constant in that file."
+    },
+    "structuralExpansion": {
+      "what": "From the top-N semantic seeds, commits linked by the lineage table (same path key with overlapping line ranges; interval endpoints of tokens in seed evidence) are added to the candidate pool, tagged matchedBy='linked' with a hop-count linkDistance, entering scoring at the seed's fused score discounted by hops.",
+      "why": "Terse originating commits ('add vquic', 'initial streams') never enter a semantic candidate pool on their own. This is the observed external-v2 failure and a wider top-k does not fix it; only structure does.",
+      "disabledWhen": "constraint.type === 'none'. Ordinary queries see no expansion at all."
+    }
   },
   "candidateLimits": {
     "lexicalTopK": 50,
@@ -38,17 +57,17 @@
     "B": {
       "name": "workspace",
       "tools": "Arm A + Zvec-Grep (zg) over the current task workspace. No git why.",
-      "status": "BLOCKED: zg is not installed in this environment and must not be installed by the evaluation lane per its brief. Runner marks this arm 'unavailable' rather than skipping it silently; see bench/agents/isolation.mjs and bench/agents/runner.mjs."
+      "status": "RUNNABLE. zg (Zvec-Grep) 0.2.2 is installed and verified by `git why doctor`. The runner builds the zg index in the trial clone and asserts `zg status --check-ready` before the trial; a failure is recorded as treatment_error, never as a silent skip."
     },
     "C": {
       "name": "workspace+history",
       "tools": "Arm A + the identical zg setup from arm B + git why over the permitted history.",
-      "status": "BLOCKED on the same zg dependency as arm B."
+      "status": "RUNNABLE, same zg dependency as arm B, plus a `git why index` built in the clone with `git why status --check-ready` asserted before the trial."
     },
     "D": {
       "name": "history",
       "tools": "Arm A + git why over the permitted history, without zg.",
-      "status": "runnable once dist/cli/main.js exists; does not require zg."
+      "status": "RUNNABLE. Requires a built dist/cli/main.js and a prebuilt index in the trial clone."
     },
     "primaryComparisons": ["C vs B", "D vs A"],
     "secondaryComparisons": [
@@ -85,7 +104,7 @@
   },
   "billedModelBudget": {
     "amount": 0,
-    "note": "Zero billed-model spend for the initial pilot. A rate limit does not authorize silently switching to a paid OpenCode model or an unknown metered endpoint. DevPass is a separate, explicitly opted-in cohort, never mixed mid-block with the free cohort."
+    "note": "Zero billed-model spend. A rate limit does not authorize silently switching to a paid OpenCode model or an unknown metered endpoint. Any nonzero budget requires the human's explicit written approval recorded in this file, together with the provider/model id, the timestamp, and the catalog price at approval time. The calibrated model for the pilot is recorded in bench/results/agents/model-calibration.json and is selected BEFORE any arm comparison."
   },
   "datasetComposition": {
     "totalCases": 48,
@@ -125,12 +144,32 @@
       "MRR"
     ],
     "noEvidenceHandling": "No-evidence cases are excluded from Hit@k/Recall@k/MRR (there is no relevant SHA to rank). They are reported separately: what the system actually returned (top-k commits), and whether a fabricated-sounding rationale would be unsupported by that evidence.",
-    "denominatorWarning": "\"At least one relevant hit in the top 5\" is Hit@5, not Recall@5. Recall@5 for a case with N relevant SHAs is (relevant SHAs found in top 5) / N."
+    "denominatorWarning": "\"At least one relevant hit in the top 5\" is Hit@5, not Recall@5. Recall@5 for a case with N relevant SHAs is (relevant SHAs found in top 5) / N.",
+    "temporal": {
+      "exactFirst": "Fraction of when-introduced cases whose returned `answer.sha` equals the labelled introducedSha. Scored on the `answer` field, not on the ranked list, because they are different claims.",
+      "exactRemoval": "Same, against removedSha.",
+      "timelinePrecisionRecall": "Against the labelled orderedChain, over the returned timeline episodes.",
+      "nonTemporalRegression": "MRR on the non-temporal cases, reported before and after the temporal term. The gate is no worse than 0.005 absolute on dev. The temporal-QA survey (arXiv:2505.20243) recommends mixing temporal and non-temporal cases precisely so this can be shown.",
+      "baselineToBeat": "4 of 15 Hit@1 on the external-v2 'when first' probes under protocol v1."
+    }
   },
   "comparisons": [
     "FTS only",
     "Vector only, per candidate embedding model",
     "Hybrid (RRF per this protocol), per candidate embedding model"
   ],
-  "protocolHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f"
+  "protocolHash": "sha256:458142672d4746ff366fb22a9c0d44f4b0a82f7fbc3cc74c7f021a41dc5773df",
+  "supersedes": {
+    "protocolVersion": 1,
+    "recordedHash": "sha256:522a2beec8aff23364a2e314ce6862d8211150bad808b6b3164570d01ad9be6f",
+    "hashWasVerifiable": false,
+    "note": "The v1 hash was a literal string with no generator; re-deriving it from the v1 content yields sha256:29ce6b89bbdc23cc333f024bbd5999ecbd0fb3dd998671240fbbcecac23e0c71, so it never certified anything. bench/freeze-protocol.mjs now derives the hash from the protocol's own content and `mise run check` verifies it. Retrieval results recorded against protocol v1 remain valid as v1 results; they are NOT comparable to v2 results, because v2 changes ranking (RANKING_VERSION 1 -> 2, temporal term) and adds a stratum.",
+    "invalidatedAgentPilot": "bench/results/agents/pilot-2026-09-09T23-13-53-652Z was deleted, not superseded. Eight independent harness defects (workspace re-rooting, no index in any trial workspace, evaluator material reachable, task answers written into src/, 3-commit task repos with answers in the prompts, token accounting reading only the final step_finish event, an uncalibrated billed model, and rubric trials mixed into pass counts). It must not be cited."
+  },
+  "strata": {
+    "coding": "Revert-and-reapply tasks plus current-code, simple-edit and no-evidence controls. Graded by the upstream test from the fix commit. pass is boolean.",
+    "rubric": "Judged by a blinded rubric. pass is null and MUST NOT enter any pass-rate numerator or denominator. Mixing rubric trials into per-arm pass counts was defect 8 of the invalid v1 pilot.",
+    "temporal": "When-introduced / when-removed / history-of questions, labelled with introducedSha, removedSha and an orderedChain in ancestry order.",
+    "aggregationRule": "Every reported rate carries an explicit numerator and denominator, per stratum and per arm. No rate is reported over a mixed-stratum denominator."
+  }
 }

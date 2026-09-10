@@ -61,6 +61,10 @@ description = "Run the 64 free-model pilot trials"
 depends = ["build"]
 run = "node bench/agents/run.mjs --stage=pilot"
 
+[tasks."bench:freeze"]
+description = "Verify bench/protocol.json still matches its own hash"
+run = "node bench/freeze-protocol.mjs"
+
 [tasks."bench:report"]
 description = "Generate tables and the report from saved records"
 run = "node bench/report.mjs"
