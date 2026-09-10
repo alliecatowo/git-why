@@ -227,7 +227,12 @@ function preparePackagedGitWhy() {
     cwd: REPO_ROOT,
     encoding: 'utf8',
   });
-  const tarball = JSON.parse(packed)[0]?.filename;
+  // npm's `pack --json` shape has changed across versions: older npm prints
+  // an array of pack results, npm 12.0.2 (pinned here) prints an object
+  // keyed by package name. Handle both rather than assuming one.
+  const parsedPack = JSON.parse(packed);
+  const packEntry = Array.isArray(parsedPack) ? parsedPack[0] : Object.values(parsedPack)[0];
+  const tarball = packEntry?.filename;
   if (typeof tarball !== 'string') throw new Error('npm pack did not report a tarball filename');
   execFileSync(
     'npm',
@@ -506,11 +511,33 @@ async function pooledMap(items, limit, worker) {
   return results;
 }
 
+/**
+ * Detects a provider-side rate limit (opencode's free "Console"/zen gateway
+ * returns HTTP 429 with `error.type: "FreeUsageLimitError"`, an
+ * `isRetryable: true` APIError event) among the raw session events. Measured
+ * empirically 2026-09-10: the container/network/auth path was fine (the
+ * request reached https://opencode.ai/zen/v1/chat/completions and got a
+ * real 429 back); the free-tier quota was exhausted by prior trials, not a
+ * harness bug. This is a transient provider outage from the runner's
+ * perspective, not a model outcome -- it must not be scored as a trial
+ * failure (wrong answer) or an isolation/preflight violation.
+ */
+function isRateLimitError(trialResult) {
+  return (trialResult.rawEvents ?? []).some((evt) => {
+    if (evt?.type !== 'error') return false;
+    const data = evt.error?.data;
+    return data?.statusCode === 429 || data?.isRetryable === true;
+  });
+}
+
 function isInfrastructureError(trialResult) {
   // A process-level failure to even reach the model (spawn error, provider
   // outage before any step_finish) is infrastructure; a completed run with
   // a wrong/incomplete answer is a model outcome, not infrastructure.
-  return trialResult.exitCode === null && trialResult.eventCount === 0;
+  return (
+    (trialResult.exitCode === null && trialResult.eventCount === 0) ||
+    isRateLimitError(trialResult)
+  );
 }
 
 async function runOnePlannedTrial(
@@ -728,7 +755,9 @@ async function runOnePlannedTrial(
 
   if (isInfrastructureError(trialResult)) {
     record.exit_reason = 'infrastructure_error';
-    record.infrastructure_error = trialResult.stderr || 'no events received from opencode process';
+    record.infrastructure_error = isRateLimitError(trialResult)
+      ? `provider rate limit: ${(trialResult.rawEvents ?? []).find((e) => e?.type === 'error')?.error?.data?.message ?? 'rate limit exceeded'}`
+      : trialResult.stderr || 'no events received from opencode process';
     return finish();
   }
 
