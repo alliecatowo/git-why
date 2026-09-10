@@ -8,7 +8,7 @@ any history reasoning. Measured: zg 77%, git why 50%, both together 42%.
 
 These tasks are built around one property, and it is the whole point:
 
-  **the decisive evidence exists ONLY in history, never in the working tree.**
+**the decisive evidence exists ONLY in history, never in the working tree.**
 
 Each task contains an approach that was tried, caused a specific failure, and
 was reverted. Because it was reverted, the code is gone. `zg`, `grep` and
@@ -22,7 +22,7 @@ Two shapes, both drawn from what the tool is actually for:
    failure Z, then reverted. The agent is asked for a feature where X is the
    obvious approach. Does it avoid X, or walk into the same wall?
 
-2. **stale-constraint.** History shows the code does Z *because* Y did not
+2. **stale-constraint.** History shows the code does Z _because_ Y did not
    exist at the time. Y exists now. The agent is asked to improve that area.
    Does it notice the original constraint no longer applies and propose the
    better approach, or preserve a workaround nobody needs?
