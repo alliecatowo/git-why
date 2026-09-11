@@ -1,9 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.1.0
 
-First public state. Prior to this the project had no released versions, so
-everything below is the initial surface rather than a diff against one.
+First release. There are no prior versions, so everything below is the initial
+surface rather than a diff against one.
 
 ### Added
 

@@ -1,0 +1,65 @@
+name: Release
+
+# Fires only on a version tag, so cutting a release is `git tag v0.1.0 &&
+# git push --tags` and nothing else. It never runs on a branch push: there is
+# no path from ordinary development to an accidental publish.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write # create the GitHub release
+  id-token: write # npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.21.0'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+
+      # The tag is the claim; package.json is the fact. Publishing a v0.1.1
+      # tag from a tree that still says 0.1.0 would ship the wrong version
+      # under the right name, which is unrecoverable once it is on the
+      # registry.
+      - name: Tag matches package.json version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p 'require("./package.json").version')"
+          if [ "$tag" != "$pkg" ]; then
+            echo "tag ${GITHUB_REF_NAME} does not match package.json version ${pkg}" >&2
+            exit 1
+          fi
+          echo "releasing ${pkg}"
+
+      # The same gates CI runs, re-run here rather than trusted from the
+      # branch build: a tag can point at any commit, including one CI never
+      # saw.
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run test:unit
+      - run: node scripts/verify-package.mjs
+      - run: node scripts/verify-plugins.mjs
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Attach the tarball to a GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm pack
+          gh release create "${GITHUB_REF_NAME}" ./*.tgz \
+            --title "${GITHUB_REF_NAME}" \
+            --notes "See CHANGELOG.md for what changed, and docs/report.md for the measurements behind it."

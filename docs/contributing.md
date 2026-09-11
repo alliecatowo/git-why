@@ -57,3 +57,27 @@ Development-only tooling must never load when a user runs `git why`.
 
 `npx tsc -p tsconfig.json --noEmit` typechecks the whole tree, including other
 lanes that may be mid-flight. Filter the output to your own files.
+
+## Cutting a release
+
+The tag is the trigger; nothing else publishes.
+
+```sh
+# 1. package.json version and the CHANGELOG heading must already say the
+#    new version — the workflow refuses to publish a tag that disagrees
+#    with package.json.
+# 2. Regenerate anything derived, so the published docs match the code.
+node bench/report.mjs
+npm run check
+
+# 3. Tag and push. The release workflow re-runs every CI gate against the
+#    tagged commit (a tag can point anywhere, including at a commit CI never
+#    saw), publishes to npm with provenance, and attaches the tarball to a
+#    GitHub release.
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+`NPM_TOKEN` must exist as a repository secret with publish rights, and the
+`man/` directory is built rather than committed — `npm run build` generates it
+from `--help`, and `npm publish` runs the build first.
