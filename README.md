@@ -157,6 +157,28 @@ That boundary is the honest positioning, and the shipped
 
 ### Scale and cost
 
+### Does it help an agent?
+
+<!-- generated:agent -->
+
+Retrieval quality is not the product. The question is whether an agent answering a real
+question does it more accurately, or in fewer turns, with the tool than without. Four arms
+over the same frozen tasks, paired per task, with token counts reconciled against the
+provider's own accounting database.
+
+| model                 | paired n | accuracy W-L | median tool calls saved |
+| --------------------- | -------: | -----------: | ----------------------: |
+| deepseek-v4-flash     |        8 |          0-0 |                       2 |
+| gemini-2.5-flash-lite |        6 |          2-1 |                       1 |
+| gemini-3.1-flash-lite |        7 |          2-0 |                       1 |
+
+Every model reached the answer in the same number of turns or fewer. At single-digit paired n per model this is descriptive, not significant, and it is reported that way
+deliberately — the direction is consistent, the magnitude is not established. Full method and per-arm figures in the benchmark report.
+
+<!-- /generated:agent -->
+
+Method, per-arm figures and the registered hypothesis: [`docs/report.md`](docs/report.md#5-agent-benchmark-does-this-help-an-agent-and-which-agents).
+
 <!-- generated:scale -->
 
 | measurement                                 | result                                  |

@@ -849,7 +849,34 @@ function readmeBlocks() {
     scale += `| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 ${ablation.hit5 >= 0 ? '+' : ''}${num(ablation.hit5)} |\n`;
   }
 
-  return { corpus: table, crossfile, honesty, scale, cases: main.cases };
+  // The agent benchmark, for the marketing surfaces. Written from the same
+  // compareModels() the report uses, and omitted entirely rather than hedged
+  // when no model has completed a run.
+  const cm = compareModels(join(RESULTS_DIR, 'agents'));
+  const paired = cm.rows.filter((r) => r.dVsA !== null);
+  let agent = '';
+  if (paired.length > 0) {
+    agent =
+      'Retrieval quality is not the product. The question is whether an agent answering a real\n' +
+      'question does it more accurately, or in fewer turns, with the tool than without. Four arms\n' +
+      'over the same frozen tasks, paired per task, with token counts reconciled against the\n' +
+      "provider's own accounting database.\n\n";
+    agent += '| model | paired n | accuracy W-L | median tool calls saved |\n|---|---:|---:|---:|\n';
+    for (const r of paired) {
+      const d = r.dVsA;
+      const saved = d.callsDelta === null ? 'n/a' : d.callsDelta <= 0 ? String(-d.callsDelta) : `${d.callsDelta} more`;
+      agent += `| ${r.model.replace(/^[^/]+\//, '')} | ${d.n} | ${d.accWin}-${d.accLoss} | ${saved} |\n`;
+    }
+    const savings = paired.map((r) => r.dVsA.callsDelta).filter((v) => typeof v === 'number');
+    const allSaved = savings.length > 0 && savings.every((v) => v <= 0);
+    agent +=
+      `\n${allSaved ? 'Every model reached the answer in the same number of turns or fewer' : 'Results are mixed across models'}. ` +
+      'At single-digit paired n per model this is descriptive, not significant, and it is reported that way\n' +
+      'deliberately — the direction is consistent, the magnitude is not established. ' +
+      'Full method and per-arm figures in the benchmark report.\n';
+  }
+
+  return { corpus: table, crossfile, honesty, scale, agent, cases: main.cases };
 }
 
 function replaceMarked(source, name, body) {
@@ -868,8 +895,8 @@ if (blocks !== null) {
   // used to: the site's headline was the hand-authored set at Hit@5 0.900,
   // whose questions were written by someone who had already seen the commits.
   for (const [label, relative, names] of [
-    ['README.md', 'README.md', ['corpus-table', 'crossfile', 'scale', 'honesty']],
-    ['site/index.md', join('site', 'index.md'), ['corpus-table', 'crossfile', 'scale', 'honesty']],
+    ['README.md', 'README.md', ['corpus-table', 'crossfile', 'agent', 'scale', 'honesty']],
+    ['site/index.md', join('site', 'index.md'), ['corpus-table', 'crossfile', 'agent', 'scale', 'honesty']],
   ]) {
     const target = join(REPO_ROOT, relative);
     const before = readFileSync(target, 'utf8');
