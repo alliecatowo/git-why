@@ -67,15 +67,29 @@ function roffEscape(text) {
 function parseEntries(lines) {
   const entries = [];
   const headPattern = /^ {2}(\S.*?) {2,}(\S.*)$/;
+  // A flag whose name is too long for the description column puts the
+  // description on the following line instead, e.g. `--first --last
+  // --removed`. Such a line is still a head, not a continuation: heads sit at
+  // exactly two spaces of indent, continuations at more. Without this case the
+  // flag folds into the PREVIOUS entry's description and disappears from the
+  // man page entirely -- which is how `--first`, `--last` and `--removed` went
+  // undocumented.
+  const bareHeadPattern = /^ {2}(\S.*\S|\S)$/;
   for (const line of lines) {
     const m = headPattern.exec(line);
     if (m) {
       entries.push({ flag: m[1], desc: m[2] });
       continue;
     }
+    const bare = bareHeadPattern.exec(line);
+    if (bare) {
+      entries.push({ flag: bare[1], desc: '' });
+      continue;
+    }
     const trimmed = line.trim();
     if (trimmed.length > 0 && entries.length > 0) {
-      entries[entries.length - 1].desc += ` ${trimmed}`;
+      const last = entries[entries.length - 1];
+      last.desc = last.desc.length > 0 ? `${last.desc} ${trimmed}` : trimmed;
     }
   }
   return entries;
@@ -120,9 +134,23 @@ function buildRoff(text, { version, date }) {
     commandLines.push(lines[i]);
     i += 1;
   }
+  while (i < lines.length && lines[i].length === 0) i += 1;
+
+  // Flags that only apply to a subcommand. Optional: older help text put them
+  // in brackets inside a command's description instead, where they had no
+  // entry of their own and no room for an explanation.
+  const commandOptionLines = [];
+  if (lines[i] === 'Command options:') {
+    i += 1;
+    while (i < lines.length && lines[i].length > 0) {
+      commandOptionLines.push(lines[i]);
+      i += 1;
+    }
+  }
 
   const options = parseEntries(optionLines);
   const commands = parseEntries(commandLines);
+  const commandOptions = parseEntries(commandOptionLines);
 
   const out = [];
   out.push(`.TH GIT-WHY 1 "${date}" "git-why ${version}" "Git Manual"`);
@@ -146,6 +174,14 @@ function buildRoff(text, { version, date }) {
     out.push('.TP');
     out.push(`.B ${roffEscape(flag)}`);
     out.push(roffEscape(desc));
+  }
+  if (commandOptions.length > 0) {
+    out.push('.SH COMMAND OPTIONS');
+    for (const { flag, desc } of commandOptions) {
+      out.push('.TP');
+      out.push(`.B ${roffEscape(flag)}`);
+      out.push(roffEscape(desc));
+    }
   }
   out.push('.SH SEE ALSO');
   out.push('.BR git (1)');

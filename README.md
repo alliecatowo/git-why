@@ -131,7 +131,7 @@ questions, `git log -S` scores Hit@10 **0.950** against `git why`'s 0.350.
 Semantic search has no advantage over a tool you can hand the exact literal.
 
 That boundary is the honest positioning, and the shipped
-[skill](plugin/skills/history-archaeology/SKILL.md) tells agents both halves:
+[skill](plugins/git-why/skills/history-archaeology/SKILL.md) tells agents both halves:
 
 - **cannot name the term** → `git why`
 - **can name the term** → `git log -S`

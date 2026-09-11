@@ -76,10 +76,19 @@ Options:
 
 Commands:
   index                 Create or reconcile the index
-  status                Report index state without mutating anything [--check-ready]
-  rebuild               Replace derived index data [--use-default-model]
+  status                Report index state without mutating anything
+  rebuild               Replace derived index data
   gc                    Reconcile and compact without downloading embeddings
   help                  Show this help
+
+Command options:
+  --if-needed           With index: exit 0 immediately if the index is already
+                        current, so it is cheap to run unconditionally
+  --check-ready         With status: exit non-zero unless the index exists, is
+                        current for the repository's refs, and covers every
+                        reachable commit. For scripts that gate on readiness
+  --use-default-model   With rebuild: re-embed with the default model rather
+                        than the one recorded in the existing index
 `;
 
 function readVersion(): string {
