@@ -114,19 +114,76 @@ const tools = [
           items: { type: 'string' },
           description: 'Additional query groups to fuse by commit-level RRF.',
         },
+        owners: {
+          type: 'boolean',
+          description:
+            'Also return who established this area, ranked by the relevance of their commits rather than by surviving lines (git blame) or commit count (git shortlog). Use for "who built this", "who should review this", "who would know about this".',
+        },
       },
       required: ['query'],
     },
   },
   {
     name: 'git_why_status',
-    description: 'Inspect the Git Why index status for a repository.',
+    description: `Report whether this repository's history index exists and is current.
+
+USE THIS when git_why_search returns an index error, or before searching a
+repository for the first time. The answer is actionable: if "state" is not
+"current", run \`git why index --if-needed\` in a shell -- it is idempotent and
+takes about 0.2s when there is nothing to do.
+
+An index is built once per repository and shared by all its worktrees. A first
+build on a large repository takes minutes, so do it deliberately rather than
+inside a loop.`,
     inputSchema: { type: 'object', properties: { cwd: { type: 'string' } } },
   },
 ];
 
-const rl = createInterface({ input: process.stdin, crlfDelay: Infinity });
-rl.on('line', async (line) => {
+/**
+ * Maps MCP tool arguments onto CLI flags.
+ *
+ * Exported and pure so it can be tested without spawning anything. This is the
+ * whole plugin surface -- a flag that silently fails to map here is a feature
+ * an agent cannot reach, which is how `--owners` went missing from the MCP
+ * server while being a headline feature of the CLI.
+ */
+export function searchCliArgs(args: Record<string, unknown>): string[] {
+  const query = String(args.query ?? '').trim();
+  if (!query) throw new Error('query is required');
+  const cliArgs = [query, '-n', String(args.limit ?? 5), '--json'];
+  if (args.sort) cliArgs.push(`--sort=${String(args.sort)}`);
+  if (args.mode === 'text') cliArgs.push('--text');
+  if (args.mode === 'semantic') cliArgs.push('--semantic');
+  const temporal = args.temporal as Record<string, unknown> | undefined;
+  if (temporal?.type) {
+    const type = String(temporal.type);
+    if (['first', 'last', 'removed', 'timeline'].includes(type)) cliArgs.push(`--${type}`);
+    else if (type === 'between' && temporal.anchor && temporal.anchorEnd)
+      cliArgs.push(`--between=${String(temporal.anchor)},${String(temporal.anchorEnd)}`);
+    else if (['before', 'after', 'around'].includes(type) && temporal.anchor)
+      cliArgs.push(`--${type}=${String(temporal.anchor)}`);
+  }
+  if (Array.isArray(args.groups))
+    for (const group of args.groups) cliArgs.push('--group', String(group));
+  if (args.owners === true) cliArgs.push('--owners');
+  return cliArgs;
+}
+
+/** The advertised tool list, exported so tests can assert its shape. */
+export const mcpTools = tools;
+
+/**
+ * Only start reading stdin when this file IS the process entry point.
+ *
+ * Without the guard, importing anything from this module (a test asserting the
+ * tool list, say) attaches a readline interface to stdin, which keeps the
+ * process alive forever and hangs the run.
+ */
+const isEntryPoint =
+  process.argv[1] !== undefined && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+const rl = isEntryPoint ? createInterface({ input: process.stdin, crlfDelay: Infinity }) : null;
+rl?.on('line', async (line) => {
   let request: Rpc;
   try {
     request = JSON.parse(line) as Rpc;
@@ -148,24 +205,7 @@ rl.on('line', async (line) => {
     const args = (request.params?.arguments ?? {}) as Record<string, unknown>;
     try {
       if (name === 'git_why_search') {
-        const query = String(args.query ?? '').trim();
-        if (!query) throw new Error('query is required');
-        const cliArgs = [query, '-n', String(args.limit ?? 5), '--json'];
-        if (args.sort) cliArgs.push(`--sort=${String(args.sort)}`);
-        if (args.mode === 'text') cliArgs.push('--text');
-        if (args.mode === 'semantic') cliArgs.push('--semantic');
-        const temporal = args.temporal as Record<string, unknown> | undefined;
-        if (temporal?.type) {
-          const type = String(temporal.type);
-          if (['first', 'last', 'removed', 'timeline'].includes(type)) cliArgs.push(`--${type}`);
-          else if (type === 'between' && temporal.anchor && temporal.anchorEnd)
-            cliArgs.push(`--between=${String(temporal.anchor)},${String(temporal.anchorEnd)}`);
-          else if (['before', 'after', 'around'].includes(type) && temporal.anchor)
-            cliArgs.push(`--${type}=${String(temporal.anchor)}`);
-        }
-        if (Array.isArray(args.groups))
-          for (const group of args.groups) cliArgs.push('--group', String(group));
-        const result = await runCli(cliArgs, args.cwd ? String(args.cwd) : undefined);
+        const result = await runCli(searchCliArgs(args), args.cwd ? String(args.cwd) : undefined);
         reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
       } else if (name === 'git_why_status') {
         const result = await runCli(['status', '--json'], args.cwd ? String(args.cwd) : undefined);
