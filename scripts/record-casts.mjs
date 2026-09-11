@@ -81,6 +81,30 @@ const SCENARIOS = [
     ],
   },
   {
+    // The case with no good alternative: a comment states a constraint, and
+    // only history says whether it still holds. Neither grep nor blame can
+    // date a reason.
+    name: 'expired-constraint',
+    title: 'Checking whether a workaround is still needed',
+    repo: arg('curl', '/Users/allie/.cache/git-why-bench/0199f07e4778/external/curl-curl'),
+    script: ['git why "why do we avoid sending the expect 100-continue header" -n 3'],
+  },
+  {
+    // Deliberately shows the tool LOSING. When the symbol is nameable,
+    // `git log -S` scores 0.950 against 0.350, and a demo reel that only shows
+    // wins teaches people to reach for the wrong tool.
+    name: 'wrong-tool',
+    title: 'When NOT to use this: you already know the symbol',
+    repo: arg('zod', '/Users/allie/.cache/git-why-bench/0199f07e4778/external/colinhacks-zod'),
+    script: ['git log -S CompiledFn --oneline -3', 'git why "the compiled fast path helper" -n 3'],
+  },
+  {
+    name: 'timeline',
+    title: 'How something changed over time',
+    repo: arg('curl', '/Users/allie/.cache/git-why-bench/0199f07e4778/external/curl-curl'),
+    script: ['git why "HTTP/2 multiplexing support" --timeline -n 5'],
+  },
+  {
     name: 'index',
     title: 'Index management',
     repo: arg('zod', '/Users/allie/.cache/git-why-bench/0199f07e4778/external/colinhacks-zod'),
@@ -168,6 +192,10 @@ for (const s of SCENARIOS) {
         // and the first recording of this scenario did exactly that.
         PATH: `${s.isolateNetwork ? blockShim : shim}:${process.env.PATH}`,
         NO_COLOR: '1',
+        // Git's pager emits terminal control sequences that render as noise in
+        // a cast. The recordings are short by design, so paging adds nothing.
+        GIT_PAGER: 'cat',
+        PAGER: 'cat',
       },
     },
   );

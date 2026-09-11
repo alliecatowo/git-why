@@ -1,0 +1,13 @@
+The Caddy project has raised its minimum Go version multiple times, and while updates to the `quic-go` library (which provides HTTP/3 support) have historically coincided with Go version bumps, they were generally part of routine dependency maintenance rather than a change forced *specifically* by a feature requirement in `quic-go` itself that demanded a higher Go version.
+
+The most notable commit in this repository that links a `quic-go` update and a Go minimum version bump is **`f45a6de`**, which states:
+
+> `go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)`
+
+However, the commit message implies that the Go bump was a deliberate choice for maintenance and infrastructure improvements (as evidenced by the CI workflow changes) alongside the `quic-go` upgrade, rather than a technical limitation imposed by `quic-go`.
+
+Another relevant commit, **`697cc59`**, states:
+
+> `chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)`
+
+This again shows a synchronization between a dependency update and a Go version bump, but in line with the project's practice of keeping up with modern Go releases. The codebase does not contain evidence that a change to HTTP/3 logic was *blocked* by a Go version limitation that forced an upgrade of the entire Caddy project's minimum Go version requirements.

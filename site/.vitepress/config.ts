@@ -198,12 +198,14 @@ export default defineConfig({
           text: 'Start here',
           items: [
             { text: 'Getting started', link: '/guide/getting-started' },
+            { text: 'Examples', link: '/guide/examples' },
             { text: 'How it works', link: '/guide/how-it-works' },
           ],
         },
         {
           text: 'Reference',
           items: [
+            { text: 'Examples', link: '/guide/examples' },
             { text: 'CLI reference', link: '/guide/cli-reference' },
             { text: 'Operations & guarantees', link: '/guide/operations' },
             { text: 'Benchmarks', link: '/guide/benchmarks' },

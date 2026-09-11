@@ -1,0 +1,6 @@
+Requests no longer supports Python 3.9. Support for Python 3.9 was dropped in version 2.33.0.
+
+This is confirmed by commit `bc04dfd6dad4cb02cd92f5daa81eb562d280a761` (v2.33.0), which includes the following note in `HISTORY.md`:
+
+> **Deprecations**
+> - Dropped support for Python 3.9 following its end of support. (#7196)

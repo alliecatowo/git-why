@@ -1,0 +1,96 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "24b66df595a03183e0958bafc60f5b14ebcff548",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:14:22.667Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "ec83471faeea1e7189fa4e762ccc9dd61fbab2321bf3ead55643809615a04f8e",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": false,
+    "citedShaCount": 1,
+    "matchedTokens": []
+  },
+  "wall_ms": 9584,
+  "tool_calls": 5,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 16368,
+  "output_tokens": 269,
+  "cache_read_tokens": 16644,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0049116,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 14602,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-requests-02-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "223f16f3dee5a78d443913ce957442eb6e976f54deba21478487de303e5c0ac8",
+  "zg_index_build_ms": 16992,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_3GHbU7DITL5Q2DxT1A2n0X91",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"Dropped support for Python 3.9\" --patch HISTORY.md"
+        },
+        "output": "commit bc04dfd6dad4cb02cd92f5daa81eb562d280a761\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Wed Mar 25 09:06:17 2026 -0600\n\n    v2.33.0\n\ndiff --git a/HISTORY.md b/HISTORY.md\nindex 3828073a..3c3d673f 100644\n--- a/HISTORY.md\n+++ b/HISTORY.md\n@@ -6,6 +6,35 @@ dev\n \n - \\[Short description of non-trivial change.\\]\n \n+2.33.0 (2026-03-25)\n+--------------------\n+\n+**Announcements**\n+- 📣 Requests is adding inline types. If you have a typed code base that\n+uses Requests, please take a look at #7271. Give it a try, and report\n+any gaps or feedback you may have in the issue. 📣\n+\n+**Security**\n+- CVE-2026-25645 ``requests.utils.extract_zipped_paths`` now extracts\n+  contents to a non-deterministic location to prevent malicious file\n+  replacement. This does not affect default usage of Requests, only\n+  applications calling the utility function directly.\n+\n+**Improvements**\n+- Migrated to a PEP 517 build system using setuptools. (#7012)\n+\n+**Bugfixes**\n+- Fixed an issue where an empty netrc entry could cause\n+  malformed authentication to be applied to Requests on\n+  Python 3.11+. (#7205)\n+\n+**Deprecations**\n+- Dropped support for Python 3.9 following its end of support. (#7196)\n+\n+**Documentation**\n+- Various typo fixes and doc improvements.\n+\n+\n 2.32.5 (2025-08-18)\n -------------------\n \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_DQNv5P8e2o4B61cobD5uu2nl",
+        "status": "completed",
+        "input": {
+          "command": "git show bc04dfd6dad4cb02cd92f5daa81eb562d280a761"
+        },
+        "output": "commit bc04dfd6dad4cb02cd92f5daa81eb562d280a761\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Wed Mar 25 09:06:17 2026 -0600\n\n    v2.33.0\n\ndiff --git a/HISTORY.md b/HISTORY.md\nindex 3828073a..3c3d673f 100644\n--- a/HISTORY.md\n+++ b/HISTORY.md\n@@ -6,6 +6,35 @@ dev\n \n - \\[Short description of non-trivial change.\\]\n \n+2.33.0 (2026-03-25)\n+--------------------\n+\n+**Announcements**\n+- 📣 Requests is adding inline types. If you have a typed code base that\n+uses Requests, please take a look at #7271. Give it a try, and report\n+any gaps or feedback you may have in the issue. 📣\n+\n+**Security**\n+- CVE-2026-25645 ``requests.utils.extract_zipped_paths`` now extracts\n+  contents to a non-deterministic location to prevent malicious file\n+  replacement. This does not affect default usage of Requests, only\n+  applications calling the utility function directly.\n+\n+**Improvements**\n+- Migrated to a PEP 517 build system using setuptools. (#7012)\n+\n+**Bugfixes**\n+- Fixed an issue where an empty netrc entry could cause\n+  malformed authentication to be applied to Requests on\n+  Python 3.11+. (#7205)\n+\n+**Deprecations**\n+- Dropped support for Python 3.9 following its end of support. (#7196)\n+\n+**Documentation**\n+- Various typo fixes and doc improvements.\n+\n+\n 2.32.5 (2025-08-18)\n -------------------\n \ndiff --git a/src/requests/__version__.py b/src/requests/__version__.py\nindex ddb2b5ef..567b49f5 100644\n--- a/src/requests/__version__.py\n+++ b/src/requests/__version__.py\n@@ -5,7 +5,7 @@\n __title__ = \"requests\"\n __description__ = \"Python HTTP for Humans.\"\n __url__ = \"https://requests.readthedocs.io\"\n-__version__ = \"2.33.0.dev1\"\n+__version__ = \"2.33.0\"\n __build__ = 0x023300\n __author__ = \"Kenneth Reitz\"\n __author_email__ = \"me@kennethreitz.org\"\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 16368,
+    "output": 269,
+    "messages": 7
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/223f16f3dee5a78d443913ce957442eb6e976f54deba21478487de303e5c0ac8",
+  "completed": true
+}

@@ -1,0 +1,28 @@
+The behavior regarding unknown keys in `zod` objects did indeed change. In earlier versions, `zod` object schemas allowed unknown keys by default. This was changed to strip unknown keys by default in commit `18854492` ("strip unknown keys by default").
+
+The commit message confirms this shift:
+> - Object schemas now strip unknown keys by default, instead of throwing an error
+
+Additionally, the diff for `src/types/object.ts` shows the default `UnknownKeys` parameter being updated to `'strip'` from `'passthrough'` (previously `'allow'`):
+
+```typescript
+// From src/types/object.ts
+export class ZodObject<
+  T extends z.ZodRawShape,
+-  UnknownKeys extends UnknownKeysParam = 'allow',
++  UnknownKeys extends UnknownKeysParam = 'passthrough',
+```
+
+And the `create` method for `ZodObject` was also updated to default to `'strip'`:
+
+```typescript
+// From src/types/object.ts
+    return new ZodObject({
+      t: z.ZodTypes.object,
+      shape: () => shape,
+-     unknownKeys: 'allow',
++     unknownKeys: 'strip',
+      catchall: ZodNever.create(),
+```
+
+The commit that established this change is: **`18854492b4b6e1648499f2f920c615dab187ee1a`**

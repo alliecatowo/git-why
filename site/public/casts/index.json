@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-09-11T01:12:35.911Z",
+  "recordedAt": "2026-09-11T01:17:03.714Z",
   "note": "Real recorded sessions. Timings are actual latency; output is whatever the tool printed.",
   "casts": [
     {
@@ -21,6 +21,21 @@
       "name": "agent",
       "title": "An agent investigating why code is the way it is",
       "file": "agent.cast"
+    },
+    {
+      "name": "expired-constraint",
+      "title": "Checking whether a workaround is still needed",
+      "file": "expired-constraint.cast"
+    },
+    {
+      "name": "wrong-tool",
+      "title": "When NOT to use this: you already know the symbol",
+      "file": "wrong-tool.cast"
+    },
+    {
+      "name": "timeline",
+      "title": "How something changed over time",
+      "file": "timeline.cast"
     },
     {
       "name": "index",

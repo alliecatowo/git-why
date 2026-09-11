@@ -1,0 +1,16 @@
+Redis first introduced the streams data type with the `XADD` command in commit `79866a6361829ed0602dedff9cb378c66977227a` (dated 2017-08-30).
+
+This commit's message states:
+> "Streams: 12 commits squashed into the initial Streams implementation."
+
+The commit introduced `src/t_stream.c` containing the `xaddCommand` function, which explicitly implements the `XADD` command:
+
+```c
+void xaddCommand(client *c) {
+    if ((c->argc % 2) == 1) {
+        addReplyError(c,"wrong number of arguments for XADD");
+        return;
+    }
+    // ...
+}
+```

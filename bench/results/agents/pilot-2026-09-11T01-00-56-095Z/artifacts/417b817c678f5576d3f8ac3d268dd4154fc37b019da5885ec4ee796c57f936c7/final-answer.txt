@@ -1,0 +1,9 @@
+The `requests` library transitioned its default text-encoding detector from `chardet` to `charset_normalizer` to address licensing ambiguity. The `chardet` library is licensed under the LGPL, which caused concerns for downstream users who might want to bundle `requests` (and therefore its dependencies) into their own projects without being subject to LGPL requirements. By moving to `charset_normalizer`, which is MIT-licensed, this ambiguity was removed.
+
+This change was implemented in commit `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`.
+
+As stated in the commit message:
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects... By changing out this dependency for one under MIT we remove all license ambiguity."
+
+The library still maintains `chardet` as an optional dependency (accessible via an extra) for those who prefer it or require it for backwards compatibility, as noted in the commit message:
+> "As an 'escape hatch' I have made the code so that it will use chardet first if it is installed, but we no longer depend upon it directly..."
