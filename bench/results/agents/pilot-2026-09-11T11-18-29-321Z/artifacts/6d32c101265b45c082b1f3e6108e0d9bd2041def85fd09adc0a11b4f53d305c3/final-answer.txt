@@ -1,0 +1,13 @@
+The following brief answers the engineering questions regarding the `burntsushi-ripgrep` repository history:
+
+1. **Bug with matching style for patterns:** This refers to an issue where patterns that were identical but had different matching options (like case-insensitivity) could cause one to be skipped because the underlying regex construction deduped them incorrectly. This was addressed in commit `88524a2` ("core: dedup patterns"), with the message "core: dedup patterns".
+
+2. **Curly-brace file filters bug:** This refers to an issue where the glob parser did not support curly-brace alternation. Adding support for this was achieved in commit `fd5ae2f` ("Add curly brace alternates to glob format."), supporting the implementation of brace expansion in globs.
+
+3. **Slowdown on Windows checking ignore file existence:** This slowdown was caused by unnecessary `stat` calls for potential ignore files (like `.gitignore`) in every directory, even when they didn't exist. This was mitigated by adding a speculative `exists()` check, as documented in commit `a18cf6e` ("ignore: add existence check for ignore files"), with the message "The reason is that a simple existence check via `stat` can be faster than actually trying to `open` the file".
+
+4. **Paths relative to the command's directory:** This refers to the challenge of ensuring that patterns and paths were correctly interpreted relative to the search root, rather than the process's current working directory. Commit `b610d1c` ("ignore: fix global gitignore bug that arises with absolute paths") addresses this, noting: "these gitignore files should have their patterns interpreted relative to the current working directory."
+
+5. **Bug appearing after moving past an earlier release:** This refers to an issue with `\A` or `(?-m)^` anchors in multi-line search, which was introduced by an optimization that failed to account for these anchors. It was fixed in commit `581a35e` ("impl: fix --multiline anchored match bug"), with the message: "This fixes a bug where using \A or (?-m)^ in combination with -U/--multiline would permit matches that aren't anchored to the beginning of the file."
+
+6. **Search time invariance with trailing context:** This was a performance bug where searching `stdin` with context lines (`-A`/`-B`) became exponentially slower as the context size increased, because of how buffers were handled. This was addressed in commit `8c6595c` ("searcher: fix performance bug with -A/--after-context when searching stdin"), where the fix is described as "putting `read` into an inner loop that ensures our buffer gets filled up."

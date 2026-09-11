@@ -1,0 +1,31 @@
+The engineering brief regarding the historical development of the `caddyserver/caddy` repository is as follows:
+
+1.  **Multiple certificates in a signing chain:**
+    Support was added to allow loading and managing multiple certificates (a full chain) instead of a single certificate in the PKI module.
+    Commit: `7ebe72b`
+    Evidence: `"caddypki: Add support for multiple intermediates in signing chain (#7057)"`
+
+2.  **Load-balancing "random choice" bug:**
+    The `random_choose` load balancing policy (Power-of-d-choices) had an incorrect reservoir sampling implementation that caused it to sample upstreams improperly instead of picking the least-loaded one from a uniform random sample of available upstreams.
+    Commit: `b2be548`
+    Evidence: `"The random_choose selection policy is meant to implement power-of-d-choices: sample d available upstreams uniformly, then pick the least-loaded of that sample. The sampling loop, however, was not a correct implementation of reservoir sampling."`
+
+3.  **Restart failure due to stale socket file:**
+    Support was added to clean up (remove) existing Unix socket files before attempting to bind to them, which prevents failures when a stale socket file remains from a previous process.
+    Commit: `6a64bb2`
+    Evidence: `"Delete old unix domain socket files on Windows ... there still is a valid need for an equivalent to the syscall.Unlink implementation for unix."`
+
+4.  **Header name performance issue:**
+    Caddy switched to using canonical MIME header keys for certain lookups (e.g., `Content-Type`) because the Go `Header.Get/Set` methods perform extra re-canonicalization and allocation work when provided non-canonical keys.
+    Commit: `3be8dab`
+    Evidence: `"Header.Get/Set re-canonicalize and allocate whenever the passed key isn't already in canonical MIME header form."`
+
+5.  **Matcher block merging bug:**
+    Caddyfile adaptation logic was updated to correctly merge header and query matcher blocks that share the same field names instead of overwriting them or treating them as a single stream of duplicate keys.
+    Commit: `966d5e6` (header matchers) / `b4f49e2` (query matchers)
+    Evidence: `caddytest/integration/caddyfile_adapt/matcher_syntax.txt`: `"header matcher merging values of the same field"` / `"query matcher merging pairs with the same keys"`
+
+6.  **Security header filter slip:**
+    Caddy introduced a `MultiRegexpFilter` in the logging module to properly handle and consolidate multiple regex-based log filters, preventing issues where multiple filters applied to the same field might not behave as expected or might bypass intended masking.
+    Commit: `f5f25d8`
+    Evidence: `"logging: fix multiple regexp filters on same field (fixes #7049)"`

@@ -1,0 +1,31 @@
+The requested brief is provided below:
+
+1.  **Why did an element that wasn't allowed inside a wrapper get quietly let through?**
+    Projections in the `v4` rewrite mapped inner types while failing to correctly preserve or isolate the wrapper's specific side-effect storage (`.default()` and `.catch()` on the output side, `.prefault()` on the input side), causing them to be improperly retained during schema rewrites.
+    *   **Commit**: `7cfc012`
+    *   **Quote**: `"A default value belongs to the output side, so a rewritten inner type leaves it stranded."`
+
+2.  **Why did a child type lose the ability to override what its parent had installed on the shared prototype?**
+    Zod 4.5 moved methods from being own properties on every instance to the prototype to reduce memory consumption, meaning child schemas now inherit their method implementations from the prototype rather than redefining them.
+    *   **Commit**: `3063993`
+    *   **Quote**: `"Schema instances carried their methods as own properties... Moving those methods to the prototype — where they mate…"`
+
+3.  **What was the crash where turning a schema into JSON blew up on a huge number default?**
+    The crash occurred when `z.toJSONSchema()` encountered a `multipleOf` divisor that was not a finite, positive number, as the `multipleOf` keyword in JSON Schema does not support these values, causing the process to fail.
+    *   **Commit**: `6f04836`
+    *   **Quote**: `"A multipleOf divisor of ${divisor} cannot be represented in JSON Schema"`
+
+4.  **Why did making lots of schemas suddenly get so slow and memory-hungry?**
+    Schema instances previously carried their methods as own properties, which forced V8 out of optimized inline property storage into dictionary mode, ballooning memory usage and slowing down object construction.
+    *   **Commit**: `3063993`
+    *   **Quote**: `"Schema instances carried their methods as own properties, which put them past the point where V8 stops using inline slots for property storage."`
+
+5.  **What was that thing where combining two shapes printed out as a nested `allOf` block in the generated schema?**
+    `z.toJSONSchema()` originally processed intersections as nested `allOf` arrays, which created deep, redundant structures; this was fixed by flattening `allOf` arrays during processing so that nested intersections are merged.
+    *   **Commit**: `f97733f`
+    *   **Quote**: `"The first-pass flattened simple intersections... The allOf array was flattened if members themselves were allOf schemas."`
+
+6.  **What was that bug where the last character of a generated id could be one of two values that don't actually come from the data?**
+    The ULID validation regex was too broad because it accepted two extra bits of entropy in the base32 representation that do not correspond to valid data, causing it to incorrectly accept characters that should be rejected by the spec.
+    *   **Commit**: `9d5b20e`
+    *   **Quote**: `"Those bits are discarded on decode rather than rejected, which is why 0…, 8…, G… and R… all decode…"`

@@ -1,0 +1,172 @@
+{
+  "task_id": "B-burntsushi-ripgrep-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "b70666a1c3640673021d0456baf11333131a2b94",
+  "packed_tool_sha256": "2b2808ab545eab4238d37536834b565e0d546687748219d0c4ca32f8de9a7870",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T11:49:38.335Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "b652d69e48621db91cd75baed2037c0515b021bafbca136edb48ee356c0f8ee4",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 2,
+    "outOf": 6,
+    "found": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true
+    ],
+    "citedShaCount": 6,
+    "citedGoldSha": true,
+    "goldSha": "74959a14cbcce19e2471b0d281ea5cdbd248527d"
+  },
+  "wall_ms": 98492,
+  "tool_calls": 16,
+  "history_calls": 4,
+  "zg_calls": 0,
+  "git_why_calls": 9,
+  "input_tokens": 105465,
+  "output_tokens": 1492,
+  "cache_read_tokens": 601103,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.043631825,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 502415,
+  "index_build_ms": 31952,
+  "model_download_ms": null,
+  "index_disk_bytes": 91397716,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T11-18-29-321Z/events/B-burntsushi-ripgrep-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "c1f5c8d095764f9db033376a4e3e4174ed90c691b4cd10c72f26c93afe3c44ae",
+  "indexed_commits": 2287,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 10829,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  216 / 216 files\n  Entities    5,359\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_cjVHLIcpuAPNGqbfdn3P5Dkb",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"dash\" -- doc/rg.1.md\ngit log -S \"man page\" -- doc/rg.1.md"
+        },
+        "output": "commit 65539403288c984c5175a612c9519437742fc95c\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Mon Feb 5 18:45:45 2018 -0500\n\n    doc: generate man page\n    \n    This commit uses the recent refactoring for defining flags to\n    automatically generate a man page. This finally allows us to define the\n    documentation for each flag in a single place.\n    \n    The man page is generated on every build, if and only if `asciidoc` is\n    installed. When generated, it is placed in Cargo's `OUT_DIR` directory,\n    which is the same place that shell completions live.\n\ncommit 34c0b1bc709f74678d7c1a24046c26571c25eaec\nAuthor: dana <dana@dana.is>\nDate:   Thu Jan 11 07:05:52 2018 -0600\n\n    doc: various updates\n    \n    * Don't use 'smart typography' when generating man page\n    * Document PATTERN and PATH\n    * Capitalise place-holder names consistently\n    * Add note about PATH overriding glob/ignore rules\n    * Update args.rs for new PATH capitalisation\n    \n    Fixes #725\n\ncommit 598b162fea356249506f4ca5480882564fc3321e\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sun Nov 6 12:10:27 2016 -0500\n\n    Note -e/--regexp's additional usefulness.\n    \n    Specifically, it can be used when searching for patterns that start\n    with a dash.\n    \n    Fixes #215\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_uBxEAevzA1v6WK4Nsj1o4qGa",
+        "status": "completed",
+        "input": {
+          "command": "git show 34c0b1bc709f74678d7c1a24046c26571c25eaec"
+        },
+        "output": "commit 34c0b1bc709f74678d7c1a24046c26571c25eaec\nAuthor: dana <dana@dana.is>\nDate:   Thu Jan 11 07:05:52 2018 -0600\n\n    doc: various updates\n    \n    * Don't use 'smart typography' when generating man page\n    * Document PATTERN and PATH\n    * Capitalise place-holder names consistently\n    * Add note about PATH overriding glob/ignore rules\n    * Update args.rs for new PATH capitalisation\n    \n    Fixes #725\n\ndiff --git a/doc/convert-to-man b/doc/convert-to-man\nindex eeb252e..60761db 100755\n--- a/doc/convert-to-man\n+++ b/doc/convert-to-man\n@@ -1,5 +1,5 @@\n #!/bin/sh -e\n \n-pandoc -s -t man rg.1.md -o rg.1\n+pandoc -s -f markdown-smart -t man rg.1.md -o rg.1\n sed -i.bak 's/\\.TH.*/.TH \"rg\" \"1\"/g' rg.1\n rm -f rg.1.bak # BSD `sed` requires the creation of a back-up file\ndiff --git a/doc/rg.1 b/doc/rg.1\nindex c91cbc5..c098410 100644\n--- a/doc/rg.1\n+++ b/doc/rg.1\n@@ -1,4 +1,4 @@\n-.\\\" Automatically generated by Pandoc 1.19.2.1\n+.\\\" Automatically generated by Pandoc 2.0.6\n .\\\"\n .TH \"rg\" \"1\"\n .hy\n@@ -7,18 +7,18 @@\n rg \\- recursively search current directory for lines matching a pattern\n .SH SYNOPSIS\n .PP\n-rg [\\f[I]options\\f[]] \\f[I]PATTERN\\f[] [\\f[I]path\\f[] ...]\n+rg [\\f[I]OPTIONS\\f[]] \\f[I]PATTERN\\f[] [\\f[I]PATH\\f[] ...]\n .PP\n-rg [\\f[I]options\\f[]] [\\-e \\f[I]PATTERN\\f[] ...] [\\-f \\f[I]FILE\\f[] ...]\n-[\\f[I]path\\f[] ...]\n+rg [\\f[I]OPTIONS\\f[]] [\\-e \\f[I]PATTERN\\f[] ...] [\\-f \\f[I]FILE\\f[] ...]\n+[\\f[I]PATH\\f[] ...]\n .PP\n-rg [\\f[I]options\\f[]] \\-\\-files [\\f[I]path\\f[] ...]\n+rg [\\f[I]OPTIONS\\f[]] \\-\\-files [\\f[I]PATH\\f[] ...]\n .PP\n-rg [\\f[I]options\\f[]] \\-\\-type\\-list\n+rg [\\f[I]OPTIONS\\f[]] \\-\\-type\\-list\n .PP\n-rg [\\f[I]options\\f[]] \\-\\-help\n+rg [\\f[I]OPTIONS\\f[]] \\-\\-help\n .PP\n-rg [\\f[I]options\\f[]] \\-\\-version\n+rg [\\f[I]OPTIONS\\f[]] \\-\\-version\n .SH DESCRIPTION\n .PP\n ripgrep (rg) combines the usability of The Silver Searcher (an ack\n@@ -34,6 +34,21 @@ it searches a file that is simultaneously truncated.\n This behavior can be avoided by passing the \\-\\-no\\-mmap flag.\n .PP\n Project home page: https://github.com/BurntSushi/ripgrep\n+.SH POSITIONAL ARGUMENTS\n+.TP\n+.B \\f[I]PATTERN\\f[]\n+A regular expression used for searching.\n+To match a pattern beginning with a dash, use the \\-e/\\-\\-regexp option.\n+.RS\n+.RE\n+.TP\n+.B \\f[I]PATH\\f[]\n+A file or directory to search.\n+Directories are searched recursively.\n+Paths specified expicitly on the command line override glob and ignore\n+rules.\n+.RS\n+.RE\n .SH COMMON OPTIONS\n .TP\n .B \\-a, \\-\\-text\ndiff --git a/doc/rg.1.md b/doc/rg.1.md\nindex bbc0207..2cd7059 100644\n--- a/doc/rg.1.md\n+++ b/doc/rg.1.md\n@@ -4,17 +4,17 @@ rg - recursively search current directory for lines matching a pattern\n \n # SYNOPSIS\n \n-rg [*options*] *PATTERN* [*path* ...]\n+rg [*OPTIONS*] *PATTERN* [*PATH* ...]\n \n-rg [*options*] [-e *PATTERN* ...] [-f *FILE* ...] [*path* ...]\n+rg [*OPTIONS*] [-e *PATTERN* ...] [-f *FILE* ...] [*PATH* ...]\n \n-rg [*options*] --files [*path* ...]\n+rg [*OPTIONS*] --files [*PATH* ...]\n \n-rg [*options*] --type-list\n+rg [*OPTIONS*] --type-list\n \n-rg [*options*] --help\n+rg [*OPTIONS*] --help\n \n-rg [*options*] --version\n+rg [*OPTIONS*] --version\n \n # DESCRIPTION\n \n@@ -31,6 +31,16 @@ by passing the --no-mmap flag.\n \n Project home page: https://github.com/BurntSushi/ripgrep\n \n+# POSITIONAL ARGUMENTS\n+\n+*PATTERN*\n+: A regular expression used for searching. To match a pattern beginning with a\n+  dash, use the -e/--regexp option.\n+\n+*PATH*\n+: A file or directory to search. Directories are searched recursively. Paths\n+  specified expicitly on the command line override glob and ignore rules.\n+\n # COMMON OPTIONS\n \n -a, --text\ndiff --git a/src/app.rs b/src/app.rs\nindex 5d99854..bcc91f8 100644\n--- a/src/app.rs\n+++ b/src/app.rs\n@@ -18,10 +18,10 @@ Project home page: https://github.com/BurntSushi/ripgrep\n Use -h for short descriptions and --help for more details.\";\n \n const USAGE: &str = \"\n-    rg [options] PATTERN [path ...]\n-    rg [options] [-e PATTERN ...] [-f FILE ...] [path ...]\n-    rg [options] --files [path ...]\n-    rg [options] --type-list\";\n+    rg [OPTIONS] PATTERN [PATH ...]\n+    rg [OPTIONS] [-e PATTERN ...] [-f FILE ...] [PATH ...]\n+    rg [OPTIONS] --files [PATH ...]\n+    rg [OPTIONS] --type-list\";\n \n const TEMPLATE: &str = \"\\\n {bin} {version}\n@@ -67,7 +67,7 @@ pub fn app() -> App<'static, 'static> {\n                 \"file\", \"files\", \"help-short\", \"help\", \"regexp\", \"type-list\",\n                 \"ripgrep-version\",\n              ]))\n-        .arg(arg(\"path\").multiple(true))\n+        .arg(arg(\"PATH\").multiple(true))\n         .arg(flag(\"regexp\").short(\"e\")\n              .takes_value(true).multiple(true).number_of_values(1)\n              .set(ArgSettings::AllowLeadingHyphen)\n@@ -247,10 +247,11 @@ lazy_static! {\n              \"Use pattern to search. This option can be provided multiple \\\n              times, where all patterns given are searched. This is also \\\n              useful when searching for patterns that start with a dash.\");\n-        doc!(h, \"path\",\n+        doc!(h, \"PATH\",\n              \"A file or directory to search.\",\n              \"A file or directory to search. Directories are searched \\\n-              recursively.\");\n+              recursively. Paths specified on the command line override glob \\\n+              and ignore rules.\");\n         doc!(h, \"files\",\n              \"Print each file that would be searched.\",\n              \"Print each file that would be searched without actually \\\ndiff --git a/src/args.rs b/src/args.rs\nindex f0f93cc..6affa2d 100644\n--- a/src/args.rs\n+++ b/src/args.rs\n@@ -371,7 +371,7 @@ impl<'a> ArgMatches<'a> {\n \n     /// Return all file paths that ripgrep should search.\n     fn paths(&self) -> Vec<PathBuf> {\n-        let mut paths: Vec<PathBuf> = match self.values_of_os(\"path\") {\n+        let mut paths: Vec<PathBuf> = match self.values_of_os(\"PATH\") {\n             None => vec![],\n             Some(vals) => vals.map(|p| Path::new(p).to_path_buf()).collect(),\n         };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_HcIFaRQLQnfzwuAIT9BEv0cb",
+        "status": "completed",
+        "input": {
+          "command": "git show r2990_trip_over_trailing_dot"
+        },
+        "output": "fatal: ambiguous argument 'r2990_trip_over_trailing_dot': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_J4PT33xEArXzydxjpl8tBLY3",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"r2990\""
+        },
+        "output": "commit 4df1298127695ed1e76937f16de1a0135677ccf5\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sun Aug 17 17:18:27 2025 -0400\n\n    globset: fix bug where trailing `.` in file name was incorrectly handled\n    \n    I'm not sure why I did this, but I think I was trying to imitate the\n    contract of [`std::path::Path::file_name`]:\n    \n    > Returns None if the path terminates in `..`.\n    \n    But the status quo clearly did not implement this. And as a result, if\n    you have a glob that ends in a `.`, it was instead treated as the empty\n    string (which only matches the empty string).\n    \n    We fix this by implementing the semantic from the standard library\n    correctly.\n    \n    Fixes #2990\n    \n    [`std::path::Path::file_name`]: https://doc.rust-lang.org/std/path/struct.Path.html#method.file_name\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 15,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 15,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 15,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 32,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 15,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 15,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 105465,
+    "output": 1492,
+    "messages": 18
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/c1f5c8d095764f9db033376a4e3e4174ed90c691b4cd10c72f26c93afe3c44ae",
+  "completed": true
+}

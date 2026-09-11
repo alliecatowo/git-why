@@ -1,0 +1,31 @@
+The following brief provides answers to the requested questions about the `curl-curl` repository history.
+
+1.  **Why did the help output show the short version of an option twice when I spelled it out too?**
+    Before commit `5abfdc014` in 2008, curl's command-line option parser would toggle boolean options on/off if used multiple times, which led to confusion. The rework introduced the `--no-` prefix to explicitly disable options, resolving the duplication and ambiguity in help output.
+    *   Commit: `5abfdc014`
+    *   Quote: "curl's option parser for boolean options reworked"
+
+2.  **Why were non-English filenames getting corrupted on Windows builds?**
+    Windows builds initially used standard C library functions (like `stat` or `fopen`) that relied on the local code page for path manipulation, which caused corruption when handling non-English filenames (UTF-8). The project eventually transitioned to using Windows-native Unicode APIs (`_waccess`, etc.) to handle filenames correctly.
+    *   Commit: `bed5f8454`
+    *   Quote: "strerror: honor Unicode API choice on Windows"
+
+3.  **Why did upgrading the crypto library suddenly flood us with deprecation warnings?**
+    Upgrading to OpenSSL 3 caused deprecation warnings for functions libcurl uses (like DES, MD5, and ENGINE), for which OpenSSL provided no immediate replacement. The project suppressed these warnings globally in the build configuration.
+    *   Commit: `cab040248`
+    *   Quote: "OpenSSLv3 marks DES, MD5 and ENGINE functions deprecated but we have no replacements (yet) so tell the compiler to not warn for them."
+
+4.  **What was the case that only worked when we knew the length up front?**
+    CURLOPT_READFUNCTION requires the upload data size to be provided up front (e.g., via `CURLOPT_INFILESIZE`) for certain protocols to work reliably, such as PUT/POST without `Transfer-Encoding: chunked`.
+    *   Commit: `43f7ffb6c`
+    *   Quote: "CURLOPT_READFUNCTION.3: provide the upload data size up front"
+
+5.  **What was that test calling the memory-free helper that newer compilers kept flagging under strict warning flags?**
+    Newer compilers and strict warning flags (like `-Wmissing-prototypes`) flagged the test helper `test_free` because it lacked a prototype or was not properly isolated. Commit `372052073` added `#pragma` directives to suppress these specific warnings when building tool code.
+    *   Commit: `372052073`
+    *   Quote: "#pragma GCC diagnostic ignored \"-Wmissing-prototypes\""
+
+6.  **What was that thing that made it safe to call the header accessors in a loop without the returned values getting trashed?**
+    The introduction of `curl_easy_header()` and `curl_easy_nextheader()` provided a header API where each call stores the header data in its own internal `curl_header` struct within the easy handle, preventing subsequent calls from overwriting the previously returned header values.
+    *   Commit: `d1e4a6773`
+    *   Quote: "By letting curl_easy_header() and curl_easy_nextheader() store the header data in their own struct storage ... it makes it possible for applications to use them both in a loop."

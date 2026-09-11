@@ -1,0 +1,25 @@
+The following brief answers the questions regarding the history of `redis-redis`:
+
+1.  **Access rule overlap bug:** When adding a new access rule, the system failed to correctly resume searching for overlapping rules after a match, causing it to skip over subsequent rules and improperly compact the rule set.
+    *   **Commit:** `7c179f9`
+    *   **Quote:** "However there when a match was found, the search was not resumed at the right location, but instead after the original position of the original command."
+
+2.  **Background maintenance job (shrinking/growing):** This was a result of improving the replication backlog resizing to handle both shrinking (trimming data) and growing (allocating more space) in a unified, safer manner, rather than treating them as disconnected operations.
+    *   **Commit:** `0e5b813`
+    *   **Quote:** "It is up to the function to resize the buffer and setup it so that it contains the same data as the previous one (possibly less data, but the most recent bytes, or the same data and more free space in case the buffer is enlarged)."
+
+3.  **File handle zero bug:** The `open()` system call can return zero as a valid file descriptor, which was not being correctly handled in previous checks, leading to potential issues where a valid handle of zero was ignored or treated as an invalid/leaked file handle.
+    *   **Commit:** `c9aa586`
+    *   **Quote:** "`open()` can return any non-negative integer on success, including zero. This change modifies the check from open()'s return value to also include checking for a return value of zero"
+
+4.  **Database growth bug during loading:** This appears to be related to improvements in how the RDB loader handles duplicate keys and key management during loading, ensuring that the database state is consistently maintained without panics or errors that might halt the expansion/loading process.
+    *   **Commit:** `30adc62`
+    *   **Quote:** "This commit also prepares the ability to have more flexibility when loading stuff from the RDB, since we no longer use dbAdd() but can..." (referring to `dictAdd` which handles duplicates explicitly).
+
+5.  **Bit-position lookup (list vs. string):** When bit operations like `BITPOS` were updated to support both byte and bit indexing, the logic had to explicitly differentiate between these modes because a bit-position lookup on a byte-indexed string (which implies a list of bytes) requires calculating the bit offset differently than when dealing with a direct bit-index.
+    *   **Commit:** `75dd230`
+    *   **Quote:** "For byte index, we need to generate the real bit index... set startbit [expr $start << 3]"
+
+6.  **Expiration sweep/sparse buckets:** The expiration scan needed improved logic to actively skip over dictionaries (or slots in cluster mode) that contained many empty buckets, as scanning empty buckets was inefficient; the flakiness was caused by the scan logic failing to skip these empty slots properly in certain test environments.
+    *   **Commit:** `3fac869`
+    *   **Quote:** "Fix test, disable expiration until empty buckets are formed ... expiry of keys might happen before the empty buckets are formed and won't help with the expiry skip logic validation."

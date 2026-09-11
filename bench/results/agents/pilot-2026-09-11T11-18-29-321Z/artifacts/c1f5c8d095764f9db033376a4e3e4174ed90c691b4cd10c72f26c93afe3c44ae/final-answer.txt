@@ -1,0 +1,31 @@
+This brief answers the questions regarding the history of the `burntsushi-ripgrep` repository:
+
+1. **Bug: Manual page rendered an odd-looking dash.**
+   This was an issue where Pandoc would render certain characters inconsistently in the generated man page, often turning hyphens into long dashes. It was addressed by updating Pandoc and adjusting the man page generation process.
+   *   **Commit:** `34c0b1bc709f74678d7c1a24046c26571c25eaec`
+   *   **Quote:** `pandoc -s -f markdown-smart -t man rg.1.md -o rg.1` (This command change introduced the fix by using `-f markdown-smart` to specifically handle formatting.)
+
+2. **Dependency bumped for router firmware build.**
+   This refers to updating the `winapi` dependency (and others) to newer, more stable versions that supported cross-compilation and build requirements for various environments, including ARM targets used in some firmware builds.
+   *   **Commit:** `cb47be9`
+   *   **Quote:** `This fixes a bug where ripgrep's man page wasn't generated in the ARM cross-compile build. Mostly, this should just require installing asciidoc...`
+
+3. **Thing we got rid of because it kept breaking.**
+   This refers to the `Clap` argument parsing library, which was replaced by `lexopt` to simplify the codebase and reduce maintenance burden.
+   *   **Commit:** `082245d`
+   *   **Quote:** `ripgrep began it's life with docopt for argument parsing. Then it moved to Clap and stayed there for a number of years. Clap has served ripgrep well... but I ended up deciding to replace it [with lexopt].`
+
+4. **Why bundled executables were resolved eagerly on Windows.**
+   This was a security vulnerability where `CreateProcess` on Windows would implicitly search the current working directory for an executable if given a relative path. The fix involved explicitly resolving executables to absolute paths using the `PATH` environment variable before execution.
+   *   **Commit:** `229d1a8`
+   *   **Quote:** `Notably, on Windows, this avoids a security problem where passing a relative path to CreateProcess will automatically search the current directory for a matching program.`
+
+5. **Bug where names ending in two dots treated as having no filename.**
+   This was an issue in `globset` where paths ending in `..` or a trailing `.` were incorrectly handled due to an incorrect implementation of `file_name` that didn't match the standard library's `Path::file_name` contract.
+   *   **Commit:** `4df1298127695ed1e76937f16de1a0135677ccf5`
+   *   **Quote:** `And as a result, if you have a glob that ends in a ., it was instead treated as the empty string... We fix this by implementing the semantic from the standard library correctly.`
+
+6. **Bug where capping results was untrustworthy with surrounding lines.**
+   This was an issue where the "max matches" limit (`--max-count`) interacted poorly with multi-line matches and context lines, leading to inaccurate result counting or missing matches. It was resolved by moving the "max matches" logic from the printer to the searcher to correctly handle state across lines.
+   *   **Commit:** `a6e0be3`
+   *   **Quote:** `This is a bit of a brutal change, but I believe is necessary in order to fix a bug in how we handle the "max matches" limit in multi-line mode while simultaneously handling context lines correctly.`

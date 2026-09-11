@@ -1,0 +1,19 @@
+The requested brief regarding the history of the `curl-curl` repository is provided below:
+
+1. **Why did the help output show the short version of an option twice when I spelled it out too?**
+   Prior to generating the help output from a centralized source, duplicate listings occurred because the help text was manually maintained and inconsistent. Commit `4ab8ebb23` ("I re-arranged the curl --help output. All the options are now sorted on their long option names and all descriptions are one-liners.") initiated a cleanup, and later commit `8b2f22ed2` ("curl: generate the --help output") moved the generation to a script (`docs/cmdline-opts/gen.pl`) to ensure consistent, non-redundant output.
+
+2. **Why were non-English filenames getting corrupted on Windows builds?**
+   Windows builds were using ANSI-based file functions that did not correctly handle non-ASCII/Unicode characters in filenames. Commit `ffdddb45d` ("curl_setup: support Unicode functions to open files on Windows") introduced `curlx_win32_fopen` and `curlx_win32_stat` to use Unicode-aware functions (`_wfopen`, `_wstat`) when `_UNICODE` is defined, preventing corruption.
+
+3. **Why did upgrading the crypto library suddenly flood us with deprecation warnings?**
+   The project began adding explicit deprecation markers to APIs to encourage migration to newer alternatives, and a test was added to enforce/check these deprecations. Commit `6967571bf` ("lib: feature deprecation warnings in gcc >= 4.3") introduced `CURL_DEPRECATED()` macros throughout the library, causing builds to report these warnings where previously there were none.
+
+4. **What was the case that only worked when we knew the length up front?**
+   Multipart form uploads using a read callback required the total size to be known to set the `Content-Length` header correctly in the POST request. Commit `a2314225e` ("Added CURLFORM_STREAM as a supported option to curl_formadd()...") made `CURLFORM_CONTENTSLENGTH` mandatory when using the `CURLFORM_STREAM` option, as the library could not otherwise determine the size of the streamed data.
+
+5. **What was that test calling the memory-free helper that newer compilers kept flagging under strict warning flags?**
+   The project used `Curl_safefree` as a function, which caused issues with memory tracking and unnecessary warnings in some configurations. Commit `9194e1700` ("MemoryTracking: fix logging of free() calls done where Curl_safefree is called") redefined `Curl_safefree` as a macro and introduced the `WHILE_FALSE` macro in `setup_once.h` to satisfy compiler warnings about constant conditional expressions in loop-like macros.
+
+6. **What was that thing that made it safe to call the header accessors in a loop without the returned values getting trashed?**
+   Previously, header accessors used a single shared memory location in `struct UrlState` for returned header data, meaning subsequent calls overwrote the results of previous ones. Commit `05616379e` ("headers: make curl_easy_header and nextheader return different buffers") changed `struct curl_header headerout` in `urldata.h` to an array (`struct curl_header headerout[2]`), allowing two different header lookups to persist in memory simultaneously.

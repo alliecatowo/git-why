@@ -1,0 +1,150 @@
+{
+  "task_id": "B-redis-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "b70666a1c3640673021d0456baf11333131a2b94",
+  "packed_tool_sha256": "2b2808ab545eab4238d37536834b565e0d546687748219d0c4ca32f8de9a7870",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T11:45:14.377Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "9168da2e3585baa5f7ddce5937dfeb25e045532791a1d1cfb390234a025fa510",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 2,
+    "outOf": 6,
+    "found": [
+      true,
+      false,
+      true,
+      false,
+      false,
+      false
+    ],
+    "citedShaCount": 6,
+    "citedGoldSha": true,
+    "goldSha": "7c179f9bf4390512196b3a2b2ad6d0f4cb625c8a"
+  },
+  "wall_ms": 77917,
+  "tool_calls": 12,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 7,
+  "input_tokens": 45597,
+  "output_tokens": 1194,
+  "cache_read_tokens": 134970,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0165645,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 147133,
+  "index_build_ms": 223137,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T11-18-29-321Z/events/B-redis-redis-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "fb087773a61e80a7fb4905c3a47007f1f58646d48ae907093c4c91e0273d9475",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_qsvahaPC5gFgES9Fl15ez1uP",
+        "status": "completed",
+        "input": {
+          "command": "git show 7c179f9"
+        },
+        "output": "commit 7c179f9bf4390512196b3a2b2ad6d0f4cb625c8a\nAuthor: Madelyn Olson <34459052+madolson@users.noreply.github.com>\nDate:   Wed Aug 9 23:58:53 2023 -0700\n\n    Fixed a bug where sequential matching ACL rules weren't compressed (#12472)\n    \n    When adding a new ACL rule was added, an attempt was made to remove\n    any \"overlapping\" rules. However, there when a match was found, the search\n    was not resumed at the right location, but instead after the original position of\n    the original command.\n    \n    For example, if the current rules were `-config +config|get` and a rule `+config`\n    was added. It would identify that `-config` was matched, but it would skip over\n    `+config|get`, leaving the compacted rule `-config +config`. This would be evaluated\n    safely, but looks weird.\n    \n    This bug can only be triggered with subcommands, since that is the only way to\n    have sequential matching rules. Resolves #12470. This is also only present in 7.2.\n    I think there was also a minor risk of removing another valid rule, since it would start\n    the search of the next command at an arbitrary point. I couldn't find a valid offset that\n    would have cause a match using any of the existing commands that have subcommands\n    with another command.\n\ndiff --git a/src/acl.c b/src/acl.c\nindex 0bffbe970..5fd956d23 100644\n--- a/src/acl.c\n+++ b/src/acl.c\n@@ -563,7 +563,7 @@ void ACLSelectorRemoveCommandRule(aclSelector *selector, sds new_rule) {\n          * as well if the command is removed. */\n         char *rule_end = strchr(existing_rule, ' ');\n         if (!rule_end) {\n-            /* This is the last rule, so it it to the end of the string. */\n+            /* This is the last rule, so move it to the end of the string. */\n             rule_end = existing_rule + strlen(existing_rule);\n \n             /* This approach can leave a trailing space if the last rule is removed,\n@@ -580,6 +580,8 @@ void ACLSelectorRemoveCommandRule(aclSelector *selector, sds new_rule) {\n                 /* Copy the remaining rules starting at the next rule to replace the rule to be\n                  * deleted, including the terminating NULL character. */\n                 memmove(copy_position, copy_end, strlen(copy_end) + 1);\n+                existing_rule = copy_position;\n+                continue;\n             }\n         }\n         existing_rule = copy_end;\ndiff --git a/tests/unit/acl.tcl b/tests/unit/acl.tcl\nindex 6dcee8b94..36ef06370 100644\n--- a/tests/unit/acl.tcl\n+++ b/tests/unit/acl.tcl\n@@ -615,6 +615,10 @@ start_server {tags {\"acl external:skip\"}} {\n         # Unnecessary categories are retained for potentional future compatibility\n         r ACL SETUSER adv-test -@all -@dangerous\n         assert_equal \"-@all -@dangerous\" [dict get [r ACL getuser adv-test] commands]\n+\n+        # Duplicate categories are compressed, regression test for #12470\n+        r ACL SETUSER adv-test -@all +config +config|get -config|set +config\n+        assert_equal \"-@all +config\" [dict get [r ACL getuser adv-test] commands]\n     }\n \n     test \"ACL CAT with illegal arguments\" {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_cRq7a3ssAJBN3XuF1IPUSuWW",
+        "status": "completed",
+        "input": {
+          "command": "git show c9aa586"
+        },
+        "output": "commit c9aa586b6bf99ac51b2118484fab98006d59dfc5\nAuthor: Moshe Kaplan <mosheekaplan@gmail.com>\nDate:   Thu Nov 23 03:14:17 2023 -0500\n\n    rdb.c: Avoid potential file handle leak (Coverity 404720) (#12795)\n    \n    `open()` can return any non-negative integer on success, including zero.\n    This change modifies the check from open()'s return value to also\n    include checking for a return value of zero (e.g., if stdin were closed\n    and then `open()` was called).\n    \n    Fixes Coverity 404720\n    \n    Can't happen in Redis. just a cleanup.\n\ndiff --git a/src/rdb.c b/src/rdb.c\nindex d983a99f2..5478d612b 100644\n--- a/src/rdb.c\n+++ b/src/rdb.c\n@@ -3442,7 +3442,7 @@ int rdbLoad(char *filename, rdbSaveInfo *rsi, int rdbflags) {\n     if (retval == C_OK && !(rdbflags & RDBFLAGS_KEEP_CACHE)) {\n         /* TODO: maybe we could combine the fopen and open into one in the future */\n         rdb_fd = open(filename, O_RDONLY);\n-        if (rdb_fd > 0) bioCreateCloseJob(rdb_fd, 0, 1);\n+        if (rdb_fd >= 0) bioCreateCloseJob(rdb_fd, 0, 1);\n     }\n     return (retval==C_OK) ? RDB_OK : RDB_FAILED;\n }\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_A5V2Yel3hs0HZH3mvNAoULzc",
+        "status": "completed",
+        "input": {
+          "command": "git show 3fac869"
+        },
+        "output": "commit 3fac869f02657d94dc89fab23acb8ef188889c96\nAuthor: Harkrishn Patro <harkrisp@amazon.com>\nDate:   Tue Oct 24 01:29:40 2023 -0700\n\n    Fix test, disable expiration until empty buckets are formed (#12689)\n    \n    Test failure on freebsd CI:\n    ```\n    *** [err]: expire scan should skip dictionaries with lot's of empty buckets in tests/unit/expire.tcl\n      scan didn't handle slot skipping logic.\n    ```\n    \n    Observation:\n    \n    expiry of keys might happen before the empty buckets are formed and won't help with the expiry skip logic validation.\n    \n    Solution:\n    \n    Disable expiration until the empty buckets are formed.\n\ndiff --git a/tests/unit/expire.tcl b/tests/unit/expire.tcl\nindex 672ba1b42..5f69b3866 100644\n--- a/tests/unit/expire.tcl\n+++ b/tests/unit/expire.tcl\n@@ -836,6 +836,8 @@ start_server {tags {\"expire\"}} {\n \n start_cluster 1 0 {tags {\"expire external:skip cluster slow\"}} {\n     test \"expire scan should skip dictionaries with lot's of empty buckets\" {\n+        r debug set-active-expire 0\n+\n         # Collect two slots to help determine the expiry scan logic is able\n         # to go past certain slots which aren't valid for scanning at the given point of time.\n         # And the next non empyt slot after that still gets scanned and expiration happens.\n@@ -860,7 +862,9 @@ start_cluster 1 0 {tags {\"expire external:skip cluster slow\"}} {\n             r del \"{foo}$j\"\n         }\n \n-        # Verify {foo}5 still exists and remaining got cleaned up\n+        r debug set-active-expire 1\n+\n+        # Verify {foo}100 still exists and remaining got cleaned up\n         wait_for_condition 20 100 {\n             [r dbsize] eq 1\n         } else {\n@@ -889,5 +893,5 @@ start_cluster 1 0 {tags {\"expire external:skip cluster slow\"}} {\n         } else {\n             fail \"Keys did not actively expire.\"\n         }\n-    }\n+    } {} {needs:debug}\n }\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 45597,
+    "output": 1194,
+    "messages": 14
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/fb087773a61e80a7fb4905c3a47007f1f58646d48ae907093c4c91e0273d9475",
+  "completed": true
+}
