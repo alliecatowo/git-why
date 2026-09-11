@@ -1,0 +1,31 @@
+The requested engineering brief is as follows:
+
+1.  **Why did an element that wasn't allowed inside a wrapper get quietly let through instead of rejected?**
+    It was a design choice to maintain a consistent wrapper contract between the compiled and interpreted parse paths; the `withParser` installer intentionally allowed the runtime to re-parse as a fallback, rather than failing the parse.
+    *   **Commit:** `213ee75d2ad6e41508587c3fab8246967f006993`
+    *   **Quote:** "its undefined definite keeps the runtime re-parse on every rejection."
+
+2.  **Why did a child type lose the ability to override what its parent had installed on the shared prototype?**
+    The installation mechanism was moved to the `$constructor` itself, which installs methods once per prototype, making the child's own methods (which are now physically closer in the chain) win by default, rather than relying on the previous system of overwriting sentinel-based installs.
+    *   **Commit:** `773a48676ede1a2144d4f2e60892e6c0cd6625a7`
+    *   **Quote:** "the subclass's own methods win by being nearer in the chain."
+
+3.  **What was the crash where turning a schema into JSON blew up on a huge number default?**
+    This occurred when `toJSONSchema` encountered a BigInt default value, as the JSON serializer hit a `TypeError` (BigInt cannot be serialized as JSON), which was not handled before the conversion hooks were called.
+    *   **Commit:** `4d6b5cd3eb36e650fec0586bc085ed7263d43ef4`
+    *   **Quote:** "A bigint `.default()` crashed `toJSONSchema` with a raw `JSON.stringify` TypeError before any hook could run."
+
+4.  **Why did making lots of schemas suddenly get so slow and memory-hungry?**
+    The overhead was caused by every object schema installing an own accessor per instance, which demoted them to dictionary mode in V8, and the `z.object()` parser churn.
+    *   **Commit:** `9782f87c69be3ceb0bbdae94fcc1c337bfc8618d`
+    *   **Quote:** "every object schema after the first sat in v8 dictionary mode because `shape` installed an own accessor per instance."
+
+5.  **What was that thing where combining two shapes printed out as a nested allOf block in the generated schema?**
+    Intersection schemas were being emitted as `allOf` arrays; the recursive nature of some intersections caused the exporter to emit nested `allOf` blocks, which `additionalProperties` logic could not correctly resolve across different members.
+    *   **Commit:** `7b612b536d8bcb1dd160a705cc2d9a4109cb50b3`
+    *   **Quote:** "`z.toJSONSchema()` emits `z.intersection(A, B)` as `allOf: [A, B]`. `additionalProperties` in an `allOf` member only sees that member's own `properties`"
+
+6.  **What was that bug where the last character of a generated id could be one of two values that don't actually come from the data?**
+    This referred to the ULID validator accepting the full alphabet in the first position, where some characters (like '8' and '9') would decode to the same 128-bit value as others, leading to collision vulnerabilities that the reference implementation specifically guarded against.
+    *   **Commit:** `9d5b20ef6c9dbff29a0fa272de4203201b23aa50`
+    *   **Quote:** "Those bits are discarded on decode rather than rejected, which is why `0…`, `8…`, `G…` and `R…` all decode to the same 128-bit value."

@@ -49,6 +49,7 @@ if (process.argv.includes('--dump')) {
           process.execPath,
           [
             CLI,
+            '--query',
             c.question,
             '-n',
             String(DEPTH),

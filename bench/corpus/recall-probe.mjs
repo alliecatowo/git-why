@@ -49,7 +49,17 @@ function search(repo, query, depth) {
   try {
     const out = execFileSync(
       process.execPath,
-      [CLI, query, '-n', String(depth), '--no-refresh', '--json', '--max-bytes', String(MAX_BYTES)],
+      [
+        CLI,
+        '--query',
+        query,
+        '-n',
+        String(depth),
+        '--no-refresh',
+        '--json',
+        '--max-bytes',
+        String(MAX_BYTES),
+      ],
       { cwd: repo, encoding: 'utf8', maxBuffer: 1e9, stdio: ['ignore', 'pipe', 'ignore'] },
     );
     const parsed = JSON.parse(out);

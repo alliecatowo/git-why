@@ -1,0 +1,13 @@
+The following is the brief addressing the questions based on the repository history:
+
+1. **Certificate selection change:** The shift to supporting multiple certificates occurred when certificate selection policies were refactored to handle merged connection policies (Commit: `6ca58282`). The message states: *"caddytls: Refactor certificate selection policies (close #1575)"* and the diff reflects the move to supporting multiple certificate selection.
+
+2. **Load-balancing bug:** The "random_choose" policy had an incorrect implementation of reservoir sampling, causing it to fail to pick the least-busy server correctly (Commit: `b2be5482`). The commit message is: *"reverseproxy: fix broken reservoir sampling in random_choose policy (#7873)"*.
+
+3. **Stale socket file:** On Windows, the server failed to restart if a stale Unix socket remained (Commit: `6a64bb2c`). The message is: *"listeners: clean up stale Unix socket files on Windows (#7676)"*.
+
+4. **Header casing performance:** Using non-canonical header names forced unnecessary re-canonicalization, which was resolved by switching to standard canonical casing (Commit: `3be8dabc`). The message is: *"caddyhttp: use canonical header key casing to avoid re-canonicalization (#7911)"*.
+
+5. **Matcher block merging:** Consecutive matchers were being improperly handled; they now correctly merge into a single stream instead of staying separate (Commit: `40c582ce`). The message is: *"caddyhttp: Fix merging consecutive client_ip or remote_ip matchers (#6350)"*.
+
+6. **Header security bypass:** Client-supplied headers could bypass the filter if the auth service failed to provide them, which was fixed by explicitly deleting those headers first (Commit: `2dbcdefb`). The message is: *"forward_auth: copy_headers does not strip client-supplied identity headers (Fixes GHSA-7r4p-vjf4-gxv4) (#7545)"*.

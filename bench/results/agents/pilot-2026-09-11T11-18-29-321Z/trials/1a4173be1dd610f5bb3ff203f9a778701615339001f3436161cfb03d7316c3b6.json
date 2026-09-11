@@ -1,0 +1,132 @@
+{
+  "task_id": "B-curl-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "9f0d8254943189bdc90cc6807a5cbb8e316dd622",
+  "packed_tool_sha256": "2b2808ab545eab4238d37536834b565e0d546687748219d0c4ca32f8de9a7870",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T11:20:04.427Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "014c78f11da40c42fb4a0fa006b38cb5456c3f9e91943549153af8cf8d747c88",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 1,
+    "outOf": 6,
+    "found": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ],
+    "citedShaCount": 7,
+    "citedGoldSha": true,
+    "goldSha": "33866a31c3ce14590b8d1f6039fefcde8460e577"
+  },
+  "wall_ms": 57619,
+  "tool_calls": 10,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 9,
+  "input_tokens": 39165,
+  "output_tokens": 1050,
+  "cache_read_tokens": 103911,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.013964025,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 123595,
+  "index_build_ms": 567653,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105129095,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T11-18-29-321Z/events/B-curl-curl-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "1a4173be1dd610f5bb3ff203f9a778701615339001f3436161cfb03d7316c3b6",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 24,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 39165,
+    "output": 1050,
+    "messages": 12
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/1a4173be1dd610f5bb3ff203f9a778701615339001f3436161cfb03d7316c3b6",
+  "completed": true
+}

@@ -53,6 +53,7 @@ function ranked(repo, question) {
       process.execPath,
       [
         CLI,
+        '--query',
         question,
         '-n',
         String(depth),

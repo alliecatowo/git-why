@@ -18,7 +18,7 @@ be unanswerable by `git log --grep` or `git log -S`.
 
 **Reach for `git why` when you cannot name the term.**
 
-On questions where keyword search provably fails, `git why` scores MRR 0.233
+On questions where keyword search provably fails, `git why` scores MRR 0.266
 against 0.026 for `zg` and 0.003 for `git log --grep`. `git log --grep
 --all-match` returns _nothing at all_ on 109 of 174. That is the regime it
 exists for.

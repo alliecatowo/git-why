@@ -393,6 +393,46 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## Eleven cases scored zero because of a stray hyphen
+
+The corpus reported 11 of 174 questions as returning nothing. On repositories
+with thousands of commits that is implausible on its face, which is what made
+it worth chasing.
+
+All eleven were from zod, and all eleven began with a literal `- ` — a markdown
+list marker the paraphraser left on its output. The CLI reads a leading hyphen
+as an option, so `git why "- what was that bug..."` is `Unknown option`, exit 2.
+The product behaved correctly. The benchmark was handing it an invalid
+invocation and recording the refusal as a retrieval failure.
+
+**This is a measurement fix, and it moves the headline numbers up, so it is
+worth being precise about what changed and what did not.**
+
+| 174-case corpus   | Hit@1 | Hit@5 |   MRR | unscoreable |
+| ----------------- | ----: | ----: | ----: | ----------: |
+| with the artifact | 0.172 | 0.333 | 0.233 |          11 |
+| after cleaning    | 0.201 | 0.374 | 0.266 |           0 |
+
+Nothing about retrieval changed between those rows. Eleven questions that could
+not be asked are now asked. `zg` was affected identically — its unscoreable
+count fell from 13 to 2 — so the comparison between strategies was not
+distorted, only depressed.
+
+Fixed in three places, because one would not have been enough:
+
+- The paraphraser now strips every list marker a model might emit, not only the
+  numbered form it happened to be written against.
+- The eleven stored questions are cleaned. The marker was never part of the
+  question; no user types it.
+- Every corpus scorer passes the question through `--query`, which exists for
+  exactly this and which none of them was using. A question is arbitrary text
+  and must never be positional.
+
+**The product gets one change from this**, recorded separately: `Unknown
+option: - what was that bug` is a correct error with an unhelpful hint. When an
+unknown option looks like prose rather than a flag, the hint should name
+`--query`.
+
 ## A recency prior scores well and must not ship
 
 Found while looking for a second reranking signal, and worth recording

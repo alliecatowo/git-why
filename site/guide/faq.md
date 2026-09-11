@@ -26,8 +26,8 @@ full caveat and numbers.
 
 ## Which benchmark number should I believe?
 
-The one in [section 0](/guide/benchmarks) of the report: **MRR 0.233, Hit@5
-0.333**, on 174 questions derived mechanically from six real repositories and
+The one in [section 0](/guide/benchmarks) of the report: **MRR 0.266, Hit@5
+0.374**, on 174 questions derived mechanically from six real repositories and
 then gated so that anything `git log --grep` or `git log -S` could already
 answer was thrown out.
 

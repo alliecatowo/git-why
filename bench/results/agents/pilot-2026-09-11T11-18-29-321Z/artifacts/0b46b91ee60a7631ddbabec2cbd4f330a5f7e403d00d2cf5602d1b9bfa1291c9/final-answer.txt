@@ -1,0 +1,31 @@
+### Engineering brief: burntsushi-ripgrep
+
+1. **Bug with matching style skipping patterns:**
+   This occurred when using multiple `-e` / `--regexp` patterns, where the `ArgsImp` structure was not deduplicating them, causing potential logic errors in the matcher. It was fixed by using a `HashSet` to ensure unique patterns.
+   * Commit SHA: `88524a2`
+   * Quote: "ripgrep does not, and likely never will, report which pattern matched. Because of that, we can dedup the patterns via just their concrete syntax without any fuss."
+
+2. **Curly-brace file filters bug:**
+   Curly-brace expansion (`{...}`) was added to the glob format in a specific commit, which allowed for comma-separated alternates in glob patterns.
+   * Commit SHA: `fd5ae2f`
+   * Quote: "Add curly brace alternates to glob format."
+
+3. **Slowdown on Windows from checking if ignore files exist:**
+   Checking for ignore files via `stat` on Windows is notoriously slow. Ripgrep introduced a change to speculatively avoid the `exists()` check on Windows to maintain performance, as Windows system calls in this context are heavy.
+   * Commit SHA: `a18cf6e`
+   * Quote: "However, until demonstrated otherwise, we speculatively do not do this on Windows since Windows is notorious for having slow file system operations."
+
+4. **Paths relative to the directory the command was set up for:**
+   Test utilities were refactored so that `current_dir` automatically joins the provided path with the test's working directory, ensuring that paths are interpreted relative to the intended base directory.
+   * Commit SHA: `924ba10`
+   * Quote: "The path given is interpreted relative to the directory that this command was created for."
+
+5. **Bug appearing after moving past an earlier release:**
+   While Fish shell completions were announced to be removed in a previous release, they were retained due to community demand, which caused some confusion and required fixing in the changelog and release process.
+   * Commit SHA: `af8b27f`
+   * Quote: "In a previous release, I announced that Fish completions were being removed. But the Fish project decided to remove theirs and have ripgrep's stay."
+
+6. **Search time hardly changing regardless of trailing context:**
+   A performance bug related to `-A/--after-context` caused excessive work when finding preceding lines for context, leading to slow performance for large context values. This was fixed by optimizing how the searcher finds preceding lines for context.
+   * Commit SHA: `d4b77a8`
+   * Quote: "searcher: fix a performance bug with `-A/--after-context` ... however, we only need to find the N preceding lines based on before context. We can skip this (potentially costly, for large values of N) step when before_context==0."

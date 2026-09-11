@@ -121,9 +121,13 @@ const STRATEGIES = {
   },
 
   'git why': (repo, q) => {
-    const out = run(process.execPath, [CLI, q, '-n', String(TOPK), '--json', '--no-refresh'], {
-      cwd: repo,
-    });
+    const out = run(
+      process.execPath,
+      [CLI, '--query', q, '-n', String(TOPK), '--json', '--no-refresh'],
+      {
+        cwd: repo,
+      },
+    );
     try {
       return (JSON.parse(out).results ?? []).map((r) => r.sha);
     } catch {

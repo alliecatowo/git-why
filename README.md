@@ -142,14 +142,14 @@ answer from the question's own words, the case is discarded.
 
 | strategy                   | Hit@1     | Hit@5     | MRR       | returned nothing |
 | -------------------------- | --------- | --------- | --------- | ---------------- |
-| **git why**                | **0.172** | **0.333** | **0.233** | 11               |
-| zg (semantic code search)  | 0.017     | 0.040     | 0.026     | 13               |
+| **git why**                | **0.201** | **0.374** | **0.266** | 0                |
+| zg (semantic code search)  | 0.017     | 0.040     | 0.026     | 2                |
 | git log -G                 | 0.006     | 0.017     | 0.011     | 15               |
 | git log --grep             | 0.000     | 0.011     | 0.003     | 0                |
 | git log --grep --all-match | 0.000     | 0.000     | 0.000     | **109**          |
 | git log -S                 | 0.000     | 0.000     | 0.000     | 15               |
 
-**8.9x `zg` and 20x the best Git-native strategy** — and the only approach that answers nearly every question rather than returning an empty set.
+**10.2x `zg` and 23x the best Git-native strategy** — and the only approach that answers nearly every question rather than returning an empty set.
 
 <!-- /generated:corpus-table -->
 
@@ -241,8 +241,8 @@ hours.
 
 <!-- generated:honesty -->
 
-**It is also wrong most of the time.** Hit@5 of 0.333 means the right commit is
-outside the top five on 66.7% of these questions. It beats every alternative on
+**It is also wrong most of the time.** Hit@5 of 0.374 means the right commit is
+outside the top five on 62.6% of these questions. It beats every alternative on
 them and still fails on most. Treat a result as a lead to verify with `git show`, never as
 established fact.
 

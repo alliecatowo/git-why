@@ -75,7 +75,12 @@ for (let i = 0; i < cases.length; i += BATCH) {
   const lines = text
     .replace(ANSI, '')
     .split('\n')
-    .map((l) => l.replace(/^\s*\d+[.)]\s*/, '').trim())
+    // Strip every list marker the model might use, not only the numbered form.
+    // Eleven questions shipped with a literal "- " prefix, and a leading dash
+    // makes the CLI read the whole question as an unknown option — so those
+    // cases scored zero for a formatting artifact rather than for anything
+    // about retrieval.
+    .map((l) => l.replace(/^\s*(?:\d+[.)]|[-*\u2022])\s+/, '').trim())
     .filter((l) => l.length > 25 && !l.startsWith('>') && !/^build\b/i.test(l));
 
   for (let j = 0; j < batch.length && j < lines.length; j += 1) {

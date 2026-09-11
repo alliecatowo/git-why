@@ -1,0 +1,203 @@
+{
+  "task_id": "B-burntsushi-ripgrep-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "9f0d8254943189bdc90cc6807a5cbb8e316dd622",
+  "packed_tool_sha256": "2b2808ab545eab4238d37536834b565e0d546687748219d0c4ca32f8de9a7870",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T11:18:29.775Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "c00d30fc1d500874961212486ed60e99e16c49b1d2a24d0d7831e1f9a7c4ef2a",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 2,
+    "outOf": 6,
+    "found": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      true
+    ],
+    "citedShaCount": 6,
+    "citedGoldSha": true,
+    "goldSha": "f55548ba9f24dda192880d4a3da2b52e90f6e194"
+  },
+  "wall_ms": 640712,
+  "tool_calls": 21,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 14,
+  "input_tokens": 80384,
+  "output_tokens": 1206,
+  "cache_read_tokens": 602534,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.03696835,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 356233,
+  "index_build_ms": 29139,
+  "model_download_ms": null,
+  "index_disk_bytes": 91397716,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T11-18-29-321Z/events/B-burntsushi-ripgrep-02-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "0b46b91ee60a7631ddbabec2cbd4f330a5f7e403d00d2cf5602d1b9bfa1291c9",
+  "indexed_commits": 2287,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_rTdIbr4NNJZpgqpIUwlHN8kI",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"trailing context\" -p --no-refresh"
+        },
+        "output": "fatal: unrecognized argument: --no-refresh\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_cRAZNUtapoCepLbnop5KGoVm",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"trailing context\" -p"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_C7SgNNvTbR6nwGqmPK29WXf7",
+        "status": "completed",
+        "input": {
+          "command": "git log -G \"context\" --grep=\"context\" --oneline -20"
+        },
+        "output": "b621e65 ignore: add incremental checking\nd4b77a8 searcher: fix a performance bug with `-A/--after-context`\n8c6595c searcher: fix performance bug with `-A/--after-context` when searching `stdin`\nfdea972 doc: clarify a case where -m/--max-count is not strictly respected\na6e0be3 searcher: move \"max matches\" from printer to searcher\n92c81b1 core: switch to anyhow\nd675844 core: don't let context flags override eachother\nefd9cfb grep: fix bugs in handling multi-line look-around\n578e199 cli: add --field-{context,match}-separator flags\n0ca96e0 printer: fix context bug when --max-count is used\ne71eedf cli: add --no-context-separator flag\nd5c0b03 changelog: massive update for libripgrep\nb006943 search: add -b/--byte-offset flag\nd73a75d Omit context separators when using a contextless option like -c or -l\ne7c06b9 Fix printing context after an early return from a search\nd352b79 Add new -M/--max-columns option.\nca058d7 Add support for memory maps.\nc2b5577 progress on after contexts\n7f0b1cc Before contexts seem to work.\n5450aed Make \"before\" context work.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_2xkLoOS0VmqbHwNHPY9q60Ww",
+        "status": "completed",
+        "input": {
+          "command": "git show d4b77a8 | head -n 50"
+        },
+        "output": "commit d4b77a8d8967ce1bf701ec65ceb9a75e85e5f2e0\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Tue Oct 14 13:46:02 2025 -0400\n\n    searcher: fix a performance bug with `-A/--after-context`\n    \n    Previously (with the previous commit):\n    \n    ```\n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -A999) | wc -l\n    \n    real    2.321\n    user    0.674\n    sys     0.735\n    maxmem  30 MB\n    faults  0\n    1000\n    \n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -A9999) | wc -l\n    \n    real    2.513\n    user    0.823\n    sys     0.686\n    maxmem  30 MB\n    faults  0\n    10000\n    \n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -A99999) | wc -l\n    \n    real    5.067\n    user    3.254\n    sys     0.676\n    maxmem  30 MB\n    faults  0\n    100000\n    \n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -A999999) | wc -l\n    \n    real    6.658\n    user    4.841\n    sys     0.778\n    maxmem  51 MB\n    faults  0\n    1000000\n    ```\n    \n    Now with this commit:\n    \n    ```\n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -A999) | wc -l\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_5tJJC7lCIHEgqtEfnTrJhbjp",
+        "status": "completed",
+        "input": {
+          "command": "git show d4b77a8 | tail -n 50"
+        },
+        "output": "    faults  0\n    1\n    \n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -B9999) | wc -l\n    \n    real    2.638\n    user    0.895\n    sys     0.665\n    maxmem  29 MB\n    faults  0\n    1\n    \n    $ cat bigger.txt | (time rg ZQZQZQZQZQ -B99999) | wc -l\n    \n    real    5.172\n    user    3.282\n    sys     0.748\n    maxmem  29 MB\n    faults  0\n    1\n    ```\n    \n    NOTE: To get `bigger.txt`:\n    \n    ```\n    $ curl -LO 'https://burntsushi.net/stuff/opensubtitles/2018/en/sixteenth.txt.gz'\n    $ gzip -d sixteenth.txt.gz\n    $ (echo ZQZQZQZQZQ && for ((i=0;i<10;i++)); do cat sixteenth.txt; done) > bigger.txt\n    ```\n\ndiff --git a/crates/searcher/src/searcher/core.rs b/crates/searcher/src/searcher/core.rs\nindex 87eaf7f..e0693c0 100644\n--- a/crates/searcher/src/searcher/core.rs\n+++ b/crates/searcher/src/searcher/core.rs\n@@ -191,10 +191,14 @@ impl<'s, M: Matcher, S: Sink> Core<'s, M, S> {\n             // separator (when before_context==0 and after_context>0), we\n             // need to know something about the position of the previous\n             // line visited, even if we're at the beginning of the buffer.\n+            //\n+            // ... however, we only need to find the N preceding lines based\n+            // on before context. We can skip this (potentially costly, for\n+            // large values of N) step when before_context==0.\n             let context_start = lines::preceding(\n                 buf,\n                 self.config.line_term.as_byte(),\n-                self.config.max_context(),\n+                self.config.before_context,\n             );\n             let consumed =\n                 std::cmp::max(context_start, self.last_line_visited);\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 80384,
+    "output": 1206,
+    "messages": 23
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/0b46b91ee60a7631ddbabec2cbd4f330a5f7e403d00d2cf5602d1b9bfa1291c9",
+  "completed": true
+}

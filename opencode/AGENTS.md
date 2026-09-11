@@ -11,7 +11,7 @@ plus a cross-file corpus.
 
 - **`zg "<query>"`** — where something is in the CURRENT code.
 - **`git why "<question>"`** — WHY it is that way. On questions you cannot turn
-  into a search term it scores ~20x `git log --grep`.
+  into a search term it scores ~23x `git log --grep`.
 - **`git log -S<symbol>`** — what touched a KNOWN identifier. Beats semantic
   search 0.950 to 0.350. If you can see the name, use this.
 
@@ -48,7 +48,7 @@ git why "when was HTTP/3 support added" --first
 
 ## Trusting results
 
-It misses roughly two hard questions in three while still beating every
+It misses roughly three hard questions in five while still beating every
 alternative on them. Verify with `git show <sha>` before acting. If nothing
 looks relevant, report that the history does not record a reason rather than
 assembling one from a weak match — a confident wrong "why" is worse than none.

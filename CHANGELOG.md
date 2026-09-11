@@ -40,7 +40,7 @@ surface rather than a diff against one.
 ### Measured
 
 - On 174 questions derived from six real repositories and verified
-  unanswerable by keyword search: MRR 0.233, Hit@5 0.333, against 0.026 for
+  unanswerable by keyword search: MRR 0.266, Hit@5 0.374, against 0.026 for
   `zg` and 0.003 for `git log --grep`.
 - `git log -S` beats this tool 0.950 to 0.350 on cross-file causal questions.
   The shipped skill says so, because a tool that oversells itself makes an
@@ -57,7 +57,7 @@ surface rather than a diff against one.
 
 ### Known limits
 
-- It misses roughly two hard questions in three (Hit@5 0.333). Results are
+- It misses roughly three hard questions in five (Hit@5 0.374). Results are
   leads to verify with `git show`, not established fact.
 - `--last` and `--removed` are weaker than `--first`, because regenerated files
   make a term appear and disappear for reasons unrelated to the feature.

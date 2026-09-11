@@ -1,0 +1,25 @@
+The following brief provides answers to the requested questions based on the repository history:
+
+1. **What went wrong when adding a new access rule tried to strip out existing overlapping ones?**
+   When an ACL rule was added and an attempt was made to remove overlapping rules, the search for subsequent rules in the list was not resumed at the correct location after a match, but instead started after the original position of the command, potentially skipping over and failing to compress valid sequential rules.
+   - **Commit:** `7c179f9`
+   - **Quote:** "However, there when a match was found, the search was not resumed at the right location, but instead after the original position of the original command."
+
+2. **Why did the background maintenance job start doing both shrinking and growing at once?**
+   (Not found in the commit history). The history related to maintenance and growth/shrinking appears in `afterCommand` (added in `fd135f3`) and `bioCreateBackgroundJob` / `bioSubmitJob` (updated in `59ff42c`), but no specific commit explains a change that forced both actions simultaneously as a bug fix in the manner described.
+
+3. **What was that bug where things went wrong when a file ended up with handle number zero?**
+   The issue was that `open()` could return zero on success (if for example `stdin` was closed), causing a check like `if (rdb_fd > 0)` to incorrectly fail to recognize the valid file descriptor.
+   - **Commit:** `c9aa586`
+   - **Quote:** "`open()` can return any non-negative integer on success, including zero. This change modifies the check from open()'s return value to also include checking for a return value of zero."
+
+4. **What was the bug where the database quit growing itself after it had already been expanded once during snapshot loading?**
+   (Not found in the commit history). There are commits related to `aof_rewrite_base_size` (e.g., `625bda`) and improvements in malloc efficiency for cluster slots (e.g., `3b1e65`), but no specific commit explicitly addresses a bug where the database stops growing itself after an expansion during snapshot loading.
+
+5. **What happened when the bit-position lookup was pointed at a list instead of a string?**
+   (Not found in the commit history). While the bit-position lookup (specifically `BITPOS` and `BITCOUNT`) was updated to support bit indices in commit `75dd23`, there is no evidence of a bug specifically regarding pointing it at a list instead of a string.
+
+6. **What was that flaky test where the expiration sweep didn't properly skip over sparse buckets?**
+   The test was failing because the expiration scan logic was not correctly skipping dictionaries with many empty buckets.
+   - **Commit:** `3fac869`
+   - **Quote:** "Test failure on freebsd CI: `*** [err]: expire scan should skip dictionaries with lot's of empty buckets in tests/unit/expire.tcl` scan didn't handle slot skipping logic."

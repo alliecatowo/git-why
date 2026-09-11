@@ -707,7 +707,7 @@
       ],
       "subject": "Fix compilation warning in KeySpace_ServerEventCallback and add CFLAGS=-Werror flag for module CI (#12786)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "--------- Co-authored-by: Viktor S\u00f6derqvist <viktor.soderqvist@est.tech>"
+      "originalSentence": "--------- Co-authored-by: Viktor Söderqvist <viktor.soderqvist@est.tech>"
     },
     {
       "id": "recall-redis-redis-22cc9b51",
@@ -935,7 +935,7 @@
       ],
       "subject": "Fix sort_ro get-keys function return wrong key number (#12522)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "Before\uff1a ``` 127.0.0.1:6379> command getkeys sort_ro key (empty array) 127.0.0.1:6379> ``` After: ``` 127.0.0.1:6379> command getkeys sort_ro key 1) \"key\" 127.0.0.1:6379> ```"
+      "originalSentence": "Before： ``` 127.0.0.1:6379> command getkeys sort_ro key (empty array) 127.0.0.1:6379> ``` After: ``` 127.0.0.1:6379> command getkeys sort_ro key 1) \"key\" 127.0.0.1:6379> ```"
     },
     {
       "id": "recall-redis-redis-1407ac1f",
@@ -1505,7 +1505,7 @@
       "id": "recall-colinhacks-zod-9d5b20ef",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- what was that bug where the last character of a generated id could be one of two values that don't actually come from the data",
+      "question": "what was that bug where the last character of a generated id could be one of two values that don't actually come from the data",
       "relevantShas": [
         "9d5b20ef6c9dbff29a0fa272de4203201b23aa50"
       ],
@@ -1517,7 +1517,7 @@
       "id": "recall-colinhacks-zod-7b612b53",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- what was that thing where combining two shapes printed out as a nested allOf block in the generated schema",
+      "question": "what was that thing where combining two shapes printed out as a nested allOf block in the generated schema",
       "relevantShas": [
         "7b612b536d8bcb1dd160a705cc2d9a4109cb50b3"
       ],
@@ -1529,7 +1529,7 @@
       "id": "recall-colinhacks-zod-badf0b78",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- the value given to a recovery handler looked like it had already been processed once and didn't match what we fed in",
+      "question": "the value given to a recovery handler looked like it had already been processed once and didn't match what we fed in",
       "relevantShas": [
         "badf0b7894a4f777d41fcd7ed2433e5f8c9c23ea"
       ],
@@ -1541,7 +1541,7 @@
       "id": "recall-colinhacks-zod-a87ac366",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- whole-number fields were indistinguishable from fractional ones to TypeScript, so a type check couldn't tell them apart",
+      "question": "whole-number fields were indistinguishable from fractional ones to TypeScript, so a type check couldn't tell them apart",
       "relevantShas": [
         "a87ac3665f90144aecf8860030a59eb45a41a2eb"
       ],
@@ -1553,7 +1553,7 @@
       "id": "recall-colinhacks-zod-7cfc0122",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- why did that one kind of fallback get pushed through validation while the others were used as-is",
+      "question": "why did that one kind of fallback get pushed through validation while the others were used as-is",
       "relevantShas": [
         "7cfc012238ca88ff4aa87a22e8fa08f5efb5b63d"
       ],
@@ -1565,7 +1565,7 @@
       "id": "recall-colinhacks-zod-53cec2a0",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- the generated schema and the validator disagreed about what the input side of a transform looked like until we lined them up",
+      "question": "the generated schema and the validator disagreed about what the input side of a transform looked like until we lined them up",
       "relevantShas": [
         "53cec2a0d0941a69d8add934ac3a8695fb5fb14c"
       ],
@@ -1577,7 +1577,7 @@
       "id": "recall-colinhacks-zod-2125d30c",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- a number that was plainly an exact multiple still got rejected as not being one, some kind of floating-point thing",
+      "question": "a number that was plainly an exact multiple still got rejected as not being one, some kind of floating-point thing",
       "relevantShas": [
         "2125d30ce58f66170682d5a50ee4a3e2eac568e3"
       ],
@@ -1589,7 +1589,7 @@
       "id": "recall-colinhacks-zod-168122fc",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- a recursive structure came out of a projection missing its lazy typing",
+      "question": "a recursive structure came out of a projection missing its lazy typing",
       "relevantShas": [
         "168122fca54452aa30d7261c83df79b703b258d7"
       ],
@@ -1601,7 +1601,7 @@
       "id": "recall-colinhacks-zod-a0bfdb39",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- options changed in one build had no effect in the other, like there were two separate copies of the same settings",
+      "question": "options changed in one build had no effect in the other, like there were two separate copies of the same settings",
       "relevantShas": [
         "a0bfdb39d0c5fdc066189da8e9786ebf4d6f12b1"
       ],
@@ -1613,7 +1613,7 @@
       "id": "recall-colinhacks-zod-5825605e",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- just creating an error report was slow because building the error object itself captured a full stack trace",
+      "question": "just creating an error report was slow because building the error object itself captured a full stack trace",
       "relevantShas": [
         "5825605edb86ef27f1e7b1eae832303f15724130"
       ],
@@ -1625,13 +1625,13 @@
       "id": "recall-colinhacks-zod-6574e784",
       "archetype": "ambiguous_recall",
       "repositoryId": "colinhacks-zod",
-      "question": "- adding a recovery step to a pipeline made it stop parsing altogether, which is the opposite of what it should do",
+      "question": "adding a recovery step to a pipeline made it stop parsing altogether, which is the opposite of what it should do",
       "relevantShas": [
         "6574e7842b1a030f6987c80c268d713767df8b06"
       ],
       "subject": "fix(v4): stop catch resurrecting issues an optional already resolved (#6440)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "Appending `.catch()` to a chain that parses could make it stop parsing, which is backwards \u2014 catch can only ever turn failure into success."
+      "originalSentence": "Appending `.catch()` to a chain that parses could make it stop parsing, which is backwards — catch can only ever turn failure into success."
     },
     {
       "id": "recall-colinhacks-zod-b63db248",
@@ -1763,7 +1763,7 @@
       ],
       "subject": "Improve Portuguese localization and add Brazilian Portuguese (pt-BR) (#6076)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "In an article-aware locale the fall-through contracts onto the raw key and emits \"Formato dcredit_card inv\u00e1lido\" rather than degrading to untranslated text, so the key carries pt's existing translation."
+      "originalSentence": "In an article-aware locale the fall-through contracts onto the raw key and emits \"Formato dcredit_card inválido\" rather than degrading to untranslated text, so the key carries pt's existing translation."
     },
     {
       "id": "recall-colinhacks-zod-536ee3b0",
@@ -1847,7 +1847,7 @@
       ],
       "subject": "fix(v4): stop the object JIT fastpass keeping a swallowed issue's value (#6407)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "While here, collapse the identical arms of the required-in branch's assignment \u2014 it shrinks the generated source by four lines per key."
+      "originalSentence": "While here, collapse the identical arms of the required-in branch's assignment — it shrinks the generated source by four lines per key."
     },
     {
       "id": "recall-colinhacks-zod-b53e53cc",
@@ -1919,7 +1919,7 @@
       ],
       "subject": "fix(v4): clarify infinite number errors (#5906)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "`z.number()` is finite-by-default in v4, so `Infinity` fails with an `invalid_type` issue \u2014 but the English message read \"Invalid input: expected number, received number\", which names the same type on both sides and tells the user nothing."
+      "originalSentence": "`z.number()` is finite-by-default in v4, so `Infinity` fails with an `invalid_type` issue — but the English message read \"Invalid input: expected number, received number\", which names the same type on both sides and tells the user nothing."
     },
     {
       "id": "recall-colinhacks-zod-0a76f3d7",
@@ -2075,7 +2075,7 @@
       ],
       "subject": "fix(docs-v3): rename README.md to home.md so Vercel serves it",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "Vercel stopped serving root-level README.md from static deployments (deployments from identical source served it on May 4 but 404 it since May 19), which broke v3.zod.dev \u2014 docsify fetches the homepage markdown client-side."
+      "originalSentence": "Vercel stopped serving root-level README.md from static deployments (deployments from identical source served it on May 4 but 404 it since May 19), which broke v3.zod.dev — docsify fetches the homepage markdown client-side."
     },
     {
       "id": "recall-colinhacks-zod-ee7376ad",

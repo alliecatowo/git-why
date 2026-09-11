@@ -1,0 +1,13 @@
+The following brief answers the questions regarding `burntsushi-ripgrep` history:
+
+1.  **Bug where the manual page rendered an odd-looking dash:** The issue was that without explicit hyphen escaping in roff, some renderers would convert hyphens in flag names into special Unicode characters that broke search functionality in man pages. This was addressed in commit `74959a1`, which noted: "Apparently, if we don't do this, some roff renderers with use a special Unicode hyphen. That in turn makes searching a man page not work as one would expect."
+
+2.  **Dependency bumped for router firmware:** This could not be found in the repository history.
+
+3.  **Thing removed because it kept breaking:** A build-time dependency on `asciidoc`/`asciidoctor` was removed because managing its installation and configuration caused consistent issues for man page generation. This is supported by commit `5dc424d`, where the commit message states: "This optional dependency is now finally dropped. So ends a long journey of trying to generate man pages in a lightweight and dependable way."
+
+4.  **Why bundled executables were resolved eagerly on Windows:** This could not be found in the repository history as a specific behavior change described as "eager resolution of bundled executables".
+
+5.  **Bug where names ending in two dots were treated as having no filename:** A bug involving trailing dots in file names (e.g., `filename.`) was incorrectly handled, which is supported by commit `4df1298`, titled: "globset: fix bug where trailing `.` in file name was incorrectly handled".
+
+6.  **Bug where capping results could not be trusted with surrounding lines in multi-line spellings:** When using `-m/--max-count` together with `-A/--after-context`, ripgrep could print more matches than the limit because it failed to correctly handle the state of context line decrementing once the limit was reached. This was fixed in commit `0ca96e0`, which states in the diff's comment: "This avoids a bug where we display more matches than a configured limit. The main idea here is that 'matched' might be called again while printing an after-context line."
