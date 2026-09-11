@@ -182,6 +182,8 @@ called.
 
 - **[Documentation site](https://alliecatowo.github.io/git-why/)** — guided
   install, how retrieval works, CLI reference, FAQ.
+- **[`ROADMAP.md`](ROADMAP.md)** — pull requests, `gh why`, wikis, and what
+  would need measuring before any of it ships.
 - **[`docs/indexes.md`](docs/indexes.md)** — where indexes live, worktrees,
   submodules, monorepos, disk use, and the shared model cache.
 - **[`docs/examples.md`](docs/examples.md)** — real output on real
