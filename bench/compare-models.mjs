@@ -18,7 +18,9 @@ import { join } from 'node:path';
 import { compareModels, ARMS } from './agents/model-compare.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const { rows, skipped } = compareModels(join(ROOT, 'bench', 'results', 'agents'));
+const { rows, skipped, mixedBuilds, unverifiableBuilds } = compareModels(
+  join(ROOT, 'bench', 'results', 'agents'),
+);
 
 const families = [...new Set(rows.map((r) => r.family))];
 console.log(
@@ -51,6 +53,24 @@ for (const row of rows) {
   const sign = (v) => (v === null ? '-' : v > 0 ? `+${v}` : String(v));
   console.log(
     `${row.family.padEnd(8)}${row.model.slice(0, 33).padEnd(34)}${String(p.n).padEnd(5)}${(p.pointsOutOf === null ? '-' : `${p.pointsX}->${p.pointsY}/${p.pointsOutOf}`).padEnd(14)}${`${p.accWin}-${p.accLoss}`.padEnd(8)}${sign(p.callsDelta).padEnd(12)}${sign(p.tokDelta)}`,
+  );
+}
+
+for (const mixed of mixedBuilds) {
+  console.log(
+    `\n!! ${mixed.family} trials span ${mixed.builds.length} builds, so these models did not all\n` +
+      '   measure the same tool and cannot be compared to each other:\n',
+  );
+  for (const m of mixed.byModel) {
+    console.log(`     ${m.model.padEnd(34)}${m.builds.map((b) => b.slice(0, 8)).join(' ')}`);
+  }
+  console.log('   Re-run the affected models against one commit.\n');
+}
+
+for (const u of unverifiableBuilds) {
+  console.log(
+    `\nNote: ${u.family} trials predate per-run tool hashing, so which build each measured\n` +
+      `cannot be established (${u.distinct} distinct repository HEADs, which is not the same thing).\n`,
   );
 }
 

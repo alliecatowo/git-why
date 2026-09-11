@@ -184,9 +184,56 @@ export function compareModels(resultsDir, opts = {}) {
       };
     };
 
-    rows.push({ model, family, arms, dVsA: paired('A', 'D'), cVsB: paired('B', 'C') });
+    // Which build each trial measured. The runner packs `dist/`, so a rebuild
+    // between two models of one suite measures two different tools under one
+    // comparison — and nothing in the numbers would show it. The runner now
+    // refuses to start from an uncommitted tree, but that cannot catch a
+    // rebuild BETWEEN runs, so the evidence is surfaced here instead of
+    // trusted.
+    // `packed_tool_sha256` is the tarball the agent actually ran. Prefer it:
+    // `implementation_sha` is the repository HEAD at trial time, which drifts
+    // whenever someone commits during a run, and once showed fourteen
+    // "builds" for a single model that had measured one tool throughout.
+    const builds = [
+      ...new Set(records.map((r) => r.packed_tool_sha256 ?? r.implementation_sha).filter(Boolean)),
+    ];
+    const buildsAreExact = records.every((r) => r.packed_tool_sha256 != null);
+    rows.push({
+      model,
+      family,
+      arms,
+      builds,
+      buildsAreExact,
+      dVsA: paired('A', 'D'),
+      cVsB: paired('B', 'C'),
+    });
   }
 
   rows.sort((a, b) => a.family.localeCompare(b.family) || a.model.localeCompare(b.model));
-  return { rows, skipped };
+
+  // A comparison across models is only meaningful if every model measured the
+  // same tool. Reported per family, because different families are different
+  // experiments and are never compared to each other anyway.
+  const mixedBuilds = [];
+  const unverifiableBuilds = [];
+  for (const family of new Set(rows.map((r) => r.family))) {
+    const inFamily = rows.filter((r) => r.family === family);
+    const all = [...new Set(inFamily.flatMap((r) => r.builds))];
+    // Only report a mixed build when it can be stated as a fact. Runs that
+    // predate `packed_tool_sha256` fall back to HEAD-at-trial-time, which
+    // differs for reasons that have nothing to do with the tool, and crying
+    // wolf about those would train a reader to ignore the warning that counts.
+    const exact = inFamily.every((r) => r.buildsAreExact);
+    if (all.length > 1 && exact) {
+      mixedBuilds.push({
+        family,
+        builds: all,
+        byModel: inFamily.map((r) => ({ model: r.model, builds: r.builds })),
+      });
+    } else if (all.length > 1) {
+      unverifiableBuilds.push({ family, distinct: all.length });
+    }
+  }
+
+  return { rows, skipped, mixedBuilds, unverifiableBuilds };
 }

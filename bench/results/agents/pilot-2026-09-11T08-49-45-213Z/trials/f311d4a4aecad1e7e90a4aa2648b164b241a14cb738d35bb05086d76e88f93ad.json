@@ -1,0 +1,112 @@
+{
+  "task_id": "B-burntsushi-ripgrep-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "b1b4fc0654f42681dff00dc6a1c7b465f4fddd43",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T08:49:45.776Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "c00d30fc1d500874961212486ed60e99e16c49b1d2a24d0d7831e1f9a7c4ef2a",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 46325,
+  "tool_calls": 9,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 8,
+  "input_tokens": 56749,
+  "output_tokens": 757,
+  "cache_read_tokens": 110447,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.07157870000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 219403,
+  "index_build_ms": 41207,
+  "model_download_ms": null,
+  "index_disk_bytes": 91397716,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T08-49-45-213Z/events/B-burntsushi-ripgrep-02-D-r1-a1.jsonl",
+  "exit_reason": "nonzero_exit",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited 1",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "f311d4a4aecad1e7e90a4aa2648b164b241a14cb738d35bb05086d76e88f93ad",
+  "indexed_commits": 2287,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 11,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 56749,
+    "output": 757,
+    "messages": 11
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "completed": true
+}

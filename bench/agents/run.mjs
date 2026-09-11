@@ -341,6 +341,9 @@ function assertReproducibleTree(allowDirty) {
   return { head, dirty: true };
 }
 
+/** Hash of the tarball actually installed for this run; see below. */
+let packedToolSha256 = null;
+
 function preparePackagedGitWhy() {
   const tarballsDir = benchWorkSubdir('tools', 'tarballs');
   rmSync(PACKAGED_TOOL_DIR, { recursive: true, force: true });
@@ -356,6 +359,14 @@ function preparePackagedGitWhy() {
   const packEntry = Array.isArray(parsedPack) ? parsedPack[0] : Object.values(parsedPack)[0];
   const tarball = packEntry?.filename;
   if (typeof tarball !== 'string') throw new Error('npm pack did not report a tarball filename');
+  // The tarball IS the tool that gets measured. `implementation_sha` records
+  // the repository's HEAD at trial time, which drifts whenever someone commits
+  // during a run and says nothing about what the agent actually used — a run
+  // showed fourteen "builds" for one model, all of them the same tool. This is
+  // the identity that matters, so it is recorded rather than inferred.
+  packedToolSha256 = createHash('sha256')
+    .update(readFileSync(join(tarballsDir, tarball)))
+    .digest('hex');
   execFileSync(
     'npm',
     [
@@ -739,6 +750,9 @@ async function runOnePlannedTrial(
     // its status assertion.
     corpus_fingerprint: taskMeta.baseSha,
     implementation_sha: gitHeadOfThisRepoOrNull(),
+    // What the agent actually ran. Unlike implementation_sha this cannot drift
+    // while a run is in progress.
+    packed_tool_sha256: packedToolSha256,
     model_id: model,
     provider_id: 'opencode',
     model_metadata_timestamp: new Date().toISOString(),
