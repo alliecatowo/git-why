@@ -45,13 +45,18 @@ This weights commits by relevance instead.
 
 <Cast src="/casts/agent.cast" title="An agent asked why schema creation got slow" />
 
-Given the routing guidance the plugin ships, the agent reaches for history
-unprompted, finds the commit, verifies it with `git show`, and reports the
-measured numbers — including the one axis that regressed.
+The agent was given a neutral list of what exists — `git log`, `git show`,
+`git blame`, `grep`, `rg`, `git why` — and **no instruction about which to
+use**. Network tools were shadowed, so the GitHub API was not an escape hatch.
 
-That guidance is the product. An earlier recording of this same task, where the
-tool was merely _mentioned_ rather than explained, ended with the agent ignoring
-it entirely. The skill is what makes the difference.
+It chose history search on its own, found the commit, verified it, and reported
+the measured numbers including the one axis that regressed.
+
+Two earlier takes of this same recording are worth knowing about. In the first,
+`gh` was on PATH and the agent answered from the GitHub API without touching
+the repository at all. In the second the prompt told it which tool to use for
+what, which proves nothing: of course it complies. Only the third — neutral
+list, no network — actually tests whether a model reaches for history unaided.
 
 ## Honest numbers
 

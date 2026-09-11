@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "wget: disabled for this recording; the answer is in the repository" >&2
+exit 127

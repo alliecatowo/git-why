@@ -1,0 +1,16 @@
+The `LPOS` command's `FIRST` option was indeed renamed to `RANK`. This change was implemented in commit `a5a3a7b`.
+
+The commit message explicitly states: **"LPOS: option FIRST renamed RANK."**
+
+The diff from this commit confirms the change in the source code and tests:
+
+```diff
+-/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]
++/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]
+...
+-   -    test {LPOS FIRST (positive and negative rank) option} {
+-   -        assert {[r LPOS mylist c FIRST 1] == 2}
+-   ...
++   +    test {LPOS RANK (positive and negative rank) option} {
++   +        assert {[r LPOS mylist c RANK 1] == 2}
+```

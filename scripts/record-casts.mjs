@@ -11,7 +11,7 @@
  *   node scripts/record-casts.mjs [--repo <dir>]
  */
 
-import { execFileSync, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +23,6 @@ const arg = (n, d) => {
   const i = argv.indexOf(`--${n}`);
   return i >= 0 ? argv[i + 1] : d;
 };
-const REPO = arg('repo', join(ROOT, '..', '..', '.cache'));
 
 /** One cast per scenario, so a page can embed exactly the one it is about. */
 const SCENARIOS = [
@@ -47,34 +46,36 @@ const SCENARIOS = [
   },
   {
     // An AGENT session, not a human one. This is the case the plugin exists
-    // for, and showing a person typing the command does not demonstrate it:
-    // what matters is whether a model REACHES for history unprompted and uses
-    // what comes back. Recorded live, so a run where the agent ignores the
-    // tool would show that instead.
+    // for, and a person typing the command does not demonstrate it: what
+    // matters is whether a model REACHES for history unprompted.
+    //
+    // A neutral tool list, not an instruction.
+    //
+    // Two earlier attempts were unusable. The first merely mentioned the tool
+    // and the agent ignored it, shelling out to `gh` and answering from the
+    // GitHub API -- which also means the answer never came from the repository
+    // at all. The second told the agent WHICH tool to use for what, which is
+    // leading the witness: of course it complies, and the recording proves
+    // nothing about whether a model reaches for history on its own.
+    //
+    // So: list what exists, say nothing about when to use any of it, and take
+    // `gh` off PATH so the network is not an escape hatch. Whatever the agent
+    // then does is the actual result, including choosing badly.
     name: 'agent',
     title: 'An agent investigating why code is the way it is',
     repo: arg('zod', '/Users/allie/.cache/git-why-bench/0199f07e4778/external/colinhacks-zod'),
     agent: true,
-    // The agent is given the SKILL, because that is what the plugin supplies.
-    // A first recording that merely mentioned the tool produced a session where
-    // the agent ignored it and answered from GitHub issue data -- honest, but a
-    // demonstration of nothing. Routing guidance is the product, so the demo
-    // includes it.
-    //
-    // No backticks in the prompt: sh performs command substitution on them even
-    // inside double quotes, and an earlier recording was just shell errors.
+    isolateNetwork: true,
     script: [
       'opencode run --model llmgateway/deepseek-v4-flash ' +
         JSON.stringify(
           [
-            'You are investigating an unfamiliar codebase. Tool routing, measured:',
-            'Use: git why "a question in plain words"  -- searches commit history by',
-            'MEANING. Reach for it when you cannot name the exact symbol to grep for.',
-            'Use: git log -S SYMBOL  -- when you CAN name the symbol.',
-            'Do not use the network. The answer is in this repository.',
+            'Creating many schemas in this project got slow and memory-hungry a while',
+            'back. Find out what was done about it and cite the commit.',
             '',
-            'Question: creating many schemas got slow and memory-hungry a while back.',
-            'Find what was done about it and cite the commit. Verify with git show.',
+            'Available: git log, git show, git blame, grep, rg, and',
+            'git why "a question" (searches this repository history).',
+            'No network access.',
           ].join(' '),
         ),
     ],
@@ -105,6 +106,35 @@ writeFileSync(
   { mode: 0o755 },
 );
 
+/**
+ * Shadows `gh` with a stub that refuses, rather than removing its directory
+ * from PATH.
+ *
+ * Dropping every directory containing `gh` also dropped /opt/homebrew/bin,
+ * which is where `opencode` lives, so the recording could not start at all.
+ * Shadowing blocks the escape hatch without taking the toolchain with it.
+ */
+function blockNetworkTools(shimDir) {
+  for (const tool of ['gh', 'curl', 'wget']) {
+    writeFileSync(
+      join(shimDir, tool),
+      `#!/bin/sh\necho "${tool}: disabled for this recording; the answer is in the repository" >&2\nexit 127\n`,
+      { mode: 0o755 },
+    );
+  }
+}
+
+// A second shim directory that also shadows network tools, used by scenarios
+// marked isolateNetwork.
+const blockShim = join(OUT, '.bin-isolated');
+mkdirSync(blockShim, { recursive: true });
+writeFileSync(
+  join(blockShim, 'git-why'),
+  `#!/bin/sh\nexec "${process.execPath}" "${join(cliDir, 'main.js')}" "$@"\n`,
+  { mode: 0o755 },
+);
+blockNetworkTools(blockShim);
+
 let recorded = 0;
 for (const s of SCENARIOS) {
   if (!existsSync(join(s.repo, '.git'))) {
@@ -131,7 +161,14 @@ for (const s of SCENARIOS) {
     {
       cwd: s.repo,
       stdio: 'inherit',
-      env: { ...process.env, PATH: `${shim}:${process.env.PATH}`, NO_COLOR: '1' },
+      env: {
+        ...process.env,
+        // Isolated scenarios get a shim that shadows gh/curl/wget: an agent
+        // reaching the GitHub API demonstrates nothing about local history,
+        // and the first recording of this scenario did exactly that.
+        PATH: `${s.isolateNetwork ? blockShim : shim}:${process.env.PATH}`,
+        NO_COLOR: '1',
+      },
     },
   );
   if (res.status === 0) {
