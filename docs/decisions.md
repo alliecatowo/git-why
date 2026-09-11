@@ -393,6 +393,53 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## A quarter of correct answers hide the reason
+
+Retrieval quality is measured constantly here; what the user then _sees_ was
+not measured at all. It turns out to be a real gap.
+
+When `git why` returns the right commit, the sentence that actually answers the
+question is visible in the printed excerpt **75.3% of the time**. The other
+24.7% show a correct commit with its rationale cut off — the message excerpt is
+capped at 280 characters and starts at the beginning, and the median full
+message among those cases is 814 characters. The tool finds the answer and does
+not show it, and the user has to run `git show` anyway.
+
+That matters more than a normal polish item, because the product's claim is
+specifically "the commit, its author's real words, and the relevant diff".
+
+**Two fixes that do not work, and why.**
+
+_Choosing the excerpt by relevance instead of by position_ — slide a window and
+keep the one covering the most query terms — makes it slightly WORSE: 74.1%
+against 75.3%. The reason is the same property that makes retrieval hard. The
+corpus questions are gated to share no searchable vocabulary with their commit,
+so query overlap cannot locate the answering sentence either. A snippet
+selector fails for exactly the reason the tool exists.
+
+_Stripping Git trailers_ (`Signed-off-by`, `Fixes #`, `Reported-by`) to recover
+budget changes nothing at all, to three decimal places. Trailers live at the
+END of a message, so they never consume the first 280 characters.
+
+**What does work is the cap itself.**
+
+|         cap | answer visible | median excerpt |
+| ----------: | -------------: | -------------: |
+| 280 (today) |          75.3% |            280 |
+|         500 |          81.0% |            500 |
+|         600 |          82.2% |            600 |
+|         800 |          82.8% |            631 |
+|        1500 |          83.9% |            631 |
+
+600 buys +6.9 points. The cost is smaller than it looks: most commit messages
+are shorter than the cap, so the median excerpt at 800 is only 631 characters —
+raising it extends the long messages rather than padding every result. For an
+agent carrying 157,000 input tokens in a brief, a few hundred more per search is
+noise against being shown the answer.
+
+Beyond 800 the curve flattens: the remaining ~16% have the rationale buried far
+enough down that no reasonable cap reaches it, and those need `git show`.
+
 ## A cosmetic artifact left in a running suite, deliberately
 
 The brief tasks were generated before the corpus was cleaned, so two of the six
