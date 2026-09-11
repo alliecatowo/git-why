@@ -1,0 +1,247 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:22:32.745Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "8d6dd87e4ee1c8c294bf165d8eb9089e08825592120760b0232319eb3aa00bce",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 141990,
+  "tool_calls": 23,
+  "history_calls": 18,
+  "zg_calls": 0,
+  "git_why_calls": 2,
+  "input_tokens": 19334,
+  "output_tokens": 2626,
+  "cache_read_tokens": 267776,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.004588159999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 76281,
+  "index_build_ms": 548691,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105129095,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-curl-02-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": "network_fetch_attempt",
+  "attempt": 1,
+  "key": "da52457bf675cce7b7fdba63564d23184edf49301f8fe2a74ba328ace7e28d47",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_uve9d3eu1oupeoj4r1n0jpdg",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20 --grep=\"CVE-2022\" 2>&1 | head -40"
+        },
+        "output": "8dfc93e57 cookie: reject cookies with \"control bytes\"\n20f9dd6ba fopen: add Curl_fopen() for better overwriting of files\n48d7064a4 cookie: apply limits\n3a09fbb7f content_encoding: return error on too many compression steps\n6ecdf5136 krb5: return error properly on decode errors\n1645e9b44 url: check SSH config match on connection reuse\nf18af4f87 tls: check more TLS details for connection reuse\n7e92d12b4 cookies: make bad_domain() not consider a trailing dot fine\n8c7ee9083 post_per_transfer: remove the updated file name\nfae6fea20 hsts: ignore trailing dots when comparing hosts names\n914aaab91 urlapi: reject percent-decoding host name into separator bytes\n5c7da89d4 nss: return error if seemingly stuck in a cert loop\n5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\nafe752e05 test898: verify the fix for CVE-2022-27776\n6e6599939 http: avoid auth/cookie on redirects same host diff port\n058f98dc3 conncache: include the zone id in the \"bundle\" hashkey\n852aa5ad3 url: check sasl additional parameters for connection reuse.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_wq2lmr60clfl1ia0d1vxmqs1",
+        "status": "completed",
+        "input": {
+          "command": "git cat-file -t 620ea21410030 2>&1; git log --oneline -5 620ea21410030 2>&1 | head -10"
+        },
+        "output": "commit\n620ea2141 transfer: redirects to other protocols or ports clear auth\n08b8ef4e7 connect: store \"conn_remote_port\" in the info struct\nc12629963 cookie.d: clarify when cookies are always sent\nafe752e05 test898: verify the fix for CVE-2022-27776\n6e6599939 http: avoid auth/cookie on redirects same host diff port\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_v7meh85ls72fcurmx8vuna6z",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 620ea2141 2>&1 | head -40"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\n lib/transfer.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-\n 1 file changed, 48 insertions(+), 1 deletion(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ushahfq5pdstm5i1bkm5k2gh",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format=fuller 620ea2141 2>&1"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor:     Daniel Stenberg <daniel@haxx.se>\nAuthorDate: Mon Apr 25 16:24:33 2022 +0200\nCommit:     Daniel Stenberg <daniel@haxx.se>\nCommitDate: Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_rddjjzfroe587cau2u9yaf9p",
+        "status": "completed",
+        "input": {
+          "command": "git show 620ea2141 -- lib/transfer.c 2>&1"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\ndiff --git a/lib/transfer.c b/lib/transfer.c\nindex 53ef0b03b..315da876c 100644\n--- a/lib/transfer.c\n+++ b/lib/transfer.c\n@@ -1611,10 +1611,57 @@ CURLcode Curl_follow(struct Curl_easy *data,\n       return CURLE_OUT_OF_MEMORY;\n   }\n   else {\n-\n     uc = curl_url_get(data->state.uh, CURLUPART_URL, &newurl, 0);\n     if(uc)\n       return Curl_uc_to_curlcode(uc);\n+\n+    /* Clear auth if this redirects to a different port number or protocol,\n+       unless permitted */\n+    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {\n+      char *portnum;\n+      int port;\n+      bool clear = FALSE;\n+\n+      if(data->set.use_port && data->state.allow_port)\n+        /* a custom port is used */\n+        port = (int)data->set.use_port;\n+      else {\n+        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,\n+                          CURLU_DEFAULT_PORT);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+        port = atoi(portnum);\n+        free(portnum);\n+      }\n+      if(port != data->info.conn_remote_port) {\n+        infof(data, \"Clear auth, redirects to port from %u to %u\",\n+              data->info.conn_remote_port, port);\n+        clear = TRUE;\n+      }\n+      else {\n+        char *scheme;\n+        const struct Curl_handler *p;\n+        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+\n+        p = Curl_builtin_scheme(scheme);\n+        if(p && (p->protocol != data->info.conn_protocol)) {\n+          infof(data, \"Clear auth, redirects scheme from %s to %s\",\n+                data->info.conn_scheme, scheme);\n+          clear = TRUE;\n+        }\n+        free(scheme);\n+      }\n+      if(clear) {\n+        Curl_safefree(data->state.aptr.user);\n+        Curl_safefree(data->state.aptr.passwd);\n+      }\n+    }\n   }\n \n   if(type == FOLLOW_FAKE) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_71wd63nykt9dtoh7i78kiczd",
+        "status": "completed",
+        "input": {
+          "command": "git merge-base --is-ancestor 620ea21410030a9977396b4661806bc187231b79 HEAD && echo \"620ea2141 IS an ancestor of HEAD\"; git log --oneline HEAD --grep=\"27774\" 2>&1"
+        },
+        "output": "620ea2141 IS an ancestor of HEAD\n5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_9rpxxi6n91ch7l5zzlgzuovr",
+        "status": "completed",
+        "input": {
+          "command": "git show 5295e8d64 --stat 2>&1 | head -20; git show 5295e8d64 -- tests/data/test1477 2>&1 | head -60"
+        },
+        "output": "commit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\n tests/data/Makefile.inc |  2 +-\n tests/data/test973      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test974      | 87 ++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test975      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test976      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n 5 files changed, 352 insertions(+), 1 deletion(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3t4atr53sq81w2eesp982vd5",
+        "status": "completed",
+        "input": {
+          "command": "git show 5295e8d64 -- tests/data/test974 2>&1 | head -70"
+        },
+        "output": "commit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\ndiff --git a/tests/data/test974 b/tests/data/test974\nnew file mode 100644\nindex 000000000..ac4e6415d\n--- /dev/null\n+++ b/tests/data/test974\n@@ -0,0 +1,87 @@\n+<testcase>\n+<info>\n+<keywords>\n+HTTP\n+--location\n+</keywords>\n+</info>\n+\n+#\n+# Server-side\n+<reply>\n+<data>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: http://firsthost.com:9999/a/path/%TESTNUMBER0002\n+\n+</data>\n+<data2>\n+HTTP/1.1 200 OK\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 4\n+Connection: close\n+Content-Type: text/html\n+\n+hey\n+</data2>\n+\n+<datacheck>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: http://firsthost.com:9999/a/path/%TESTNUMBER0002\n+\n+HTTP/1.1 200 OK\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 4\n+Connection: close\n+Content-Type: text/html\n+\n+hey\n+</datacheck>\n+\n+</reply>\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_zfu0po7uudzq5gb6p7g9ggau",
+        "status": "completed",
+        "input": {
+          "command": "ls docs/ 2>/dev/null | grep -i \"cve-2022\" ; git show 620ea2141:docs/CVE-2022-27774.md 2>/dev/null | head -40"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_i1ouw5hqvt9bhd2mvkufikgg",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- RELEASE-NOTES | head -5; git show HEAD:RELEASE-NOTES 2>/dev/null | grep -n -A6 -i \"27774\" | head -30"
+        },
+        "output": "c4a89cb15 RELEASE-NOTES: synced\nc8fe72a37 RELEASE-NOTES: synced\na496d46a7 RELEASE-NOTES: synced\n0232e160e RELEASE-NOTES: synced\n3cb03e9f1 RELEASE-NOTES: synced\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_gtzkcav6dw1oa3n56hh7su9f",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S \"CVE-2022-27774\" -- RELEASE-NOTES 2>&1 | head -5"
+        },
+        "output": "3fd1d8df3 RELEASE-NOTES: synced\n1669b17d3 RELEASE-NOTES: synced\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_hgnnlsjjau2t8lfw7o1b2rrx",
+        "status": "completed",
+        "input": {
+          "command": "git show 3fd1d8df3 -- RELEASE-NOTES 2>&1 | grep -n -B2 -A8 \"27774\" | head -40"
+        },
+        "output": "293-- [105] = https://curl.se/bug/?i=8753\n294-- [107] = https://curl.se/bug/?i=8707\n295:- [109] = https://curl.se/docs/CVE-2022-27774.html\n296-- [110] = https://curl.se/docs/CVE-2022-27776.html\n297-- [111] = https://hackerone.com/reports/1549461\n298-- [112] = https://curl.se/docs/CVE-2022-27775.html\n299-- [113] = https://curl.se/docs/CVE-2022-22576.html\n300-- [114] = https://hackerone.com/reports/1549435\n301-- [115] = https://hackerone.com/reports/1542881\n302-- [116] = https://curl.se/bug/?i=8738\n303-- [117] = https://hackerone.com/reports/1548535\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_eqdgfnwfhgj3dd830auxoqst",
+        "status": "completed",
+        "input": {
+          "command": "git show 3fd1d8df3 -- RELEASE-NOTES 2>&1 | grep -n -B4 -A10 \"CVE-2022-27774\\b\" | grep -v \"^\\-\\-\" | grep -v \"index \" | head -30"
+        },
+        "output": "291-- [102] = https://curl.se/bug/?i=8697\n292-- [103] = https://curl.se/bug/?i=8711\n293-- [105] = https://curl.se/bug/?i=8753\n294-- [107] = https://curl.se/bug/?i=8707\n295:- [109] = https://curl.se/docs/CVE-2022-27774.html\n296-- [110] = https://curl.se/docs/CVE-2022-27776.html\n297-- [111] = https://hackerone.com/reports/1549461\n298-- [112] = https://curl.se/docs/CVE-2022-27775.html\n299-- [113] = https://curl.se/docs/CVE-2022-22576.html\n300-- [114] = https://hackerone.com/reports/1549435\n301-- [115] = https://hackerone.com/reports/1542881\n302-- [116] = https://curl.se/bug/?i=8738\n303-- [117] = https://hackerone.com/reports/1548535\n304-- [119] = https://curl.se/bug/?i=8739\n305-- [122] = https://curl.se/bug/?i=8692\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_e7kh1eve1mggl4kwuu3p664v",
+        "status": "completed",
+        "input": {
+          "command": "git show 3fd1d8df3:RELEASE-NOTES 2>/dev/null | sed -n '1,80p'"
+        },
+        "output": "curl and libcurl 7.83.1\n\n Public curl releases:         208\n Command line options:         247\n curl_easy_setopt() options:   295\n Public functions in libcurl:  88\n Contributors:                 2625\n\nThis release includes the following changes:\n\n o\n\nThis release includes the following bugfixes:\n\n o conn: fix typo 'connnection' -> 'connection' in two function names [1]\n\nThis release includes the following known bugs:\n\n o see docs/KNOWN_BUGS (https://curl.se/docs/knownbugs.html)\n\nThis release would not have looked like this without help, code, reports and\nadvice from friends like these:\n\n  Adam Rosenfield, Daniel Stenberg,\n  (2 contributors)\n\nReferences to bug reports and discussions on issues:\n\n [1] = https://curl.se/bug/?i=8759\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_lfx3h0et4kuk2jwnst5c1rqz",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -- RELEASE-NOTES 2>/dev/null | while read sha rest; do git show \"$sha:RELEASE-NOTES\" 2>/dev/null | grep -q \"Credential leak on redirect\" && echo \"$sha\"; done | head -3"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_5cytato6uz7mzm1c728z11zw",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -- RELEASE-NOTES 2>/dev/null | while read sha rest; do if git show \"$sha:RELEASE-NOTES\" 2>/dev/null | grep -q \"27774\"; then echo \"$sha $rest\"; fi; done | head -5"
+        },
+        "output": "1669b17d3 RELEASE-NOTES: synced\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_g5mjncr2na4829pqicr08ouw",
+        "status": "completed",
+        "input": {
+          "command": "git show 1669b17d3:RELEASE-NOTES 2>/dev/null | grep -n -B3 -A12 \"27774\" | head -40"
+        },
+        "output": "274- [103] = https://curl.se/bug/?i=8711\n275- [105] = https://curl.se/bug/?i=8753\n276- [107] = https://curl.se/bug/?i=8707\n277: [109] = https://curl.se/docs/CVE-2022-27774.html\n278- [110] = https://curl.se/docs/CVE-2022-27776.html\n279- [111] = https://hackerone.com/reports/1549461\n280- [112] = https://curl.se/docs/CVE-2022-27775.html\n281- [113] = https://curl.se/docs/CVE-2022-22576.html\n282- [114] = https://hackerone.com/reports/1549435\n283- [115] = https://hackerone.com/reports/1542881\n284- [116] = https://curl.se/bug/?i=8738\n285- [117] = https://hackerone.com/reports/1548535\n286- [119] = https://curl.se/bug/?i=8739\n287- [122] = https://curl.se/bug/?i=8692\n288- [123] = https://curl.se/bug/?i=8699\n289- [124] = https://curl.se/bug/?i=8708\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_w73vpyreanw8qgkbnx53hln6",
+        "status": "completed",
+        "input": {
+          "command": "git show 1669b17d3:RELEASE-NOTES 2>/dev/null | grep -n -i \"security\\|CVE\" | head -20"
+        },
+        "output": "277: [109] = https://curl.se/docs/CVE-2022-27774.html\n278: [110] = https://curl.se/docs/CVE-2022-27776.html\n280: [112] = https://curl.se/docs/CVE-2022-27775.html\n281: [113] = https://curl.se/docs/CVE-2022-22576.html\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 8,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 19334,
+    "output": 2626,
+    "messages": 20
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": false,
+    "invalidation_reason": "network_fetch_attempt",
+    "violations": [
+      "network_fetch_attempt"
+    ],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "completed": true
+}

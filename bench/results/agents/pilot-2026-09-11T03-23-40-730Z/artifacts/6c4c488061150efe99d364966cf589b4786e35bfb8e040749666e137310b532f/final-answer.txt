@@ -1,0 +1,36 @@
+## Answer
+
+Redis first got the streams data type with `XADD` in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`** — *"Streams: 12 commits squashed into the initial Streams implementation."*
+Author: antirez · Date: **2017-08-30 12:40:27 +0200**
+
+I verified this is an ancestor of the pinned HEAD (`e64d91c…`) and is the earliest commit in this repository that creates `src/t_stream.c` and introduces the `XADD` command (confirmed with `git log -S "XADD" --reverse` and `git log --reverse -- src/t_stream.c`).
+
+### Supporting evidence
+
+The commit message itself:
+
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+The diff registers the new stream commands in `src/server.c`'s `redisCommandTable`:
+
+```diff
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+and creates `src/t_stream.c` (376 lines) containing the first `xaddCommand`:
+
+```c
++/* XADD key [field value] [field value] ... */
++void xaddCommand(client *c) {
+...
++    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+```
+
+The commit's stat shows the initial stream implementation: `src/listpack.c`, `src/listpack.h`, `src/listpack_malloc.h`, `src/stream.h`, `src/t_stream.c`, plus changes to `src/object.c`, `src/rax.c`, `src/rdb.h`, `src/server.c`, and `src/server.h`.
+
+No files were modified.

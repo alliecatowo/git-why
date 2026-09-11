@@ -1,0 +1,65 @@
+I'll start by running the verification command as instructed, then investigate the security bug related to credentials being leaked during redirects.Good, the verification passes. Now I'll search for information about the security bug related to credential leakage during redirects. Let me start by exploring git history and looking for relevant commits.Let me search more specifically for security issues related to credentials and redirects:Let me try a more specific search related to credential leakage during redirects:Great! I can see some very relevant commits. Let me look at these particularly interesting ones:
+- `620ea2141 transfer: redirects to other protocols or ports clear auth`
+- `6e6599939 http: avoid auth/cookie on redirects same host diff port`
+- `093531556 gnutls: don't leak the SRP credentials in redirects`
+- `139a54ed0 openssl: don't leak the SRP credentials in redirects either`
+
+Let me examine these commits:Perfect! This looks like the fix. Let me see the full diff:Excellent! This is the security fix. Let me also check the related commits I noticed to get a fuller picture:Let me see this one too:Perfect! Now let me also check the gnutls and openssl credential leak fixes:Perfect! Now I have a complete picture of the security fix. Let me verify the exact commit hash by checking what we're currently at:Let me confirm the primary fix commit exists in this repo at the version we're at:Perfect! Now let me provide the answer to the task.
+
+## Summary
+
+I found the security fix for the curl vulnerability where following a redirect could leak credentials to a different protocol or port.
+
+**Commit SHA:** `620ea2141` (full: `620ea21410030a9977396b4661806bc187231b79`)
+
+**Commit Message:**
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+**What the fix changed:**
+
+The fix modified `lib/transfer.c` in the `Curl_follow()` function to clear authentication credentials when a redirect occurs to:
+1. A different port number, OR
+2. A different protocol/scheme
+
+The implementation added code that:
+- Detects when a redirect target has a different port than the original connection
+- Detects when a redirect target has a different protocol/scheme than the original connection
+- Clears the stored authentication credentials (`data->state.aptr.user` and `data->state.aptr.passwd`) when either condition is true
+- Allows overriding this behavior only if explicitly permitted via `data->set.allow_auth_to_other_hosts`
+
+**Key quote from the diff:**
+```c
+/* Clear auth if this redirects to a different port number or protocol,
+   unless permitted */
+if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+  ...
+  if(port != data->info.conn_remote_port) {
+    infof(data, "Clear auth, redirects to port from %u to %u",
+          data->info.conn_remote_port, port);
+    clear = TRUE;
+  }
+  else {
+    ...
+    if(p && (p->protocol != data->info.conn_protocol)) {
+      infof(data, "Clear auth, redirects scheme from %s to %s",
+            data->info.conn_scheme, scheme);
+      clear = TRUE;
+    }
+    ...
+  }
+  if(clear) {
+    Curl_safefree(data->state.aptr.user);
+    Curl_safefree(data->state.aptr.passwd);
+  }
+}
+```
+
+This was part of a series of related security fixes (CVE-2022-27774, CVE-2022-27776, etc.) addressing credential leakage during redirects.

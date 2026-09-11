@@ -1,0 +1,40 @@
+I'll start by running the verification command, then investigate the task.Good! The verification passes. Now I need to research whether caddy ever had to raise its minimum Go version specifically because of the HTTP/3 library it depends on. Let me search through the git history and code for relevant information.Let me search for commits that relate to minimum Go version changes:Great! I found some relevant commits. Let me examine the ones that mention both Go version bumps and quic-go (which is the HTTP/3 library):This looks very promising! Let me see the commit message and diff details:Perfect! This is exactly what I need. Let me also check another relevant commit to get more context:Let me see the full diff of the first commit to understand why the Go version was bumped:Now let me check the git log to understand the history and relationship between these commits:Perfect! Now I have clear evidence. Let me verify the commit message and check the specific reason mentioned in the commit:Let me also look at the PR discussion to get more insight into why quic-go v0.41.0 required Go 1.21:Perfect! I have found the answer. The key information is in commit `697cc593`. The commit message is "chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)". 
+
+Looking at the diff, the key changes show:
+1. In `go.mod`: quic-go was updated from v0.40.1 to v0.41.0, and the Go version minimum was bumped from 1.20 to 1.21
+2. In `go.sum`: the dependency `github.com/quic-go/qtls-go1-20` was removed
+3. In `modules/caddyhttp/app.go`: The warning logic for Go 1.20 was removed
+4. The build-specific files `duplex_go120.go` and `duplex_go121.go` were deleted
+
+The critical detail is that when updating quic-go to v0.41.0, the `qtls-go1-20` dependency was removed, which means quic-go v0.41.0 no longer supports Go 1.20 and requires Go 1.21+.
+
+Let me verify this is indeed the answer by checking if there were any earlier Go version bumps related to quic-go:Perfect! Now let me provide the final answer based on my findings:
+
+## Final Answer
+
+**Yes**, caddy did have to raise its minimum Go version specifically because of the HTTP/3 library it depends on.
+
+**Commit SHA:** `697cc593a17fcb39087161b058fc1dba8b767060`
+
+**Commit Message:** `chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)`
+
+**Supporting Evidence:**
+
+The commit bumped Caddy's minimum Go version from 1.20 to 1.21 when updating the HTTP/3 library (quic-go) from v0.40.1 to v0.41.0. The key indicator in the diff is that the dependency `github.com/quic-go/qtls-go1-20` was removed from `go.mod` and `go.sum`:
+
+```diff
+-github.com/quic-go/qtls-go1-20 v0.4.1 h1:D33340mCNDAIKBqXuAvexTNMUByrYmFYVfKfDN5nfFs=
+-github.com/quic-go/qtls-go1-20 v0.4.1/go.mod h1:X9Nh97ZL80Z+bX/gUXMbipO6OxdiDi58b/fMC9mAL+k=
+-github.com/quic-go/quic-go v0.40.1 h1:X3AGzUNFs0jVuO3esAGnTfvdgvL4fq655WaOi1snv1Q=
+-github.com/quic-go/quic-go v0.40.1/go.mod h1:PeN7kuVJ4xZbxSv/4OX6S1USOX8MJvydwpTx31vx60c=
++github.com/quic-go/quic-go v0.41.0 h1:aD8MmHfgqTURWNJy48IYFg2OnxwHT3JL7ahGs73lb4k=
++github.com/quic-go/quic-go v0.41.0/go.mod h1:qCkNjqczPEvgsOnxZ0eCD14lv+B2LHlFAB++CNOh9hA=
+```
+
+And in `go.mod`:
+```diff
+-go 1.20
++go 1.21
+```
+
+This indicates that quic-go v0.41.0 dropped support for Go 1.20 and requires Go 1.21 or later, necessitating Caddy to bump its minimum Go version accordingly.

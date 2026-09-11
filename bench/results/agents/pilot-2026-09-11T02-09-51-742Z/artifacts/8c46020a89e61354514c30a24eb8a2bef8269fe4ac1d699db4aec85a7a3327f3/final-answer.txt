@@ -1,0 +1,45 @@
+I'll start by verifying the environment as instructed, then investigate the history of ripgrep's ignore-file naming.Perfect! The environment is verified. Now I'll search for information about ripgrep's ignore-file naming history using the `git why` tool.Good! I found a relevant commit. Let me look more closely at commit 7cefc55, which mentions removing `.agignore`. Let me search for more information about `.rgignore` and when these names were introduced.Perfect! I found the key commit. Let me get more details about commit `cc90511` which shows the switch from `.rgignore` to `.ignore`.Excellent! Now let me verify if there was something even earlier. Let me check the commit that introduced `.rgignore` in the first place.Let me check the commit before `cc90511` to see what was there originally.Let me look at the commit that renamed xrep to ripgrep:Great! Let me see more of that commit to see the xrepignore references:Perfect! Now I have the full picture. Let me verify the exact commit hash and look at what came before `.xrepignore`:Let me check when `.agignore` was introduced to understand the evolution better:Let me check the commit that introduced `.agignore`:Let me look at when `.agignore` was removed to understand the history:Perfect! Now I have the complete picture. Let me verify the timeline is correct by looking at the commit before `.agignore` was removed:Let me check a commit before `.agignore` was added to see the original state:Let me check the oldest reference to IGNORE_NAMES:Perfect! Now I have the complete history. Let me create a summary document. The key finding is:
+
+1. **Early days (xrep era)**: `.xrepignore` was used
+2. **After renaming to ripgrep** (commit `a744ec1`, Sep 8 2016): Changed to `.rgignore`
+3. **Sep 15 2016** (commit `7cefc55`): Removed `.agignore`
+4. **Sep 24 2016** (commit `cc90511`): Switched from `.rgignore` to `.ignore`
+
+Let me verify these dates and commits:Perfect! Now I have all the information I need. Let me write a comprehensive answer.
+
+## Summary
+
+Yes, ripgrep's special ignore-file name has changed several times throughout its history. Here's the complete timeline:
+
+### Answer to the Question
+
+**The special ignore-file name used to be `.xrepignore` in the very early days of the project.**
+
+### Historical Evolution
+
+1. **Initial (`.xrepignore`)** - When the project was called `xrep`, the ignore file was named `.xrepignore`
+
+2. **After renaming to ripgrep (`.rgignore`)** - When the project was renamed from `xrep` to `ripgrep` on September 8, 2016 (commit `a744ec1`), the ignore file name was changed to `.rgignore`. This commit shows the transition:
+   - `$HOME/.xrepignore` → `$HOME/.rgignore`
+   - `.xrepignore` → `.rgignore` in the IGNORE_NAMES constant
+
+3. **Removal of `.agignore`** - On September 15, 2016 (commit `7cefc55`), `.agignore` support was removed from the list of checked ignore files
+
+4. **Switch to `.ignore`** - On September 23-24, 2016 (commit `cc90511`), ripgrep switched from `.rgignore` to the more generic `.ignore` file name. This was done to align with The Silver Searcher project.
+
+### Supporting Evidence
+
+**Commit `a744ec1` (Sep 8, 2016)** - "Rename xrep to ripgrep" shows:
+```
+-   $HOME/.xrepignore or on the command line.
++   $HOME/.rgignore or on the command line.
+```
+
+And in the IGNORE_NAMES constant:
+```
+-    ".xrepignore",
++    ".rgignore",
+```
+
+**Commit `cc90511` (Sep 24, 2016)** - "Switch from .rgignore to .ignore" states in the commit message:
+> "Switch from .rgignore to .ignore. But don't actually remove support for .rgignore until the next semver bump. Note that this puts us in line with the silver searcher"

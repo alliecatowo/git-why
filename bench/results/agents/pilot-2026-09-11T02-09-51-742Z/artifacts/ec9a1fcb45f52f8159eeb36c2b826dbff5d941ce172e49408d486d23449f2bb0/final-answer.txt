@@ -1,0 +1,49 @@
+I'll start by verifying the repository state and commit as instructed.Good! The repository state matches the expected values. Now let me investigate the task: Did ripgrep's special ignore-file name used to be something other than '.ignore'?
+
+Let me search for when the `.ignore` file was introduced and what it might have been called before:I can see `.ignore` mentioned in these results, but I need to look earlier in history to see if there was a different name. Let me search for references to `.rgignore` which appears in the results:Excellent! I found the answer! Let me look at the specific commit that switched from `.rgignore` to `.ignore`:Perfect! Let me get the full diff to see what was changed:Perfect! I now have the complete answer. Let me verify this is the right commit by checking when the `.rgignore` name was first introduced:Now let me verify the original question was asking about the early days and confirm my answer is correct:
+
+Based on my investigation using `git why`, I found clear evidence that answers the question:
+
+## Answer
+
+Yes, ripgrep's special ignore-file name used to be something other than `.ignore`. It was originally called **`.rgignore`**.
+
+### Supporting Evidence
+
+**Commit SHA: `cc90511ab29d3c37e873acac0fd80f90473f54bb`**
+
+**Commit Message:**
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+**Relevant diff excerpt from that commit:**
+
+In `src/ignore.rs`, the IGNORE_NAMES constant was updated to add `.ignore`:
+```
+const IGNORE_NAMES: &'static [&'static str] = &[
+    ".gitignore",
++   ".ignore",
+    ".rgignore",
+];
+```
+
+And the documentation was changed from:
+```
+$HOME/.rgignore or on the command line.
+```
+
+To:
+```
+$HOME/.ignore or on the command line.
+```
+
+The commit was made on **September 23, 2016** by Andrew Gallant, and it explicitly states that `.ignore` was added while maintaining backward compatibility with `.rgignore` until the next semver bump. This aligns ripgrep with the silver searcher project, which made the same naming choice.

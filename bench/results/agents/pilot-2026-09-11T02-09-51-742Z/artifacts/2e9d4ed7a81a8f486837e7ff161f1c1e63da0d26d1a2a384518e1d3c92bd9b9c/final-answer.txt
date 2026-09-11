@@ -1,0 +1,22 @@
+I'll complete this task step by step. Let me start by running the verification command as instructed.Perfect! The verification checks pass. Now I need to investigate the question: Why did the requests library switch its default text-encoding guesser from chardet to something else?
+
+Let me start by exploring the repository structure and looking for relevant information about encoding detection.Now let me search for commits related to chardet or charset detection changes:Great! I found a very relevant commit: `2ed84f55 Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)`. Let me examine this commit in detail:Perfect! I found the answer. Let me verify the commit SHA and gather the relevant information:Excellent! I have found the complete answer to the question. Here's my final summary:
+
+## Answer
+
+The requests library switched its default text-encoding guesser from **chardet** to **charset_normalizer** due to licensing concerns.
+
+**Supporting Commit:**
+- **SHA:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`
+- **Message:** "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)"
+
+**Key Quote from Commit Message:**
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd. By changing out this dependency for one under MIT we remove all license ambiguity."
+
+**Implementation Details (from the diff):**
+- For Python 3+: Uses `charset_normalizer` (MIT-licensed) as the default
+- For Python 2: Still uses `chardet` (which is a mandatory dependency)
+- **Backwards compatibility "escape hatch":** If `chardet` is already installed, requests will use it instead of `charset_normalizer`
+- An optional extra `use_chardet_on_py3` was added to allow users to explicitly opt-in to chardet on Python 3
+
+The change was motivated purely by licensing clarity for downstream projects that might bundle requests into a single binary.

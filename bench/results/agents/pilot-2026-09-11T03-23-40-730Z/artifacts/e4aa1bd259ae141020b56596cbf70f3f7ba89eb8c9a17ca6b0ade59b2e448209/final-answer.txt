@@ -1,0 +1,38 @@
+Yes — curl supports `-w "%{json}"`. It emits a JSON object containing all the available write-out keys.
+
+## Supporting commit
+
+**`04c03416e68fd635a15cae8201872f5c29fdcca8`** — *"writeout: support to generate JSON output"*, authored by Mathias Gumz, Sat Feb 1 2020, `Closes #4870`. It is an ancestor of the pinned `HEAD` (`ee521a1c8`), and the `%{json}` key is still present in the current tree (`docs/cmdline-opts/write-out.d:85`).
+
+The commit message states the feature directly:
+
+```
+writeout: support to generate JSON output
+
+This commit adds support to generate JSON via the writeout feature:
+
+    -w "%{json}"
+
+It leverages the existing infrastructure as much as possible. Thus,
+generating the JSON on STDERR is possible by:
+
+    -w "%{stderr}%{json}"
+
+This implements a variant of
+https://github.com/curl/curl/wiki/JSON#--write-out-json.
+
+Closes #4870
+```
+
+The diff adds the documentation key in `docs/cmdline-opts/write-out.d`:
+
+```diff
++.B json
++A JSON object with all available keys.
+```
+
+and implements it in a new file `src/tool_writeout_json.c` (181 lines) plus `src/tool_writeout_json.h`, wired into `src/tool_writeout.c`, `src/Makefile.inc`, and `lib/version.c`.
+
+So your recollection is correct: `-w "%{json}"` is real, and it produces a single JSON object holding every available write-out value. You can also route it to stderr with `-w "%{stderr}%{json}"`.
+
+(No files were modified.)

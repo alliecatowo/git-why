@@ -1,0 +1,43 @@
+Verified: `pwd` = `/workspace`, toplevel = `/workspace`, HEAD = `ee521a1c889f4cde6905c5db117959917568be9b`.
+
+## Answer
+
+**Yes.** curl can print transfer stats as JSON via `-w "%{json}"`. This was added by commit **`04c03416e68fd635a15cae8201872f5c29fdcca8`** ("writeout: support to generate JSON output", Mathias Gumz, 2020-02-01), which introduced the `json` key as a write-out variable.
+
+Its commit message explicitly states:
+
+```
+writeout: support to generate JSON output
+
+This commit adds support to generate JSON via the writeout feature:
+
+    -w "%{json}"
+
+It leverages the existing infrastructure as much as possible. Thus,
+generating the JSON on STDERR is possible by:
+
+    -w "%{stderr}%{json}"
+
+This implements a variant of
+https://github.com/curl/curl/wiki/JSON#--write-out-json.
+
+Closes #4870
+```
+
+The diff supports this too — it adds a new `src/tool_writeout_json.c` implementation and documents the key in `docs/cmdline-opts/write-out.d`:
+
+```diff
+ .B http_version
+ The http version that was effectively used. (Added in 7.50.0)
+ .TP
++.B json
++A JSON object with all available keys.
++.TP
+ .B local_ip
+```
+
+and in `src/tool_writeout.c` it wires in the new JSON generator (`#include "tool_writeout_json.h"`). Follow-up commits such as `7631f2b75` ("test 970: verify --write-out '%{json}'") added tests confirming the behavior.
+
+So the `-w "%{json}"` example you remember is real, and `04c03416e68fd635a15cae8201872f5c29fdcca8` is the commit that establishes it.
+
+No files were modified.

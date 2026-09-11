@@ -1,0 +1,43 @@
+I'll start by verifying the repository state as instructed, then investigate the question about the requests library's text-encoding guesser.Great! The repository state is verified. Now I'll investigate the question about the requests library's text-encoding guesser. Let me start by exploring the codebase to understand what encoding guesser is currently used, then search the git history to find when it changed from chardet.Let me search for references to encoding detection and chardet in the codebase:Interesting! It looks like there's a fallback mechanism. Let me check the compat.py file to understand this better:Perfect! I can see that the code at line 39 tries to import `chardet` first, then falls back to `charset_normalizer`. This indicates that at some point, the default switched from chardet to charset_normalizer. Let me search the git history to find this change:Excellent! I found the key commit: `2ed84f55 Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)`. Let me examine this commit:Perfect! Now let me look at the actual diff to see the implementation details:Excellent! I now have all the information needed to provide a complete answer. Let me verify this is indeed the commit in our current repository:Perfect! Let me also verify the current date of this commit to ensure it's in the history:Perfect! I have all the information needed to provide a comprehensive answer.
+
+## Answer
+
+The requests library switched its default text-encoding guesser from **chardet** (LGPL-licensed) to **charset_normalizer** (MIT-licensed) due to licensing concerns, while maintaining chardet as a fallback for backwards compatibility.
+
+### Supporting Commit
+
+**Commit SHA:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`
+
+**Date:** July 7, 2021
+
+**Title:** "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)"
+
+### Key Quote from Commit Message
+
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd. By changing out this dependency for one under MIT we remove all license ambiguity."
+
+### Implementation Details
+
+From the commit diff, the key change in `requests/compat.py`:
+
+```python
+# Before:
+import chardet
+
+# After:
+try:
+    import chardet
+except ImportError:
+    import charset_normalizer as chardet
+```
+
+This means charset_normalizer is now the primary dependency for Python 3, with chardet as a fallback if installed. The commit also added an optional extra `use_chardet_on_py3` to allow users to explicitly opt-in to using chardet if needed.
+
+From `setup.py`:
+```python
+requires = [
+    'charset_normalizer~=2.0.0; python_version >= "3"',
+    'chardet>=3.0.2,<5; python_version < "3"',
+    # ...
+]
+```

@@ -1,0 +1,163 @@
+{
+  "task_id": "X-caddy-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "corpus_fingerprint": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T03:39:51.873Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "2cbd2a7aae258ca841c60477c706cb7db003798fcc12d98c618a3d1a0a6329a7",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 564702,
+  "tool_calls": 11,
+  "history_calls": 10,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 16495,
+  "output_tokens": 1079,
+  "cache_read_tokens": 54272,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00164007,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 67106,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-caddy-01-B-r1-a1.jsonl",
+  "exit_reason": "wall_clock_timeout",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited null",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "505011b8d0522497d66ed8e683b0728a3a15cdea5dab08adc2294b5a2d0b6228",
+  "zg_index_build_ms": 14019,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  641 / 641 files\n  Entities    4,377\n  Truncated   2 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_Cmxrt6ZPdgP9p0xyaFip5545",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | head -50; echo \"---total---\"; git rev-list --all --count"
+        },
+        "output": "56ae39bd reverseproxy: replace only known placeholders in health check body (#8003)\n769ed7e4 events: skip dispatch setup when nothing is subscribed (#7997)\nc8f0667a caddyhttp: demote Alt-Svc ErrNoAltSvcPort to debug level (#8000)\ne05f57dc listen: don't wedge a reloaded listener sharing a socket on Windows (#7999)\n9dd286c5 httpcaddyfile: give each adaptation its own directive order (#7995)\n8626fa37 caddytls: synchronize storage cleaner with TLS.Stop via context and WaitGroup (#7954)\nf7d58438 admin: fix host allow-list comparison to be case-insensitive (#7993)\n8e90c9a0 caddyhttp: surface write timeout errors in access log (#7945)\n97a08d82 fileserver: reject non-integer browse file_limit (#7988)\n19be5d8c caddyhttp: remove unused QUICConfig from the HTTP/3 server (#7980)\n2cb7ebca caddyfile: fix importGraph self-loop and stale-edge bugs (#7971)\naf29f9ea admin: fix origin allow-list host comparison to be case-insensitive (#7973)\n7cc98d4d cmd: make splitModule strictly conform to Go module spec (#7974)\n99687582 usagepool: avoid lock inversion after constructor failure (#7968)\n62a72977 core: fix ParseNetworkAddress port-range span off-by-one (#7975)\nd0e93c23 cmd: upgrade automemlimit to v1.0.0 (#7978)\n8257349b chore: preserve canonical header keys (#7964)\n502691f5 admin: stabilise log redaction test (#7942)\n7bf1b905 rewrite: fix strip_path_suffix ignoring percent-encoding (#7877)\n3244ef41 fileserver: reject short names in every path component (#7952)\nd6637934 admin: normalize request path in remote admin access-control check (defense-in-depth) (#7910)\n39af0aec rewrite: fix URI splitting when a query or fragment arrives via a placeholder (#7947)\n8b62e3c6 caddyfile: clarify ArgErr documentation (#7960)\n51db7f03 pki: honor skip_install_trust for explicit tls internal issuers (#7894)\n4974956b chore: fix lint errors from newer golangci-lint (#7958)\n0cf03d32 caddyhttp: mitigate slowloris via idle read/write deadlines (#7913)\n45ba3278 fastcgi: fix HTTPoxy vulnerability (#7934)\n0bbda5c7 fix: close resources on error paths (#7940)\n789f60e3 caddyhttp: fix url_pattern authorization bypass via encoded-slash traversal (#7941)\n50e54ee2 logging: add set_cookie log filter for Set-Cookie response headers (#7888)\n6584c759 reverseproxy: isolate active health-check state per distinct check config (#7916)\n1fed0322 caddyhttp: shield specific hostnames from a covering wildcard's client auth (#7920)\nd6f7f18b Merge commit from fork\n947087ca Merge commit from fork\n63f4e387 caddyhttp: allocate the request UUID lazily instead of on every request (#7936)\nc290397c caddyhttp: log recovered handler panics at ERROR level (#7924)\n1880021e network_proxy: reject proxy URLs that resolve to a port with no host (#7922)\n22e976e5 reverseproxy: preallocate upstream slices with known sizes (#7926)\n04767548 reverseproxy: reduce allocation/CPU overhead in request hot paths (#7925)\n546752e2 feat(fastcgi): populate SERVER_ADDR by default (#7912)\n7d26d34e caddyconfig: cancel HTTP loader requests with context (#7918)\n64b64c61 log: don't allow overwriting singly-assigned vals (#7927)\ne096ca95 caddyauth: isolate provider responses to prevent cross-provider clobbering (#7904)\n2adc7630 fileserver: speed up directory browsing for large directories (#7903)\ndf44d6c3 encode: flush headers immediately for server-sent events responses (#7905)\n323e3fe4 encode: reduce allocations in AcceptedEncodings (#7847)\n54a6b8bc caddyconfig: Register nested named-route invokes transitively (#7898)\n3be8dabc caddyhttp: use canonical header key casing to avoid re-canonicalization (#7911)\nc96bca12 rewrite: preserve non-canonical path encoding after uri replace (#7907)\nc5b66cf8 Set the QUIC InitialPacketSize to 1200 bytes (#7886)\n---total---\n2680\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_5QedKlWEwUPibxvgqipK4788",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S 'quic-go' -- go.mod | head -50"
+        },
+        "output": "697cc593 chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\nf45a6de2 go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n8cb1bb4a go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)\ne62b5fb5 chore: Build with Go 1.20, keep minimum at 1.18 for now (#5353)\n0c8ad52b Experimental IETF-standard HTTP/3 support (known issue exists) (#2727)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_WU7d6DwCNz9pZK7JwXSP0246",
+        "status": "completed",
+        "input": {
+          "command": "for c in 697cc593 f45a6de2 8cb1bb4a e62b5fb5; do echo \"=================== $c ===================\"; git show --stat --format='%H%n%an <%ae>%n%ad%n%n%B' $c | head -60; done"
+        },
+        "output": "=================== 697cc593 ===================\n697cc593a17fcb39087161b058fc1dba8b767060\nMarten Seemann <martenseemann@gmail.com>\nThu Jan 25 10:58:19 2024 -0800\n\nchore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n\nCo-authored-by: Francis Lavoie <lavofr@gmail.com>\r\nCo-authored-by: Matt Holt <mholt@users.noreply.github.com>\r\n\n\n .github/workflows/ci.yml          |  8 ++++----\n .github/workflows/cross-build.yml |  6 +++---\n .github/workflows/lint.yml        |  7 ++-----\n README.md                         |  2 +-\n go.mod                            |  7 ++++---\n go.sum                            | 39 +++++++++++++++++++++++++++++++++++----\n modules/caddyhttp/app.go          |  8 --------\n modules/caddyhttp/duplex_go120.go | 26 --------------------------\n modules/caddyhttp/duplex_go121.go | 26 --------------------------\n modules/caddyhttp/replacer.go     |  7 +++++--\n modules/caddyhttp/server.go       |  5 ++---\n 11 files changed, 56 insertions(+), 85 deletions(-)\n=================== f45a6de2 ===================\nf45a6de20dd19e82e58c85b37e03957b2203b544\nMarten Seemann <martenseemann@gmail.com>\nFri Jul 21 21:00:48 2023 -0700\n\ngo.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n\n* update quic-go to v0.37.0\r\n\r\n* Bump to Go 1.20\r\n\r\n* Bump golangci-lint version, yml syntax consistency\r\n\r\n* Use skip-pkg-cache workaround\r\n\r\n* Workaround needed for both?\r\n\r\n* Seeding weakrand is no longer necessary\r\n\r\n---------\r\n\r\nCo-authored-by: Matt Holt <mholt@users.noreply.github.com>\r\nCo-authored-by: Francis Lavoie <lavofr@gmail.com>\n\n .github/workflows/ci.yml                           | 17 ++++++----\n .github/workflows/cross-build.yml                  | 18 ++++++++--\n .github/workflows/lint.yml                         | 17 ++++++++--\n .github/workflows/release.yml                      |  8 +++--\n .github/workflows/release_published.yml            |  3 +-\n README.md                                          |  2 +-\n go.mod                                             |  7 ++--\n go.sum                                             | 10 +++---\n modules/caddyhttp/caddyauth/basicauth.go           |  3 --\n modules/caddyhttp/errors.go                        |  5 ---\n modules/caddyhttp/fileserver/staticfiles.go        |  3 --\n modules/caddyhttp/reverseproxy/reverseproxy.go     | 39 +++++++++-------------\n .../caddyhttp/reverseproxy/selectionpolicies.go    |  3 --\n 13 files changed, 70 insertions(+), 65 deletions(-)\n=================== 8cb1bb4a ===================\n8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe\nMatthew Holt <mholt@users.noreply.github.com>\nFri Feb 24 13:35:56 2023 -0700\n\ngo.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)\n\n\n README.md |  4 ++--\n go.mod    |  9 ++++-----\n go.sum    | 18 ++++++++----------\n 3 files changed, 14 insertions(+), 17 deletions(-)\n=================== e62b5fb5 ===================\ne62b5fb58619364051551a7ee614fb9949cfe69a\nFrancis Lavoie <lavofr@gmail.com>\nMon Feb 6 11:29:20 2023 -0500\n\nchore: Build with Go 1.20, keep minimum at 1.18 for now (#5353)\n\n\n\n .github/workflows/ci.yml          |  6 +++---\n .github/workflows/cross-build.yml |  6 +++---\n .github/workflows/release.yml     |  6 +++---\n go.mod                            | 17 +++++++++--------\n go.sum                            | 34 +++++++++++++++++++---------------\n listeners.go                      |  6 +++---\n modules/caddyhttp/app.go          |  4 ++--\n modules/caddyhttp/caddyhttp.go    |  2 +-\n modules/caddyhttp/server.go       |  4 ++--\n 9 files changed, 45 insertions(+), 40 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_LzF5aBaQbF0HcdbZQDb43536",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -G '^go 1\\.' -- go.mod | head -40"
+        },
+        "output": "704394d9 chore: deps upgrade (#7751)\n03243e42 go.mod: Upgrade dependencies\n05acc513 chore: bump Go to v1.25 (#7184)\n172136a0 caddytls: Support post-quantum key exchange mechanism X25519MLKEM768\n2028da4e ci: build and test with Go 1.23 (#6526)\n44860482 chore: downgrade minimum Go version in go.mod (#6318)\nabdf1ae1 go.mod: go 1.22.3\n81413cae caddytls: Upgrade ACMEz to v2; support ZeroSSL API; various fixes (#6229)\n697cc593 chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\nf45a6de2 go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n99d47050 core: Eliminate unnecessary shutdown delay on Unix (#5413)\n141872ed chore: Bump up to Go 1.19, minimum 1.18 (#4925)\nb4f1a713 chore: Bump minimum Go to 1.17 (#4662)\n6bc87ea2 ci: Start testing on Go 1.17, drop 1.15 (#4283)\n5376e511 ci: Build and test on Go 1.16, bump minimum to 1.15 (#4024)\nb8cba626 Refactor for CertMagic v0.10; prepare for PKI app\n78760c0d go.mod: Bump to Go 1.14\n7799554b go.mod: Use lego v3 and CertMagic 0.7.0\n8eba582e Add go module files\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_lhkJ547qwXEcEHNRsPnQ2819",
+        "status": "completed",
+        "input": {
+          "command": "echo \"############ 697cc593 ############\"; git show 697cc593 -- go.mod; echo; echo \"############ f45a6de2 ############\"; git show f45a6de2 -- go.mod; echo; echo \"############ 8cb1bb4a ############\"; git show 8cb1bb4a -- go.mod README.md"
+        },
+        "output": "############ 697cc593 ############\ncommit 697cc593a17fcb39087161b058fc1dba8b767060\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Thu Jan 25 10:58:19 2024 -0800\n\n    chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n    \n    Co-authored-by: Francis Lavoie <lavofr@gmail.com>\n    Co-authored-by: Matt Holt <mholt@users.noreply.github.com>\n\ndiff --git a/go.mod b/go.mod\nindex 17948a87..2f116af3 100644\n--- a/go.mod\n+++ b/go.mod\n@@ -1,6 +1,8 @@\n module github.com/caddyserver/caddy/v2\n \n-go 1.20\n+go 1.21\n+\n+toolchain go1.21.4\n \n require (\n \tgithub.com/BurntSushi/toml v1.3.2\n@@ -16,7 +18,7 @@ require (\n \tgithub.com/klauspost/cpuid/v2 v2.2.5\n \tgithub.com/mholt/acmez v1.2.0\n \tgithub.com/prometheus/client_golang v1.18.0\n-\tgithub.com/quic-go/quic-go v0.40.1\n+\tgithub.com/quic-go/quic-go v0.41.0\n \tgithub.com/smallstep/certificates v0.25.0\n \tgithub.com/smallstep/nosql v0.6.0\n \tgithub.com/smallstep/truststore v0.12.1\n@@ -59,7 +61,6 @@ require (\n \tgithub.com/onsi/ginkgo/v2 v2.13.2 // indirect\n \tgithub.com/pmezard/go-difflib v1.0.0 // indirect\n \tgithub.com/quic-go/qpack v0.4.0 // indirect\n-\tgithub.com/quic-go/qtls-go1-20 v0.4.1 // indirect\n \tgithub.com/smallstep/go-attestation v0.4.4-0.20230627102604-cf579e53cbd2 // indirect\n \tgithub.com/x448/float16 v0.8.4 // indirect\n \tgithub.com/zeebo/blake3 v0.2.3 // indirect\n\n############ f45a6de2 ############\ncommit f45a6de20dd19e82e58c85b37e03957b2203b544\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Fri Jul 21 21:00:48 2023 -0700\n\n    go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n    \n    * update quic-go to v0.37.0\n    \n    * Bump to Go 1.20\n    \n    * Bump golangci-lint version, yml syntax consistency\n    \n    * Use skip-pkg-cache workaround\n    \n    * Workaround needed for both?\n    \n    * Seeding weakrand is no longer necessary\n    \n    ---------\n    \n    Co-authored-by: Matt Holt <mholt@users.noreply.github.com>\n    Co-authored-by: Francis Lavoie <lavofr@gmail.com>\n\ndiff --git a/go.mod b/go.mod\nindex 6843018a..6cacef5e 100644\n--- a/go.mod\n+++ b/go.mod\n@@ -1,6 +1,6 @@\n module github.com/caddyserver/caddy/v2\n \n-go 1.19\n+go 1.20\n \n require (\n \tgithub.com/BurntSushi/toml v1.3.2\n@@ -17,7 +17,7 @@ require (\n \tgithub.com/mastercactapus/proxyprotocol v0.0.4\n \tgithub.com/mholt/acmez v1.2.0\n \tgithub.com/prometheus/client_golang v1.14.0\n-\tgithub.com/quic-go/quic-go v0.36.2\n+\tgithub.com/quic-go/quic-go v0.37.0\n \tgithub.com/smallstep/certificates v0.24.2\n \tgithub.com/smallstep/nosql v0.6.0\n \tgithub.com/smallstep/truststore v0.12.1\n@@ -57,8 +57,7 @@ require (\n \tgithub.com/onsi/ginkgo/v2 v2.9.5 // indirect\n \tgithub.com/pmezard/go-difflib v1.0.0 // indirect\n \tgithub.com/quic-go/qpack v0.4.0 // indirect\n-\tgithub.com/quic-go/qtls-go1-19 v0.3.2 // indirect\n-\tgithub.com/quic-go/qtls-go1-20 v0.2.2 // indirect\n+\tgithub.com/quic-go/qtls-go1-20 v0.3.0 // indirect\n \tgithub.com/smallstep/go-attestation v0.4.4-0.20230509120429-e17291421738 // indirect\n \tgithub.com/x448/float16 v0.8.4 // indirect\n \tgithub.com/zeebo/blake3 v0.2.3 // indirect\n\n############ 8cb1bb4a ############\ncommit 8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe\nAuthor: Matthew Holt <mholt@users.noreply.github.com>\nDate:   Fri Feb 24 13:35:56 2023 -0700\n\n    go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)\n\ndiff --git a/README.md b/README.md\nindex e0d659d6..5e96a6c0 100644\n--- a/README.md\n+++ b/README.md\n@@ -70,7 +70,7 @@\n - **Stays up when other servers go down** due to TLS/OCSP/certificate-related issues\n - **Production-ready** after serving trillions of requests and managing millions of TLS certificates\n - **Scales to hundreds of thousands of sites** as proven in production\n-- **HTTP/1.1, HTTP/2, and HTTP/3** supported all by default\n+- **HTTP/1.1, HTTP/2, and HTTP/3** all supported by default\n - **Highly extensible** [modular architecture](https://caddyserver.com/docs/architecture) lets Caddy do anything without bloat\n - **Runs anywhere** with **no external dependencies** (not even libc)\n - Written in Go, a language with higher **memory safety guarantees** than other servers\n@@ -87,7 +87,7 @@ See [our online documentation](https://caddyserver.com/docs/install) for other i\n \n Requirements:\n \n-- [Go 1.18 or newer](https://golang.org/dl/)\n+- [Go 1.19 or newer](https://golang.org/dl/)\n \n ### For development\n \ndiff --git a/go.mod b/go.mod\nindex 517abfc2..4a5dc864 100644\n--- a/go.mod\n+++ b/go.mod\n@@ -13,10 +13,10 @@ require (\n \tgithub.com/google/cel-go v0.13.0\n \tgithub.com/google/uuid v1.3.0\n \tgithub.com/klauspost/compress v1.15.15\n-\tgithub.com/klauspost/cpuid/v2 v2.2.3\n+\tgithub.com/klauspost/cpuid/v2 v2.2.4\n \tgithub.com/mholt/acmez v1.1.0\n \tgithub.com/prometheus/client_golang v1.14.0\n-\tgithub.com/quic-go/quic-go v0.32.0\n+\tgithub.com/quic-go/quic-go v0.33.0\n \tgithub.com/smallstep/certificates v0.23.2\n \tgithub.com/smallstep/nosql v0.5.0\n \tgithub.com/smallstep/truststore v0.12.1\n@@ -48,9 +48,8 @@ require (\n \tgithub.com/google/pprof v0.0.0-20210407192527-94a9f03dee38 // indirect\n \tgithub.com/onsi/ginkgo/v2 v2.2.0 // indirect\n \tgithub.com/quic-go/qpack v0.4.0 // indirect\n-\tgithub.com/quic-go/qtls-go1-18 v0.2.0 // indirect\n-\tgithub.com/quic-go/qtls-go1-19 v0.2.0 // indirect\n-\tgithub.com/quic-go/qtls-go1-20 v0.1.0 // indirect\n+\tgithub.com/quic-go/qtls-go1-19 v0.2.1 // indirect\n+\tgithub.com/quic-go/qtls-go1-20 v0.1.1 // indirect\n \tgithub.com/rogpeppe/go-internal v1.9.0 // indirect\n \tgithub.com/x448/float16 v0.8.4 // indirect\n \tgolang.org/x/exp v0.0.0-20221205204356-47842c84f3db // indirect\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_HzGuSFTObDwHPUY3yb6I4987",
+        "status": "completed",
+        "input": {
+          "command": "echo \"==== 697cc593 README ====\"; git show 697cc593 -- README.md; echo; echo \"==== f45a6de2 README ====\"; git show f45a6de2 -- README.md"
+        },
+        "output": "==== 697cc593 README ====\ncommit 697cc593a17fcb39087161b058fc1dba8b767060\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Thu Jan 25 10:58:19 2024 -0800\n\n    chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n    \n    Co-authored-by: Francis Lavoie <lavofr@gmail.com>\n    Co-authored-by: Matt Holt <mholt@users.noreply.github.com>\n\ndiff --git a/README.md b/README.md\nindex 6dd04688..e5f99efd 100644\n--- a/README.md\n+++ b/README.md\n@@ -87,7 +87,7 @@ See [our online documentation](https://caddyserver.com/docs/install) for other i\n \n Requirements:\n \n-- [Go 1.20 or newer](https://golang.org/dl/)\n+- [Go 1.21 or newer](https://golang.org/dl/)\n \n ### For development\n \n\n==== f45a6de2 README ====\ncommit f45a6de20dd19e82e58c85b37e03957b2203b544\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Fri Jul 21 21:00:48 2023 -0700\n\n    go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n    \n    * update quic-go to v0.37.0\n    \n    * Bump to Go 1.20\n    \n    * Bump golangci-lint version, yml syntax consistency\n    \n    * Use skip-pkg-cache workaround\n    \n    * Workaround needed for both?\n    \n    * Seeding weakrand is no longer necessary\n    \n    ---------\n    \n    Co-authored-by: Matt Holt <mholt@users.noreply.github.com>\n    Co-authored-by: Francis Lavoie <lavofr@gmail.com>\n\ndiff --git a/README.md b/README.md\nindex 5e96a6c0..6dd04688 100644\n--- a/README.md\n+++ b/README.md\n@@ -87,7 +87,7 @@ See [our online documentation](https://caddyserver.com/docs/install) for other i\n \n Requirements:\n \n-- [Go 1.19 or newer](https://golang.org/dl/)\n+- [Go 1.20 or newer](https://golang.org/dl/)\n \n ### For development\n \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_1NqpGTMazTUQkgKHvRtf7998",
+        "status": "completed",
+        "input": {
+          "command": "git show 697cc593 -- modules/caddyhttp/app.go modules/caddyhttp/duplex_go120.go modules/caddyhttp/duplex_go121.go .github/workflows/ci.yml"
+        },
+        "output": "commit 697cc593a17fcb39087161b058fc1dba8b767060\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Thu Jan 25 10:58:19 2024 -0800\n\n    chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n    \n    Co-authored-by: Francis Lavoie <lavofr@gmail.com>\n    Co-authored-by: Matt Holt <mholt@users.noreply.github.com>\n\ndiff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 0bca6b4d..f0fb2520 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -23,18 +23,18 @@ jobs:\n           - macos-latest\n           - windows-latest\n         go: \n-          - '1.20'\n           - '1.21'\n+          - '1.22'\n \n         include:\n         # Set the minimum Go patch version for the given Go minor\n         # Usable via ${{ matrix.GO_SEMVER }}\n-        - go: '1.20'\n-          GO_SEMVER: '~1.20.6'\n-\n         - go: '1.21'\n           GO_SEMVER: '~1.21.0'\n \n+        - go: '1.22'\n+          GO_SEMVER: '~1.22.0-rc.2'\n+\n         # Set some variables per OS, usable via ${{ matrix.VAR }}\n         # CADDY_BIN_PATH: the path to the compiled Caddy binary, for artifact publishing\n         # SUCCESS: the typical value for $? per OS (Windows/pwsh returns 'True')\ndiff --git a/modules/caddyhttp/app.go b/modules/caddyhttp/app.go\nindex 46846d4f..0ae0af39 100644\n--- a/modules/caddyhttp/app.go\n+++ b/modules/caddyhttp/app.go\n@@ -20,9 +20,7 @@ import (\n \t\"fmt\"\n \t\"net\"\n \t\"net/http\"\n-\t\"runtime\"\n \t\"strconv\"\n-\t\"strings\"\n \t\"sync\"\n \t\"time\"\n \n@@ -328,15 +326,9 @@ func (app *App) Provision(ctx caddy.Context) error {\n \n // Validate ensures the app's configuration is valid.\n func (app *App) Validate() error {\n-\tisGo120 := strings.Contains(runtime.Version(), \"go1.20\")\n-\n \t// each server must use distinct listener addresses\n \tlnAddrs := make(map[string]string)\n \tfor srvName, srv := range app.Servers {\n-\t\tif isGo120 && srv.EnableFullDuplex {\n-\t\t\tapp.logger.Warn(\"enable_full_duplex is not supported in Go 1.20, use a build made with Go 1.21 or later\", zap.String(\"server\", srvName))\n-\t\t}\n-\n \t\tfor _, addr := range srv.Listen {\n \t\t\tlistenAddr, err := caddy.ParseNetworkAddress(addr)\n \t\t\tif err != nil {\ndiff --git a/modules/caddyhttp/duplex_go120.go b/modules/caddyhttp/duplex_go120.go\ndeleted file mode 100644\nindex 065ccf28..00000000\n--- a/modules/caddyhttp/duplex_go120.go\n+++ /dev/null\n@@ -1,26 +0,0 @@\n-// Copyright 2015 Matthew Holt and The Caddy Authors\n-//\n-// Licensed under the Apache License, Version 2.0 (the \"License\");\n-// you may not use this file except in compliance with the License.\n-// You may obtain a copy of the License at\n-//\n-//     http://www.apache.org/licenses/LICENSE-2.0\n-//\n-// Unless required by applicable law or agreed to in writing, software\n-// distributed under the License is distributed on an \"AS IS\" BASIS,\n-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n-// See the License for the specific language governing permissions and\n-// limitations under the License.\n-\n-//go:build !go1.21\n-\n-package caddyhttp\n-\n-import (\n-\t\"net/http\"\n-)\n-\n-func enableFullDuplex(w http.ResponseWriter) error {\n-\t// Do nothing, Go 1.20 and earlier do not support full duplex\n-\treturn nil\n-}\ndiff --git a/modules/caddyhttp/duplex_go121.go b/modules/caddyhttp/duplex_go121.go\ndeleted file mode 100644\nindex a17d3afe..00000000\n--- a/modules/caddyhttp/duplex_go121.go\n+++ /dev/null\n@@ -1,26 +0,0 @@\n-// Copyright 2015 Matthew Holt and The Caddy Authors\n-//\n-// Licensed under the Apache License, Version 2.0 (the \"License\");\n-// you may not use this file except in compliance with the License.\n-// You may obtain a copy of the License at\n-//\n-//     http://www.apache.org/licenses/LICENSE-2.0\n-//\n-// Unless required by applicable law or agreed to in writing, software\n-// distributed under the License is distributed on an \"AS IS\" BASIS,\n-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n-// See the License for the specific language governing permissions and\n-// limitations under the License.\n-\n-//go:build go1.21\n-\n-package caddyhttp\n-\n-import (\n-\t\"net/http\"\n-)\n-\n-func enableFullDuplex(w http.ResponseWriter) error {\n-\t//nolint:bodyclose\n-\treturn http.NewResponseController(w).EnableFullDuplex()\n-}\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_rrEkVFt3tOz143Giv9rr8652",
+        "status": "completed",
+        "input": {
+          "command": "echo \"==== search messages mentioning quic + go version ====\"; git log --all --oneline --grep='quic' -i | head -40; echo; echo \"==== full body search for 'minimum' in commits touching go.mod ====\"; git log --all --format='%H%n%B%n----' -S'quic-go' -- go.mod | grep -i -A2 -B2 'go 1\\.\\|minimum\\|requires go' | head -80"
+        },
+        "output": "==== search messages mentioning quic + go version ====\n19be5d8c caddyhttp: remove unused QUICConfig from the HTTP/3 server (#7980)\nc5b66cf8 Set the QUIC InitialPacketSize to 1200 bytes (#7886)\ncc58caa1 go.mod: Upgrade quic-go to v0.59.1\n41aee973 core: propagate ECH keys to the QUIC listener (#7670)\n5168acfb update quic-go to v0.59.0 (#7431)\n5640611d chore: update quic-go to v0.58.0 (#7404)\n786d5378 build(deps): bump the all-updates group with 3 updates (#7376)\nb9e6f3b2 update quic-go to v0.57.0 (#7359)\nf2199d48 chore: update quic-go to v0.56.0, enable qlog for HTTP/3 (#7345)\n178294e9 chore: Update quic-go to v0.55.0 (#7288)\n0c8798fc go.mod: update quic-go to v0.54.1 (#7273)\n7590c9ca caddyhttp: Free up quic listener when stopping (#7177)\n8ba7eefd update quic-go to v0.54.0 (#7138)\n11c6daec go.mod: update quic-go to v0.53.0 (#7094)\na6d488a1 go.mod: update quic-go to v0.51.0 (#6972)\n7b1f00c3 update quic-go to v0.50.1 (#6918)\n4ebcfed9 caddytls: Reorder provisioning steps (fix #6877)\nfd4de7e0 chore: update quic-go to v0.50.0 (#6854)\n8d748bee chore: update quic-go to v0.49.0 (#6803)\n22b9d512 go.mod: Upgrade quic-go to 0.48.2\n4457afc1 chore: Bump quic-go to 0.48.1, fixing a panic (#6654)\na211c656 chore: update quic-go to v0.48.0 (#6627)\n5b44d6ce update quic-go to v0.47.0 (#6582)\na8b0dfa8 go.mod: update quic-go package (#6498)\nb5227106 go.mod: Upgrade to quic-go v0.43.1\na46ff50a go.mod: Upgrade to quic-go v0.43.0\n924010cd caddyhttp: close quic connections when server closes (#6202)\n32f7dd44 chore: Update quic-go to v0.42.0 (#6176)\n697cc593 chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\nb49ec051 go.mod: Updated quic-go to v0.40.1 (#5983)\nee358550 go.mod: update quic-go version to v0.40.0 (#5922)\n3f55efcf update quic-go to v0.39.3 (#5918)\nfe2a02bf go.mod: Upgrade quic-go to v0.39.1\n7c82e265 core: quic listener will manage the underlying socket by itself (#5749)\n888c6d7e go.mod: Update quic-go to v0.38.0 (#5772)\n84d5e1c5 update quic-go to v0.37.6 (#5767)\nf11c3c9f go.mod: Upgrade CertMagic and quic-go\n6cdcc2a7 ci: Update to Go 1.21 (#5719)\na8cc5d1a go.mod: Upgrade to quic-go v0.37.3\n51b1bfb1 go.mod: Upgrade quic-go to v0.37.2 (fix  #5680)\n\n==== full body search for 'minimum' in commits touching go.mod ====\n697cc593a17fcb39087161b058fc1dba8b767060\nchore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n\nCo-authored-by: Francis Lavoie <lavofr@gmail.com>\r\n--\n----\nf45a6de20dd19e82e58c85b37e03957b2203b544\ngo.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n\n* update quic-go to v0.37.0\r\n\r\n* Bump to Go 1.20\r\n\r\n* Bump golangci-lint version, yml syntax consistency\r\n--\n----\n8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe\ngo.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)\n\n----\ne62b5fb58619364051551a7ee614fb9949cfe69a\nchore: Build with Go 1.20, keep minimum at 1.18 for now (#5353)\n\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_ajDrGwDb52Q0ptuMoFGf7668",
+        "status": "completed",
+        "input": {
+          "command": "echo \"==== go directive history ====\"; for c in 8cb1bb4a~1 8cb1bb4a f45a6de2~1 f45a6de2 697cc593~1 697cc593; do printf '%s: ' $c; git show $c:go.mod 2>/dev/null | grep -E '^go |^toolchain' | tr '\\n' ' '; echo; done"
+        },
+        "output": "==== go directive history ====\n8cb1bb4a~1: go 1.18 \n8cb1bb4a: go 1.18 \nf45a6de2~1: go 1.19 \nf45a6de2: go 1.20 \n697cc593~1: go 1.20 \n697cc593: go 1.21 toolchain go1.21.4 \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_NKAA5hM8KepJfEYzr3Mc0748",
+        "status": "completed",
+        "input": {
+          "command": "echo \"==== f45a6de2 full commit body raw ====\"; git log -1 --format='%B' f45a6de2; echo \"==== 697cc593 body raw ====\"; git log -1 --format='%B' 697cc593; echo \"==== 8cb1bb4a body raw ====\"; git log -1 --format='%B' 8cb1bb4a"
+        },
+        "output": "==== f45a6de2 full commit body raw ====\ngo.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n\n* update quic-go to v0.37.0\r\n\r\n* Bump to Go 1.20\r\n\r\n* Bump golangci-lint version, yml syntax consistency\r\n\r\n* Use skip-pkg-cache workaround\r\n\r\n* Workaround needed for both?\r\n\r\n* Seeding weakrand is no longer necessary\r\n\r\n---------\r\n\r\nCo-authored-by: Matt Holt <mholt@users.noreply.github.com>\r\nCo-authored-by: Francis Lavoie <lavofr@gmail.com>\n==== 697cc593 body raw ====\nchore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n\nCo-authored-by: Francis Lavoie <lavofr@gmail.com>\r\nCo-authored-by: Matt Holt <mholt@users.noreply.github.com>\r\n\n==== 8cb1bb4a body raw ====\ngo.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)\n\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 16906,
+    "output": 1778,
+    "messages": 8
+  },
+  "token_cross_check_agrees": false,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "56ae39bdcc1d64661038683e30ea49cad0b0121d"
+    }
+  },
+  "completed": true
+}

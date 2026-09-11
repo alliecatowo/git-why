@@ -1,0 +1,57 @@
+I'll help you investigate when the default handling of unknown keys changed in Zod. Let me start by verifying the repository state and then explore the git history.Good, the repository state is verified. Now let me search through the git history to understand when the default behavior for handling unknown keys changed. Let me look at the log for commits related to unknown keys or object property handling.Let me search more specifically for commits related to object stripping or passthrough behavior:Excellent! I found some highly relevant commits. Let me examine these commits more closely:Let me check the commit message and diff for the key commits. The one that says "strip unknown keys by default" looks like the answer:Perfect! Let me see the full commit message and the relevant changes:Perfect! I have found the answer. Let me verify this commit is indeed in the current repository's history:Excellent! Now let me also check the earlier commit that introduced the opposite behavior to provide complete context:Perfect! I now have a complete picture. Let me summarize my findings:
+
+## Answer
+
+Yes, the default handling of unknown keys in Zod objects **did change**. Initially, Zod object schemas **did NOT allow unknown keys by default** — they would throw an error. However, this behavior was changed in **version 2 of Zod**.
+
+### Supporting Commit
+
+**Commit SHA:** `18854492b4b6e1648499f2f920c615dab187ee1a`
+
+**Commit message:** "strip unknown keys by default"
+
+**Date:** Thu Sep 17 13:20:45 2020 -0700
+
+### Evidence from the Commit
+
+The README diff in this commit explicitly documents the breaking change:
+
+```
+- Object schemas now _allow_ unknown keys by default, instead of throwing an error
+```
+
+Changed to:
+
+```
+- Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+The diff also shows changes to documentation examples:
+
+**Before:**
+```ts
+person.parse({
+  name: 'bob dylan',
+  extraKey: 61,
+});
+// => { name: "bob dylan", extraKey: 61 }
+```
+
+**After:**
+```ts
+person.parse({
+  name: 'bob dylan',
+  extraKey: 61,
+});
+// => { name: "bob dylan" }
+```
+
+And the code changes in `src/types/object.ts` changed the default `UnknownKeys` type parameter from `'allow'` to `'strip'`:
+
+```typescript
+export class ZodObject<
+  T extends z.ZodRawShape,
+  UnknownKeys extends UnknownKeysParam = 'strip',  // changed from 'allow'
+```
+
+So you're correct: Zod used to keep (allow/pass through) unknown keys by default, but now strips them. To restore the old behavior of keeping unknown keys, users can call `.passthrough()` on their object schemas.

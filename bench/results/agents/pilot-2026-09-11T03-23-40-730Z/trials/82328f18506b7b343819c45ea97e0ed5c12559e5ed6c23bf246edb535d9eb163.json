@@ -1,0 +1,117 @@
+{
+  "task_id": "X-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T03:37:00.936Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "9aa19b3050a6a4591ec58345438404966904f1b5ef391fc6783a1b59569c728a",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 31476,
+  "tool_calls": 17,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 5673,
+  "output_tokens": 1419,
+  "cache_read_tokens": 88192,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0014170699999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 48360,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-curl-01-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": "network_fetch_attempt",
+  "attempt": 1,
+  "key": "82328f18506b7b343819c45ea97e0ed5c12559e5ed6c23bf246edb535d9eb163",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_18xjeF5G2ApqoPwFouHY2348",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -5; git log --oneline --all | head"
+        },
+        "output": "ee521a1c8 http: don't send 100-continue for short PUT requests\n970330bde tests: add DELAY keyword to more tests using waits\n13b4d050a tests: hack to build most unit tests under cmake\n29d7c3bdb tests: fix MSVC unreachable code warnings in unit tests\ncb7ed5acf tests: make CPPFLAGS common to all unit tests\nee521a1c8 http: don't send 100-continue for short PUT requests\n970330bde tests: add DELAY keyword to more tests using waits\n13b4d050a tests: hack to build most unit tests under cmake\n29d7c3bdb tests: fix MSVC unreachable code warnings in unit tests\ncb7ed5acf tests: make CPPFLAGS common to all unit tests\na76322137 tests: keep cmake unit tests names in sync\n079079b2f src: silence wmain() warning for all build methods\nc2b7249db CI: fix retrying on brew failures\n544a7f804 http2: fix error handling during parallel operations\ncb49e6730 url: only reuse connections with same GSS delegation\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_vqj8ZxeaO9MKWsstvc0k9698",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -- src/tool_writeout_json.c | tail -20"
+        },
+        "output": "842be672c tool_writeout_json. fix the output for duplicate header names\n2bc1d775f copyright: update all copyright lines and remove year ranges\nad9bc5976 copyright: make repository REUSE compliant\ne7793cb57 curl/header_json: output the header names in lowercase\n4133a69f2 curl: add %{header_json} support in -w handling\n85e697564 copyright: update copyright year ranges to 2021\n65ca22946 tool_writeout: refactor write-out and write-out json\n8ab78f720 misc: fix \"warning: empty expression statement has no effect\"\n4d2f80067 curl.se: new home\n0c1e767e8 tool_writeout: add new writeout variable, %{num_headers}\n884de1a76 writeout_json: Fix data type issues\n8d9802b0a writeout_json: use curl_off_t printf() option for the time output\nab9dc5ae2 writeout_json: add missing comma to fix the HTTP version\n04c03416e writeout: support to generate JSON output\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_s8XBqJa1yPcFy1agqlzW9274",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 04c03416e | head -40; echo =====; git log -1 --format='%H%n%an%n%ad%n%n%B' 04c03416e"
+        },
+        "output": "commit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\n docs/cmdline-opts/write-out.d   |   3 +\n lib/version.c                   |  10 +++\n packages/Symbian/group/curl.mmp |   1 +\n src/Makefile.inc                |   2 +\n src/tool_writeout.c             | 160 +++++++++++++++++------------------\n src/tool_writeout.h             |  57 ++++++++++++-\n src/tool_writeout_json.c        | 181 ++++++++++++++++++++++++++++++++++++++++\n src/tool_writeout_json.h        |  30 +++++++\n 8 files changed, 361 insertions(+), 83 deletions(-)\n=====\n04c03416e68fd635a15cae8201872f5c29fdcca8\nMathias Gumz\nSat Feb 1 18:55:24 2020 +0100\n\nwriteout: support to generate JSON output\n\nThis commit adds support to generate JSON via the writeout feature:\n\n    -w \"%{json}\"\n\nIt leverages the existing infrastructure as much as possible. Thus,\ngenerating the JSON on STDERR is possible by:\n\n    -w \"%{stderr}%{json}\"\n\nThis implements a variant of\nhttps://github.com/curl/curl/wiki/JSON#--write-out-json.\n\nCloses #4870\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_R3E9ATrv8Yi2lWvGvJw81256",
+        "status": "completed",
+        "input": {
+          "command": "git merge-base --is-ancestor 04c03416e68fd635a15cae8201872f5c29fdcca8 HEAD && echo \"IS ANCESTOR\"; git show 04c03416e -- docs/cmdline-opts/write-out.d"
+        },
+        "output": "IS ANCESTOR\ncommit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\ndiff --git a/docs/cmdline-opts/write-out.d b/docs/cmdline-opts/write-out.d\nindex 2fc0ff21a..9024d32e0 100644\n--- a/docs/cmdline-opts/write-out.d\n+++ b/docs/cmdline-opts/write-out.d\n@@ -50,6 +50,9 @@ curl CONNECT request. (Added in 7.12.4)\n .B http_version\n The http version that was effectively used. (Added in 7.50.0)\n .TP\n+.B json\n+A JSON object with all available keys.\n+.TP\n .B local_ip\n The IP address of the local end of the most recently done connection - can be\n either IPv4 or IPv6 (Added in 7.29.0)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_huZFbcJSVQifMJ86plXu2711",
+        "status": "completed",
+        "input": {
+          "command": "grep -n \"LIBCURL_VERSION\\|VERSION\" include/curl/curlver.h | head; git show 04c03416e --stat | grep tool_writeout.c"
+        },
+        "output": "35:#define LIBCURL_VERSION \"8.0.0-DEV\"\n39:#define LIBCURL_VERSION_MAJOR 8\n40:#define LIBCURL_VERSION_MINOR 0\n41:#define LIBCURL_VERSION_PATCH 0\n44:   parsing and comparisons by programs. The LIBCURL_VERSION_NUM define will\n59:   CURL_VERSION_BITS() macro since curl's own configure script greps for it\n62:#define LIBCURL_VERSION_NUM 0x080000\n75:#define CURL_VERSION_BITS(x,y,z) ((x)<<16|(y)<<8|(z))\n76:#define CURL_AT_LEAST_VERSION(x,y,z) \\\n77:  (LIBCURL_VERSION_NUM >= CURL_VERSION_BITS(x, y, z))\n src/tool_writeout.c             | 160 +++++++++++++++++------------------\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 5673,
+    "output": 1419,
+    "messages": 12
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": false,
+    "invalidation_reason": "network_fetch_attempt",
+    "violations": [
+      "network_fetch_attempt"
+    ],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "completed": true
+}

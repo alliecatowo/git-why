@@ -1,0 +1,32 @@
+## Answer
+
+Yes — the default handling of unknown keys changed. The commit that establishes it is:
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a` — "strip unknown keys by default"** (Colin McDonnell, 2020‑09‑17).
+
+Before it, the v2 object constructor defaulted to `unknownKeys: 'allow'`, so extras were kept in the parsed output. That commit flipped the default to `'strip'`, so unknowns are silently dropped, and renamed the builders accordingly (`.allowUnknown()` → `.passthrough()`, `.stripUnknown()` → `.strip()`):
+
+```diff
+// src/types/object.ts
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+```
+
+Its README diff states the change directly:
+
+```diff
+-- Object schemas now _allow_ unknown keys by default, instead of throwing an error
++- Object schemas now strip unknown keys by default, instead of throwing an error
+...
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+```
+
+```diff
+-#### Strip unknown keys
++#### Pass through unknown keys
+```
+
+One nuance worth flagging: the released v1 line actually *rejected* unknown keys (`strict`), so the "kept them" behavior you remember was the v2 pre‑release default introduced in `2936e65b` ("Eliminated params from ZodObject"). `1885449` is the commit that changed that v2 default to stripping. Modern Zod has kept strip as the default since; to keep extras you now opt in with `.passthrough()`.
+
+No files were modified.

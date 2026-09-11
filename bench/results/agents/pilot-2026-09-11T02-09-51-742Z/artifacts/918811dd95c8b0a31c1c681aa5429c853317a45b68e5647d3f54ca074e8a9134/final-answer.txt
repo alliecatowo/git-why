@@ -1,0 +1,45 @@
+I'll start by verifying the repository details as instructed, then investigate the history of ripgrep's ignore file naming.Good! The verification is successful. Now I'll explore the git history to find when the `.ignore` filename was established, looking for any references to previous names for this special ignore file.
+
+Let me search for commits related to the ignore file naming:Let me search for commits that mention the specific filename ".ignore":Let me search for commits that mention the filename differently. Let me look at the early history of the repository:Let me search more specifically through the early commits for mentions of ignore files:I found a reference to `.xrepignore`! Let me search more specifically for this:Let me try a different approach:Let me search in the commit messages directly:Let me check the early commits more carefully:Let me look at the README and early documentation to understand the history:Let me search for early documentation about the ignore file feature:Great! I see "Remove .agignore from ignore file list" commit. Let me look at that:Excellent! I found that `.agignore` was in the ignore file list. But let me check if there's also reference to a `.ignore` file. Let me look at what was in that list earlier:Perfect! I found it! There's a commit that shows `.ignore` being added to the `IGNORE_NAMES` list. Let me find that specific commit:Let me find the exact commit hash:Perfect! I see "Switch from .rgignore to .ignore." - let me check that commit:Excellent! Now let me verify what was the original name before `.rgignore`. Let me check the earlier commits:So after removing `.agignore`, it was `.gitignore` and `.rgignore`. Let me check before that:So the timeline is:
+1. First: `.gitignore`, `.agignore`, `.xrepignore` 
+2. Then: `.gitignore`, `.agignore`, `.rgignore` (after xrep was renamed to ripgrep)
+3. Then: `.gitignore`, `.rgignore` (after removing `.agignore`)
+4. Finally: `.gitignore`, `.ignore`, `.rgignore` (and `.rgignore` was kept for backward compatibility)
+
+Let me find when `.xrepignore` was first introduced:Let me check the first commit that mentions ignore:Perfect! The very first commit that mentions ignore files (065c449) references `.xrepignore`. Let me check if there's a IGNORE_NAMES list in that commit:Let me check the next commit:Let me check 812cdb1:Let me check 7a149c2:Great! So in commit 7a149c2, we have `.gitignore`, `.agignore`, and `.xrepignore`. Now let me check what was in the previous commit:Let me find the exact commit where IGNORE_NAMES was introduced:Let me search for when IGNORE_NAMES was first introduced:So the first commit that introduced IGNORE_NAMES is 7a149c2. Let me check the commit right before it more carefully:Perfect! I can see the documentation in commit 7a149c2 mentions ".xrepignore". Now let me verify this is the first commit to mention `.xrepignore`:So 065c449 is the first commit mentioning `.xrepignore`. Let me check that commit more carefully:Perfect! I found it. Let me now see the exact commit title and verify the information:
+
+Based on my investigation of the ripgrep repository history, I can now provide a comprehensive answer:
+
+## Answer
+
+Yes, ripgrep's special ignore-file name used to be something other than `.ignore`. 
+
+**The original name was `.xrepignore`**, which was used when the project was called "xrep" before being renamed to "ripgrep".
+
+### Supporting Evidence
+
+**Commit SHA: `065c449`** (File path filtering works and is pretty fast)
+- **Date:** August 27, 2016
+- **First introduction of `.xrepignore`**
+
+In the `src/gitignore.rs` file added in this commit, the documentation states:
+> "Besides, we need to implement this logic anyway to support things like an .xrepignore file."
+
+**Commit SHA: `7a149c2`** (More progress. With coloring!)
+- **Date:** September 5, 2016
+- **IGNORE_NAMES constant introduced**
+
+This commit established the `IGNORE_NAMES` list with three entries:
+```rust
+const IGNORE_NAMES: &'static [&'static str] = &[
+    ".gitignore",
+    ".agignore",
+    ".xrepignore",
+];
+```
+
+**Timeline of changes:**
+1. `.xrepignore` → added in commit 065c449 (Aug 27, 2016)
+2. `.xrepignore` renamed to `.rgignore` → in commit a744ec1 (after project renamed to ripgrep)
+3. `.agignore` removed → in commit 7cefc55 (Sep 15, 2016)
+4. `.rgignore` switched to `.ignore` → in commit cc90511 (Sep 23, 2016), which states: "Switch from .rgignore to .ignore. But don't actually remove support for .rgignore until the next semver bump."

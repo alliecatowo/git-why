@@ -1,0 +1,65 @@
+I'll start with the required verification command.Verified: `/workspace`, `/workspace`, and `e64d91c37105bc2e23816b6f81b9ffc5e5d99801` all match. Now let me investigate the streams history.Let me inspect the initial Streams commit diff to confirm XADD is included.## Answer
+
+Redis first got the streams data type — including the `XADD` command — in commit **`79866a6361829ed0602dedff9cb378c66977227a`**, authored by antirez on **Wed Aug 30 12:40:27 2017 +0200**. This commit is an ancestor of the pinned `HEAD` (`e64d91c…`), and a reverse `git log -S'XADD'` over all history confirms it is the earliest commit introducing the string `XADD`.
+
+### Supporting evidence
+
+**Commit message:**
+
+> `Streams: 12 commits squashed into the initial Streams implementation.`
+
+**Files added** (the commit introduces the whole type from scratch):
+
+```
+ src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++
+ src/listpack.h        |  61 +++
+ src/stream.h          |  21 ++
+ src/t_stream.c        | 376 +++++++++++++++++++++++++++++
+ src/server.h          |   9 +
+ src/rdb.h             |   3 +-
+ ...
+```
+
+**Diff excerpts showing the data type and the `XADD` command:**
+
+- New `OBJ_STREAM` type and encoding in `src/server.h`:
+  ```
+  #define OBJ_STREAM 5
+  #define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
+  ```
+- New stream data structure in `src/stream.h`:
+  ```
+  /* Stream item ID: a 128 bit number composed of a milliseconds time and
+   * a sequence counter. ... */
+  typedef struct streamID {
+      uint64_t ms;        /* Unix time in milliseconds. */
+      uint64_t seq;       /* Sequence number. */
+  } streamID;
+
+  typedef struct stream {
+      rax *rax;               /* The radix tree holding the stream. */
+      uint64_t length;        /* Number of elements inside this stream. */
+      streamID last_id;       /* Zero if there are yet no items. */
+  } stream;
+  ```
+- The command registered in the command table (`src/server.c`):
+  ```
+  {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+  ```
+- The command implementation in `src/t_stream.c`:
+  ```
+  /* XADD key [field value] [field value] ... */
+  void xaddCommand(client *c) {
+      if (c->argc < 4) {
+          addReplyError(c,"wrong number of arguments for XADD");
+          return;
+      }
+      ...
+      streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+      ...
+      notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+      server.dirty++;
+  }
+  ```
+
+Note that the message explicitly says this single commit is "12 commits squashed into the initial Streams implementation," so it is the repository history's canonical founding commit for the streams feature rather than the original granular development history. No files were modified.

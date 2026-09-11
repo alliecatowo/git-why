@@ -1,0 +1,272 @@
+{
+  "task_id": "X-zod-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "corpus_fingerprint": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T03:38:44.509Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "447b0c6d6e1031c2e31218738c7aa762b71fe3c75b2fba619bf8653ff69740c7",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "18854492b4b6e1648499f2f920c615dab187ee1a",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "18854492b4b6e1648499f2f920c615dab187ee1a",
+      "18854492"
+    ]
+  },
+  "wall_ms": 85152,
+  "tool_calls": 33,
+  "history_calls": 15,
+  "zg_calls": 11,
+  "git_why_calls": 0,
+  "input_tokens": 24319,
+  "output_tokens": 3175,
+  "cache_read_tokens": 423168,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.006306330000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 113529,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-zod-01-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "f6894c1af871bee29ead04f9a60b55375e4edac9622eb24c569fcb3990152733",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  563 / 563 files\n  Entities    7,793\n  Truncated   162 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_RbawfMja7nUpynkdMYuy5246",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline | wc -l; git log --oneline -5"
+        },
+        "output": "3210\n62311eb2 4.6.1\n2efa8b80 ci: give the npm wait a real budget and drop the back-publish path (#6583)\nb12aa523 fix: preserve unique tags with defaulted discriminators (#6582)\ndd9c36fa fix(v4): defer recursive object index inference (#6580)\n574d480f fix(locales): clarify Tajik discriminator value message\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_dTParxKuDGPt7QC6VhAC8809",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S 'unknownKeys: \"strip\"' -- packages/zod/src | head; echo \"===\"; git log --oneline --all -S 'unknownKeys: \"passthrough\"' -- packages/zod/src | head; echo \"===\"; git log --oneline --all -S 'passthrough' -- packages/zod/src/v3/types.ts | head"
+        },
+        "output": "66a0f34b Move source to `/src` (#4808)\n364200a6 Revert \"Add back src (#4806)\"\nf6da0301 Add back src (#4806)\n90fa0cdc Switch to `zshy` (#4777)\n85928549 Zod 4 (#4074)\n===\n66a0f34b Move source to `/src` (#4808)\n364200a6 Revert \"Add back src (#4806)\"\nf6da0301 Add back src (#4806)\n90fa0cdc Switch to `zshy` (#4777)\n85928549 Zod 4 (#4074)\n===\n66a0f34b Move source to `/src` (#4808)\n364200a6 Revert \"Add back src (#4806)\"\nf6da0301 Add back src (#4806)\n90fa0cdc Switch to `zshy` (#4777)\n85928549 Zod 4 (#4074)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_mHsaLpjjWJp8x7PnV46H5372",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -i --grep='unknown key' | head -40; echo \"=== passthrough ===\"; git log --all --oneline -i --grep='passthrough' | head -40; echo \"=== strip ===\"; git log --all --oneline -i --grep='strip' | head -40"
+        },
+        "output": "68a609ac Widen literal inputs in property check types (#6520)\n18854492 strip unknown keys by default\n=== passthrough ===\nead9fcb3 fix(v4): write a declared __proto__ key as an own property (#6354)\nfbe8ad1b fix(v4): allow dynamic `.catch()` under `unrepresentable: \"any\"` (#5273) (#5925)\n85928549 Zod 4 (#4074)\nb6794a49 Add index signature for passthrough\n=== strip ===\nf7fd5548 perf(v4): drop the lookaheads from the email regex (#6573)\n22bed613 feat(v4): add z.iban() string format with mod-97 checksum (#6571)\n6f048367 fix(v4): derive JSON Schema constraints by folding checks in the converter (#6554)\neca96871 fix(v4): enforce the six JSON Schema keywords fromJSONSchema silently dropped (#6535)\n773a4867 refactor(v4): declare a trait's members on $constructor (#6478)\n5825605e perf(v4): skip the eager stack capture when building a ZodError (#6450)\nd4108872 fix(v4): correct the date/time format keywords in both JSON Schema directions (#6452)\ne0e51a55 docs(v4): cut the compile comments down to what they explain (#6449)\nd6ca12ae fix(v4): infer recursive getter options in discriminatedUnion (#6422)\n79cfedea feat(v4): expose the owning schema on check-originated issues (#6420)\n2abc9e05 docs: note that the JSON Schema emitter reads static optin (#6417)\n973b1b44 fix(v4): strip output-typed catch values from the input JSON Schema (#6409)\nd24fb4c3 fix: consistently strip __proto__ from parsed objects (#6386)\n2aeec83e docs: prune lapsed gold sponsors and rebalance logo sizing\n02c2baf7 Make z.preprocess defer optionality to inner schema (#5929)\n8fcb71a5 perf(v4): lazy-bind builder methods to shared internal prototype (#5897)\nfa4a3740 fix(v4): apply util.Writeable in mini object constructors and extend/safeExtend/partial/required (#5895)\n757f0b0f fix(v4): apply util.Writeable<T> in strictObject/looseObject for shape display parity (#5882)\n584b1089 fix(v4): reject whitespace in z.base64() to close atob bypass (#5888)\n91a7d0d1 fix(v4): reject whitespace in z.base64() to close atob bypass\n41b25af9 docs(agents): refine PR comment tone guidance\nb6a3b336 fix: strip redundant id from $defs entries in toJSONSchema (#5759)\n222a6637 Change ZodObject default to $strip. Set inst.shape in zod mini\nb142ea8f Fix $strip\n033088da Optimize object strip case (#1393)\n68ca0c9d Deprecate `.nonstrict()`\ne72b92a5 Stripped unnecessary items out of eslint and package.json\n18854492 strip unknown keys by default\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_0Ztu2lWc0GbBKuaPa5ju4628",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 18854492; echo \"==========================\"; git log -1 --format='%H%n%an%n%ad%n%s%n%n%b' 18854492"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\n README.md                          | 24 ++++++++++++------------\n src/__tests__/intersection.test.ts | 22 +---------------------\n src/__tests__/object.test.ts       | 21 ++++++++++++++++++---\n src/parser.ts                      |  2 +-\n src/playground.ts                  | 22 ----------------------\n src/types/object.ts                | 16 ++++++++--------\n 6 files changed, 40 insertions(+), 67 deletions(-)\n==========================\n18854492b4b6e1648499f2f920c615dab187ee1a\nColin McDonnell\nThu Sep 17 13:20:45 2020 -0700\nstrip unknown keys by default\n\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_21xJ4ADYm59Bd3A2lPmZ8807",
+        "status": "completed",
+        "input": {
+          "command": "git show 18854492 -- src/parser.ts src/types/object.ts README.md src/__tests__/object.test.ts"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/README.md b/README.md\nindex 2f12e132..c9c94ca5 100644\n--- a/README.md\n+++ b/README.md\n@@ -31,13 +31,13 @@ Here are some of the new features.\n \n - Transformers! These let you provide default values, do casting/coersion, and a lot more. Read more here: [Transformers](#transformers)\n - Asynchronous refinements and new `.parseAsync` and `.safeParseAsync` methods. Read more here: [Refinements](#refinements)\n-- New object methods: `.stripUnknown()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n+- New object methods: `.passthrough()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n \n In almost all cases, you'll be able to upgrade to Zod 2 without changing any code. Here are some of the (very minor) breaking changes:\n \n - Parsing now returns a _deep clone_ of the data you pass in. Previously it returned the exact same object you passed in.\n - Relatedly, Zod _no longer_ supports cyclical _data_. Recursive schemas are still supported, but Zod can't properly parse nested objects that contain cycles.\n-- Object schemas now _allow_ unknown keys by default, instead of throwing an error\n+- Object schemas now strip unknown keys by default, instead of throwing an error\n - Optional and nullable schemas are now represented with the dedicated ZodOptional and ZodNullable classes, instead of using ZodUnion.\n \n ---\n@@ -116,7 +116,7 @@ _To get your name + Twitter + website here, sponsor Zod at the [Freelancer](http\n   - [.extend](#extending-objects)\n   - [.pick/.omit](#pick-and-omit)\n   - [.partial/.deepPartial](#partials)\n-  - [.stripUnknown](#strip-unknown-keys)\n+  - [.strip](#strip-unknown-keys)\n   - [.strict](#disallow-unknown-keys)\n   - [.primitives/.nonprimitives](#primitives-and-nonprimitives)\n - [Records](#records)\n@@ -686,9 +686,9 @@ const deepPartialUser = user.deepPartial();\n \n #### Unknown keys\n \n-Zod object schemas allow unknown keys.\n+By default Zod object schema strip unknown keys from the output.\n \n-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.\n+> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.\n \n Zod will return\n \n@@ -701,30 +701,30 @@ person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n });\n-// => { name: \"bob dylan\", extraKey: 61 }\n+// => { name: \"bob dylan\" }\n ```\n \n-#### Strip unknown keys\n+#### Pass through unknown keys\n \n-If you want to strip out unknown keys, use `.stripUnknown`:\n+If you want to pass through unknown keys, use `.passthrough()`. For backwards compatibility, you can also call `.nonstrict()` which behaves identically.\n \n ```ts\n const person = z\n   .object({\n     name: z.string(),\n   })\n-  .stripUnknown();\n+  .passthrough();\n \n person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n });\n-// => { name: \"bob dylan\" }\n+// => { name: \"bob dylan\", extraKey: 61 }\n ```\n \n #### Disallow unknown keys\n \n-You can _disallow_ unknown keys with `.strict()`\n+You can _disallow_ unknown keys with `.strict()`. If there are any unknown keys in the input, Zod will throw an error.\n \n ```ts\n const person = z\n@@ -794,7 +794,7 @@ person.parse({\n // => { name: \"bob dylan\" }\n ```\n \n-> Using `.catchall()` overrides `.stripUnknown()` or `.strict()`. All keys are now considered \"known\".\n+> Using `.catchall()` overrides `.passsthrough()`, `.strip()`, or `.strict()`. All keys are now considered \"known\".\n \n ## Records\n \ndiff --git a/src/__tests__/object.test.ts b/src/__tests__/object.test.ts\nindex 23ddace3..5c31ce1c 100644\n--- a/src/__tests__/object.test.ts\n+++ b/src/__tests__/object.test.ts\n@@ -86,22 +86,37 @@ const data = {\n   points: 2314,\n   unknown: 'asdf',\n };\n+\n+test('strip by default', () => {\n+  const val = z.object({ points: z.number() }).parse(data);\n+  expect(val).toEqual({ points: 2314 });\n+});\n+\n test('unknownkeys override', () => {\n   const val = z\n     .object({ points: z.number() })\n     .strict()\n-    .allowUnknown()\n-    .stripUnknown()\n+    .passthrough()\n+    .strip()\n     .nonstrict()\n     .parse(data);\n \n   expect(val).toEqual(data);\n });\n \n+test('passthrough unknown', () => {\n+  const val = z\n+    .object({ points: z.number() })\n+    .passthrough()\n+    .parse(data);\n+\n+  expect(val).toEqual(data);\n+});\n+\n test('strip unknown', () => {\n   const val = z\n     .object({ points: z.number() })\n-    .stripUnknown()\n+    .strip()\n     .parse(data);\n \n   expect(val).toEqual({ points: 2314 });\ndiff --git a/src/parser.ts b/src/parser.ts\nindex 3348f632..2b14a829 100644\n--- a/src/parser.ts\n+++ b/src/parser.ts\n@@ -393,7 +393,7 @@ export const ZodParser = (schema: z.ZodType<any>) => (\n       }\n \n       if (def.catchall instanceof ZodNever) {\n-        if (def.unknownKeys === 'allow') {\n+        if (def.unknownKeys === 'passthrough') {\n           for (const key of extraKeys) {\n             objectPromises[key] = PseudoPromise.resolve(data[key]);\n           }\ndiff --git a/src/types/object.ts b/src/types/object.ts\nindex e1de0fcb..ab846f9e 100644\n--- a/src/types/object.ts\n+++ b/src/types/object.ts\n@@ -31,7 +31,7 @@ const AugmentFactory = <Def extends ZodObjectDef>(def: Def) => <\n   }) as any;\n };\n \n-type UnknownKeysParam = 'allow' | 'strict' | 'strip';\n+type UnknownKeysParam = 'passthrough' | 'strict' | 'strip';\n \n export interface ZodObjectDef<\n   T extends z.ZodRawShape = z.ZodRawShape,\n@@ -150,7 +150,7 @@ export type AnyZodObject = ZodObject<any, any, any>;\n // >;\n export class ZodObject<\n   T extends z.ZodRawShape,\n-  UnknownKeys extends UnknownKeysParam = 'allow',\n+  UnknownKeys extends UnknownKeysParam = 'passthrough',\n   Catchall extends z.ZodTypeAny = z.ZodTypeAny\n   // Params extends ZodObjectParams = { strict: true },\n   // Type extends ZodObjectType<T, Params> = ZodObjectType<T, Params>\n@@ -186,19 +186,19 @@ export class ZodObject<\n       unknownKeys: 'strict',\n     });\n \n-  stripUnknown = (): ZodObject<T, 'strip', Catchall> =>\n+  strip = (): ZodObject<T, 'strip', Catchall> =>\n     new ZodObject({\n       ...this._def,\n       unknownKeys: 'strip',\n     });\n \n-  allowUnknown = (): ZodObject<T, 'allow', Catchall> =>\n+  passthrough = (): ZodObject<T, 'passthrough', Catchall> =>\n     new ZodObject({\n       ...this._def,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'passthrough',\n     });\n \n-  nonstrict = this.allowUnknown;\n+  nonstrict = this.passthrough;\n \n   // opt optional: () => ZodUnion<[this, ZodUndefined]> = () => ZodUnion.create([this, ZodUndefined.create()]);\n \n@@ -388,7 +388,7 @@ export class ZodObject<\n     return new ZodObject({\n       t: z.ZodTypes.object,\n       shape: () => shape,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'strip',\n       catchall: ZodNever.create(),\n       //  params: {\n       //    strict: true,\n@@ -402,7 +402,7 @@ export class ZodObject<\n     return new ZodObject({\n       t: z.ZodTypes.object,\n       shape,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'strip',\n       catchall: ZodNever.create(),\n     }) as any;\n   };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_aBsV1eJE0DpiGIZILMDe9976",
+        "status": "completed",
+        "input": {
+          "command": "git merge-base --is-ancestor 18854492b4b6e1648499f2f920c615dab187ee1a HEAD && echo \"ancestor of HEAD: YES\" || echo \"ancestor of HEAD: NO\"; echo \"===\"; git log -1 --format='%H%n%ad%n%s' 222a6637; echo \"=== diff 222a6637 ===\"; git show 222a6637 --stat | head -30"
+        },
+        "output": "ancestor of HEAD: YES\n===\n222a663732f6f605fd47c9c95bcef602e3d1e188\nMon Jun 16 18:02:54 2025 -0400\nChange ZodObject default to $strip. Set inst.shape in zod mini\n=== diff 222a6637 ===\ncommit 222a663732f6f605fd47c9c95bcef602e3d1e188\nAuthor: Colin McDonnell <colinmcd94@gmail.com>\nDate:   Mon Jun 16 18:02:54 2025 -0400\n\n    Change ZodObject default to $strip. Set inst.shape in zod mini\n\n packages/zod/src/v4/classic/schemas.ts           |  6 ++---\n packages/zod/src/v4/classic/tests/object.test.ts | 30 ++++++++++++++++++++----\n packages/zod/src/v4/mini/schemas.ts              |  3 ++-\n play.ts                                          |  4 +---\n 4 files changed, 31 insertions(+), 12 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_S2AVJRsELTJzWX2Hfn9N0804",
+        "status": "completed",
+        "input": {
+          "command": "git show 18854492^:src/types/object.ts 2>/dev/null | zg query --rg -n \"unknownKeys:\" - 2>/dev/null | head; echo \"=== parent create default ===\"; git show 18854492^:src/types/object.ts 2>/dev/null | zg query --rg -n \"UnknownKeysParam|unknownKeys: '\" - 2>/dev/null | head -20"
+        },
+        "output": "No searchable files.\nmissing: -\n=== parent create default ===\nNo searchable files.\nmissing: -\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_TngWSGgp9LskzdC4ntrn9385",
+        "status": "completed",
+        "input": {
+          "command": "git show 222a6637 -- packages/zod/src/v4/classic/schemas.ts packages/zod/src/v4/mini/schemas.ts"
+        },
+        "output": "commit 222a663732f6f605fd47c9c95bcef602e3d1e188\nAuthor: Colin McDonnell <colinmcd94@gmail.com>\nDate:   Mon Jun 16 18:02:54 2025 -0400\n\n    Change ZodObject default to $strip. Set inst.shape in zod mini\n\ndiff --git a/packages/zod/src/v4/classic/schemas.ts b/packages/zod/src/v4/classic/schemas.ts\nindex ddbb2e4a..3afdce1e 100644\n--- a/packages/zod/src/v4/classic/schemas.ts\n+++ b/packages/zod/src/v4/classic/schemas.ts\n@@ -1025,7 +1025,7 @@ export function keyof<T extends ZodObject>(schema: T): ZodLiteral<keyof T[\"_zod\"\n export interface ZodObject<\n   /** @ts-ignore Cast variance */\n   out Shape extends core.$ZodShape = core.$ZodLooseShape,\n-  out Config extends core.$ZodObjectConfig = core.$ZodObjectConfig,\n+  out Config extends core.$ZodObjectConfig = core.$strip,\n > extends _ZodType<core.$ZodObjectInternals<Shape, Config>>,\n     core.$ZodObject<Shape, Config> {\n   shape: Shape;\n@@ -1108,9 +1108,7 @@ export const ZodObject: core.$constructor<ZodObject> = /*@__PURE__*/ core.$const\n   core.$ZodObject.init(inst, def);\n   ZodType.init(inst, def);\n \n-  util.defineLazy(inst, \"shape\", () => {\n-    return Object.fromEntries(Object.entries(inst._zod.def.shape));\n-  });\n+  util.defineLazy(inst, \"shape\", () => def.shape);\n   inst.keyof = () => _enum(Object.keys(inst._zod.def.shape)) as any;\n   inst.catchall = (catchall) => inst.clone({ ...inst._zod.def, catchall: catchall as any as core.$ZodType }) as any;\n   inst.passthrough = () => inst.clone({ ...inst._zod.def, catchall: unknown() });\ndiff --git a/packages/zod/src/v4/mini/schemas.ts b/packages/zod/src/v4/mini/schemas.ts\nindex f14ee8ac..66f5d5c3 100644\n--- a/packages/zod/src/v4/mini/schemas.ts\n+++ b/packages/zod/src/v4/mini/schemas.ts\n@@ -695,7 +695,7 @@ export function keyof<T extends ZodMiniObject>(schema: T): ZodMiniLiteral<keyof\n export interface ZodMiniObject<\n   /** @ts-ignore Cast variance */\n   out Shape extends core.$ZodShape = core.$ZodShape,\n-  out Config extends core.$ZodObjectConfig = core.$ZodObjectConfig,\n+  out Config extends core.$ZodObjectConfig = core.$strip,\n > extends ZodMiniType<any, any, core.$ZodObjectInternals<Shape, Config>>,\n     core.$ZodObject<Shape, Config> {\n   shape: Shape;\n@@ -705,6 +705,7 @@ export const ZodMiniObject: core.$constructor<ZodMiniObject> = /*@__PURE__*/ cor\n   (inst, def) => {\n     core.$ZodObject.init(inst, def);\n     ZodMiniType.init(inst, def);\n+    util.defineLazy(inst, \"shape\", () => def.shape);\n   }\n );\n export function object<T extends core.$ZodLooseShape = Record<never, SomeType>>(\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_WtcdmC8y51AVP9l0l9Bg8850",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S \"unknownKeys: 'allow'\" -- src/types/object.ts | head; echo \"=== version at commit ===\"; git show 18854492:package.json 2>/dev/null | zg query --rg -n '\"version\"' - 2>/dev/null; git show 18854492:package.json 2>/dev/null | head -5; echo \"=== nearest tags ===\"; git describe --tags --contains 18854492 2>/dev/null; git tag --contains 18854492 | head"
+        },
+        "output": "18854492 strip unknown keys by default\n2936e65b Eliminated params from ZodObject\n=== version at commit ===\nNo searchable files.\nmissing: -\n{\n  \"name\": \"zod\",\n  \"version\": \"2.0.0-beta.1\",\n  \"description\": \"TypeScript-first schema declaration and validation library with static type inference\",\n  \"main\": \"./lib/src/index.js\",\n=== nearest tags ===\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_9ZhcCJeCbzMMAKPfvxwO1059",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -i --grep='allow unknown' | head; echo \"===\"; git log --oneline --all -i --grep='unknown' | head -20"
+        },
+        "output": "ddfc8760 Allow unknown arguments to .aparse\n===\neca96871 fix(v4): enforce the six JSON Schema keywords fromJSONSchema silently dropped (#6535)\n68a609ac Widen literal inputs in property check types (#6520)\n84e416fb fix(v4): stop the cycle walk from firing a default factory (#6500)\n11c9268b revert(core): drop the exactOptional parse prototype from #6432 (#6438)\n9d20fdc3 fix(v4): preserve z.preprocess input narrowing (#5967)\n85dba7e1 docs: document that any/unknown object keys are required (#6388)\n7f20a26a test(v4): stop redos tests failing on CPU contention (#6360)\nc2be4f81 fix(v4): generalize optin/fallback to transform; restore preprocess on absent keys (#5941)\n02c2baf7 Make z.preprocess defer optionality to inner schema (#5929)\n5eb04722 RecordKeys shold only care about output (#5522)\n3de2b638 fix: remove redundant Required<> from input and output type definitions (#5033)\n59f48723 Change unknown -> any for ZodType defaults\nb8d731f7 Set input type of ZodCatch to unknown\n2893e165 Make unknown input type for preprocess\n73495779 Add ZodUnknown to ZodFunction.create\n55730928 Make tuples inside ZodFunction have rest unknown\n5a14940b Add unit test for any/unknown behavior in objects\n4ec49083 Stop inferring `unknown` fields as optional\n47542699 Fixed type issue on ZodObject.merge. B now overrides catchall and unknownKeys settings of A when A.merge(B)\n18854492 strip unknown keys by default\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_rhWvrWc1ceDa9KpUTKH67758",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S \"unknownKeys: 'strip'\" -- src/types/object.ts | head; echo \"=== v2.0.0 object default ===\"; git show v2.0.0:src/types/object.ts 2>/dev/null | zg query --rg -n \"unknownKeys: '\" - 2>/dev/null | head"
+        },
+        "output": "da4934ca chore: run format with prettier defaults\n18854492 strip unknown keys by default\n78a4832b implemented catchall\n=== v2.0.0 object default ===\nNo searchable files.\nmissing: -\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_0Z60dBdaAQmtq1QNtEa87899",
+        "status": "completed",
+        "input": {
+          "command": "git show 18854492^:README.md 2>/dev/null | zg query --rg -n \"allow unknown keys|strip unknown\" - 2>/dev/null | head; echo \"=== parent class default line context ===\"; git show 18854492^:src/types/object.ts 2>/dev/null > /tmp/opencode/object_parent.ts; wc -l /tmp/opencode/object_parent.ts"
+        },
+        "output": "No searchable files.\nmissing: -\n=== parent class default line context ===\n409 /tmp/opencode/object_parent.ts\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_NuVOlpxq57QZ6ilSXVXt1458",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S 'unknownKeys' -- src/types/object.ts | head -30"
+        },
+        "output": "64d696b9 Got rid of ZodTypes.\n295e4e93 Added files\n1f57b40c Resolve almost all except 6 circular dependencies\nee2ae298 Fixed catchall bug\n78a4832b implemented catchall\n2936e65b Eliminated params from ZodObject\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_YysXBlzehmd9C01CrvXa5264",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -S 'core.$ZodObjectConfig = core.$ZodObjectConfig' -- packages/zod/src/v4/classic/schemas.ts | head; echo \"=== object() current ===\"; zg query --rg -n \"export function object\" packages/zod/src/v4/classic/schemas.ts 2>&1 | head"
+        },
+        "output": "222a6637 Change ZodObject default to $strip. Set inst.shape in zod mini\n85928549 Zod 4 (#4074)\n=== object() current ===\npackages/zod/src/v4/classic/schemas.ts\n  1726:\texport function object<T extends core.$ZodLooseShape = Partial<Record<never, core.SomeType>>>(\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_M48HyURdE3MyQNpCsH8o9137",
+        "status": "completed",
+        "input": {
+          "command": "git show 18854492 --format='%H%n%ad%n%s%n%n%b' --no-patch"
+        },
+        "output": "18854492b4b6e1648499f2f920c615dab187ee1a\nThu Sep 17 13:20:45 2020 -0700\nstrip unknown keys by default\n\n\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 24319,
+    "output": 3175,
+    "messages": 23
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/f6894c1af871bee29ead04f9a60b55375e4edac9622eb24c569fcb3990152733",
+  "completed": true
+}

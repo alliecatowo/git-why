@@ -1,0 +1,45 @@
+I'll start by running the verification command as instructed.Perfect! Now I'll work on answering the question: **Can curl print transfer stats as JSON with -w/--write-out?**
+
+Let me search for information about JSON output format in curl's write-out functionality.Great! I found several commits related to JSON output in write-out. Let me look at the key commit that added `%{json}` support:Perfect! I found the answer. Let me verify the commit details:Perfect! Let me verify this commit is in the current history by checking its position relative to our HEAD:Excellent! The commit is in the history. Now let me provide the final answer:
+
+## Answer
+
+**Yes, curl can print transfer stats as JSON with `-w/--write-out` using `-w "%{json}"`.**
+
+### Supporting Commit
+
+**Commit SHA:** `04c03416e`
+
+**Commit Message:**
+```
+writeout: support to generate JSON output
+
+This commit adds support to generate JSON via the writeout feature:
+
+    -w "%{json}"
+
+It leverages the existing infrastructure as much as possible. Thus,
+generating the JSON on STDERR is possible by:
+
+    -w "%{stderr}%{json}"
+
+This implements a variant of
+https://github.com/curl/curl/wiki/JSON#--write-out-json.
+
+Closes #4870
+```
+
+### Key Evidence from the Diff
+
+The commit added a new feature in the documentation (`docs/cmdline-opts/write-out.d`):
+```
+.B json
+A JSON object with all available keys.
+```
+
+And implemented the feature by:
+1. Creating new files `tool_writeout_json.c` and `tool_writeout_json.h` to handle JSON output generation
+2. Adding a `VAR_JSON` enum value to support the `%{json}` pattern
+3. Modifying `tool_writeout.c` to route the `%{json}` pattern to the new JSON output function which outputs a JSON object containing all available transfer statistics
+
+The feature generates a complete JSON object with all available metrics (http_code, time_total, size_download, content_type, etc.) when using `-w "%{json}"`.

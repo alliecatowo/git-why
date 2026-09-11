@@ -1,0 +1,140 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "208dc48c1781fa881bb64db40f3aefe5fa139cdd",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T02:27:46.922Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "f508f0f5f27a56928fb542c9c49737b4b6326cfd662a94f310f7b243fbad3468",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "620ea21410030a9977396b4661806bc187231b79",
+    "citedGoldSha": true,
+    "citedShaCount": 5,
+    "matchedTokens": [
+      "620ea21410030"
+    ]
+  },
+  "wall_ms": 71079,
+  "tool_calls": 10,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 6,
+  "input_tokens": 50609,
+  "output_tokens": 1524,
+  "cache_read_tokens": 110766,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0693056,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 108112,
+  "index_build_ms": 575785,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105075197,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T02-09-51-742Z/events/X-curl-02-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "f1d8589f568413998f039ca5578e8e8fb8dc9d73bb3301599149df28f0b42043",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 32722,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_KsnKrndWMrsWF5H1i1LQp5",
+        "status": "completed",
+        "input": {
+          "command": "git show 6e65999"
+        },
+        "output": "commit 6e659993952aa5f90f48864be84a1bbb047fc258\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 13:05:40 2022 +0200\n\n    http: avoid auth/cookie on redirects same host diff port\n    \n    CVE-2022-27776\n    \n    Reported-by: Harry Sintonen\n    Bug: https://curl.se/docs/CVE-2022-27776.html\n    Closes #8749\n\ndiff --git a/lib/http.c b/lib/http.c\nindex ce79fc4e3..f0476f3b9 100644\n--- a/lib/http.c\n+++ b/lib/http.c\n@@ -775,6 +775,21 @@ output_auth_headers(struct Curl_easy *data,\n   return CURLE_OK;\n }\n \n+/*\n+ * allow_auth_to_host() tells if autentication, cookies or other \"sensitive\n+ * data\" can (still) be sent to this host.\n+ */\n+static bool allow_auth_to_host(struct Curl_easy *data)\n+{\n+  struct connectdata *conn = data->conn;\n+  return (!data->state.this_is_a_follow ||\n+          data->set.allow_auth_to_other_hosts ||\n+          (data->state.first_host &&\n+           strcasecompare(data->state.first_host, conn->host.name) &&\n+           (data->state.first_remote_port == conn->remote_port) &&\n+           (data->state.first_remote_protocol == conn->handler->protocol)));\n+}\n+\n /**\n  * Curl_http_output_auth() setups the authentication headers for the\n  * host/proxy and the correct authentication\n@@ -847,17 +862,14 @@ Curl_http_output_auth(struct Curl_easy *data,\n        with it */\n     authproxy->done = TRUE;\n \n-  /* To prevent the user+password to get sent to other than the original\n-     host due to a location-follow, we do some weirdo checks here */\n-  if(!data->state.this_is_a_follow ||\n+  /* To prevent the user+password to get sent to other than the original host\n+     due to a location-follow */\n+  if(allow_auth_to_host(data)\n #ifndef CURL_DISABLE_NETRC\n-     conn->bits.netrc ||\n+     || conn->bits.netrc\n #endif\n-     !data->state.first_host ||\n-     data->set.allow_auth_to_other_hosts ||\n-     strcasecompare(data->state.first_host, conn->host.name)) {\n+    )\n     result = output_auth_headers(data, conn, authhost, request, path, FALSE);\n-  }\n   else\n     authhost->done = TRUE;\n \n@@ -1905,10 +1917,7 @@ CURLcode Curl_add_custom_headers(struct Curl_easy *data,\n                    checkprefix(\"Cookie:\", compare)) &&\n                   /* be careful of sending this potentially sensitive header to\n                      other hosts */\n-                  (data->state.this_is_a_follow &&\n-                   data->state.first_host &&\n-                   !data->set.allow_auth_to_other_hosts &&\n-                   !strcasecompare(data->state.first_host, conn->host.name)))\n+                  !allow_auth_to_host(data))\n             ;\n           else {\n #ifdef USE_HYPER\n@@ -2084,6 +2093,7 @@ CURLcode Curl_http_host(struct Curl_easy *data, struct connectdata *conn)\n       return CURLE_OUT_OF_MEMORY;\n \n     data->state.first_remote_port = conn->remote_port;\n+    data->state.first_remote_protocol = conn->handler->protocol;\n   }\n   Curl_safefree(data->state.aptr.host);\n \ndiff --git a/lib/urldata.h b/lib/urldata.h\nindex 1d89b8d7f..ef2174d9e 100644\n--- a/lib/urldata.h\n+++ b/lib/urldata.h\n@@ -1329,14 +1329,16 @@ struct UrlState {\n   char *ulbuf; /* allocated upload buffer or NULL */\n   curl_off_t current_speed;  /* the ProgressShow() function sets this,\n                                 bytes / second */\n-  char *first_host; /* host name of the first (not followed) request.\n-                       if set, this should be the host name that we will\n-                       sent authorization to, no else. Used to make Location:\n-                       following not keep sending user+password... This is\n-                       strdup() data.\n-                    */\n+\n+  /* host name, port number and protocol of the first (not followed) request.\n+     if set, this should be the host name that we will sent authorization to,\n+     no else. Used to make Location: following not keep sending user+password.\n+     This is strdup()ed data. */\n+  char *first_host;\n+  int first_remote_port;\n+  unsigned int first_remote_protocol;\n+\n   int retrycount; /* number of retries on a new connection */\n-  int first_remote_port; /* remote port of the first (not followed) request */\n   struct Curl_ssl_session *session; /* array of 'max_ssl_sessions' size */\n   long sessionage;                  /* number of the most recent session */\n   struct tempbuf tempwrite[3]; /* BOTH, HEADER, BODY */\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_FnpGavUEvqvic9fHTVcBty",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline | grep -i \"same host diff port\""
+        },
+        "output": "6e6599939 http: avoid auth/cookie on redirects same host diff port\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_EAytd3qvOvS02AUtm8mJbi",
+        "status": "completed",
+        "input": {
+          "command": "git show 139a54e | head -100"
+        },
+        "output": "commit 139a54ed0a172adaaf1a78d6f4fff50b2c3f9e08\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 17:59:15 2022 +0200\n\n    openssl: don't leak the SRP credentials in redirects either\n    \n    Follow-up to 620ea21410030\n    \n    Reported-by: Harry Sintonen\n    Closes #8751\n\ndiff --git a/lib/http.c b/lib/http.c\nindex f0476f3b9..0d5c449bc 100644\n--- a/lib/http.c\n+++ b/lib/http.c\n@@ -776,10 +776,10 @@ output_auth_headers(struct Curl_easy *data,\n }\n \n /*\n- * allow_auth_to_host() tells if autentication, cookies or other \"sensitive\n- * data\" can (still) be sent to this host.\n+ * Curl_allow_auth_to_host() tells if authentication, cookies or other\n+ * \"sensitive data\" can (still) be sent to this host.\n  */\n-static bool allow_auth_to_host(struct Curl_easy *data)\n+bool Curl_allow_auth_to_host(struct Curl_easy *data)\n {\n   struct connectdata *conn = data->conn;\n   return (!data->state.this_is_a_follow ||\n@@ -864,7 +864,7 @@ Curl_http_output_auth(struct Curl_easy *data,\n \n   /* To prevent the user+password to get sent to other than the original host\n      due to a location-follow */\n-  if(allow_auth_to_host(data)\n+  if(Curl_allow_auth_to_host(data)\n #ifndef CURL_DISABLE_NETRC\n      || conn->bits.netrc\n #endif\n@@ -1917,7 +1917,7 @@ CURLcode Curl_add_custom_headers(struct Curl_easy *data,\n                    checkprefix(\"Cookie:\", compare)) &&\n                   /* be careful of sending this potentially sensitive header to\n                      other hosts */\n-                  !allow_auth_to_host(data))\n+                  !Curl_allow_auth_to_host(data))\n             ;\n           else {\n #ifdef USE_HYPER\ndiff --git a/lib/http.h b/lib/http.h\nindex 0972261e6..c4ab3c22d 100644\n--- a/lib/http.h\n+++ b/lib/http.h\n@@ -364,4 +364,10 @@ Curl_http_output_auth(struct Curl_easy *data,\n                       bool proxytunnel); /* TRUE if this is the request setting\n                                             up the proxy tunnel */\n \n+/*\n+ * Curl_allow_auth_to_host() tells if authentication, cookies or other\n+ * \"sensitive data\" can (still) be sent to this host.\n+ */\n+bool Curl_allow_auth_to_host(struct Curl_easy *data);\n+\n #endif /* HEADER_CURL_HTTP_H */\ndiff --git a/lib/vtls/openssl.c b/lib/vtls/openssl.c\nindex 5d8e2d39d..3722005d4 100644\n--- a/lib/vtls/openssl.c\n+++ b/lib/vtls/openssl.c\n@@ -2924,7 +2924,8 @@ static CURLcode ossl_connect_step1(struct Curl_easy *data,\n #endif\n \n #ifdef USE_OPENSSL_SRP\n-  if(ssl_authtype == CURL_TLSAUTH_SRP) {\n+  if((ssl_authtype == CURL_TLSAUTH_SRP) &&\n+     Curl_allow_auth_to_host(data)) {\n     char * const ssl_username = SSL_SET_OPTION(username);\n \n     infof(data, \"Using TLS-SRP username: %s\", ssl_username);\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 50609,
+    "output": 1524,
+    "messages": 12
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/f1d8589f568413998f039ca5578e8e8fb8dc9d73bb3301599149df28f0b42043",
+  "completed": true
+}

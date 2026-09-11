@@ -1,0 +1,35 @@
+I'll start with the required verification command.Verification passed. Now let me investigate the LPOS command's option naming.I found strong evidence. Let me verify the full commit details.Let me view the full diff of the rename commit and confirm the command's introduction history.Let me confirm whether `FIRST` ever shipped in a release and verify the current state.## Answer
+
+**Yes — the option was renamed from `FIRST` to `RANK`.**
+
+LPOS was first added under the temporary name `LRANK` (commit `a7936ef96`, "LRANK: Add command (the command will be renamed LPOS)"), then implemented as `LPOS` with an option token of `FIRST`. The token was subsequently renamed to `RANK`, and that option name is what the current tree uses (`src/commands/lpos.json` line 66: `"token": "RANK"`; `src/t_list.c` line 970: `if (!strcasecmp(opt,"RANK") && moreargs)`).
+
+### Supporting commit
+
+**`a5a3a7bbc61203398ecc1d5b52c76214f5672776`** — *"LPOS: option FIRST renamed RANK."* (antirez, 2020‑06‑24).
+
+This commit is an ancestor of the current `HEAD`, and its message is exactly the answer. From its diff of `src/t_list.c`:
+
+```diff
+-/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]
++/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]
+  *
+- * FIRST "rank" is the position of the match, so if it is 1, the first match
++ * The "rank" is the position of the match, so if it is 1, the first match
+...
+-        if (!strcasecmp(opt,"FIRST") && moreargs) {
++        if (!strcasecmp(opt,"RANK") && moreargs) {
+...
+-                addReplyError(c,"FIRST can't be zero: use 1 to start from "
++                addReplyError(c,"RANK can't be zero: use 1 to start from "
+```
+
+The same commit rewrote the tests from `LPOS mylist c FIRST 1` to `LPOS mylist c RANK 1` etc., confirming the user-visible option name changed.
+
+### Why your memory is correct
+
+The `FIRST` spelling only ever existed during the brief development window in June 2020:
+- `ca58198` (2020‑06‑12, "help.h updated.") still documented `key element [FIRST rank] ...`.
+- `a5a3a7b` (2020‑06‑24) renamed it to `RANK` before the command was publicly released (LPOS shipped in Redis 6.0.6 / 6.2.0). So early internal examples/tests used `FIRST`, but no released version did.
+
+No files were modified.

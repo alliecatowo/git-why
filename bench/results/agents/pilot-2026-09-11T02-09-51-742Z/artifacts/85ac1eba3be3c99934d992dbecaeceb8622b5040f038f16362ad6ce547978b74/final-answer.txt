@@ -1,0 +1,40 @@
+I'll start by verifying the repository state as instructed, then investigate whether Python 3.9 support was dropped in the requests library.Perfect! The verification checks pass. Now I'll search for information about Python 3.9 support in the requests library. Let me use the available tools to investigate.Excellent! I found the answer. Let me verify this information by examining the specific commit.Let me look at the full diff to see the exact changes:Perfect! I now have a complete answer with supporting evidence.
+
+## Answer
+
+**No, requests no longer supports Python 3.9.** Python 3.9 support was dropped in the requests library.
+
+**Supporting Commit:** `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`
+
+**Commit Message:** "Drop support for Python 3.9 (#7196)"
+
+**Date:** February 6, 2026
+
+**Key Evidence from the commit diff:**
+
+1. **pyproject.toml** - Changed the minimum required Python version:
+   ```
+   -requires-python = ">=3.9"
+   +requires-python = ">=3.10"
+   ```
+
+2. **README.md** - Updated the official support statement:
+   ```
+   -Requests officially supports Python 3.9+.
+   +Requests officially supports Python 3.10+.
+   ```
+
+3. **setup.py** - Updated the version check:
+   ```
+   -if sys.version_info < (3, 9):
+   -    sys.stderr.write("Requests requires Python 3.9 or later.\n")
+   +if sys.version_info < (3, 10):
+   +    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+   ```
+
+4. **Classifiers removed** from pyproject.toml:
+   ```
+   -    "Programming Language :: Python :: 3.9",
+   ```
+
+5. **CI/CD updates** - Python 3.9 was removed from the test matrix in `.github/workflows/run-tests.yml` and `tox.ini`

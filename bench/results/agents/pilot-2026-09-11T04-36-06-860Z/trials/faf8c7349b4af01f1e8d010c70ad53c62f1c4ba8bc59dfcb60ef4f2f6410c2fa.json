@@ -1,0 +1,126 @@
+{
+  "task_id": "X-zod-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "corpus_fingerprint": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:39:38.181Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "d47e3e62a782913bbc71b791d4bf61bbdfcb6f334fec7b42ad049e4643aad9de",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "18854492b4b6e1648499f2f920c615dab187ee1a",
+    "citedGoldSha": true,
+    "citedShaCount": 4,
+    "matchedTokens": [
+      "1885449",
+      "18854492b4b6e1648499f2f920c615dab187ee1a",
+      "18854492"
+    ]
+  },
+  "wall_ms": 200406,
+  "tool_calls": 7,
+  "history_calls": 4,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 26994,
+  "output_tokens": 1785,
+  "cache_read_tokens": 134466,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0987312,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 34928,
+  "index_build_ms": 75038,
+  "model_download_ms": null,
+  "index_disk_bytes": 169442011,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-zod-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "faf8c7349b4af01f1e8d010c70ad53c62f1c4ba8bc59dfcb60ef4f2f6410c2fa",
+  "indexed_commits": 3210,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  563 / 563 files\n  Entities    7,793\n  Truncated   162 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_4Nj6elAcPNkDqjB8xvWOFU",
+        "status": "completed",
+        "input": {
+          "command": "git show 1885449 --stat; echo \"---\"; git log -1 1885449 --format=\"%H %ci %s\"; echo \"---full message---\"; git log -1 1885449 --format=\"%B\""
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\n README.md                          | 24 ++++++++++++------------\n src/__tests__/intersection.test.ts | 22 +---------------------\n src/__tests__/object.test.ts       | 21 ++++++++++++++++++---\n src/parser.ts                      |  2 +-\n src/playground.ts                  | 22 ----------------------\n src/types/object.ts                | 16 ++++++++--------\n 6 files changed, 40 insertions(+), 67 deletions(-)\n---\n18854492b4b6e1648499f2f920c615dab187ee1a 2020-09-17 13:20:45 -0700 strip unknown keys by default\n---full message---\nstrip unknown keys by default\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_J7ruXYW8qgFrb4bGc76CTx",
+        "status": "completed",
+        "input": {
+          "command": "git show 18854492b4b6e1648499f2f920c615dab187ee1a -- src/types/object.ts"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/src/types/object.ts b/src/types/object.ts\nindex e1de0fcb..ab846f9e 100644\n--- a/src/types/object.ts\n+++ b/src/types/object.ts\n@@ -31,7 +31,7 @@ const AugmentFactory = <Def extends ZodObjectDef>(def: Def) => <\n   }) as any;\n };\n \n-type UnknownKeysParam = 'allow' | 'strict' | 'strip';\n+type UnknownKeysParam = 'passthrough' | 'strict' | 'strip';\n \n export interface ZodObjectDef<\n   T extends z.ZodRawShape = z.ZodRawShape,\n@@ -150,7 +150,7 @@ export type AnyZodObject = ZodObject<any, any, any>;\n // >;\n export class ZodObject<\n   T extends z.ZodRawShape,\n-  UnknownKeys extends UnknownKeysParam = 'allow',\n+  UnknownKeys extends UnknownKeysParam = 'passthrough',\n   Catchall extends z.ZodTypeAny = z.ZodTypeAny\n   // Params extends ZodObjectParams = { strict: true },\n   // Type extends ZodObjectType<T, Params> = ZodObjectType<T, Params>\n@@ -186,19 +186,19 @@ export class ZodObject<\n       unknownKeys: 'strict',\n     });\n \n-  stripUnknown = (): ZodObject<T, 'strip', Catchall> =>\n+  strip = (): ZodObject<T, 'strip', Catchall> =>\n     new ZodObject({\n       ...this._def,\n       unknownKeys: 'strip',\n     });\n \n-  allowUnknown = (): ZodObject<T, 'allow', Catchall> =>\n+  passthrough = (): ZodObject<T, 'passthrough', Catchall> =>\n     new ZodObject({\n       ...this._def,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'passthrough',\n     });\n \n-  nonstrict = this.allowUnknown;\n+  nonstrict = this.passthrough;\n \n   // opt optional: () => ZodUnion<[this, ZodUndefined]> = () => ZodUnion.create([this, ZodUndefined.create()]);\n \n@@ -388,7 +388,7 @@ export class ZodObject<\n     return new ZodObject({\n       t: z.ZodTypes.object,\n       shape: () => shape,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'strip',\n       catchall: ZodNever.create(),\n       //  params: {\n       //    strict: true,\n@@ -402,7 +402,7 @@ export class ZodObject<\n     return new ZodObject({\n       t: z.ZodTypes.object,\n       shape,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'strip',\n       catchall: ZodNever.create(),\n     }) as any;\n   };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_siX3ZTfE2vxKQlkskZduB3",
+        "status": "completed",
+        "input": {
+          "command": "git show 18854492b4b6e1648499f2f920c615dab187ee1a -- README.md"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/README.md b/README.md\nindex 2f12e132..c9c94ca5 100644\n--- a/README.md\n+++ b/README.md\n@@ -31,13 +31,13 @@ Here are some of the new features.\n \n - Transformers! These let you provide default values, do casting/coersion, and a lot more. Read more here: [Transformers](#transformers)\n - Asynchronous refinements and new `.parseAsync` and `.safeParseAsync` methods. Read more here: [Refinements](#refinements)\n-- New object methods: `.stripUnknown()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n+- New object methods: `.passthrough()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n \n In almost all cases, you'll be able to upgrade to Zod 2 without changing any code. Here are some of the (very minor) breaking changes:\n \n - Parsing now returns a _deep clone_ of the data you pass in. Previously it returned the exact same object you passed in.\n - Relatedly, Zod _no longer_ supports cyclical _data_. Recursive schemas are still supported, but Zod can't properly parse nested objects that contain cycles.\n-- Object schemas now _allow_ unknown keys by default, instead of throwing an error\n+- Object schemas now strip unknown keys by default, instead of throwing an error\n - Optional and nullable schemas are now represented with the dedicated ZodOptional and ZodNullable classes, instead of using ZodUnion.\n \n ---\n@@ -116,7 +116,7 @@ _To get your name + Twitter + website here, sponsor Zod at the [Freelancer](http\n   - [.extend](#extending-objects)\n   - [.pick/.omit](#pick-and-omit)\n   - [.partial/.deepPartial](#partials)\n-  - [.stripUnknown](#strip-unknown-keys)\n+  - [.strip](#strip-unknown-keys)\n   - [.strict](#disallow-unknown-keys)\n   - [.primitives/.nonprimitives](#primitives-and-nonprimitives)\n - [Records](#records)\n@@ -686,9 +686,9 @@ const deepPartialUser = user.deepPartial();\n \n #### Unknown keys\n \n-Zod object schemas allow unknown keys.\n+By default Zod object schema strip unknown keys from the output.\n \n-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.\n+> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.\n \n Zod will return\n \n@@ -701,30 +701,30 @@ person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n });\n-// => { name: \"bob dylan\", extraKey: 61 }\n+// => { name: \"bob dylan\" }\n ```\n \n-#### Strip unknown keys\n+#### Pass through unknown keys\n \n-If you want to strip out unknown keys, use `.stripUnknown`:\n+If you want to pass through unknown keys, use `.passthrough()`. For backwards compatibility, you can also call `.nonstrict()` which behaves identically.\n \n ```ts\n const person = z\n   .object({\n     name: z.string(),\n   })\n-  .stripUnknown();\n+  .passthrough();\n \n person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n });\n-// => { name: \"bob dylan\" }\n+// => { name: \"bob dylan\", extraKey: 61 }\n ```\n \n #### Disallow unknown keys\n \n-You can _disallow_ unknown keys with `.strict()`\n+You can _disallow_ unknown keys with `.strict()`. If there are any unknown keys in the input, Zod will throw an error.\n \n ```ts\n const person = z\n@@ -794,7 +794,7 @@ person.parse({\n // => { name: \"bob dylan\" }\n ```\n \n-> Using `.catchall()` overrides `.stripUnknown()` or `.strict()`. All keys are now considered \"known\".\n+> Using `.catchall()` overrides `.passsthrough()`, `.strip()`, or `.strict()`. All keys are now considered \"known\".\n \n ## Records\n \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_PHVK4WljI4ONGegYSNtikA",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | wc -l"
+        },
+        "output": "3210\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 3,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 26994,
+    "output": 1785,
+    "messages": 9
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/faf8c7349b4af01f1e8d010c70ad53c62f1c4ba8bc59dfcb60ef4f2f6410c2fa",
+  "completed": true
+}

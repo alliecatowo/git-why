@@ -1,0 +1,49 @@
+The environment verification passed. Now let me research the question about curl's `-w "%{json}"` support.
+
+I found the supporting commit. Let me examine it in detail.
+
+I have found the supporting commit. Let me also verify the current state of the repository to confirm that `%{json}` still works today, and check the write-out date.
+
+The current repository state confirms `%{json}` is still present in the `write-out.d` manual (line 85) and `%{header_json}` was added later. Let me view the relevant current doc section for completeness.
+
+I have everything I need.
+
+## Answer
+
+**Yes** — curl can print transfer stats as JSON with `-w/--write-out`, specifically via the `-w "%{json}"` form.
+
+The commit that establishes this is:
+
+**`04c03416e68fd635a15cae8201872f5c29fdcca8`** — "writeout: support to generate JSON output"
+(Mathias Gumz, dated Sat Feb 1 18:55:24 2020 +0100)
+
+This commit's message explicitly states it:
+
+> This commit adds support to generate JSON via the writeout feature:
+>
+> ```
+> -w "%{json}"
+> ```
+>
+> It leverages the existing infrastructure as much as possible. Thus,
+> generating the JSON on STDERR is possible by:
+>
+> ```
+> -w "%{stderr}%{json}"
+> ```
+>
+> This implements a variant of
+> https://github.com/curl/curl/wiki/JSON#--write-out-json.
+
+The diff adds the new writeout variable and its documentation:
+
+- `docs/cmdline-opts/write-out.d` gains:
+  ```
+  .B json
+  A JSON object with all available keys.
+  ```
+- A new file `src/tool_writeout_json.c` is added (with the actual `ourWriteOutJSON` implementation).
+
+I also confirmed this behavior is still present in the current checkout — `docs/cmdline-opts/write-out.d` line 85 still documents `.B json` as "A JSON object with all available keys." (A related later feature, `%{header_json}`, was added by commit `4133a69` in 2022, but `%{json}` itself was established by `04c03416e`.)
+
+Note: I did not modify any files.

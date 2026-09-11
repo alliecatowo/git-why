@@ -1,0 +1,95 @@
+{
+  "task_id": "X-redis-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:40:59.862Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "a72afa91fa0e160b95998afc8cfc0c699437e22e66ebc0a93ddb1e6c5fbfaaef",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "a5a3a7bbc61203398ecc1d5b52c76214f5672776",
+    "citedGoldSha": true,
+    "citedShaCount": 5,
+    "matchedTokens": [
+      "a5a3a7b",
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776"
+    ]
+  },
+  "wall_ms": 48974,
+  "tool_calls": 3,
+  "history_calls": 1,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 16590,
+  "output_tokens": 1081,
+  "cache_read_tokens": 26262,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.049242400000000006,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 25651,
+  "index_build_ms": 191687,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-redis-02-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "133d4e6fd2a54ad1c9f137f9f756acb59900b18c520c2bc2331348dde562ded9",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_eNytGIg7uFOsj2bFcopSSU",
+        "status": "completed",
+        "input": {
+          "command": "git show --no-patch a5a3a7b\necho \"---\"\ngit log --oneline a5a3a7b -1"
+        },
+        "output": "commit a5a3a7bbc61203398ecc1d5b52c76214f5672776\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Jun 24 09:07:17 2020 +0200\n\n    LPOS: option FIRST renamed RANK.\n---\na5a3a7bbc LPOS: option FIRST renamed RANK.\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 16590,
+    "output": 1081,
+    "messages": 5
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/133d4e6fd2a54ad1c9f137f9f756acb59900b18c520c2bc2331348dde562ded9",
+  "completed": true
+}

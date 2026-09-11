@@ -1,0 +1,43 @@
+Verified. Now let's investigate the streams/XADD history.Found it. Let's look at the earliest commit - the squashed initial implementation.This is the very first commit that introduces streams (t_stream.c, stream.h) with XADD. Let's confirm XADD is registered as a command here.This is definitively the commit. Let's also check that no earlier commit had any partial stream work (in case squash isn't literally the first).Good — confirms 79866a636 is the very first commit introducing streams. Let's view the XADD command source snippet for the quote.## Answer
+
+**Redis first got the Streams data type (with commands like `XADD`) in commit `79866a636` — "Streams: 12 commits squashed into the initial Streams implementation."** (authored by antirez, dated Wed Aug 30 12:40:27 2017 +0200).
+
+This is the very first commit in the repository's history to introduce `src/t_stream.c` and `src/stream.h`, and it registers `XADD` as a server command and implements it:
+
+Commit message:
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+Diff excerpt from `src/server.c` (command table registration):
+```c
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+```
+
+Diff excerpt from `src/t_stream.c` (the command implementation):
+```c
++void xaddCommand(client *c) {
++    if ((c->argc % 2) == 1) {
++        addReplyError(c,"wrong number of arguments for XADD");
++        return;
++    }
++
++    /* Lookup the stream at key. */
++    robj *o;
++    stream *s;
++    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
++    s = o->ptr;
++
++    /* Append using the low level function and return the ID. */
++    streamID id;
++    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
++    sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
++    addReplySds(c,reply);
++
++    signalModifiedKey(c->db,c->argv[1]);
++    notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
++    server.dirty++;
++}
+```
+
+I confirmed via `git log --oneline --all -- src/t_stream.c src/stream.h` that this is the oldest commit touching these files (its direct parent, `045d65c3a`, has no stream-related code), and checked the immediate follow-on commits in the reachable history (`100d43c1a` "assign value of 6 to OBJ_STREAM...", `485014cc7` "Streams: RDB saving.", etc.) confirming this squashed commit is where the feature branch begins in this repo's history. No files were modified during this investigation.

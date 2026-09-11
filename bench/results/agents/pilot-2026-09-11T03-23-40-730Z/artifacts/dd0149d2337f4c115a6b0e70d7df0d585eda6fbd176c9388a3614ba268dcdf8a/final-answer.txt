@@ -1,0 +1,66 @@
+I'll start with the required verification command.Verified: `/workspace`, `/workspace`, `e64d91c37105bc2e23816b6f81b9ffc5e5d99801`. Now let me investigate the streams history.The initial streams commit appears to be `79866a636`. Let me confirm it's in HEAD's history and inspect its diff.I have the answer. Let me confirm I made no changes.## Answer
+
+Redis first got the streams data type and the `XADD` command in this commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`** — *"Streams: 12 commits squashed into the initial Streams implementation."*
+Author: antirez · Date: **Wed Aug 30 12:40:27 2017 +0200**
+
+I verified this is the earliest commit reachable in the repository's history that introduces either `xaddCommand` or `OBJ_STREAM`:
+
+```
+$ git log --all --oneline --reverse -S 'xaddCommand'
+79866a636 Streams: 12 commits squashed into the initial Streams implementation.
+
+$ git log --all --oneline --reverse -S 'OBJ_STREAM' | head -1
+79866a636 Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+### Supporting evidence
+
+The commit message itself states it is the initial implementation:
+
+> Streams: 12 commits squashed into the initial Streams implementation.
+
+Its parent is `045d65c3af460a71d2b89b84f5e0b85d98320a77` ("PSYNC2: Fix off by one buffer size in luaCreateFunction()"), and the diff introduces both the type and the command.
+
+Command table registration added in `src/server.c`:
+
+```c
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+New file `src/t_stream.c` (which contains the command implementation):
+
+```c
++void xaddCommand(client *c) {
++    if ((c->argc % 2) == 1) {
++        addReplyError(c,"wrong number of arguments for XADD");
++        return;
++    }
+...
++    /* Append using the low level function and return the ID. */
++    streamID id;
++    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
++    sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
++    addReplySds(c,reply);
+```
+
+The diff stats also confirm the foundational pieces (stream type, listpack encoding, radix tree, RDB support) all arrive together:
+
+```
+ src/Makefile          |   2 +-
+ src/listpack.c        | 783 +++++++++++++++++++++++++++++++++++
+ src/listpack.h        |  61 +++
+ src/object.c          |   7 +
+ src/rax.c             |  24 +-
+ src/rdb.h             |   3 +-
+ src/server.c          |   2 +
+ src/server.h          |   9 +
+ src/stream.h          |  21 ++
+ src/t_stream.c        | 376 ++++++++++++++++++++++++++++++++
+```
+
+So the streams data type with `XADD`/`XRANGE` first appeared on **August 30, 2017**, in commit **`79866a636`** (the work behind what shipped in Redis 5.0).
+
+No files were modified (`git status --porcelain` is empty).

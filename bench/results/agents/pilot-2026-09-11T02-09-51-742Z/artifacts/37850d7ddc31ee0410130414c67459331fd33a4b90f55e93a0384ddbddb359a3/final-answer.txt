@@ -1,0 +1,37 @@
+I'll start by verifying the repository state as instructed.Perfect! The repository is verified. Now I need to investigate the curl security bug related to following redirects that could leak credentials to a different protocol or port. Let me search for relevant commits and information about this issue.Let me search more specifically for redirect-related security issues:I found some very relevant commits! Let me examine these more closely, starting with the ones that look most relevant to credentials leaking on redirect to different protocol/port:Excellent! This looks very relevant. Let me see the full diff:Perfect! I found the commit. Let me also check the related commit about SRP credentials to see if there's more context:Let me also check if there's information about the CVE 2022-27774 in the git log or commit history:Let me check the test commit to better understand the issue:Perfect! I have found the answer. Let me verify the commit hash once more:Now let me verify this is indeed in the current repository's history by checking if it's reachable from HEAD:Excellent! Now I have all the information I need to answer the question.
+
+## Summary
+
+I found the curl security bug fix related to credentials leaking when following redirects to different protocols or ports.
+
+**Commit SHA:** `620ea2141` (full SHA: `620ea21410030a9977396b4661806bc187231b79`)
+
+**What the fix changed:**
+
+The fix adds explicit checks when processing redirects to clear authentication credentials (username and password) if the redirect goes to:
+1. A different port number, OR
+2. A different protocol
+
+**From the commit message and diff:**
+
+The commit is titled "transfer: redirects to other protocols or ports clear auth" and includes the note "... unless explicitly permitted."
+
+The key change in `lib/transfer.c` adds logic in the `Curl_follow` function that:
+- Checks if a redirect targets a different port than the original connection
+- Checks if a redirect targets a different protocol than the original connection
+- If either condition is true, clears the `data->state.aptr.user` and `data->state.aptr.passwd` fields, removing the authentication credentials before following the redirect
+
+**Specific diff excerpt:**
+```c
+/* Clear auth if this redirects to a different port number or protocol,
+   unless permitted */
+if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+  // ... checks for port and protocol differences ...
+  if(clear) {
+    Curl_safefree(data->state.aptr.user);
+    Curl_safefree(data->state.aptr.passwd);
+  }
+}
+```
+
+This fix prevents the CVE-2022-27774 vulnerability where curl could unintentionally leak authentication credentials when following a redirect to a different protocol or port.

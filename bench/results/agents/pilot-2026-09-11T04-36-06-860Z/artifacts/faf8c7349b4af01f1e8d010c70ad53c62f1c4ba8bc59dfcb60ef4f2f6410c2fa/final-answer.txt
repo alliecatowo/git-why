@@ -1,0 +1,52 @@
+Verified. Now let's investigate.Found it. Let's verify commit 1885449 in detail.Full SHA is `18854492b4b6e1648499f2f920c615dab187ee1a`. Let's look at the diff in detail, especially object.ts.This confirms it precisely: `z.object()` factory's default `unknownKeys` changed from `'allow'` to `'strip'`.This is exactly on point — a README diff that explicitly says the default changed from allowing unknown keys to stripping them. Let's double check where this commit sits in history and confirm HEAD is after it (i.e., this is a valid ancestor).Confirmed — this commit is a genuine ancestor of the pinned HEAD.Matches the stated 3,210 commits. Answer is solid.
+
+## Answer
+
+**Yes — the default changed.** Historically (Zod v1 / early v2 dev), `z.object()` allowed unknown keys by default (any behavior of stripping had to be opted into). This flipped to the current behavior — silently stripping unknown keys unless you call `.passthrough()` — in a specific commit during Zod v2 development.
+
+### Commit
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a`** — "strip unknown keys by default" (Colin McDonnell, 2020-09-17)
+
+This commit is a genuine ancestor of the pinned HEAD (`62311eb2c4a93c7348a8b1c5abbde1ec77c66b67`).
+
+### Supporting evidence
+
+**Commit message** (the entire message, verbatim):
+```
+strip unknown keys by default
+```
+
+**Diff in `src/types/object.ts`** — the `object()` factory's default `unknownKeys` setting flips from `'allow'` to `'strip'`:
+```diff
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+     }) as any;
+   };
+```
+(Same change applied to the other `object()` overload just above it in the same file.) It also renames the accessor methods: `.stripUnknown()` → `.strip()`, and `.allowUnknown()` → `.passthrough()`.
+
+**Diff in `README.md`**, which states the change explicitly:
+```diff
+-Object schemas now _allow_ unknown keys by default, instead of throwing an error
++Object schemas now strip unknown keys by default, instead of throwing an error
+```
+and further down:
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+
+-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
++> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+```
+with the corresponding example output changing from:
+```diff
+-// => { name: "bob dylan", extraKey: 61 }
++// => { name: "bob dylan" }
+```
+
+So the full arc (visible via `git why`) is: Zod v1 disallowed unknown keys by default (threw an error) → an early v2 dev pass briefly made `.object()` *allow* unknown keys by default → commit `18854492` flipped that default to *strip* them, which is the behavior that has persisted to the pinned HEAD. No further commit reversed this default between `18854492` and HEAD.

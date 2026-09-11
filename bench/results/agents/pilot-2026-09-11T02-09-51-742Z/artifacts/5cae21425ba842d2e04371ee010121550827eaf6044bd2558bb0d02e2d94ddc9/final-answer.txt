@@ -1,0 +1,28 @@
+I'll start by verifying the repository state as instructed.Good, the repository state matches. Now I'll work on the task: finding if Caddy ever had to raise its minimum Go version specifically because of the HTTP/3 library it depends on.
+
+Let me use the `git why` tool to search for this information:Now let me search more specifically for Go version changes related to quic-go/HTTP3:Good! I found something interesting. Let me look more closely at commit `8cb1bb4` which mentions "Go 1.19 min". Let me examine that commit:Perfect! This is exactly what I need. The commit message says "go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)" and the diff shows that the Go minimum version requirement was raised from Go 1.18 to Go 1.19 specifically because of the quic-go update.
+
+Let me verify this is the commit that raised the Go version requirement by checking if there was a prior commit that already had Go 1.19 as minimum, or if this was the change:Perfect! I can see the sequence of Go version bumps:
+- `141872ed`: "chore: Bump up to Go 1.19, minimum 1.18 (#4925)" - This made 1.19 the Go build version but kept 1.18 as minimum
+- `8cb1bb4a`: "go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)" - This is the first commit that raised the MINIMUM to 1.19
+- `f45a6de2`: "go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)" - Later, quic-go v0.37.0 required 1.20
+
+Let me confirm the exact context by looking at the commit before 8cb1bb4 to make sure 1.18 was still the minimum:And now let me confirm that 8cb1bb4 indeed changed it to 1.19:Excellent! Now let me check the go.mod file changes in that commit to confirm it was about quic-go:Note that the `go 1.18` is still in the go.mod file even though the README requirement changed. Let me check git log to see if there was a separate change to go.mod's Go directive:Let me search for when the go.mod directive was changed to go 1.19:Perfect! So commit 8cb1bb4 changed both the README and the go.mod directive from 1.18 to 1.19. This was specifically due to the quic-go v0.33.0 upgrade. Let me verify this is true by checking what quic-go v0.33.0's requirements are. Let me also check the commit message once more to be thorough:Perfect! I have found the answer. The commit message itself is very clear: "go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)". 
+
+Let me verify the current go.mod to see if this is still the case at the current commit:The current version requires Go 1.25.1, which makes sense as later versions of quic-go likely required higher Go versions. But the key finding is about the HTTP/3 library (quic-go) forcing a Go version bump.
+
+## Summary
+
+**Yes, Caddy did have to raise its minimum Go version specifically because of the HTTP/3 library it depends on.**
+
+**Supporting Commit:** `8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe`
+
+**Commit Message:** `go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)`
+
+**Evidence from the diff:**
+- The README.md was updated to change the requirement from "Go 1.18 or newer" to "Go 1.19 or newer"
+- The go.mod directive was changed from `go 1.18` to `go 1.19`
+- The quic-go dependency was upgraded from `v0.32.0` to `v0.33.0`
+- The go.sum also shows changes to the quic-go qtls packages that required Go 1.19+ (specifically removing `qtls-go1-18` and keeping only `qtls-go1-19` and `qtls-go1-20`)
+
+This was authored by Matthew Holt on February 24, 2023. The commit directly links the Go version bump to the quic-go upgrade, indicating that quic-go v0.33.0 had a minimum Go version requirement of 1.19.

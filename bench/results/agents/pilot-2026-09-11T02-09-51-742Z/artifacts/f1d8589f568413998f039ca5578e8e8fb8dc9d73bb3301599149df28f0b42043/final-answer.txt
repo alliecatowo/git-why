@@ -1,0 +1,54 @@
+I'll start by running the verification command as instructed, then investigate the curl security bug related to credential leakage during redirects.Good, verification passed. Now let me search for the curl security bug related to redirect credential leakage using `git why`:Good, I found a relevant result. Let me search more specifically for credentials leaking to different protocols:Interesting! I found commit `139a54e` that mentions "don't leak the SRP credentials in redirects either". Let me search for the initial fix it references (620ea21410030):Let me search for "port" and redirect security issues:Let me try a more specific search about the security bug related to protocol downgrade or credential leaking on redirects:Good! I found a reference to "Curl_allow_auth_to_host". Let me search specifically for this function and the related security fix:Perfect! I found the key commit! Let me get the full details of commit `6e65999`:Excellent! Let me verify this is the right commit by checking the CVE details:Perfect! Let me also check the related follow-up commit mentioned in the first search:Perfect! Now I have the complete picture. Let me create a summary based on what I found:
+
+## Summary
+
+I found the curl security bug and its fix. Here are the key details:
+
+**Commit SHA:** `6e6599939` (full hash: `6e659993952aa5f90f48864be84a1bbb047fc258`)
+
+**Bug:** CVE-2022-27776 - Authentication credentials and cookies could leak to different ports during redirects
+
+**What the fix changed:**
+
+The fix introduced a new function `allow_auth_to_host()` that checks whether authentication/cookies can be sent to the target host. The key change was adding port and protocol validation to prevent credentials from being sent to the same hostname but on a different port or protocol.
+
+**Specific changes from the diff:**
+
+1. **Added port and protocol checking:** The fix stored `data->state.first_remote_port` and added `data->state.first_remote_protocol` to track the original connection's port and protocol.
+
+2. **New validation function:** Created `allow_auth_to_host()` that returns `true` only if:
+   - This is NOT a follow redirect, OR
+   - `allow_auth_to_other_hosts` is set, OR
+   - The host, port AND protocol all match the original request
+
+3. **Applied checks to both headers and auth:** The function was used both in `Curl_http_output_auth()` and `Curl_add_custom_headers()` to prevent sending sensitive headers to different hosts/ports/protocols.
+
+**Quote from commit message:**
+```
+http: avoid auth/cookie on redirects same host diff port
+
+CVE-2022-27776
+
+Reported-by: Harry Sintonen
+Bug: https://curl.se/docs/CVE-2022-27776.html
+```
+
+**Quote from diff comment:**
+```
++/*
++ * allow_auth_to_host() tells if autentication, cookies or other "sensitive
++ * data" can (still) be sent to this host.
++ */
++static bool allow_auth_to_host(struct Curl_easy *data)
++{
++  struct connectdata *conn = data->conn;
++  return (!data->state.this_is_a_follow ||
++          data->set.allow_auth_to_other_hosts ||
++          (data->state.first_host &&
++           strcasecompare(data->state.first_host, conn->host.name) &&
++           (data->state.first_remote_port == conn->remote_port) &&
++           (data->state.first_remote_protocol == conn->handler->protocol)));
++}
+```
+
+The fix ensures that credentials cannot leak to different ports or protocols during redirects, even if the hostname remains the same.

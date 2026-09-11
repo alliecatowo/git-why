@@ -1,0 +1,116 @@
+{
+  "task_id": "X-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T03:50:13.950Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "3e5157e0944e281405bea8715675c909a6e08b12b6786e2ed663791b15e4d1f3",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "04c03416e68fd635a15cae8201872f5c29fdcca8",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8",
+      "04c03416e"
+    ]
+  },
+  "wall_ms": 43534,
+  "tool_calls": 10,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 16673,
+  "output_tokens": 1204,
+  "cache_read_tokens": 61440,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00156845,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 35403,
+  "index_build_ms": 548899,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105129095,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-curl-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "f9b43ed9ac22558db54e9469db1c7d9f101f096083db53b30c07e0718b606f78",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-837f229d468a2a53",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S '\"json\"' -- src/tool_writeout.c src/tool_writeout.h 2>/dev/null | head -30"
+        },
+        "output": "04c03416e writeout: support to generate JSON output\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-92f5abe01fed3d1c",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c03416e --stat; echo \"-----\"; git show 04c03416e | head -80"
+        },
+        "output": "commit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\n docs/cmdline-opts/write-out.d   |   3 +\n lib/version.c                   |  10 +++\n packages/Symbian/group/curl.mmp |   1 +\n src/Makefile.inc                |   2 +\n src/tool_writeout.c             | 160 +++++++++++++++++------------------\n src/tool_writeout.h             |  57 ++++++++++++-\n src/tool_writeout_json.c        | 181 ++++++++++++++++++++++++++++++++++++++++\n src/tool_writeout_json.h        |  30 +++++++\n 8 files changed, 361 insertions(+), 83 deletions(-)\n-----\ncommit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\ndiff --git a/docs/cmdline-opts/write-out.d b/docs/cmdline-opts/write-out.d\nindex 2fc0ff21a..9024d32e0 100644\n--- a/docs/cmdline-opts/write-out.d\n+++ b/docs/cmdline-opts/write-out.d\n@@ -50,6 +50,9 @@ curl CONNECT request. (Added in 7.12.4)\n .B http_version\n The http version that was effectively used. (Added in 7.50.0)\n .TP\n+.B json\n+A JSON object with all available keys.\n+.TP\n .B local_ip\n The IP address of the local end of the most recently done connection - can be\n either IPv4 or IPv6 (Added in 7.29.0)\ndiff --git a/lib/version.c b/lib/version.c\nindex 8170106ee..c7fe42a07 100644\n--- a/lib/version.c\n+++ b/lib/version.c\n@@ -127,6 +127,16 @@ char *curl_version(void)\n   int i = 0;\n   int j;\n \n+#ifdef DEBUGBUILD\n+  /* Override version string when environment variable CURL_VERSION is set */\n+  const char *debugversion = getenv(\"CURL_VERSION\");\n+  if(debugversion) {\n+    strncpy(out, debugversion, sizeof(out)-1);\n+    out[sizeof(out)-1] = '\\0';\n+    return out;\n+  }\n+#endif\n+\n   src[i++] = LIBCURL_NAME \"/\" LIBCURL_VERSION;\n #ifdef USE_SSL\n   Curl_ssl_version(ssl_version, sizeof(ssl_version));\ndiff --git a/packages/Symbian/group/curl.mmp b/packages/Symbian/group/curl.mmp\nindex 14ccf1419..361e0a620 100644\n--- a/packages/Symbian/group/curl.mmp\n+++ b/packages/Symbian/group/curl.mmp\n@@ -45,6 +45,7 @@ SOURCE \\\n     tool_vms.c \\\n     tool_writeenv.c \\\n     tool_writeout.c \\\n+    tool_writeout_json.c \\\n     tool_xattr.c\n \n SOURCEPATH  ../../../lib\ndiff --git a/src/Makefile.inc b/src/Makefile.inc\nindex dd6b9d336..ac96f6514 100644\n--- a/src/Makefile.inc\n+++ b/src/Makefile.inc\n@@ -62,6 +62,7 @@ CURL_CFILES = \\\n   tool_util.c \\\n   tool_vms.c \\\n   tool_writeout.c \\\n+  tool_writeout_json.c \\\n   tool_xattr.c\n \n CURL_HFILES = \\\n@@ -107,6 +108,7 @@ CURL_HFILES = \\\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-87434008ad901aaa",
+        "status": "completed",
+        "input": {
+          "command": "git show -s --format='%H%n%ad%n%s' 04c03416e"
+        },
+        "output": "04c03416e68fd635a15cae8201872f5c29fdcca8\nSat Feb 1 18:55:24 2020 +0100\nwriteout: support to generate JSON output\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 16673,
+    "output": 1204,
+    "messages": 10
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/f9b43ed9ac22558db54e9469db1c7d9f101f096083db53b30c07e0718b606f78",
+  "completed": true
+}

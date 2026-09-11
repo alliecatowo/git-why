@@ -1,0 +1,40 @@
+Good, verified. Now let's investigate the question.This confirms it exists. Now let's find the commit that introduced the `%{json}` variable.Found the introducing commit. Let's get full details.This is exactly the commit that establishes `-w "%{json}"` support — matching the user's recollection precisely.Confirmed. Let's also verify this commit is present in the repo's history (it is, since ancestor of HEAD).## Answer
+
+**Yes** — curl can print transfer stats as JSON via `-w`/`--write-out` using the `%{json}` variable, exactly as you recalled.
+
+**Supporting commit:** `04c03416e68fd635a15cae8201872f5c29fdcca8`
+
+- Author: Mathias Gumz, Sat Feb 1 18:55:24 2020 +0100
+- Confirmed as an ancestor of the pinned HEAD (`ee521a1c889f4cde6905c5db117959917568be9b`), so it's part of this repository's history.
+
+**Commit message quote:**
+
+> writeout: support to generate JSON output
+>
+> This commit adds support to generate JSON via the writeout feature:
+>
+>     -w "%{json}"
+>
+> It leverages the existing infrastructure as much as possible. Thus,
+> generating the JSON on STDERR is possible by:
+>
+>     -w "%{stderr}%{json}"
+>
+> This implements a variant of
+> https://github.com/curl/curl/wiki/JSON#--write-out-json.
+>
+> Closes #4870
+
+**Diff quote (docs/cmdline-opts/write-out.d):**
+
+```diff
+ .B http_version
+ The http version that was effectively used. (Added in 7.50.0)
+ .TP
++.B json
++A JSON object with all available keys.
++.TP
+ .B local_ip
+```
+
+The commit added new files `src/tool_writeout_json.c`/`.h` implementing the JSON serialization and wired the new `VAR_JSON` variable into `src/tool_writeout.c`'s variable table (`{"json", VAR_JSON, CURLINFO_NONE, NULL}`), which is still present in the current checkout's `src/tool_writeout.c` (calling `ourWriteOutJSON()` for `%{json}` and `headerJSON()` for the related `%{header_json}`).

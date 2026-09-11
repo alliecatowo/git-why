@@ -1,0 +1,42 @@
+## Answer
+
+Yes — ripgrep's special ignore-file name used to be **`.rgignore`**, and it was changed to `.ignore` in the project's early history.
+
+### Supporting commit
+
+**`cc90511ab29d3c37e873acac0fd80f90473f54bb`** — *"Switch from .rgignore to .ignore."* (Andrew Gallant, 2016-09-23)
+
+The commit message itself states the change plainly:
+
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+The diff supports it in two ways. It reworded the documentation from `.rgignore` to `.ignore`, and — decisively — it added `.ignore` to the list of recognized ignore filenames while keeping `.rgignore` for backward compatibility:
+
+```diff
+diff --git a/src/ignore.rs b/src/ignore.rs
+@@
+-   $HOME/.rgignore or on the command line.
++   $HOME/.ignore or on the command line.
+@@
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+It also added a test for the new generic name (`ignore_generic` using `.ignore`) alongside the existing `ignore_ripgrep` test (using `.rgignore`).
+
+So the "vague memory" is correct: `.rgignore` came first, and `.ignore` was introduced (with `.rgignore` retained for compatibility until a semver bump) in commit `cc90511`.
+
+No files were modified; `git status` shows only the pre-existing `.zvec-grep/` index directory as untracked.

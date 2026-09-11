@@ -1,0 +1,43 @@
+I'll start by running the verification command as instructed.Perfect! The verification passes. Now I need to find when Redis first got the streams data type with commands like XADD. Let me use the available tools to search the git history for this information.
+
+Let me start with `git why` to search for information about XADD and streams:These results show commits that added tests and fixes for XADD, but I need to find when the streams data type was originally introduced. Let me search more broadly for "streams" introduction:Let me search for the actual implementation of the XADD command to find when streams were first introduced:Let me search further back in the history to find the initial commit that introduced streams:Great! I can see commit `79866a636` which says "Streams: 12 commits squashed into the initial Streams implementation." Let me examine this commit more closely:Perfect! Let me check the full commit message and the initial implementation:Now let me check the t_stream.c file to see what commands were implemented:Let me continue checking what commands are in the t_stream.c file:Perfect! Now let me verify the date of this commit and get more details:Excellent! Now let me check if there were any earlier commits that introduced streams infrastructure. Let me look at the commit that came just before this one:Let me check what's before this commit:Let me check what was in server.h around that commit to understand when XADD was exposed:Good! Now let me verify this is indeed the first introduction by checking what commit added the XADD command to the command table. Let me look at a later commit:Let me verify once more by checking when the command was first added to the command table:Perfect! Now let me look at the full commit message one more time to see if there's more information:Let me check the exact date one more time and verify the commands in the implementation:Perfect! Now let me verify the XADD and XRANGE commands were indeed implemented in this commit:Excellent! Let me also verify this is visible in the server's command table:Perfect! Let me do one final check to make absolutely certain this is the first introduction. Let me search for any earlier mentions of "stream" or "XADD" in the codebase before this commit:Great! Now let me check if src/t_stream.c existed before commit 79866a636:Perfect! This confirms that the streams data type with XADD command was first introduced in commit 79866a636. Let me gather the evidence from the diff one more time:Perfect! I have all the information I need. Let me create a final summary.
+
+## Summary
+
+**When did Redis first get the streams data type with commands like XADD?**
+
+Redis first introduced the streams data type with commands like XADD on **August 30, 2017** in commit **79866a636** (`79866a6361829ed0602dedff9cb378c66977227a`).
+
+**Supporting Evidence:**
+
+The commit message states: "Streams: 12 commits squashed into the initial Streams implementation."
+
+The commit introduces:
+1. A new streams data type (OBJ_STREAM) defined in `src/stream.h`
+2. The `XADD` command implementation in `src/t_stream.c`:
+   ```c
+   void xaddCommand(client *c) {
+       if ((c->argc % 2) == 1) {
+           addReplyError(c,"wrong number of arguments for XADD");
+           return;
+       }
+       /* Lookup the stream at key. */
+       robj *o;
+       stream *s;
+       if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
+       s = o->ptr;
+       /* Append using the low level function and return the ID. */
+       streamID id;
+       streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+       sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
+       addReplySds(c,reply);
+       signalModifiedKey(c->db,c->argv[1]);
+       notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+       server.dirty++;
+   }
+   ```
+3. The `XRANGE` command (also shown above)
+4. Both commands registered in the command table in `src/server.c`
+5. New support files including `src/listpack.c` for efficient storage
+
+**Commit SHA:** `79866a636` (full: `79866a6361829ed0602dedff9cb378c66977227a`)

@@ -1,0 +1,40 @@
+Environment verified. Now let me research the git history for commits related to Go version bumps and HTTP/3 dependencies.
+
+Several strong candidates. Let me examine them in detail.
+
+Three strong candidates found. Let me check a couple more historical commits for completeness, including the older quic-go-related bumps.
+
+I have all the evidence I need. Let me verify the key supporting quotes one final time to ensure accuracy.
+
+## Answer
+
+**Yes.** Caddy has had to raise its minimum Go version specifically because of quic-go, the library it uses for HTTP/3 support — and it did so at least three times. quic-go (originally `github.com/lucas-clemente/quic-go`, now `github.com/quic-go/quic-go`) historically ships a fork of Go's `crypto/tls` (the `quic-go/qtls-go1-XX` / `marten-seemann/qtls-go1-XX` packages) that is bound to a specific Go release line, so each quic-go upgrade drops support for older Go versions, forcing Caddy to bump its declared minimum.
+
+**Primary supporting commit:** `8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe` — *"go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)"* (Matthew Holt, Feb 24, 2023). This is the earliest instance where the Go minimum was raised explicitly because of the HTTP/3 library. Its commit message ties the quic-go upgrade directly to the Go minimum:
+
+> `go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)`
+
+The diff supports it: the README requirement was raised from Go 1.18 to Go 1.19 in the same commit,
+
+```diff
+-- [Go 1.18 or newer](https://golang.org/dl/)
++- [Go 1.19 or newer](https://golang.org/dl/)
+```
+
+while go.mod upgraded quic-go and dropped the `qtls-go1-18` dependency (quic-go v0.33.0 no longer supports Go 1.18):
+
+```diff
+-	github.com/quic-go/quic-go v0.32.0
++	github.com/quic-go/quic-go v0.33.0
+...
+-	github.com/quic-go/qtls-go1-18 v0.2.0 // indirect
+```
+
+(CI was updated to Go 1.19 min in the immediately following commit `167981d2` — *"ci: Update minimum Go version to 1.19"* — also by Matthew Holt, same day.)
+
+**Two later instances confirm this was a recurring pattern**, each with the Go minimum bump and the quic-go upgrade in the same commit:
+
+1. `f45a6de20dd19e82e58c85b37e03957b2203b544` — *"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)"* (Jul 21, 2023). go.mod diff: `-go 1.19` / `+go 1.20`, and `-github.com/quic-go/quic-go v0.36.2` / `+github.com/quic-go/quic-go v0.37.0`.
+2. `697cc593a17fcb39087161b058fc1dba8b767060` — *"chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)"* (Jan 25, 2024). go.mod diff: `-go 1.20` / `+go 1.21` (plus `toolchain go1.21.4`), and quic-go v0.40.1 → v0.41.0, with `github.com/quic-go/qtls-go1-20` removed.
+
+No files were modified.

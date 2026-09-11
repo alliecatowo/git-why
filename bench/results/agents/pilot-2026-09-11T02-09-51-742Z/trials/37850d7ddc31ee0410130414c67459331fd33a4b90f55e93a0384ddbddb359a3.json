@@ -1,0 +1,150 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "3bb81653711bf0465d72da2079c5ee9431292c16",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T02:18:58.906Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "48902663b2a1932c503009ea836fc65e1b2231d371f9fd8bb9f49f1297c29a3c",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "620ea21410030a9977396b4661806bc187231b79",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "620ea2141",
+      "620ea21410030a9977396b4661806bc187231b79"
+    ]
+  },
+  "wall_ms": 34001,
+  "tool_calls": 10,
+  "history_calls": 8,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 28682,
+  "output_tokens": 1320,
+  "cache_read_tokens": 78252,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.043107200000000005,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 53557,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T02-09-51-742Z/events/X-curl-02-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "37850d7ddc31ee0410130414c67459331fd33a4b90f55e93a0384ddbddb359a3",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_ku1GD6oldAF6FPEvpIEgOD",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"redirect\" --grep=\"credential\" --grep=\"leak\" --grep=\"protocol\" --grep=\"port\" -i | head -50"
+        },
+        "output": "544a7f804 http2: fix error handling during parallel operations\ncb49e6730 url: only reuse connections with same GSS delegation\nb725fe194 lib: silence clang/gcc -Wvla warnings in brotli headers\nf384d4071 url: remove dummy protocol handler\naf369db4d url: fix the SSH connection reuse check\nfcee070cb CURLOPT_PROXY.3: curl+NSS does not handle HTTPS over unix domain socket\ndca4cdf07 CURLSHOPT_SHARE.3: HSTS sharing is not thread-safe\n538b1e79a telnet: only accept option arguments in ascii\n674a0662c test1903: test use of COOKIEFILE - reset - COOKIEFILE\nb559ef6f3 url: fix cookielist memleak when curl_easy_reset\n940b67803 wolfSSL: ressurect the BIO `io_result`\nadaec5d1d gssapi: align global `gss_OID_desc` vars to silence ld warnings on macOS ventura\n842be672c tool_writeout_json. fix the output for duplicate header names\n05616379e headers: make curl_easy_header and nextheader return different buffers\na26418cf1 ftp: active mode with SSL, add the damn filter\n48cd03262 http2: fix handling of RST and GOAWAY to recognize partial transfers\nb0564c1d5 tests: use dynamic ports numbers in pytest suite\n257416023 connect: fix time_connect and time_appconnect timer statistics\n45d4bf5af cookie: don't load cookies again when flushing\n755ddbe90 rand: use arc4random as fallback when available\n8cfc936f5 cmake: fix enabling LDAPS on Windows\n016c62c4d cmake: skip CA-path/bundle auto-detection in cross-builds\nad4997e5b urlapi: parse IPv6 literals without ENABLE_IPV6\n73e9e6d76 build: drop the use of XC_AMEND_DISTCLEAN\ne497a96a0 tests: rename tests/tests-httpd to tests/http\n9fd2d5aa7 socket: detect \"dead\" connections better, e.g. not fit for reuse\nd9ccc75b0 http2: fix upload busy loop\ncbe9d82c2 http2: fix for http2-prior-knowledge when reusing connections\nefa1aba97 cf-socket: fix handling of remote addr for accepted tcp sockets\na4d015e69 http: fix unix domain socket use in https connects\n252fce70b mqtt: on send error, return error\n3b23dbeec ws: keep the socket non-blocking\nc5168365c PARALLEL-TRANSFERS.md: not \"early days\" for this anymore\ncf3e6ce92 idn: return error if the conversion ends up with a blank host\naa31f9a85 Revert \"GHA: add Microsoft C++ Code Analysis\"\n90756d33d tests: test secure mail protocols with explicit SSL requests\n5855c478c tests: support for imaps/pop3s/smtps protocols\n8bfa4d66d runtests: use a hash table for server port numbers\ncbd3fd7cb telnet: error correctly for WS set to \"x[num]\"\n835682661 misc: remove support for curl_off_t < 8 bytes\nf6fe54e21 ngtcp2: fix unwanted close of file descriptor 0\n0242eba06 select: stop treating POLLRDBAND as an error\nd9b7f6e75 curl: make -w's %{stderr} use the file set with --stderr\n47129b2b4 sectransp: fix compiler warning c89 mixed code/declaration\n60e13311f tool_operate: propagate error codes for missing URL after --next\n780ff2c95 tool_getparam: don't add a new node for just --no-remote-name\n86ec17b85 docs/cmdline-opts: mark all global options\n475207c1c tool_progress: shut off progress meter for --silent in parallel\n1c9cfb7af tool_operate: avoid fclose(NULL) on bad header dump file\na6506f266 socketpair: allow EWOULDBLOCK when reading the pair check bytes\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_RdtPJxuI7uUtcayhPlWRBy",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | grep -i \"redirect\" | head -30"
+        },
+        "output": "cde8f2848 test1662: verify formpost, 301 redirect, no rewind possible\nf5e5384ec test644: verify --xattr (with redirect)\n3ab3c16b2 tool_xattr: save the original URL, not the final redirected one\n07058f6ad transfer: maintain --path-as-is after redirects\n5394cbf57 test391: verify --path-as-is with redirect\n093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\n620ea2141 transfer: redirects to other protocols or ports clear auth\n6e6599939 http: avoid auth/cookie on redirects same host diff port\n70ac27604 urlapi: handle \"redirects\" smarter\naceff6088 maketgz: redirect updatemanpages.pl output to /dev/null\nb97718ab1 README.md: delete Codacy UTM parameters & follow permanent redirect [ci skip]\n74ec0e5ec TODO: provide timing info for each redirect\n021f2c25f MANUAL: update examples to resolve without redirects\n259a81555 lib1560: verify \"redirect\" to double-slash leading URL\n95f2732e7 TODO: retry on the redirected-to URL\nc048dd0b7 KNOWN_BUGS: RTSP authentication breaks without redirect support\nc0e139a60 transfer: Switch PUT to GET/HEAD on 303 redirect\n9973dabeb test1270: a basic -w redirect_url test\nc6f250c4d redirect: when following redirects to an absolute URL, URL encode it\n44c988455 CURLINFO docs: mention that in redirects times are added\n7c31a8980 TODO/ROADMAP: remove \"refuse downgrade redirects\" and HTTP/3\n98c3f1487 alt-svc: send Alt-Used: in redirected requests\ne8442e4ff libcurl: Restrict redirect schemes (follow-up)\n797e549d0 libcurl: Add testcase for gopher redirects\n6080ea098 libcurl: Restrict redirect schemes\n1f30dc886 cookies: skip custom cookies when redirecting cross-site\n1945460d4 test1519: use lib1518 and test CURLINFO_REDIRECT_URL more\n2c5ec339e Curl_follow: accept non-supported schemes for \"fake\" redirects\n1836d59ed HTTP: Don't attempt to needlessly decompress redirect body\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_JDdPEg3pZSgZ4fbZNAOgcF",
+        "status": "completed",
+        "input": {
+          "command": "git show 620ea2141 --stat"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\n lib/transfer.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-\n 1 file changed, 48 insertions(+), 1 deletion(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_xAT80XeT5aecZQGu0eOrE5",
+        "status": "completed",
+        "input": {
+          "command": "git show 620ea2141"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\ndiff --git a/lib/transfer.c b/lib/transfer.c\nindex 53ef0b03b..315da876c 100644\n--- a/lib/transfer.c\n+++ b/lib/transfer.c\n@@ -1611,10 +1611,57 @@ CURLcode Curl_follow(struct Curl_easy *data,\n       return CURLE_OUT_OF_MEMORY;\n   }\n   else {\n-\n     uc = curl_url_get(data->state.uh, CURLUPART_URL, &newurl, 0);\n     if(uc)\n       return Curl_uc_to_curlcode(uc);\n+\n+    /* Clear auth if this redirects to a different port number or protocol,\n+       unless permitted */\n+    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {\n+      char *portnum;\n+      int port;\n+      bool clear = FALSE;\n+\n+      if(data->set.use_port && data->state.allow_port)\n+        /* a custom port is used */\n+        port = (int)data->set.use_port;\n+      else {\n+        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,\n+                          CURLU_DEFAULT_PORT);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+        port = atoi(portnum);\n+        free(portnum);\n+      }\n+      if(port != data->info.conn_remote_port) {\n+        infof(data, \"Clear auth, redirects to port from %u to %u\",\n+              data->info.conn_remote_port, port);\n+        clear = TRUE;\n+      }\n+      else {\n+        char *scheme;\n+        const struct Curl_handler *p;\n+        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+\n+        p = Curl_builtin_scheme(scheme);\n+        if(p && (p->protocol != data->info.conn_protocol)) {\n+          infof(data, \"Clear auth, redirects scheme from %s to %s\",\n+                data->info.conn_scheme, scheme);\n+          clear = TRUE;\n+        }\n+        free(scheme);\n+      }\n+      if(clear) {\n+        Curl_safefree(data->state.aptr.user);\n+        Curl_safefree(data->state.aptr.passwd);\n+      }\n+    }\n   }\n \n   if(type == FOLLOW_FAKE) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_K0UFwvLsem7mN2UMRsoEsV",
+        "status": "completed",
+        "input": {
+          "command": "git show 6e6599939 --stat"
+        },
+        "output": "commit 6e659993952aa5f90f48864be84a1bbb047fc258\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 13:05:40 2022 +0200\n\n    http: avoid auth/cookie on redirects same host diff port\n    \n    CVE-2022-27776\n    \n    Reported-by: Harry Sintonen\n    Bug: https://curl.se/docs/CVE-2022-27776.html\n    Closes #8749\n\n lib/http.c    | 34 ++++++++++++++++++++++------------\n lib/urldata.h | 16 +++++++++-------\n 2 files changed, 31 insertions(+), 19 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_dnswNdpskIy4eJ1XK2IHYr",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"27774\" -i"
+        },
+        "output": "5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_Jv0vfmW1VStT7ipXdnzJfG",
+        "status": "completed",
+        "input": {
+          "command": "git show 5295e8d64"
+        },
+        "output": "commit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\ndiff --git a/tests/data/Makefile.inc b/tests/data/Makefile.inc\nindex 0e44679b3..6ec78c6e9 100644\n--- a/tests/data/Makefile.inc\n+++ b/tests/data/Makefile.inc\n@@ -119,7 +119,7 @@ test936 test937 test938 test939 test940 test941 test942 test943 test944 \\\n test945 test946 test947 test948 test949 test950 test951 test952 test953 \\\n test954 test955 test956 test957 test958 test959 test960 test961 test962 \\\n test963 test964 test965 test966 test967 test968 test969 test970 test971 \\\n-test972 \\\n+test972 test973 test974 test975 test976 \\\n \\\n test980 test981 test982 test983 test984 test985 test986 \\\n \\\ndiff --git a/tests/data/test973 b/tests/data/test973\nnew file mode 100644\nindex 000000000..6ced10789\n--- /dev/null\n+++ b/tests/data/test973\n@@ -0,0 +1,88 @@\n+<testcase>\n+<info>\n+<keywords>\n+HTTP\n+FTP\n+--location\n+</keywords>\n+</info>\n+\n+#\n+# Server-side\n+<reply>\n+<data>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: ftp://%HOSTIP:%FTPPORT/a/path/%TESTNUMBER0002\n+\n+</data>\n+<data2>\n+data\n+    to\n+      see\n+that FTP\n+works\n+  so does it?\n+</data2>\n+\n+<datacheck>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: ftp://%HOSTIP:%FTPPORT/a/path/%TESTNUMBER0002\n+\n+data\n+    to\n+      see\n+that FTP\n+works\n+  so does it?\n+</datacheck>\n+\n+</reply>\n+\n+#\n+# Client-side\n+<client>\n+<server>\n+http\n+ftp\n+</server>\n+ <name>\n+HTTP with auth redirected to FTP w/o auth\n+ </name>\n+ <command>\n+http://%HOSTIP:%HTTPPORT/%TESTNUMBER -L -u joe:secret\n+</command>\n+</client>\n+\n+#\n+# Verify data after the test has been \"shot\"\n+<verify>\n+<protocol>\n+GET /%TESTNUMBER HTTP/1.1\r\n+Host: %HOSTIP:%HTTPPORT\r\n+Authorization: Basic am9lOnNlY3JldA==\r\n+User-Agent: curl/%VERSION\r\n+Accept: */*\r\n+\r\n+USER anonymous\r\n+PASS ftp@example.com\r\n+PWD\r\n+CWD a\r\n+CWD path\r\n+EPSV\r\n+TYPE I\r\n+SIZE %TESTNUMBER0002\r\n+RETR %TESTNUMBER0002\r\n+QUIT\r\n+</protocol>\n+</verify>\n+</testcase>\ndiff --git a/tests/data/test974 b/tests/data/test974\nnew file mode 100644\nindex 000000000..ac4e6415d\n--- /dev/null\n+++ b/tests/data/test974\n@@ -0,0 +1,87 @@\n+<testcase>\n+<info>\n+<keywords>\n+HTTP\n+--location\n+</keywords>\n+</info>\n+\n+#\n+# Server-side\n+<reply>\n+<data>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: http://firsthost.com:9999/a/path/%TESTNUMBER0002\n+\n+</data>\n+<data2>\n+HTTP/1.1 200 OK\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 4\n+Connection: close\n+Content-Type: text/html\n+\n+hey\n+</data2>\n+\n+<datacheck>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: http://firsthost.com:9999/a/path/%TESTNUMBER0002\n+\n+HTTP/1.1 200 OK\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 4\n+Connection: close\n+Content-Type: text/html\n+\n+hey\n+</datacheck>\n+\n+</reply>\n+\n+#\n+# Client-side\n+<client>\n+<server>\n+http\n+</server>\n+ <name>\n+HTTP with auth redirected to HTTP on a diff port w/o auth\n+ </name>\n+ <command>\n+-x http://%HOSTIP:%HTTPPORT http://firsthost.com -L -u joe:secret\n+</command>\n+</client>\n+\n+#\n+# Verify data after the test has been \"shot\"\n+<verify>\n+<protocol>\n+GET http://firsthost.com/ HTTP/1.1\r\n+Host: firsthost.com\r\n+Authorization: Basic am9lOnNlY3JldA==\r\n+User-Agent: curl/%VERSION\r\n+Accept: */*\r\n+Proxy-Connection: Keep-Alive\r\n+\r\n+GET http://firsthost.com:9999/a/path/%TESTNUMBER0002 HTTP/1.1\r\n+Host: firsthost.com:9999\r\n+User-Agent: curl/%VERSION\r\n+Accept: */*\r\n+Proxy-Connection: Keep-Alive\r\n+\r\n+</protocol>\n+</verify>\n+</testcase>\ndiff --git a/tests/data/test975 b/tests/data/test975\nnew file mode 100644\nindex 000000000..85e03e4f2\n--- /dev/null\n+++ b/tests/data/test975\n@@ -0,0 +1,88 @@\n+<testcase>\n+<info>\n+<keywords>\n+HTTP\n+FTP\n+--location-trusted\n+</keywords>\n+</info>\n+\n+#\n+# Server-side\n+<reply>\n+<data>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: ftp://%HOSTIP:%FTPPORT/a/path/%TESTNUMBER0002\n+\n+</data>\n+<data2>\n+data\n+    to\n+      see\n+that FTP\n+works\n+  so does it?\n+</data2>\n+\n+<datacheck>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: ftp://%HOSTIP:%FTPPORT/a/path/%TESTNUMBER0002\n+\n+data\n+    to\n+      see\n+that FTP\n+works\n+  so does it?\n+</datacheck>\n+\n+</reply>\n+\n+#\n+# Client-side\n+<client>\n+<server>\n+http\n+ftp\n+</server>\n+ <name>\n+HTTP with auth redirected to FTP allowing auth to continue\n+ </name>\n+ <command>\n+http://%HOSTIP:%HTTPPORT/%TESTNUMBER --location-trusted -u joe:secret\n+</command>\n+</client>\n+\n+#\n+# Verify data after the test has been \"shot\"\n+<verify>\n+<protocol>\n+GET /%TESTNUMBER HTTP/1.1\r\n+Host: %HOSTIP:%HTTPPORT\r\n+Authorization: Basic am9lOnNlY3JldA==\r\n+User-Agent: curl/%VERSION\r\n+Accept: */*\r\n+\r\n+USER joe\r\n+PASS secret\r\n+PWD\r\n+CWD a\r\n+CWD path\r\n+EPSV\r\n+TYPE I\r\n+SIZE %TESTNUMBER0002\r\n+RETR %TESTNUMBER0002\r\n+QUIT\r\n+</protocol>\n+</verify>\n+</testcase>\ndiff --git a/tests/data/test976 b/tests/data/test976\nnew file mode 100644\nindex 000000000..c4dd61e70\n--- /dev/null\n+++ b/tests/data/test976\n@@ -0,0 +1,88 @@\n+<testcase>\n+<info>\n+<keywords>\n+HTTP\n+--location-trusted\n+</keywords>\n+</info>\n+\n+#\n+# Server-side\n+<reply>\n+<data>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: http://firsthost.com:9999/a/path/%TESTNUMBER0002\n+\n+</data>\n+<data2>\n+HTTP/1.1 200 OK\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 4\n+Connection: close\n+Content-Type: text/html\n+\n+hey\n+</data2>\n+\n+<datacheck>\n+HTTP/1.1 301 redirect\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 0\n+Connection: close\n+Content-Type: text/html\n+Location: http://firsthost.com:9999/a/path/%TESTNUMBER0002\n+\n+HTTP/1.1 200 OK\n+Date: Tue, 09 Nov 2010 14:49:00 GMT\n+Server: test-server/fake\n+Content-Length: 4\n+Connection: close\n+Content-Type: text/html\n+\n+hey\n+</datacheck>\n+\n+</reply>\n+\n+#\n+# Client-side\n+<client>\n+<server>\n+http\n+</server>\n+ <name>\n+HTTP with auth redirected to HTTP on a diff port --location-trusted\n+ </name>\n+ <command>\n+-x http://%HOSTIP:%HTTPPORT http://firsthost.com --location-trusted -u joe:secret\n+</command>\n+</client>\n+\n+#\n+# Verify data after the test has been \"shot\"\n+<verify>\n+<protocol>\n+GET http://firsthost.com/ HTTP/1.1\r\n+Host: firsthost.com\r\n+Authorization: Basic am9lOnNlY3JldA==\r\n+User-Agent: curl/%VERSION\r\n+Accept: */*\r\n+Proxy-Connection: Keep-Alive\r\n+\r\n+GET http://firsthost.com:9999/a/path/%TESTNUMBER0002 HTTP/1.1\r\n+Host: firsthost.com:9999\r\n+Authorization: Basic am9lOnNlY3JldA==\r\n+User-Agent: curl/%VERSION\r\n+Accept: */*\r\n+Proxy-Connection: Keep-Alive\r\n+\r\n+</protocol>\n+</verify>\n+</testcase>\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_shtxWm6M3gl28gYuTEVhhS",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | grep \"620ea2141\""
+        },
+        "output": "620ea2141 transfer: redirects to other protocols or ports clear auth\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 28682,
+    "output": 1320,
+    "messages": 12
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/37850d7ddc31ee0410130414c67459331fd33a4b90f55e93a0384ddbddb359a3",
+  "completed": true
+}

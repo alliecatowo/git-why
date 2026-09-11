@@ -1,0 +1,35 @@
+I'll start by running the verification command as instructed.Perfect! The verification confirms I'm in the correct repository at the correct commit. Now I need to find when Redis first got the streams data type with commands like XADD. Let me search the git history for relevant commits.Let me search for the initial introduction of streams more broadly:Great! I can see there are stream commits. Let me look at the very first stream commit to understand when this feature was introduced:Let me look at the commit that says "Streams: 12 commits squashed into the initial Streams implementation":Perfect! Let me get more details about this commit and check the message:Perfect! This shows the initial implementation of Streams. Now let me get the full commit message to provide complete information:Excellent! Now let me verify that this commit indeed introduces XADD by checking if XADD commands are present in this commit:Perfect! Let me also check the date to provide more context:Let me try a simpler approach to get the date information:Perfect! Now I have all the information I need. Let me provide the final answer.
+
+## Summary
+
+Redis first got the streams data type with commands like XADD on **August 30, 2017**.
+
+**Commit SHA:** `79866a6361829ed0602dedff9cb378c66977227a`
+
+**Commit Message:** 
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+**Supporting Evidence from the diff:**
+
+The commit introduces the fundamental streams implementation with:
+
+1. **New files created:**
+   - `src/stream.h` - Stream data structure definition with `streamID` type containing millisecond time and sequence counter
+   - `src/t_stream.c` - Stream command implementation
+
+2. **Commands registered in `src/server.c`:**
+   ```c
+   {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+   {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+   ```
+
+3. **Command implementations in `src/t_stream.c`:**
+   - `xaddCommand()` - Adds entries to a stream with field-value pairs
+   - `xrangeCommand()` - Retrieves entries from a stream within a specified range
+   - `streamNew()` - Creates new stream objects
+   - `streamAppendItem()` - Low-level function to append items to streams
+   - `streamReplyWithRange()` - Retrieves stream entries within a range
+
+The commit also includes the necessary supporting infrastructure like the `listpack` data structure for efficient memory storage and modifications to the radix tree (`rax`) implementation.

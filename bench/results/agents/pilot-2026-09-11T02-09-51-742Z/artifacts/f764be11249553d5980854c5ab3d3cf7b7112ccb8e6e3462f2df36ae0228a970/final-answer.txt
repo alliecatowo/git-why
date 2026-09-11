@@ -1,0 +1,40 @@
+I'll start by verifying the repository state, then investigate the curl security bug related to credential leakage through redirects.Good! The repository verification is correct. Now I'll search for commits related to the redirect credential leakage security bug.Great! I found a very relevant result: commit `139a54e` - "openssl: don't leak the SRP credentials in redirects either". Let me search for more specific information about credentials leaking through redirects to different protocols or ports.Let me search more specifically for redirect-related issues with credentials:Let me search more specifically for auth header handling and redirects:Perfect! I found the key commit: `6e65999` - "http: avoid auth/cookie on redirects same host diff port" which is related to CVE-2022-27776. Let me look at the full details:Excellent! Now let me verify this is the right commit by looking at the CVE link mentioned:Perfect! Now let me verify the commit SHA in the current repository to ensure it matches:Perfect! Let me get the full commit hash:Perfect! Now I have all the information I need to answer the question. Let me provide the final answer:
+
+## Answer
+
+**The curl security bug (CVE-2022-27776)** involved credentials being leaked to different protocols or ports when following redirects.
+
+**Commit SHA:** `6e659993952aa5f90f48864be84a1bbb047fc258`
+
+**What the fix changed:**
+
+The fix introduced a new function `allow_auth_to_host()` that checks three conditions before sending authentication headers and cookies on redirect:
+1. Whether it's NOT a redirect (`!data->state.this_is_a_follow`)
+2. Whether `.allow_auth_to_other_hosts` is explicitly enabled
+3. **Most importantly**, it verifies that the **same host, same port, AND same protocol** are being used
+
+The key changes in the commit:
+- Added tracking of `first_remote_port` and **added `first_remote_protocol`** (new field added to `struct UrlState`)
+- The function now checks: `(data->state.first_remote_port == conn->remote_port) && (data->state.first_remote_protocol == conn->handler->protocol)`
+- Previously, the code only checked the hostname, allowing credentials to leak when redirecting to the same host but on a different port or protocol
+- The fix ensures authentication headers (Authorization, Cookie, etc.) are only sent if all three factors match: **same host, same port, AND same protocol**
+
+From the commit message and diff:
+```
+http: avoid auth/cookie on redirects same host diff port
+
+CVE-2022-27776
+
+Reported-by: Harry Sintonen
+Bug: https://curl.se/docs/CVE-2022-27776.html
+Closes #8749
+```
+
+The critical addition in the urldata.h file shows:
+```
++  char *first_host;
++  int first_remote_port;
++  unsigned int first_remote_protocol;  /* <-- NEW */
+```
+
+This ensures credentials cannot leak through redirects to different protocols or ports on the same host.

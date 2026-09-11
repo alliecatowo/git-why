@@ -1,0 +1,21 @@
+I'll help you complete this task. Let me start by verifying the repository state and then investigate the history of the LPOS command option naming.Good, the verification passed. Now let me search for information about the LPOS command and its RANK/FIRST option in the repository history.Perfect! I found a commit that directly addresses this: `a5a3a7bbc - LPOS: option FIRST renamed RANK`. Let me examine this commit to get the details:Perfect! I have found the answer with clear evidence. Let me verify the commit SHA one more time:## Answer
+
+**Yes, the LPOS command option was renamed from FIRST to RANK.**
+
+**Supporting Commit:** `a5a3a7bbc61203398ecc1d5b52c76214f5672776`
+
+**Commit Message:** "LPOS: option FIRST renamed RANK."
+
+**Evidence from the diff:**
+
+The commit directly changes the command syntax from `LPOS key element [FIRST rank]` to `LPOS key element [RANK rank]`. The key excerpts from the commit include:
+
+1. In the comment documentation:
+   - **Before:** `/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]`
+   - **After:** `/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]`
+
+2. In the C code:
+   - **Before:** `if (!strcasecmp(opt,"FIRST") && moreargs) {`
+   - **After:** `if (!strcasecmp(opt,"RANK") && moreargs) {`
+
+3. In the test suite, all test cases referencing `FIRST` were updated to use `RANK` instead, confirming the API change was applied throughout the codebase.

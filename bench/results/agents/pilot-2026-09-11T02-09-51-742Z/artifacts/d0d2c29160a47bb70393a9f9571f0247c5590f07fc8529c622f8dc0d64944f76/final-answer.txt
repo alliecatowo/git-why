@@ -1,0 +1,39 @@
+I'll start by verifying the repository state with the required bash command, then investigate the question about ripgrep's ignore-file naming history.Good! The repository state is verified. Now I need to investigate whether ripgrep's special ignore-file name was something other than '.ignore'. Let me search the git history for references to ignore files and naming changes.Let me search for commits that mention ".ignore" or "ignore file" naming:Let me search the git log for references to "ignore file" or the name change:Let me search for commit messages related to "add .ignore" or "rename":Let me search more specifically in the earliest commits and look for changes related to the .ignore file naming:Excellent! I can see a commit "7cefc55 Remove .agignore from ignore file list." This suggests that .agignore was previously supported. Let me look at that commit:Great! I can see that `.agignore` was in the ignore file list. Now let me search for when `.ignore` was added or when `.rgignore` was introduced. Let me look for earlier commits:Perfect! Let me look at commit "cc90511 Switch from .rgignore to .ignore." This seems to be the key change:Perfect! I found the answer. Let me verify the exact commit and look for more context if needed:Perfect! I have the complete answer. Let me also verify when .rgignore was originally introduced to provide complete context:Now let me look at when .rgignore was first introduced:Let me check the early commits to see when .rgignore was introduced:Let me try a different approach and look at the first appearance of IGNORE_NAMES:Excellent! I found that the earliest version had `.agignore` and `.xrepignore`. Now let me verify the exact details of when it changed from .rgignore to .ignore:Now I have all the information needed. Let me provide the complete answer:
+
+## Summary
+
+**YES**, ripgrep's special ignore-file name used to be something other than `.ignore`. 
+
+The history shows:
+1. **Initially**: `.agignore` and `.xrepignore` were supported (as seen in commit 7a149c2, "More progress. With coloring!")
+2. **Later**: Changed to `.rgignore` (the ripgrep-specific ignore file)
+3. **Finally**: Switched to `.ignore` (the current standard)
+
+## Answer with Supporting Commit
+
+**Commit SHA: `cc90511ab29d3c37e873acac0fd80f90473f54bb`**
+
+**Commit Message:**
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+**Supporting Diff Quote:**
+The commit changed the ignore file list in `src/ignore.rs`:
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+This commit shows the addition of `.ignore` as the new primary ripgrep-specific ignore file, while maintaining backward compatibility with `.rgignore`. The commit message explicitly states they were switching from `.rgignore` to align with the Silver Searcher's convention.

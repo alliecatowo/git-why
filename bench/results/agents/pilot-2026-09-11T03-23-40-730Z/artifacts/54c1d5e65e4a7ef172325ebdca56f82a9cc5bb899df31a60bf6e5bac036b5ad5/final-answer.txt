@@ -1,0 +1,49 @@
+The verification matches. Now let me investigate the history of the text encoding guesser in the requests library.
+
+The current checkout uses both chardet and charset_normalizer, preferring chardet and falling back. Let me look at the git history to find the commit that established the switch to charset_normalizer.
+
+The commit `2ed84f55` "Switch LGPL'd chardet for MIT licensed charset_normalizer" is exactly what I'm looking for. Let me examine it.
+
+This is the commit that answers the question. Let me examine the diff details, particularly the setup.py change and the models.py/compat.py changes.
+
+This fully answers the question. Let me confirm the commit is in the repository's history on the current branch.
+
+The commit is in the current branch's history. Let me also verify the current state that reflects this commit (the compat.py and models.py already showed both libraries). I now have a complete answer.
+
+## Summary
+
+The requests library **did** switch from `chardet` as its text-encoding guesser to `charset_normalizer`. The commit that establishes this is:
+
+**`2ed84f55b22f19a1e1e8eea2e50963dce62052d3`** — "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)" by Ash Berlin-Taylor, July 7, 2021. This commit is an ancestor of the current HEAD.
+
+### Why the switch happened
+
+The commit message explains the motivation directly:
+
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary... By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity."
+
+So the reason was **licensing**: `chardet` is LGPL-licensed, which creates uncertainty for projects that want to bundle requests in a single binary. Replacing it with the MIT-licensed `charset_normalizer` removes that ambiguity.
+
+### Supporting diff details
+
+In `setup.py`, the direct dependency was changed:
+```python
+-    'chardet>=3.0.2,<5',
++    'charset_normalizer~=2.0.0; python_version >= "3"',
++    'chardet>=3.0.2,<5; python_version < "3"',
+```
+
+In `compat.py`, the import was made to prefer charset_normalizer with chardet as an escape hatch:
+```python
+-import chardet
++try:
++    import chardet
++except ImportError:
++    import charset_normalizer as chardet
+```
+
+And in the models.py docstrings, references were updated to reflect that encoding is now guessed by "the charset_normalizer or chardet libraries."
+
+Notably, the commit also kept chardet as a fallback escape hatch — it will be used first if installed, and was moved to the optional `requests[use_chardet_on_py3]` extra — but charset_normalizer became the new default dependency for Python 3. In the modern checkout (which uses a src-layout and a refactored `_resolve_char_detection()` that loops over both), this ordering behavior is retained.

@@ -1,0 +1,50 @@
+## Answer
+
+Yes — the default handling of unknown keys changed. Zod object schemas used to **keep** extra keys (`unknownKeys: 'allow'`, effectively a passthrough), and the default was changed to **strip** them, so unrecognized properties now silently disappear from parsed output.
+
+The commit that establishes this is:
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a`** — "strip unknown keys by default" (Colin McDonnell, Thu Sep 17 13:20:45 2020). It is an ancestor of the pinned HEAD `62311eb2`.
+
+Supporting evidence from the commit's diff:
+
+In `src/types/object.ts`, the class default changed:
+
+```diff
+-  UnknownKeys extends UnknownKeysParam = 'allow',
++  UnknownKeys extends UnknownKeysParam = 'passthrough',
+```
+
+The factory used by `z.object(...)` changed its `unknownKeys` from `allow` to `strip`:
+
+```diff
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+And the parser switched to keying off the renamed `passthrough` mode (so `allow` no longer meant "keep"):
+
+```diff
+       if (def.catchall instanceof ZodNever) {
+-        if (def.unknownKeys === 'allow') {
++        if (def.unknownKeys === 'passthrough') {
+```
+
+The README in the same commit states the behavior change directly:
+
+```diff
+-Object schemas now _allow_ unknown keys by default, instead of throwing an error
++Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+and the docs example:
+
+```diff
+ // => { name: "bob dylan", extraKey: 61 }
++// => { name: "bob dylan" }
+```
+
+So extra keys weren't always kept: before this commit they were allowed through, after it the default strips them. `.passthrough()` (with `.nonstrict()` kept as a backwards-compatible alias) is the way to restore the old behavior. No files were modified.

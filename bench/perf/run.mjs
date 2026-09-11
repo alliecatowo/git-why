@@ -482,9 +482,38 @@ async function main() {
         const r = runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: args.repo });
         if (r.exitCode === 0) samples.push(r.elapsedMs);
       }
+      // Where the time actually goes. Each mode is a separate invocation of the
+      // real CLI, so the differences are external and attributable:
+      //   status            = process start + open the index, no retrieval
+      //   --text            = + the full-text branch
+      //   --semantic        = + the embedding model and the vector branch
+      //   hybrid            = both branches, which overlap rather than sum
+      // This exists because the obvious story -- "it is a one-shot CLI, so it
+      // is paying startup and model load" -- is measurably wrong: startup is a
+      // small fraction and retrieval over a large collection is the cost.
+      const breakdownOf = (extraArgs) => {
+        const samples = [];
+        for (let i = 0; i < 5; i++) {
+          const r = runOnce(cliPath, extraArgs, { cwd: args.repo });
+          if (r.exitCode === 0) samples.push(r.elapsedMs);
+        }
+        return summarizeLatencies(samples);
+      };
+      const breakdown = {
+        statusOnly: breakdownOf(['status', '--json']),
+        textOnly: breakdownOf([QUERY, '--text', '--no-refresh', '--json']),
+        semanticOnly: breakdownOf([QUERY, '--semantic', '--no-refresh', '--json']),
+        hybrid: breakdownOf([QUERY, '--no-refresh', '--json']),
+      };
+
       results.realRepo = {
         path: args.repo,
         name: args.repo.split('/').pop(),
+        breakdown,
+        breakdownNote:
+          'Each row is a separate CLI invocation, so differences are externally attributable. statusOnly is process start plus opening the index with no retrieval; the branches overlap in hybrid rather than summing.',
+        loadCaveat:
+          'Wall-clock on a shared machine. If other work was running, these are pessimistic. Re-run on an idle machine before quoting them as a floor.',
         indexedCommits: status?.index?.indexedCommits ?? null,
         recordCount: status?.index?.recordCount ?? null,
         diskBytes: status?.index?.diskBytes ?? null,

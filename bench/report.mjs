@@ -694,9 +694,35 @@ if (realRepoPerf?.data.realRepo?.latencyMs) {
   }
   md +=
     'That is the number to quote, and it is not fast: a query on a 30,000-commit history takes a ' +
-    'few seconds, not the sub-second the fixture suggests. It is a one-shot CLI with no daemon, so ' +
-    'this includes process start and model load on every invocation. ' +
-    `Every query passed \`--no-refresh\`, so the workload could not write to or mutate the clone.\n\n`;
+    'few seconds, not the sub-second the fixture suggests. ' +
+    'Every query passed `--no-refresh`, so the workload could not write to or mutate the clone.\n\n';
+
+  if (rr.breakdown) {
+    const b = rr.breakdown;
+    md +=
+      '**Where the time goes.** The intuitive answer — "it is a one-shot CLI with no daemon, so\n';
+    md +=
+      'it is paying process start and model load every time" — is wrong, and worth disproving\n';
+    md +=
+      'because it points optimisation at the wrong thing. Each row below is a separate invocation\n';
+    md += 'of the real CLI, so the differences are externally attributable:\n\n';
+    md += '| invocation | what it adds | p50 |\n|---|---|---:|\n';
+    md += `| \`status\` | process start, open the index, no retrieval | ${ms(b.statusOnly?.p50)} |\n`;
+    md += `| \`--text\` | + the full-text branch | ${ms(b.textOnly?.p50)} |\n`;
+    md += `| \`--semantic\` | + the embedding model and the vector branch | ${ms(b.semanticOnly?.p50)} |\n`;
+    md += `| hybrid (default) | both branches, which overlap rather than sum | ${ms(b.hybrid?.p50)} |\n\n`;
+    if (b.statusOnly?.p50 && b.hybrid?.p50) {
+      const share = Math.round((b.statusOnly.p50 / b.hybrid.p50) * 100);
+      md += `Startup and opening the index is ${share}% of a query. The rest is retrieval over `;
+      md += `${rr.recordCount?.toLocaleString('en-US') ?? 'the'} records, and **both branches are expensive** — `;
+      md +=
+        'the embedding model is not the bottleneck people assume it is. A resident process or a\n';
+      md +=
+        'daemon would therefore recover a small fraction of this; the collection scan is where the\n';
+      md += 'time is.\n\n';
+    }
+    md += `_${rr.loadCaveat}_\n\n`;
+  }
 }
 md += '**Known gaps in this run** (from the runner itself, not omitted silently):\n\n';
 for (const g of perfResults.knownGaps) md += `- ${g}\n`;

@@ -1,0 +1,64 @@
+I'll start by running the required command to verify the environment.
+
+The environment is verified. Now let me research the question about ripgrep's special ignore-file name history.
+
+Let me search the git history for the origin of the `.ignore` file name and any earlier name.
+
+Interesting! I found a very relevant commit: `cc90511 Switch from .rgignore to .ignore.` Let me examine it in detail.
+
+This commit clearly establishes the answer. The special ignore-file name was originally `.rgignore` before being switched to `.ignore`. Let me look at the full diff to confirm and quote the supporting parts.
+
+This commit directly answers the question and establishes the answer. Let me also check that the earlier `.rgignore` name was indeed the original by looking at the initial commit that introduced it, to confirm it wasn't switched to `.rgignore` from something even earlier.
+
+Let me confirm the very earliest occurrence of `.rgignore` to establish that `.rgignore` was the original name. Let me check the commit right before `cc90511` where `.rgignore` was the name.
+
+Let me check the earliest commit (`f83cd63`) that introduced `.rgignore` to verify it was the original name for the ignore file. Let me check when `.rgignore` first appeared and what the very early ignore.rs looked like.
+
+This confirms that `.rgignore` was the original special ignore-file name, used from the early days. Now let me verify the commit `cc90511` is the one that establishes the answer. 
+
+The commit `cc90511` ("Switch from .rgignore to .ignore.") directly documents that the name was originally `.rgignore`, and it was switched to `.ignore` (aligning with the Silver Searcher / ag). The commit even explicitly keeps backward-compat support for `.rgignore` in the `IGNORE_NAMES` array.
+
+Let me confirm the full SHA of this commit.
+
+I have everything needed to answer the question.
+
+## Answer
+
+**Yes.** Ripgrep's special ignore-file name used to be **`.rgignore`**, not `.ignore`. The rename happened very early in the project's history.
+
+**Supporting commit:** `cc90511ab29d3c37e873acac0fd80f90473f54bb` — "Switch from .rgignore to .ignore."
+
+The commit's message states this plainly:
+
+> Switch from .rgignore to .ignore.
+> But don't actually remove support for .rgignore until the next semver bump.
+> Note that this puts us in line with the silver searcher...
+> Fixes #40
+
+The diff confirms the name change. Notable supporting hunks:
+
+In the ignore-name registry, `.ignore` is added while `.rgignore` is kept only for backward compatibility:
+
+```c
+const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+And documentation was updated accordingly, e.g. in `README.md`:
+
+```
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+I confirmed that `.rgignore` was indeed the *original* name (introduced with the earliest gitignore-matching code, e.g. seen in commit `f83cd63` "Add integration tests" and used in the pre-`cc90511` `src/ignore.rs` whose `IGNORE_NAMES` array contained only `.gitignore` and `.rgignore`).
+
+So: early on the special ignore file was `.rgignore`, and ripgrep renamed it to `.ignore` (matching `ag`/the Silver Searcher) in commit `cc90511ab29d3c37e873acac0fd80f90473f54bb`.

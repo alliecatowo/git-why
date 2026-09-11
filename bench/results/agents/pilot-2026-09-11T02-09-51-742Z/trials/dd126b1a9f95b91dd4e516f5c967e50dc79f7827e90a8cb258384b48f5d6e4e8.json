@@ -1,0 +1,265 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "e0e60f58affe085ab7a68b34fcc17a8349001f6d",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T02:52:38.138Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "853f9ccbc0d0d4269161407a2e7eaf7b75b17a20e768d251a679b172b0d8dd5d",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "79866a6361829ed0602dedff9cb378c66977227a",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "79866a636",
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ]
+  },
+  "wall_ms": 82351,
+  "tool_calls": 22,
+  "history_calls": 19,
+  "zg_calls": 0,
+  "git_why_calls": 2,
+  "input_tokens": 60947,
+  "output_tokens": 2677,
+  "cache_read_tokens": 334828,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.10781479999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 126740,
+  "index_build_ms": 194614,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T02-09-51-742Z/events/X-redis-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "dd126b1a9f95b91dd4e516f5c967e50dc79f7827e90a8cb258384b48f5d6e4e8",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 20338,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_8i1briLujDgQgODVz8H9MB",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"stream\" --grep=\"XADD\" -i | head -30"
+        },
+        "output": "a8e745117 Xread last entry in stream (#7388) (#13117)\nf17381a38 Fix propagation of entries_read by calling streamPropagateGroupID unconditionally (#12898)\n820a4e45f Edit the history field of xinfo-consumers (#13078)\nca5cac998 xinfo-stream add minimum to seen-time, skip logreqres in fuzzer (#13056)\n32f44da51 Increase tolerance range to block reprocess tests to avoid timing issues (#13053)\n492021db9 Fix blocking commands timeout is reset due to re-processing command (#13004)\n9d0158bf8 Reorder signalModifiedKey in xaddCommand. (#12895)\n45d331069 BITCOUNT: check for argument, before checking for key (#12394)\nce5f4ea3a Delete empty key if fails after moduleCreateEmptyKey() in module (#12129)\ne55568edb Add RM_RdbLoad and RM_RdbSave module API functions (#11852)\n9344f654c Implementing the WAITAOF command (issue #10505) (#11713)\n4ba47d2d2 Add reply_schema to command json files (internal for now) (#10273)\na7c9e5053 Fix test and improve assert_replication_stream print the whole stream (#11793)\n312654d5b Fix misleading error message in XREADGROUP (#11799)\n2bb29e4aa Always compact nodes in stream listpacks after creating new nodes (#11885)\n3b260149e adding the ability to add streams to the pre-defined redis-benchmark tests (#11762)\n383d902ce reprocess command when client is unblocked on keys (#11012)\ncd12cc2f5 solve race in replication test due to ping (#11609)\nb0250b450 Try to fix a race in psync2 test (#11553)\n72e90695e Stream consumers: Re-purpose seen-time, add active-time (#11099)\nc81813148 Add a special notification unlink available only for modules (#9406)\n7395e370e Fix XSETID with max_deleted_entry_id issue (#11444)\n737a09051 Set errno in case XADD with partial ID fails (#11424)\nb57fd0106 Blocked module clients should be aware when a key is deleted (#11310)\n3469c6509 Change compiler optimizations to -O3 -flto (#11207)\n6d2156019 Fix heap overflow vulnerability in XAUTOCLAIM (CVE-2022-35951) (#11301)\n5389fa62a Update group and consumer description in json file for Unifying Stream command format (#11190)\nc1bd61a4a Reverts most of the changes of #10969 (#11178)\n508a13888 Fix replication inconsistency on modules that uses key space notifications (#10969)\n6e1c3ff13 Update some comments in stream command docs (#10821)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_voSzpRjWMKPfPvflRyD7EF",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"[Ss]tream\" | tail -40"
+        },
+        "output": "0adb43b68 Streams: XREAD ability to block fixed.\n6a1c92d52 Streams: synchronous xread fixes and improvements.\na7d898334 Streams: XREAD get-key method fixed.\n110041825 Streams: XREAD get-keys method.\nfa61720d3 Streams: XREAD, first draft. Handling of blocked clients still missing.\ne65b4825f Streams: XREAD arguments parsing.\n4086dff47 Streams: augment client.bpop with XREAD specific fields.\nf80dfbf46 Streams: more internal preparation for blocking XREAD.\n4a377cecd Streams: initial work to use blocking lists logic for streams XREAD.\n439120c62 Streams: implement stream object release.\nec9bbe96b Streams: XLEN command.\n98d184db1 Streams: Save stream->length in RDB.\ncd18f06e9 Streams: change listpack allocator to zmalloc.\nedd70c199 Streams: RDB loading. RDB saving modified.\n485014cc7 Streams: RDB saving.\n100d43c1a Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n93037f764 PSYNC2: make repl_stream_db never be -1\nb8579c225 PSYNC2: clarify the scenario when repl_stream_db can be -1\nb541ccef2 PSYNC2: make persisiting replication info more solid\ne74f0aa6d Fix replication of SLAVEOF inside transaction.\n365dd037d RDB modules values serialization format version 2.\n469d6e2b3 PSYNC2: fix master cleanup when caching it.\n1f72ec7da Merge pull request #1 from antirez/unstable\n04542cff9 Replication: fix the infamous key leakage of writable slaves + EXPIRE.\n434e6b2da PSYNC2: Do not accept WAIT in slave instances.\neab865a0a PSYNC2: stop sending newlines to sub-slaves when master is down.\n2669fb836 PSYNC2: different improvements to Redis replication.\n86f0a2ee8 CLIENT REPLY command implemented: ON, OFF and SKIP modes.\n363c0f67b Test: fix attach_to_replication_stream to handle newlines.\n606437108 Fix lua-cmsgpack 64 bit integer on 32 bit platform\nbb7fea0d5 Diskless SYNC: fix RDB EOF detection.\n5ee2ccf48 Diskless replication: EOF:<mark> streaming support slave side.\nfdaab0234 Merge remote-tracking branch 'upstream/unstable' into unstable\n21648473a Auto-enter slaveMode when SYNC from redis-cli\n6b4635f4f REPLCONF ACK command.\n7572dc47d Test: new functions to capture and analyze the replication stream.\n4b83ad4e1 Use replicationFeedSlaves() to send PING to slaves.\n7465ac7ab Emit SELECT to slaves in a centralized way.\ncb598cdd5 Don't expire keys when loading an RDB after a SYNC\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_G8wzBNHQGPks0lbZ1o5FCY",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 --stat | head -60"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\n src/Makefile          |   2 +-\n src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/listpack.h        |  61 ++++\n src/listpack_malloc.h |  44 +++\n src/object.c          |   7 +\n src/rax.c             |  24 +-\n src/rax.h             |   1 +\n src/rdb.h             |   3 +-\n src/server.c          |   2 +\n src/server.h          |   9 +\n src/stream.h          |  21 ++\n src/t_stream.c        | 376 ++++++++++++++++++++++++\n 12 files changed, 1323 insertions(+), 10 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_32hXBxINlXBZo6pxkCYAfU",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 | head -200"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/Makefile b/src/Makefile\nindex 86e0b3fe0..b896b1263 100644\n--- a/src/Makefile\n+++ b/src/Makefile\n@@ -144,7 +144,7 @@ endif\n \n REDIS_SERVER_NAME=redis-server\n REDIS_SENTINEL_NAME=redis-sentinel\n-REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o\n+REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.c\n REDIS_CLI_NAME=redis-cli\n REDIS_CLI_OBJ=anet.o adlist.o redis-cli.o zmalloc.o release.o anet.o ae.o crc64.o\n REDIS_BENCHMARK_NAME=redis-benchmark\ndiff --git a/src/listpack.c b/src/listpack.c\nnew file mode 100644\nindex 000000000..e2702b65c\n--- /dev/null\n+++ b/src/listpack.c\n@@ -0,0 +1,783 @@\n+/* Listpack -- A lists of strings serialization format\n+ *\n+ * This file implements the specification you can find at:\n+ *\n+ *  https://github.com/antirez/listpack\n+ *\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n+ *     to endorse or promote products derived from this software without\n+ *     specific prior written permission.\n+ *\n+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\n+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\n+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n+ * POSSIBILITY OF SUCH DAMAGE.\n+ */\n+\n+#include <stdint.h>\n+#include <limits.h>\n+#include <sys/types.h>\n+#include <stdlib.h>\n+#include <string.h>\n+#include <stdio.h>\n+\n+#include \"listpack.h\"\n+#include \"listpack_malloc.h\"\n+\n+#define LP_HDR_SIZE 6       /* 32 bit total len + 16 bit number of elements. */\n+#define LP_HDR_NUMELE_UNKNOWN UINT16_MAX\n+#define LP_MAX_INT_ENCODING_LEN 9\n+#define LP_MAX_BACKLEN_SIZE 5\n+#define LP_MAX_ENTRY_BACKLEN 34359738367ULL\n+#define LP_ENCODING_INT 0\n+#define LP_ENCODING_STRING 1\n+\n+#define LP_ENCODING_7BIT_UINT 0\n+#define LP_ENCODING_7BIT_UINT_MASK 0x80\n+#define LP_ENCODING_IS_7BIT_UINT(byte) (((byte)&LP_ENCODING_7BIT_UINT_MASK)==LP_ENCODING_7BIT_UINT)\n+\n+#define LP_ENCODING_6BIT_STR 0x80\n+#define LP_ENCODING_6BIT_STR_MASK 0xC0\n+#define LP_ENCODING_IS_6BIT_STR(byte) (((byte)&LP_ENCODING_6BIT_STR_MASK)==LP_ENCODING_6BIT_STR)\n+\n+#define LP_ENCODING_13BIT_INT 0xC0\n+#define LP_ENCODING_13BIT_INT_MASK 0xE0\n+#define LP_ENCODING_IS_13BIT_INT(byte) (((byte)&LP_ENCODING_13BIT_INT_MASK)==LP_ENCODING_13BIT_INT)\n+\n+#define LP_ENCODING_12BIT_STR 0xE0\n+#define LP_ENCODING_12BIT_STR_MASK 0xF0\n+#define LP_ENCODING_IS_12BIT_STR(byte) (((byte)&LP_ENCODING_12BIT_STR_MASK)==LP_ENCODING_12BIT_STR)\n+\n+#define LP_ENCODING_16BIT_INT 0xF1\n+#define LP_ENCODING_16BIT_INT_MASK 0xFF\n+#define LP_ENCODING_IS_16BIT_INT(byte) (((byte)&LP_ENCODING_16BIT_INT_MASK)==LP_ENCODING_16BIT_INT)\n+\n+#define LP_ENCODING_24BIT_INT 0xF2\n+#define LP_ENCODING_24BIT_INT_MASK 0xFF\n+#define LP_ENCODING_IS_24BIT_INT(byte) (((byte)&LP_ENCODING_24BIT_INT_MASK)==LP_ENCODING_24BIT_INT)\n+\n+#define LP_ENCODING_32BIT_INT 0xF3\n+#define LP_ENCODING_32BIT_INT_MASK 0xFF\n+#define LP_ENCODING_IS_32BIT_INT(byte) (((byte)&LP_ENCODING_32BIT_INT_MASK)==LP_ENCODING_32BIT_INT)\n+\n+#define LP_ENCODING_64BIT_INT 0xF4\n+#define LP_ENCODING_64BIT_INT_MASK 0xFF\n+#define LP_ENCODING_IS_64BIT_INT(byte) (((byte)&LP_ENCODING_64BIT_INT_MASK)==LP_ENCODING_64BIT_INT)\n+\n+#define LP_ENCODING_32BIT_STR 0xF0\n+#define LP_ENCODING_32BIT_STR_MASK 0xFF\n+#define LP_ENCODING_IS_32BIT_STR(byte) (((byte)&LP_ENCODING_32BIT_STR_MASK)==LP_ENCODING_32BIT_STR)\n+\n+#define LP_EOF 0xFF\n+\n+#define LP_ENCODING_6BIT_STR_LEN(p) ((p)[0] & 0x3F)\n+#define LP_ENCODING_12BIT_STR_LEN(p) ((((p)[0] & 0xF) << 8) | (p)[1])\n+#define LP_ENCODING_32BIT_STR_LEN(p) (((uint32_t)(p)[1]<<0) | \\\n+                                      ((uint32_t)(p)[2]<<8) | \\\n+                                      ((uint32_t)(p)[3]<<16) | \\\n+                                      ((uint32_t)(p)[4]<<24))\n+\n+#define lpGetTotalBytes(p)           (((uint32_t)(p)[0]<<0) | \\\n+                                      ((uint32_t)(p)[1]<<8) | \\\n+                                      ((uint32_t)(p)[2]<<16) | \\\n+                                      ((uint32_t)(p)[3]<<24))\n+\n+#define lpGetNumElements(p)          (((uint32_t)(p)[4]<<0) | \\\n+                                      ((uint32_t)(p)[5]<<8))\n+#define lpSetTotalBytes(p,v) do { \\\n+    (p)[0] = (v)&0xff; \\\n+    (p)[1] = ((v)>>8)&0xff; \\\n+    (p)[2] = ((v)>>16)&0xff; \\\n+    (p)[3] = ((v)>>24)&0xff; \\\n+} while(0)\n+\n+#define lpSetNumElements(p,v) do { \\\n+    (p)[4] = (v)&0xff; \\\n+    (p)[5] = ((v)>>8)&0xff; \\\n+} while(0)\n+\n+/* Convert a string into a signed 64 bit integer.\n+ * The function returns 1 if the string could be parsed into a (non-overflowing)\n+ * signed 64 bit int, 0 otherwise. The 'value' will be set to the parsed value\n+ * when the function returns success.\n+ *\n+ * Note that this function demands that the string strictly represents\n+ * a int64 value: no spaces or other characters before or after the string\n+ * representing the number are accepted, nor zeroes at the start if not\n+ * for the string \"0\" representing the zero number.\n+ *\n+ * Because of its strictness, it is safe to use this function to check if\n+ * you can convert a string into a long long, and obtain back the string\n+ * from the number without any loss in the string representation. *\n+ *\n+ * -----------------------------------------------------------------------------\n+ *\n+ * Credits: this function was adapted from the Redis source code, file\n+ * \"utils.c\", function string2ll(), and is copyright:\n+ *\n+ * Copyright(C) 2011, Pieter Noordhuis\n+ * Copyright(C) 2011, Salvatore Sanfilippo\n+ *\n+ * The function is released under the BSD 3-clause license.\n+ */\n+int lpStringToInt64(const char *s, unsigned long slen, int64_t *value) {\n+    const char *p = s;\n+    unsigned long plen = 0;\n+    int negative = 0;\n+    uint64_t v;\n+\n+    if (plen == slen)\n+        return 0;\n+\n+    /* Special case: first and only digit is 0. */\n+    if (slen == 1 && p[0] == '0') {\n+        if (value != NULL) *value = 0;\n+        return 1;\n+    }\n+\n+    if (p[0] == '-') {\n+        negative = 1;\n+        p++; plen++;\n+\n+        /* Abort on only a negative sign. */\n+        if (plen == slen)\n+            return 0;\n+    }\n+\n+    /* First digit should be 1-9, otherwise the string should just be 0. */\n+    if (p[0] >= '1' && p[0] <= '9') {\n+        v = p[0]-'0';\n+        p++; plen++;\n+    } else if (p[0] == '0' && slen == 1) {\n+        *value = 0;\n+        return 1;\n+    } else {\n+        return 0;\n+    }\n+\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_viEZT1lpAocm0nPTvFPFRE",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/t_stream.c | head -150"
+        },
+        "output": "/*\n * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n * All rights reserved.\n *\n * Redistribution and use in source and binary forms, with or without\n * modification, are permitted provided that the following conditions are met:\n *\n *   * Redistributions of source code must retain the above copyright notice,\n *     this list of conditions and the following disclaimer.\n *   * Redistributions in binary form must reproduce the above copyright\n *     notice, this list of conditions and the following disclaimer in the\n *     documentation and/or other materials provided with the distribution.\n *   * Neither the name of Redis nor the names of its contributors may be used\n *     to endorse or promote products derived from this software without\n *     specific prior written permission.\n *\n * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\n * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\n * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n * POSSIBILITY OF SUCH DAMAGE.\n */\n\n/* TODO:\n * - After loading a stream, populate the last ID.\n */\n\n#include \"server.h\"\n#include \"listpack.h\"\n#include \"endianconv.h\"\n#include \"stream.h\"\n\n#define STREAM_BYTES_PER_LISTPACK 4096\n\n/* -----------------------------------------------------------------------\n * Low level stream encoding: a radix tree of listpacks.\n * ----------------------------------------------------------------------- */\n\n/* Create a new stream data structure. */\nstream *streamNew(void) {\n    stream *s = zmalloc(sizeof(*s));\n    s->rax = raxNew();\n    s->length = 0;\n    s->last_id.ms = 0;\n    s->last_id.seq = 0;\n    return s;\n}\n\n/* Generate the next stream item ID given the previous one. If the current\n * milliseconds Unix time is greater than the previous one, just use this\n * as time part and start with sequence part of zero. Otherwise we use the\n * previous time (and never go backward) and increment the sequence. */\nvoid streamNextID(streamID *last_id, streamID *new_id) {\n    uint64_t ms = mstime();\n    if (ms > last_id->ms) {\n        new_id->ms = ms;\n        new_id->seq = 0;\n    } else {\n        new_id->ms = last_id->ms;\n        new_id->seq = last_id->seq+1;\n    }\n}\n\n/* This is just a wrapper for lpAppend() to directly use a 64 bit integer\n * instead of a string. */\nunsigned char *lpAppendInteger(unsigned char *lp, int64_t value) {\n    char buf[LONG_STR_SIZE];\n    int slen = ll2string(buf,sizeof(buf),value);\n    return lpAppend(lp,(unsigned char*)buf,slen);\n}\n\n/* This is a wrapper function for lpGet() to directly get an integer value\n * from the listpack (that may store numbers as a string), converting\n * the string if needed. */\nint64_t lpGetInteger(unsigned char *ele) {\n    int64_t v;\n    unsigned char *e = lpGet(ele,&v,NULL);\n    if (e == NULL) return v;\n    /* The following code path should never be used for how listpacks work:\n     * they should always be able to store an int64_t value in integer\n     * encoded form. However the implementation may change. */\n    int retval = string2ll((char*)e,v,&v);\n    serverAssert(retval != 0);\n    return v;\n}\n\n/* Convert the specified stream entry ID as a 128 bit big endian number, so\n * that the IDs can be sorted lexicographically. */\nvoid streamEncodeID(void *buf, streamID *id) {\n    uint64_t e[2];\n    e[0] = htonu64(id->ms);\n    e[1] = htonu64(id->seq);\n    memcpy(buf,e,sizeof(e));\n}\n\n/* This is the reverse of streamEncodeID(): the decoded ID will be stored\n * in the 'id' structure passed by reference. The buffer 'buf' must point\n * to a 128 bit big-endian encoded ID. */\nvoid streamDecodeID(void *buf, streamID *id) {\n    uint64_t e[2];\n    memcpy(e,buf,sizeof(e));\n    id->ms = ntohu64(e[0]);\n    id->seq = ntohu64(e[1]);\n}\n\n/* Adds a new item into the stream 's' having the specified number of\n * field-value pairs as specified in 'numfields' and stored into 'argv'.\n * Returns the new entry ID populating the 'added_id' structure. */\nvoid streamAppendItem(stream *s, robj **argv, int numfields, streamID *added_id) {\n    raxIterator ri;\n    raxStart(&ri,s->rax);\n    raxSeek(&ri,\"$\",NULL,0);\n\n    size_t lp_bytes = 0;        /* Total bytes in the tail listpack. */\n    unsigned char *lp = NULL;   /* Tail listpack pointer. */\n\n    /* Get a reference to the tail node listpack. */\n    if (raxNext(&ri)) {\n        lp = ri.data;\n        lp_bytes = lpBytes(lp);\n    }\n    raxStop(&ri);\n\n    /* Generate the new entry ID. */\n    streamID id;\n    streamNextID(&s->last_id,&id);\n\n    /* We have to add the key into the radix tree in lexicographic order,\n     * to do so we consider the ID as a single 128 bit number written in\n     * big endian, so that the most significant bytes are the first ones. */\n    uint64_t rax_key[2];    /* Key in the radix tree containing the listpack.*/\n    uint64_t entry_id[2];   /* Entry ID of the new item as 128 bit string. */\n    streamEncodeID(entry_id,&id);\n\n    /* Create a new listpack and radix tree node if needed. */\n    if (lp == NULL || lp_bytes > STREAM_BYTES_PER_LISTPACK) {\n        lp = lpNew();\n        rax_key[0] = entry_id[0];\n        rax_key[1] = entry_id[1];\n        raxInsert(s->rax,(unsigned char*)&rax_key,sizeof(rax_key),lp,NULL);\n    } else {\n        serverAssert(ri.key_len == sizeof(rax_key));\n        memcpy(rax_key,ri.key,sizeof(rax_key));\n    }\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_DjW2kYxZ9gsLi5U3Y55TXc",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/t_stream.c | grep -E \"^void.*Command|^(int|void) x[a-z]+Command\" | head -20"
+        },
+        "output": "void xaddCommand(client *c) {\nvoid xrangeCommand(client *c) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_RERurt8cGez37sst51Z82p",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 --format=fuller | head -50"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor:     antirez <antirez@gmail.com>\nAuthorDate: Wed Aug 30 12:40:27 2017 +0200\nCommit:     antirez <antirez@gmail.com>\nCommitDate: Fri Dec 1 10:24:24 2017 +0100\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/Makefile b/src/Makefile\nindex 86e0b3fe0..b896b1263 100644\n--- a/src/Makefile\n+++ b/src/Makefile\n@@ -144,7 +144,7 @@ endif\n \n REDIS_SERVER_NAME=redis-server\n REDIS_SENTINEL_NAME=redis-sentinel\n-REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o\n+REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.c\n REDIS_CLI_NAME=redis-cli\n REDIS_CLI_OBJ=anet.o adlist.o redis-cli.o zmalloc.o release.o anet.o ae.o crc64.o\n REDIS_BENCHMARK_NAME=redis-benchmark\ndiff --git a/src/listpack.c b/src/listpack.c\nnew file mode 100644\nindex 000000000..e2702b65c\n--- /dev/null\n+++ b/src/listpack.c\n@@ -0,0 +1,783 @@\n+/* Listpack -- A lists of strings serialization format\n+ *\n+ * This file implements the specification you can find at:\n+ *\n+ *  https://github.com/antirez/listpack\n+ *\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n+ *     to endorse or promote products derived from this software without\n+ *     specific prior written permission.\n+ *\n+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_m7aCrLUPQSorw8yvr1Q1q0",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline 79866a636^..79866a636"
+        },
+        "output": "79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_biV19yxhgCVD0IrlhZnApl",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline 79866a636~5..79866a636"
+        },
+        "output": "79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n045d65c3a PSYNC2: Fix off by one buffer size in luaCreateFunction().\n452ad2e92 PSYNC2: just store script bodies into RDB.\n28dfdca73 PSYNC2: luaCreateFunction() should handle NULL client parameter.\nf11a7585a PSYNC2: Save Lua scripts state into RDB file.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_qATqEQKIFkrOAsjbeniOvS",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/server.h | grep -i xadd"
+        },
+        "output": "void xaddCommand(client *c);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_a6qK2xwLvFsMy56M04bzLS",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"XADD\" | head -10"
+        },
+        "output": "737a09051 Set errno in case XADD with partial ID fails (#11424)\na642947e0 Optimize stream id sds creation on XADD key * (~20% saved cpu cycles) (#10574)\n2a2954086 XREADGROUP: Unblock client if stream is deleted (#10306)\nc81c7f51c Add stream consumer group lag tracking and reporting (#9127)\n3c3e6cc1c X[AUTO]CLAIM should skip deleted entries (#10227)\nb93ccee45 Fix timing issue in strem blocking tests (#9927)\n21aa1d4b9 Adds auto-seq-only-generation via `XADD ... <ms>-*` (#9217)\nd56ded89c improvement of a blocking xread test (#9859)\n252981914 XADD - skip rewrite the id arg if it was given and is valid. (#9599)\nf5160ed0a improve latency when a client is unblocked by module timer (#9593)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_YvWAY8bYrw7Z8XmrOm0QEg",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 | grep -A 100 \"\\\"xadd\\\"\" | head -30"
+        },
+        "output": "+    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n+    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n     {\"post\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"host:\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"latency\",latencyCommand,-2,\"aslt\",0,NULL,0,0,0,0,0}\ndiff --git a/src/server.h b/src/server.h\nindex 11eb36f3d..38a76d008 100644\n--- a/src/server.h\n+++ b/src/server.h\n@@ -59,6 +59,7 @@ typedef long long mstime_t; /* millisecond time type. */\n #include \"anet.h\"    /* Networking the easy way */\n #include \"ziplist.h\" /* Compact list data structure */\n #include \"intset.h\"  /* Compact integer set structure */\n+#include \"stream.h\"  /* Stream data type header file. */\n #include \"version.h\" /* Version macro */\n #include \"util.h\"    /* Misc functions useful in many places */\n #include \"latency.h\" /* Latency monitor API */\n@@ -451,6 +452,7 @@ typedef long long mstime_t; /* millisecond time type. */\n #define OBJ_SET 2\n #define OBJ_ZSET 3\n #define OBJ_HASH 4\n+#define OBJ_STREAM 5\n \n /* The \"module\" object type is a special one that signals that the object\n  * is one directly managed by a Redis module. In this case the value points\n@@ -575,6 +577,7 @@ typedef struct RedisModuleDigest {\n #define OBJ_ENCODING_SKIPLIST 7  /* Encoded as skiplist */\n #define OBJ_ENCODING_EMBSTR 8  /* Embedded sds string encoding */\n #define OBJ_ENCODING_QUICKLIST 9 /* Encoded as linked list of ziplists */\n+#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_QorMAGbnftenTztuDmqyts",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 --format=\"%B\" | head -50"
+        },
+        "output": "Streams: 12 commits squashed into the initial Streams implementation.\n\n\ndiff --git a/src/Makefile b/src/Makefile\nindex 86e0b3fe0..b896b1263 100644\n--- a/src/Makefile\n+++ b/src/Makefile\n@@ -144,7 +144,7 @@ endif\n \n REDIS_SERVER_NAME=redis-server\n REDIS_SENTINEL_NAME=redis-sentinel\n-REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o\n+REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.c\n REDIS_CLI_NAME=redis-cli\n REDIS_CLI_OBJ=anet.o adlist.o redis-cli.o zmalloc.o release.o anet.o ae.o crc64.o\n REDIS_BENCHMARK_NAME=redis-benchmark\ndiff --git a/src/listpack.c b/src/listpack.c\nnew file mode 100644\nindex 000000000..e2702b65c\n--- /dev/null\n+++ b/src/listpack.c\n@@ -0,0 +1,783 @@\n+/* Listpack -- A lists of strings serialization format\n+ *\n+ * This file implements the specification you can find at:\n+ *\n+ *  https://github.com/antirez/listpack\n+ *\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n+ *     to endorse or promote products derived from this software without\n+ *     specific prior written permission.\n+ *\n+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\n+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_tZczz1IAcrQrDm56JN85dl",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 79866a636 --format=\"%H %ai %s\""
+        },
+        "output": "79866a6361829ed0602dedff9cb378c66977227a 2017-08-30 12:40:27 +0200 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_Id5qyUoD2P22P4Mvp9b3KL",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/t_stream.c | grep -E \"^void x[a-z]+Command\" | head -20"
+        },
+        "output": "void xaddCommand(client *c) {\nvoid xrangeCommand(client *c) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_UtLXwGuKmI6D6RMPgQBMAD",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636:src/server.c | grep -A 5 \"\\\"xadd\\\"\""
+        },
+        "output": "    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n    {\"post\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n    {\"host:\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n    {\"latency\",latencyCommand,-2,\"aslt\",0,NULL,0,0,0,0,0}\n};\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_0sgkRhqyWUYGET0i3iz9YJ",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- src/t_stream.c | tail -5"
+        },
+        "output": "439120c62 Streams: implement stream object release.\nec9bbe96b Streams: XLEN command.\n485014cc7 Streams: RDB saving.\n100d43c1a Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_ZQM9OozDcpwPNHoBswrgzV",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636^:src/t_stream.c 2>&1 | head -5"
+        },
+        "output": "fatal: path 'src/t_stream.c' exists on disk, but not in '79866a636^'\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_SwewmbmvzcGLSfUn3ZQkzx",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 | grep -A 50 \"void xaddCommand\""
+        },
+        "output": "+void xaddCommand(client *c);\n+void xrangeCommand(client *c);\n \n #if defined(__GNUC__)\n void *calloc(size_t count, size_t size) __attribute__ ((deprecated));\ndiff --git a/src/stream.h b/src/stream.h\nnew file mode 100644\nindex 000000000..065c328eb\n--- /dev/null\n+++ b/src/stream.h\n@@ -0,0 +1,21 @@\n+#ifndef STREAM_H\n+#define STREAM_H\n+\n+#include \"rax.h\"\n+\n+/* Stream item ID: a 128 bit number composed of a milliseconds time and\n+ * a sequence counter. IDs generated in the same millisecond (or in a past\n+ * millisecond if the clock jumped backward) will use the millisecond time\n+ * of the latest generated ID and an incremented sequence. */\n+typedef struct streamID {\n+    uint64_t ms;        /* Unix time in milliseconds. */\n+    uint64_t seq;       /* Sequence number. */\n+} streamID;\n+\n+typedef struct stream {\n+    rax *rax;               /* The radix tree holding the stream. */\n+    uint64_t length;        /* Number of elements inside this stream. */\n+    streamID last_id;       /* Zero if there are yet no items. */\n+} stream;\n+\n+#endif\ndiff --git a/src/t_stream.c b/src/t_stream.c\nnew file mode 100644\nindex 000000000..c64f5059f\n--- /dev/null\n+++ b/src/t_stream.c\n@@ -0,0 +1,376 @@\n+/*\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n--\n+void xaddCommand(client *c) {\n+    if ((c->argc % 2) == 1) {\n+        addReplyError(c,\"wrong number of arguments for XADD\");\n+        return;\n+    }\n+\n+    /* Lookup the stream at key. */\n+    robj *o;\n+    stream *s;\n+    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;\n+    s = o->ptr;\n+\n+    /* Append using the low level function and return the ID. */\n+    streamID id;\n+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);\n+    sds reply = sdscatfmt(sdsempty(),\"+%U.%U\\r\\n\",id.ms,id.seq);\n+    addReplySds(c,reply);\n+\n+    signalModifiedKey(c->db,c->argv[1]);\n+    notifyKeyspaceEvent(NOTIFY_HASH,\"xadd\",c->argv[1],c->db->id);\n+    server.dirty++;\n+}\n+\n+/* XRANGE key start end [COUNT <n>] */\n+void xrangeCommand(client *c) {\n+    robj *o;\n+    stream *s;\n+    streamID startid, endid;\n+    long long count = 0;\n+\n+    if (streamParseIDOrReply(c,c->argv[2],&startid,0) == C_ERR) return;\n+    if (streamParseIDOrReply(c,c->argv[3],&endid,UINT64_MAX) == C_ERR) return;\n+\n+    /* Parse the COUNT option if any. */\n+    if (c->argc > 4) {\n+        if (strcasecmp(c->argv[4]->ptr,\"COUNT\") == 0) {\n+            if (getLongLongFromObjectOrReply(c,c->argv[5],&count,NULL) != C_OK)\n+                return;\n+        } else {\n+            addReply(c,shared.syntaxerr);\n+            return;\n+        }\n+    }\n+\n+    /* Return the specified range to the user. */\n+    if ((o = lookupKeyReadOrReply(c,c->argv[1],shared.emptymultibulk)) == NULL\n+        || checkType(c,o,OBJ_STREAM)) return;\n+    s = o->ptr;\n+    streamReplyWithRange(c,s,&startid,&endid,count);\n+}\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 8,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 60947,
+    "output": 2677,
+    "messages": 24
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/dd126b1a9f95b91dd4e516f5c967e50dc79f7827e90a8cb258384b48f5d6e4e8",
+  "completed": true
+}

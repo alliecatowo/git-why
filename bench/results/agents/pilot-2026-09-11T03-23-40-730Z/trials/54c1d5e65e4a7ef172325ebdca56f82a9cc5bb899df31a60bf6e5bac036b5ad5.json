@@ -1,0 +1,105 @@
+{
+  "task_id": "X-requests-01",
+  "task_stratum": "archaeology",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:00:23.828Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "e42183a95f4fba44ccfcc88693114315545cc8f5667b1bcdaa414ae5e0f487b5",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "2ed84f55b22f19a1e1e8eea2e50963dce62052d3",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "2ed84f55",
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ]
+  },
+  "wall_ms": 79869,
+  "tool_calls": 10,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 7015,
+  "output_tokens": 1400,
+  "cache_read_tokens": 58112,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00107187,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 34342,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-requests-01-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "54c1d5e65e4a7ef172325ebdca56f82a9cc5bb899df31a60bf6e5bac036b5ad5",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-92bd38b8cae5e80e",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all -S \"charset_normalizer\" -- src/requests/compat.py src/requests/models.py setup.py pyproject.toml | head -30"
+        },
+        "output": "cb2c8005 Migrate build system to PEP 517 (#7012)\nd63e94f5 Move to src directory (#6506)\n2ed84f55 Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-afe2853152251d26",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 2ed84f55 --stat | head -40"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\n .gitignore             |  6 ++++++\n HISTORY.md             | 17 ++++++++++++++++-\n docs/user/advanced.rst | 20 ++++++++++++++++----\n requests/__init__.py   | 37 ++++++++++++++++++++++++++-----------\n requests/compat.py     |  5 ++++-\n requests/help.py       | 20 ++++++++++++++++++--\n requests/models.py     |  6 +++---\n requests/packages.py   | 14 +++++++++++++-\n setup.py               |  4 +++-\n tox.ini                | 17 ++++++++++++++---\n 10 files changed, 119 insertions(+), 27 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-8243e93497420b9e",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 2ed84f55 -- setup.py requests/models.py requests/compat.py"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\ndiff --git a/requests/compat.py b/requests/compat.py\nindex 5de0769f..0b14f501 100644\n--- a/requests/compat.py\n+++ b/requests/compat.py\n@@ -8,7 +8,10 @@ This module handles import compatibility issues between Python 2 and\n Python 3.\n \"\"\"\n \n-import chardet\n+try:\n+    import chardet\n+except ImportError:\n+    import charset_normalizer as chardet\n \n import sys\n \ndiff --git a/requests/models.py b/requests/models.py\nindex 93b901b4..aa6fb86e 100644\n--- a/requests/models.py\n+++ b/requests/models.py\n@@ -731,7 +731,7 @@ class Response(object):\n \n     @property\n     def apparent_encoding(self):\n-        \"\"\"The apparent encoding, provided by the chardet library.\"\"\"\n+        \"\"\"The apparent encoding, provided by the charset_normalizer or chardet libraries.\"\"\"\n         return chardet.detect(self.content)['encoding']\n \n     def iter_content(self, chunk_size=1, decode_unicode=False):\n@@ -845,7 +845,7 @@ class Response(object):\n         \"\"\"Content of the response, in unicode.\n \n         If Response.encoding is None, encoding will be guessed using\n-        ``chardet``.\n+        ``charset_normalizer`` or ``chardet``.\n \n         The encoding of the response content is determined based solely on HTTP\n         headers, following RFC 2616 to the letter. If you can take advantage of\n@@ -893,7 +893,7 @@ class Response(object):\n         if not self.encoding and self.content and len(self.content) > 3:\n             # No encoding set. JSON RFC 4627 section 3 states we should expect\n             # UTF-8, -16 or -32. Detect which one to use; If the detection or\n-            # decoding fails, fall back to `self.text` (using chardet to make\n+            # decoding fails, fall back to `self.text` (using charset_normalizer to make\n             # a best guess).\n             encoding = guess_json_utf(self.content)\n             if encoding is not None:\ndiff --git a/setup.py b/setup.py\nindex 552c66de..27f3948c 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -41,7 +41,8 @@ if sys.argv[-1] == 'publish':\n packages = ['requests']\n \n requires = [\n-    'chardet>=3.0.2,<5',\n+    'charset_normalizer~=2.0.0; python_version >= \"3\"',\n+    'chardet>=3.0.2,<5; python_version < \"3\"',\n     'idna>=2.5,<3',\n     'urllib3>=1.21.1,<1.27',\n     'certifi>=2017.4.17'\n@@ -103,6 +104,7 @@ setup(\n         'security': ['pyOpenSSL >= 0.14', 'cryptography>=1.3.4'],\n         'socks': ['PySocks>=1.5.6, !=1.5.7'],\n         'socks:sys_platform == \"win32\" and python_version == \"2.7\"': ['win_inet_pton'],\n+        'use_chardet_on_py3': ['chardet>=3.0.2,<5']\n     },\n     project_urls={\n         'Documentation': 'https://requests.readthedocs.io',\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 7015,
+    "output": 1400,
+    "messages": 10
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/54c1d5e65e4a7ef172325ebdca56f82a9cc5bb899df31a60bf6e5bac036b5ad5",
+  "completed": true
+}

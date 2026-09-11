@@ -1,0 +1,48 @@
+Good, verified. Now let's investigate.Found it: `cc90511 Switch from .rgignore to .ignore.`This confirms it clearly. Let me also verify this commit exists in the current repo's history (reachable from HEAD).## Answer
+
+Yes — ripgrep's special ignore‑file name used to be **`.rgignore`** before it became **`.ignore`**.
+
+**Supporting commit:** `cc90511ab29d3c37e873acac0fd80f90473f54bb` — *"Switch from .rgignore to .ignore."* (Andrew Gallant, 2016‑09‑23, Fixes #40). This commit is an ancestor of the current `HEAD` (`3fce3b5b...`).
+
+Commit message:
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver bump.
+>
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974
+>
+> Fixes #40
+
+Supporting diff excerpts:
+
+- `src/ignore.rs`:
+```rust
+const IGNORE_NAMES: &'static [&'static str] = &[
+    ".gitignore",
++    ".ignore",
+    ".rgignore",
+];
+```
+(`.ignore` was added while `.rgignore` was kept, but demoted to a legacy/back‑compat name.)
+
+- `README.md`:
+```
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+- `src/gitignore.rs` (module doc comment):
+```
+-   an .rgignore file.
++   an .ignore file.
+```
+
+This shows that prior to this commit, `.rgignore` was ripgrep's dedicated ignore-file name; `cc90511` introduced `.ignore` as the new primary name (matching The Silver Searcher's convention) while retaining `.rgignore` support for backward compatibility, later slated for removal in a subsequent semver bump.
+
+No files were modified as part of this investigation.

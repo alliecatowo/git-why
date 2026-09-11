@@ -1,0 +1,48 @@
+I'll start with the required verification command.Verified: `/workspace`, `/workspace`, `dae7ef63b4df6eded86637f251fc4e3a06c3b479`. Now let me investigate Python version support.Current state is `requires-python = ">=3.10"` with no 3.9 classifier. Let me find the commit that dropped 3.9.Found commit `0c2bbe73` "Drop support for Python 3.9 (#7196)". Let me inspect it.Let me confirm this commit is an ancestor of HEAD and verify the current state.## Answer
+
+**No — requests no longer supports Python 3.9. Support was dropped.**
+
+The supporting commit is:
+
+**`0c2bbe73982a70623fb81bf16b2507ea0ca80b99`** — *"Drop support for Python 3.9 (#7196)"* by Nate Prewitt, dated Fri Feb 6 08:02:46 2026 -0700. It is an ancestor of the pinned HEAD (`dae7ef63`).
+
+The commit message itself states the change directly:
+
+> Drop support for Python 3.9 (#7196)
+
+The diff makes the answer unambiguous. Key excerpts:
+
+`pyproject.toml`:
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+```
+
+```diff
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+`README.md`:
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+`setup.py`:
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```
+
+`tox.ini`:
+```diff
+-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}
++envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}
+```
+
+The current working tree confirms this is still in effect: `pyproject.toml` has `requires-python = ">=3.10"` (no 3.9 classifier), `setup.py` requires 3.10+, and `README.md` line 38 reads "Requests officially supports Python 3.10+."
+
+No files were modified.

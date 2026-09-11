@@ -1,0 +1,36 @@
+I'll complete this task step by step. Let me start by verifying the repository state as instructed.Perfect! The repository state is verified. Now I need to find when Redis first got the streams data type with commands like XADD. Let me use the `git why` tool to search for information about XADD and streams.These are mostly later commits about XADD bugfixes. Let me search more broadly for the initial introduction of streams:Let me search for the initial introduction of streams, perhaps looking for "Streams" as a major feature:Let me search more specifically for the initial addition of streams to Redis. Let me look for the commit that first introduced the XADD command:Good! I found it. The commit `79866a636` says "Streams: 12 commits squashed into the initial Streams implementation." This appears to be the initial introduction. Let me verify this commit:Perfect! Let me check the commit message and verify it contains XADD:Let me check if this commit actually includes XADD command implementation:Excellent! This is the initial introduction. Let me get the date of this commit more clearly:Perfect! Now let me verify the full commit to make sure it introduces XADD and related stream commands:Perfect! Let me get the exact XADD command implementation from this commit:Excellent! I have confirmed the commit. Let me do one final verification to see what version this was released in:Let me check what tags point near this commit:Let me check the history around the commit date more specifically. The commit was dated Aug 30, 2017. Let me check for releases around that time:It seems I'm getting results from much later commits. Let me check the exact location of the commit in the history:Let me check what comes after this commit to see if there are any version or release markers:Let me check for Redis 4.0 release related information. The commit was in August 2017, so Redis 4.0 was likely released around then:Let me search differently - look for any tags or version information near the streams commit:Let me look at the actual history and release tags more directly:Let me check if there are any NEWS or CHANGELOG files that mention streams:Let me check more directly in the repo for changelog data:Based on the date of the commit (August 30, 2017), this was around Redis 4.0 release. Let me verify the commit message more thoroughly to understand what it says:Perfect! Now I have all the information I need. Let me verify one more time that XADD command is actually in the diff:Perfect! Now I have all the details. Let me provide the final answer.
+
+## Summary
+
+**Redis first got the streams data type with commands like XADD on August 30, 2017.**
+
+**Commit SHA:** `79866a6361829ed0602dedff9cb378c66977227a`
+
+**Commit Message:** "Streams: 12 commits squashed into the initial Streams implementation."
+
+**Author:** antirez (Salvatore Sanfilippo)  
+**Date:** Wed Aug 30 12:40:27 2017 +0200
+
+**Supporting Evidence from the commit diff:**
+
+The commit introduces the streams data structure with the following key additions:
+
+1. New files created: `src/stream.h` and `src/t_stream.c` (376 lines of stream implementation)
+2. New supporting file: `src/listpack.c` (a specialized data structure for storing stream entries efficiently)
+3. The XADD command implementation in `t_stream.c`:
+```c
+void xaddCommand(client *c) {
+    if ((c->argc % 2) == 1) {
+        addReplyError(c,"wrong number of arguments for XADD");
+        return;
+    }
+    ...
+    signalModifiedKey(c->db,c->argv[1]);
+    notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+    server.dirty++;
+}
+```
+
+4. Command registration in the server's command table: `{"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0}`
+
+This was the foundational commit that introduced Redis Streams as a new data type, marking a major feature addition to Redis.

@@ -1,0 +1,21 @@
+I'll start by running the verification command as instructed.Perfect! The verification passes. Now I need to investigate whether the LPOS command's option for selecting which matching element to return was renamed from FIRST to RANK.
+
+Let me start by using the `git why` command to search for information about LPOS command options:Perfect! I found the answer. Let me verify this commit to get more details:Excellent! I have found the definitive answer. Let me get the full commit message and diff details:Perfect! I have all the information I need to answer the question.
+
+## Answer
+
+**Yes, the LPOS command option was renamed from FIRST to RANK.**
+
+The supporting commit is **a5a3a7b** (commit SHA: `a5a3a7bbc61203398ecc1d5b52c76214f5672776`), dated June 24, 2020, by antirez with the commit message: **"LPOS: option FIRST renamed RANK."**
+
+**Evidence from the commit diff:**
+
+From `src/t_list.c`, the command documentation was updated:
+- **Before**: `LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]`
+- **After**: `LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]`
+
+Also in the code:
+- **Before**: `if (!strcasecmp(opt,"FIRST") && moreargs)`
+- **After**: `if (!strcasecmp(opt,"RANK") && moreargs)`
+
+The test suite was also updated systematically, replacing all `FIRST` usages with `RANK` in the test cases (e.g., from `r LPOS mylist c FIRST 1` to `r LPOS mylist c RANK 1`).

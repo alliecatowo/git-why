@@ -1,0 +1,57 @@
+## Answer
+
+The bug is **CVE-2022-27774 (“Credential leak on redirect”)**, and the fix is commit:
+
+```
+620ea21410030a9977396b4661806bc187231b79
+transfer: redirects to other protocols or ports clear auth
+```
+
+### What the fix changed
+
+It modified `Curl_follow()` in `lib/transfer.c` so that, when following a real redirect (not a `FOLLOW_FAKE`), curl compares the redirect target's **port** and **scheme/protocol** against the original connection. If either differs, curl discards the credentials it would otherwise keep using, unless the application explicitly opted in with `CURLOPT_UNRESTRICTED_AUTH` (`data->set.allow_auth_to_other_hosts`).
+
+Commit message:
+
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+The core of the diff:
+
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
+...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
+```
+
+It was accompanied by tests in commit `5295e8d64ac6949ecb3f9e564317a608f51b90d8` (“tests: verify the fix for CVE-2022-27774”), which added `tests/data/test973–test976` covering HTTP→FTP and HTTP→HTTP-different-port redirects with and without the “permit” option. Both commits are ancestors of the pinned `HEAD` (`ee521a1c8`).
+
+A closely related (sibling) fix is `6e659993952aa5f90f48864be84a1bbb047fc258` (“http: avoid auth/cookie on redirects same host diff port”, CVE-2022-27776), which is about auth/cookie leakage on the same host but a different port; the “different protocol or port clears auth” change described above is the one matching the question.
+
+No files were modified. (The untracked `.zvec-grep/` directory is the pre-built search index from the runner, not a change by me.)

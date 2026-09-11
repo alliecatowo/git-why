@@ -1,0 +1,33 @@
+## Answer
+
+**Python 3.9 was dropped.** At this pinned checkout, `requests` requires Python 3.10 or later — `pyproject.toml` declares `requires-python = ">=3.10"`, `setup.py` exits with `"Requests requires Python 3.10 or later."`, the 3.9 trove classifier is gone, and CI no longer tests 3.9.
+
+## Supporting commit
+
+**SHA: `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`** — *"Drop support for Python 3.9 (#7196)"* (Nate Prewitt, 2026-02-06). It is an ancestor of the pinned HEAD (`dae7ef63`, 100 commits back), so the drop is in effect at HEAD.
+
+Key diff evidence:
+
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+...
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```
+
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+The commit also removed `"3.9"` from the CI test matrix and changed `tox.ini` to `envlist = py{310,311,312,313,314}-...`. At the pinned commit, `requires-python = ">=3.10"` and the setup.py guard confirm 3.9 is no longer supported.
+
+(Verified the required values first: `pwd` = `/workspace`, `git rev-parse --show-toplevel` = `/workspace`, `git rev-parse HEAD` = `dae7ef63b4df6eded86637f251fc4e3a06c3b479`. No files were modified.)

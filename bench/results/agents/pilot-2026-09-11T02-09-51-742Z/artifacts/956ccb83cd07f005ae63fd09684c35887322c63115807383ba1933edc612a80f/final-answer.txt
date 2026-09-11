@@ -1,0 +1,14 @@
+I'll start by verifying the environment as instructed, then investigate the LPOS command's option naming.Good! The environment checks out. Now I need to investigate whether the LPOS command's option for matching element selection was renamed from FIRST to RANK. Let me use the `git why` tool to search for information about this.Perfect! I found the answer. The search results clearly show that the LPOS command's option was indeed renamed from FIRST to RANK. Let me get more details on the specific commit:Excellent! I have all the information needed to answer the question. Let me verify the commit message one more time:## Answer
+
+Yes, the LPOS command's option for selecting which matching element to return **was renamed from FIRST to RANK**.
+
+**Supporting commit:** `a5a3a7b` (commit SHA: `a5a3a7bbc61203398ecc1d5b52c76214f5672776`)
+
+**Commit message:** "LPOS: option FIRST renamed RANK."
+
+**Date:** June 24, 2020
+
+**Evidence from the diff:** The commit shows changes in both the source code (`src/t_list.c`) and tests (`tests/unit/type/list.tcl`) where:
+- Test names changed from "LPOS FIRST (positive and negative rank) option" to "LPOS RANK (positive and negative rank) option"
+- Command syntax changed from `r LPOS mylist c FIRST 1` to `r LPOS mylist c RANK 1`
+- Documentation comments changed from `[FIRST rank]` to `[RANK rank]`

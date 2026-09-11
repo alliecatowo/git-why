@@ -1,0 +1,35 @@
+I'll start by verifying the repository state as instructed, then investigate the question about how zod handles unknown keys in objects.Good, the repository state is verified. Now I'll search for information about how zod changed its handling of unknown keys in objects. Let me use the `git why` tool to find the relevant commit.Perfect! I found the relevant commit. Let me look at the full details of commit 1885449 to get the exact information:Let me look at the actual diff for the core change in src/types/object.ts:Perfect! Now let me get the commit message to confirm this is the right context:Excellent! I have found the answer. Let me verify the current state of the code to confirm this is still in effect:Now let me create a concise final answer:
+
+## Answer
+
+Yes, the default handling of unknown keys in Zod objects changed. 
+
+**The Change:** In commit **1885449** (dated 2020-09-17), the default behavior for unknown keys was changed from `'allow'` to `'strip'` (renamed to `'passthrough'` at the same time, but the semantic is key).
+
+**What Changed:**
+- Before: Unknown keys were allowed by default (mode: `'allow'`)
+- After: Unknown keys are stripped/removed by default (mode: `'strip'`)
+
+**Supporting Evidence from the commit diff:**
+
+In `src/types/object.ts`, the default parameter for the `UnknownKeys` type parameter changed from:
+```typescript
+UnknownKeys extends UnknownKeysParam = 'allow',
+```
+to:
+```typescript
+UnknownKeys extends UnknownKeysParam = 'passthrough',
+```
+
+Additionally, the `ZodObject.create()` static method changed from:
+```typescript
+unknownKeys: 'allow',
+```
+to:
+```typescript
+unknownKeys: 'strip',
+```
+
+**The Commit Message:** `"strip unknown keys by default"`
+
+This explains why extra keys now "just disappear" — that's the intended behavior after this change. If you want the old behavior where extra keys are kept, you would need to call `.passthrough()` (formerly `.allowUnknown()`) on your schema.

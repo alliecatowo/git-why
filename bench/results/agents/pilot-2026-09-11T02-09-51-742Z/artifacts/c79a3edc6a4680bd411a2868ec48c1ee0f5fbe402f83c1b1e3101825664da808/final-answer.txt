@@ -1,0 +1,22 @@
+I'll start by running the verification command, then investigate the question about Caddy's minimum Go version and HTTP/3.Great! The repository is verified. Now let me investigate the question about whether Caddy had to raise its minimum Go version because of the HTTP/3 library.
+
+Let me start by exploring the git history for commits related to HTTP/3 and Go version changes:Now let me search for Go version changes in the git history:I see a potentially relevant commit: `f45a6de2 go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)`. Let me examine this commit in detail:Perfect! This is exactly what I was looking for. The commit message and diff clearly show that the Go version was bumped to 1.20 specifically because of the quic-go library (HTTP/3). Let me verify the commit message once more:Perfect! Now let me also check if there are any related PR discussions or if there's more context:Let me also check the go.mod changes to see the exact dependency relationship:Excellent! Now I have the complete picture. Let me verify the commit SHA one more time to ensure accuracy:Perfect! I have found the answer to the question.
+
+## Answer
+
+**Yes**, Caddy did have to raise its minimum Go version specifically because of the HTTP/3 library it depends on.
+
+**Supporting Commit:** `f45a6de20dd19e82e58c85b37e03957b2203b544`
+
+**Evidence from the commit:**
+
+The commit message is: `go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)`
+
+The commit diff shows these key changes:
+1. Updated `go.mod` from `go 1.19` to `go 1.20`
+2. Updated `github.com/quic-go/quic-go` from `v0.36.2` to `v0.37.0` (the HTTP/3 QUIC library)
+3. Updated the corresponding `github.com/quic-go/qtls-go1-20` dependency (which is Go 1.20-specific)
+4. Removed the old `github.com/quic-go/qtls-go1-19` dependency
+5. Updated CI workflows to remove Go 1.19 testing and only test with Go 1.20
+
+The README.md change in this commit explicitly updates the requirement from "Go 1.19 or newer" to "Go 1.20 or newer", and the commit directly links the Go version bump to the quic-go library update.

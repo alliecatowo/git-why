@@ -1,0 +1,132 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "776f8f3cc44922471e08de2daf4c31529210c3a8",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:45:08.992Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "48902663b2a1932c503009ea836fc65e1b2231d371f9fd8bb9f49f1297c29a3c",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "620ea21410030a9977396b4661806bc187231b79",
+    "citedGoldSha": true,
+    "citedShaCount": 5,
+    "matchedTokens": [
+      "620ea2141",
+      "620ea21410030a9977396b4661806bc187231b79"
+    ]
+  },
+  "wall_ms": 45676,
+  "tool_calls": 8,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 19032,
+  "output_tokens": 2370,
+  "cache_read_tokens": 61315,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.074027,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 39064,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-curl-02-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "daa72874123cc3e3a7dda7a78bf44f69048193f65f0c5367b3b368e7b154061b",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_B5FhoRBpyMpkUdKRTnJkjp",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --grep=\"different protocol\" -i | head -50"
+        },
+        "output": "7d1f2ac76 http: Disable pipelining for HTTP/2 and upgraded connections\n060f7ca2d - Hang Kin Lau found and fixed: When I use libcurl to connect to an https   server through a proxy and have the remote https server port set using the   CURLOPT_PORT option, protocol gets reset to http from https after the first   request.\n2be8c7a4e  - Oskar Liljeblad <osk@hem.passagen.se> pointed out and corrected a problem    in the Location: following system that made curl following a location: to a    different protocol to fail.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_KRkV6OEfxuEA4BgjLtsnHW",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --grep=\"leak\" -i | head -50"
+        },
+        "output": "674a0662c test1903: test use of COOKIEFILE - reset - COOKIEFILE\nb559ef6f3 url: fix cookielist memleak when curl_easy_reset\na6ae16954 KNOW_BUGS: cleanups with some changed to TODOs\nc29ccb35f CURLOPT_WRITEFUNCTION.3: fix memory leak in example\n40f350440 CURLOPT_AUTOREFERER.3: highlight the privacy leak risk\nec977b050 tool_operate: more transfer cleanup after parallel transfer fail\ned5095ed9 strcase: add and use Curl_timestrcmp\n37dbbbb6c Curl_close: call Curl_resolver_cancel to avoid memory-leak\nf236595ec asyn-thread: fix socket leak on OOM\n011788f0b msh3: fix the QUIC disconnect function\n6e241bbf1 digest: fix memory leak, fix not quoted 'opaque'\n7935972b3 mprintf: fix *dyn_vprintf() when out-of-memory\n5a41abef6 ntlm: copy NTLM_HOSTNAME to host buffer\n709ae2454 ntlm: provide a fixed fake host name\n522736790 test1919: verify CURLOPT_XOAUTH2_BEARER leak fix\na7b29122c curl: free resource in error path\n093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\ncd29c1651 ngtcp2: fix memory leak\nf9d1b2501 mqtt: free 'sendleftovers' in disconnect\n84853d94f mqtt: free any leftover when done\ne43ad4b47 multi: cleanup the socket hash when destroying it\n75b31ce62 tool_operate: fix potential memory-leak\nd3d079c13 tool_operate: fix torture leaks with etags\n90e74206b schannel: fix memory leak due to failed SSL connection\nafd489885 sws: fix memory leak on exit\n5de119d0b hostip: Move allocation to clarify there is no memleak\n60738f398 vtls: Fix a memory leak if an SSL session cannot be added to the cache\n2b99f5e02 parse_args: redo the warnings for --remote-header-name combos\n378e331e9 asyn-ares: call ares_freeaddrinfo() to clean up addrinfo results\nc34bd93f6 tests/*server.py: remove pidfile on server termination\nd9d26a6b2 tests/servers: use our platform-aware pid for server verification\n62be09608 hostip: (macOS) free returned memory of SCDynamicStoreCopyProxies\nf777e752c cmake: Avoid leaking absolute paths into exported config\nacf91ff75 version: free the openldap info correctly\n764532407 libssh2: ignore timeout during disconnect\n3a6058cb9 http2: fix a resource leak in push_promise()\n319317047 http2: fix resource leaks in set_transfer_url()\nb97718ab1 README.md: delete Codacy UTM parameters & follow permanent redirect [ci skip]\n8ed71fc4f ftp: fix memory leak in ftp_done\neb36c03e8 memdebug: close debug logfile explicitly on exit\nd25c479e8 url: fix memory leak if OOM in the HSTS handling\nbc928be02 wolfssl: don't store a NULL sessionid\nf248a1306 parse_proxy: fix a memory leak in the OOM path\ne87ad71d1 schannel: plug a memory-leak\n2d4d012a4 openssl: free mem_buf in error path\n0b60d3685 socks: check for DNS entries with the right port number\n8bcb23593 gnutls: fix memory leaks (certfields memory wasn't released)\n95d30409b tests: add missing global_init/cleanup calls\n01e2679b4 schannel: fix memory leak when using get_cert_location\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_xCrVZqIoDxonei0cWqBozL",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --grep=\"CVE-2022-27774\" -i\necho \"---\"\ngit log --all --oneline --grep=\"credential\" -i | head -50"
+        },
+        "output": "5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n---\n1027d52e7 schannel: when importing PFX, disable key persistence\n093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\ndf957e100 schannel: move the algIds array out of schannel.h\neeca818b1 openldap: implement SASL authentication\ncdc1da912 openldap: several minor improvements\nba3452caf schannel: Ensure the security context request flags are always set\n54e747501 schannel: Disable auto credentials; add an option to enable it\n33ddef361 ngtcp2+gnutls: clear credentials when freed\n605aa03ac http_proxy: only loop on 407 + close if we have credentials\n721428889 transfer: strip credentials from the auto-referer header field\n46620b974 http: use credentials from transfer, not connection\n08e8455dd http: introduce AWS HTTP v4 Signature\n3532262ed url: use blank credentials when using proxy w/o username and password\n2110b996a configure: repair the check if argv can be written to\nad829b21a url: accept \"any length\" credentials for proxy auth\n600a8cded url: make the updated credentials URL-encoded in the URL\ne1f3f3a14 url: reject too long input when parsing credentials\nd3dc0a07e urlapi: guess scheme correct even with credentials given\n34e6bc42b conn: do not reuse connection if SOCKS proxy credentials differ\n68fab35c7 http: fix use of credentials from URL when using HTTP proxy\n06ace0ba9 xattr: skip unittest on unsupported platforms\n98e662915 xattr: strip credentials from any URL that is stored\n6b6c2b8d5 schannel: client certificate store opening fix\n6f5ef24f0 auth: pick Bearer authentication whenever a token is available\nbc4b8c971 ntlm_sspi: fix authentication using Credential Manager\n36f0f4788 vauth: Fix typo\nb0989cd3a vtls: allow selecting which SSL backend to use at runtime\naf5fbb14b digest_sspi: Handle 'stale=TRUE' directive in HTTP digest\nc5cffce56 vauth: Fix memleak by freeing credentials if out of memory\n156b8287a krb5_gssapi: Only process challenge when present\n61152e7d9 krb5_sspi: Only process challenge when present\n228cd71c6 krb5_sspi: Only generate the output token when its not allocated\n2d2c67e3e krb5: Only generate a SPN when its not known\nd41dcba4e NTLM: Fix ConnectionExists to compare Proxy credentials\n24a8359b2 http: do not leak basic auth credentials on re-used connections\na3e5a4371 schannel: Add support for optional client certificates\n31be461c6 ConnectionExists: for NTLM re-use, require credentials to match\ned429b72d gtls: add check of return code\n0da4524a2 url.c: Fixed compilation warning when USE_NTLM is not defined\nf9b713217 smb: Don't try to connect with empty credentials\nf3fc3d021 sspi: Return CURLE_LOGIN_DENIED on AcquireCredentialsHandle() failure\nf7e24683c sasl_sspi: Allow DIGEST-MD5 to use current windows credentials\n0574196ac docs: Added Kerberos V5 to the --user SSPI current credentials usage\nf719a97e1 docs: Added Negotiate to the SSPI current credentials usage description\n313b274b9 test1134: verify CREDSPERREQUEST for HTTP\ndd07e7902 tests: Added SMTP with credentials test for RFC-821 based server\nafbcfc4f4 tests: Added email unit tests to verify login credential connection re-use\nfe260b75e smtp: Fixed login denied when server doesn't support AUTH capability\n517b06d65 url: Fixed connection re-use when using different log-in credentials\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_BF0QqFZ4fqFyjj3pGjRxjj",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --grep=\"same protocol\" -i\necho \"---\"\ngit log --all --oneline --grep=\"same port\" -i\necho \"---\"\ngit log --all --oneline --grep=\"different port\" -i"
+        },
+        "output": "---\n---\n5295e8d64 tests: verify the fix for CVE-2022-27774\n018dd775c tests: add %NOLISTENPORT and use it\n5e2f4a33f tests: make 2006-2010 handle different port number lengths\n65872efea test1150: verify same host fetch using different ports over proxy\n582317952 connections: non-HTTP proxies on different ports aren't reused either\n2a746f6c2 conncache: keep bundles on host+port bases, not only host names\n005991126 James Atwill correctly pointed out that curl didn't follow Location: headers properly when the new URL is an absolute one to a different port than the first URL...\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_0IqFhI9zSDJbmvH0Pa6MLG",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show --stat 620ea2141\necho \"======FULL======\"\ngit show 620ea2141"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\n lib/transfer.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-\n 1 file changed, 48 insertions(+), 1 deletion(-)\n======FULL======\ncommit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\ndiff --git a/lib/transfer.c b/lib/transfer.c\nindex 53ef0b03b..315da876c 100644\n--- a/lib/transfer.c\n+++ b/lib/transfer.c\n@@ -1611,10 +1611,57 @@ CURLcode Curl_follow(struct Curl_easy *data,\n       return CURLE_OUT_OF_MEMORY;\n   }\n   else {\n-\n     uc = curl_url_get(data->state.uh, CURLUPART_URL, &newurl, 0);\n     if(uc)\n       return Curl_uc_to_curlcode(uc);\n+\n+    /* Clear auth if this redirects to a different port number or protocol,\n+       unless permitted */\n+    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {\n+      char *portnum;\n+      int port;\n+      bool clear = FALSE;\n+\n+      if(data->set.use_port && data->state.allow_port)\n+        /* a custom port is used */\n+        port = (int)data->set.use_port;\n+      else {\n+        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,\n+                          CURLU_DEFAULT_PORT);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+        port = atoi(portnum);\n+        free(portnum);\n+      }\n+      if(port != data->info.conn_remote_port) {\n+        infof(data, \"Clear auth, redirects to port from %u to %u\",\n+              data->info.conn_remote_port, port);\n+        clear = TRUE;\n+      }\n+      else {\n+        char *scheme;\n+        const struct Curl_handler *p;\n+        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+\n+        p = Curl_builtin_scheme(scheme);\n+        if(p && (p->protocol != data->info.conn_protocol)) {\n+          infof(data, \"Clear auth, redirects scheme from %s to %s\",\n+                data->info.conn_scheme, scheme);\n+          clear = TRUE;\n+        }\n+        free(scheme);\n+      }\n+      if(clear) {\n+        Curl_safefree(data->state.aptr.user);\n+        Curl_safefree(data->state.aptr.passwd);\n+      }\n+    }\n   }\n \n   if(type == FOLLOW_FAKE) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_h1Q3SwILQGGqSpi41ksuq5",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 5295e8d64 --stat\necho \"---\"\ngit log --oneline 620ea2141~1..620ea2141"
+        },
+        "output": "commit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\n tests/data/Makefile.inc |  2 +-\n tests/data/test973      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test974      | 87 ++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test975      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test976      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n 5 files changed, 352 insertions(+), 1 deletion(-)\n---\n620ea2141 transfer: redirects to other protocols or ports clear auth\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 19032,
+    "output": 2370,
+    "messages": 8
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/daa72874123cc3e3a7dda7a78bf44f69048193f65f0c5367b3b368e7b154061b",
+  "completed": true
+}

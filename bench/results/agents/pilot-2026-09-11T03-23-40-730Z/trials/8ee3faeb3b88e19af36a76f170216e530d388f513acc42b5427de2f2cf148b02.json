@@ -1,0 +1,133 @@
+{
+  "task_id": "X-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:07:48.747Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "a072ea835c535a77834b8b8bda85ac0e6cef21adb9a1ad60ba974c3da8c3448d",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "04c03416e68fd635a15cae8201872f5c29fdcca8",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8"
+    ]
+  },
+  "wall_ms": 35727,
+  "tool_calls": 7,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 3931,
+  "output_tokens": 816,
+  "cache_read_tokens": 33024,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00066399,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 28173,
+  "index_build_ms": 551145,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105075197,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-curl-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "8ee3faeb3b88e19af36a76f170216e530d388f513acc42b5427de2f2cf148b02",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_01_mQRC9gYLiyzuhMlubWW53740",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --grep='json' -i --all | head -50"
+        },
+        "output": "27a760087 test421: -w %{header_json} test with multiple same header names\n842be672c tool_writeout_json. fix the output for duplicate header names\nc74bad29f tests: add tests for HTTP/2 and HTTP/3 to verify the header API\n3cc9df181 write-out.d: add 'since version' to %{header_json} documentation\nfb11e45f9 test972: verify the output without using external tool\na3f4d7cee misc: spelling fixes\ne7793cb57 curl/header_json: output the header names in lowercase\n160b640a8 test1671: verify -w '%{header_json}\n4133a69f2 curl: add %{header_json} support in -w handling\n5ab9b1542 scripts/copyright.pl: ignore the new mlc_config.json file\nfe4913ff5 mlc_config.json: add file to ignore known troublesome URLs\n9bd119515 json.d: fix typo (overriden -> overridden)\n32160cae8 tool_getparam: initial --json support\n8a3e67e73 quiche: change qlog file extension to `.sqlog`\n6fc805d0c test972: verify the json output with jsonlint\n2f78be51e tool_writeout: fix the HTTP_CODE json output\n65ca22946 tool_writeout: refactor write-out and write-out json\nc06ffdb6f test970: make it require proxy support\n890986519 TODO: Consider convenience options for JSON and XML?\n884de1a76 writeout_json: Fix data type issues\n8d9802b0a writeout_json: use curl_off_t printf() option for the time output\nab9dc5ae2 writeout_json: add missing comma to fix the HTTP version\n7631f2b75 test 970: verify --write-out '%{json}'\n04c03416e writeout: support to generate JSON output\nee04bee82 oauth2: Support OAUTHBEARER failures sent as continuation responses\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_uhVDJbffGhbp0lwEPVz75331",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -S'%{json}' --all -- . | head -50"
+        },
+        "output": "d9ccc75b0 http2: fix upload busy loop\n671158242 connections: introduce http/3 happy eyeballs\n33ac97e1c tests-httpd: basic infra to run curl against an apache httpd plus nghttpx for h3\n6fc805d0c test972: verify the json output with jsonlint\nb4799e978 RELEASE-NOTES: synced\n1a46b218d RELEASE-NOTES: synced\n7631f2b75 test 970: verify --write-out '%{json}'\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_WJc5CdK5iU4jVNcUIgy33256",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 04c03416e | head -60"
+        },
+        "output": "commit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\n docs/cmdline-opts/write-out.d   |   3 +\n lib/version.c                   |  10 +++\n packages/Symbian/group/curl.mmp |   1 +\n src/Makefile.inc                |   2 +\n src/tool_writeout.c             | 160 +++++++++++++++++------------------\n src/tool_writeout.h             |  57 ++++++++++++-\n src/tool_writeout_json.c        | 181 ++++++++++++++++++++++++++++++++++++++++\n src/tool_writeout_json.h        |  30 +++++++\n 8 files changed, 361 insertions(+), 83 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_i2rXSk5DJZLlXuIPuchN4724",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format='%H%n%an%n%ad%n%s%n%n%b' 04c03416e"
+        },
+        "output": "04c03416e68fd635a15cae8201872f5c29fdcca8\nMathias Gumz\nSat Feb 1 18:55:24 2020 +0100\nwriteout: support to generate JSON output\n\nThis commit adds support to generate JSON via the writeout feature:\n\n    -w \"%{json}\"\n\nIt leverages the existing infrastructure as much as possible. Thus,\ngenerating the JSON on STDERR is possible by:\n\n    -w \"%{stderr}%{json}\"\n\nThis implements a variant of\nhttps://github.com/curl/curl/wiki/JSON#--write-out-json.\n\nCloses #4870\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_00JEoYBBI8Siiyiz7GH42323",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c03416e -- docs/cmdline-opts/write-out.d src/tool_writeout.c | head -120"
+        },
+        "output": "commit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\ndiff --git a/docs/cmdline-opts/write-out.d b/docs/cmdline-opts/write-out.d\nindex 2fc0ff21a..9024d32e0 100644\n--- a/docs/cmdline-opts/write-out.d\n+++ b/docs/cmdline-opts/write-out.d\n@@ -50,6 +50,9 @@ curl CONNECT request. (Added in 7.12.4)\n .B http_version\n The http version that was effectively used. (Added in 7.50.0)\n .TP\n+.B json\n+A JSON object with all available keys.\n+.TP\n .B local_ip\n The IP address of the local end of the most recently done connection - can be\n either IPv4 or IPv6 (Added in 7.29.0)\ndiff --git a/src/tool_writeout.c b/src/tool_writeout.c\nindex 27b2ac50d..9fbc8665d 100644\n--- a/src/tool_writeout.c\n+++ b/src/tool_writeout.c\n@@ -5,7 +5,7 @@\n  *                            | (__| |_| |  _ <| |___\n  *                             \\___|\\___/|_| \\_\\_____|\n  *\n- * Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.\n+ * Copyright (C) 1998 - 2020, Daniel Stenberg, <daniel@haxx.se>, et al.\n  *\n  * This software is licensed as described in the file COPYING, which\n  * you should have received as part of this distribution. The terms\n@@ -25,87 +25,81 @@\n #include \"curlx.h\"\n #include \"tool_cfgable.h\"\n #include \"tool_writeout.h\"\n+#include \"tool_writeout_json.h\"\n \n #include \"memdebug.h\" /* keep this as LAST include */\n \n-typedef enum {\n-  VAR_NONE,       /* must be the first */\n-  VAR_TOTAL_TIME,\n-  VAR_NAMELOOKUP_TIME,\n-  VAR_CONNECT_TIME,\n-  VAR_APPCONNECT_TIME,\n-  VAR_PRETRANSFER_TIME,\n-  VAR_STARTTRANSFER_TIME,\n-  VAR_SIZE_DOWNLOAD,\n-  VAR_SIZE_UPLOAD,\n-  VAR_SPEED_DOWNLOAD,\n-  VAR_SPEED_UPLOAD,\n-  VAR_HTTP_CODE,\n-  VAR_HTTP_CODE_PROXY,\n-  VAR_HEADER_SIZE,\n-  VAR_REQUEST_SIZE,\n-  VAR_EFFECTIVE_URL,\n-  VAR_CONTENT_TYPE,\n-  VAR_NUM_CONNECTS,\n-  VAR_REDIRECT_TIME,\n-  VAR_REDIRECT_COUNT,\n-  VAR_FTP_ENTRY_PATH,\n-  VAR_REDIRECT_URL,\n-  VAR_SSL_VERIFY_RESULT,\n-  VAR_PROXY_SSL_VERIFY_RESULT,\n-  VAR_EFFECTIVE_FILENAME,\n-  VAR_PRIMARY_IP,\n-  VAR_PRIMARY_PORT,\n-  VAR_LOCAL_IP,\n-  VAR_LOCAL_PORT,\n-  VAR_HTTP_VERSION,\n-  VAR_SCHEME,\n-  VAR_STDOUT,\n-  VAR_STDERR,\n-  VAR_NUM_OF_VARS /* must be the last */\n-} replaceid;\n-\n-struct variable {\n-  const char *name;\n-  replaceid id;\n-};\n-\n-\n-static const struct variable replacements[]={\n-  {\"url_effective\", VAR_EFFECTIVE_URL},\n-  {\"http_code\", VAR_HTTP_CODE},\n-  {\"response_code\", VAR_HTTP_CODE},\n-  {\"http_connect\", VAR_HTTP_CODE_PROXY},\n-  {\"time_total\", VAR_TOTAL_TIME},\n-  {\"time_namelookup\", VAR_NAMELOOKUP_TIME},\n-  {\"time_connect\", VAR_CONNECT_TIME},\n-  {\"time_appconnect\", VAR_APPCONNECT_TIME},\n-  {\"time_pretransfer\", VAR_PRETRANSFER_TIME},\n-  {\"time_starttransfer\", VAR_STARTTRANSFER_TIME},\n-  {\"size_header\", VAR_HEADER_SIZE},\n-  {\"size_request\", VAR_REQUEST_SIZE},\n-  {\"size_download\", VAR_SIZE_DOWNLOAD},\n-  {\"size_upload\", VAR_SIZE_UPLOAD},\n-  {\"speed_download\", VAR_SPEED_DOWNLOAD},\n-  {\"speed_upload\", VAR_SPEED_UPLOAD},\n-  {\"content_type\", VAR_CONTENT_TYPE},\n-  {\"num_connects\", VAR_NUM_CONNECTS},\n-  {\"time_redirect\", VAR_REDIRECT_TIME},\n-  {\"num_redirects\", VAR_REDIRECT_COUNT},\n-  {\"ftp_entry_path\", VAR_FTP_ENTRY_PATH},\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_nnW1XHFrnvVJaGiNofCG6544",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c03416e:src/tool_writeout_json.c | head -60"
+        },
+        "output": "/***************************************************************************\n *                                  _   _ ____  _\n *  Project                     ___| | | |  _ \\| |\n *                             / __| | | | |_) | |\n *                            | (__| |_| |  _ <| |___\n *                             \\___|\\___/|_| \\_\\_____|\n *\n * Copyright (C) 1998 - 2020, Daniel Stenberg, <daniel@haxx.se>, et al.\n *\n * This software is licensed as described in the file COPYING, which\n * you should have received as part of this distribution. The terms\n * are also available at https://curl.haxx.se/docs/copyright.html.\n *\n * You may opt to use, copy, modify, merge, publish, distribute and/or sell\n * copies of the Software, and permit persons to whom the Software is\n * furnished to do so, under the terms of the COPYING file.\n *\n * This software is distributed on an \"AS IS\" basis, WITHOUT WARRANTY OF ANY\n * KIND, either express or implied.\n *\n ***************************************************************************/\n#include \"tool_setup.h\"\n\n#define ENABLE_CURLX_PRINTF\n\n/* use our own printf() functions */\n#include \"curlx.h\"\n#include \"tool_cfgable.h\"\n#include \"tool_writeout_json.h\"\n#include \"tool_writeout.h\"\n\n\nstatic const char *http_version[] = {\n  \"0\",   /* CURL_HTTP_VERSION_NONE */\n  \"1\",   /* CURL_HTTP_VERSION_1_0 */\n  \"1.1\", /* CURL_HTTP_VERSION_1_1 */\n  \"2\"    /* CURL_HTTP_VERSION_2 */\n  \"3\"    /* CURL_HTTP_VERSION_3 */\n};\n\nstatic void jsonEscape(FILE *stream, const char *in)\n{\n  const char *i = in;\n  const char *in_end = in + strlen(in);\n\n  for(; i < in_end; i++) {\n    switch(*i) {\n    case '\\\\':\n      fputs(\"\\\\\\\\\", stream);\n      break;\n    case '\\\"':\n      fputs(\"\\\\\\\"\", stream);\n      break;\n    case '\\b':\n      fputs(\"\\\\b\", stream);\n      break;\n    case '\\f':\n      fputs(\"\\\\f\", stream);\n      break;\n    case '\\n':\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 3931,
+    "output": 816,
+    "messages": 6
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/8ee3faeb3b88e19af36a76f170216e530d388f513acc42b5427de2f2cf148b02",
+  "completed": true
+}

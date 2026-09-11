@@ -195,6 +195,34 @@ existing work got:
   `gh pr list --search`, and a human scrolling the PR. If those win, that is
   the finding.
 
+## 6. Query latency on large repositories
+
+Measured, and not where it was assumed to be.
+
+A query on curl (30,000 commits, 182,772 records) takes p50 ~3.7s. The obvious
+explanation — a one-shot CLI paying process start and model load every time —
+is wrong: `git why status`, which starts the process and opens the index but
+retrieves nothing, is about 12% of that. The remaining ~88% is retrieval, and
+**both branches are expensive**, not just the vector one. The embedding model
+is not the bottleneck.
+
+That redirects the obvious optimisations:
+
+- **A daemon or resident process recovers ~12%.** Worth much less than it
+  sounds, and it costs the "no daemon, no watcher" property that makes the
+  operational contract simple. Not obviously a good trade.
+- **The collection scan is the target.** Both the FTS and vector branches read
+  over the full record set. Candidate limits are already top-50 per branch, so
+  the cost is in the scan rather than in what is returned.
+- **Record count, not commit count, is the scaling variable** — curl is 30,000
+  commits but 182,772 records, because evidence hunks dominate. Anything that
+  reduces records per commit without losing retrieval quality would help
+  directly, and the evidence ablation says removing them outright would not
+  (`docs/report.md` section 4c).
+
+Needs measuring against the 174-case corpus like everything else: a latency win
+that costs accuracy on the questions this tool exists for is not a win.
+
 ## Known limits that are not on this list
 
 Recorded so they are not mistaken for oversights:

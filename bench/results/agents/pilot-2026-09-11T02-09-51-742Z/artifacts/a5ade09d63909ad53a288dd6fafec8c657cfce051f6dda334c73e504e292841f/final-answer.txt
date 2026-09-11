@@ -1,0 +1,29 @@
+I'll start by running the verification command as instructed.Perfect! The verification passes. Now I need to find when Redis first got the streams data type with commands like XADD. Let me search the git history for relevant commits.Let me search for the initial introduction of the streams feature:Let me look for the very first introduction of streams. I'll search with different keywords:Great! I can see `79866a636` appears to be the initial streams implementation. Let me examine that commit:This commit says it's a squash of 12 commits. Let me check the commit message more fully:Let me check the full commit message to understand what's included:Let me check if there's an XADD command in this commit:Perfect! The commit 79866a636 includes the XADD command. Let me verify this date and get the exact details:Now let me verify what version this corresponds to by checking the version tags:Let me check what branches contain this commit:Let me check the commit date more carefully and confirm when streams were officially released:Let me check the changelog or release notes in the repository:Let me check the release notes:Let me look at the full path of the release notes:Let me check if there are version numbers in the source code:Let me look directly at the server.h file to find version information:So this is an unstable/development version. Let me find when this commit was actually released. Let me look at what releases mentioned Streams:Let me look for information about when Redis 5.0 was released:Let me look for release tags:Let me check all tags:It appears there are no tags in this repository. Let me verify the commit once more and check its date more explicitly. The commit date is December 1, 2017 (Commit Date), and the Author Date is August 30, 2017:Now let me search for documentation or articles that mention when Streams were first introduced. Let me check what's in the commit in more detail:Perfect! Now let me verify that this commit introduces XADD and other stream commands by examining the t_stream.c file:Let me check what stream commands were added in this commit:Perfect! So this commit introduces XADD and XRANGE. Let me verify this more thoroughly by examining the exact commit message context:Let me double-check by looking for any earlier stream-related commits:Perfect! I can see the full chain of stream development. The commit 79866a636 "Streams: 12 commits squashed into the initial Streams implementation." is indeed the initial implementation of streams. Looking at the log, all the preceding commits with "Streams:" prefix appear to be part of this squashed history.
+
+Let me verify one more time the exact content, looking at the commit before to confirm this is the first:Perfect! The parent commit (79866a636~1) is about PSYNC2, not streams. So commit 79866a636 is indeed the first commit that introduces the Streams data type with XADD and other commands.
+
+Let me create a final confirmation by checking that XADD is not present in the parent:Excellent! This confirms that t_stream.c didn't exist before this commit, proving this is the initial streams implementation.
+
+Let me provide one final verification by looking at the exact content of the new files created:Perfect! Now I have all the information I need to provide a complete answer.
+
+## Final Answer
+
+**When Redis first got the streams data type with commands like XADD:**
+
+Redis first introduced the Streams data type with commands like XADD on **August 30, 2017** (authored date), with the commit formally integrated on December 1, 2017.
+
+**Commit SHA:** `79866a6361829ed0602dedff9cb378c66977227a`
+
+**Commit Message:**
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+**Supporting Evidence:**
+This commit introduces the initial Streams implementation by:
+1. Creating a new file `src/t_stream.c` containing the stream commands (376 lines added)
+2. Creating `src/stream.h` header file (21 lines added)
+3. Creating `src/listpack.c` and `src/listpack.h` - the data structure used for efficient stream storage (783 + 61 lines added)
+4. The t_stream.c file contains the `xaddCommand()` function which implements the XADD command and `xrangeCommand()` for XRANGE
+
+The parent commit (79866a636~1) does not contain the `src/t_stream.c` file, confirming this is the first commit where Streams were introduced. The Streams data type was developed over 12 squashed commits and represents a major new Redis data structure alongside strings, lists, sets, sorted sets, and hashes.

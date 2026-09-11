@@ -1,0 +1,29 @@
+I'll start by verifying the repository state as instructed, then answer the question about zod's handling of unknown keys.Good! The repository is at the correct state. Now I'll search for information about how zod handles unknown keys in objects, looking for when this behavior changed.Perfect! This gives me clear information. Let me look at the most relevant commit more closely:Let me check the specific change in the object.ts file for this commit:Let me see the actual class definition to see the default:Good! Now let me check what it was before this commit. Let me look at the commit right before:Let me see the full commit message for 278a4f5:Now let me look at the specific diff for the object.ts file in this commit to see the change more clearly:Perfect! Now let me verify the date and get more context about when this behavior changed. Let me check if there was an earlier change from "allow" to "passthrough":Let me search more broadly for when the default changed from "passthrough" to "strip":Excellent! Now I have the clear answer. Let me verify this commit's date and message:Perfect! Now I have a complete picture. Let me verify this is indeed part of the history in our current repository:Perfect! Now let me provide the final answer:
+
+---
+
+## Answer
+
+**Yes, the default handling of unknown keys changed.**
+
+The behavior changed from keeping extra keys to stripping them by default.
+
+**Supporting commit:** `1885449` (full SHA: `18854492b4b6e1648499f2f920c615dab187ee1a`)
+
+**Commit message:** "strip unknown keys by default"
+
+**Date:** September 17, 2020
+
+**Relevant diff excerpt:**
+
+```diff
+- UnknownKeys extends UnknownKeysParam = 'allow',
++ UnknownKeys extends UnknownKeysParam = 'passthrough',
+
+And later:
+
+- unknownKeys: 'allow',
++ unknownKeys: 'strip',
+```
+
+The commit changed the default unknown-key handling from `'allow'` (which preserved extra keys) to `'strip'` (which removes them). The method was also renamed from `.allowUnknown()` to `.passthrough()` to match the new naming scheme. If you want to keep extra keys now, you must explicitly call `.passthrough()` on your object schema.

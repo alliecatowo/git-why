@@ -1,0 +1,116 @@
+{
+  "task_id": "X-requests-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "b1454070ee9afa5c30bccf607285ec7adeae095d",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:17:48.211Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "7131649effbf6cf31a7928cd25a77bb6ac6bc4c26b0c0cccd3f791550ef54b09",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "2ed84f55b22f19a1e1e8eea2e50963dce62052d3",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ]
+  },
+  "wall_ms": 17710,
+  "tool_calls": 7,
+  "history_calls": 4,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 4497,
+  "output_tokens": 1065,
+  "cache_read_tokens": 45440,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0008529499999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 34591,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T03-23-40-730Z/events/X-requests-01-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "c2c6526deee30ab1fb37762823ef4bc70c626b224c3eeacefc4e281c7c44bc09",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_3BQ0tQUIxvllK4GoDNjX3182",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20; echo \"---\"; ls"
+        },
+        "output": "dae7ef63 Bump https://github.com/astral-sh/ruff-pre-commit (#7616)\n5460f467 Update lock-issues.yml to latest dependencies (#7609)\n6af0b941 Bump https://github.com/astral-sh/ruff-pre-commit (#7608)\n8f8b212d Bump https://github.com/astral-sh/ruff-pre-commit (#7606)\n80683562 Bump https://github.com/astral-sh/ruff-pre-commit (#7603)\n1f6589ec Bump https://github.com/astral-sh/ruff-pre-commit (#7598)\n414f0513 Bump the actions group with 2 updates (#7596)\nded32878 Bump https://github.com/astral-sh/ruff-pre-commit (#7597)\n69f84847 Bump the actions group with 3 updates (#7591)\nb17c61b6 Bump https://github.com/astral-sh/ruff-pre-commit (#7590)\nf361ead0 Bump https://github.com/astral-sh/ruff-pre-commit (#7562)\nd38495c9 Fix link to AI Policy in CONTRIBUTING.md (#7576)\n4c800e9a Bump actions/setup-python from 6.2.0 to 6.3.0 in the actions group (#7561)\n23953c0c Bump https://github.com/astral-sh/ruff-pre-commit (#7551)\n4ed3d1b3 Bump actions/checkout from 6.0.2 to 7.0.0 in the actions group (#7540)\nd44b67eb Bump https://github.com/astral-sh/ruff-pre-commit (#7536)\n74c56d5f Inline pre-commit linting (#7539)\nd64b9ad4 Bump https://github.com/astral-sh/ruff-pre-commit (#7515)\n6f66281a Add hasattr checks for remaining protocol isinstance checks (#7505)\n6f205ff4 Fix `_encode_files` detection for `__getattr__`-based file wrappers (#7502)\n---\nAUTHORS.rst\nHISTORY.md\nLICENSE\nMANIFEST.in\nMakefile\nNOTICE\nREADME.md\ndocs\next\npyproject.toml\nrequirements-dev.txt\nsetup.py\nsrc\ntests\ntox.ini\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_GjeUKCVNvio7r3REbQF90015",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | wc -l; git log --oneline -5 --grep=\"chardet\" -i; echo \"---normalizer---\"; git log --oneline -5 --grep=\"normalizer\" -i"
+        },
+        "output": "6494\ne50e5945 Improve static typing of 3rd party imports  (#7496)\nb2a1d33f Increase chardet upper limit to 8\n4bd79e39 Increase chardet upper limit to 7\neea3bbf9 Merge pull request #6562 from amkarn258/issue-6223\ne9b1217c added handling for chardet and charset_normalizer imports\n---normalizer---\ne9b1217c added handling for chardet and charset_normalizer imports\nc57f1f0c Allow charset normalizer >=2 and <4 (#6261)\n0e28c8f1 Allow charset normalizer >=2 and <3 (#6169)\n2ed84f55 Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_uUq2d7OfwwldbnJLXYxl9952",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 2ed84f55; echo \"=====MESSAGE=====\"; git log -1 --format=%B 2ed84f55"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\n .gitignore             |  6 ++++++\n HISTORY.md             | 17 ++++++++++++++++-\n docs/user/advanced.rst | 20 ++++++++++++++++----\n requests/__init__.py   | 37 ++++++++++++++++++++++++++-----------\n requests/compat.py     |  5 ++++-\n requests/help.py       | 20 ++++++++++++++++++--\n requests/models.py     |  6 +++---\n requests/packages.py   | 14 +++++++++++++-\n setup.py               |  4 +++-\n tox.ini                | 17 ++++++++++++++---\n 10 files changed, 119 insertions(+), 27 deletions(-)\n=====MESSAGE=====\nSwitch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n\nAlthough using the (non-vendored) chardet library is fine for requests\r\nitself, but using a LGPL dependency the story is a lot less clear\r\nfor downstream projects, particularly ones that might like to bundle\r\nrequests (and thus chardet) in to a single binary -- think something\r\nsimilar to what docker-compose is doing. By including an LGPL'd module\r\nit is no longer clear if the resulting artefact must also be LGPL'd.\r\n\r\nBy changing out this dependency for one under MIT we remove all\r\nlicense ambiguity.\r\n\r\nAs an \"escape hatch\" I have made the code so that it will use chardet\r\nfirst if it is installed, but we no longer depend upon it directly,\r\nalthough there is a new extra added, `requests[lgpl]`. This should\r\nminimize the impact to users, and give them an escape hatch if\r\ncharset_normalizer turns out to be not as good. (In my non-exhaustive\r\ntests it detects the same encoding as chartdet in every case I threw at\r\nit)\r\n\r\nCo-authored-by: Jarek Potiuk <jarek@potiuk.com>\r\n\r\nCo-authored-by: Jarek Potiuk <jarek@potiuk.com>\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_ETV4HaDkxzD2OoOKR82K6722",
+        "status": "completed",
+        "input": {
+          "command": "git show 2ed84f55 -- setup.py HISTORY.md | head -200"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\ndiff --git a/HISTORY.md b/HISTORY.md\nindex 0331d187..9b08a7f2 100644\n--- a/HISTORY.md\n+++ b/HISTORY.md\n@@ -6,6 +6,22 @@ dev\n \n -   \\[Short description of non-trivial change.\\]\n \n+**Dependencies**\n+\n+- Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3\n+  to remove license ambiguity for projects bundling requests. If `chardet`\n+  is already installed on your machine it will be used instead of `charset_normalizer`\n+  to keep backwards compatibility.\n+\n+  You can also install `chardet` while installing requests by\n+  specifying `[use_chardet_on_py3]` extra as follows:\n+\n+    ```shell\n+    pip install \"requests[use_chardet_on_py3]\"\n+    ```\n+\n+  Python2 still depends upon the `chardet` module.\n+\n 2.25.1 (2020-12-16)\n -------------------\n \n@@ -1707,4 +1723,3 @@ This is not a backwards compatible change.\n \n -   Frustration\n -   Conception\n-\ndiff --git a/setup.py b/setup.py\nindex 552c66de..27f3948c 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -41,7 +41,8 @@ if sys.argv[-1] == 'publish':\n packages = ['requests']\n \n requires = [\n-    'chardet>=3.0.2,<5',\n+    'charset_normalizer~=2.0.0; python_version >= \"3\"',\n+    'chardet>=3.0.2,<5; python_version < \"3\"',\n     'idna>=2.5,<3',\n     'urllib3>=1.21.1,<1.27',\n     'certifi>=2017.4.17'\n@@ -103,6 +104,7 @@ setup(\n         'security': ['pyOpenSSL >= 0.14', 'cryptography>=1.3.4'],\n         'socks': ['PySocks>=1.5.6, !=1.5.7'],\n         'socks:sys_platform == \"win32\" and python_version == \"2.7\"': ['win_inet_pton'],\n+        'use_chardet_on_py3': ['chardet>=3.0.2,<5']\n     },\n     project_urls={\n         'Documentation': 'https://requests.readthedocs.io',\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 4497,
+    "output": 1065,
+    "messages": 7
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/c2c6526deee30ab1fb37762823ef4bc70c626b224c3eeacefc4e281c7c44bc09",
+  "completed": true
+}

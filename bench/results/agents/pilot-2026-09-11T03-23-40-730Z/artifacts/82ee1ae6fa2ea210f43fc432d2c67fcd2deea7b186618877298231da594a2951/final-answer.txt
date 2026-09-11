@@ -1,0 +1,34 @@
+I'll start by running the required bash command to verify the environment.
+
+The environment matches the expected values. Let me investigate the Python version support in the requests repository history.
+
+Let me look at the setup files to find Python version requirements.
+
+At the current HEAD, requests requires Python 3.10 or later. This means Python 3.9 was dropped. Let me find the commit that made this change.
+
+I found the commit. Let me examine it in detail.
+
+Let me see the full diff of this commit to quote the supporting changes.
+
+I have found the answer with strong supporting evidence. Let me summarize my findings.
+
+## Answer
+
+**Requests dropped Python 3.9 support.** At the current commit (`dae7ef63`), requests requires Python **3.10 or later**, so Python 3.9 is no longer supported.
+
+The commit that establishes this is:
+
+**`0c2bbe73982a70623fb81bf16b2507ea0ca80b99`** — "Drop support for Python 3.9 (#7196)" by Nate Prewitt
+
+The commit message itself explicitly states it: *"Drop support for Python 3.9 (#7196)"*.
+
+Supporting quotes from that commit's diff:
+
+- **pyproject.toml**:
+  - `-requires-python = ">=3.9"` → `+requires-python = ">=3.10"`
+  - Removed classifier: `- "Programming Language :: Python :: 3.9",`
+- **README.md**: `-Requests officially supports Python 3.9+.` → `+Requests officially supports Python 3.10+.`
+- **setup.py**: `-if sys.version_info < (3, 9):` → `+if sys.version_info < (3, 10):` with message `"Requests requires Python 3.10 or later."`
+- **tox.ini**: CI env list changed from `py{39,310,...}` to `py{310,311,...}`
+
+I did not modify any files. This is confirmed by the current state of the repo at HEAD (`pyproject.toml` has `requires-python = ">=3.10"`), which matches the post-drop state from this commit. So the answer is definitive: **Python 3.9 was dropped** in commit `0c2bbe73`.

@@ -1,0 +1,41 @@
+All three match. Now let's investigate.Found it clearly. Let's verify commit `2ed84f55` full message and confirm it's in this repo's history.Confirmed: commit `2ed84f55` is an ancestor of the pinned HEAD, so it exists in this checkout's reachable history.This gives clear, verified evidence. Let me finalize the answer.
+
+## Answer
+
+**Yes** — `requests` originally used `chardet` (LGPL-licensed) as its default fallback text-encoding guesser, and it was switched to `charset_normalizer` (MIT-licensed) as the default on Python 3, with `chardet` kept only as an optional escape hatch.
+
+**Supporting commit:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`
+"Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)" — authored by Ash Berlin-Taylor, 2021-07-06/07, co-authored by Jarek Potiuk. This commit is confirmed to be an ancestor of the pinned HEAD (`dae7ef63b4df6eded86637f251fc4e3a06c3b479`), i.e. present in this checkout's history.
+
+**Reason, quoted from the commit message:**
+
+> Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity.
+>
+> As an "escape hatch" I have made the code so that it will use chardet first if it is installed, but we no longer depend upon it directly, although there is a new extra added, `requests[lgpl]`.
+
+**Supporting diff excerpts from that same commit:**
+
+`setup.py`:
+```diff
+ requires = [
+-    'chardet>=3.0.2,<5',
++    'charset_normalizer~=2.0.0; python_version >= "3"',
++    'chardet>=3.0.2,<5; python_version < "3"',
+     'idna>=2.5,<3',
+     'urllib3>=1.21.1,<1.27',
+     'certifi>=2017.4.17'
+...
++        'use_chardet_on_py3': ['chardet>=3.0.2,<5']
+```
+
+`requests/models.py`:
+```diff
+     @property
+     def apparent_encoding(self):
+-        """The apparent encoding, provided by the chardet library."""
++        """The apparent encoding, provided by the charset_normalizer or chardet libraries."""
+```
+
+So the switch was purely a **licensing decision**: `chardet` is LGPL-licensed, which creates ambiguity for downstream projects that want to bundle `requests` into standalone binaries; `charset_normalizer` is MIT-licensed and removes that ambiguity, while `chardet` remained available as an opt-in extra (`requests[use_chardet_on_py3]`) for users who preferred it.

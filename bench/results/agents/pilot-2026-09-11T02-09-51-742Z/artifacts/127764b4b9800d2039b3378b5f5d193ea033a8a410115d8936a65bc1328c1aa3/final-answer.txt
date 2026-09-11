@@ -1,0 +1,41 @@
+I'll start by running the verification command as instructed, then investigate the repository to answer the question about Python 3.9 support.Good! The verification checks out. Now let me explore the repository to understand the requests project and find information about Python 3.9 support.Let me check the pyproject.toml and setup.py files to see the current Python version requirements:The current code shows that Python 3.9 is no longer supported (it requires Python 3.10+). Now I need to find the commit that established this. Let me search the git history for when this change was made:Perfect! I found it: commit `0c2bbe73` with the message "Drop support for Python 3.9 (#7196)". Let me examine this commit in detail:Perfect! I have found the answer with comprehensive supporting evidence. Let me verify this is the correct commit by checking the current HEAD is after this commit:Perfect! The commit is indeed in the history of the current HEAD.
+
+## Answer
+
+**Does requests still support Python 3.9?**
+
+**No, requests no longer supports Python 3.9.**
+
+**Supporting Commit:**
+- **SHA:** `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`
+- **Subject:** "Drop support for Python 3.9 (#7196)"
+- **Author:** Nate Prewitt
+- **Date:** Fri Feb 6 08:02:46 2026 -0700
+
+**Supporting Evidence from the commit:**
+
+1. **From README.md:**
+   ```
+   -Requests officially supports Python 3.9+.
+   +Requests officially supports Python 3.10+.
+   ```
+
+2. **From pyproject.toml:**
+   ```
+   -requires-python = ">=3.9"
+   +requires-python = ">=3.10"
+   ```
+   And the removal of the Python 3.9 classifier:
+   ```
+   -    "Programming Language :: Python :: 3.9",
+   ```
+
+3. **From setup.py:**
+   ```
+   -if sys.version_info < (3, 9):
+   -    sys.stderr.write("Requests requires Python 3.9 or later.\n")
+   +if sys.version_info < (3, 10):
+   +    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+   ```
+
+The commit definitively shows that Python 3.9 support was dropped, with the minimum required version now being Python 3.10.

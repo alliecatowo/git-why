@@ -1,0 +1,36 @@
+## Answer
+
+Redis first got the streams data type with `XADD` in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`**
+> "Streams: 12 commits squashed into the initial Streams implementation."
+> Author: antirez — AuthorDate: Wed Aug 30 12:40:27 2017, CommitDate: Fri Dec 1 10:24:24 2017.
+
+This is the earliest commit in the repository that adds `XADD` (verified with `git log --reverse -S 'XADD'`, whose first result is this commit). It introduces `src/t_stream.c`, `src/stream.h`, and the `xaddCommand`/`xrangeCommand` implementations.
+
+Supporting diff excerpts:
+
+`src/server.c` — command table registration:
+```
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+`src/t_stream.c` (new file, +376 lines):
+```c
+/* XADD key [field value] [field value] ... */
+void xaddCommand(client *c) {
+    if ((c->argc % 2) == 1) {
+        addReplyError(c,"wrong number of arguments for XADD");
+        return;
+    }
+    ...
+    signalModifiedKey(c->db,c->argv[1]);
+    notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+    server.dirty++;
+}
+```
+
+`src/server.h` also adds `#define OBJ_STREAM 5` and `void xaddCommand(client *c);`.
+
+Context: this landed before the Redis 5.0 release, which is the version that shipped Streams. No files were modified (working tree clean).

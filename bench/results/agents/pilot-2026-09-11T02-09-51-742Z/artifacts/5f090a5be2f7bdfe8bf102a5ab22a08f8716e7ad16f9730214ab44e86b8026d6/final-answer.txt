@@ -1,0 +1,40 @@
+I'll start by verifying the repository state as instructed.Good! The repository state is verified. Now I need to investigate the question about whether the default handling of unknown keys in Zod objects has changed. The user suspects that objects used to keep properties they didn't define, but now extra keys disappear.
+
+Let me search for relevant information about unknown key handling in the codebase:Good, let me look at the documentation about `.strict`, `.strip`, and `.passthrough` to understand the current behavior:Now let me check the migration guide to see what changed between versions:Let me search for when the default behavior of stripping unknown keys was changed. I'll look at git history:Let me search more specifically for commits about unknown key handling:Perfect! I found the commit `18854492` which says "strip unknown keys by default". Let me check that commit:Perfect! I found the answer. Now let me verify the commit hash and get more context:Perfect! I have found the answer. Let me provide a clear summary:
+
+## Answer
+
+Yes, the default handling of unknown keys in Zod objects **did change**. 
+
+**The Change:** 
+In commit **`18854492b4b6e1648499f2f920c615dab187ee1a`** (September 17, 2020), Zod v2 introduced a breaking change where **object schemas now strip unknown keys by default instead of allowing them**.
+
+**Supporting Evidence from the Commit:**
+
+The commit message states: **"strip unknown keys by default"**
+
+The README diff shows the breaking change notification:
+```
+- Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+The diff also demonstrates the behavioral change in documentation:
+- **Before (v1):** Objects allowed unknown keys by default
+  ```ts
+  person.parse({
+    name: 'bob dylan',
+    extraKey: 61,
+  });
+  // => { name: "bob dylan", extraKey: 61 }
+  ```
+
+- **After (v2):** Objects strip unknown keys by default
+  ```ts
+  person.parse({
+    name: 'bob dylan',
+    extraKey: 61,
+  });
+  // => { name: "bob dylan" }
+  ```
+
+To preserve unknown keys in v2+, you must explicitly call `.passthrough()` on the object schema. The commit also introduced the complementary `.strict()` method to throw errors on unknown keys.

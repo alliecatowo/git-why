@@ -1,0 +1,46 @@
+Verified. Now let's investigate.Found the key commit directly: `0c2bbe7` "Drop support for Python 3.9 (#7196)". Let me verify this commit exists in this repo's history (reachable from HEAD) and get full details.The commit `0c2bbe7` is a real ancestor of the pinned HEAD, dated Feb 6, 2026, and HEAD itself is from Sep 2, 2026, so this checkout postdates the drop. Let's get the full diff to quote accurately.Let's also confirm the current state of the repo at HEAD reflects this (i.e., no later commit re-added 3.9 support).Confirmed — the current HEAD state matches the change made by this commit, with no later reversal.
+
+## Answer
+
+**Requests has dropped support for Python 3.9.** As of this repository's pinned commit (`dae7ef63b4df6eded86637f251fc4e3a06c3b479`), the minimum supported Python version is **3.10**.
+
+### Supporting commit
+
+**SHA:** `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`
+**Subject:** `Drop support for Python 3.9 (#7196)`
+**Author/Date:** Nate Prewitt, Fri Feb 6 08:02:46 2026 -0700
+
+This commit is a direct ancestor of the pinned HEAD (verified with `git merge-base --is-ancestor`), and its changes are still in effect at HEAD (verified by inspecting the current file contents).
+
+### Quoted diff excerpts
+
+From `pyproject.toml`:
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+...
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+From `README.md`:
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+From `setup.py`:
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```
+
+From `tox.ini`:
+```diff
+-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}
++envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}
+```
+
+I confirmed via `git show HEAD:pyproject.toml`, `README.md`, and `setup.py` that these changes remain intact at the pinned HEAD (no later commit re-adds 3.9 support), so the drop is still in effect. No files were modified during this investigation.

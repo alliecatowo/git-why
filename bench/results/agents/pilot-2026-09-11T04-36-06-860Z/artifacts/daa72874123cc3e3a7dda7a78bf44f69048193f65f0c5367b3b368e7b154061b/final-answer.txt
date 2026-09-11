@@ -1,0 +1,50 @@
+Verified. Now let's search the git history for the relevant security fix.Found it. Let's examine commit `620ea2141`.This is exactly the commit that fixes CVE-2022-27774. Let's also check that this commit is reachable from HEAD (ee521a1c).Confirmed: commit `620ea2141` is an ancestor of HEAD, is within the 30,000-commit history, and is the fix for CVE-2022-27774.## Answer
+
+**The security bug**: When curl followed an HTTP redirect (`Location:` header) to a URL on a different port or a different protocol/scheme than the original request, it would keep using the same authentication credentials (username/password) for the new destination. This meant credentials sent to the original host could leak to an attacker-controlled server on a different port or protocol if a server (or an attacker who could influence the redirect target) redirected the request elsewhere. This is tracked as **CVE-2022-27774**.
+
+**The fix**: Commit **`620ea21410030a9977396b4661806bc187231b79`** ("transfer: redirects to other protocols or ports clear auth"), authored by Daniel Stenberg on 2022-04-25, changes `lib/transfer.c`'s `Curl_follow()` function so that, unless the application has explicitly opted in (via the new `allow_auth_to_other_hosts` setting, exposed later as `CURLOPT_REDIR_PROTOCOLS`/related auth flag), curl now **clears the stored username and password** (`data->state.aptr.user` / `data->state.aptr.passwd`) whenever a redirect target has a different port number or a different protocol/scheme than the original request.
+
+Commit message:
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+Key diff excerpt (from `lib/transfer.c`):
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
++      ...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
++        ...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
++        ...
++      }
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
++    }
+```
+
+So the fix's essence: **redirect-following now drops the previously-set credentials whenever the redirect target's port or protocol differs from the original request's, preventing credential leakage across ports/protocols, unless the caller explicitly permits it.**
+
+I also confirmed a companion test commit, `5295e8d64` ("tests: verify the fix for CVE-2022-27774"), which added tests 973–976 exercising exactly this HTTP→FTP and HTTP→HTTP-different-port redirect scenarios.
+
+Both commits are present and ancestors of the pinned HEAD (`ee521a1c889f4cde6905c5db117959917568be9b`), confirmed via `git merge-base --is-ancestor`. No files were modified as part of this investigation.
