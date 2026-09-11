@@ -393,6 +393,64 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## A recency prior scores well and must not ship
+
+Found while looking for a second reranking signal, and worth recording
+precisely because the measurement says yes.
+
+Multiplying a result's score by its commit date improves the corpus: MRR 0.291
+to 0.311 on the dev half, Hit@5 0.391 to 0.413. It is one of only two signals
+out of nine tried that helped at all.
+
+It is still wrong, for two independent reasons either of which is sufficient.
+
+**It exploits how the corpus was built.** Gold commits have a median year of
+2025; the pool they are drawn from has a median of 2020. The corpus derives
+questions from commit bodies containing a substantive sentence, and these
+projects write longer commit messages than they used to — so "newer" correlates
+with "has a body worth paraphrasing". A recency prior is fitting that artifact,
+not learning anything about which commit answers a question.
+
+**It contradicts a documented guarantee.** `docs/operations.md` states that
+retrieval "never silently favours recent commits, and introduction, reversion
+and removal commits can all legitimately appear together". Chronology is
+offered explicitly through `--sort` and the ordinal flags, precisely so that it
+is never applied behind the user's back. Shipping this would make that sentence
+false while the benchmark went up.
+
+Recorded rather than quietly dropped, because the next person to look for a
+reranking signal will find it too, and the measurement alone will tell them to
+take it.
+
+## The overlap weight was set too low, and the corpus wants it higher still
+
+The shipped weight of 1 was chosen conservatively from a dev sweep that
+plateaued between 1 and 2. Re-measuring against the now-shipped baseline shows
+1 was under-tuned. Dividing the shipped boost back out to recover the true
+parameter, on the dev half:
+
+|      weight | Hit@1 | Hit@5 |   MRR |
+| ----------: | ----: | ----: | ----: |
+|           0 | 0.120 | 0.380 | 0.231 |
+| 1 (shipped) | 0.196 | 0.391 | 0.291 |
+|           2 | 0.217 | 0.402 | 0.310 |
+|           3 | 0.239 | 0.413 | 0.322 |
+|           4 | 0.239 | 0.424 | 0.325 |
+
+Confirmed once on the held-out half at weight 2: Hit@5 0.324 to 0.366, MRR
+0.236 to 0.248.
+
+**Stopping at 2 is a judgement, not a measurement.** The curve is still rising
+at 4, and following it would be the wrong move. At weight 4 the lexical overlap
+spans a 5x range and dominates the fused RRF score — the semantic branch
+becomes a tiebreak, and the tool becomes a keyword matcher. That is the exact
+thing it exists not to be, and the corpus cannot see the difference because its
+gate only removed cases `git log --grep` could answer with ALL the question's
+terms, leaving partial overlap behind as a residual signal.
+
+So the weight is bounded where the boost still modulates the ranking rather
+than deciding it. The benchmark would pay more; the product would be worse.
+
 ## The remaining 42% is the embedding, and that is now proven rather than assumed
 
 After the reranking work, the corpus splits cleanly: a third of gold commits

@@ -1,13 +1,13 @@
 {
   "depth": 50,
   "cases": 163,
-  "foundWithinDepth": 94,
-  "neverRetrieved": 69,
+  "foundWithinDepth": 95,
+  "neverRetrieved": 68,
   "buckets": {
-    "1": 27,
-    "2-5": 27,
-    "6-10": 12,
-    "11-20": 16,
+    "1": 30,
+    "2-5": 29,
+    "6-10": 13,
+    "11-20": 11,
     "21-50": 12,
     "51-50": 0
   },
@@ -27,7 +27,7 @@
     {
       "id": "recall-curl-curl-05616379",
       "repositoryId": "curl-curl",
-      "rank": 8,
+      "rank": 6,
       "returned": 50
     },
     {
@@ -63,7 +63,7 @@
     {
       "id": "recall-curl-curl-cab04024",
       "repositoryId": "curl-curl",
-      "rank": 5,
+      "rank": 4,
       "returned": 50
     },
     {
@@ -129,13 +129,13 @@
     {
       "id": "recall-curl-curl-349c5391",
       "repositoryId": "curl-curl",
-      "rank": 10,
+      "rank": 13,
       "returned": 50
     },
     {
       "id": "recall-curl-curl-7305ca63",
       "repositoryId": "curl-curl",
-      "rank": 5,
+      "rank": 11,
       "returned": 50
     },
     {
@@ -207,7 +207,7 @@
     {
       "id": "recall-redis-redis-493e31e3",
       "repositoryId": "redis-redis",
-      "rank": 4,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -225,7 +225,7 @@
     {
       "id": "recall-redis-redis-f20774ec",
       "repositoryId": "redis-redis",
-      "rank": 37,
+      "rank": 50,
       "returned": 50
     },
     {
@@ -237,7 +237,7 @@
     {
       "id": "recall-redis-redis-7c9f41b5",
       "repositoryId": "redis-redis",
-      "rank": 4,
+      "rank": 2,
       "returned": 50
     },
     {
@@ -261,7 +261,7 @@
     {
       "id": "recall-redis-redis-e12f2dec",
       "repositoryId": "redis-redis",
-      "rank": 25,
+      "rank": 27,
       "returned": 50
     },
     {
@@ -279,13 +279,13 @@
     {
       "id": "recall-redis-redis-29e6245a",
       "repositoryId": "redis-redis",
-      "rank": 13,
+      "rank": 10,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-14b1edfd",
       "repositoryId": "redis-redis",
-      "rank": 30,
+      "rank": 9,
       "returned": 50
     },
     {
@@ -303,7 +303,7 @@
     {
       "id": "recall-redis-redis-f7b1d028",
       "repositoryId": "redis-redis",
-      "rank": 8,
+      "rank": 4,
       "returned": 50
     },
     {
@@ -321,7 +321,7 @@
     {
       "id": "recall-redis-redis-5b1fe925",
       "repositoryId": "redis-redis",
-      "rank": 4,
+      "rank": 1,
       "returned": 50
     },
     {
@@ -369,19 +369,19 @@
     {
       "id": "recall-redis-redis-2e854bcc",
       "repositoryId": "redis-redis",
-      "rank": 11,
+      "rank": 9,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-c9aa586b",
       "repositoryId": "redis-redis",
-      "rank": 43,
+      "rank": 33,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-3d9c427f",
       "repositoryId": "redis-redis",
-      "rank": 2,
+      "rank": 1,
       "returned": 50
     },
     {
@@ -393,13 +393,13 @@
     {
       "id": "recall-redis-redis-0ffb9d2e",
       "repositoryId": "redis-redis",
-      "rank": 4,
+      "rank": 3,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-7d68208a",
       "repositoryId": "redis-redis",
-      "rank": 19,
+      "rank": 17,
       "returned": 50
     },
     {
@@ -423,7 +423,7 @@
     {
       "id": "recall-redis-redis-a2b0701d",
       "repositoryId": "redis-redis",
-      "rank": 4,
+      "rank": 5,
       "returned": 50
     },
     {
@@ -441,25 +441,25 @@
     {
       "id": "recall-redis-redis-9d31768c",
       "repositoryId": "redis-redis",
-      "rank": 18,
+      "rank": 15,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-2e0f6724",
       "repositoryId": "redis-redis",
-      "rank": 12,
+      "rank": 4,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-cc2be639",
       "repositoryId": "redis-redis",
-      "rank": 14,
+      "rank": 4,
       "returned": 50
     },
     {
       "id": "recall-redis-redis-044e29dd",
       "repositoryId": "redis-redis",
-      "rank": 17,
+      "rank": 8,
       "returned": 50
     },
     {
@@ -531,7 +531,7 @@
     {
       "id": "recall-burntsushi-ripgrep-68b3c9e0",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 13,
+      "rank": 12,
       "returned": 50
     },
     {
@@ -561,19 +561,19 @@
     {
       "id": "recall-burntsushi-ripgrep-924ba101",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 1,
+      "rank": 2,
       "returned": 50
     },
     {
       "id": "recall-burntsushi-ripgrep-9d8016d1",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 2,
+      "rank": 1,
       "returned": 50
     },
     {
       "id": "recall-burntsushi-ripgrep-c45ec163",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 6,
+      "rank": 9,
       "returned": 50
     },
     {
@@ -585,13 +585,13 @@
     {
       "id": "recall-burntsushi-ripgrep-a6e0be3c",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 2,
+      "rank": 3,
       "returned": 50
     },
     {
       "id": "recall-burntsushi-ripgrep-74959a14",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 6,
+      "rank": 7,
       "returned": 50
     },
     {
@@ -603,13 +603,13 @@
     {
       "id": "recall-burntsushi-ripgrep-126bbeab",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 5,
+      "rank": 6,
       "returned": 50
     },
     {
       "id": "recall-burntsushi-ripgrep-4df12981",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 6,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -627,13 +627,13 @@
     {
       "id": "recall-burntsushi-ripgrep-d199058e",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 18,
+      "rank": 15,
       "returned": 50
     },
     {
       "id": "recall-burntsushi-ripgrep-53279db4",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 35,
+      "rank": 24,
       "returned": 50
     },
     {
@@ -651,31 +651,31 @@
     {
       "id": "recall-burntsushi-ripgrep-4a308193",
       "repositoryId": "burntsushi-ripgrep",
-      "rank": 9,
+      "rank": 10,
       "returned": 50
     },
     {
       "id": "recall-caddyserver-caddy-947087ca",
       "repositoryId": "caddyserver-caddy",
-      "rank": 8,
+      "rank": 9,
       "returned": 50
     },
     {
       "id": "recall-caddyserver-caddy-3be8dabc",
       "repositoryId": "caddyserver-caddy",
-      "rank": 7,
+      "rank": 5,
       "returned": 50
     },
     {
       "id": "recall-caddyserver-caddy-9738f49b",
       "repositoryId": "caddyserver-caddy",
-      "rank": 40,
+      "rank": 28,
       "returned": 50
     },
     {
       "id": "recall-caddyserver-caddy-b2be5482",
       "repositoryId": "caddyserver-caddy",
-      "rank": 2,
+      "rank": 1,
       "returned": 50
     },
     {
@@ -687,7 +687,7 @@
     {
       "id": "recall-caddyserver-caddy-176b043b",
       "repositoryId": "caddyserver-caddy",
-      "rank": 5,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -699,25 +699,25 @@
     {
       "id": "recall-caddyserver-caddy-7e83775e",
       "repositoryId": "caddyserver-caddy",
-      "rank": 38,
+      "rank": 31,
       "returned": 50
     },
     {
       "id": "recall-caddyserver-caddy-88616e86",
       "repositoryId": "caddyserver-caddy",
-      "rank": 4,
+      "rank": 1,
       "returned": 50
     },
     {
       "id": "recall-colinhacks-zod-741981ff",
       "repositoryId": "colinhacks-zod",
-      "rank": 8,
+      "rank": 3,
       "returned": 50
     },
     {
       "id": "recall-colinhacks-zod-2ec972ec",
       "repositoryId": "colinhacks-zod",
-      "rank": 9,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -759,7 +759,7 @@
     {
       "id": "recall-colinhacks-zod-b63db248",
       "repositoryId": "colinhacks-zod",
-      "rank": 2,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -771,7 +771,7 @@
     {
       "id": "recall-colinhacks-zod-17d1227f",
       "repositoryId": "colinhacks-zod",
-      "rank": 34,
+      "rank": 33,
       "returned": 50
     },
     {
@@ -789,13 +789,13 @@
     {
       "id": "recall-colinhacks-zod-e125fd8d",
       "repositoryId": "colinhacks-zod",
-      "rank": 1,
+      "rank": 2,
       "returned": 50
     },
     {
       "id": "recall-colinhacks-zod-9f0a3d81",
       "repositoryId": "colinhacks-zod",
-      "rank": 3,
+      "rank": 2,
       "returned": 50
     },
     {
@@ -813,7 +813,7 @@
     {
       "id": "recall-colinhacks-zod-45fdeda5",
       "repositoryId": "colinhacks-zod",
-      "rank": 4,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -825,7 +825,7 @@
     {
       "id": "recall-colinhacks-zod-536ee3b0",
       "repositoryId": "colinhacks-zod",
-      "rank": 12,
+      "rank": 6,
       "returned": 50
     },
     {
@@ -837,13 +837,13 @@
     {
       "id": "recall-colinhacks-zod-eb4682c9",
       "repositoryId": "colinhacks-zod",
-      "rank": 11,
+      "rank": 8,
       "returned": 50
     },
     {
       "id": "recall-colinhacks-zod-4d6b5cd3",
       "repositoryId": "colinhacks-zod",
-      "rank": 1,
+      "rank": 3,
       "returned": 50
     },
     {
@@ -861,7 +861,7 @@
     {
       "id": "recall-colinhacks-zod-69be843f",
       "repositoryId": "colinhacks-zod",
-      "rank": 37,
+      "rank": 21,
       "returned": 50
     },
     {
@@ -891,7 +891,7 @@
     {
       "id": "recall-colinhacks-zod-a1904fc2",
       "repositoryId": "colinhacks-zod",
-      "rank": 2,
+      "rank": 1,
       "returned": 50
     },
     {
@@ -903,13 +903,13 @@
     {
       "id": "recall-colinhacks-zod-0a76f3d7",
       "repositoryId": "colinhacks-zod",
-      "rank": 5,
+      "rank": 2,
       "returned": 50
     },
     {
       "id": "recall-colinhacks-zod-9d20fdc3",
       "repositoryId": "colinhacks-zod",
-      "rank": null,
+      "rank": 43,
       "returned": 50
     },
     {
@@ -927,13 +927,13 @@
     {
       "id": "recall-colinhacks-zod-8ac9ae51",
       "repositoryId": "colinhacks-zod",
-      "rank": 4,
+      "rank": 5,
       "returned": 50
     },
     {
       "id": "recall-colinhacks-zod-e7029aa4",
       "repositoryId": "colinhacks-zod",
-      "rank": 20,
+      "rank": 18,
       "returned": 50
     },
     {
@@ -945,7 +945,7 @@
     {
       "id": "recall-colinhacks-zod-ead9fcb3",
       "repositoryId": "colinhacks-zod",
-      "rank": 3,
+      "rank": 1,
       "returned": 50
     },
     {
@@ -957,7 +957,7 @@
     {
       "id": "recall-colinhacks-zod-e6c213ec",
       "repositoryId": "colinhacks-zod",
-      "rank": 11,
+      "rank": 13,
       "returned": 50
     },
     {
@@ -981,7 +981,7 @@
     {
       "id": "recall-colinhacks-zod-ee7376ad",
       "repositoryId": "colinhacks-zod",
-      "rank": 1,
+      "rank": 2,
       "returned": 50
     },
     {

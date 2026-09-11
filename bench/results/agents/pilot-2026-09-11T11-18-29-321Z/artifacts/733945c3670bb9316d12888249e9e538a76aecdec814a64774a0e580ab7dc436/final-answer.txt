@@ -1,0 +1,29 @@
+The following brief answers the requested questions regarding `ripgrep`'s development history:
+
+1.  **What was the bug where the manual page rendered an odd-looking dash under certain doc tools?**
+    Flag names in the man page were not escaped, causing some roff renderers to use a special Unicode hyphen, which broke searches for those flags.
+    *   **Commit:** `74959a14cbcce19e2471b0d281ea5cdbd248527d`
+    *   **Quote:** "Apparently, if we don't do this, some roff renderers with use a special Unicode hyphen. That in turn makes searching a man page not work as one would expect."
+
+2.  **What was that dependency we bumped so the thing would finally build on that router firmware?**
+    The requested information regarding a dependency bump specifically for "router firmware" was not found in the repository history. While there were updates to build infrastructure, cross-compilation support (like `musl`), and CI configurations, no commit explicitly links a dependency update to enabling a build on "router firmware."
+
+3.  **What was that thing we got rid of because it kept breaking and caused nothing but trouble?**
+    The `max_matches` configuration was removed from the `grep-printer` crate to fix issues with match count enforcement in multi-line mode, as the printer was the wrong place for that logic.
+    *   **Commit:** `9d8016d10c94a5af2768eb6dd0440386a7d317a0`
+    *   **Quote:** "The commit message has the details for why we're doing this, but the short story is to fix #3076. Note that this is a breaking change for `grep-printer`, so this will require a semver incompatible release."
+
+4.  **Why did all the bundled executables get resolved eagerly when running on Windows?**
+    To prevent security vulnerabilities where `Command::new` might implicitly search the current working directory for executables if passed a relative path, which could lead to arbitrary program execution.
+    *   **Commit:** `23adbd6795d4b0a7fbbb606d58fa82e3df0dabc2`
+    *   **Quote:** "The purpose of doing this instead of passing the path to the program directly to Command::new is that Command::new will hand relative paths to CreateProcess on Windows, which will implicitly search the current working directory for the executable. This could be undesirable for security reasons."
+
+5.  **What was the bug where names ending in two dots were treated as though they had no filename at all?**
+    The glob path utility incorrectly handled paths ending in a `.` by imitating `std::path::Path::file_name`'s contract in a way that caused trailing dots in globs to be treated as empty strings.
+    *   **Commit:** `4df1298127695ed1e76937f16de1a0135677ccf5`
+    *   **Quote:** "And as a result, if you have a glob that ends in a `.`, it was instead treated as the empty string (which only matches the empty string)."
+
+6.  **What was the bug where capping the number of results could not be trusted anymore once surrounding lines were added to multi-line spellings?**
+    The `max_matches` logic in the printer could not correctly account for multi-line matches and surrounding context, leading to incorrect match counts; it was moved to the searcher to enforce the limit correctly.
+    *   **Commit:** `a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4`
+    *   **Quote:** "The main problem here is that 'max matches' refers to the shorter of 'one match per line' or 'a single match.' In typical grep, matches *can't* span multiple lines, so there's never a difference. But in multi-line mode, they can."
