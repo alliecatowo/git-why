@@ -368,3 +368,60 @@ test('a closed stdout pipe (EPIPE) exits cleanly with no stack trace', async () 
   );
   assert.equal(result.code, 0);
 });
+
+// --- Flags whose result must survive all the way to the terminal ------
+//
+// `--first`, `--last`, `--removed`, `--timeline` and `--owners` all produce a
+// field the human renderer once ignored: the CLI parsed the flag, the backend
+// did the work, and the terminal showed an ordinary result list as though
+// nothing had been asked for. Unit tests on the renderer would not have caught
+// it, because the renderer was never handed the field. These drive the real
+// argument parsing and the real output path.
+
+test('--first reaches the backend and its answer is printed, not just computed', async () => {
+  const result = await runCli(['fake query', '--first'], { cwd: repo.dir, config: {} });
+  assert.equal(result.code, 0);
+  assert.match(result.stdout, /^introduced: bbbbbbb {2}Fake ordinal answer/m);
+  assert.match(result.stdout, /\(by faketoken\)/);
+});
+
+test('--last and --removed are labelled distinctly rather than all reading as "introduced"', async () => {
+  const last = await runCli(['fake query', '--last'], { cwd: repo.dir, config: {} });
+  assert.match(last.stdout, /^last changed: bbbbbbb/m);
+  const removed = await runCli(['fake query', '--removed'], { cwd: repo.dir, config: {} });
+  assert.match(removed.stdout, /^removed: bbbbbbb/m);
+});
+
+test('--timeline prints its episodes', async () => {
+  const result = await runCli(['fake query', '--timeline'], { cwd: repo.dir, config: {} });
+  assert.equal(result.code, 0);
+  assert.match(result.stdout, /^timeline:/m);
+  assert.match(result.stdout, /introduced {2}ccccccc {2}Fake timeline episode/);
+});
+
+test('--owners prints the roster, with a share and a checkable commit', async () => {
+  const result = await runCli(['fake query', '--owners'], { cwd: repo.dir, config: {} });
+  assert.equal(result.code, 0);
+  assert.match(result.stdout, /^owners, by relevance of their commits:/m);
+  assert.match(result.stdout, /1\. Fake Owner <owner@example\.invalid> {2}100% {2}3 commits/);
+  assert.match(result.stdout, /dddddddd?d? {2}Fake owner commit/);
+});
+
+test('an ordinary query prints none of those headings', async () => {
+  const result = await runCli(['fake query'], { cwd: repo.dir, config: {} });
+  assert.ok(!result.stdout.includes('owners,'));
+  assert.ok(!result.stdout.includes('timeline:'));
+  assert.ok(!result.stdout.includes('introduced:'));
+});
+
+test('--owners and the ordinal answer both appear in --json, matching the human output', async () => {
+  const result = await runCli(['fake query', '--owners', '--first', '--json'], {
+    cwd: repo.dir,
+    config: {},
+  });
+  const parsed = JSON.parse(result.stdout.trim());
+  assert.equal(parsed.answer.sha, 'b'.repeat(40));
+  assert.equal(parsed.answer.subject, 'Fake ordinal answer');
+  assert.equal(parsed.answer.committerTime, 1700000000);
+  assert.equal(parsed.owners[0].name, 'Fake Owner');
+});

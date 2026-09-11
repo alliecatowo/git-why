@@ -118,9 +118,57 @@ function defaultSearchResponse(request) {
       anchorEnd: null,
       w: 0,
     },
-    answer: null,
-    timeline: null,
-    owners: null,
+    // These three are computed by the real backend and were, for a while,
+    // silently dropped by the human renderer -- the flags parsed, the work
+    // happened, and nothing reached the terminal. The fake returns them
+    // whenever the corresponding flag asked for them so an end-to-end test can
+    // see whether they survive the whole pipeline.
+    answer:
+      request.temporal?.type === 'first' ||
+      request.temporal?.type === 'last' ||
+      request.temporal?.type === 'removed'
+        ? {
+            sha: 'b'.repeat(40),
+            kind:
+              request.temporal.type === 'removed'
+                ? 'removed'
+                : request.temporal.type === 'last'
+                  ? 'last_modified'
+                  : 'introduced',
+            subject: 'Fake ordinal answer',
+            committerTime: 1700000000,
+            viaToken: 'faketoken',
+            viaPath: null,
+            confidence: 'explicit',
+          }
+        : null,
+    timeline:
+      request.temporal?.type === 'timeline'
+        ? [
+            {
+              sha: 'c'.repeat(40),
+              kind: 'introduced',
+              committerTime: 1700000000,
+              subject: 'Fake timeline episode',
+              evidence: null,
+            },
+          ]
+        : null,
+    owners: request.owners
+      ? [
+          {
+            name: 'Fake Owner',
+            email: 'owner@example.invalid',
+            weight: 1,
+            commits: 3,
+            firstTime: 1700000000,
+            lastTime: 1700000000,
+            topCommits: [
+              { sha: 'd'.repeat(40), subject: 'Fake owner commit', committerTime: 1700000000 },
+            ],
+          },
+        ]
+      : null,
     warnings: [],
     candidateLimitReached: false,
   };
