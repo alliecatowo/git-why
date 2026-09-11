@@ -1,0 +1,9 @@
+{
+  "name": "git-why",
+  "version": "0.1.0",
+  "description": "Semantic search over Git history. Finds the commits that explain why code is the way it is, for questions you cannot turn into a grep.",
+  "author": { "name": "alliecatowo" },
+  "homepage": "https://github.com/alliecatowo/git-why",
+  "license": "MIT",
+  "keywords": ["git", "history", "search", "archaeology", "code-comprehension"]
+}

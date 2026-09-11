@@ -39,7 +39,8 @@
     "LICENSE",
     "NOTICE",
     "schema/",
-    "man/"
+    "man/",
+    "plugin/"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node scripts/postbuild.mjs && node scripts/gen-man.mjs",
@@ -56,7 +57,8 @@
     "site:install": "npm install --prefix site",
     "site:dev": "npm run --prefix site dev",
     "site:build": "npm run --prefix site build",
-    "bench:freeze": "node bench/freeze-protocol.mjs"
+    "bench:freeze": "node bench/freeze-protocol.mjs",
+    "bench:corpus": "node bench/corpus/baselines.mjs --cases bench/corpus/cases.json"
   },
   "dependencies": {
     "@zvec/zvec": "0.7.1"

@@ -65,10 +65,6 @@ run = "node bench/agents/run.mjs --stage=pilot"
 description = "Verify bench/protocol.json still matches its own hash"
 run = "node bench/freeze-protocol.mjs"
 
-[tasks."bench:dashboard"]
-description = "Write a self-contained docs/report.html from existing results"
-run = "node bench/dashboard.mjs"
-
 [tasks."bench:report"]
 description = "Generate tables and the report from saved records"
 run = "node bench/report.mjs"
