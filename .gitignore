@@ -24,4 +24,3 @@ site/public/install.sh
 .env
 .env.*
 **/auth.json
-docs/report.html

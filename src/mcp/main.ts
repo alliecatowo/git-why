@@ -49,12 +49,36 @@ function runCli(args: string[], cwd: string | undefined): Promise<unknown> {
 const tools = [
   {
     name: 'git_why_search',
-    description:
-      'Search the current Git repository history for commits explaining a natural-language question.',
+    description: [
+      'Find the commits that explain WHY code is the way it is: the rationale behind a',
+      'design, whether an approach was already tried and reverted, what a past incident',
+      'was, or who established an area.',
+      '',
+      'USE THIS when you cannot name the exact symbol or string to search for. On',
+      'questions where keyword search fails, it scores ~18x `git log --grep`.',
+      '',
+      'DO NOT USE THIS when you already know the identifier. `git log -S<symbol>` is',
+      'measurably better for that (Hit@10 0.950 vs 0.350) -- if you can see the name in',
+      'the code, run pickaxe search instead. For the CURRENT state of the code rather',
+      'than its history, use a code search tool; this only reads history.',
+      '',
+      'Ask the way you would ask a colleague who was there. Vague, natural phrasing',
+      'works BETTER than technical phrasing here -- restating a question in technical',
+      'vocabulary measurably trades away more recall than it gains in precision.',
+      '',
+      'Results are ranked by relevance, not proven. It misses roughly seven hard',
+      'questions in ten. Verify a result with `git show <sha>` before acting on it, and',
+      'if nothing looks relevant say so rather than constructing a rationale from a weak',
+      'match.',
+    ].join('\n'),
     inputSchema: {
       type: 'object',
       properties: {
-        query: { type: 'string', description: 'What you want to learn from Git history.' },
+        query: {
+          type: 'string',
+          description:
+            'The question, phrased naturally. "why do we retry twice before giving up", "what was that bug with duplicate webhook deliveries". Describe a symptom or a decision, not a file -- `git log -- <path>` already does files, and does them better.',
+        },
         cwd: {
           type: 'string',
           description: 'Repository directory. Defaults to the server process directory.',
