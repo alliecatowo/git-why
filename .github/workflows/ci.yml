@@ -48,6 +48,14 @@ jobs:
       # what makes that enforceable rather than merely asked for.
       - name: README numbers match the measurements
         run: node bench/report.mjs --check
+      # The site's CLI reference tables are generated from `git why -h`. Checked
+      # here rather than in the site job because this job already has the built
+      # CLI the tables come from; the site job would have to install and build
+      # the whole package a second time to ask the same question. The
+      # hand-maintained version had drifted to fourteen flags out of
+      # twenty-seven, with every temporal flag missing.
+      - name: Site CLI reference matches --help
+        run: node site/scripts/gen-cli-reference.mjs --check
 
   # Smoke-test that the documentation site still builds. The real deploy
   # happens in pages.yml, on pushes to main only.
@@ -65,16 +73,6 @@ jobs:
       - name: Install site dependencies
         working-directory: site
         run: npm ci
-
-      # The CLI reference tables are generated from `git why -h`. The
-      # hand-maintained version drifted to documenting fourteen flags out of
-      # twenty-seven, with every temporal flag missing, so the page is checked
-      # rather than trusted.
-      - name: Install root dependencies (for the CLI the reference is generated from)
-        run: npm ci
-      - run: npm run build
-      - name: CLI reference matches --help
-        run: node site/scripts/gen-cli-reference.mjs --check
 
       - name: Build site
         working-directory: site
