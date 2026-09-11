@@ -313,10 +313,15 @@ function armNeedsZg(arm) {
  * the records rather than being silent about it.
  */
 function assertReproducibleTree(allowDirty) {
-  const status = execFileSync('git', ['status', '--porcelain', '--untracked-files=no'], {
-    cwd: REPO_ROOT,
-    encoding: 'utf8',
-  }).trim();
+  // Only paths that can change what `npm pack` produces. Benchmark results and
+  // documentation are written by the very runs being gated, so including them
+  // would block a second run purely because the first one succeeded.
+  const PACKED_PATHS = ['src', 'package.json', 'package-lock.json', 'schema', 'completions', 'bin'];
+  const status = execFileSync(
+    'git',
+    ['status', '--porcelain', '--untracked-files=no', '--', ...PACKED_PATHS],
+    { cwd: REPO_ROOT, encoding: 'utf8' },
+  ).trim();
   const head = execFileSync('git', ['rev-parse', 'HEAD'], {
     cwd: REPO_ROOT,
     encoding: 'utf8',
@@ -325,7 +330,7 @@ function assertReproducibleTree(allowDirty) {
   const files = status.split('\n').slice(0, 10).join('\n');
   if (!allowDirty) {
     fail(
-      `the working tree has uncommitted changes, so this run could not be attributed to a commit:\n${files}\n\n` +
+      `the packaged sources have uncommitted changes, so this run could not be attributed to a commit:\n${files}\n\n` +
         'Commit them, or pass --allow-dirty to record the run as unattributable.',
     );
   }
