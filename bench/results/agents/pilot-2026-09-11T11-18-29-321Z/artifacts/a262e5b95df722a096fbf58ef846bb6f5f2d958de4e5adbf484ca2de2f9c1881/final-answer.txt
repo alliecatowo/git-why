@@ -1,0 +1,11 @@
+1. The bug where matching the same style for multiple patterns could skip one was due to incorrect iteration over overlapping matches in `globset`, fixed in commit `7f45640` where the loop was updated: `+        self.matcher.which_overlapping_matches(&input, &mut patset); +        for i in patset.iter() { matches.push(self.map[i]); }`.
+
+2. The bug where curly-brace file filters failed inside bundled folders was likely related to the initial implementation of curly brace support, which introduced new error variants like `UnopenedAlternates` in commit `fd5ae2f`: `+    UnopenedAlternates, +    UnclosedAlternates, +    NestedAlternates,`.
+
+3. The slowdown on Windows from checking if every ignore file exists was addressed by checking ignore rules before issuing stat calls, as explained in commit `a28e664`: "This seems like an obvious optimization but becomes critical when filesystem operations even as simple as stat can result in significant overheads".
+
+4. The demand for relative path output was addressed in commit `c749b60`, which clarified that ignore patterns "are matched relative to the current working directory" (message: `+and are matched relative to the current working directory.`).
+
+5. A bug that appeared after an earlier release was the regression in `12.0.0` regarding superfluous error messages when searching git repositories with sub-modules, fixed in commit `1bb30b7`: "This was a regression introduced in the 12.0.0 release."
+
+6. The issue where search time did not change regardless of trailing context was a performance bug in `-A/--after-context` on `stdin` searching, fixed in commit `8c6595c` which explained that pathological `read` calls on `stdin` were not amortizing, and was resolved by adding an inner loop to ensure buffers are fully filled.

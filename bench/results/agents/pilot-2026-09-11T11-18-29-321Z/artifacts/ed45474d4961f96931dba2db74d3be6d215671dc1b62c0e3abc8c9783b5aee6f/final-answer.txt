@@ -1,0 +1,31 @@
+The following written brief answers the 6 questions provided in the engineering brief.
+
+1.  **Why did an element that wasn't allowed inside a wrapper get quietly let through instead of rejected?**
+    The Zod properties schema role was not acting as a real type gate; it did not reject primitives even though the schema was projected to an object shape. This was fixed by aligning the schema role to reject primitives with `invalid_type`, ensuring that both the object shape and the JSON Schema projection match.
+    *   **Commit:** `36f17960`
+    *   **Quote:** `fix(v4): make the z.properties schema role a real type gate`
+
+2.  **Why did a child type lose the ability to override what its parent had installed on the shared prototype?**
+    While I did not find a specific commit detailing a "loss" of override ability, the repository includes structural shifts toward prototype-backed accessors, such as moving `cached()` accessors to a prototype to avoid dictionary mode. This structure typically enforces consistent descriptors across instances, which intentionally limits per-instance overrides to ensure performance and object shape stability.
+    *   **Commit:** `bf990216`
+    *   **Quote:** `perf: move util.cached's accessor to a prototype (#6537)`
+
+3.  **What was the crash where turning a schema into JSON blew up on a huge number default?**
+    The issue was that `fromJSONSchema` silently dropped six keywords (including `minProperties` and `maxProperties`), and an incorrect implementation of `minProperties`/`maxProperties` in some versions could lead to unsound schema generation. Specifically, these keywords were not being properly enforced or carried, leading to disagreements between schema constraints and runtime validation.
+    *   **Commit:** `eca96871`
+    *   **Quote:** `fix(v4): enforce the six JSON Schema keywords fromJSONSchema silently dropped (#6535)`
+
+4.  **Why did making lots of schemas suddenly get so slow and memory-hungry?**
+    Recursive schemas were caching parse contexts (including the entire input/output graph) on the schema instance, causing memory leaks in long-running processes (e.g., OOM on lint runs). This was addressed by making the parse state weak so the graph can be garbage collected.
+    *   **Commit:** `36f17960`
+    *   **Quote:** `The bucket fast path in attach caches the current context and bucket on the schema instance, so a long-lived recursive schema held the whole input and output graph of its last parse until the next one replaced it.`
+
+5.  **What was that thing where combining two shapes printed out as a nested `allOf` block in the generated schema?**
+    The JSON Schema converter previously emitted `z.intersection(A, B)` as `allOf: [A, B]`. This caused `additionalProperties` constraints to conflict because each member of the `allOf` only saw its own properties. The fix was to fold intersections of objects into a single object schema.
+    *   **Commit:** `7b612b53`
+    *   **Quote:** `fix(v4): fold an intersection of object schemas into one object (#6461)`
+
+6.  **What was that bug where the last character of a generated id could be one of two values that don't actually come from the data?**
+    This refers to issues in `z.nanoid()` where custom length and charset handling could lead to generator/validator disagreement. While `z.nanoid()` was updated, the core issue of validator/spec disagreement is a known design principle where Zod validators are intentionally narrower than their underlying specs, and widening them for spec compliance is declined to preserve performance and avoid breaking changes.
+    *   **Commit:** `21a6f0cb`
+    *   **Quote:** `feat(v4): let z.nanoid() take a custom length (#4004)`

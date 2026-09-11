@@ -1,0 +1,19 @@
+I have completed the requested brief. Here are the answers to the questions based on the repository history:
+
+1. **What was that change where loading a certificate started handing back several of them instead of just one?**
+   This refers to the implementation of support for multiple certificate issuers in `caddytls`. Commit **13781e67** ("caddytls: Support multiple issuers (#3862)") introduced this, with the commit message stating: "Defaults are Let's Encrypt and ZeroSSL. There are probably bugs."
+
+2. **What was that load-balancing bug where the random pick wasn't actually leaning toward the least-busy server?**
+   This was a bug in the `random_choose` selection policy that caused it to behave like a plain random policy rather than implementing power-of-two-choices (sampling `d` candidates and picking the least-loaded one). It was fixed in commit **b2be5482** ("reverseproxy: fix broken reservoir sampling in random_choose policy (#7873)"), which notes in the commit message: "Most notably, with two upstreams and 'random_choose 2' (the canonical power-of-two-choices setup), half of all requests were routed to the more-loaded upstream even when it was saturated and the other idle".
+
+3. **What was that bug where restarting the server failed because a stale socket file got left behind by the old process?**
+   This refers to issues with handling Unix domain socket (UDS) files during server reloads. Commit **806341e0** ("core: Properly preserve unix sockets (fix #5568)") fixed a related issue, and commit **6a64bb2c** ("listeners: clean up stale Unix socket files on Windows (#7676)") specifically addressed stale Unix socket files on Windows.
+
+4. **What was that performance issue where using header names with unusual casing caused extra work every time you set them?**
+   `http.Header` canonicalization caused unnecessary allocations when header keys were not in the standard MIME header format. Commit **3be8dabc** ("caddyhttp: use canonical header key casing to avoid re-canonicalization (#7911)") fixed this, as stated in the commit message: "Header.Get/Set re-canonicalize and allocate whenever the passed key isn't already in canonical MIME header form."
+
+5. **What was that bug where two matcher blocks that shared a name got merged into one stream instead of staying separate?**
+   This refers to the inconsistent merging of consecutive `client_ip` or `remote_ip` matchers in the Caddyfile. Commit **40c582ce** ("caddyhttp: Fix merging consecutive `client_ip` or `remote_ip` matchers (#6350)") resolved this, changing the `UnmarshalCaddyfile` implementations for those matchers to correctly handle multiple occurrences.
+
+6. **What was that security thing where some header names that looked like the bad one still slipped through the filter?**
+   An injection vulnerability in `forward_auth` allowed client-supplied headers to bypass filtering when the auth service did not explicitly return those headers. Commit **2dbcdefb** ("forward_auth: `copy_headers` does not strip client-supplied identity headers (Fixes GHSA-7r4p-vjf4-gxv4) (#7545)") addressed this by adding "an unconditional delete route for each copy_headers entry, placed just before the existing conditional set route."
