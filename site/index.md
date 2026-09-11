@@ -184,6 +184,7 @@ provider's own accounting database.
 | model                 | paired n | accuracy W-L | median tool calls saved |
 | --------------------- | -------: | -----------: | ----------------------: |
 | claude-haiku-4-5      |        9 |          1-1 |                       1 |
+| claude-sonnet-5       |        8 |          0-0 |                       1 |
 | deepseek-v4-flash     |        8 |          0-0 |                       3 |
 | gemini-2.5-flash-lite |        6 |          2-1 |                       1 |
 | gemini-3.1-flash-lite |        7 |          2-0 |                       1 |

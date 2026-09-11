@@ -622,6 +622,15 @@ md += `- Arm B/C availability: ${zgInstalled ? `\`zg\` found at ${zgPath} at rep
 md += `- Smoke runs under \`bench/results/agents/\`: ${smokeDirs.length > 0 ? smokeDirs.join(', ') : 'none'}. Per protocol, smoke runs never enter any aggregate.\n`;
 md += `- Pilot runs present: ${pilotDirs.length > 0 ? pilotDirs.join(', ') : 'none'}.\n\n`;
 
+md +=
+  '**A caveat on the wall-clock column across tiers.** A latency fix landed between tier 2 and\n' +
+  'tier 3 (`docs/decisions.md`: the lineage table stopped being loaded on queries that never read\n' +
+  'it, 4.7x on the published workload). Each model run packs the CLI from source at the time it\n' +
+  'runs, so tiers 1-2 measured a slower tool than tiers 3-5. Citation accuracy and tool-call counts\n' +
+  'are unaffected -- the fix was verified to produce byte-identical output on eleven query shapes,\n' +
+  'so the agent saw exactly the same results, only sooner. Wall clock is not comparable across\n' +
+  'that boundary and no comparison below uses it.\n\n';
+
 md += '### The registered hypothesis\n\n';
 md += `> ${models.hypothesis.statement}\n\n`;
 md += `Registered ${models.hypothesis.registeredBefore.toLowerCase()} It predicts: ${models.hypothesis.predicts}\n\n`;
