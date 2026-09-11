@@ -22,6 +22,7 @@ import { ensureCached, type PinnedArtifact } from './cache.js';
 import type { CacheOptions } from './cache.js';
 import { parseStaticModelConfig, StaticEmbedder } from './static-embedder.js';
 import { readFile } from 'node:fs/promises';
+import { JINA_V2_BASE_EN, JINA_V2_SMALL_EN, TransformerEmbedder } from './transformer-embedder.js';
 
 /** minishlab/potion-code-16M-v2 — the shipped default. WordPiece, 256-dim, F16 weights, mean pooling, L2 normalized. */
 export const POTION_CODE_16M_V2: PinnedArtifact = {
@@ -115,6 +116,18 @@ export async function loadDefaultEmbedder(options?: CacheOptions): Promise<Embed
     return createGenericStaticEmbedder(POTION_CODE_16M_V2, options);
   }
   const candidate = MODEL_CANDIDATES.find((c) => c.name === requested);
+  // A candidate with its own factory (a transformer) is not a pinned static
+  // artifact, so it is constructed through the factory rather than through the
+  // static path.
+  if (candidate?.createEmbedder !== undefined && candidate.pinned === undefined) {
+    if (!candidate.available) {
+      throw new GitWhyError(
+        'MODEL_UNAVAILABLE',
+        `GIT_WHY_EMBEDDING="${requested}" is not available: ${candidate.unavailableReason ?? 'unknown reason'}`,
+      );
+    }
+    return candidate.createEmbedder(options);
+  }
   if (candidate === undefined || candidate.pinned === undefined) {
     throw new GitWhyError(
       'INVALID_ARGUMENTS',
@@ -144,6 +157,32 @@ const MINILM_UNAVAILABLE_REASON =
   'which is a new runtime dependency outside the @zvec/zvec + Node-stdlib budget. Not added; report this to the ' +
   'integrator if benchmark coverage of this candidate is required before the model decision is frozen.';
 
+const JINA_UNAVAILABLE_REASON =
+  'jina-v2-small needs the optional @huggingface/transformers runtime, which is not installed. ' +
+  'Install it (npm install -g @huggingface/transformers) to enable it. The shipped default needs no such runtime.';
+
+/**
+ * Whether the optional transformer runtime is resolvable.
+ *
+ * Uses `import.meta.resolve`, which is the SAME resolution the dynamic
+ * `import()` in transformer-embedder.ts will perform. `createRequire().resolve`
+ * looked equivalent and is not: it honours `NODE_PATH` where ESM does not, so
+ * availability reported true while loading then failed — telling a user a
+ * model is ready and refusing it a moment later, which is worse than either
+ * answer alone.
+ *
+ * Synchronous, because `MODEL_CANDIDATES` is a module-level constant. Resolving
+ * does not execute the module, so this costs nothing when it is absent.
+ */
+function transformerRuntimeInstalled(): boolean {
+  try {
+    import.meta.resolve('@huggingface/transformers');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export const MODEL_CANDIDATES: readonly CandidateDescriptor[] = [
   {
     name: 'potion-code-16M-v2',
@@ -161,6 +200,27 @@ export const MODEL_CANDIDATES: readonly CandidateDescriptor[] = [
     name: 'minilm-reference',
     available: false,
     unavailableReason: MINILM_UNAVAILABLE_REASON,
+  },
+  {
+    // Measured at +41% MRR over the shipped default on the 12,101-document
+    // pool in bench/embedders/, for 191x the indexing time. Offered rather
+    // than imposed: `available` reflects whether the optional runtime is
+    // actually installed, so a benchmark reports "not evaluated" instead of
+    // silently falling back to the default and calling it a Jina result.
+    name: 'jina-v2-small',
+    available: transformerRuntimeInstalled(),
+    unavailableReason: transformerRuntimeInstalled() ? undefined : JINA_UNAVAILABLE_REASON,
+    createEmbedder: () => TransformerEmbedder.create(JINA_V2_SMALL_EN),
+  },
+  {
+    // The measured ceiling: +64% MRR over the default, and R@50 0.862 against
+    // 0.753 — the recall that actually addresses the commits retrieval never
+    // returns. At 296 ms/doc it is ~15 hours to index curl, which is why it is
+    // a second rung rather than the recommendation.
+    name: 'jina-v2-base',
+    available: transformerRuntimeInstalled(),
+    unavailableReason: transformerRuntimeInstalled() ? undefined : JINA_UNAVAILABLE_REASON,
+    createEmbedder: () => TransformerEmbedder.create(JINA_V2_BASE_EN),
   },
 ];
 

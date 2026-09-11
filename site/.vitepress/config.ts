@@ -57,6 +57,7 @@ export default defineConfig({
           items: [
             { text: 'CLI reference', link: '/guide/cli-reference' },
             { text: 'Daemon', link: '/guide/daemon' },
+            { text: 'Embedding model', link: '/guide/embedding' },
             { text: 'Operations & guarantees', link: '/guide/operations' },
             { text: 'Benchmarks', link: '/guide/benchmarks' },
           ],

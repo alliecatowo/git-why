@@ -229,8 +229,15 @@ retrieved but ranked below 5, which is a reordering problem, while 42% is never
 retrieved at all, which is not. See
 [`docs/decisions.md`](docs/decisions.md).
 
-The remaining headroom is that 42%: a recall problem in the embedding itself,
-which would need a larger model or a learned reranker.
+The remaining headroom is that 42%: a recall problem in the embedding itself.
+That is now measured rather than guessed —
+[`docs/embedding.md`](docs/embedding.md) compares ten models on a fixed pool.
+Transformer embedders score **+41%** (`jina-v2-small`) and **+64%**
+(`jina-v2-base`) MRR over the shipped static one, at 191x and 1287x the
+indexing time plus an ONNX runtime. Both are available opt-in; the default
+stays fast and dependency-free, because a tool that installs in seconds and
+indexes in under a minute should not quietly become one that needs fifteen
+hours.
 
 <!-- generated:honesty -->
 
@@ -261,6 +268,8 @@ called.
   install, how retrieval works, CLI reference, FAQ.
 - **[`ROADMAP.md`](ROADMAP.md)** — pull requests, `gh why`, wikis, and what
   would need measuring before any of it ships.
+- **[`docs/embedding.md`](docs/embedding.md)** — nine embedding models
+  measured, the +41% one you can opt into, and why the default did not change.
 - **[`docs/daemon.md`](docs/daemon.md)** — the optional daemon: what it holds
   warm, why it can never break a search, and its security posture.
 - **[`docs/indexes.md`](docs/indexes.md)** — where indexes live, worktrees,

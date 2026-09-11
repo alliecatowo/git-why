@@ -1,0 +1,14 @@
+{
+  "model": "jina-v2-base-en",
+  "kind": "transformer",
+  "hf": "Xenova/jina-embeddings-v2-base-en",
+  "note": "137M params, 768d — does the larger Jina keep gaining?",
+  "documents": 12101,
+  "elapsedMs": 3578481,
+  "n": 174,
+  "hit1": 0.40229885057471265,
+  "hit5": 0.5919540229885057,
+  "hit10": 0.6954022988505747,
+  "recall50": 0.8620689655172413,
+  "mrr": 0.5004161617464942
+}

@@ -30,6 +30,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { format, resolveConfig } from 'prettier';
 
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const OUT_DIR = join(ROOT, 'bench', 'results', 'embedders');
@@ -256,6 +257,45 @@ if (process.argv.includes('--report')) {
     '\nAbsolute scores are EASIER than the product on full history: the pool is smaller.',
   );
   console.log('Only the comparison between rows is meaningful.\n');
+
+  // Write the table into docs/embedding.md rather than leaving it to be
+  // transcribed. Every other measured table in this project is generated, for
+  // the reason this one would need it too: a hand-copied number is true once.
+  const doc = join(ROOT, 'docs', 'embedding.md');
+  if (existsSync(doc)) {
+    const perDoc = (r) => {
+      const ms = r.elapsedMs / r.documents;
+      return ms < 1 ? `${ms.toFixed(2)} ms` : `${Math.round(ms)} ms`;
+    };
+    const label = (r) => (r.model === 'potion-code-16M-v2' ? `**${r.model}** (shipped)` : r.model);
+    const emph = (v, on) => (on ? `**${v}**` : v);
+    const bestMrr = Math.max(...rows.map((r) => r.mrr));
+    const bestRecall = Math.max(...rows.map((r) => r.recall50));
+    const fastest = Math.min(...rows.map((r) => r.elapsedMs / r.documents));
+    let table = '| model | kind | Hit@1 | Hit@5 | R@50 | MRR | per doc |\n';
+    table += '| --- | --- | ---: | ---: | ---: | ---: | ---: |\n';
+    for (const r of rows) {
+      const isFastest = Math.abs(r.elapsedMs / r.documents - fastest) < 1e-9;
+      table +=
+        `| ${label(r)} | ${r.kind} | ${r.hit1.toFixed(3)} | ${r.hit5.toFixed(3)} | ` +
+        `${emph(r.recall50.toFixed(3), r.recall50 === bestRecall)} | ` +
+        `${emph(r.mrr.toFixed(3), r.mrr === bestMrr)} | ${emph(perDoc(r), isFastest)} |\n`;
+    }
+    const open = '<!-- generated:embedder-table -->';
+    const close = '<!-- /generated:embedder-table -->';
+    const text = readFileSync(doc, 'utf8');
+    const a = text.indexOf(open);
+    const b = text.indexOf(close);
+    if (a >= 0 && b >= 0) {
+      const next = await format(`${text.slice(0, a + open.length)}\n\n${table}\n${text.slice(b)}`, {
+        parser: 'markdown',
+        ...(await resolveConfig(doc)),
+      });
+      writeFileSync(doc, next);
+      console.log(`wrote the table into ${doc}`);
+    }
+  }
+
   process.exit(0);
 }
 

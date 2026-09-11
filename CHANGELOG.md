@@ -26,6 +26,11 @@ surface rather than a diff against one.
   `AGENTS.md` fragment for OpenCode.
 - Shell completions for bash, zsh and fish via `git why completion <shell>`,
   completing both the `git why` and `git-why` spellings.
+- Optional transformer embedders. `GIT_WHY_EMBEDDING=jina-v2-small` scores
+  +41% MRR over the shipped static model and `jina-v2-base` +64%, at 191x and
+  1287x the indexing time and an optional `@huggingface/transformers` runtime.
+  The default is unchanged and needs no such runtime; ten models are compared
+  in [`docs/embedding.md`](docs/embedding.md).
 - An optional daemon: `git why server on|off|status`. Holds the index, the
   embedding model and the lineage table open between queries — 569 ms to
   286 ms on a 30,000-commit repository. `--daemon=direct|server|auto`
