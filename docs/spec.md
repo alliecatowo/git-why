@@ -2,7 +2,12 @@
 
 **Semantic archaeology for Git.**  
 **Executable:** `git-why` · **Command:** `git why`  
-**Revision:** 2026-09-09 · **Status:** implementation handoff; performance results have not yet been measured.
+**Revision:** 2026-09-09 · **Status:** historical. This is the build brief the
+project was written against, kept because source comments cite its section
+numbers. It is not user documentation and it is not updated as the product
+changes — where it disagrees with [`docs/report.md`](report.md),
+[`docs/operations.md`](operations.md) or the code, they are right and this is
+a record of what was asked for.
 
 > `git blame` tells you who changed the code. `git why` finds the history that explains why.
 
