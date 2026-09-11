@@ -254,6 +254,35 @@ function corpusSection() {
     '`git log --grep` or `git log -S` could already answer was discarded, because a tool that only wins ';
   out += 'where grep also wins is not worth installing. What remains is the hard half.\n\n';
 
+  // Naming the archetype matters: this corpus measures ONE of the three things
+  // the tool claims to do, and reading it as a verdict on all three would be
+  // wrong in the tool's favour.
+  const archetypes = new Map();
+  for (const c of cases.cases ?? cases)
+    archetypes.set(c.archetype, (archetypes.get(c.archetype) ?? 0) + 1);
+  if (archetypes.size === 1) {
+    const [only] = [...archetypes.keys()];
+    out += `**All ${main.cases} cases are one archetype: \`${only}\`** — you remember a problem and `;
+    out +=
+      'want the commit, but cannot name anything in it. That is the central case, and it is not the\n';
+    out += 'only thing the tool claims to do:\n\n';
+    out += '| claim | measured where |\n| --- | --- |\n';
+    out += `| Ambiguous recall | this section, n=${main.cases} |\n`;
+    out +=
+      '| Cross-file causal ("why does this file do X", answer lives elsewhere) | section 0b, n=20 — and it **loses** there |\n';
+    out += '| Ownership ("who established this area", `--owners`) | **not benchmarked** |\n\n';
+    out +=
+      '`--owners` has no accuracy number here because the question has no agreed ground truth: ';
+    out +=
+      '`git blame` credits whoever last reformatted a line, `git shortlog` credits churn, and which\n';
+    out +=
+      'of the three is "right" depends on what you mean by *owns*. Comparing them on curl shows\n';
+    out +=
+      '`--owners` agreeing with `shortlog` on the top author and diverging in the tail, while `blame`\n';
+    out +=
+      'disagrees outright. That is a description, not a score, and it is presented as one.\n\n';
+  }
+
   // Backticks are not decoration: strategy names contain angle-bracket
   // placeholders like `git log -- <consumer file>`, which the docs site parses
   // as an unclosed HTML tag and fails the build on.
