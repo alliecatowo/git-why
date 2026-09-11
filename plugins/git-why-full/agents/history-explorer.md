@@ -26,6 +26,13 @@ These are measured boundaries, not preferences:
 - **`git show <sha>`** — always, before you believe a result.
 - **`git why "<area>" --owners`** — who established an area, weighted by
   relevance rather than by line survival or commit count.
+- **`git why "<thing>" --first`** — when something was introduced. It resolves
+  from a lineage table rather than from the ranking, so it prints its answer
+  **above** the results and that answer is frequently not in them. Read the top
+  line, and read the `(by <term>)` it names — an ordinal keyed on the wrong
+  term is wrong in a way the SHA will not show you. `--last` and `--removed`
+  are the same mechanism but less reliable, because regenerated files make a
+  term appear and vanish for reasons unrelated to the feature.
 
 ## How to work
 

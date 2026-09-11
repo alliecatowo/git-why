@@ -93,9 +93,25 @@ git why "<question>"              search history
 git why "<question>" --owners     who established this area
 git why "<question>" --first      when it was first introduced
 git why "<question>" --timeline   how it changed over time
-git why index                     build or refresh the index
+git why index --if-needed         build or refresh; cheap, safe to run always
 git why status --check-ready      is the index current
 ```
 
-The index builds at roughly 5.9 KB per record and answers in about 480 ms on a
-30,000-commit repository, so it is cheap to keep current.
+`--owners`, `--first`, `--last`, `--removed` and `--timeline` print their
+answer **above** the ranked results, and that answer does not come from the
+ranking. `--first` in particular resolves from a lineage table, so it
+routinely names a commit that is not in the result list at all — read the line
+at the top, not the list below it:
+
+```
+introduced: 3af0e76  HTTP3: initial (experimental) support  2019-07-21  (by http3)
+```
+
+`(by http3)` is the term the answer was keyed on, and it is worth checking. An
+ordinal resolved through the wrong term is wrong in a way the SHA will not show
+you. `--first` is the most reliable of the three: `--last` and `--removed` are
+often keyed on regenerated files like RELEASE-NOTES, where a term appears and
+disappears for reasons unrelated to the feature.
+
+The index builds at roughly 5.9 KB per record and answers in under half a
+second on a 30,000-commit repository, so it is cheap to keep current.
