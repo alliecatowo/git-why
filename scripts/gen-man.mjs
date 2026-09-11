@@ -136,21 +136,30 @@ function buildRoff(text, { version, date }) {
   }
   while (i < lines.length && lines[i].length === 0) i += 1;
 
-  // Flags that only apply to a subcommand. Optional: older help text put them
-  // in brackets inside a command's description instead, where they had no
-  // entry of their own and no room for an explanation.
-  const commandOptionLines = [];
-  if (lines[i] === 'Command options:') {
+  // Remaining blocks are optional and may appear in any order, so they are
+  // collected by heading rather than by position. Assuming a fixed order is
+  // how adding a "Server:" block silently truncated the page at the first
+  // heading the parser did not expect, losing every flag after it.
+  const blocks = new Map();
+  while (i < lines.length) {
+    const heading = lines[i];
+    if (!heading.endsWith(':')) break;
     i += 1;
+    const collected = [];
     while (i < lines.length && lines[i].length > 0) {
-      commandOptionLines.push(lines[i]);
+      collected.push(lines[i]);
       i += 1;
     }
+    blocks.set(heading, collected);
+    while (i < lines.length && lines[i].length === 0) i += 1;
   }
+  const commandOptionLines = blocks.get('Command options:') ?? [];
+  const serverLines = blocks.get('Server:') ?? [];
 
   const options = parseEntries(optionLines);
   const commands = parseEntries(commandLines);
   const commandOptions = parseEntries(commandOptionLines);
+  const serverCommands = parseEntries(serverLines);
 
   const out = [];
   out.push(`.TH GIT-WHY 1 "${date}" "git-why ${version}" "Git Manual"`);
@@ -174,6 +183,14 @@ function buildRoff(text, { version, date }) {
     out.push('.TP');
     out.push(`.B ${roffEscape(flag)}`);
     out.push(roffEscape(desc));
+  }
+  if (serverCommands.length > 0) {
+    out.push('.SH SERVER');
+    for (const { flag, desc } of serverCommands) {
+      out.push('.TP');
+      out.push(`.B ${roffEscape(flag)}`);
+      out.push(roffEscape(desc));
+    }
   }
   if (commandOptions.length > 0) {
     out.push('.SH COMMAND OPTIONS');

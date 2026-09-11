@@ -1,0 +1,60 @@
+I'll start with the required verification command.All three match. Now let me search the history for the introduction of streams.I have everything I need. Let me confirm one final detail about the surrounding series.## Answer
+
+**Redis first got the streams data type (with `XADD`) in development work by antirez that began on 2017‑08‑30 and landed in the `unstable` branch on 2017‑12‑01; it shipped publicly in Redis 5.0.**
+
+### The commit that establishes it
+
+**SHA: `79866a6361829ed0602dedff9cb378c66977227a`** (short: `79866a636`)
+
+```
+Author:     antirez <antirez@gmail.com>
+AuthorDate: Wed Aug 30 12:40:27 2017 +0200
+CommitDate: Fri Dec  1 10:24:24 2017 +0100
+
+    Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+This is the **only** commit in this repository's 12,110-commit history that adds `src/t_stream.c` and `src/stream.h` (verified with `git log --diff-filter=A`), and it is the first commit anywhere in history containing `xaddCommand` / the string `XADD` (verified with `git log -S`). It is an ancestor of the checked-out HEAD.
+
+### Supporting quotes from the diff
+
+New command table entries in `src/server.c` — this is the birth of `XADD`:
+
+```diff
+     {"pfdebug",pfdebugCommand,-3,"w",0,NULL,0,0,0,0,0},
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+New object type in `src/server.h`:
+
+```diff
++#include "stream.h"  /* Stream data type header file. */
++#define OBJ_STREAM 5
++#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
++void xaddCommand(client *c);
+```
+
+New `src/t_stream.c` (376 lines) with the command implementation:
+
+```c
+void xaddCommand(client *c) {
+    ...
+    /* Append using the low level function and return the ID. */
+    streamID id;
+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+```
+
+New `src/stream.h` defining the 128-bit `ms`-`seq` stream ID and the radix-tree-of-listpacks `stream` struct, plus a new RDB type in `src/rdb.h`:
+
+```diff
++#define RDB_TYPE_STREAM_LISTPACKS 15
+```
+
+### Notes on dating
+
+- The commit's **author date is 2017‑08‑30**, but its **commit date is 2017‑12‑01** — the whole streams series (12 squashed commits, then `100d43c1a` "assign value of 6 to OBJ_STREAM", `485014cc7` "RDB saving", `ec9bbe96b` "XLEN command", `4a377cecd` "initial work to use blocking lists logic for streams XREAD", …) was rebased onto `unstable` on 2017‑12‑01, right after `045d65c3a` "PSYNC2: Fix off by one buffer size in luaCreateFunction()".
+- Consumer groups (`XGROUP`, `XREADGROUP`, `XINFO`) came later, in January–March 2018 (e.g. `58f0c000a` "CG: data structures design + XGROUP CREATE implementation.").
+- For the *released* version: this checkout has no tags, but `src/commands/xadd.json` records `"since": "5.0.0"`, i.e. streams debuted in the Redis 5.0 release line (GA October 2018).
+
+I did not modify any files; all operations were read-only `git` queries and file reads.

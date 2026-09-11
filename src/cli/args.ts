@@ -46,6 +46,12 @@ export interface ParsedSearch {
   readonly before: number | null;
   readonly author: string | null;
   readonly json: boolean;
+  /**
+   * `--daemon=direct|server|auto`. Not named `--mode`: `mode` already means
+   * the retrieval mode here (text, semantic, hybrid), and two different
+   * `mode`s would be a trap for anyone reading either one.
+   */
+  readonly daemonMode: string | null;
   readonly noRefresh: boolean;
   readonly offline: boolean;
   readonly maxBytes: number;
@@ -106,6 +112,7 @@ const VALUE_LONG_FLAGS = new Set([
   'between',
   'around',
   'group',
+  'daemon',
 ]);
 
 const REFRESH_MODES = ['off', 'wait'] as const;
@@ -457,6 +464,7 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
     })(),
     author: asStringOption(options, 'author') ?? null,
     json: jsonFlag,
+    daemonMode: asStringOption(options, 'daemon') ?? null,
     verbose: verboseFlag,
     noRefresh,
     offline: offlineFlag,

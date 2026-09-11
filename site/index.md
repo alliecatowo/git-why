@@ -200,13 +200,13 @@ Method, per-arm figures and the registered hypothesis are in the
 
 <!-- generated:scale -->
 
-| measurement                                               | result                        |
-| --------------------------------------------------------- | ----------------------------- |
-| Index across 6 real repos (56,781 commits)                | 5.51–7.84 KB/record           |
-| curl-curl (30,000 commits, 182,772 records)               | 1.37 GiB, 7.84 KB/record      |
-| Warm query on curl-curl (30,000 commits), p50 / p95, n=20 | 807 ms / 1199 ms              |
-| The same query on a 135-commit fixture                    | 477 ms / 508 ms               |
-| Diff/evidence ingestion, real-repo ablation               | earns its cost, ΔHit@5 +0.375 |
+| measurement                                                  | result                        |
+| ------------------------------------------------------------ | ----------------------------- |
+| Index across 6 real repos (56,781 commits)                   | 5.51–7.84 KB/record           |
+| curl-curl (30,000 commits, 182,772 records)                  | 1.37 GiB, 7.84 KB/record      |
+| Query on curl-curl (30,000 commits) with `git why server on` | 286 ms p50, 301 ms p95        |
+| The same query with no daemon                                | 569 ms p50, 597 ms p95        |
+| Diff/evidence ingestion, real-repo ablation                  | earns its cost, ΔHit@5 +0.375 |
 
 <!-- /generated:scale -->
 

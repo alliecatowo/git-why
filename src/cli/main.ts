@@ -19,6 +19,7 @@ import { resolvePathRestrictions } from './paths.js';
 import { createBackend } from './wire.js';
 import type { Backend, ProgressEvent, RepositoryHandle } from './ports.js';
 import { renderSearchHuman, renderStatusHuman } from '../output/human.js';
+import { resolveMode, route } from '../daemon/client.js';
 import {
   renderSearchErrorJson,
   renderSearchJson,
@@ -59,6 +60,8 @@ Options:
   --around=<anchor>     Prefer commits near a date, tag, or SHA
   --owners              Who established this area, ranked by relevance of their
                         commits rather than by surviving lines or commit count
+  --daemon=<mode>       direct: never use the daemon. server: require it.
+                        auto (default): use it when running, else run directly
   --group <query>       Additional retrieval group; fuse groups at commit level
   --after=<date>        Only commits at or after this date (UTC, ISO-8601)
   --before=<date>       Only commits strictly before this date (UTC, ISO-8601)
@@ -82,6 +85,12 @@ Commands:
   rebuild               Replace derived index data
   gc                    Reconcile and compact without downloading embeddings
   help                  Show this help
+
+Server:
+  server on             Start the shared daemon; holds the index, model and
+                        lineage table open between queries (about 2x faster)
+  server off            Stop it
+  server status         Report whether one is running [--check-ready]
 
 Command options:
   --if-needed           With index: exit 0 immediately if the index is already
@@ -401,12 +410,23 @@ async function runSearch(
       owners: parsed.ownersRequested,
     };
 
-    const response = await backend.search(repo, request, {
-      offline: parsed.offline,
-      noRefresh: parsed.noRefresh,
-      lockTimeoutMs: parsed.lockTimeoutSeconds * 1000,
-      signal: controller.signal,
-      onProgress,
+    // A running daemon answers from warm handles; without one this is exactly
+    // the call it replaces. `auto` never fails because of the daemon — any
+    // problem falls back to running directly — so the fast path can be the
+    // default without becoming a new way for the tool to break.
+    const response = await route({
+      mode: resolveMode(parsed.daemonMode),
+      viaDaemon: (connection) => connection.search(repo.identity.worktreeRoot ?? cwd, request),
+      direct: () =>
+        backend.search(repo, request, {
+          offline: parsed.offline,
+          noRefresh: parsed.noRefresh,
+          lockTimeoutMs: parsed.lockTimeoutSeconds * 1000,
+          signal: controller.signal,
+          onProgress,
+        }),
+      onFallback: (reason) =>
+        onProgress({ stage: 'model', message: `daemon unavailable (${reason}); running directly` }),
     });
 
     if (parsed.json) {
@@ -439,6 +459,14 @@ async function run(): Promise<number> {
   // `completion <shell>` is handled before anything touches a repository: it
   // emits a static script and must work outside a Git worktree, with no index
   // and no model, because that is when people set up their shell.
+  // `server` is handled before anything touches a repository: the daemon is a
+  // machine-level service and `git why server status` has to work from
+  // anywhere, including outside a worktree.
+  if (argv[0] === 'server') {
+    const { runServerCommand } = await import('./server-command.js');
+    return runServerCommand(argv.slice(1), { writeStdout, writeStderr });
+  }
+
   if (argv[0] === 'completion') {
     const shell = argv[1];
     const known = ['bash', 'zsh', 'fish'] as const;

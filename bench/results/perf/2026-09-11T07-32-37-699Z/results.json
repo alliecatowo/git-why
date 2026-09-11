@@ -1,0 +1,88 @@
+{
+  "runId": "2026-09-11T07-32-37-699Z",
+  "generatedAt": "2026-09-11T07:32:37.700Z",
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpuModel": "Apple M2",
+    "cpuCount": 8,
+    "totalMemBytes": 8589934592
+  },
+  "referenceCorpus": {
+    "kind": "synthetic-bench-fixture",
+    "fixtureId": "task-queue",
+    "path": "/Users/allie/.cache/git-why-bench/0199f07e4778/fixtures/task-queue",
+    "commitCount": 135
+  },
+  "realRepo": {
+    "path": "/Users/allie/.cache/git-why-bench/0199f07e4778/external/curl-curl",
+    "name": "curl-curl",
+    "daemon": {
+      "running": true,
+      "ready": true,
+      "pid": 64172,
+      "url": "http://127.0.0.1:63856",
+      "version": "0.1.0",
+      "uptimeMs": 66153,
+      "repositories": 1,
+      "servedRequests": 76
+    },
+    "breakdown": {
+      "statusOnly": {
+        "n": 5,
+        "p50": 425.622208,
+        "p95": 494.591958,
+        "min": 397.21475,
+        "max": 494.591958,
+        "mean": 431.47539159999997
+      },
+      "textOnly": {
+        "n": 5,
+        "p50": 279.056458,
+        "p95": 279.298583,
+        "min": 269.968792,
+        "max": 279.298583,
+        "mean": 275.8665668
+      },
+      "semanticOnly": {
+        "n": 5,
+        "p50": 269.899292,
+        "p95": 272.184333,
+        "min": 267.583,
+        "max": 272.184333,
+        "mean": 269.50138319999996
+      },
+      "hybrid": {
+        "n": 5,
+        "p50": 285.623708,
+        "p95": 288.433917,
+        "min": 283.406708,
+        "max": 288.433917,
+        "mean": 286.05670820000006
+      }
+    },
+    "breakdownNote": "Each row is a separate CLI invocation, so differences are externally attributable. statusOnly is process start plus opening the index with no retrieval; the branches overlap in hybrid rather than summing.",
+    "loadCaveat": "Wall-clock on a shared machine. If other work was running, these are pessimistic. Re-run on an idle machine before quoting them as a floor.",
+    "indexedCommits": 30000,
+    "recordCount": 182772,
+    "diskBytes": 1467044415,
+    "warmupRuns": 3,
+    "requestedSamples": 20,
+    "successfulSamples": 20,
+    "latencyMs": {
+      "n": 20,
+      "p50": 286.751667,
+      "p95": 318.019292,
+      "min": 282.730125,
+      "max": 322.388542,
+      "mean": 293.62796455
+    },
+    "note": "Read-only: every query passes --no-refresh, so this workload cannot write to or mutate the clone it measures."
+  },
+  "knownGaps": [
+    "Per-phase timing breakdown is not part of the frozen --json contract; only total external wall time is measured.",
+    "Loaded-process query loop is approximated via warm fresh-process calls, not a true in-process repeat.",
+    "Every mutating workload (new commits, rename/rebase, concurrent updater) runs against the synthetic fixture, because it has to modify the repository it measures. Only the read-only query workloads can be pointed at a real clone."
+  ],
+  "workloads": {}
+}

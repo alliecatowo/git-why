@@ -473,15 +473,26 @@ async function main() {
         skipped: `index state is ${status?.index?.state ?? 'unknown'}; run \`git why index\` in that clone first. This workload is read-only by design and will not build one.`,
       };
     } else {
+      // The same query, both ways, in the same window. Comparing a
+      // daemon-served real repository against a fixture that was never
+      // daemon-served is not a comparison, and an earlier draft of this report
+      // duly announced that curl was "0.6x slower" than a 135-commit fixture.
+      const sampleQuery = (mode, n) => {
+        const samples = [];
+        for (let i = 0; i < n; i++) {
+          const r = runOnce(cliPath, [QUERY, '--json', '--no-refresh', `--daemon=${mode}`], {
+            cwd: args.repo,
+          });
+          if (r.exitCode === 0) samples.push(r.elapsedMs);
+        }
+        return samples;
+      };
       const warmupRuns = 3;
-      for (let i = 0; i < warmupRuns; i++)
-        runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: args.repo });
+      sampleQuery('auto', warmupRuns);
+      sampleQuery('direct', warmupRuns);
       const sampleCount = 20;
-      const samples = [];
-      for (let i = 0; i < sampleCount; i++) {
-        const r = runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: args.repo });
-        if (r.exitCode === 0) samples.push(r.elapsedMs);
-      }
+      const samples = sampleQuery('auto', sampleCount);
+      const directSamples = sampleQuery('direct', sampleCount);
       // Where the time actually goes. Each mode is a separate invocation of the
       // real CLI, so the differences are external and attributable:
       //   status            = process start + open the index, no retrieval
@@ -501,14 +512,31 @@ async function main() {
       };
       const breakdown = {
         statusOnly: breakdownOf(['status', '--json']),
-        textOnly: breakdownOf([QUERY, '--text', '--no-refresh', '--json']),
-        semanticOnly: breakdownOf([QUERY, '--semantic', '--no-refresh', '--json']),
-        hybrid: breakdownOf([QUERY, '--no-refresh', '--json']),
+        textOnly: breakdownOf([QUERY, '--text', '--no-refresh', '--json', '--daemon=direct']),
+        semanticOnly: breakdownOf([
+          QUERY,
+          '--semantic',
+          '--no-refresh',
+          '--json',
+          '--daemon=direct',
+        ]),
+        hybrid: breakdownOf([QUERY, '--no-refresh', '--json', '--daemon=direct']),
       };
+
+      // Whether a daemon answered is the single largest factor in these
+      // numbers, so a result that does not record it is not interpretable.
+      let daemon = { running: false };
+      try {
+        const raw = runOnce(cliPath, ['server', 'status', '--json'], { cwd: args.repo });
+        daemon = JSON.parse(raw.stdout);
+      } catch {
+        /* reported as not running rather than guessed at */
+      }
 
       results.realRepo = {
         path: args.repo,
         name: args.repo.split('/').pop(),
+        daemon,
         breakdown,
         breakdownNote:
           'Each row is a separate CLI invocation, so differences are externally attributable. statusOnly is process start plus opening the index with no retrieval; the branches overlap in hybrid rather than summing.',
@@ -521,6 +549,7 @@ async function main() {
         requestedSamples: sampleCount,
         successfulSamples: samples.length,
         latencyMs: summarizeLatencies(samples),
+        directLatencyMs: summarizeLatencies(directSamples),
         note: 'Read-only: every query passes --no-refresh, so this workload cannot write to or mutate the clone it measures.',
       };
     }

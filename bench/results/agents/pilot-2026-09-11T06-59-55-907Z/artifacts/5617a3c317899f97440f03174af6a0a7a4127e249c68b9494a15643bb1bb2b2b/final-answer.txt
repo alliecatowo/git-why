@@ -1,0 +1,65 @@
+I'll start with the required verification command.All three match. Now let me search history.Let me confirm the surrounding timeline and today's behavior.No files were modified (the untracked `.zvec-grep/` is the search tool's own index).
+
+## Answer
+
+**Yes, the default changed — but your memory is off by one step.** There were actually *two* changes in quick succession during the Zod 2 beta in September 2020, and the passthrough behavior you remember only existed for two days.
+
+### The commit that establishes it
+
+**`18854492b4b6e1648499f2f920c615dab187ee1a`** — "strip unknown keys by default" (Colin McDonnell, 2020-09-17)
+
+The diff flips the default in both `ZodObject` factories in `src/types/object.ts`:
+
+```diff
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+     }) as any;
+```
+
+...and the class's type-level default:
+
+```diff
+ export class ZodObject<
+   T extends z.ZodRawShape,
+-  UnknownKeys extends UnknownKeysParam = 'allow',
++  UnknownKeys extends UnknownKeysParam = 'passthrough',
+```
+
+The same commit renamed the mode itself, so `'allow'` became `'passthrough'` (`type UnknownKeysParam = 'passthrough' | 'strict' | 'strip'`), the method `allowUnknown()` became `passthrough()` (with `nonstrict = this.passthrough` kept as an alias), and `stripUnknown()` became `strip()`. The parser check was updated to match: `if (def.unknownKeys === 'allow')` → `if (def.unknownKeys === 'passthrough')`.
+
+The README edit in that commit states the new contract directly:
+
+> ```diff
+> -Zod object schemas allow unknown keys.
+> +By default Zod object schema strip unknown keys from the output.
+> ```
+>
+> ```diff
+> -// => { name: "bob dylan", extraKey: 61 }
+> +// => { name: "bob dylan" }
+> ```
+
+And it added the regression test that locks it in:
+
+```ts
+test('strip by default', () => {
+  const val = z.object({ points: z.number() }).parse(data);
+  expect(val).toEqual({ points: 2314 });
+});
+```
+
+### The full timeline
+
+The behavior you remember was real but very short-lived:
+
+- **Zod 1.x** — objects *threw* on unknown keys. `.nonstrict()` (added in `edffebc5`) was the opt-out.
+- **`2936e65b`** "Eliminated params from ZodObject" (2020-09-15, v1.11.8) — refactored `params: { strict }` into the `unknownKeys` string union and set the default to `'allow'`, i.e. passthrough. This is the version whose README carried the note *"⚠️ Before Zod 2 object schema did NOT allow unknown keys by default"* and the example returning `{ name: "bob dylan", extraKey: 61 }`.
+- **`18854492`** (2020-09-17, v2.0.0-beta.1) — **two days later**, changed the default to `'strip'`, where it has stayed ever since.
+
+### Bottom line
+
+Stripping has been the default since the v2.0.0 beta and is still the default today — `packages/docs/content/api.mdx` says *"By default, unrecognized keys are stripped from the parsed result"*. If you want the old keep-extra-keys behavior, use `z.looseObject({...})` or `.passthrough()`; for the Zod 1 throw-on-unknown behavior, use `z.strictObject({...})` or `.strict()`.

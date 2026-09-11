@@ -13,10 +13,12 @@ _git-why() {
     'rebuild:Rebuild the index from scratch'
     'gc:Reclaim disk from superseded generations'
     'help:Show help'
+    'server:Start, stop or inspect the shared daemon'
     'completion:Emit a shell completion script'
   )
   sorts=('relevance:Ranked by relevance (default)' 'oldest:Chronological' 'newest:Reverse chronological')
   refreshes=('off:Never refresh; fail if stale' 'wait:Refresh before querying')
+  daemons=('direct:Never contact the daemon' 'server:Require a running daemon' 'auto:Use one when running (default)')
 
   _arguments -C \
     '(--text --semantic)--text[Full-text search only]' \
@@ -44,6 +46,7 @@ _git-why() {
     '--max-bytes=[Bound rendered output, including JSON framing]:bytes:' \
     '--lock-timeout=[Seconds to wait for another process]:seconds:' \
     '--use-default-model[rebuild: re-embed with the default model]' \
+    '--daemon=[Daemon routing]:mode:((${daemons}))' \
     '-n[Number of commits to return]:count:' \
     '--help[Show help]' \
     '--version[Show version]' \

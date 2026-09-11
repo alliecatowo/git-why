@@ -1,0 +1,133 @@
+{
+  "task_id": "X-requests-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "0d8811acf611c3a08ecf03d7f7d8d1657a1ab466",
+  "model_id": "llmgateway/claude-opus-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T07:04:08.698Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "339fdf90e098b8f42964774231977fc5ec0220e845cf91d17fdb0d33575a93bb",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "2ed84f55b22f19a1e1e8eea2e50963dce62052d3",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ]
+  },
+  "wall_ms": 74013,
+  "tool_calls": 10,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 28941,
+  "output_tokens": 2479,
+  "cache_read_tokens": 76515,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.2449375,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 65282,
+  "index_build_ms": 60199,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T06-59-55-907Z/events/X-requests-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "df3186007e5c3c5c50e6fdf1fc772151173abae17337d72355577b37c4c8f346",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 14276,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_tHSVz7BZs47BWxNQznFUU7",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format=\"%H%n%an <%ae>%n%ad%n%n%B\" 2ed84f5"
+        },
+        "output": "2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAsh Berlin-Taylor <ash_github@firemirror.com>\nWed Jul 7 00:55:02 2021 +0100\n\nSwitch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n\nAlthough using the (non-vendored) chardet library is fine for requests\r\nitself, but using a LGPL dependency the story is a lot less clear\r\nfor downstream projects, particularly ones that might like to bundle\r\nrequests (and thus chardet) in to a single binary -- think something\r\nsimilar to what docker-compose is doing. By including an LGPL'd module\r\nit is no longer clear if the resulting artefact must also be LGPL'd.\r\n\r\nBy changing out this dependency for one under MIT we remove all\r\nlicense ambiguity.\r\n\r\nAs an \"escape hatch\" I have made the code so that it will use chardet\r\nfirst if it is installed, but we no longer depend upon it directly,\r\nalthough there is a new extra added, `requests[lgpl]`. This should\r\nminimize the impact to users, and give them an escape hatch if\r\ncharset_normalizer turns out to be not as good. (In my non-exhaustive\r\ntests it detects the same encoding as chartdet in every case I threw at\r\nit)\r\n\r\nCo-authored-by: Jarek Potiuk <jarek@potiuk.com>\r\n\r\nCo-authored-by: Jarek Potiuk <jarek@potiuk.com>\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_IfZiueLEdaagV00lHvgKBY",
+        "status": "completed",
+        "input": {
+          "command": "git show 2ed84f5 --stat | head -30"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\n .gitignore             |  6 ++++++\n HISTORY.md             | 17 ++++++++++++++++-\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_WnHhdCRyXSr0uKBsVAyzvF",
+        "status": "completed",
+        "input": {
+          "command": "git show 2ed84f5 -- requests/compat.py setup.py HISTORY.md"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\ndiff --git a/HISTORY.md b/HISTORY.md\nindex 0331d187..9b08a7f2 100644\n--- a/HISTORY.md\n+++ b/HISTORY.md\n@@ -6,6 +6,22 @@ dev\n \n -   \\[Short description of non-trivial change.\\]\n \n+**Dependencies**\n+\n+- Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3\n+  to remove license ambiguity for projects bundling requests. If `chardet`\n+  is already installed on your machine it will be used instead of `charset_normalizer`\n+  to keep backwards compatibility.\n+\n+  You can also install `chardet` while installing requests by\n+  specifying `[use_chardet_on_py3]` extra as follows:\n+\n+    ```shell\n+    pip install \"requests[use_chardet_on_py3]\"\n+    ```\n+\n+  Python2 still depends upon the `chardet` module.\n+\n 2.25.1 (2020-12-16)\n -------------------\n \n@@ -1707,4 +1723,3 @@ This is not a backwards compatible change.\n \n -   Frustration\n -   Conception\n-\ndiff --git a/requests/compat.py b/requests/compat.py\nindex 5de0769f..0b14f501 100644\n--- a/requests/compat.py\n+++ b/requests/compat.py\n@@ -8,7 +8,10 @@ This module handles import compatibility issues between Python 2 and\n Python 3.\n \"\"\"\n \n-import chardet\n+try:\n+    import chardet\n+except ImportError:\n+    import charset_normalizer as chardet\n \n import sys\n \ndiff --git a/setup.py b/setup.py\nindex 552c66de..27f3948c 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -41,7 +41,8 @@ if sys.argv[-1] == 'publish':\n packages = ['requests']\n \n requires = [\n-    'chardet>=3.0.2,<5',\n+    'charset_normalizer~=2.0.0; python_version >= \"3\"',\n+    'chardet>=3.0.2,<5; python_version < \"3\"',\n     'idna>=2.5,<3',\n     'urllib3>=1.21.1,<1.27',\n     'certifi>=2017.4.17'\n@@ -103,6 +104,7 @@ setup(\n         'security': ['pyOpenSSL >= 0.14', 'cryptography>=1.3.4'],\n         'socks': ['PySocks>=1.5.6, !=1.5.7'],\n         'socks:sys_platform == \"win32\" and python_version == \"2.7\"': ['win_inet_pton'],\n+        'use_chardet_on_py3': ['chardet>=3.0.2,<5']\n     },\n     project_urls={\n         'Documentation': 'https://requests.readthedocs.io',\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_vqIpvRsUK1wt1mLla4XlTo",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --format=\"%h %ad %s\" --date=short -S\"use_chardet_on_py3\" -- setup.py setup.cfg pyproject.toml | tail -20"
+        },
+        "output": "cb2c8005 2026-01-30 Migrate build system to PEP 517 (#7012)\n8bce583b 2022-03-25 Farewell, sweet Concorde!\n2ed84f55 2021-07-07 Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_CgoKta8XCOk5vBhElshESj",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format=\"%H %ad%n%B\" --date=short 555b870"
+        },
+        "output": "555b870eb19d497ddb67042645420083ec8efb02 2024-05-14\nAllow character detection dependencies to be optional in post-packaging steps\n\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 10,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 28941,
+    "output": 2479,
+    "messages": 8
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/df3186007e5c3c5c50e6fdf1fc772151173abae17337d72355577b37c4c8f346",
+  "completed": true
+}

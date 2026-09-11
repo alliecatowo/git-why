@@ -1,0 +1,48 @@
+I'll start with the required verification command.All three values match. Now let me search the history.## Answer
+
+**Yes — it was renamed.** The option was originally introduced as `FIRST` and later renamed to `RANK`, before the command ever shipped in a stable release (both changes happened in June 2020, during Redis 6.2 development).
+
+### Supporting commit
+
+**SHA: `a5a3a7bbc61203398ecc1d5b52c76214f5672776`** (short: `a5a3a7b`)
+Author: antirez <antirez@gmail.com> — Wed Jun 24 09:07:17 2020 +0200
+
+The commit message states it outright:
+
+> ```
+> LPOS: option FIRST renamed RANK.
+> ```
+
+And the diff to `src/t_list.c` confirms it is a pure rename of the option keyword, its docs, and its error message:
+
+```diff
+-/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]
++/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]
+  *
+- * FIRST "rank" is the position of the match, so if it is 1, the first match
++ * The "rank" is the position of the match, so if it is 1, the first match
+   ...
+- * be combiled with FIRST in order to returning only the element starting
++ * be combiled with RANK in order to returning only the element starting
+   ...
+-        if (!strcasecmp(opt,"FIRST") && moreargs) {
++        if (!strcasecmp(opt,"RANK") && moreargs) {
+             j++;
+             if (getLongFromObjectOrReply(c, c->argv[j], &rank, NULL) != C_OK)
+                 return;
+             if (rank == 0) {
+-                addReplyError(c,"FIRST can't be zero: use 1 to start from "
++                addReplyError(c,"RANK can't be zero: use 1 to start from "
+                                 "the first match, 2 from the second, ...");
+```
+
+The test suite was renamed in the same commit (`tests/unit/type/list.tcl`): `test {LPOS FIRST (positive and negative rank) option}` → `test {LPOS RANK (positive and negative rank) option}`, with every `LPOS mylist c FIRST n` invocation changed to `LPOS mylist c RANK n`.
+
+### Context
+
+- `FIRST` was introduced two weeks earlier in `89ca2afd6` — *"LPOS: update to latest proposal."* — which added `if (!strcasecmp(opt,"FIRST") && moreargs)`. That's where your early examples came from.
+- Only those two commits ever mention `FIRST` in `src/t_list.c` (`git log -S'FIRST' -- src/t_list.c` returns exactly `a5a3a7bbc` and `89ca2afd6`), so `a5a3a7b` is the definitive rename.
+- The command itself had also been renamed earlier: `a7936ef96` — *"LRANK: Add command (the command will be renamed LPOS)."*
+- At the pinned HEAD (`e64d91c`), `src/t_list.c` uses only `RANK` (lines 942–975), with no `FIRST` alias — so the old name does not work.
+
+No files were modified.

@@ -1,0 +1,66 @@
+I'll start with the required verification command.All three values match. Now let me search the history.## Verification
+
+`pwd`, `git rev-parse --show-toplevel`, and `git rev-parse HEAD` all matched the expected values (`/workspace`, `/workspace`, `ee521a1c889f4cde6905c5db117959917568be9b`). No files were modified (`git status --porcelain` is empty).
+
+## Answer
+
+The bug is **CVE-2022-27774 — "Credential leak on redirect"**. The authoritative fix commit in this repository's history is:
+
+**SHA: `620ea21410030a9977396b4661806bc187231b79`** — *"transfer: redirects to other protocols or ports clear auth"*
+
+Commit message (quoted in full):
+
+> ```
+> transfer: redirects to other protocols or ports clear auth
+>
+>     ... unless explicitly permitted.
+>
+>     Bug: https://curl.se/docs/CVE-2022-27774.html
+>     Reported-by: Harry Sintonen
+>     Closes #8748
+> ```
+
+### What the fix changed
+
+Before this commit, `Curl_follow()` in `lib/transfer.c` simply extracted the new URL and followed it; credentials stored in the easy handle (`data->state.aptr.user` / `.passwd`) survived the redirect as long as the *host name* was unchanged. The fix added a check in the redirect-handling path that also compares **port** and **protocol/scheme**, and wipes the stored credentials when either differs — unless the application has explicitly opted in via `CURLOPT_UNRESTRICTED_AUTH` (`data->set.allow_auth_to_other_hosts`). Key part of the diff (`lib/transfer.c`, additions marked `+`):
+
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
+...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
+```
+
+Notably, the port is taken from `CURLOPT_PORT` when a custom port is in effect, otherwise from the URL with `CURLU_DEFAULT_PORT` so scheme-default ports compare correctly. The diff touched only `lib/transfer.c` (48 insertions, 1 deletion). This commit is an ancestor of the checked-out HEAD, and the code is still present at `lib/transfer.c:1577-1622` in this checkout (with `Curl_builtin_scheme()` since gaining a length argument).
+
+### Supporting / related commits
+
+- **`5295e8d64ac6949ecb3f9e564317a608f51b90d8`** — *"tests: verify the fix for CVE-2022-27774"*, same author/date, adds the regression tests:
+  > ```
+  >  - Test 973 redirects from HTTP to FTP, clear auth
+  >  - Test 974 redirects from HTTP to HTTP different port, clear auth
+  >  - Test 975 redirects from HTTP to FTP, permitted to keep auth
+  >  - Test 976 redirects from HTTP to HTTP different port, permitted to keep auth
+  > ```
+
+- **`6e659993952aa5f90f48864be84a1bbb047fc258`** — *"http: avoid auth/cookie on redirects same host diff port"* (**CVE-2022-27776**, "Auth/cookie leak on redirect", same reporter, same day). This is the companion sibling fix on the *sending* side in `lib/http.c`: it introduced `allow_auth_to_host()` which extends the "same host" test to also require the same port and protocol, and recorded `data->state.first_remote_protocol` alongside `first_remote_port` in `struct UrlState`, applying the check to both auth headers and custom `Cookie:`/`Authorization:` headers.
+
+If you meant the *auth/cookie header suppression* aspect rather than clearing the stored credentials, `6e6599939` is the commit; if you meant clearing the credentials themselves on cross-port/cross-protocol redirects (CVE-2022-27774 as literally described), it is `620ea2141`.

@@ -762,18 +762,29 @@ if (realRepoPerf?.data.realRepo?.latencyMs) {
     'being measured. That makes them useful for comparing one change to another and misleading as ' +
     'an answer to "how fast is it". The query workload is the exception: it is read-only, so it can ' +
     'run against a real clone.\n\n';
-  md += `Run \`${realRepoPerf.name}\`, against \`${rr.name}\`:\n\n`;
-  md +=
-    '| | commits | records | index on disk | p50 | p95 | n |\n|---|---:|---:|---:|---:|---:|---:|\n';
-  md += `| ${rr.name} | ${rr.indexedCommits?.toLocaleString('en-US') ?? 'n/a'} | ${rr.recordCount?.toLocaleString('en-US') ?? 'n/a'} | ${rr.diskBytes == null ? 'n/a' : `${(rr.diskBytes / 1024 ** 3).toFixed(2)} GiB`} | ${ms(rr.latencyMs.p50)} | ${ms(rr.latencyMs.p95)} | ${rr.latencyMs.n} |\n`;
-  const fixtureFresh = perfResults.workloads.freshProcessCurrentIndex;
-  if (fixtureFresh) {
-    md += `| the fixture | ${perfResults.referenceCorpus.commitCount} | | | ${ms(fixtureFresh.latencyMs.p50)} | ${ms(fixtureFresh.latencyMs.p95)} | ${fixtureFresh.latencyMs.n} |\n`;
-    md += `\nAbout ${(rr.latencyMs.p50 / fixtureFresh.latencyMs.p50).toFixed(1)}x slower on the real repository. `;
+  md += `Run \`${realRepoPerf.name}\`, against \`${rr.name}\` — `;
+  md += `${rr.indexedCommits?.toLocaleString('en-US') ?? 'unknown'} commits, `;
+  md += `${rr.recordCount?.toLocaleString('en-US') ?? 'unknown'} records, `;
+  md += `${rr.diskBytes == null ? 'unknown' : `${(rr.diskBytes / 1024 ** 3).toFixed(2)} GiB`} of index.\n\n`;
+
+  if (rr.directLatencyMs) {
+    // The same query, both ways, in one window. An earlier draft of this
+    // section compared a daemon-served real repository against a fixture that
+    // was never daemon-served, and duly announced that curl was "0.6x slower"
+    // than 135 commits.
+    md += '| | p50 | p95 | n |\n|---|---:|---:|---:|\n';
+    md += `| \`--daemon=direct\`, a cold process per query | ${ms(rr.directLatencyMs.p50)} | ${ms(rr.directLatencyMs.p95)} | ${rr.directLatencyMs.n} |\n`;
+    md += `| with the daemon | ${ms(rr.latencyMs.p50)} | ${ms(rr.latencyMs.p95)} | ${rr.latencyMs.n} |\n\n`;
+    if (rr.latencyMs.p50 > 0) {
+      md += `**${(rr.directLatencyMs.p50 / rr.latencyMs.p50).toFixed(1)}x**, and the daemon's p95 is tighter than its p50 without one — `;
+      md += 'a warm process has less left to vary.\n\n';
+    }
+  } else {
+    md += `p50 ${ms(rr.latencyMs.p50)}, p95 ${ms(rr.latencyMs.p95)}, n=${rr.latencyMs.n}.\n\n`;
   }
   md +=
-    'That is the number to quote. ' +
-    'Every query passed `--no-refresh`, so the workload could not write to or mutate the clone.\n\n';
+    'Every query passed `--no-refresh`, so neither configuration could write to or mutate the\n';
+  md += 'clone it measured.\n\n';
 
   if (rr.breakdown) {
     const b = rr.breakdown;
@@ -1046,11 +1057,13 @@ function readmeBlocks() {
   // entire premise is large histories -- and it is 7x faster than the truth.
   const real = realRepoPerf?.data.realRepo;
   if (real?.latencyMs) {
-    scale += `| Warm query on ${real.name} (${real.indexedCommits.toLocaleString('en-US')} commits), p50 / p95, n=${real.latencyMs.n} | ${ms(real.latencyMs.p50)} / ${ms(real.latencyMs.p95)} |\n`;
-  }
-  if (fresh) {
-    const corpus = perfResults.referenceCorpus;
-    scale += `| The same query on a ${corpus.commitCount}-commit fixture | ${ms(fresh.latencyMs.p50)} / ${ms(fresh.latencyMs.p95)} |\n`;
+    const commits = real.indexedCommits?.toLocaleString('en-US') ?? '?';
+    if (real.directLatencyMs) {
+      scale += `| Query on ${real.name} (${commits} commits) with \`git why server on\` | ${ms(real.latencyMs.p50)} p50, ${ms(real.latencyMs.p95)} p95 |\n`;
+      scale += `| The same query with no daemon | ${ms(real.directLatencyMs.p50)} p50, ${ms(real.directLatencyMs.p95)} p95 |\n`;
+    } else {
+      scale += `| Query on ${real.name} (${commits} commits) | ${ms(real.latencyMs.p50)} p50, ${ms(real.latencyMs.p95)} p95 |\n`;
+    }
   }
   if (ablation) {
     scale += `| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 ${ablation.hit5 >= 0 ? '+' : ''}${num(ablation.hit5)} |\n`;

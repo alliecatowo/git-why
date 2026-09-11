@@ -1,0 +1,48 @@
+I'll start with the required verification command.All three values match. Now let me investigate the encoding guesser history.Let me find the original commit that made the switch.Found it: `2ed84f55`. Let me read the full commit message and diff.No files were modified. Here's the answer.
+
+## Answer
+
+**Because of software licensing, not because chardet was technically inferior.** `chardet` is LGPL-licensed, which created legal ambiguity for downstream projects that bundle requests into a single binary. It was replaced with `charset_normalizer`, which is MIT-licensed.
+
+### Supporting commit
+
+**SHA: `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`** — "Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)", by Ash Berlin-Taylor (co-authored by Jarek Potiuk), 2021-07-07.
+
+Quoting the commit message:
+
+> Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity.
+>
+> As an "escape hatch" I have made the code so that it will use chardet first if it is installed, but we no longer depend upon it directly... This should minimize the impact to users, and give them an escape hatch if charset_normalizer turns out to be not as good. (In my non-exhaustive tests it detects the same encoding as chartdet in every case I threw at it)
+
+The corresponding diff in `setup.py` swapped the hard dependency and added an opt-in extra:
+
+```diff
+ requires = [
+-    'chardet>=3.0.2,<5',
++    'charset_normalizer~=2.0.0; python_version >= "3"',
++    'chardet>=3.0.2,<5; python_version < "3"',
+...
++        'use_chardet_on_py3': ['chardet>=3.0.2,<5']
+```
+
+And `requests/compat.py` gained the fallback that preserves backward compatibility:
+
+```diff
+-import chardet
++try:
++    import chardet
++except ImportError:
++    import charset_normalizer as chardet
+```
+
+The docs diff in the same commit states the rationale plainly: *"The `chardet` library is an LGPL-licenced dependency and some users of requests cannot depend on mandatory LGPL-licensed dependencies."*
+
+### Important nuance
+
+chardet was never fully removed — it is still **preferred when present**. The current code at `src/requests/compat.py:36-51` iterates `("chardet", "charset_normalizer")` in that order, so chardet still wins if installed; `charset_normalizer` is merely the default *installed* dependency (`pyproject.toml:19`), with chardet available via the `use_chardet_on_py3` extra (`pyproject.toml:56`).
+
+Two notable follow-ups refined this:
+- `555b870e` — "Allow character detection dependencies to be optional in post-packaging steps" (2024-05-14): replaced the `try/except` with the `_resolve_char_detection()` loop and downgraded the hard `raise Exception("You need either charset_normalizer or chardet installed")` into a `RequestsDependencyWarning`, making character detection fully optional.
+- `0e28c8f` → `c57f1f0` — progressively widened the pin from `charset_normalizer~=2.0.0` to `>=2,<4`.

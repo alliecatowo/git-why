@@ -10,15 +10,17 @@ _git_why_complete() {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-  local commands="index status rebuild gc help completion"
+  local commands="index status rebuild gc server help completion"
   local flags="--text --semantic --json --owners --first --last --removed --timeline \
 --sort= --before= --after= --between= --around= --group= --refresh= --no-refresh \
 --if-needed --check-ready --use-default-model --offline --verbose --max-bytes= \
---lock-timeout= --author= --query --help --version -n"
+--lock-timeout= --author= --query --daemon= --help --version -n"
 
   case "$prev" in
     --sort) COMPREPLY=( $(compgen -W "relevance oldest newest" -- "$cur") ); return ;;
     --refresh) COMPREPLY=( $(compgen -W "off wait" -- "$cur") ); return ;;
+    --daemon) COMPREPLY=( $(compgen -W "direct server auto" -- "$cur") ); return ;;
+    server) COMPREPLY=( $(compgen -W "on off status run" -- "$cur") ); return ;;
     completion) COMPREPLY=( $(compgen -W "bash zsh fish" -- "$cur") ); return ;;
   esac
 

@@ -1,0 +1,45 @@
+I'll start with the required verification command.All three match. Now let me search the history.## Answer
+
+**Yes — repeatedly.** Caddy's minimum Go version was bumped several times purely as a consequence of upgrading `quic-go`, its HTTP/3 library. The commit that first establishes this is:
+
+### Primary citation: `8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe`
+
+*Matthew Holt, 2023-02-24* — subject line states the causation directly:
+
+> `go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)`
+
+The diff shows the dependency bump and the minimum-version bump landing together in one 3-file commit (`README.md`, `go.mod`, `go.sum`):
+
+```diff
+-	github.com/quic-go/quic-go v0.32.0
++	github.com/quic-go/quic-go v0.33.0
+```
+```diff
+-	github.com/quic-go/qtls-go1-18 v0.2.0 // indirect
+-	github.com/quic-go/qtls-go1-19 v0.2.0 // indirect
+-	github.com/quic-go/qtls-go1-20 v0.1.0 // indirect
++	github.com/quic-go/qtls-go1-19 v0.2.1 // indirect
++	github.com/quic-go/qtls-go1-20 v0.1.1 // indirect
+```
+```diff
+ Requirements:
+ 
+-- [Go 1.18 or newer](https://golang.org/dl/)
++- [Go 1.19 or newer](https://golang.org/dl/)
+```
+
+The mechanism is visible in the diff: quic-go used per-Go-version `qtls-go1-XX` shims to reach into crypto/tls internals, and v0.33.0 dropped the `qtls-go1-18` shim — so Go 1.18 could no longer build Caddy. Ten minutes later the same author updated CI to match in `167981d258f41b7ef931d510056a5a5fdc9cbd0d` ("ci: Update minimum Go version to 1.19", changing the matrix from `go: [ '1.18', '1.20' ]` to `[ '1.19', '1.20' ]`), and the `go` directive in `go.mod` followed in `99d47050e97a8ccac2aad3bda46be46d4fec85ed`.
+
+### The pattern recurred twice more, also attributed to quic-go in the subject line
+
+- **`f45a6de20dd19e82e58c85b37e03957b2203b544`** (2023-07-21, Marten Seemann — a quic-go maintainer): "go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)", with body bullets "* update quic-go to v0.37.0 / * Bump to Go 1.20". Diff: `-go 1.19` / `+go 1.20`, `-quic-go v0.36.2` / `+quic-go v0.37.0`, and it dropped `qtls-go1-19` leaving only `qtls-go1-20`. This bump also let Caddy delete its Go 1.18 workaround for Early Hints:
+  ```diff
+  -	// Caddy requires at least Go 1.18, but Early Hints requires Go 1.19; thus we can simply check for 1.18 in version string
+  -	// TODO: remove this once our minimum Go version is 1.19
+  -	supports1xx = !strings.Contains(runtime.Version(), "go1.18")
+  ```
+- **`697cc593a17fcb39087161b058fc1dba8b767060`** (2024-01-25, Marten Seemann): "chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)". Diff: `-go 1.20` / `+go 1.21` (plus `toolchain go1.21.4`) alongside `-quic-go v0.40.1` / `+quic-go v0.41.0`.
+
+By contrast, the other minimum-version bumps in this history (`5376e511` → 1.15, `b4f1a713` → 1.17, `141872ed` → 1.18, `05acc513` → 1.25, etc.) are generic "keep up with upstream Go" changes with no quic-go attribution.
+
+No files were modified; the working tree is clean.

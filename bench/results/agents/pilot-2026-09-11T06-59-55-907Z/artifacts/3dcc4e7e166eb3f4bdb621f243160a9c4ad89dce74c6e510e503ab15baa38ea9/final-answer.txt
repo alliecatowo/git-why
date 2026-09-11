@@ -1,0 +1,62 @@
+I'll start with the required verification command.All three match. Now let me search the history.I have a definitive answer. Let me verify no earlier stream work exists.## Answer
+
+**Redis first got the streams data type on 30 August 2017** (author date), with the initial implementation landing in the `unstable` branch. It was authored by Salvatore Sanfilippo (antirez) and shipped publicly in **Redis 5.0**.
+
+### Supporting commit
+
+```
+commit 79866a6361829ed0602dedff9cb378c66977227a
+Author: antirez <antirez@gmail.com>
+Date:   Wed Aug 30 12:40:27 2017 +0200
+
+    Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+This is the **first** commit in the repository to touch `src/t_stream.c` or `src/stream.h`, and the first to add `xadd` to the command table (verified with `git log --diff-filter=A`, `git log -S'"xadd"' --reverse`, and by confirming no XADD/Streams commits exist before this date).
+
+### Quoted evidence from the diff
+
+It registers `XADD` (and `XRANGE`) in the command table in `src/server.c`:
+
+```diff
+     {"pfdebug",pfdebugCommand,-3,"w",0,NULL,0,0,0,0,0},
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+It creates the new `src/stream.h` defining the core type:
+
+```diff
++/* Stream item ID: a 128 bit number composed of a milliseconds time and
++ * a sequence counter. ... */
++typedef struct streamID {
++    uint64_t ms;        /* Unix time in milliseconds. */
++    uint64_t seq;       /* Sequence number. */
++} streamID;
++
++typedef struct stream {
++    rax *rax;               /* The radix tree holding the stream. */
++    uint64_t length;        /* Number of elements inside this stream. */
++    streamID last_id;       /* Zero if there are yet no items. */
++} stream;
+```
+
+And it adds `src/t_stream.c` (376 lines) with the command implementations:
+
+```diff
++/* XADD key [field value] [field value] ... */
++void xaddCommand(client *c) {
+...
++/* XRANGE key start end [COUNT <n>] */
++void xrangeCommand(client *c) {
+```
+
+The full commit adds 1,323 lines across 12 files, including the brand-new `listpack.c` encoding and `rax.c` radix-tree changes that back the "radix tree of listpacks" stream encoding described in the code comments.
+
+### Notes on dating
+
+- **Author date is 2017-08-30**, but the **commit date is 2017-12-01** — antirez developed streams on a side branch and squashed/rebased 12 commits onto `unstable` in December 2017. Either date is defensible; 2017-08-30 is when the work was originally written.
+- Follow-up commits fill out the type over the following days/months: `100d43c1a` (OBJ_STREAM = 6), `485014cc7` (RDB saving), `edd70c199` (RDB loading), `ec9bbe96b` (XLEN), etc.
+- This repository checkout has **no tags**, so the 5.0 release association comes from the release timeline rather than in-repo tag evidence.
+
+I did not modify any files.

@@ -82,7 +82,7 @@ async function loadEmbedder(options: {
 }
 
 /** Any recorded omission means the corpus is partial for the current policy. */
-function coverageSummaryOf(omissions: ManifestOmissionCounts): SnapshotSummary['coverage'] {
+export function coverageSummaryOf(omissions: ManifestOmissionCounts): SnapshotSummary['coverage'] {
   const anyOmission =
     omissions.excludedFiles > 0 ||
     omissions.unavailableFiles > 0 ||
@@ -91,7 +91,7 @@ function coverageSummaryOf(omissions: ManifestOmissionCounts): SnapshotSummary['
   return anyOmission ? 'partial' : 'complete_for_policy';
 }
 
-function toSnapshotSummary(
+export function toSnapshotSummary(
   snapshot: RepositorySnapshot,
   generation: string,
   indexedAt: string | null,

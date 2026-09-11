@@ -1,0 +1,66 @@
+## Answer: Yes — it was `.rgignore` (and before that, `.xrepignore`)
+
+**The commit that establishes the answer: `cc90511ab29d3c37e873acac0fd80f90473f54bb`** — "Switch from .rgignore to .ignore." (Andrew Gallant, 2016-09-23)
+
+Commit message:
+
+> ```
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver
+> bump.
+>
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974
+>
+> Fixes #40
+> ```
+
+Supporting diff hunks from that commit:
+
+`src/ignore.rs` — `.ignore` is added alongside the pre-existing `.rgignore`:
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+`README.md`:
+```diff
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+And a new test was added in `tests/tests.rs` next to the existing `.rgignore` test:
+```diff
++sherlock!(ignore_generic, "Sherlock", ".", |wd: WorkDir, mut cmd: Command| {
++    wd.create(".ignore", "sherlock\n");
++    wd.assert_err(&mut cmd);
++});
+```
+
+### Bonus: an even earlier name
+
+Two prior commits show the name history goes back further, to when the tool itself was called `xrep`:
+
+- `065c44998092906746f6585090bafbf36d98342b` — "File path filtering works and is pretty fast." (2016-08-27) introduced the original custom ignore file as **`.xrepignore`**, e.g. `builder.add_path(id.path.join(".xrepignore"))` and `$HOME/.xrepignore`.
+- `a744ec133d12e0c8d8e8b0486cd92e2b60ad61e6` — "Rename xrep to ripgrep." (2016-09-08) renamed it to `.rgignore`:
+  ```diff
+   const IGNORE_NAMES: &'static [&'static str] = &[
+       ".gitignore",
+       ".agignore",
+  -    ".xrepignore",
+  +    ".rgignore",
+   ];
+  ```
+
+So the progression was `.xrepignore` → `.rgignore` → `.ignore`. Note `.rgignore` was never fully dropped — at the pinned commit it still exists as a ripgrep-specific custom ignore filename (`crates/core/flags/hiargs.rs:916`: `builder.add_custom_ignore_filename(".rgignore");`), applied in addition to `.ignore`.
+
+No files were modified.
