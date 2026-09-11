@@ -129,8 +129,23 @@ git why "ETIMEDOUT" --text
 git why "the fix for the flaky retry test" --semantic
 
 # Chronological order instead of relevance (reorders, never widens).
-git why "when was request cancellation introduced?" -n 20 --sort=oldest
+git why "the retry rework" -n 20 --sort=oldest
 ```
+
+For "when did this happen" there is something better than sorting. `--first`,
+`--last` and `--removed` resolve an endpoint from the lineage table rather
+than reordering the ranked list, so they can name a commit the ranking never
+surfaced:
+
+```sh
+git why "when was request cancellation introduced" --first
+git why "how did the retry logic evolve" --timeline
+git why "who built the TLS layer" --owners
+```
+
+The answer prints above the results and names the term it was keyed on, so you
+can judge it. See
+[Ordering results](/guide/operations#ordinal-answers-first-last-removed).
 
 ## Explicit index lifecycle
 
@@ -138,22 +153,36 @@ Normal use never requires these, but they exist for CI, cold starts, and
 recovery:
 
 ```sh
-git why index              # create or reconcile the index
+git why index               # create or reconcile the index
+git why index --if-needed   # exit immediately if already current (cheap; safe in a loop)
 git why status              # report index state, no mutation
 git why status --json       # same, machine-readable
-git why rebuild              # replace derived index data
-git why gc                   # reconcile + compact, no downloads
+git why status --check-ready  # exit non-zero unless it can answer queries now
+git why rebuild             # replace derived index data
+git why gc                  # reconcile + compact, no downloads
 ```
 
 ## A note on `--help`
 
-Use `git why -h`, not `git why --help`. Git intercepts `--help` in the first
-position after any subcommand name — built-in or external — and redirects it
-to a man-page lookup. Since Git Why ships no man page, `git why --help`
-reports a missing manual page instead of reaching the tool. This is Git's
-dispatch behavior for every external subcommand, not something Git Why can
-override. `git-why --help` (calling the binary directly, not through Git)
-works fine, and so does `git why -h`.
+All three of these work:
+
+```sh
+git why -h        # the tool's own help
+git-why --help    # the binary directly, bypassing Git
+git why --help    # Git's man-page dispatch, which resolves to the shipped page
+```
+
+The third one is worth explaining, because it very nearly does not work. Git
+intercepts `--help` in the first position after any subcommand name — built-in
+or external — and rewrites it to a man-page lookup before the external command
+is ever executed. A tool that ships no man page therefore answers
+`git why --help` with "No manual entry", which is confusing and is not
+something the tool can override.
+
+Git Why ships `git-why.1`, generated from its own `-h` output so the two
+cannot disagree, and the install script places it where that lookup finds it.
+Packaging tests verify the dispatch end to end, and that every flag the tool
+advertises has its own entry in the page.
 
 ## Next
 

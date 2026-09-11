@@ -59,12 +59,25 @@ significant, because that is what those sample sizes support.
 
 ## `git why --help` says "no manual entry" — is that a bug?
 
-No. Git intercepts `--help` in the first position after any subcommand name
-(built-in or external) and redirects it to a man-page lookup, before your
-subcommand ever runs. Since Git Why ships no man page, that lookup fails.
-Use `git why -h`, or call the binary directly: `git-why --help`. Verified
-with `GIT_TRACE=1`; this is Git's dispatch behavior, not something an
-external subcommand can override.
+It means the man page is not installed where `man` looks for it.
+
+Git intercepts `--help` in the first position after any subcommand name (built
+in or external) and rewrites it to a man-page lookup before your subcommand
+ever runs. Verified with `GIT_TRACE=1`; this is Git's dispatch behaviour and
+an external subcommand cannot override it. Git Why ships `git-why.1` for
+exactly this reason, and the install script copies it into place.
+
+If you installed with plain `npm install -g`, npm 7 and later no longer link
+the `man` field, so the page ships inside the package but never reaches your
+`MANPATH`. Either use the install script, or copy it yourself:
+
+```sh
+cp "$(npm root -g)/@alliecatowo/git-why/man/git-why.1" \
+   "$(npm prefix -g)/share/man/man1/"
+```
+
+`git why -h` and `git-why --help` work regardless, since neither goes through
+Git's man dispatch.
 
 ## Does it work on Windows?
 

@@ -237,12 +237,20 @@ order, for "how did this evolve" rather than "when did this happen".
 
 ## Help output
 
-`git why -h` and `git-why --help` both work. `git why --help` does not reach
-this tool: Git intercepts `--help` in the first position after any subcommand
-name, built-in or external, and redirects it to a man-page lookup. Verified
-with `GIT_TRACE=1`. Git Why ships no man page, so that invocation reports a
-missing manual page. This is Git's dispatch behaviour and is not overridable
-from an external subcommand.
+`git why -h`, `git-why --help` and `git why --help` all work, but the third
+one takes a different route and is worth knowing about.
+
+Git intercepts `--help` in the first position after any subcommand name, built
+in or external, and rewrites it to a man-page lookup before the external
+command is executed. Verified with `GIT_TRACE=1`. This is Git's dispatch
+behaviour and is not overridable from an external subcommand, so a tool that
+ships no man page answers `git why --help` with "No manual entry".
+
+Git Why ships `man/git-why.1`. It is generated from the tool's own `-h`
+output, so the two cannot describe different flags, and packaging tests verify
+both that the dispatch resolves end to end and that every advertised flag
+heads its own entry in the page. The same generation-and-check applies to the
+site's CLI reference and to all three shell completions.
 
 ## Known coverage limits
 
