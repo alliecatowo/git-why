@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "git-why": {
-      "command": "git-why-mcp",
-      "args": [],
-      "env": {}
-    }
-  }
-}

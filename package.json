@@ -40,7 +40,9 @@
     "NOTICE",
     "schema/",
     "man/",
-    "plugin/"
+    "completions/",
+    "plugins/",
+    "opencode/"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node scripts/postbuild.mjs && node scripts/gen-man.mjs",

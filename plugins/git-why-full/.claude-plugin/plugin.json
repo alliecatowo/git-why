@@ -1,0 +1,9 @@
+{
+  "name": "git-why-full",
+  "version": "0.1.0",
+  "description": "Git Why plus Zvec-Grep: history archaeology and current-code search together, with an explorer agent that knows which to use when.",
+  "author": { "name": "alliecatowo" },
+  "homepage": "https://github.com/alliecatowo/git-why",
+  "license": "Apache-2.0",
+  "keywords": ["git", "history", "search", "archaeology", "code-search"]
+}

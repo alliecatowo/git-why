@@ -71,7 +71,9 @@ are in [`docs/install.md`](docs/install.md).
 npm install -g @alliecatowo/git-why
 ```
 
-Then add the `plugin/` directory as a Claude Code plugin. It registers the MCP
+Two plugins ship in `plugins/`: `git-why` on its own, and `git-why-full`
+which pairs it with [`zg`](https://zvec.org) and adds an explorer agent.
+OpenCode users get `opencode/` instead. It registers the MCP
 server and ships a skill that teaches an agent **when to reach for history and
 when not to** — including the case where `git log -S` is the better tool, since
 a skill that oversells its own tool makes an agent worse at its job.
@@ -180,6 +182,8 @@ called.
 
 - **[Documentation site](https://alliecatowo.github.io/git-why/)** — guided
   install, how retrieval works, CLI reference, FAQ.
+- **[`docs/indexes.md`](docs/indexes.md)** — where indexes live, worktrees,
+  submodules, monorepos, disk use, and the shared model cache.
 - **[`docs/examples.md`](docs/examples.md)** — real output on real
   repositories, including a case where this is the wrong tool.
 - **[`docs/plugin.md`](docs/plugin.md)** — the Claude Code plugin, its skill,

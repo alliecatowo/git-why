@@ -9,7 +9,14 @@ and an agent definition for deeper investigation.
 npm install -g @alliecatowo/git-why
 ```
 
-Then add the plugin directory to Claude Code. The MCP server is registered by
+Two plugins ship:
+
+- **`plugins/git-why`** — the tool alone: MCP server, the history skill, and
+  index management.
+- **`plugins/git-why-full`** — adds `zg` for current-code search, a routing
+  skill that covers both, and the `history-explorer` agent.
+
+Add either directory to Claude Code. The MCP server is registered by
 `plugin/.mcp.json` and runs the `git-why-mcp` binary that the npm package
 installs, so no separate server setup is needed.
 
@@ -55,3 +62,20 @@ If the agent has the skill loaded it should reach for `git why` on "why is
 this like this" questions and for `git log -S` when it already has an
 identifier. If it reaches for `git why` with a symbol it can already see, the
 skill is not doing its job — that is the specific failure worth reporting.
+
+## OpenCode
+
+`opencode/` holds an `AGENTS.md` fragment and an `opencode.json` with the MCP
+registration. Copy the guidance into your project's `AGENTS.md` or point your
+config at the JSON.
+
+## Shell completions
+
+```sh
+git why completion zsh  > ~/.zsh/completions/_git-why
+git why completion bash > /usr/local/etc/bash_completion.d/git-why
+git why completion fish > ~/.config/fish/completions/git-why.fish
+```
+
+The scripts complete `git why ...` as well as `git-why ...`, since Git
+dispatches the subcommand form and that is how people actually type it.

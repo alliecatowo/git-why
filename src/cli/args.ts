@@ -69,6 +69,8 @@ export interface ParsedLifecycle {
   readonly noRefresh: boolean;
   /** `status --check-ready` only; false, and meaningless, for every other command. */
   readonly checkReady: boolean;
+  /** `index --if-needed`: skip the build when the index is already current. */
+  readonly ifNeeded: boolean;
 }
 
 export type ParsedInvocation = ParsedHelp | ParsedVersion | ParsedSearch | ParsedLifecycle;
@@ -84,6 +86,7 @@ const BOOLEAN_LONG_FLAGS = new Set([
   'version',
   'verbose',
   'check-ready',
+  'if-needed',
   'owners',
   'first',
   'last',
@@ -339,6 +342,15 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
       invalid('--use-default-model is only valid with "rebuild".');
     }
 
+    // `index --if-needed` is idempotent: build when the index is missing or
+    // stale, do nothing when it is current. Without it every caller has to
+    // script `status --check-ready || index`, and an agent that gets that
+    // wrong either rebuilds a 30,000-commit index needlessly or queries a
+    // stale one.
+    const ifNeeded = options.get('if-needed') === true;
+    if (ifNeeded && command !== 'index') {
+      invalid('--if-needed is only valid with "index".');
+    }
     const checkReady = options.get('check-ready') === true;
     if (checkReady && command !== 'status') {
       invalid('--check-ready is only valid with "status".');
@@ -370,6 +382,7 @@ export function parseArgs(argv: readonly string[]): ParsedInvocation {
       verbose: verboseFlag,
       noRefresh: parseRefresh(options),
       checkReady,
+      ifNeeded,
     };
   }
 

@@ -6,6 +6,8 @@
  */
 
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   parseArgs,
   argvRequestsJson,
@@ -271,6 +273,17 @@ function searchContext(parsed: ParsedSearch): ErrorContext {
   };
 }
 
+/**
+ * Reads a shipped completion script. They are data files rather than string
+ * literals so the same text is what gets installed to a completion directory,
+ * with no chance of the two drifting apart.
+ */
+function readCompletionScript(shell: string): string {
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  // dist/cli/ -> package root -> completions/
+  return readFileSync(path.join(here, '..', '..', 'completions', `git-why.${shell}`), 'utf8');
+}
+
 async function runLifecycle(
   backend: Backend,
   repo: RepositoryHandle,
@@ -280,6 +293,23 @@ async function runLifecycle(
   const lockTimeoutMs = parsed.lockTimeoutSeconds * 1000;
   const signal = controller.signal;
   try {
+    // `index --if-needed` is idempotent: when the index is already current it
+    // reports and exits without rebuilding. Callers would otherwise have to
+    // script `status --check-ready || index`, and getting that wrong means
+    // either rebuilding a 30,000-commit index needlessly or querying a stale
+    // one. Checked BEFORE the work, obviously, or it would not save anything.
+    if (parsed.command === 'index' && parsed.ifNeeded) {
+      const current = await backend.getStatus(repo, { lockTimeoutMs, signal });
+      if (isIndexReady(current)) {
+        if (parsed.json) {
+          writeStdout(renderStatusJson('index', current) + '\n');
+        } else {
+          writeStdout(renderStatusHuman(current));
+        }
+        return ExitCode.OK;
+      }
+    }
+
     const status = await (() => {
       switch (parsed.command) {
         case 'status':
@@ -393,6 +423,25 @@ async function run(): Promise<number> {
       query: '',
       mode: 'hybrid',
     });
+  }
+
+  // `completion <shell>` is handled before anything touches a repository: it
+  // emits a static script and must work outside a Git worktree, with no index
+  // and no model, because that is when people set up their shell.
+  if (argv[0] === 'completion') {
+    const shell = argv[1];
+    const known = ['bash', 'zsh', 'fish'] as const;
+    if (shell === undefined || !(known as readonly string[]).includes(shell)) {
+      writeStderr(`usage: git why completion <${known.join('|')}>\n`);
+      return ExitCode.INVALID_INVOCATION;
+    }
+    try {
+      writeStdout(readCompletionScript(shell));
+      return ExitCode.OK;
+    } catch {
+      writeStderr(`git why: completion script for ${shell} is not installed\n`);
+      return ExitCode.INDEX_FAILURE;
+    }
   }
 
   if (parsed.kind === 'help') {
