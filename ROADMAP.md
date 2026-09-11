@@ -30,6 +30,88 @@ means storing the PR-to-commit edge and letting a commit hit pull in its PR
 discussion as evidence. That is the same shape as the existing evidence
 records, so it fits the storage model rather than fighting it.
 
+## 1b. The real prize: recovering history that Git threw away
+
+The reason pull requests matter is bigger than "more text to index", and it is
+worth stating separately because it changes what the tool is.
+
+**Visible history is a lossy projection of what actually happened.** Squash
+merges, rebases and force-pushes are designed to destroy the messy trail and
+leave a clean one. The messy trail is the reasoning:
+
+- A squashed commit says `Add retry logic (#1234)`. The six commits that went
+  into it said `try exponential backoff`, `backoff amplifies load under
+failure`, `revert backoff`, `queue and dedupe instead`. The squash deletes
+  the three sentences that answer "why not just retry".
+- A force-push after review replaces the version the reviewer objected to. The
+  objection and the thing objected to are both gone from `git log`.
+- A rebase rewrites SHAs, so anything referencing the pre-rebase commits
+  dangles.
+
+A pull request preserves all of it: the long-form body, the individual
+pre-squash commits under `refs/pull/N/head`, the review threads attached to
+specific lines of specific versions. **Squashed repositories are where this is
+most valuable**, which is the opposite of the intuition that a clean history
+needs less help.
+
+**What that implies technically.** The interesting artefact is not a bag of PR
+documents; it is an edge set:
+
+```
+squashed commit  --produced-by-->  PR #1234
+PR #1234         --contains-->     6 original commits (refs/pull/1234/head)
+review thread    --anchored-to-->  a line in a version that no longer exists
+```
+
+With those edges, a hit on the squashed commit can surface the internal
+reasoning that the squash removed. The existing lineage table is already an
+edge store over commits, so this extends a structure that exists rather than
+adding a parallel one.
+
+**Open pull requests are free upside.** Work that is proposed but not merged is
+not in history at all, and "has anyone tried this already" is exactly the
+question where the answer is often an open or a closed-unmerged PR. No other
+local tool can answer it.
+
+## 1c. Ancestry is harder than "what is reachable"
+
+Following from the above, and relevant even without any GitHub integration.
+
+`git why` currently treats history as the commits reachable from refs. That is
+incomplete in ways that matter:
+
+- **Dangling commits** from rebases and amends remain in the object database
+  until `gc` collects them. These are real and plentiful: `git fsck --dangling`
+  on a fresh zod clone reports 114. Pre-rebase versions of a change are
+  frequently more explanatory than the rebased result. Note that a fresh clone
+  has an almost empty reflog (3 entries), so the reflog is only useful in a
+  repository someone has actually worked in — dangling-object discovery has to
+  come from `fsck`, not from the reflog.
+- **`refs/pull/*`** is NOT present in a standard clone — checked, rather than
+  assumed. The default refspec is `+refs/heads/*:refs/remotes/origin/*` and a
+  fresh clone of zod has zero pull refs. Fetching them needs an explicit
+  refspec:
+
+  ```sh
+  git fetch origin '+refs/pull/*/head:refs/pull/*/head'
+  ```
+
+  That is cheap and needs no API token, so it is still the better first step
+  than building a fetcher — but it is an opt-in action a user must take, not
+  something already sitting in the clone.
+
+- **Ordinal answers are already ancestry-based**, not timestamp-based, because
+  rebases rewrite dates. That decision was right and this extends it: ancestry
+  itself is partly hidden, not merely misordered.
+
+**The honest risk:** reachability is a clean, well-defined scope, and
+"everything in the object database" is not. Dangling objects are unreviewed,
+possibly abandoned, and may contain work someone deliberately discarded.
+Surfacing a reverted experiment as though it were current guidance would be
+worse than missing it. Any such source has to be labelled distinctly in results
+and probably opt-in, and that needs measuring on the 174-case corpus before it
+is a default.
+
 ## 2. `gh why` as a sister command, sharing one index
 
 The open design question, recorded with a position rather than left vague.
