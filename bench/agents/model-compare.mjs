@@ -28,6 +28,25 @@ export const median = (xs) => {
 };
 const sum = (xs) => xs.reduce((a, b) => a + (b ?? 0), 0);
 
+/**
+ * Chooses between two trials of the same (task, arm).
+ *
+ * This happens when one model is run twice -- deepseek-v4-flash has an
+ * original run and a re-run added once token reconciliation existed. Without a
+ * rule, whichever the filesystem happened to list last won, which means the
+ * paired comparison silently depended on readdir order.
+ *
+ * A trial whose token counts reconcile against the provider's own accounting
+ * is strictly better evidence than one whose do not, so that wins first.
+ * Failing that, the later trial wins, since it ran against newer code.
+ */
+export function preferTrial(a, b) {
+  const rank = (r) =>
+    r.token_cross_check_agrees === true ? 2 : r.token_cross_check_agrees === null ? 1 : 0;
+  if (rank(b) !== rank(a)) return rank(b) > rank(a) ? b : a;
+  return (b.__runId ?? '') >= (a.__runId ?? '') ? b : a;
+}
+
 /** A trial counts only if it ran to completion and produced a verdict. */
 export function graded(records, arm) {
   return records.filter(
@@ -43,9 +62,13 @@ export function graded(records, arm) {
 function loadRun(dir) {
   const trialsDir = join(dir, 'trials');
   if (!existsSync(trialsDir)) return [];
+  // Trial records carry no timestamp of their own; the run directory name is
+  // the ISO timestamp, so it is attached here to give `preferTrial` something
+  // ordered to break ties on.
+  const runId = dir.split('/').pop() ?? '';
   return readdirSync(trialsDir)
     .filter((n) => n.endsWith('.json'))
-    .map((n) => JSON.parse(readFileSync(join(trialsDir, n), 'utf8')));
+    .map((n) => ({ ...JSON.parse(readFileSync(join(trialsDir, n), 'utf8')), __runId: runId }));
 }
 
 /**
@@ -105,7 +128,7 @@ export function compareModels(resultsDir, opts = {}) {
       for (const arm of [x, y]) {
         for (const r of graded(records, arm)) {
           const e = byTask.get(r.task_id) ?? {};
-          e[arm] = r;
+          e[arm] = e[arm] === undefined ? r : preferTrial(e[arm], r);
           byTask.set(r.task_id, e);
         }
       }
