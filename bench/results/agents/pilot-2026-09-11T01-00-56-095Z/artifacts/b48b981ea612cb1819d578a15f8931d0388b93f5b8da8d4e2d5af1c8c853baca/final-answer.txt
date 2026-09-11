@@ -1,0 +1,21 @@
+Yes, ripgrep's special ignore-file name used to be `.rgignore` before it was changed to `.ignore`.
+
+This change is documented in commit `cc90511ab29d3c37e873acac0fd80f90473f54bb` with the subject "Switch from .rgignore to .ignore."
+
+The commit message and relevant changes note:
+> Switch from .rgignore to .ignore.
+>
+> But don't actually remove support for .rgignore until the next semver
+> bump.
+>
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974
+
+The diff for `src/ignore.rs` added `.ignore` to the list of ignored files:
+```rust
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```

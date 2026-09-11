@@ -73,7 +73,15 @@ for (const { model, records } of byModel.values()) {
       calls: median(g.map((r) => r.tool_calls)),
       inTok: median(g.map((r) => r.input_tokens)),
       outTok: median(g.map((r) => r.output_tokens)),
-      cost: sum(g.map((r) => r.actual_billed_cost)),
+      // Cost is summed over trials whose token counts RECONCILE against the
+      // provider's own database. A trial whose accounting disagrees has an
+      // unreliable cost, and averaging it in would quietly corrupt the column
+      // that matters most.
+      cost: sum(
+        g.filter((r) => r.token_cross_check_agrees !== false).map((r) => r.actual_billed_cost),
+      ),
+      verified: g.filter((r) => r.token_cross_check_agrees === true).length,
+      unverified: g.filter((r) => r.token_cross_check_agrees === null).length,
       // Cross-check disagreements invalidate the cost column, so they are
       // surfaced rather than averaged away.
       badTokens: g.filter((r) => r.token_cross_check_agrees === false).length,
@@ -107,14 +115,14 @@ for (const { model, records } of byModel.values()) {
 
 console.log('\nPer-arm, graded trials only (n = trials that ran and produced a verdict)\n');
 console.log(
-  `${'model'.padEnd(34)}${'arm'.padEnd(5)}${'cited'.padEnd(10)}${'calls'.padEnd(7)}${'in tok'.padEnd(9)}${'cost'.padEnd(11)}bad-tok`,
+  `${'model'.padEnd(34)}${'arm'.padEnd(5)}${'cited'.padEnd(10)}${'calls'.padEnd(7)}${'in tok'.padEnd(9)}${'cost'.padEnd(11)}${'tok ok'.padEnd(8)}bad-tok`,
 );
 for (const row of rows) {
   for (const arm of ['A', 'B', 'C', 'D']) {
     const a = row.arms[arm];
     if (a.n === 0) continue;
     console.log(
-      `${row.model.slice(0, 33).padEnd(34)}${arm.padEnd(5)}${`${a.hits}/${a.n}`.padEnd(10)}${String(a.calls ?? '-').padEnd(7)}${String(a.inTok ?? '-').padEnd(9)}${`$${a.cost.toFixed(4)}`.padEnd(11)}${a.badTokens || ''}`,
+      `${row.model.slice(0, 33).padEnd(34)}${arm.padEnd(5)}${`${a.hits}/${a.n}`.padEnd(10)}${String(a.calls ?? '-').padEnd(7)}${String(a.inTok ?? '-').padEnd(9)}${`$${a.cost.toFixed(4)}`.padEnd(11)}${`${a.verified}/${a.n}`.padEnd(8)}${a.badTokens || ''}`,
     );
   }
 }
@@ -131,6 +139,12 @@ for (const row of rows) {
     `${row.model.slice(0, 33).padEnd(34)}${String(p.n).padEnd(5)}${`${p.accWin}-${p.accLoss}`.padEnd(10)}${sign(p.callsDelta).padEnd(12)}${sign(p.tokDelta)}`,
   );
 }
+
+console.log(
+  '\n"tok ok" is how many of that arm\'s trials had their token counts confirmed\n' +
+    "against the provider's own database. Cost sums only reconciled trials;\n" +
+    'runs predating the cross-check show 0 and their cost is unverified.\n',
+);
 
 console.log(
   '\nA negative call delta means git why reached the answer in FEWER turns.\n' +

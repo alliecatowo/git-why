@@ -1,0 +1,13 @@
+Yes, curl can print transfer statistics as JSON using the `-w` (or `--write-out`) option with the `%{json}` variable.
+
+This functionality was introduced in commit `04c0341` (dated March 17, 2020, by Mathias Gumz).
+
+The relevant part of the commit message confirms:
+> This commit adds support to generate JSON via the writeout feature:
+>
+>    -w "%{json}"
+>
+> It leverages the existing infrastructure as much as possible. Thus,
+> generating the JSON on STDERR is possible by:
+>
+>    -w "%{stderr}%{json}"

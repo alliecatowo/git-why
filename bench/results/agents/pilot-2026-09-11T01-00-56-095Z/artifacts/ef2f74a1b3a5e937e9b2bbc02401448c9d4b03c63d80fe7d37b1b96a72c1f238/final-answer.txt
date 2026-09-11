@@ -1,0 +1,24 @@
+The Redis `STREAMS` data type was introduced in the commit `79866a636` ("Streams: 12 commits squashed into the initial Streams implementation."). This commit added the initial implementation of streams, including the `XADD` and `XRANGE` commands.
+
+The commit message itself is minimal ("Streams: 12 commits squashed into the initial Streams implementation."), but the diff shows the creation of `src/t_stream.c` containing the `xaddCommand` and `xrangeCommand` implementations, and the modifications to `src/server.c` to register these commands:
+
+```c
+// From src/server.c in commit 79866a636
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+The core `XADD` logic was implemented in `src/t_stream.c` in the same commit:
+
+```c
+/* XADD key [field value] [field value] ... */
+void xaddCommand(client *c) {
+    ...
+    /* Append using the low level function and return the ID. */
+    streamID id;
+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+    ...
+}
+```
+
+Commit SHA: `79866a6361829ed0602dedff9cb378c66977227a`

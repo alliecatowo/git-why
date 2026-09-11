@@ -1,0 +1,87 @@
+{
+  "task_id": "X-redis-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "31cd1cc0a87ce9853433cfefd8eaa1fdbef00aa9",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:55:14.454Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "fc54c6bdc1bc2362709931bc5e4dce10fbd2f472bd4ded4220c023420ab024bf",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "a5a3a7bbc61203398ecc1d5b52c76214f5672776",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "a5a3a7b"
+    ]
+  },
+  "wall_ms": 56836,
+  "tool_calls": 2,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 12142,
+  "output_tokens": 190,
+  "cache_read_tokens": 7554,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00350935,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 23568,
+  "index_build_ms": 186664,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-redis-02-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "5655192ba16e8417dd59886ce5d5512e06971662e8b009646d4da219b9e14611",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 12142,
+    "output": 190,
+    "messages": 4
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/5655192ba16e8417dd59886ce5d5512e06971662e8b009646d4da219b9e14611",
+  "completed": true
+}

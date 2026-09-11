@@ -1,0 +1,11 @@
+The security bug where following a redirect could leak credentials to a different protocol or port was addressed in curl by tightening the checks for when authentication and sensitive headers (like `Cookie` and `Authorization`) are sent during a redirect.
+
+Specifically, the fix involved:
+1.  **Clearing authentication on protocol or port change:** The transfer logic was updated to clear user and password information if a redirect is followed to a different port number or a different protocol, unless the user explicitly permits this with `CURLOPT_ALLOW_AUTH_TO_OTHER_HOSTS`. This was implemented in commit **620ea21410030a9977396b4661806bc187231b79** (`transfer: redirects to other protocols or ports clear auth`).
+2.  **Strictly limiting auth/sensitive data sending to the first host:** The logic was further refined to ensure that sensitive data like cookies and authorization headers are only sent if the connection is to the same host, port, and protocol as the original request, unless `CURLOPT_ALLOW_AUTH_TO_OTHER_HOSTS` is set. This was implemented in commit **6e659993952aa5f90f48864be84a1bbb047fc258** (`http: avoid auth/cookie on redirects same host diff port`).
+
+### Relevant commits:
+*   **620ea21410030a9977396b4661806bc187231b79**: 
+    > "Clear auth if this redirects to a different port number or protocol, unless permitted"
+*   **6e659993952aa5f90f48864be84a1bbb047fc258**: 
+    > "To prevent the user+password to get sent to other than the original host due to a location-follow"

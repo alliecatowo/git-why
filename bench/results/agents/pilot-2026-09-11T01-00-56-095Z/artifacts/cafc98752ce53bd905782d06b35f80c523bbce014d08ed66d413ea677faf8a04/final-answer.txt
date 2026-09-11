@@ -1,0 +1,25 @@
+The default behavior for handling unknown keys in Zod objects was changed in **commit `18854492`** ("strip unknown keys by default").
+
+Before this change, Zod object schemas allowed unknown keys by default (passing them through to the output). As of this commit, they are stripped by default.
+
+### Supporting Evidence
+
+The commit message states:
+> `- Object schemas now strip unknown keys by default, instead of throwing an error`
+
+Additionally, the diff for `README.md` in that commit highlights this breaking change:
+```diff
+-- Object schemas now _allow_ unknown keys by default, instead of throwing an error
++- Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+And in the `README.md` documentation update:
+```diff
+ #### Unknown keys
+ 
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+ 
+-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
++> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+```

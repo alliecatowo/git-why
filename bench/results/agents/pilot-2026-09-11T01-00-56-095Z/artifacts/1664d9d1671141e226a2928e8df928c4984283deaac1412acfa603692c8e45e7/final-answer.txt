@@ -1,0 +1,6 @@
+Redis first introduced the Streams data type in commit `79866a6361829ed0602dedff9cb378c66977227a`, which squashed 12 commits for the initial implementation.
+
+The commit message states:
+> "Streams: 12 commits squashed into the initial Streams implementation."
+
+The diff confirms the introduction of the data type, including the `XADD` command (e.g., `+/* XADD key [field value] [field value] ... */` found in the diff).

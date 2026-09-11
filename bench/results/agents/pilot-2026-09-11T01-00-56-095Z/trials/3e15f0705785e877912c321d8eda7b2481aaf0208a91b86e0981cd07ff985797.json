@@ -1,0 +1,181 @@
+{
+  "task_id": "X-caddy-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "corpus_fingerprint": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "implementation_sha": "24b66df595a03183e0958bafc60f5b14ebcff548",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:17:19.989Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "2cbd2a7aae258ca841c60477c706cb7db003798fcc12d98c618a3d1a0a6329a7",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 612024,
+  "tool_calls": 13,
+  "history_calls": 12,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 48106,
+  "output_tokens": 449,
+  "cache_read_tokens": 126842,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.01587105,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 65064,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-caddy-01-B-r1-a1.jsonl",
+  "exit_reason": "wall_clock_timeout",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited null",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "3e15f0705785e877912c321d8eda7b2481aaf0208a91b86e0981cd07ff985797",
+  "zg_index_build_ms": 14220,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  641 / 641 files\n  Entities    4,377\n  Truncated   2 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_KxKMPwshIAr7TJhVtHTZSms3",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --grep=\"go version\" --grep=\"go.mod\" --grep=\"HTTP/3\" | head -n 20"
+        },
+        "output": "19be5d8c caddyhttp: remove unused QUICConfig from the HTTP/3 server (#7980)\n7cc98d4d cmd: make splitModule strictly conform to Go module spec (#7974)\n915793f6 caddyhttp: add {http.request.proto_name} placeholder for spec-compliant protocol names (#7782)\nfcc7860d reverseproxy: replace placeholders specified for sni while using http3 (#7737)\n94fcea08 go.mod: update x/net (#7767)\n44b667a7 go.mod: Update x/crypto\ncc58caa1 go.mod: Upgrade quic-go to v0.59.1\nf6ee80be go.mod: Upgrade dependencies including CertMagic\nce203aa9 go.mod: Upgrade x/net\n03243e42 go.mod: Upgrade dependencies\n80bf8183 go.mod: update nebula v1.10.3 to resolve cve (#7471)\nb2d21f65 go.mod: Upgrade CertMagic and ZeroSSL deps\n34fd2dfc go.mod: update tscert package to latest (aea342f6) (#7397)\nf2199d48 chore: update quic-go to v0.56.0, enable qlog for HTTP/3 (#7345)\n0c8798fc go.mod: update quic-go to v0.54.1 (#7273)\n3723e895 go.mod: Upgrade CertMagic to v0.24.0\n3bd41354 go.mod: Upgrade dependencies\n11c6daec go.mod: update quic-go to v0.53.0 (#7094)\na6d488a1 go.mod: update quic-go to v0.51.0 (#6972)\n137711ae go.mod: Upgrade acmez and certmagic\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_DLREeowUX83sAEzMDJgQRj3u",
+        "status": "completed",
+        "input": {
+          "command": "git log -p -S \"go 1.\" --reverse --oneline --no-patch"
+        },
+        "output": "8eba582e Add go module files\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_DuVJBMRc1Mh0vzB1ayI7h2Uz",
+        "status": "completed",
+        "input": {
+          "command": "git log -p -S \"go 1.\" --oneline"
+        },
+        "output": "8eba582e Add go module files\ndiff --git a/go.mod b/go.mod\nnew file mode 100644\nindex 00000000..89aa72ed\n--- /dev/null\n+++ b/go.mod\n@@ -0,0 +1,11 @@\n+module bitbucket.org/lightcodelabs/caddy2\n+\n+go 1.12\n+\n+require (\n+\tgithub.com/go-acme/lego v2.5.0+incompatible\n+\tgithub.com/klauspost/cpuid v1.2.1\n+\tgithub.com/mholt/certmagic v0.5.1\n+\tgo.starlark.net v0.0.0-20190506145734-95b2783e7d63\n+\tgolang.org/x/net v0.0.0-20190503192946-f4e77d36d62c\n+)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_5S7WlHyz8oadNTIEUNcXqSxU",
+        "status": "completed",
+        "input": {
+          "command": "git log -p -G \"go 1\\.\" | grep \"go 1\\.\""
+        },
+        "output": "-go 1.25.0\n+go 1.25.1\n-go 1.25\n+go 1.25.0\n-go 1.24\n+go 1.25\n-go 1.22.3\n+go 1.24\n-go 1.21.0\n+go 1.22.3\n-go 1.22.3\n+go 1.21.0\n    go.mod: go 1.22.3\n-go 1.22.0\n+go 1.22.3\n-go 1.21\n+go 1.22.0\n-go 1.20\n+go 1.21\n-go 1.19\n+go 1.20\n-go 1.18\n+go 1.19\n-go 1.17\n+go 1.18\n-go 1.16\n+go 1.17\n-go 1.15\n+go 1.16\n-go 1.14\n+go 1.15\n-go 1.13\n+go 1.14\n-go 1.13\n+go 1.14\n-go 1.12\n+go 1.13\n+go 1.12\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_eqiapKyIhxPn6TW6hFebdNo9",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -p | grep -C 5 \"go 1\\.\" | grep -B 10 -A 2 \"quic\" | head -n 50"
+        },
+        "output": "--- a/go.mod\n+++ b/go.mod\n@@ -1,6 +1,6 @@\n module github.com/caddyserver/caddy/v2\n \n-go 1.24\n+go 1.25\n \n require (\n \tgithub.com/BurntSushi/toml v1.5.0\n7590c9ca caddyhttp: Free up quic listener when stopping (#7177)\ndiff --git a/listeners.go b/listeners.go\n--\n--\n require (\n \tgithub.com/Masterminds/sprig/v3 v3.2.2\n-\tgithub.com/alecthomas/chroma v0.9.2\n+\tgithub.com/alecthomas/chroma v0.10.0\n--\n+\tcaddy.DefaultStorage = &certmagic.FileStorage{Path: caddy.AppDataDir()}\n+\n \treturn nil\n }\n \ne0a6a1ef chore: Update quic-go for go 1.17 support (#4297)\ndiff --git a/go.mod b/go.mod\nindex 69d771f6..75770ec0 100644\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_SRGC4n3f3kVGwVLlvWnwNGW6",
+        "status": "completed",
+        "input": {
+          "command": "git show e0a6a1ef"
+        },
+        "output": "commit e0a6a1efffd424b5ff0a2437a9b0a7066ac62803\nAuthor: Adam Weinberger <adamw@adamw.org>\nDate:   Fri Aug 20 12:19:16 2021 -0400\n\n    chore: Update quic-go for go 1.17 support (#4297)\n    \n    * Update quic-go for go 1.17 support\n    \n    * Complete quic-go update (go mod tidy)\n\ndiff --git a/go.mod b/go.mod\nindex 69d771f6..75770ec0 100644\n--- a/go.mod\n+++ b/go.mod\n@@ -13,7 +13,7 @@ require (\n \tgithub.com/google/uuid v1.2.0\n \tgithub.com/klauspost/compress v1.13.1\n \tgithub.com/klauspost/cpuid/v2 v2.0.6\n-\tgithub.com/lucas-clemente/quic-go v0.21.1\n+\tgithub.com/lucas-clemente/quic-go v0.23.0\n \tgithub.com/mholt/acmez v0.1.3\n \tgithub.com/naoina/go-stringutil v0.1.0 // indirect\n \tgithub.com/naoina/toml v0.1.1\ndiff --git a/go.sum b/go.sum\nindex 3de91df3..340dd35c 100644\n--- a/go.sum\n+++ b/go.sum\n@@ -250,6 +250,8 @@ github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LB\n github.com/go-stack/stack v1.6.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=\n github.com/go-stack/stack v1.8.0 h1:5SgMzNM5HxrEjV0ww2lTmX6E2Izsfxas4+YHWRs3Lsk=\n github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=\n+github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 h1:p104kn46Q8WdvHunIJ9dAyjPVtrBPhSr3KT2yUst43I=\n+github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0/go.mod h1:fyg7847qk6SyHyPtNmDHnmrv/HOrqktSC+C9fM+CJOE=\n github.com/go-toolsmith/astcast v1.0.0/go.mod h1:mt2OdQTeAQcY4DQgPSArJjHCcOwlX+Wl/kwN+LbLGQ4=\n github.com/go-toolsmith/astcopy v1.0.0/go.mod h1:vrgyG+5Bxrnz4MZWPF+pI4R8h3qKRjjyvV/DSez4WVQ=\n github.com/go-toolsmith/astequal v0.0.0-20180903214952-dcb477bfacd6/go.mod h1:H+xSiq0+LtiDC11+h1G32h7Of5O3CYFJ99GVbS5lDKY=\n@@ -496,8 +498,8 @@ github.com/libdns/libdns v0.2.1/go.mod h1:yQCXzk1lEZmmCPa857bnk4TsOiqYasqpyOEeSO\n github.com/lightstep/lightstep-tracer-common/golang/gogo v0.0.0-20190605223551-bc2310a04743/go.mod h1:qklhhLq1aX+mtWk9cPHPzaBjWImj5ULL6C7HFJtXQMM=\n github.com/lightstep/lightstep-tracer-go v0.18.1/go.mod h1:jlF1pusYV4pidLvZ+XD0UBX0ZE6WURAspgAczcDHrL4=\n github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e/go.mod h1:7rIyQOR62GCctdiQpZ/zOJlFyk6y+94wXzv6RNZgaR4=\n-github.com/lucas-clemente/quic-go v0.21.1 h1:uuhCcu885TE9u/piPYMChI/yqA1lXfaLUEx8uCMxf8w=\n-github.com/lucas-clemente/quic-go v0.21.1/go.mod h1:U9kFi5LKbNIlU30dkuM9vxmTxWq4Bvzee/MjBI+07UA=\n+github.com/lucas-clemente/quic-go v0.23.0 h1:5vFnKtZ6nHDFsc/F3uuiF4T3y/AXaQdxjUqiVw26GZE=\n+github.com/lucas-clemente/quic-go v0.23.0/go.mod h1:paZuzjXCE5mj6sikVLMvqXk8lJV2AsqtJ6bDhjEfxx0=\n github.com/lunixbochs/vtclean v0.0.0-20180621232353-2d01aacdc34a/go.mod h1:pHhQNgMf3btfWnGBVipUOjRYhoOsdGqdm/+2c2E2WMI=\n github.com/lunixbochs/vtclean v1.0.0 h1:xu2sLAri4lGiovBDQKxl5mrXyESr3gUr5m5SM5+LVb8=\n github.com/lunixbochs/vtclean v1.0.0/go.mod h1:pHhQNgMf3btfWnGBVipUOjRYhoOsdGqdm/+2c2E2WMI=\n@@ -510,12 +512,11 @@ github.com/manifoldco/promptui v0.8.0 h1:R95mMF+McvXZQ7j1g8ucVZE1gLP3Sv6j9vlF9ky\n github.com/manifoldco/promptui v0.8.0/go.mod h1:n4zTdgP0vr0S3w7/O/g98U+e0gwLScEXGwov2nIKuGQ=\n github.com/marten-seemann/qpack v0.2.1 h1:jvTsT/HpCn2UZJdP+UUB53FfUUgeOyG5K1ns0OJOGVs=\n github.com/marten-seemann/qpack v0.2.1/go.mod h1:F7Gl5L1jIgN1D11ucXefiuJS9UMVP2opoCp2jDKb7wc=\n-github.com/marten-seemann/qtls-go1-15 v0.1.4 h1:RehYMOyRW8hPVEja1KBVsFVNSm35Jj9Mvs5yNoZZ28A=\n github.com/marten-seemann/qtls-go1-15 v0.1.4/go.mod h1:GyFwywLKkRt+6mfU99csTEY1joMZz5vmB1WNZH3P81I=\n-github.com/marten-seemann/qtls-go1-16 v0.1.3 h1:XEZ1xGorVy9u+lJq+WXNE+hiqRYLNvJGYmwfwKQN2gU=\n-github.com/marten-seemann/qtls-go1-16 v0.1.3/go.mod h1:gNpI2Ol+lRS3WwSOtIUUtRwZEQMXjYK+dQSBFbethAk=\n-github.com/marten-seemann/qtls-go1-17 v0.1.0-beta.1.2 h1:SficYjyOthSrliKI+EaFuXS6HqSsX3dkY9AqxAAjBjw=\n-github.com/marten-seemann/qtls-go1-17 v0.1.0-beta.1.2/go.mod h1:fz4HIxByo+LlWcreM4CZOYNuz3taBQ8rN2X6FqvaWo8=\n+github.com/marten-seemann/qtls-go1-16 v0.1.4 h1:xbHbOGGhrenVtII6Co8akhLEdrawwB2iHl5yhJRpnco=\n+github.com/marten-seemann/qtls-go1-16 v0.1.4/go.mod h1:gNpI2Ol+lRS3WwSOtIUUtRwZEQMXjYK+dQSBFbethAk=\n+github.com/marten-seemann/qtls-go1-17 v0.1.0 h1:P9ggrs5xtwiqXv/FHNwntmuLMNq3KaSIG93AtAZ48xk=\n+github.com/marten-seemann/qtls-go1-17 v0.1.0/go.mod h1:fz4HIxByo+LlWcreM4CZOYNuz3taBQ8rN2X6FqvaWo8=\n github.com/matoous/godox v0.0.0-20190911065817-5d6d842e92eb/go.mod h1:1BELzlh859Sh1c6+90blK8lbYy0kwQf1bYlBhBysy1s=\n github.com/mattn/go-colorable v0.0.9/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaOChaDxuIBZU=\n github.com/mattn/go-colorable v0.1.4/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVcfRqFIhoBtE=\n@@ -589,8 +590,9 @@ github.com/neelance/astrewrite v0.0.0-20160511093645-99348263ae86/go.mod h1:kHJE\n github.com/neelance/sourcemap v0.0.0-20151028013722-8c68805598ab/go.mod h1:Qr6/a/Q4r9LP1IltGz7tA7iOK1WonHEYhu1HRBA7ZiM=\n github.com/newrelic/go-agent v2.15.0+incompatible/go.mod h1:a8Fv1b/fYhFSReoTU6HDkTYIMZeSVNffmoS726Y0LzQ=\n github.com/ngdinhtoan/glide-cleanup v0.2.0/go.mod h1:UQzsmiDOb8YV3nOsCxK/c9zPpCZVNoHScRE3EO9pVMM=\n-github.com/nxadm/tail v1.4.4 h1:DQuhQpB1tVlglWS2hLQ5OV6B5r8aGxSrPc5Qo6uTN78=\n github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI8A=\n+github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=\n+github.com/nxadm/tail v1.4.8/go.mod h1:+ncqLTQzXmGhMZNUePPaPqPvBxHAIsmXswZKocGu+AU=\n github.com/oklog/oklog v0.3.2/go.mod h1:FCV+B7mhrz4o+ueLpx+KqkyXRGMWOYEvfiXtdGtbWGs=\n github.com/oklog/run v1.0.0/go.mod h1:dlhp/R75TPv97u0XWUtDeV/lRKWPKSdTuV0TZvrmrQA=\n github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=\n@@ -601,15 +603,18 @@ github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+W\n github.com/onsi/ginkgo v1.7.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=\n github.com/onsi/ginkgo v1.11.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=\n github.com/onsi/ginkgo v1.12.1/go.mod h1:zj2OWP4+oCPe1qIXoGWkgMRwljMUYCdkwsT2108oapk=\n-github.com/onsi/ginkgo v1.14.0 h1:2mOpI4JVVPBN+WQRa0WKH2eXR+Ey+uK4n7Zj0aYpIQA=\n github.com/onsi/ginkgo v1.14.0/go.mod h1:iSB4RoI2tjJc9BBv4NKIKWKya62Rps+oPG/Lv9klQyY=\n+github.com/onsi/ginkgo v1.16.2/go.mod h1:CObGmKUOKaSC0RjmoAK7tKyn4Azo5P2IWuoMnvwxz1E=\n+github.com/onsi/ginkgo v1.16.4 h1:29JGrr5oVBm5ulCWet69zQkzWipVXIol6ygQUe/EzNc=\n+github.com/onsi/ginkgo v1.16.4/go.mod h1:dX+/inL/fNMqNlz0e9LfyB9TswhZpCVdJM/Z6Vvnwo0=\n github.com/onsi/gomega v0.0.0-20170829124025-dcabb60a477c/go.mod h1:C1qb7wdrVGGVU+Z6iS04AVkA3Q65CEZX59MT0QO5uiA=\n github.com/onsi/gomega v1.4.2/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=\n github.com/onsi/gomega v1.4.3/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=\n github.com/onsi/gomega v1.7.1/go.mod h1:XdKZgCCFLUoM/7CFJVPcG8C1xQ1AJ0vpAezJrB7JYyY=\n github.com/onsi/gomega v1.8.1/go.mod h1:Ho0h+IUsWyvy1OpqCwxlQ/21gkhVunqlU8fDGcoTdcA=\n-github.com/onsi/gomega v1.10.1 h1:o0+MgICZLuZ7xjH7Vx6zS/zcu93/BEp1VwkIW1mEXCE=\n github.com/onsi/gomega v1.10.1/go.mod h1:iN09h71vgCQne3DLsj+A5owkum+a2tYe+TOCB1ybHNo=\n+github.com/onsi/gomega v1.13.0 h1:7lLHu94wT9Ij0o6EWWclhu0aOh32VxhkwEJvzuWPeak=\n+github.com/onsi/gomega v1.13.0/go.mod h1:lRk9szgn8TxENtWd0Tp4c3wjlRfMTMH27I+3Je41yGY=\n github.com/op/go-logging v0.0.0-20160315200505-970db520ece7/go.mod h1:HzydrMdWErDVzsI23lYNej1Htcns9BCg93Dk0bBINWk=\n github.com/opentracing-contrib/go-observer v0.0.0-20170622124052-a52f23424492/go.mod h1:Ngi6UdF0k5OKD5t5wlmGhe/EDKPoUM3BXZSSfIuJbis=\n github.com/opentracing/basictracer-go v1.0.0/go.mod h1:QfBfYuafItcjQuMwinw9GhYKwFXS9KnPs5lxoYwgW74=\n@@ -933,6 +938,7 @@ golang.org/x/mod v0.2.0/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=\n golang.org/x/mod v0.3.0/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=\n golang.org/x/mod v0.4.0/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=\n golang.org/x/mod v0.4.1/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=\n+golang.org/x/mod v0.4.2 h1:Gz96sIWK3OalVv/I/qNygP42zyoKp3xptRVCWRFEBvo=\n golang.org/x/mod v0.4.2/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=\n golang.org/x/net v0.0.0-20170726083632-f5079bd7f6f7/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=\n golang.org/x/net v0.0.0-20170915142106-8351a756f30f/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=\n@@ -987,6 +993,7 @@ golang.org/x/net v0.0.0-20210119194325-5f4716e94777/go.mod h1:m0MpNAwzfU5UDzcl9v\n golang.org/x/net v0.0.0-20210226172049-e18ecbb05110/go.mod h1:m0MpNAwzfU5UDzcl9v0D8zg8gWTRqZa9RBIspLL5mdg=\n golang.org/x/net v0.0.0-20210316092652-d523dce5a7f4/go.mod h1:RBQZq4jEuRlivfhVLdyRGr576XBO4/greRjx4P4O3yc=\n golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4/go.mod h1:p54w0d4576C0XHj96bSt6lcn1PtDYWL6XObtHCRCNQM=\n+golang.org/x/net v0.0.0-20210428140749-89ef3d95e781/go.mod h1:OJAsFXCWl8Ukc7SiCT/9KSuxbyM7479/AVlXFRxuMCk=\n golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=\n golang.org/x/net v0.0.0-20210525063256-abc453219eb5 h1:wjuX4b5yYQnEQHzd+CBcrcC6OVR2J1CN6mUy0oSxIPo=\n golang.org/x/net v0.0.0-20210525063256-abc453219eb5/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=\n@@ -1079,6 +1086,7 @@ golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f/go.mod h1:h1NjWce9XRLGQEsW7w\n golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n golang.org/x/sys v0.0.0-20201201145000-ef89a241ccb3/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n golang.org/x/sys v0.0.0-20210104204734-6f8348627aad/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n+golang.org/x/sys v0.0.0-20210112080510-489259a85091/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n golang.org/x/sys v0.0.0-20210220050731-9a76102bfb43/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=\n@@ -1177,9 +1185,11 @@ golang.org/x/tools v0.0.0-20201017001424-6003fad69a88/go.mod h1:z6u4i615ZeAfBE4X\n golang.org/x/tools v0.0.0-20201110124207-079ba7bd75cd/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=\n golang.org/x/tools v0.0.0-20201201161351-ac6f37ff4c2a/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=\n golang.org/x/tools v0.0.0-20201208233053-a543418bbed2/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=\n+golang.org/x/tools v0.0.0-20201224043029-2b0845dc783e/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=\n golang.org/x/tools v0.0.0-20210105154028-b0ab187a4818/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=\n golang.org/x/tools v0.1.0/go.mod h1:xkSsbof2nBLbhDlRMhhhyNLN/zl3eTqcnHD5viDpcZ0=\n golang.org/x/tools v0.1.1/go.mod h1:o0xws9oXOQQZyjljx8fwUC0k7L1pTE6eaCbjGeHmOkk=\n+golang.org/x/tools v0.1.2 h1:kRBLX7v7Af8W7Gdbbc908OJcdgtK8bOz9Uaj8/F1ACA=\n golang.org/x/tools v0.1.2/go.mod h1:o0xws9oXOQQZyjljx8fwUC0k7L1pTE6eaCbjGeHmOkk=\n golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=\n golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_7LpqMtHUkAivvFCFWDTGFjcx",
+        "status": "completed",
+        "input": {
+          "command": "git log -p e0a6a1e.. --pretty=oneline | grep \"go 1\\.\" | head -n 10"
+        },
+        "output": "@@ -5,7 +5,7 @@ go 1.25.1\n@@ -4,24 +4,24 @@ go 1.25.1\n-go 1.25.0\n+go 1.25.1\n@@ -4,12 +4,12 @@ go 1.25.0\n@@ -4,7 +4,7 @@ go 1.25.0\n@@ -4,7 +4,7 @@ go 1.25.0\n-go 1.25\n+go 1.25.0\n go 1.25\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_1XxpUI7Po6jKdW5646QNKCzq",
+        "status": "completed",
+        "input": {
+          "command": "git show 11c6daec"
+        },
+        "output": "commit 11c6daecd7663bd625ec823f585a1c502468b1e7\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Fri Jun 27 00:13:08 2025 +0800\n\n    go.mod: update quic-go to v0.53.0 (#7094)\n\ndiff --git a/go.mod b/go.mod\nindex 8c95e2e0..e53c8dfb 100644\n--- a/go.mod\n+++ b/go.mod\n@@ -19,7 +19,7 @@ require (\n \tgithub.com/klauspost/cpuid/v2 v2.2.10\n \tgithub.com/mholt/acmez/v3 v3.1.2\n \tgithub.com/prometheus/client_golang v1.19.1\n-\tgithub.com/quic-go/quic-go v0.51.0\n+\tgithub.com/quic-go/quic-go v0.53.0\n \tgithub.com/smallstep/certificates v0.26.1\n \tgithub.com/smallstep/nosql v0.6.1\n \tgithub.com/smallstep/truststore v0.13.0\n@@ -60,9 +60,7 @@ require (\n \tgithub.com/google/certificate-transparency-go v1.1.8-0.20240110162603-74a5dd331745 // indirect\n \tgithub.com/google/go-tpm v0.9.0 // indirect\n \tgithub.com/google/go-tspi v0.3.0 // indirect\n-\tgithub.com/google/pprof v0.0.0-20231212022811-ec68065c825e // indirect\n \tgithub.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0 // indirect\n-\tgithub.com/onsi/ginkgo/v2 v2.13.2 // indirect\n \tgithub.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58 // indirect\n \tgithub.com/pmezard/go-difflib v1.0.0 // indirect\n \tgithub.com/quic-go/qpack v0.5.1 // indirect\n@@ -103,7 +101,6 @@ require (\n \tgithub.com/go-logr/logr v1.4.2 // indirect\n \tgithub.com/go-logr/stdr v1.2.2 // indirect\n \tgithub.com/go-sql-driver/mysql v1.7.1 // indirect\n-\tgithub.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect\n \tgithub.com/golang/protobuf v1.5.4 // indirect\n \tgithub.com/golang/snappy v0.0.4 // indirect\n \tgithub.com/huandu/xstrings v1.5.0 // indirect\ndiff --git a/go.sum b/go.sum\nindex 7113739f..6998283f 100644\n--- a/go.sum\n+++ b/go.sum\n@@ -185,8 +185,6 @@ github.com/go-sql-driver/mysql v1.7.1 h1:lUIinVbN1DY0xBg0eMOzmmtGoHwWBbvnWubQUrt\n github.com/go-sql-driver/mysql v1.7.1/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=\n github.com/go-stack/stack v1.6.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=\n github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=\n-github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 h1:tfuBGBXKqDEevZMzYi5KSi8KkcZtzBcTgAUUtapy0OI=\n-github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572/go.mod h1:9Pwr4B2jHnOSGXyyzV8ROjYa2ojvAY6HCGYYfMoC3Ls=\n github.com/gofrs/uuid v4.0.0+incompatible h1:1SD/1F5pU8p29ybwgQSwpQk+mwdRrXCYuPhW6m+TnJw=\n github.com/gofrs/uuid v4.0.0+incompatible/go.mod h1:b2aQJv3Z4Fp6yNu3cdSllBxTCLRxnplIgP/c0N/04lM=\n github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=\n@@ -225,8 +223,6 @@ github.com/google/go-tspi v0.3.0 h1:ADtq8RKfP+jrTyIWIZDIYcKOMecRqNJFOew2IT0Inus=\n github.com/google/go-tspi v0.3.0/go.mod h1:xfMGI3G0PhxCdNVcYr1C4C+EizojDg/TXuX5by8CiHI=\n github.com/google/martian v2.1.0+incompatible/go.mod h1:9I4somxYTbIHy5NJKHRl3wXiIaQGbYVAs8BPL6v8lEs=\n github.com/google/pprof v0.0.0-20181206194817-3ea8567a2e57/go.mod h1:zfwlbNMJ+OItoe0UupaVj+oy1omPYYDuagoSzA8v9mc=\n-github.com/google/pprof v0.0.0-20231212022811-ec68065c825e h1:bwOy7hAFd0C91URzMIEBfr6BAz29yk7Qj0cy6S7DJlU=\n-github.com/google/pprof v0.0.0-20231212022811-ec68065c825e/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=\n github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=\n github.com/google/s2a-go v0.1.7 h1:60BLSyTrOV4/haCDW4zb1guZItoSq8foHCXrAnjBo/o=\n github.com/google/s2a-go v0.1.7/go.mod h1:50CgR4k1jNlWBu4UfS4AcfhVe1r6pdZPygJ3R8F0Qdw=\n@@ -364,10 +360,6 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJ\n github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=\n github.com/neelance/astrewrite v0.0.0-20160511093645-99348263ae86/go.mod h1:kHJEU3ofeGjhHklVoIGuVj85JJwZ6kWPaJwCIxgnFmo=\n github.com/neelance/sourcemap v0.0.0-20151028013722-8c68805598ab/go.mod h1:Qr6/a/Q4r9LP1IltGz7tA7iOK1WonHEYhu1HRBA7ZiM=\n-github.com/onsi/ginkgo/v2 v2.13.2 h1:Bi2gGVkfn6gQcjNjZJVO8Gf0FHzMPf2phUei9tejVMs=\n-github.com/onsi/ginkgo/v2 v2.13.2/go.mod h1:XStQ8QcGwLyF4HdfcZB8SFOS/MWCgDuXMSBe6zrvLgM=\n-github.com/onsi/gomega v1.29.0 h1:KIA/t2t5UBzoirT4H9tsML45GEbo3ouUnBHsCfD2tVg=\n-github.com/onsi/gomega v1.29.0/go.mod h1:9sxs+SwGrKI0+PWe4Fxa9tFQQBG5xSsSbMXOI8PPpoQ=\n github.com/openzipkin/zipkin-go v0.1.1/go.mod h1:NtoC/o8u3JlF1lSlyPNswIbeQH9bJTmOf0Erfk+hxe8=\n github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58 h1:onHthvaw9LFnH4t2DcNVpwGmV9E1BkGknEliJkfwQj0=\n github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58/go.mod h1:DXv8WO4yhMYhSNPKjeNKa5WY9YCIEBRbNzFFPJbWO6Y=\n@@ -397,8 +389,8 @@ github.com/prometheus/procfs v0.12.0 h1:jluTpSng7V9hY0O2R9DzzJHYb2xULk9VTR1V1R/k\n github.com/prometheus/procfs v0.12.0/go.mod h1:pcuDEFsWDnvcgNzo4EEweacyhjeA9Zk3cnaOZAZEfOo=\n github.com/quic-go/qpack v0.5.1 h1:giqksBPnT/HDtZ6VhtFKgoLOWmlyo9Ei6u9PqzIMbhI=\n github.com/quic-go/qpack v0.5.1/go.mod h1:+PC4XFrEskIVkcLzpEkbLqq1uCoxPhQuvK5rH1ZgaEg=\n-github.com/quic-go/quic-go v0.51.0 h1:K8exxe9zXxeRKxaXxi/GpUqYiTrtdiWP8bo1KFya6Wc=\n-github.com/quic-go/quic-go v0.51.0/go.mod h1:MFlGGpcpJqRAfmYi6NC2cptDPSxRWTOGNuP4wqrWmzQ=\n+github.com/quic-go/quic-go v0.53.0 h1:QHX46sISpG2S03dPeZBgVIZp8dGagIaiu2FiVYvpCZI=\n+github.com/quic-go/quic-go v0.53.0/go.mod h1:e68ZEaCdyviluZmy44P6Iey98v/Wfz6HCjQEm+l8zTY=\n github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=\n github.com/rogpeppe/go-internal v1.13.1 h1:KvO1DLK/DRN07sQ1LQKScxyZJuNnedQ5/wKSR38lUII=\n github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWNMNyH2VO9fmH0o=\n@@ -491,7 +483,6 @@ github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXf\n github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=\n github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=\n github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=\n-github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=\n github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=\n github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=\n github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=\ndiff --git a/listeners.go b/listeners.go\nindex 9e005767..c0d018bb 100644\n--- a/listeners.go\n+++ b/listeners.go\n@@ -430,7 +430,7 @@ func JoinNetworkAddress(network, host, port string) string {\n // address instead.\n //\n // NOTE: This API is EXPERIMENTAL and may be changed or removed.\n-func (na NetworkAddress) ListenQUIC(ctx context.Context, portOffset uint, config net.ListenConfig, tlsConf *tls.Config) (http3.QUICEarlyListener, error) {\n+func (na NetworkAddress) ListenQUIC(ctx context.Context, portOffset uint, config net.ListenConfig, tlsConf *tls.Config) (http3.QUICListener, error) {\n \tlnKey := listenerKey(\"quic\"+na.Network, na.JoinHostPort(portOffset))\n \n \tsharedEarlyListener, _, err := listenerPool.LoadOrNew(lnKey, func() (Destructor, error) {\n@@ -610,7 +610,7 @@ type fakeCloseQuicListener struct {\n // server on which Accept would be called with non-empty contexts\n // (mind that the default net listeners' Accept doesn't take a context argument)\n // sounds way too rare for us to sacrifice efficiency here.\n-func (fcql *fakeCloseQuicListener) Accept(_ context.Context) (quic.EarlyConnection, error) {\n+func (fcql *fakeCloseQuicListener) Accept(_ context.Context) (*quic.Conn, error) {\n \tconn, err := fcql.sharedQuicListener.Accept(fcql.context)\n \tif err == nil {\n \t\treturn conn, nil\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_QTfd2ONSUa2qJXjSlZ26jNjL",
+        "status": "completed",
+        "input": {
+          "command": "git log -p -S \"quic-go\" --oneline | grep \"go 1\\.\""
+        },
+        "output": "-go 1.20\n+go 1.21\n-go 1.19\n+go 1.20\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_gQmfjapGfLHKV2AWIIJYydKt",
+        "status": "completed",
+        "input": {
+          "command": "git show a6d488a1"
+        },
+        "output": "commit a6d488a15beb01369384e74d0e0159da11272bc3\nAuthor: Marten Seemann <martenseemann@gmail.com>\nDate:   Sun Apr 20 21:39:00 2025 +0800\n\n    go.mod: update quic-go to v0.51.0 (#6972)\n\ndiff --git a/go.mod b/go.mod\nindex 5976f9ac..2a2993aa 100644\n--- a/go.mod\n+++ b/go.mod\n@@ -19,7 +19,7 @@ require (\n \tgithub.com/klauspost/cpuid/v2 v2.2.10\n \tgithub.com/mholt/acmez/v3 v3.1.2\n \tgithub.com/prometheus/client_golang v1.19.1\n-\tgithub.com/quic-go/quic-go v0.50.1\n+\tgithub.com/quic-go/quic-go v0.51.0\n \tgithub.com/smallstep/certificates v0.26.1\n \tgithub.com/smallstep/nosql v0.6.1\n \tgithub.com/smallstep/truststore v0.13.0\ndiff --git a/go.sum b/go.sum\nindex a5bfcaf4..a53eacf8 100644\n--- a/go.sum\n+++ b/go.sum\n@@ -397,8 +397,8 @@ github.com/prometheus/procfs v0.12.0 h1:jluTpSng7V9hY0O2R9DzzJHYb2xULk9VTR1V1R/k\n github.com/prometheus/procfs v0.12.0/go.mod h1:pcuDEFsWDnvcgNzo4EEweacyhjeA9Zk3cnaOZAZEfOo=\n github.com/quic-go/qpack v0.5.1 h1:giqksBPnT/HDtZ6VhtFKgoLOWmlyo9Ei6u9PqzIMbhI=\n github.com/quic-go/qpack v0.5.1/go.mod h1:+PC4XFrEskIVkcLzpEkbLqq1uCoxPhQuvK5rH1ZgaEg=\n-github.com/quic-go/quic-go v0.50.1 h1:unsgjFIUqW8a2oopkY7YNONpV1gYND6Nt9hnt1PN94Q=\n-github.com/quic-go/quic-go v0.50.1/go.mod h1:Vim6OmUvlYdwBhXP9ZVrtGmCMWa3wEqhq3NgYrI8b4E=\n+github.com/quic-go/quic-go v0.51.0 h1:K8exxe9zXxeRKxaXxi/GpUqYiTrtdiWP8bo1KFya6Wc=\n+github.com/quic-go/quic-go v0.51.0/go.mod h1:MFlGGpcpJqRAfmYi6NC2cptDPSxRWTOGNuP4wqrWmzQ=\n github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=\n github.com/rogpeppe/go-internal v1.13.1 h1:KvO1DLK/DRN07sQ1LQKScxyZJuNnedQ5/wKSR38lUII=\n github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWNMNyH2VO9fmH0o=\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_UCjYopdHfuQUoY4ZuMfU4Mf5",
+        "status": "completed",
+        "input": {
+          "command": "git log -p -S \"go 1.\" | grep \"go 1\\.\" | grep -B 10 -A 2 \"quic\" | head -n 30"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_fvKLybbNdyeoeCiOONwfiHtr",
+        "status": "completed",
+        "input": {
+          "command": "git log --grep=\"go 1.\" --oneline"
+        },
+        "output": "66c80caf cmd: Disable go1.23 tlskyber=1 experiment\nabdf1ae1 go.mod: go 1.22.3\ne0a6a1ef chore: Update quic-go for go 1.17 support (#4297)\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 103187,
+    "output": 1179,
+    "messages": 33
+  },
+  "token_cross_check_agrees": false,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "56ae39bdcc1d64661038683e30ea49cad0b0121d"
+    }
+  },
+  "completed": true
+}

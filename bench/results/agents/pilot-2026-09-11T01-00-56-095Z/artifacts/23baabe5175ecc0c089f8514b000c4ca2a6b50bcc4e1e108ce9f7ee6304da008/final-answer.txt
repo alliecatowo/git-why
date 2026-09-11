@@ -1,0 +1,21 @@
+Yes, the `LPOS` command option was renamed from `FIRST` to `RANK`.
+
+This change was established in commit `a5a3a7bbc`:
+
+> **LPOS: option FIRST renamed RANK.**
+
+The diff from this commit confirms the renaming in both the code implementation and the test suite:
+
+```diff
+-        if (!strcasecmp(opt,"FIRST") && moreargs) {
++        if (!strcasecmp(opt,"RANK") && moreargs) {
+             j++;
+             if (getLongFromObjectOrReply(c, c->argv[j], &rank, NULL) != C_OK)
+                 return;
+             if (rank == 0) {
+-                addReplyError(c,"FIRST can't be zero: use 1 to start from "
++                addReplyError(c,"RANK can't be zero: use 1 to start from "
+                                 "the first match, 2 from the second, ...");
+                 return;
+             }
+```

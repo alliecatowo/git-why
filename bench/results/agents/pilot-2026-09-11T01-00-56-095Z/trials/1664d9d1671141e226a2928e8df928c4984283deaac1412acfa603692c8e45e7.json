@@ -1,0 +1,106 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "31cd1cc0a87ce9853433cfefd8eaa1fdbef00aa9",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:40:20.357Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "853f9ccbc0d0d4269161407a2e7eaf7b75b17a20e768d251a679b172b0d8dd5d",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "79866a6361829ed0602dedff9cb378c66977227a",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ]
+  },
+  "wall_ms": 75586,
+  "tool_calls": 4,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 25301,
+  "output_tokens": 245,
+  "cache_read_tokens": 9513,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.006930575,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 23825,
+  "index_build_ms": 186837,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-redis-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "1664d9d1671141e226a2928e8df928c4984283deaac1412acfa603692c8e45e7",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_xKVvO7lOSWANOxxjARVoBcAb",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a6 | head -n 50"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/Makefile b/src/Makefile\nindex 86e0b3fe0..b896b1263 100644\n--- a/src/Makefile\n+++ b/src/Makefile\n@@ -144,7 +144,7 @@ endif\n \n REDIS_SERVER_NAME=redis-server\n REDIS_SENTINEL_NAME=redis-sentinel\n-REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o\n+REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o scripting.o bio.o rio.o rand.o memtest.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.c\n REDIS_CLI_NAME=redis-cli\n REDIS_CLI_OBJ=anet.o adlist.o redis-cli.o zmalloc.o release.o anet.o ae.o crc64.o\n REDIS_BENCHMARK_NAME=redis-benchmark\ndiff --git a/src/listpack.c b/src/listpack.c\nnew file mode 100644\nindex 000000000..e2702b65c\n--- /dev/null\n+++ b/src/listpack.c\n@@ -0,0 +1,783 @@\n+/* Listpack -- A lists of strings serialization format\n+ *\n+ * This file implements the specification you can find at:\n+ *\n+ *  https://github.com/antirez/listpack\n+ *\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n+ *     to endorse or promote products derived from this software without\n+ *     specific prior written permission.\n+ *\n+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_51JruwCc4nalBBmxpmuV3TIe",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a6 | grep \"XADD\" | head -n 5"
+        },
+        "output": "+/* XADD key [field value] [field value] ... */\n+        addReplyError(c,\"wrong number of arguments for XADD\");\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 25301,
+    "output": 245,
+    "messages": 6
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/1664d9d1671141e226a2928e8df928c4984283deaac1412acfa603692c8e45e7",
+  "completed": true
+}

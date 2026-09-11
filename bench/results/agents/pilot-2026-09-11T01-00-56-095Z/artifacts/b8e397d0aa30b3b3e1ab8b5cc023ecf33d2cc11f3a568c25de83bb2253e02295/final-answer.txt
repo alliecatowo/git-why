@@ -1,0 +1,19 @@
+The security bug where following a redirect could leak credentials to a different protocol or port was addressed in commit `620ea21410030a9977396b4661806bc187231b79`.
+
+The fix introduced logic to detect if a redirect involves a change in port or protocol and, if so, clears the authentication credentials, unless the user has explicitly permitted sending credentials to other hosts.
+
+The supporting change in `lib/transfer.c` from commit `620ea21410030a9977396b4661806bc187231b79` states:
+
+> ```c
+>     /* Clear auth if this redirects to a different port number or protocol,
+>        unless permitted */
+>     if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+>       // ... logic to compare port and protocol ...
+>       if(clear) {
+>         Curl_safefree(data->state.aptr.user);
+>         Curl_safefree(data->state.aptr.passwd);
+>       }
+>     }
+> ```
+
+Additionally, follow-up fixes ensured that TLS-SRP credentials were also cleared in similar redirect scenarios (e.g., `139a54ed0a172adaaf1a78d6f4fff50b2c3f9e08` for OpenSSL and `093531556` for GnuTLS).

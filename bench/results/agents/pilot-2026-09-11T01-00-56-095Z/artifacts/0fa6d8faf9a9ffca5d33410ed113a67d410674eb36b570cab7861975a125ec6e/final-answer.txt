@@ -1,0 +1,23 @@
+The `requests` library did indeed move away from `chardet` for a period in favor of `charade`, and later returned to `chardet`.
+
+The return to `chardet` (which replaced `charade`) was established in commit **`0bfbacd8b15ddb6e0c3bc86eb81d969ff4bcc0ae`**, committed on December 18, 2013, with the message "Initial work towards replacing charade".
+
+The following excerpt from the diff of that commit confirms the removal of `charade` and the reinstatement of `chardet` as a dependency:
+
+```diff
+-deps: urllib3 charade
++deps: urllib3 chardet
+
+-charade:
+-	rm -fr requests/packages/charade
+-	git clone https://github.com/sigmavirus24/charade.git
+-	mv charade/charade requests/packages/
+-	rm -fr charade
++chardet:
++	rm -fr requests/packages/chardet
++	git clone https://github.com/chardet/chardet.git
++	mv chardet/chardet requests/packages/
++	rm -fr chardet
+```
+
+This transition back to `chardet` was finalized in subsequent commits on the same day, such as `d8d9591076a6222bad87c89591b0667180564ec4` ("Replace remaining charade imports").

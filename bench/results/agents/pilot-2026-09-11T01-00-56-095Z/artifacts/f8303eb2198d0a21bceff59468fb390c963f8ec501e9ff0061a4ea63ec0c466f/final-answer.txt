@@ -1,0 +1,17 @@
+Yes, ripgrep's special ignore-file name used to be `.rgignore` before it was switched to `.ignore`.
+
+This change was established in commit `cc90511ab29d3c37e873acac0fd80f90473f54bb` (dated September 23, 2016), with the commit message:
+
+> "Switch from .rgignore to .ignore."
+
+The commit diff also reflects this change in the code and documentation:
+
+```rust
+const IGNORE_NAMES: &'static [&'static str] = &[
+    ".gitignore",
++    ".ignore",
+    ".rgignore",
+];
+```
+
+The author noted in the commit message that support for `.rgignore` was maintained for a time to ensure a smooth transition.

@@ -1,0 +1,95 @@
+{
+  "task_id": "X-zod-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "corpus_fingerprint": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "implementation_sha": "31cd1cc0a87ce9853433cfefd8eaa1fdbef00aa9",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:38:47.005Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "e21d362b5356654ea2c5349e1e4bdff98c7b97e4909f792e62169cdbe76e67b2",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "18854492b4b6e1648499f2f920c615dab187ee1a",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "1885449",
+      "18854492b4b6e1648499f2f920c615dab187ee1a"
+    ]
+  },
+  "wall_ms": 14279,
+  "tool_calls": 3,
+  "history_calls": 1,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 34303,
+  "output_tokens": 340,
+  "cache_read_tokens": 27644,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00977685,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 61041,
+  "index_build_ms": 56258,
+  "model_download_ms": null,
+  "index_disk_bytes": 169442011,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-zod-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "80fd91accb150243f1ebf8485823f1a69e99051feb0c395a14ccbde2b8a13836",
+  "indexed_commits": 3210,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_e6fq46ofeZikrlJ1GEVn6Lmt",
+        "status": "completed",
+        "input": {
+          "command": "git show 1885449 | head -n 50"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/README.md b/README.md\nindex 2f12e132..c9c94ca5 100644\n--- a/README.md\n+++ b/README.md\n@@ -31,13 +31,13 @@ Here are some of the new features.\n \n - Transformers! These let you provide default values, do casting/coersion, and a lot more. Read more here: [Transformers](#transformers)\n - Asynchronous refinements and new `.parseAsync` and `.safeParseAsync` methods. Read more here: [Refinements](#refinements)\n-- New object methods: `.stripUnknown()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n+- New object methods: `.passthrough()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n \n In almost all cases, you'll be able to upgrade to Zod 2 without changing any code. Here are some of the (very minor) breaking changes:\n \n - Parsing now returns a _deep clone_ of the data you pass in. Previously it returned the exact same object you passed in.\n - Relatedly, Zod _no longer_ supports cyclical _data_. Recursive schemas are still supported, but Zod can't properly parse nested objects that contain cycles.\n-- Object schemas now _allow_ unknown keys by default, instead of throwing an error\n+- Object schemas now strip unknown keys by default, instead of throwing an error\n - Optional and nullable schemas are now represented with the dedicated ZodOptional and ZodNullable classes, instead of using ZodUnion.\n \n ---\n@@ -116,7 +116,7 @@ _To get your name + Twitter + website here, sponsor Zod at the [Freelancer](http\n   - [.extend](#extending-objects)\n   - [.pick/.omit](#pick-and-omit)\n   - [.partial/.deepPartial](#partials)\n-  - [.stripUnknown](#strip-unknown-keys)\n+  - [.strip](#strip-unknown-keys)\n   - [.strict](#disallow-unknown-keys)\n   - [.primitives/.nonprimitives](#primitives-and-nonprimitives)\n - [Records](#records)\n@@ -686,9 +686,9 @@ const deepPartialUser = user.deepPartial();\n \n #### Unknown keys\n \n-Zod object schemas allow unknown keys.\n+By default Zod object schema strip unknown keys from the output.\n \n-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.\n+> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.\n \n Zod will return\n \n@@ -701,30 +701,30 @@ person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 15,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 34303,
+    "output": 340,
+    "messages": 5
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/80fd91accb150243f1ebf8485823f1a69e99051feb0c395a14ccbde2b8a13836",
+  "completed": true
+}
