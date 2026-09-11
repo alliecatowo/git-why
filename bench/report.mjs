@@ -631,6 +631,26 @@ md +=
   'so the agent saw exactly the same results, only sooner. Wall clock is not comparable across\n' +
   'that boundary and no comparison below uses it.\n\n';
 
+md +=
+  '### The tasks\n\n' +
+  'Each task is an **engineering brief**: six linked questions about one repository, answered in\n' +
+  'one session, with a commit cited for each. Scored out of six.\n\n' +
+  'The earlier tasks asked one question, wanted one SHA, and finished in five to thirteen tool\n' +
+  'calls. That measures a lookup. Three things change with a brief:\n\n' +
+  '- **It is long.** Observed trials run 20-50 tool calls against 5-13.\n' +
+  '- **It is scored 0..6, not pass/fail.** Six times the information from the same number of\n' +
+  '  expensive agent sessions, which at single-digit paired n is the difference between a signal\n' +
+  '  and a coin flip.\n' +
+  '- **Context accumulates.** By question four the agent carries everything it has already read.\n' +
+  '  That is exactly where a tool returning large evidence blocks either earns its place or does\n' +
+  '  not, and it is invisible in a single-question task.\n\n' +
+  'The questions come from the gated corpus in section 0, so every one is verified unanswerable\n' +
+  'by `git log --grep` or `git log -S` from its own words. Selection is deterministic and\n' +
+  'round-robins across repositories, because redis and zod supply 69% of the corpus and six tasks\n' +
+  'drawn at random would be five of those two.\n\n' +
+  'Brief results and lookup results are never pooled. A score out of six averaged into a pass/fail\n' +
+  'bit would be one number reporting two different measurements.\n\n';
+
 md += '### The registered hypothesis\n\n';
 md += `> ${models.hypothesis.statement}\n\n`;
 md += `Registered ${models.hypothesis.registeredBefore.toLowerCase()} It predicts: ${models.hypothesis.predicts}\n\n`;
@@ -691,11 +711,26 @@ if (cm.rows.length === 0) {
     .map((r) => ({ ...r, tier: tierOf.get(r.model)?.tier ?? null }))
     .sort((a, b) => (a.tier ?? 99) - (b.tier ?? 99) || a.model.localeCompare(b.model));
 
+  const hasLookup = cm.rows.some((r) => r.family === 'lookup');
+  if (hasLookup) {
+    md +=
+      '> **The `lookup` rows are compromised and are kept only for continuity.** The trajectory\n' +
+      '> audit flagged a network attempt on the bare word `curl`, and one of the six benchmark\n' +
+      '> repositories is curl — so listing its directory invalidated the trial. It cost 11 of 51\n' +
+      '> curl trials against 1 of 139 everywhere else, and gemini-3.5-flash, the one model whose\n' +
+      '> call delta came out positive, lost 5 of its 8. A result computed over whichever trials\n' +
+      '> survived a substring match is not a result. The audit is fixed (`bench/agents/audit.mjs`)\n' +
+      '> and the `brief` rows are the measurement to read.\n\n';
+  }
+
   md += '### Does the registered prediction hold?\n\n';
-  md += '| tier | model | accuracy W-L | call delta | token delta |\n|---:|---|---:|---:|---:|\n';
+  md += '| tier | tasks | model | points A -> D | W-L | call delta | token delta |\n';
+  md += '|---:|---|---|---:|---:|---:|---:|\n';
   for (const r of withTier) {
     const p = r.dVsA;
-    md += `| ${r.tier ?? '--'} | ${r.model.replace(/^[^/]+\//, '')} | ${p.accWin}-${p.accLoss} | ${sign(p.callsDelta)} | ${sign(p.tokDelta)} |\n`;
+    const points =
+      p.pointsOutOf === null ? 'n/a' : `${p.pointsX} -> ${p.pointsY} / ${p.pointsOutOf}`;
+    md += `| ${r.tier ?? '--'} | ${r.family} | ${r.model.replace(/^[^/]+\//, '')} | ${points} | ${p.accWin}-${p.accLoss} | ${sign(p.callsDelta)} | ${sign(p.tokDelta)} |\n`;
   }
   md += '\n';
 
