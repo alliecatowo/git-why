@@ -393,6 +393,46 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## `--check-ready` reports the wrong kind of failure
+
+Found by doing what a new user does: clone a repository, run the tool, read
+what it says.
+
+`git why status --check-ready` in a perfectly good repository with no index
+exits **3**. The documented exit-code table defines 3 as _"No usable Git
+repository"_. The repository is fine; the index simply has not been built. A
+script gating on readiness is told the wrong thing and sent to debug the wrong
+component.
+
+The cause is literal rather than subtle:
+
+```ts
+return isIndexReady(status) ? ExitCode.OK : ExitCode.NO_REPOSITORY;
+```
+
+It should be `INDEX_FAILURE` (4) — _"Index, model, storage, compatibility or
+extraction failure"_ is the right domain for "the index is not ready". The
+flag's own documentation only promises "exit non-zero", so the contract it
+breaks is the exit-code table's, not its own; both are documented, and they
+disagree.
+
+Nothing depends on the specific value: every caller in `bench/agents/` treats
+non-zero as failure.
+
+**The rest of the first-run path is correct**, which is worth recording because
+it is the part most likely to be broken and least likely to be tested — the
+integration suite drives a fake backend, so the real clone-index-query path is
+otherwise only exercised by hand:
+
+| step                     | result                                             |
+| ------------------------ | -------------------------------------------------- |
+| `status` before indexing | `state: missing`                                   |
+| first query              | builds the index and answers, 1.9 s for 77 commits |
+| `status` after           | `state: current`                                   |
+| `status --check-ready`   | exit 0                                             |
+| `index --if-needed`      | 0.20 s, matching the documented claim              |
+| `gc`                     | reclaims and reports                               |
+
 ## A quarter of correct answers hide the reason
 
 Retrieval quality is measured constantly here; what the user then _sees_ was
