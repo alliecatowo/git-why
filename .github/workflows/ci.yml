@@ -80,6 +80,12 @@ jobs:
         working-directory: site
         run: npm run build
 
+      # Anchors are the half that rots silently: renaming a heading changes its
+      # generated id, and every deep link to it quietly lands in the wrong
+      # place with nothing failing.
+      - name: Internal links and anchors resolve
+        run: node site/scripts/check-links.mjs
+
   # Packaging is verified separately because it is the check most likely to
   # catch a release-breaking mistake that unit tests cannot see: a file missing
   # from the tarball, a lost shebang, a man page that does not land where

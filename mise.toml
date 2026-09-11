@@ -88,6 +88,11 @@ run = "node bench/freeze-protocol.mjs"
 description = "Generate tables and the report from saved records"
 run = "node bench/report.mjs"
 
+[tasks."site:check"]
+description = "Build the site, then verify every internal link and anchor resolves"
+depends = ["site:build"]
+run = "node site/scripts/check-links.mjs"
+
 [tasks."verify:plugins"]
 description = "Validate both plugin manifests, their MCP commands and skill frontmatter"
 run = "node scripts/verify-plugins.mjs"
