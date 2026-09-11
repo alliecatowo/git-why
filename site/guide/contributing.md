@@ -8,7 +8,7 @@ read this first — it's the opposite of that on purpose.
 
 ```sh
 mise setup      # install dependencies from the lockfile, then doctor
-mise check      # format, lint, typecheck, unit tests
+mise check      # format, lint, typecheck, protocol hash, plugins, unit tests
 mise test:integration
 mise test:package
 ```
@@ -77,3 +77,32 @@ the root one. `docs/report.md` and `docs/operations.md` are included
 verbatim into the Benchmarks and Operations pages via VitePress's
 `<!--@include-->`, so they can't drift from the source of truth — edit those
 files, not the site pages that include them.
+
+## Generated files you cannot hand-edit
+
+Several files are written from a source of truth, and CI fails if you change
+them by hand. This is deliberate: across this project's development, eight
+separate times a plausible-looking number turned out to come from a broken
+denominator, and none of them announced itself.
+
+| File                                                        | Written from                    | Regenerate with                           |
+| ----------------------------------------------------------- | ------------------------------- | ----------------------------------------- |
+| The numbers in `README.md` and the site's front page        | raw runs under `bench/results/` | `mise bench:report`                       |
+| `docs/report.md`                                            | the same                        | `mise bench:report`                       |
+| `man/git-why.1`                                             | `git why -h`                    | `mise build`                              |
+| The Options tables in [CLI reference](/guide/cli-reference) | `git why -h`                    | `node site/scripts/gen-cli-reference.mjs` |
+| `site/public/install.sh`                                    | `install.sh` at the repo root   | the site build                            |
+
+The shell completions in `completions/` are hand-written, but packaging tests
+fail if any flag the tool advertises is missing from any of them — as they are
+if a flag is missing from the man page.
+
+If a number looks wrong, fix the measurement or the generator, never the text.
+
+## Cutting a release
+
+Push a version tag. The release workflow re-runs every CI gate against the
+tagged commit, publishes to npm with provenance, and attaches the tarball to a
+GitHub release. It refuses to publish a tag that disagrees with
+`package.json`. Full steps are in
+[`docs/contributing.md`](https://github.com/alliecatowo/git-why/blob/main/docs/contributing.md).
