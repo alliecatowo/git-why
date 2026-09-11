@@ -146,3 +146,76 @@ test('a non-shell tool cannot fetch, so its contents are not scanned for command
   ]);
   assert.ok(!violations.includes('network_fetch_attempt'), JSON.stringify(violations));
 });
+
+// Brief scoring. A brief is six questions in one session, scored 0..6 — the
+// whole reason these tasks replaced single-question lookups is that one bit
+// per expensive agent session is close to no signal at single-digit n.
+import { gradeBrief } from './grade.mjs';
+
+const GOLD = [
+  'f55548ba9f24dda192880d4a3da2b52e90f6e194',
+  '3af0e76d1e71995b7790c74e79b76af86ee7c681',
+  'aaaaaaaabbbbbbbbccccccccddddddddeeeeeeee',
+];
+
+test('one point per gold commit cited, with per-question detail', () => {
+  const grade = gradeBrief({
+    goldShas: GOLD,
+    finalAnswer: '1. see f55548ba\n2. no supporting commit found\n3. see aaaaaaaabbbb',
+    finalPatch: '',
+  });
+  assert.equal(grade.score, 2);
+  assert.equal(grade.outOf, 3);
+  assert.deepEqual(grade.found, [true, false, true]);
+});
+
+// An agent that answers out of order, or numbers its answers differently, has
+// still found the commit. Penalising that would measure presentation rather
+// than retrieval, which is not what the arms differ on.
+test('order does not matter; finding the commit does', () => {
+  const grade = gradeBrief({
+    goldShas: GOLD,
+    finalAnswer: 'Question 3: aaaaaaaabbbbbbbb. Question 1: f55548ba9f24.',
+    finalPatch: '',
+  });
+  assert.equal(grade.score, 2);
+});
+
+test('abbreviations count in both directions, down to seven characters', () => {
+  // Agents quote short SHAs; the gold is full-length.
+  assert.equal(gradeBrief({ goldShas: GOLD, finalAnswer: 'f55548b', finalPatch: '' }).score, 1);
+  // And a full-length citation against an abbreviated gold.
+  assert.equal(
+    gradeBrief({ goldShas: ['f55548ba'], finalAnswer: GOLD[0], finalPatch: '' }).score,
+    1,
+  );
+  // Six characters is not enough to be a citation rather than a coincidence.
+  assert.equal(gradeBrief({ goldShas: GOLD, finalAnswer: 'f55548', finalPatch: '' }).score, 0);
+});
+
+test('a brief that answers nothing scores zero rather than failing to grade', () => {
+  const grade = gradeBrief({
+    goldShas: GOLD,
+    finalAnswer: 'I could not find supporting commits for any of these.',
+    finalPatch: '',
+  });
+  assert.equal(grade.score, 0);
+  assert.equal(grade.citedGoldSha, false);
+  assert.deepEqual(grade.found, [false, false, false]);
+});
+
+test('a task with no gold commits is ungradeable, not a zero', () => {
+  // Scoring an ungradeable task as zero is how a harness fault becomes a
+  // finding about the product.
+  assert.equal(gradeBrief({ goldShas: [], finalAnswer: 'x', finalPatch: '' }), null);
+  assert.equal(gradeBrief({ goldShas: null, finalAnswer: 'x', finalPatch: '' }), null);
+});
+
+test('a citation in the patch counts, not just in the prose', () => {
+  const grade = gradeBrief({
+    goldShas: GOLD,
+    finalAnswer: 'see the comment I added',
+    finalPatch: '+// introduced in f55548ba9f24dda1',
+  });
+  assert.equal(grade.score, 1);
+});
