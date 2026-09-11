@@ -65,6 +65,19 @@ subcommand `git why`. No alias setup needed. More install paths — pinned
 versions, a GitHub release tarball, building from source, uninstalling —
 are in [`docs/install.md`](docs/install.md).
 
+## Use it with Claude Code
+
+```sh
+npm install -g @alliecatowo/git-why
+```
+
+Then add the `plugin/` directory as a Claude Code plugin. It registers the MCP
+server and ships a skill that teaches an agent **when to reach for history and
+when not to** — including the case where `git log -S` is the better tool, since
+a skill that oversells its own tool makes an agent worse at its job.
+
+See [`docs/plugin.md`](docs/plugin.md).
+
 ## Why
 
 `git log --grep` only matches words you already know. The reason code
@@ -85,56 +98,69 @@ never committed at all — Git Why will not manufacture those.
 
 ## Measured, not claimed
 
-Every number below is generated from raw run data, not typed by hand — see
-[`docs/report.md`](docs/report.md) for the full methodology, protocol, and
-caveats.
+Every number is generated from raw run data by `bench/report.mjs`, never typed
+by hand. Full methodology, limits, and the negative results in
+[`docs/report.md`](docs/report.md).
 
-| Measurement                                             | Result                                                     |
-| ------------------------------------------------------- | ---------------------------------------------------------- |
-| Real-repository retrieval (16 cases, six pinned repos)  | hybrid Hit@5 55.6%, MRR 0.393                              |
-| Index size across six real repos (56,781 commits total) | 5.50–6.98 KB/record, 1.91 GiB total                        |
-| Index `curl` (30,000 commits, pinned)                   | 1.00 GiB, 5.74 KB/record                                   |
-| Index `redis` (12,110 commits, pinned)                  | 450 MiB, 6.92 KB/record                                    |
-| Warm query, fresh process (p50 / p95, n=30)             | 483 ms / 494 ms                                            |
-| Diff/evidence ingestion, real-repository ablation       | earns its cost: ΔHit@5 +0.375, ΔMRR +0.280                 |
-| Agent usefulness — accuracy (36 trials, 4 arms)         | no benefit: every arm 100% on graded trials                |
-| Agent usefulness — effort, same-accuracy trials         | **16 → 9 median tool calls** (A vs D), 7 of 8 paired tasks |
-| Tests                                                   | 332 unit, 65 integration, passing                          |
+### Against the tools you would otherwise use
 
-### The agent pilot: no accuracy gain, but roughly half the work
+174 questions derived mechanically from six pinned real repositories (curl,
+redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable
+by keyword search** before it enters the set — if `git log --grep` or
+`git log -S` finds the answer from the question's own words, the case is
+discarded. What remains is the regime this tool exists for.
 
-On nine hand-authored archaeology questions against the six pinned real
-repositories, an agent with **no** retrieval tooling — only `git log`,
-`git log -S`, `git blame` and ripgrep — cited the correct commit on 9 of 9,
-including locating HTTP/3's introduction inside curl's 30,000 commits. Every
-arm reached 100% on graded trials, so Git Why could not show an advantage.
+| strategy                   | Hit@1     | Hit@5     | MRR       | returned nothing |
+| -------------------------- | --------- | --------- | --------- | ---------------- |
+| **git why**                | **0.155** | **0.287** | **0.203** | 11               |
+| zg (semantic code search)  | 0.017     | 0.040     | 0.026     | 13               |
+| git log -G                 | 0.006     | 0.017     | 0.011     | 15               |
+| git log --grep             | 0.000     | 0.011     | 0.003     | 0                |
+| git log --grep --all-match | 0.000     | 0.000     | 0.000     | **109**          |
+| git log -S                 | 0.000     | 0.000     | 0.000     | 15               |
 
-The obvious explanation was tested and rejected: those questions overlap their
-target commit by only 1–3 terms and a naive `git log -S` returns 47–1,035
-candidates, which is precisely the regime hybrid retrieval is meant to win.
-The baseline solved them anyway.
+**7.8x `zg` and 18x the best Git-native strategy** — and the only approach that
+answers nearly every question rather than returning an empty set.
 
-The accuracy ceiling hid the actual effect. Comparing only trials that cited
-correctly — like for like, same outcome — the baseline needed a median of 16
-tool calls; with Git Why it took 9. On the 8 tasks both arms solved, Git Why
-used fewer tool calls on 7, by as much as 11 (`redis-01`: 19 → 8). Output
-tokens fell about a quarter.
+### Where it loses
 
-So the honest summary is narrower than "it helps" and more useful than "it
-doesn't": on these questions Git Why does not make a capable agent more
-_accurate_, because plain Git already answers them. It makes it get there with
-roughly half the work. That is a real effect on cost and latency, measured on
-a handful of paired tasks with one model and one repetition — a direction, not
-an effect size, and no significance is claimed.
+When you can name the symbol, use pickaxe search instead. On cross-file causal
+questions, `git log -S` scores Hit@10 **0.950** against `git why`'s 0.350.
+Semantic search has no advantage over a tool you can hand the exact literal.
 
-Full method, limits and per-arm numbers in [`docs/report.md`](docs/report.md).
+That boundary is the honest positioning, and the shipped
+[skill](plugin/skills/history-archaeology/SKILL.md) tells agents both halves:
 
-Two honest caveats, spelled out fully in the report: the real-repository
-cases above were hand-authored by the same system that built the tool, so
-this is real-repository evidence, not a blinded study; and the synthetic
-fixture benchmark saturates at 100% Hit@5, which is not a meaningful number
-and is not the headline here on purpose. An agent-usefulness pilot has not
-been run yet.
+- **cannot name the term** → `git why`
+- **can name the term** → `git log -S`
+- **current code, not history** → `zg`
+
+### Scale and cost
+
+| measurement                                  | result                        |
+| -------------------------------------------- | ----------------------------- |
+| Index across six real repos (56,781 commits) | 5.50–6.98 KB/record           |
+| curl (30,000 commits)                        | 1.00 GiB, 5.74 KB/record      |
+| Warm query, fresh process (p50 / p95, n=30)  | 483 ms / 494 ms               |
+| Diff/evidence ingestion, real-repo ablation  | earns its cost, ΔHit@5 +0.375 |
+| Tests                                        | 333 unit, 65 integration      |
+
+### What does not work
+
+Seven optimisations were implemented and measured; **none improved MRR** over
+asking the question plainly: a prose-tuned embedding model, pseudo-relevance
+feedback, a prose-commit penalty, caller-side query restatement, wider result
+windows, structural expansion, and phrase fusion. The shipped default is the
+best configuration among everything tried.
+
+That is worth stating rather than hiding: it means no easy gain is being left
+unclaimed, and the remaining headroom is in the embedding itself, which would
+need a larger model or a learned reranker.
+
+**It is also wrong most of the time.** Hit@5 of 0.287 means it misses roughly
+seven hard questions in ten. It beats every alternative on those questions and
+still fails on most of them. Treat results as leads to verify with `git show`,
+never as established fact.
 
 ## When to use ordinary Git instead
 
@@ -154,6 +180,12 @@ called.
 
 - **[Documentation site](https://alliecatowo.github.io/git-why/)** — guided
   install, how retrieval works, CLI reference, FAQ.
+- **[`docs/examples.md`](docs/examples.md)** — real output on real
+  repositories, including a case where this is the wrong tool.
+- **[`docs/plugin.md`](docs/plugin.md)** — the Claude Code plugin, its skill,
+  and why it has no hook.
+- **[`docs/decisions.md`](docs/decisions.md)** — what was tried and rejected,
+  with the measurements. Seven optimisations that did not work.
 - **[`docs/install.md`](docs/install.md)** — every install path and
   uninstall, including where the index and model cache live on disk.
 - **[`docs/operations.md`](docs/operations.md)** — the full operational
