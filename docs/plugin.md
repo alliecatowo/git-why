@@ -40,7 +40,19 @@ reverted commit usually explains itself better than one that stuck), to check
 whether constraints still hold, and to distinguish what history _states_ from
 what it _shows_ from what the agent _infers_.
 
-**`.mcp.json`** — registers the `git-why` MCP server.
+**`.mcp.json`** — registers the `git-why` MCP server, which exposes two tools:
+
+| tool             | what it does                                                                                                                                                                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `git_why_search` | The query. Takes `query`, `limit`, `sort`, `mode`, `groups`, `owners`, and a `temporal` object covering `first`/`last`/`removed`/`timeline`/`before`/`after`/`around`/`between`. Returns the CLI's versioned JSON envelope unchanged. |
+| `git_why_status` | Whether the index exists and is current. Its description tells the agent the actionable fix (`git why index --if-needed`) rather than only reporting a state.                                                                         |
+
+The server is a thin bridge onto the CLI's JSON contract rather than a second
+implementation, so the two cannot disagree about what a search returns. The
+argument mapping is unit-tested, and the test fails if a parameter is
+advertised without being wired through — `--owners` was missing from this
+surface for exactly that reason, which meant an agent could not ask who
+established an area even though the CLI could.
 
 ## Why there is no hook
 
