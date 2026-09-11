@@ -35,8 +35,8 @@ surface rather than a diff against one.
 - `git log -S` beats this tool 0.950 to 0.350 on cross-file causal questions.
   The shipped skill says so, because a tool that oversells itself makes an
   agent worse at its job.
-- Index at 5.50–6.98 KB per record across 56,781 commits. Warm query on curl
-  (30,000 commits, 182,772 records): p50 807 ms, p95 1199 ms.
+- Index at 5.51–7.84 KB per record across six real repositories. Warm query on
+  curl (30,000 commits, 182,772 records): p50 807 ms, p95 1199 ms.
 - Seven optimisations implemented, measured, and rejected. See
   [`docs/decisions.md`](docs/decisions.md).
 - Agent benchmark across several models, four arms, paired per task, with

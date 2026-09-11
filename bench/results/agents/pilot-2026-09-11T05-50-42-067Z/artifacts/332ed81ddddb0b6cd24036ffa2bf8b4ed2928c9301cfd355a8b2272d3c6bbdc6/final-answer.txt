@@ -1,0 +1,37 @@
+I will run the initial command to check the current working directory, git toplevel directory, and git HEAD commit, as instructed.I will search for any files containing "stream" in their name to see if there is a `t_stream.c` or similar implementation file.I will look for source files under `src/` to see if a stream-related source file exists.I will list C source files in the `src/` directory.I will run `git status` to see the current status of the repository and understand the directory structure.I will check the git commit history for references to `t_stream.c` to see when the stream implementation was first added.I will show the details of the commit `79866a636` using `git show`.I will print the full commit message for `79866a6361829ed0602dedff9cb378c66977227a`.I will inspect the diff of `src/t_stream.c` in commit `79866a6361829ed0602dedff9cb378c66977227a` to verify if it implements `XADD` or related command handlers.I will search the git history for the keyword "XADD" to make sure there are no earlier commits introducing it.I will view the commit information of `79866a636` including its parent commit.I will verify if `src/t_stream.c` exists in the parent commit of `79866a636`.I will run `git status` one last time to ensure that no files were modified.Redis first received the **streams** data type, including commands like `XADD`, on **Wednesday, August 30, 2017**.
+
+### Commit Citation
+* **Commit SHA:** `79866a6361829ed0602dedff9cb378c66977227a`
+* **Author:** Salvatore Sanfilippo (antirez)
+* **Date:** Wed Aug 30 12:40:27 2017 +0200
+* **Commit Message:** 
+  > `Streams: 12 commits squashed into the initial Streams implementation.`
+
+### Supporting Diff / Code Quote
+In this commit, the file `src/t_stream.c` was created and introduced the implementation of the `XADD` command (`xaddCommand`):
+
+```c
+/* XADD key [field value] [field value] ... */
+void xaddCommand(client *c) {
+    if ((c->argc % 2) == 1) {
+        addReplyError(c,"wrong number of arguments for XADD");
+        return;
+    }
+
+    /* Lookup the stream at key. */
+    robj *o;
+    stream *s;
+    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
+    s = o->ptr;
+
+    /* Append using the low level function and return the ID. */
+    streamID id;
+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+    sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
+    addReplySds(c,reply);
+
+    signalModifiedKey(c->db,c->argv[1]);
+    notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+    server.dirty++;
+}
+```

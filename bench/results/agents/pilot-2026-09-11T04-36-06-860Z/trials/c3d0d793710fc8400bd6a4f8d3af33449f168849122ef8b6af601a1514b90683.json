@@ -1,0 +1,141 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b550480c01a7d9476ac2c250d2d21a142a6bdb4e",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T05:19:05.603Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "65e7b33d43666f93f5f80252e5f0835595dcd130be47f3ce5e773a67c9215091",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "620ea21410030a9977396b4661806bc187231b79",
+    "citedGoldSha": true,
+    "citedShaCount": 5,
+    "matchedTokens": [
+      "620ea2141",
+      "620ea21410030a9977396b4661806bc187231b79"
+    ]
+  },
+  "wall_ms": 228558,
+  "tool_calls": 8,
+  "history_calls": 6,
+  "zg_calls": 1,
+  "git_why_calls": 0,
+  "input_tokens": 22370,
+  "output_tokens": 2531,
+  "cache_read_tokens": 87628,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0875756,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 49625,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-curl-02-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "c3d0d793710fc8400bd6a4f8d3af33449f168849122ef8b6af601a1514b90683",
+  "zg_index_build_ms": 34985,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_MrtnPOLo4bjkNgrHqn17QX",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all | wc -l"
+        },
+        "output": "30000\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_qwfjV1zqyrXAMQQeBXizc5",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline | grep -iE \"credential\" | head -50"
+        },
+        "output": "093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\n54e747501 schannel: Disable auto credentials; add an option to enable it\n33ddef361 ngtcp2+gnutls: clear credentials when freed\n605aa03ac http_proxy: only loop on 407 + close if we have credentials\n721428889 transfer: strip credentials from the auto-referer header field\n46620b974 http: use credentials from transfer, not connection\n3532262ed url: use blank credentials when using proxy w/o username and password\nad829b21a url: accept \"any length\" credentials for proxy auth\n600a8cded url: make the updated credentials URL-encoded in the URL\ne1f3f3a14 url: reject too long input when parsing credentials\nd3dc0a07e urlapi: guess scheme correct even with credentials given\n34e6bc42b conn: do not reuse connection if SOCKS proxy credentials differ\n68fab35c7 http: fix use of credentials from URL when using HTTP proxy\n98e662915 xattr: strip credentials from any URL that is stored\nbc4b8c971 ntlm_sspi: fix authentication using Credential Manager\nc5cffce56 vauth: Fix memleak by freeing credentials if out of memory\nd41dcba4e NTLM: Fix ConnectionExists to compare Proxy credentials\n24a8359b2 http: do not leak basic auth credentials on re-used connections\n31be461c6 ConnectionExists: for NTLM re-use, require credentials to match\nf9b713217 smb: Don't try to connect with empty credentials\nf3fc3d021 sspi: Return CURLE_LOGIN_DENIED on AcquireCredentialsHandle() failure\nf7e24683c sasl_sspi: Allow DIGEST-MD5 to use current windows credentials\n0574196ac docs: Added Kerberos V5 to the --user SSPI current credentials usage\nf719a97e1 docs: Added Negotiate to the SSPI current credentials usage description\ndd07e7902 tests: Added SMTP with credentials test for RFC-821 based server\nafbcfc4f4 tests: Added email unit tests to verify login credential connection re-use\n517b06d65 url: Fixed connection re-use when using different log-in credentials\n638c6da9d proxy: make ConnectionExists() check credential of proxyconnections too\n488245f99 imap.c: Fixed bad state error when logging in with invalid credentials\n160312d94 curl_schannel.c: Reference count the credential/session handle\n46792af73 schannel: Save session credential handles in session cache\n5c314c6bb Curl_input_negotiate: do not delegate GSSAPI credentials\ne5ee82274 John Dennis filed bug report #2873666 (http://curl.haxx.se/bug/view.cgi?id=2873666) which identified a problem which made libcurl loop infinitely when given incorrect credentials when using HTTP GSS negotiate authentication.\nbf07d3773 - Mike Crowe pointed out that setting CURLOPT_USERPWD to NULL used to clear   the auth credentials back in 7.19.0 and earlier while now you have to set \"\"   to get the same effect. His patch brings back the ability to use NULL.\ncea9695bc Daniel Black filed bug #1704675 (http://curl.haxx.se/bug/view.cgi?id=1704675) identifying a double-free problem in the SSL-dealing layer, telling GnuTLS to free NULL credentials on closedown after a failure and a bad #ifdef for NSS when closing down SSL.\ncde5e35d9 Fixed CURLOPT_FAILONERROR to return CURLE_HTTP_RETURNED_ERROR even for the case when 401 or 407 are returned, *IF* no auth credentials have been given. The CURLOPT_FAILONERROR option is not possible to make fool-proof for 401 and 407 cases when auth credentials is given, but we've now covered this somewhat more.\ne00216581 27. \"libcurl built with GNUTLS ignores the SSLCERT option\" - Unlike   Curl_ossl_connect(), the Curl_gtls_connect() function does not send the user   certificate to the peer. In fact, it ignores the conn->data->set.cert field   completely, it always uses the anonymous credentials. See   http://curl.haxx.se/bug/view.cgi?id=1348930\n2769f3b24 request a file over proxy without credentials, and get a 407 back\n0049c09fc If NTLM is requested, only re-use connections that have the exact same credentials.\n06c86d1a8 Moved the NTLM credentials to the connectdata struct instead, as NTLM authenticates connections and not single requests. This should make it work better when we mix requests from multiple hosts. Problem pointed out by Cris Bailiff.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_iRHGjiSihzdOHcwXfKG30M",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline | grep -iE \"redirect\" | grep -iE \"auth|leak|port|protocol|host|cred\" "
+        },
+        "output": "093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\n620ea2141 transfer: redirects to other protocols or ports clear auth\n6e6599939 http: avoid auth/cookie on redirects same host diff port\nc048dd0b7 KNOWN_BUGS: RTSP authentication breaks without redirect support\n2c5ec339e Curl_follow: accept non-supported schemes for \"fake\" redirects\naf32cd385 http: prevent custom Authorization headers in redirects\nd6ecb2c85 redirect: skip URL encoding for host names\n81e61cda3 gen: support 'redirect'\n1f1f131e0 docs: Update the redirect protocols disabled by default\nc8996bab1 curl tool: Exclude SMB from the protocol redirect\nce2d84b3b libcurl: Exclude SMB from the protocol redirect\n81b41095e Curl_follow: handle redirects to \"//hostname/path\"\n56dab605f - I fixed the problem with doing NTLM, POST and then following a 302 redirect,   as reported by Ebenezer Ikonne (on curl-users) and Laurent Rabret (on   curl-library). The transfer was mistakenly marked to get more data to send   but since it didn't actually have that, it just hung there...\ne6f84b8cc Added test 1100 - \"HTTP POST with NTLM authorization and following a 302 redirect\" doesn't work, seems to repeat what Ebenezer Ikonne (on curl-users) and Laurent Rabret (on curl-library) have reported. Disabled for now.\n826672706 trial with an address which has a valid domain part but invalid host to avoid dns redirections.\n01d6133bd Added test cases 1089 and 1090 to test --write-out after a redirect to test a report that the size didn't work, but these test cases pass.\necc6f550e Added tests 1087 and 1088 to test Basic authentication on a redirect with and without --location-trusted\n830018aa3 - Bug #2152270 (http://curl.haxx.se/bug/view.cgi?id=2152270) identified and   fixed a CURLINFO_REDIRECT_URL memory leak and an additional wrong-doing:\n11a8a2552 Created test cases 1080 and 1081 to reproduce a problem of CURLINFO_REDIRECT_URL leaking memory and returning incorrect results when two URLs are requested. Reported by vmpdemo in bug #2152270\n515893595 Make sure not to dereference the wrong UrlState proto union member when switching from one protocol to another in a single request (e.g. redirecting from HTTP to FTP as in test 1055) by resetting state.expect100header before every request.\nf7815fa93 - Bug report #1973352 (http://curl.haxx.se/bug/view.cgi?id=1973352) identified   how the HTTP redirect following code didn't properly follow to a new URL if   the new url was but a query string such as \"Location: ?moo=foo\". Test case   1031 was added to verify this fix.\nc97d112b3 Added test case 1024 to test a scenario similar to the one reported by Ben Combee where libcurl would send the wrong cookie to a redirected server.  libcurl was doing the right thing in this test case.\n5b358603b Michal Marek forwarded the bug report https://bugzilla.novell.com/show_bug.cgi?id=332917 about a HTTP redirect to FTP that caused memory havoc. His work together with my efforts created two fixes:\n38c994b83 33. Doing multi-pass HTTP authentication on a non-default port does not work.   This happens because the multi-pass code abuses the redirect following code   for doing multiple requests, and when we following redirects to an absolute   URL we must use the newly specified port and not the one specified in the   original URL. A proper fix to this would need to separate the negotiation   \"redirect\" from an actual redirect.\n32bc30e21 Based on an error report by Philippe Vaucher, we no longer count a retried connection setup as a follow-redirect. It turns out 1) this fails when a FTP connection is re-setup and 2) it does make the max-redirs counter behave wrong. This fix was not verified since the reporter vanished, but I believe this is the right fix nonetheless.\n5ba188ab2 Ralph Mitchell reported a flaw when you used a proxy with auth, and you requested data from a host and then followed a redirect to another host. libcurl then didn't use the proxy-auth properly in the second request, due to the host-only check for original host name wrongly being extended to the proxy auth as well. Added test case 233 to verify the flaw and that the fix removed the problem.\n59b45a90c multi interface: when a request is denied due to \"Maximum redirects followed\" libcurl leaked the last Location: URL.\nffe17a819 As reported in Mandrake's bug tracker bug 12289 (http://qa.mandrakesoft.com/show_bug.cgi?id=12289), curl would print a newline to \"finish\" the progress meter after each redirect and not only after a completed transfer.\n9a2aed7d7 Chih-Chung Chang reported that if you use CURLOPT_RESUME_FROM and enabled CURLOPT_FOLLOWLOCATION, libcurl reported error if a redirect happened even if the new URL would provide the resumed file. Test case 188 added to verify the fix (together with existing test 99).\n6c6e5522c redirect from a bad url such as \"www.com?moo=foo\" to an absolute path didn't work, as reported by John McGowan\nfcacd3803 Test 90 added: --anyauth that picks NTLM with a redirect and then another NTLM request.\n09df1cd41 to support \"redirects\" after the full body is transfered\nf36cea67f This verifies that bug report #462600 is fixed, a Location: following when the given URL has no protocol:// part and the Location: redirect contains a :// section\nd5fbfa3d0 As Andr�s Garc�a reported we need to fflush() the data->err so that the progress meter looks better on windows (and if the data->err is redirected from stderr it also makes a point)\nf112cc14b The redirected error stream was closed before curl_easy_cleanup() was made, and when VERBOSE was enabled, that used the stream. Also, the stream was closed even if we looped to get more files. Corrects Dustin Boswell's bug report #441610\nfa491ed91 - disabling port on absolute redirects is wrong - removed #ifdefed code\n7c7923761 free the URL on redirections, this was a previous memory leak\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_Y9NCVSpCLbKgTlv8KJ6ac3",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show --stat 620ea2141; echo \"====\"; git show 620ea2141"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\n lib/transfer.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-\n 1 file changed, 48 insertions(+), 1 deletion(-)\n====\ncommit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\ndiff --git a/lib/transfer.c b/lib/transfer.c\nindex 53ef0b03b..315da876c 100644\n--- a/lib/transfer.c\n+++ b/lib/transfer.c\n@@ -1611,10 +1611,57 @@ CURLcode Curl_follow(struct Curl_easy *data,\n       return CURLE_OUT_OF_MEMORY;\n   }\n   else {\n-\n     uc = curl_url_get(data->state.uh, CURLUPART_URL, &newurl, 0);\n     if(uc)\n       return Curl_uc_to_curlcode(uc);\n+\n+    /* Clear auth if this redirects to a different port number or protocol,\n+       unless permitted */\n+    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {\n+      char *portnum;\n+      int port;\n+      bool clear = FALSE;\n+\n+      if(data->set.use_port && data->state.allow_port)\n+        /* a custom port is used */\n+        port = (int)data->set.use_port;\n+      else {\n+        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,\n+                          CURLU_DEFAULT_PORT);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+        port = atoi(portnum);\n+        free(portnum);\n+      }\n+      if(port != data->info.conn_remote_port) {\n+        infof(data, \"Clear auth, redirects to port from %u to %u\",\n+              data->info.conn_remote_port, port);\n+        clear = TRUE;\n+      }\n+      else {\n+        char *scheme;\n+        const struct Curl_handler *p;\n+        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+\n+        p = Curl_builtin_scheme(scheme);\n+        if(p && (p->protocol != data->info.conn_protocol)) {\n+          infof(data, \"Clear auth, redirects scheme from %s to %s\",\n+                data->info.conn_scheme, scheme);\n+          clear = TRUE;\n+        }\n+        free(scheme);\n+      }\n+      if(clear) {\n+        Curl_safefree(data->state.aptr.user);\n+        Curl_safefree(data->state.aptr.passwd);\n+      }\n+    }\n   }\n \n   if(type == FOLLOW_FAKE) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_oVJIimjsyywSQ6dtqquZ4u",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline -1 HEAD; git merge-base --is-ancestor 620ea2141 HEAD && echo \"ancestor: yes\" || echo \"ancestor: no (commit not in this HEAD's history)\""
+        },
+        "output": "ee521a1c8 http: don't send 100-continue for short PUT requests\nancestor: yes\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_lBvfD422zmzgFzlHG9gnGE",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log -1 --format=\"%ai\" ee521a1c889f4cde6905c5db117959917568be9b; git log -1 --format=\"%ai\" 620ea2141"
+        },
+        "output": "2023-03-10 13:15:43 -0800\n2022-04-25 16:24:33 +0200\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 22370,
+    "output": 2531,
+    "messages": 10
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/c3d0d793710fc8400bd6a4f8d3af33449f168849122ef8b6af601a1514b90683",
+  "completed": true
+}

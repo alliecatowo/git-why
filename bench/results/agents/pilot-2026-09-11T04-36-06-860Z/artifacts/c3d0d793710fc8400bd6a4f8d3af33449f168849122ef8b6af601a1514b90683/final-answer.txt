@@ -1,0 +1,47 @@
+Good, verified. Now let's investigate the security issue.`620ea2141 transfer: redirects to other protocols or ports clear auth` looks exactly on point. Let's inspect it.This confirms the fix precisely, and it's CVE-2022-27774. Let me check when this commit happened relative to HEAD to ensure it's in history.The commit is confirmed to be an ancestor of the pinned HEAD, so it's part of this repository's history at the checked-out state.## Answer
+
+**The bug:** This is CVE-2022-27774. When curl followed an HTTP redirect that pointed to a *different port* or a *different protocol* than the original request, it would keep sending the same authentication credentials (and, in a related sibling fix, SRP/TLS credentials) to that new destination — leaking the user's credentials to a host/service they were never intended for.
+
+**The fix:** curl now clears the stored auth credentials (username/password) whenever a redirect changes either the destination port or the protocol/scheme, unless the application has explicitly opted in to allow credentials to be sent to other hosts/ports (`CURLOPT_REDIR_PROTOCOLS`/allow-auth-to-other-hosts style opt-in).
+
+**Commit:** `620ea21410030a9977396b4661806bc187231b79` — verified to be an ancestor of the pinned HEAD `ee521a1c889f4cde6905c5db117959917568be9b`.
+
+Commit message:
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+Supporting diff excerpt (`lib/transfer.c`, in `Curl_follow()`):
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
+...
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
++    }
+```
+
+This precisely changes redirect-following behavior so that basic/plain-text username/password credentials (`data->state.aptr.user` / `data->state.aptr.passwd`) are wiped before the request is repeated against the new port or protocol, closing the credential-leak path. (Two related follow-up commits, `139a54ed0` "openssl: don't leak the SRP credentials in redirects either" and `093531556` "gnutls: don't leak the SRP credentials in redirects", extend the same protection to TLS-SRP credentials for the respective backends.)

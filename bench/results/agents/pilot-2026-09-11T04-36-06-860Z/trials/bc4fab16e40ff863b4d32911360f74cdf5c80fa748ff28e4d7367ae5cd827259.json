@@ -1,0 +1,120 @@
+{
+  "task_id": "X-caddy-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "corpus_fingerprint": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "implementation_sha": "b550480c01a7d9476ac2c250d2d21a142a6bdb4e",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T05:38:59.792Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "88d02d58135228363f3024e90308d5843b7ccb0c1b3bc9214acc83274e0504e8",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 567220,
+  "tool_calls": 9,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 18941,
+  "output_tokens": 1661,
+  "cache_read_tokens": 100333,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0745586,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 29236,
+  "index_build_ms": 42676,
+  "model_download_ms": null,
+  "index_disk_bytes": 135805019,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-caddy-01-C-r1-a1.jsonl",
+  "exit_reason": "wall_clock_timeout",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited null",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "bc4fab16e40ff863b4d32911360f74cdf5c80fa748ff28e4d7367ae5cd827259",
+  "indexed_commits": 2680,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 11932,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  641 / 641 files\n  Entities    4,377\n  Truncated   2 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_4BE9uSVNKZC8iViKnpShnC",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline -- go.mod | wc -l"
+        },
+        "output": "351\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_CyPDSNYnBAwbrcrU1wvmtz",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log -p -- go.mod | grep -n \"^go 1\" | sort -u | head -50"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_zqgVkKWCMQoRL8rUjmnmX0",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log -p --follow -- go.mod > /tmp/opencode/go_mod_history.txt; wc -l /tmp/opencode/go_mod_history.txt"
+        },
+        "output": "16336 /tmp/opencode/go_mod_history.txt\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_Dfe8wSu5gMiiDCdgEWiptf",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log -p --follow -- go.mod | grep -n \"^commit \\|^Author\\|^Date\\|^+go 1\\.\" > /tmp/opencode/go_mod_commits.txt\ngrep -n \"^commit \" /tmp/opencode/go_mod_commits.txt | wc -l\nsed -n '1,80p' /tmp/opencode/go_mod_commits.txt"
+        },
+        "output": "0\n1:commit d0e93c23a1ca0e542916392c401a13d6870b8204\n2:Author: Kévin Dunglas <kevin@dunglas.fr>\n3:Date:   Mon Aug 31 18:18:31 2026 +0200\n28:commit 789f60e337b82cea70e87dca2704c862185290c9\n29:Author: Kévin Dunglas <kevin@dunglas.fr>\n30:Date:   Sat Aug 15 18:38:20 2026 +0200\n66:commit ff6da1216b15409b7dccc94d43e73a17c916470d\n67:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n68:Date:   Sat Jul 25 10:40:28 2026 +0000\n100:commit cba4f9aabbee15eb669a0f42e66179f914a2ca5d\n101:Author: Zen Dodd <mail@steadytao.com>\n102:Date:   Sat Jul 25 20:32:30 2026 +1000\n299:commit b2693fb63a30e6d7be0972c3645e9a2c0a500e93\n300:Author: techknowlogick <matti@mdranta.net>\n301:Date:   Sat Jul 11 19:17:08 2026 -0400\n319:commit 13a4c3f43c79ca04064457ab9cf95b376c294141\n320:Author: Kévin Dunglas <kevin@dunglas.fr>\n321:Date:   Mon Jun 22 18:25:43 2026 +0200\n375:commit 94fcea08f47cb417ef3ac0a083fe9df8a7d1c074\n376:Author: Zen Dodd <mail@steadytao.com>\n377:Date:   Tue May 26 02:24:44 2026 +1000\n395:commit 44b667a79f48e6163570cd6b32fa806e12625516\n396:Author: Matthew Holt <mholt@users.noreply.github.com>\n397:Date:   Fri May 22 09:25:04 2026 -0600\n424:commit b5898c3f326592f8447f14132f67edf01fb802b8\n425:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n426:Date:   Wed May 20 12:17:10 2026 -0600\n615:commit 704394d9d18e9fdcae2202117a617b4e50ef32f2\n616:Author: Mohammed Al Sahaf <msaa1990@gmail.com>\n617:Date:   Wed May 20 02:42:19 2026 +0300\n631:+go 1.25.1\n713:commit cc58caa1099240ef1a4c280b892260b380a85c86\n714:Author: Matthew Holt <mholt@users.noreply.github.com>\n715:Date:   Mon May 11 17:33:39 2026 -0600\n733:commit fb324331f40782ac7a48d83f591c2bb7615d7eed\n734:Author: Kévin Dunglas <kevin@dunglas.fr>\n735:Date:   Thu May 7 21:59:42 2026 +0200\n777:commit c653e7d61a24ce854d3ff6410dc8ea19ffd04131\n778:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n779:Date:   Sun Apr 26 23:51:26 2026 +1000\n811:commit 2a3ed96f8cbf0c72ce4621de84939e8828726d59\n812:Author: Kévin Dunglas <kevin@dunglas.fr>\n813:Date:   Sat Apr 25 12:52:08 2026 +0200\n852:commit f6ee80be1b1207a5dbb380fce5dad450ceedaf67\n853:Author: Matthew Holt <mholt@users.noreply.github.com>\n854:Date:   Fri Apr 24 11:40:54 2026 -0600\n908:commit 4430756d5c3047564c4d5d72793de6685ba3efda\n909:Author: Zen Dodd <mail@steadytao.com>\n910:Date:   Sat Apr 18 06:56:42 2026 +1000\n991:commit af89c5ab02c7260df28655697964f47a6181b481\n992:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n993:Date:   Fri Apr 17 14:50:53 2026 -0600\n1025:commit c8e4ac2c8c9bc8c4a6b63bc3618dd4ba64e9c7ef\n1026:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n1027:Date:   Fri Apr 10 16:33:07 2026 -0600\n1059:commit 92b62004eb93440b0b234222224f99678382eb24\n1060:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n1061:Date:   Fri Apr 10 20:39:00 2026 +0000\n1319:commit 6c23ec2f3c91503df40e6d6d0f29d53ee93b33dd\n1320:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n1321:Date:   Fri Apr 10 14:31:08 2026 -0600\n1403:commit e98ed6232d65790d27bacd13fb49fa5474b9ec93\n1404:Author: Matt Holt <mholt@users.noreply.github.com>\n1405:Date:   Wed Mar 25 23:21:27 2026 -0600\n1603:commit 5d20adc7a97f70d6fe722099356cca2027908576\n1604:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n1605:Date:   Wed Mar 4 21:26:18 2026 -0700\n1666:commit ce203aa9e1ff2686777019f45c36c283debb7986\n1667:Author: Matthew Holt <mholt@users.noreply.github.com>\n1668:Date:   Fri Feb 27 10:35:24 2026 -0700\n1686:commit 03243e42fe46f6bf276cbbf5dcdc7e18fde461d7\n1687:Author: Matthew Holt <mholt@users.noreply.github.com>\n1688:Date:   Fri Feb 20 12:28:11 2026 -0700\n1700:+go 1.25.0\n1760:commit db256b53e517191f52eca4ea11d415d7a11e729f\n1761:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n1762:Date:   Thu Feb 19 14:20:06 2026 -0500\n1782:commit 8a18acc0251640b7979355997fc677fe8c60ec51\n1783:Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\n1784:Date:   Mon Feb 16 13:38:55 2026 -0500\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_WBvHaXo9DISDzMDiY96Xar",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace\nfor c in 704394d9d18e9fdcae2202117a617b4e50ef32f2 03243e42fe46f6bf276cbbf5dcdc7e18fde461d7 05acc5131ed5c80acbd28ed8d907b166cd15b72c 172136a0a0f6aa47be4eab3727fa2482d7af6617 2028da4e74cd41f0f7f94222c6599da1a371d4b8 44860482d2e38f10dc13b42e6ab277919ab4b5f1 abdf1ae15c32b467b5775fcc2711fb20c5880fb2 81413caea251a3ef9e3641d7b1b6e867572a2b1b 697cc593a17fcb39087161b058fc1dba8b767060 f45a6de20dd19e82e58c85b37e03957b2203b544 99d47050e97a8ccac2aad3bda46be46d4fec85ed 141872ed80d6323505e7543628c259fdae8506d3 b4f1a713978f44b6f26721bd4eaa355164e3e6f4 6bc87ea2ff50a962f16dfafeb125f0f947c1a885 5376e5113e25d85725e1f64d06a288700a50bbaa b8cba62643abf849411856bd92c42b59b98779f4 78760c0ddcd890702977c876fdb126026e13f937 7799554baacbb7ca2b80f2a22968cfcd8071ab0a 8eba582efe2ec8646447d8721a42c486363b3bc2; do\n  echo \"=== $c ===\"\n  git log -1 --format=\"%s\" $c\ndone"
+        },
+        "output": "=== 704394d9d18e9fdcae2202117a617b4e50ef32f2 ===\nchore: deps upgrade (#7751)\n=== 03243e42fe46f6bf276cbbf5dcdc7e18fde461d7 ===\ngo.mod: Upgrade dependencies\n=== 05acc5131ed5c80acbd28ed8d907b166cd15b72c ===\nchore: bump Go to v1.25 (#7184)\n=== 172136a0a0f6aa47be4eab3727fa2482d7af6617 ===\ncaddytls: Support post-quantum key exchange mechanism X25519MLKEM768\n=== 2028da4e74cd41f0f7f94222c6599da1a371d4b8 ===\nci: build and test with Go 1.23 (#6526)\n=== 44860482d2e38f10dc13b42e6ab277919ab4b5f1 ===\nchore: downgrade minimum Go version in go.mod (#6318)\n=== abdf1ae15c32b467b5775fcc2711fb20c5880fb2 ===\ngo.mod: go 1.22.3\n=== 81413caea251a3ef9e3641d7b1b6e867572a2b1b ===\ncaddytls: Upgrade ACMEz to v2; support ZeroSSL API; various fixes (#6229)\n=== 697cc593a17fcb39087161b058fc1dba8b767060 ===\nchore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)\n=== f45a6de20dd19e82e58c85b37e03957b2203b544 ===\ngo.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)\n=== 99d47050e97a8ccac2aad3bda46be46d4fec85ed ===\ncore: Eliminate unnecessary shutdown delay on Unix (#5413)\n=== 141872ed80d6323505e7543628c259fdae8506d3 ===\nchore: Bump up to Go 1.19, minimum 1.18 (#4925)\n=== b4f1a713978f44b6f26721bd4eaa355164e3e6f4 ===\nchore: Bump minimum Go to 1.17 (#4662)\n=== 6bc87ea2ff50a962f16dfafeb125f0f947c1a885 ===\nci: Start testing on Go 1.17, drop 1.15 (#4283)\n=== 5376e5113e25d85725e1f64d06a288700a50bbaa ===\nci: Build and test on Go 1.16, bump minimum to 1.15 (#4024)\n=== b8cba62643abf849411856bd92c42b59b98779f4 ===\nRefactor for CertMagic v0.10; prepare for PKI app\n=== 78760c0ddcd890702977c876fdb126026e13f937 ===\ngo.mod: Bump to Go 1.14\n=== 7799554baacbb7ca2b80f2a22968cfcd8071ab0a ===\ngo.mod: Use lego v3 and CertMagic 0.7.0\n=== 8eba582efe2ec8646447d8721a42c486363b3bc2 ===\nAdd go module files\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 72245,
+    "output": 3914,
+    "messages": 16
+  },
+  "token_cross_check_agrees": false,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "56ae39bdcc1d64661038683e30ea49cad0b0121d"
+    }
+  },
+  "completed": true
+}

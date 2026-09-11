@@ -1,0 +1,118 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b550480c01a7d9476ac2c250d2d21a142a6bdb4e",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T05:39:57.913Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "8d6dd87e4ee1c8c294bf165d8eb9089e08825592120760b0232319eb3aa00bce",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "620ea21410030a9977396b4661806bc187231b79",
+    "citedGoldSha": true,
+    "citedShaCount": 5,
+    "matchedTokens": [
+      "620ea2141",
+      "620ea21410030a9977396b4661806bc187231b79"
+    ]
+  },
+  "wall_ms": 74561,
+  "tool_calls": 7,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 2,
+  "input_tokens": 30082,
+  "output_tokens": 3163,
+  "cache_read_tokens": 88244,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.10944279999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 66271,
+  "index_build_ms": 554204,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105075197,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-curl-02-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "949e1e640bf8106341e55d7d4335baa24132744a6c1f16637d2a5433daacbc39",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_NR1kk6KZ14OZll8SIVRcBd",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format='%H %ad %s' ee521a1c889f4cde6905c5db117959917568be9b\necho ---\ngit log -1 --format='%ad' HEAD\n"
+        },
+        "output": "ee521a1c889f4cde6905c5db117959917568be9b Fri Mar 10 13:15:43 2023 -0800 http: don't send 100-continue for short PUT requests\n---\nFri Mar 10 13:15:43 2023 -0800\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_xdkl93pXQaMdKQiiB1A4fE",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"CVE-2022-27774\" 2>&1\necho ---\ngit log --all --oneline --grep=\"credential\" -i | head -50\n"
+        },
+        "output": "5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n---\n1027d52e7 schannel: when importing PFX, disable key persistence\n093531556 gnutls: don't leak the SRP credentials in redirects\n139a54ed0 openssl: don't leak the SRP credentials in redirects either\ndf957e100 schannel: move the algIds array out of schannel.h\neeca818b1 openldap: implement SASL authentication\ncdc1da912 openldap: several minor improvements\nba3452caf schannel: Ensure the security context request flags are always set\n54e747501 schannel: Disable auto credentials; add an option to enable it\n33ddef361 ngtcp2+gnutls: clear credentials when freed\n605aa03ac http_proxy: only loop on 407 + close if we have credentials\n721428889 transfer: strip credentials from the auto-referer header field\n46620b974 http: use credentials from transfer, not connection\n08e8455dd http: introduce AWS HTTP v4 Signature\n3532262ed url: use blank credentials when using proxy w/o username and password\n2110b996a configure: repair the check if argv can be written to\nad829b21a url: accept \"any length\" credentials for proxy auth\n600a8cded url: make the updated credentials URL-encoded in the URL\ne1f3f3a14 url: reject too long input when parsing credentials\nd3dc0a07e urlapi: guess scheme correct even with credentials given\n34e6bc42b conn: do not reuse connection if SOCKS proxy credentials differ\n68fab35c7 http: fix use of credentials from URL when using HTTP proxy\n06ace0ba9 xattr: skip unittest on unsupported platforms\n98e662915 xattr: strip credentials from any URL that is stored\n6b6c2b8d5 schannel: client certificate store opening fix\n6f5ef24f0 auth: pick Bearer authentication whenever a token is available\nbc4b8c971 ntlm_sspi: fix authentication using Credential Manager\n36f0f4788 vauth: Fix typo\nb0989cd3a vtls: allow selecting which SSL backend to use at runtime\naf5fbb14b digest_sspi: Handle 'stale=TRUE' directive in HTTP digest\nc5cffce56 vauth: Fix memleak by freeing credentials if out of memory\n156b8287a krb5_gssapi: Only process challenge when present\n61152e7d9 krb5_sspi: Only process challenge when present\n228cd71c6 krb5_sspi: Only generate the output token when its not allocated\n2d2c67e3e krb5: Only generate a SPN when its not known\nd41dcba4e NTLM: Fix ConnectionExists to compare Proxy credentials\n24a8359b2 http: do not leak basic auth credentials on re-used connections\na3e5a4371 schannel: Add support for optional client certificates\n31be461c6 ConnectionExists: for NTLM re-use, require credentials to match\ned429b72d gtls: add check of return code\n0da4524a2 url.c: Fixed compilation warning when USE_NTLM is not defined\nf9b713217 smb: Don't try to connect with empty credentials\nf3fc3d021 sspi: Return CURLE_LOGIN_DENIED on AcquireCredentialsHandle() failure\nf7e24683c sasl_sspi: Allow DIGEST-MD5 to use current windows credentials\n0574196ac docs: Added Kerberos V5 to the --user SSPI current credentials usage\nf719a97e1 docs: Added Negotiate to the SSPI current credentials usage description\n313b274b9 test1134: verify CREDSPERREQUEST for HTTP\ndd07e7902 tests: Added SMTP with credentials test for RFC-821 based server\nafbcfc4f4 tests: Added email unit tests to verify login credential connection re-use\nfe260b75e smtp: Fixed login denied when server doesn't support AUTH capability\n517b06d65 url: Fixed connection re-use when using different log-in credentials\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_O7SUmbGZQzXXuJaHCKyuHC",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep=\"CVE-2022-27774\"\necho ---\ngit show 5295e8d64 --stat\necho ---\ngit log --oneline 620ea2141~3..620ea2141\n"
+        },
+        "output": "5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n---\ncommit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\n tests/data/Makefile.inc |  2 +-\n tests/data/test973      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test974      | 87 ++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test975      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test976      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n 5 files changed, 352 insertions(+), 1 deletion(-)\n---\n620ea2141 transfer: redirects to other protocols or ports clear auth\n08b8ef4e7 connect: store \"conn_remote_port\" in the info struct\nc12629963 cookie.d: clarify when cookies are always sent\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 11,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 30082,
+    "output": 3163,
+    "messages": 9
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/949e1e640bf8106341e55d7d4335baa24132744a6c1f16637d2a5433daacbc39",
+  "completed": true
+}

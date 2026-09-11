@@ -59,16 +59,25 @@ need per-package indexes and you do not pay to maintain them.
 
 ## Disk, concretely
 
-Roughly 5.5–7 KB per record. Measured on six pinned public repositories:
+Between 5.51 and 7.84 KB per record, measured on six pinned public
+repositories by `node bench/index-size.mjs`, which reads `diskBytes` and
+`recordCount` from `git why status --json` so the ratio comes from one source
+rather than two that could disagree.
 
-| repository | commits | index    | KB/record |
-| ---------- | ------- | -------- | --------- |
-| curl       | 30,000  | 1.00 GiB | 5.74      |
-| redis      | 12,110  | 450 MiB  | 6.92      |
-| requests   | 6,494   | 106 MiB  | 5.50      |
-| zod        | 3,210   | 162 MiB  | 6.52      |
-| caddy      | 2,680   | 130 MiB  | 6.98      |
-| ripgrep    | 2,287   | 87 MiB   | 6.94      |
+| repository | commits | records | index    | KB/record |
+| ---------- | ------- | ------- | -------- | --------- |
+| curl       | 30,000  | 182,772 | 1.37 GiB | 7.84      |
+| redis      | 12,110  | 66,588  | 450 MiB  | 6.92      |
+| requests   | 6,494   | 19,741  | 106 MiB  | 5.51      |
+| zod        | 3,210   | 25,369  | 162 MiB  | 6.52      |
+| caddy      | 2,680   | 18,988  | 130 MiB  | 6.98      |
+| ripgrep    | 2,287   | 12,865  | 87 MiB   | 6.94      |
+
+**Records, not commits, is the scaling variable.** curl has 2.3x redis's
+commits but 2.7x its records, because a commit contributes one summary plus a
+record per evidence hunk — and it is the widest-ranging repositories that
+produce the most hunks per commit. Estimate from expected diff volume rather
+than from `git rev-list --count`.
 
 `git why gc` reclaims space from superseded generations. Deleting `.git/why/`
 is always safe — it is derived data, and the next search rebuilds it.

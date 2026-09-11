@@ -1,0 +1,46 @@
+Verified. Now let's search for the relevant commit.This confirms the commit exists in our history. Let me get the full commit details and confirm it's the correct/complete fix (checking if there's a related follow-up commit too).Both commits (620ea2141 and 5295e8d64) are ancestors of HEAD, confirmed present in this repo's history. This is the definitive fix commit for CVE-2022-27774.
+
+## Answer
+
+**The bug (CVE-2022-27774):** When curl followed an HTTP redirect (`Location:` header) that pointed to a different port or a different protocol/scheme on the same host, it would continue sending the previously-set HTTP Basic/Digest/etc. authentication credentials (username/password) to that new destination. This allowed a malicious or compromised server to redirect a client to another service (different port or protocol) and harvest the user's credentials.
+
+**The fix:** Commit **`620ea21410030a9977396b4661806bc187231b79`** ("transfer: redirects to other protocols or ports clear auth") in `lib/transfer.c`, inside `Curl_follow()`. It added logic that, unless the user has explicitly opted in (`data->set.allow_auth_to_other_hosts`), compares the port and protocol of the redirect target against the original connection's port/protocol, and if either differs, it clears (frees) the stored auth credentials before following the redirect:
+
+```
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+...
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
+...
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
+...
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
+```
+
+The commit message itself cites the vulnerability directly:
+```
+transfer: redirects to other protocols or ports clear auth
+
+... unless explicitly permitted.
+
+Bug: https://curl.se/docs/CVE-2022-27774.html
+Reported-by: Harry Sintonen
+Closes #8748
+```
+
+A companion commit, **`5295e8d64ac6949ecb3f9e564317a608f51b90d8`** ("tests: verify the fix for CVE-2022-27774"), adds regression tests directly confirming this behavior (test973–976: redirecting HTTP→FTP or HTTP→HTTP-different-port clears auth by default, but keeps it when explicitly permitted).
+
+Both commits are present in this repository's history and are ancestors of the pinned HEAD (`ee521a1c889f4cde6905c5db117959917568be9b`), verified via `git merge-base --is-ancestor`.

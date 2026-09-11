@@ -1,0 +1,47 @@
+Yes, ripgrep's special ignore-file name used to be **`.rgignore`**, and even earlier during pre-release development, **`.xrepignore`**.
+
+Here is the history of how this evolved in the repository, along with the establishing commits:
+
+---
+
+### 1. The Switch from `.rgignore` to `.ignore`
+The transition to `.ignore` happened in commit **`cc90511ab29d3c37e873acac0fd80f90473f54bb`** (on September 23, 2016) to align with other tools such as *The Silver Searcher*.
+
+#### Commit Message:
+```text
+commit cc90511ab29d3c37e873acac0fd80f90473f54bb
+Author: Andrew Gallant <jamslam@gmail.com>
+Date:   Fri Sep 23 22:44:17 2016 -0400
+
+    Switch from .rgignore to .ignore.
+    
+    But don't actually remove support for .rgignore until the next semver
+    bump.
+    
+    Note that this puts us in line with the silver searcher:
+    https://github.com/ggreer/the_silver_searcher/pull/974
+    
+    Fixes #40
+```
+
+#### Diff excerpt from `src/ignore.rs`:
+```rust
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+---
+
+### 2. Earlier Pre-Release Name: `.xrepignore`
+Before it was officially named `ripgrep` (and `.rgignore`), the project was developed under the name `xrep`. In the early pre-release commit **`065c44998092906746f6585090bafbf36d98342b`** (on August 27, 2016), the special ignore-file was called **`.xrepignore`**.
+
+#### Diff excerpt from `src/ignore.rs` at `065c449`:
+```rust
+        // The ordering here is important. Later globs have higher precedence.
+        ok = builder.add_path(id.path.join(".gitignore")).is_ok() || ok;
+        ok = builder.add_path(id.path.join(".agignore")).is_ok() || ok;
+        ok = builder.add_path(id.path.join(".xrepignore")).is_ok() || ok;
+```

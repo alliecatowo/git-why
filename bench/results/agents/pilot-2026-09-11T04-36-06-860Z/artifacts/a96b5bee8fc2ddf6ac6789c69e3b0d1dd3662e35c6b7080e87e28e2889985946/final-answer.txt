@@ -1,0 +1,47 @@
+Verified. Now let's investigate the repository for Python 3.9 support.At the pinned commit, requires-python is >=3.10 — so Python 3.9 is dropped. Let's find the commit that made this change.Found it: commit `0c2bbe73` "Drop support for Python 3.9 (#7196)".Let's confirm this commit is an ancestor of the pinned HEAD (i.e., actually part of this checkout's history, not a future/branch commit).Confirmed. Both dates are consistent (Feb 2026 commit precedes the Sep 2026 HEAD), and `0c2bbe73` is a direct ancestor of the pinned HEAD `dae7ef63`.
+
+## Answer
+
+**No — requests has dropped support for Python 3.9** as of this repository state. The currently pinned commit (`dae7ef63b4df6eded86637f251fc4e3a06c3b479`) requires Python **3.10+**.
+
+### Supporting commit
+
+**SHA:** `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`
+**Message:** `Drop support for Python 3.9 (#7196)`
+
+This commit is confirmed to be a direct ancestor of the pinned `HEAD`.
+
+### Supporting diff excerpts
+
+From `pyproject.toml`:
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+```
+```diff
+     "Programming Language :: Python :: 3",
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+From `setup.py`:
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```
+
+From `README.md`:
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+From `tox.ini`:
+```diff
+-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}
++envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}
+```
+
+This is corroborated by the current state of the checkout at `HEAD` (`dae7ef63`), where `setup.py` still reads `"Requests requires Python 3.10 or later.\n"` and `pyproject.toml` still has `requires-python = ">=3.10"` — no later commit re-adds 3.9 support.

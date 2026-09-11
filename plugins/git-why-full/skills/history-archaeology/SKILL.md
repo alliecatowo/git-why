@@ -123,6 +123,6 @@ p95 1199 ms on 30,000 commits. Not free, but cheap enough to ask a question
 rather than guess. Still ask one well-formed question instead of sweeping
 several phrasings — each one is a fresh process.
 
-The index is roughly 5.9 KB per record, and `index --if-needed` returns in
-about 0.2s when it is already current, so keeping it fresh costs almost
-nothing.
+The index costs 5.5–7.8 KB per record — about 1.4 GB for a 30,000-commit
+repository, so it is a real amount of disk. `index --if-needed` returns in
+about 0.2s when already current, so keeping it fresh costs almost nothing.

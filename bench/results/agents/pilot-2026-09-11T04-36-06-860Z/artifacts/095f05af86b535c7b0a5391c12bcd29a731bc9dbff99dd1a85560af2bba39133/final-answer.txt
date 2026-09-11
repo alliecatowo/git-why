@@ -1,0 +1,54 @@
+Verified. Now let's investigate the repository history.Now let's find the commits that changed the "go X.Y" line and check commit messages for HTTP/3 related context, especially quic-go.Excellent! Found it. There are two very promising commits mentioning quic-go directly with Go minimum bumps. Let's examine them in detail.Both commits explicitly bump the Go minimum version alongside a quic-go (HTTP/3 library) update. Let's check the go.mod diffs to confirm quic-go is indeed the HTTP/3 dependency, and check if there's explicit reasoning in the diff/PR about why quic-go required the bump.The commit title itself directly ties the Go bump to the quic-go (HTTP/3) library update. Both commits are authored by Marten Seemann, quic-go's maintainer. Let's verify these are on the current branch's history (reachable from HEAD) since we used `--all`.Both commits are confirmed to be part of this repository's actual history (ancestors of HEAD), not from some other branch. Let's get the full SHAs.## Answer
+
+**Yes.** Caddy has raised its minimum Go version explicitly because of `quic-go` — the library it depends on to implement HTTP/3 — on at least two occasions in this repository's history.
+
+### Commit 1: `f45a6de20dd19e82e58c85b37e03957b2203b544`
+**"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)"** — authored by Marten Seemann (quic-go's maintainer), July 21, 2023.
+
+Commit message (title says it all):
+```
+go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)
+
+* update quic-go to v0.37.0
+* Bump to Go 1.20
+...
+```
+
+Diff in `go.mod`:
+```diff
+-go 1.19
++go 1.20
+ 
+ require (
+ ...
+-	github.com/quic-go/quic-go v0.36.2
++	github.com/quic-go/quic-go v0.37.0
+ ...
+-	github.com/quic-go/qtls-go1-19 v0.3.2 // indirect
+-	github.com/quic-go/qtls-go1-20 v0.2.2 // indirect
++	github.com/quic-go/qtls-go1-20 v0.3.0 // indirect
+```
+The go.mod bump from `go 1.19` to `go 1.20` is committed in the very same change that upgrades `github.com/quic-go/quic-go`, and the accompanying CI workflow diff drops testing on Go 1.19 entirely.
+
+### Commit 2: `697cc593a17fcb39087161b058fc1dba8b767060`
+**"chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)"** — also authored by Marten Seemann, January 25, 2024.
+
+Commit message:
+```
+chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)
+```
+
+Diff in `go.mod`:
+```diff
+-go 1.20
++go 1.21
++
++toolchain go1.21.4
+ 
+ require (
+ ...
+-	github.com/quic-go/quic-go v0.40.1
++	github.com/quic-go/quic-go v0.41.0
+```
+
+Both commits' titles and diffs directly pair a `quic-go` (Caddy's HTTP/3 implementation) version bump with a corresponding increase of the `go` directive in `go.mod`, and both are confirmed ancestors of the pinned HEAD (`56ae39bdcc1d64661038683e30ea49cad0b0121d`) via `git merge-base --is-ancestor`.

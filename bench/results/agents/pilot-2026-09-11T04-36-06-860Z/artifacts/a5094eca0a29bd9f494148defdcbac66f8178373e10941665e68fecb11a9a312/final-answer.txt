@@ -1,0 +1,45 @@
+Verified. Now let's investigate.Found the commit clearly. Let's verify with `git show` for the full commit message and confirm it exists in this repo's history (before HEAD).Confirmed: it's an ancestor of the pinned HEAD, so the feature exists in this checkout. Let's also quickly check `docs/cmdline-opts/write-out.d` in the working tree to confirm the feature is present at HEAD.Confirmed: at HEAD, the `%{json}` variable and `header_json` are documented and implemented.
+
+## Answer
+
+**Yes** — curl can print transfer stats as JSON via `-w`/`--write-out`, using the `%{json}` variable (e.g. `curl -w "%{json}" ...`, or `-w "%{stderr}%{json}"` to send it to stderr instead of stdout).
+
+### Supporting commit
+
+**`04c03416e68fd635a15cae8201872f5c29fdcca8`** — "writeout: support to generate JSON output" (Mathias Gumz, 2020-02-01), which is an ancestor of this checkout's pinned `HEAD` (`ee521a1c889f4cde6905c5db117959917568be9b`).
+
+Commit message excerpt:
+
+> This commit adds support to generate JSON via the writeout feature:
+>
+> ```
+> -w "%{json}"
+> ```
+>
+> It leverages the existing infrastructure as much as possible. Thus, generating the JSON on STDERR is possible by:
+>
+> ```
+> -w "%{stderr}%{json}"
+> ```
+>
+> This implements a variant of https://github.com/curl/curl/wiki/JSON#--write-out-json.
+>
+> Closes #4870
+
+Diff excerpt (`src/tool_writeout.c`), adding the new `VAR_JSON` case dispatching to the new JSON writer:
+
+```c
+              case VAR_STDERR:
+                stream = stderr;
+                break;
++             case VAR_JSON:
++               ourWriteOutJSON(variables, curl, outs, stream);
+              default:
+                break;
+```
+
+along with a new `src/tool_writeout_json.c`/`.h` pair implementing `ourWriteOutJSON()`, and documentation added to `docs/cmdline-opts/write-out.d` describing the `json` variable.
+
+I also confirmed in the working tree at the pinned `HEAD` that this feature is present and unmodified since: `docs/cmdline-opts/write-out.d` documents the `json` (and later-added `header_json`) variable, and `src/tool_writeout.c` still contains the `{"json", VAR_JSON, ...}` mapping and `use_json` handling introduced by this commit (with later refinements from follow-up commits such as `65ca229` "tool_writeout: refactor write-out and write-out json" and `4133a69` "curl: add %{header_json} support in -w handling", both also ancestors of HEAD).
+
+No files were modified during this investigation.

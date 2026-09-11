@@ -963,12 +963,13 @@ function readmeBlocks() {
   )?.diff_evidenceMinusSummaryOnly;
   const indexRows = readJson(join(REPO_ROOT, 'bench', 'results', 'index-size.json'));
   let scale = '| measurement | result |\n| --- | --- |\n';
-  if (indexRows) {
+  if (indexRows?.repos?.length) {
     const kb = indexRows.repos.map((r) => r.kbPerRecord);
     const commits = indexRows.repos.reduce((a, r) => a + r.commits, 0);
     const biggest = indexRows.repos.reduce((a, b) => (b.commits > a.commits ? b : a));
+    const gib = (b) => `${(b / 1024 ** 3).toFixed(2)} GiB`;
     scale += `| Index across ${indexRows.repos.length} real repos (${commits.toLocaleString('en-US')} commits) | ${Math.min(...kb).toFixed(2)}–${Math.max(...kb).toFixed(2)} KB/record |\n`;
-    scale += `| ${biggest.repo} (${biggest.commits.toLocaleString('en-US')} commits) | ${biggest.size}, ${biggest.kbPerRecord.toFixed(2)} KB/record |\n`;
+    scale += `| ${biggest.repo} (${biggest.commits.toLocaleString('en-US')} commits, ${biggest.records.toLocaleString('en-US')} records) | ${gib(biggest.diskBytes)}, ${biggest.kbPerRecord.toFixed(2)} KB/record |\n`;
   }
   // Lead with the real repository. A latency figure from a 135-commit fixture
   // is the least interesting number this project can report, given that the

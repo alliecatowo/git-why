@@ -1,0 +1,25 @@
+Verified. Now let's investigate the LPOS RANK/FIRST question.Found it immediately. Let's examine that commit.This confirms it clearly. Let's also check the parent commit `89ca2afd6` for context to make sure `FIRST` was indeed the earlier name (introduced before this rename).This gives full history: the command started as `LRANK`, was renamed to `LPOS` while using a `FIRST` option, and then the `FIRST` option itself was renamed to `RANK`. I have everything needed to answer.
+
+## Answer
+
+**Yes — the `FIRST` option was renamed to `RANK`.** Your memory is correct.
+
+This happened in commit **`a5a3a7bbc61203398ecc1d5b52c76214f5672776`** ("LPOS: option FIRST renamed RANK.", authored by antirez, Wed Jun 24 2020).
+
+The diff makes the rename explicit:
+
+```
+-/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]
++/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]
+ *
+- * FIRST "rank" is the position of the match, so if it is 1, the first match
++ * The "rank" is the position of the match, so if it is 1, the first match
+...
+-        if (!strcasecmp(opt,"FIRST") && moreargs) {
++        if (!strcasecmp(opt,"RANK") && moreargs) {
+...
+-                addReplyError(c,"FIRST can't be zero: use 1 to start from "
++                addReplyError(c,"RANK can't be zero: use 1 to start from "
+```
+
+**Broader context for completeness:** the command itself went through an earlier rename too. It started life as `LRANK` in commit `a7936ef96d521ef7e28a255e5105934f820e774a` ("LRANK: Add command (the command will be renamed LPOS)."), was renamed to `LPOS` (with the `FIRST` option) in `89ca2afd6b46496e3be5dbce2027b9381c4f431e` ("LPOS: update to latest proposal."), and then the `FIRST` option itself was renamed to `RANK` in the commit cited above. So the early examples you recall with `FIRST` reflect this pre-stabilization phase of the command's design before it settled on `LPOS ... RANK ...`.

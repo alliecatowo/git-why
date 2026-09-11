@@ -185,8 +185,8 @@ Method, per-arm figures and the registered hypothesis: [`docs/report.md`](docs/r
 
 | measurement                                               | result                        |
 | --------------------------------------------------------- | ----------------------------- |
-| Index across 6 real repos (56,781 commits)                | 5.50–6.98 KB/record           |
-| curl (30,000 commits)                                     | 1.00 GiB, 5.74 KB/record      |
+| Index across 6 real repos (56,781 commits)                | 5.51–7.84 KB/record           |
+| curl-curl (30,000 commits, 182,772 records)               | 1.37 GiB, 7.84 KB/record      |
 | Warm query on curl-curl (30,000 commits), p50 / p95, n=20 | 807 ms / 1199 ms              |
 | The same query on a 135-commit fixture                    | 477 ms / 508 ms               |
 | Diff/evidence ingestion, real-repo ablation               | earns its cost, ΔHit@5 +0.375 |

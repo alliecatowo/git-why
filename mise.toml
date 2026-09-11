@@ -61,6 +61,11 @@ run = [
   "node bench/corpus/baselines.mjs",
 ]
 
+[tasks."bench:index-size"]
+description = "Measure index size per record across the pinned real clones"
+depends = ["build"]
+run = "node bench/index-size.mjs"
+
 [tasks."bench:crossfile"]
 description = "Score the cross-file causal corpus, where git log -S wins"
 depends = ["build"]

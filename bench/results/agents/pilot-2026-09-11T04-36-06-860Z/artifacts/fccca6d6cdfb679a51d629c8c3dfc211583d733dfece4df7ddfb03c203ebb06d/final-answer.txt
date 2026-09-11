@@ -1,0 +1,35 @@
+I found a clear answer.
+
+## Answer
+
+Yes — before it was `.ignore`, ripgrep's special ignore-file name was **`.rgignore`**.
+
+## Supporting commit
+
+**SHA:** `cc90511ab29d3c37e873acac0fd80f90473f54bb`
+
+**Commit message:**
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+**Diff excerpt (README.md):**
+```diff
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+This commit (dated Fri Sep 23 2016, authored by Andrew Gallant / BurntSushi) shows the rename from `.rgignore` to `.ignore` across `README.md`, `doc/rg.1`, `doc/rg.1.md`, `src/args.rs`, `src/gitignore.rs`, `src/ignore.rs`, and `tests/tests.rs`, while intentionally keeping backward-compatible support for the old `.rgignore` name for one more release cycle (later fully documented alongside `.ignore` in commit `052c857`, "doc: mention .ignore and .rgignore more prominently"). No files were modified during this investigation.

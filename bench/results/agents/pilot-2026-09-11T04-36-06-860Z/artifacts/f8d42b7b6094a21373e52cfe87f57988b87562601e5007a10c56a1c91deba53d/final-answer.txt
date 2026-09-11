@@ -1,0 +1,39 @@
+Verified. Now let's investigate the history for the chardet -> charset_normalizer switch.Found it. Let's look at the specific commit.Confirmed and this commit is in the current repo's history (an ancestor of HEAD).I have all the evidence needed to answer confidently.
+
+## Answer
+
+**Yes** — `requests` originally used `chardet` (and even earlier a fork called `charade`) as its default text-encoding detection library, and it later switched to **`charset_normalizer`** as the default on Python 3, keeping `chardet` only as a legacy/optional fallback.
+
+### The commit that establishes this
+
+**Commit SHA: `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`**
+Title: *"Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)"*
+Author: Ash Berlin-Taylor, 2021-07-07
+(Confirmed to be an ancestor of the checked-out `HEAD` via `git merge-base --is-ancestor`.)
+
+### Why the switch — quoted from the commit message
+
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity.
+>
+> As an "escape hatch" I have made the code so that it will use chardet first if it is installed, but we no longer depend upon it directly, although there is a new extra added, `requests[lgpl]`. This should minimize the impact to users, and give them an escape hatch if charset_normalizer turns out to be not as good."
+
+### Corroborating diff evidence
+
+In `setup.py`, the dependency declaration changed from:
+```diff
+- 'chardet>=3.0.2,<5',
++ 'charset_normalizer~=2.0.0; python_version >= "3"',
++ 'chardet>=3.0.2,<5; python_version < "3"',
+```
+and a new extras entry was added:
+```diff
++ 'use_chardet_on_py3': ['chardet>=3.0.2,<5']
+```
+
+And in `HISTORY.md`, the changelog entry for the release explicitly states:
+
+> "Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3 to remove license ambiguity for projects bundling requests. If `chardet` is already installed on your machine it will be used instead of `charset_normalizer` to keep backwards compatibility... Python2 still depends upon the `chardet` module."
+
+**Summary of the reason:** The switch was driven by **software licensing concerns**, not detection accuracy. `chardet` is licensed under the LGPL, which creates legal ambiguity for downstream projects that want to bundle `requests` into a single binary/artifact (the LGPL's linking/distribution requirements are murkier in that scenario). `charset_normalizer` is MIT-licensed, so replacing `chardet` as the default eliminated that license ambiguity, while still allowing users who prefer `chardet` to opt back in via the `requests[use_chardet_on_py3]` extra.

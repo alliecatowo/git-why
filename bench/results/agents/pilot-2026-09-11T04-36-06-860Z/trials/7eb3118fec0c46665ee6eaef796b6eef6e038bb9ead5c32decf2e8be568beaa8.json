@@ -1,0 +1,103 @@
+{
+  "task_id": "X-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "b550480c01a7d9476ac2c250d2d21a142a6bdb4e",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T05:24:53.013Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "a072ea835c535a77834b8b8bda85ac0e6cef21adb9a1ad60ba974c3da8c3448d",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "04c03416e68fd635a15cae8201872f5c29fdcca8",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8"
+    ]
+  },
+  "wall_ms": 45359,
+  "tool_calls": 4,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 13492,
+  "output_tokens": 1114,
+  "cache_read_tokens": 36515,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.045426999999999995,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 22976,
+  "index_build_ms": 541579,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105129095,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-curl-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "7eb3118fec0c46665ee6eaef796b6eef6e038bb9ead5c32decf2e8be568beaa8",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_uDzCRtYzNLGNDmWXTGejUi",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c0341 --stat 2>&1 | head -30\necho \"---\"\ngit log --oneline -1 04c0341 2>&1\necho \"---\"\ngit log --oneline ee521a1c889f4cde6905c5db117959917568be9b -1\necho \"--- is 04c0341 ancestor of HEAD? ---\"\ngit merge-base --is-ancestor 04c0341 HEAD && echo \"YES ancestor\" || echo \"NOT ancestor\""
+        },
+        "output": "commit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\n docs/cmdline-opts/write-out.d   |   3 +\n lib/version.c                   |  10 +++\n packages/Symbian/group/curl.mmp |   1 +\n src/Makefile.inc                |   2 +\n src/tool_writeout.c             | 160 +++++++++++++++++------------------\n src/tool_writeout.h             |  57 ++++++++++++-\n src/tool_writeout_json.c        | 181 ++++++++++++++++++++++++++++++++++++++++\n src/tool_writeout_json.h        |  30 +++++++\n 8 files changed, 361 insertions(+), 83 deletions(-)\n---\n04c03416e writeout: support to generate JSON output\n---\nee521a1c8 http: don't send 100-continue for short PUT requests\n--- is 04c0341 ancestor of HEAD? ---\nYES ancestor\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_k2IrkpNax48CCVWk98T6Lf",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c0341:docs/cmdline-opts/write-out.d | head -60"
+        },
+        "output": "Long: write-out\nShort: w\nArg: <format>\nHelp: Use output FORMAT after completion\n---\nMake curl display information on stdout after a completed transfer. The format\nis a string that may contain plain text mixed with any number of\nvariables. The format can be specified as a literal \"string\", or you can have\ncurl read the format from a file with \"@filename\" and to tell curl to read the\nformat from stdin you write \"@-\".\n\nThe variables present in the output format will be substituted by the value or\ntext that curl thinks fit, as described below. All variables are specified as\n%{variable_name} and to output a normal % you just write them as %%. You can\noutput a newline by using \\\\n, a carriage return with \\\\r and a tab space with\n\\\\t.\n\nThe output will be written to standard output, but this can be switched to\nstandard error by using %{stderr}.\n\n.B NOTE:\nThe %-symbol is a special symbol in the win32-environment, where all\noccurrences of % must be doubled when using this option.\n\nThe variables available are:\n.RS\n.TP 15\n.B content_type\nThe Content-Type of the requested document, if there was any.\n.TP\n.B filename_effective\nThe ultimate filename that curl writes out to. This is only meaningful if curl\nis told to write to a file with the --remote-name or --output\noption. It's most useful in combination with the --remote-header-name\noption. (Added in 7.26.0)\n.TP\n.B ftp_entry_path\nThe initial path curl ended up in when logging on to the remote FTP\nserver. (Added in 7.15.4)\n.TP\n.B http_code\nThe numerical response code that was found in the last retrieved HTTP(S) or\nFTP(s) transfer. In 7.18.2 the alias \\fBresponse_code\\fP was added to show the\nsame info.\n.TP\n.B http_connect\nThe numerical code that was found in the last response (from a proxy) to a\ncurl CONNECT request. (Added in 7.12.4)\n.TP\n.B http_version\nThe http version that was effectively used. (Added in 7.50.0)\n.TP\n.B json\nA JSON object with all available keys.\n.TP\n.B local_ip\nThe IP address of the local end of the most recently done connection - can be\neither IPv4 or IPv6 (Added in 7.29.0)\n.TP\n.B local_port\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 4,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 13492,
+    "output": 1114,
+    "messages": 6
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/7eb3118fec0c46665ee6eaef796b6eef6e038bb9ead5c32decf2e8be568beaa8",
+  "completed": true
+}

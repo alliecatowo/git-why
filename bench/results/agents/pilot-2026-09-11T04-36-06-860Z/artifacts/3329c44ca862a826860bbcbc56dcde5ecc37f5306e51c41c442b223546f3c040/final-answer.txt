@@ -1,0 +1,43 @@
+All checks match. Now let's investigate the repository.At the pinned commit, `requires-python = ">=3.10"` — Python 3.9 is not supported. Let's find the commit that made this change.Found it. Commit `0c2bbe73982a70623fb81bf16b2507ea0ca80b99` — "Drop support for Python 3.9 (#7196)".I have everything I need to answer definitively.
+
+## Answer
+
+**No — `requests` no longer supports Python 3.9 at this pinned commit.** Support for Python 3.9 was dropped.
+
+### Supporting commit
+
+**SHA:** `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`
+**Subject:** `Drop support for Python 3.9 (#7196)`
+**Author/Date:** Nate Prewitt, Fri Feb 6 08:02:46 2026 -0700
+
+This commit is confirmed to be an ancestor of the current `HEAD` (`dae7ef63b4df6eded86637f251fc4e3a06c3b479`), and its changes are reflected in the current working tree (`pyproject.toml` currently shows `requires-python = ">=3.10"`).
+
+### Quoted evidence from the diff
+
+From `pyproject.toml`:
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+```
+```diff
+     "Programming Language :: Python",
+     "Programming Language :: Python :: 3",
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+From `setup.py`:
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```
+
+From `README.md`:
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+This confirms Python 3.9 support was explicitly dropped, with the minimum supported version raised to Python 3.10+, matching the current state of the repo (`requires-python = ">=3.10"` in `pyproject.toml` today).

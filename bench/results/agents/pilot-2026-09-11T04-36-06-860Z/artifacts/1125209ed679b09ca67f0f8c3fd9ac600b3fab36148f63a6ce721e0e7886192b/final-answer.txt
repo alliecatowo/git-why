@@ -1,0 +1,31 @@
+Verified. Now let's investigate the question about unknown key handling in Zod objects.This is the key commit. Let's look at the full diff, especially in `src/types/object.ts` and the test file to confirm the actual code-behavior change.This confirms current code (v3 legacy path) still defaults `unknownKeys: "strip"`, consistent with the historical change. Let's also verify this is genuinely the origin — check for anything even earlier that set the default to allow/passthrough, and confirm no later commit reverted it back.Good — confirms `1885449` (full SHA `18854492b4b6e1648499f2f920c615dab187ee1a`) is the commit that flipped the default from `'allow'` (passthrough behavior) to `'strip'`. Let's double check parent commit to see the prior default was indeed `'allow'`.Confirmed: prior to this commit, the static `create`/`lazycreate` factories used `unknownKeys: 'allow'` (i.e., unknown/extra keys were passed through into the parsed output by default). This commit switched the default to `'strip'`.
+
+## Answer
+
+Yes — this was a real, deliberate behavior change, not a misremembering. Zod object schemas used to **pass through** (keep) unknown/extra keys by default; the default was changed to **strip** them.
+
+**Commit:** `18854492b4b6e1648499f2f920c615dab187ee1a` — "strip unknown keys by default" (Colin McDonnell, 2020‑09‑17)
+
+Supporting diff (in `src/types/object.ts`, the `ZodObject.create`/`lazycreate` factories):
+
+```diff
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+and the accompanying new test added in the same commit (`src/__tests__/object.test.ts`):
+
+```ts
+test('strip by default', () => {
+  const val = z.object({ points: z.number() }).parse(data);
+  expect(val).toEqual({ points: 2314 });
+});
+```
+
+The same commit also renamed the opt-in methods to match today's API: `.allowUnknown()` → `.passthrough()` (for keeping extra keys) and `.stripUnknown()` → `.strip()`, and changed the internal `UnknownKeysParam` union from `'allow' | 'strict' | 'strip'` to `'passthrough' | 'strict' | 'strip'`. The `README.md` change in the same commit spells out the user-facing effect: *"By default Zod object schema strip unknown keys from the output."* with the note *"⚠️ Before version 2, Zod did NOT allow unknown keys by default."* (that note is slightly imprecise about the exact prior default, but the code diff above is unambiguous: before this commit the default was `'allow'`, i.e. passthrough).
+
+So: you're not misremembering — before this commit (part of the Zod v2 line of work, per the neighboring "Added v2 announcement message" commit `7d0532e`), unknown keys were kept in the parsed output by default; after it, they're stripped by default unless you call `.passthrough()`. This default has held ever since (verified still true in the current `packages/zod/src/v3/types.ts` legacy-compat code at HEAD, where `unknownKeys: "strip"` remains the default).

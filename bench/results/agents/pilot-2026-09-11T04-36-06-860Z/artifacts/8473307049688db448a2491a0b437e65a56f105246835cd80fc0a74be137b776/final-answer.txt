@@ -1,0 +1,45 @@
+Good, verified. Now let's investigate.Found it - the initial implementation commit. Let's inspect it.This confirms it. Let's check the diff content for XADD command registration and definition.This is definitive proof. Let's also verify the date and check if there's a related release/announcement context.I have a clear, well-supported answer.
+
+## Answer
+
+Redis first got the **Streams** data type — with commands like `XADD` — on **August 30, 2017**, in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`**
+Author: antirez
+Date: Wed Aug 30 12:40:27 2017 +0200
+Subject: `Streams: 12 commits squashed into the initial Streams implementation.`
+
+### Supporting evidence
+
+This commit is the first (and only) one that adds `src/t_stream.c` (confirmed via `git log --diff-filter=A -- src/t_stream.c`, which returns only this single commit). Its diff introduces the full stream type and the `XADD` command:
+
+- New command table registration in `src/server.c`:
+  ```
+  +    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+  ```
+
+- New command implementation in `src/t_stream.c`:
+  ```c
+  /* XADD key [field value] [field value] ... */
+  void xaddCommand(client *c) {
+      if ((c->argc % 2) == 1) {
+          addReplyError(c,"wrong number of arguments for XADD");
+          return;
+      }
+
+      /* Lookup the stream at key. */
+      robj *o;
+      stream *s;
+      if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
+      s = o->ptr;
+
+      /* Append using the low level function and return the ID. */
+      streamID id;
+      streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+      ...
+  }
+  ```
+
+- The same commit also adds the core stream data structures (`stream.h`, listpack support files `listpack.c`/`listpack.h`, radix-tree usage in `rax.c`/`rax.h`), and object-type wiring in `object.c`/`server.h`, i.e., everything needed to make `XADD` operate on the new stream type — a 1,323-line, 12-file change explicitly described by its own commit message as "the initial Streams implementation."
+
+This was followed shortly after by commit `100d43c1a` ("Streams: assign value of 6 to OBJ_STREAM + some refactoring."), confirming the type was newly introduced around this same date. This work predates the Redis 5.0 release where Streams/XADD became officially available to users.

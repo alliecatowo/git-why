@@ -1,0 +1,45 @@
+Verified. Now let's investigate the question about unknown key handling in zod objects.Found it: `18854492 strip unknown keys by default`. Let's examine it.This confirms it perfectly. Let's double check date/context and confirm no earlier commit also affected this (to make sure this is the origin, not just one of several changes).This is confirmed as the change that flipped the default from `allow` to `strip`. This was part of the Zod 2 rewrite (this is the very early zod2 history, well before the pinned commit at zod 4.6.1).Confirmed the total commit count (3,210) matches the task description, and this commit is reachable from HEAD. This is the definitive commit.
+
+## Answer
+
+Yes — the default behavior of `z.object()` for unknown keys changed, and it flipped in the direction opposite to what you remember: unknown keys used to be **kept** (passed through) by default, and at some point Zod switched to **stripping** them by default. That flip is exactly the commit you're recalling.
+
+**Commit:** `18854492b4b6e1648499f2f920c615dab187ee1a` — *"strip unknown keys by default"* (Colin McDonnell, 2020-09-17), part of the Zod 2 rewrite early in this repo's history.
+
+From the commit's diff to `README.md`:
+
+> ```diff
+> -Object schemas now _allow_ unknown keys by default, instead of throwing an error
+> +Object schemas now strip unknown keys by default, instead of throwing an error
+> ```
+> ```diff
+> -Zod object schemas allow unknown keys.
+> +By default Zod object schema strip unknown keys from the output.
+> ```
+> ```diff
+> -> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
+> +> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+> ```
+
+And the code change in `src/types/object.ts` that flips the actual default:
+
+```diff
+   static create = <T extends z.ZodRawShape>(shape: T): ZodObject<T, ...> => {
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+along with a new test added in the same commit (`src/__tests__/object.test.ts`):
+
+```ts
+test('strip by default', () => {
+  const val = z.object({ points: z.number() }).parse(data);
+  expect(val).toEqual({ points: 2314 });
+});
+```
+
+So the history here is: originally objects threw on unknown keys → then briefly "allowed" (passed through) unknown keys by default → this commit switched the default to `strip`, and also renamed the methods (`.stripUnknown()` → `.strip()`, `.allowUnknown()` → `.passthrough()`) to the names Zod still uses today. If you want the old passthrough behavior back, `.passthrough()` is the explicit opt-in that was introduced right here.

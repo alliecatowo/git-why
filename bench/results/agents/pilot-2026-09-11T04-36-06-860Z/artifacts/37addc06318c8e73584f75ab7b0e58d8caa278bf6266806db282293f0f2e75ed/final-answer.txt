@@ -1,0 +1,49 @@
+Verified. Now let's investigate the history of the ignore-file name.Found it immediately: commit `cc90511` "Switch from .rgignore to .ignore."This confirms it clearly. Let me also check the commit that introduced `.rgignore` originally, and confirm this commit's place in this repo's history (parent commits, date order confirming it's early).## Answer
+
+**Yes.** Before it was called `.ignore`, ripgrep's special ignore-file was named **`.rgignore`**.
+
+### Supporting commit
+
+**SHA:** `cc90511ab29d3c37e873acac0fd80f90473f54bb`
+**Subject:** "Switch from .rgignore to .ignore."
+**Date:** Fri Sep 23 22:44:17 2016 -0400 (Author: Andrew Gallant)
+
+### Quoted commit message
+
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+### Quoted diff excerpt (src/ignore.rs)
+
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+And from `README.md`:
+
+```diff
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+### Context
+
+`.rgignore` was present from the very earliest commits in the repo's history — it predates even the project's rename from "xrep" to "ripgrep" (commit `a744ec1`, "Rename xrep to ripgrep") and appears as far back as `f9bf1e4` ("draft"). Commit `cc90511` is the one that introduces `.ignore` as the new primary name (mirroring a decision made by "the silver searcher," per the commit message and linked PR), while keeping `.rgignore` supported for backward compatibility ("But don't actually remove support for .rgignore until the next semver bump."). So the memory is correct: the special ignore-file name used to be `.rgignore` before it became `.ignore`.

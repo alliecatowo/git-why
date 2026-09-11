@@ -1,0 +1,97 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "b550480c01a7d9476ac2c250d2d21a142a6bdb4e",
+  "model_id": "llmgateway/gemini-3.5-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T05:50:48.845Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "dc89ba07bb4405d2ba9bebcf5014908021c3fb61ffbeb95c92139309994f0a02",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+    ]
+  },
+  "wall_ms": 25267,
+  "tool_calls": 8,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 28097,
+  "output_tokens": 802,
+  "cache_read_tokens": 45842,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0752838,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 60590,
+  "index_build_ms": 59199,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T05-50-42-067Z/events/X-requests-02-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "8f8ea343b3d3f4ebb88148f91c5146e663698df9f73f56919149358217a7cb91",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_agyaNn1iy6knaApQ7aU3DLbs",
+        "status": "completed",
+        "input": {
+          "command": "git log -p -S \"3.9\" -- pyproject.toml setup.py"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\ndiff --git a/pyproject.toml b/pyproject.toml\nindex 8f4fe5ba..f9513bf0 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -14,7 +14,7 @@ maintainers = [\n     {name = \"Ian Stapleton Cordasco\", email=\"graffatcolmingov@gmail.com\"},\n     {name = \"Nate Prewitt\", email=\"nate.prewitt@gmail.com\"}\n ]\n-requires-python = \">=3.9\"\n+requires-python = \">=3.10\"\n dependencies = [\n     \"charset_normalizer>=2,<4\",\n     \"idna>=2.5,<4\",\n@@ -32,7 +32,6 @@ classifiers = [\n     \"Operating System :: OS Independent\",\n     \"Programming Language :: Python\",\n     \"Programming Language :: Python :: 3\",\n-    \"Programming Language :: Python :: 3.9\",\n     \"Programming Language :: Python :: 3.10\",\n     \"Programming Language :: Python :: 3.11\",\n     \"Programming Language :: Python :: 3.12\",\n@@ -85,8 +84,7 @@ select = [\n     \"UP\",     # pyupgrade\n     \"T10\",    # flake8-debugger (replaces debug-statements hook)\n ]\n-# UP036: Remove once Python 3.10 is the minimum supported version\n-ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\", \"UP036\"]\n+ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\"]\n per-file-ignores = {\"src/requests/__init__.py\" = [\"E402\", \"F401\"], \"src/requests/compat.py\" = [\"E402\", \"F401\"], \"tests/compat.py\" = [\"F401\"]}\n \n [tool.ruff.lint.isort]\ndiff --git a/setup.py b/setup.py\nindex f5f816ae..1095518a 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -1,7 +1,7 @@\n import sys\n \n-if sys.version_info < (3, 9):\n-    sys.stderr.write(\"Requests requires Python 3.9 or later.\\n\")\n+if sys.version_info < (3, 10):  # noqa: UP036\n+    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n     sys.exit(1)\n \n from setuptools import setup\n\ncommit cb2c800518423e0042789ab09f8f6e719428a444\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Jan 30 19:25:55 2026 -0700\n\n    Migrate build system to PEP 517 (#7012)\n\ndiff --git a/pyproject.toml b/pyproject.toml\nindex cd48439e..8f4fe5ba 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -1,3 +1,76 @@\n+[build-system]\n+requires = [\"setuptools>=61.0\"]\n+build-backend = \"setuptools.build_meta\"\n+\n+[project]\n+name = \"requests\"\n+description = \"Python HTTP for Humans.\"\n+readme = \"README.md\"\n+license = {text = \"Apache-2.0\"}\n+authors = [\n+    { name = \"Kenneth Reitz\", email = \"me@kennethreitz.org\" },\n+]\n+maintainers = [\n+    {name = \"Ian Stapleton Cordasco\", email=\"graffatcolmingov@gmail.com\"},\n+    {name = \"Nate Prewitt\", email=\"nate.prewitt@gmail.com\"}\n+]\n+requires-python = \">=3.9\"\n+dependencies = [\n+    \"charset_normalizer>=2,<4\",\n+    \"idna>=2.5,<4\",\n+    \"urllib3>=1.21.1,<3\",\n+    \"certifi>=2017.4.17\"\n+]\n+dynamic = [\"version\"]\n+\n+classifiers = [\n+    \"Development Status :: 5 - Production/Stable\",\n+    \"Environment :: Web Environment\",\n+    \"Intended Audience :: Developers\",\n+    \"License :: OSI Approved :: Apache Software License\",\n+    \"Natural Language :: English\",\n+    \"Operating System :: OS Independent\",\n+    \"Programming Language :: Python\",\n+    \"Programming Language :: Python :: 3\",\n+    \"Programming Language :: Python :: 3.9\",\n+    \"Programming Language :: Python :: 3.10\",\n+    \"Programming Language :: Python :: 3.11\",\n+    \"Programming Language :: Python :: 3.12\",\n+    \"Programming Language :: Python :: 3.13\",\n+    \"Programming Language :: Python :: 3.14\",\n+    \"Programming Language :: Python :: 3 :: Only\",\n+    \"Programming Language :: Python :: Implementation :: CPython\",\n+    \"Programming Language :: Python :: Implementation :: PyPy\",\n+    \"Topic :: Internet :: WWW/HTTP\",\n+    \"Topic :: Software Development :: Libraries\"\n+]\n+\n+[project.urls]\n+Documentation = \"https://requests.readthedocs.io\"\n+Source = \"https://github.com/psf/requests\"\n+\n+[project.optional-dependencies]\n+security = []\n+socks = [\"PySocks>=1.5.6, !=1.5.7\"]\n+use_chardet_on_py3 = [\"chardet>=3.0.2,<6\"]\n+test = [\n+    \"pytest-httpbin==2.1.0\",\n+    \"pytest-cov\",\n+    \"pytest-mock\",\n+    \"pytest-xdist\",\n+    \"PySocks>=1.5.6, !=1.5.7\",\n+    \"pytest>=3\"\n+]\n+\n+[tool.setuptools]\n+license-files = [\"LICENSE\", \"NOTICE\"]\n+\n+[tool.setuptools.dynamic]\n+version = {attr = \"requests.__version__.__version__\"}\n+\n+[tool.setuptools.packages.find]\n+where = [\"src\"]\n+\n [tool.ruff]\n target-version = \"py310\"\n src = [\"src/requests\", \"tests\"]\n@@ -12,7 +85,8 @@ select = [\n     \"UP\",     # pyupgrade\n     \"T10\",    # flake8-debugger (replaces debug-statements hook)\n ]\n-ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\"]\n+# UP036: Remove once Python 3.10 is the minimum supported version\n+ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\", \"UP036\"]\n per-file-ignores = {\"src/requests/__init__.py\" = [\"E402\", \"F401\"], \"src/requests/compat.py\" = [\"E402\", \"F401\"], \"tests/compat.py\" = [\"F401\"]}\n \n [tool.ruff.lint.isort]\ndiff --git a/setup.py b/setup.py\nindex adee79f0..f5f816ae 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -1,105 +1,9 @@\n-#!/usr/bin/env python\n-import os\n import sys\n-from codecs import open\n \n-from setuptools import setup\n-\n-CURRENT_PYTHON = sys.version_info[:2]\n-REQUIRED_PYTHON = (3, 9)\n-\n-if CURRENT_PYTHON < REQUIRED_PYTHON:\n-    sys.stderr.write(\n-        \"\"\"\n-==========================\n-Unsupported Python version\n-==========================\n-This version of Requests requires at least Python {}.{}, but\n-you're trying to install it on Python {}.{}. To resolve this,\n-consider upgrading to a supported Python version.\n-\n-If you can't upgrade your Python version, you'll need to\n-pin to an older version of Requests (<2.32.0).\n-\"\"\".format(*(REQUIRED_PYTHON + CURRENT_PYTHON))\n-    )\n+if sys.version_info < (3, 9):\n+    sys.stderr.write(\"Requests requires Python 3.9 or later.\\n\")\n     sys.exit(1)\n \n+from setuptools import setup\n \n-# 'setup.py publish' shortcut.\n-if sys.argv[-1] == \"publish\":\n-    os.system(\"python setup.py sdist bdist_wheel\")\n-    os.system(\"twine upload dist/*\")\n-    sys.exit()\n-\n-requires = [\n-    \"charset_normalizer>=2,<4\",\n-    \"idna>=2.5,<4\",\n-    \"urllib3>=1.21.1,<3\",\n-    \"certifi>=2017.4.17\",\n-]\n-test_requirements = [\n-    \"pytest-httpbin==2.1.0\",\n-    \"pytest-cov\",\n-    \"pytest-mock\",\n-    \"pytest-xdist\",\n-    \"PySocks>=1.5.6, !=1.5.7\",\n-    \"pytest>=3\",\n-]\n-\n-about = {}\n-here = os.path.abspath(os.path.dirname(__file__))\n-with open(os.path.join(here, \"src\", \"requests\", \"__version__.py\"), \"r\", \"utf-8\") as f:\n-    exec(f.read(), about)\n-\n-with open(\"README.md\", \"r\", \"utf-8\") as f:\n-    readme = f.read()\n-\n-setup(\n-    name=about[\"__title__\"],\n-    version=about[\"__version__\"],\n-    description=about[\"__description__\"],\n-    long_description=readme,\n-    long_description_content_type=\"text/markdown\",\n-    author=about[\"__author__\"],\n-    author_email=about[\"__author_email__\"],\n-    url=about[\"__url__\"],\n-    packages=[\"requests\"],\n-    package_data={\"\": [\"LICENSE\", \"NOTICE\"]},\n-    package_dir={\"\": \"src\"},\n-    include_package_data=True,\n-    python_requires=\">=3.9\",\n-    install_requires=requires,\n-    license=about[\"__license__\"],\n-    zip_safe=False,\n-    classifiers=[\n-        \"Development Status :: 5 - Production/Stable\",\n-        \"Environment :: Web Environment\",\n-        \"Intended Audience :: Developers\",\n-        \"License :: OSI Approved :: Apache Software License\",\n-        \"Natural Language :: English\",\n-        \"Operating System :: OS Independent\",\n-        \"Programming Language :: Python\",\n-        \"Programming Language :: Python :: 3\",\n-        \"Programming Language :: Python :: 3.9\",\n-        \"Programming Language :: Python :: 3.10\",\n-        \"Programming Language :: Python :: 3.11\",\n-        \"Programming Language :: Python :: 3.12\",\n-        \"Programming Language :: Python :: 3.13\",\n-        \"Programming Language :: Python :: 3.14\",\n-        \"Programming Language :: Python :: 3 :: Only\",\n-        \"Programming Language :: Python :: Implementation :: CPython\",\n-        \"Programming Language :: Python :: Implementation :: PyPy\",\n-        \"Topic :: Internet :: WWW/HTTP\",\n-        \"Topic :: Software Development :: Libraries\",\n-    ],\n-    tests_require=test_requirements,\n-    extras_require={\n-        \"security\": [],\n-        \"socks\": [\"PySocks>=1.5.6, !=1.5.7\"],\n-        \"use_chardet_on_py3\": [\"chardet>=3.0.2,<6\"],\n-    },\n-    project_urls={\n-        \"Documentation\": \"https://requests.readthedocs.io\",\n-        \"Source\": \"https://github.com/psf/requests\",\n-    },\n-)\n+setup()\n\ncommit 2edca11103c1c27dd8b572dab544b7f48cf3b446\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Jul 25 13:42:15 2025 -0700\n\n    Add support for Python 3.14 and drop support for Python 3.8 (#6993)\n    \n    * Add testing for Python 3.14 preview build\n    \n    * Add trove classifier for Python 3.14\n    \n    * Remove support for Python 3.8\n\ndiff --git a/setup.py b/setup.py\nindex 7d9b52bc..ff65d391 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -6,7 +6,7 @@ from codecs import open\n from setuptools import setup\n \n CURRENT_PYTHON = sys.version_info[:2]\n-REQUIRED_PYTHON = (3, 8)\n+REQUIRED_PYTHON = (3, 9)\n \n if CURRENT_PYTHON < REQUIRED_PYTHON:\n     sys.stderr.write(\n@@ -69,7 +69,7 @@ setup(\n     package_data={\"\": [\"LICENSE\", \"NOTICE\"]},\n     package_dir={\"\": \"src\"},\n     include_package_data=True,\n-    python_requires=\">=3.8\",\n+    python_requires=\">=3.9\",\n     install_requires=requires,\n     license=about[\"__license__\"],\n     zip_safe=False,\n@@ -82,12 +82,12 @@ setup(\n         \"Operating System :: OS Independent\",\n         \"Programming Language :: Python\",\n         \"Programming Language :: Python :: 3\",\n-        \"Programming Language :: Python :: 3.8\",\n         \"Programming Language :: Python :: 3.9\",\n         \"Programming Language :: Python :: 3.10\",\n         \"Programming Language :: Python :: 3.11\",\n         \"Programming Language :: Python :: 3.12\",\n         \"Programming Language :: Python :: 3.13\",\n+        \"Programming Language :: Python :: 3.14\",\n         \"Programming Language :: Python :: 3 :: Only\",\n         \"Programming Language :: Python :: Implementation :: CPython\",\n         \"Programming Language :: Python :: Implementation :: PyPy\",\n\ncommit 03957eb1c2b9a1e5e6d61f5e930d7c5ed7cfe853\nAuthor: Nate Prewitt <Nate.Prewitt@gmail.com>\nDate:   Tue Nov 10 12:34:35 2020 -0800\n\n    v2.25.0\n\ndiff --git a/setup.py b/setup.py\nindex a1b5a2a4..e714bfa4 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -44,7 +44,7 @@ packages = ['requests']\n requires = [\n     'chardet>=3.0.2,<4',\n     'idna>=2.5,<3',\n-    'urllib3>=1.21.1,<1.26,!=1.25.0,!=1.25.1',\n+    'urllib3>=1.21.1,<1.27',\n     'certifi>=2017.4.17'\n \n ]\n@@ -74,7 +74,7 @@ setup(\n     author_email=about['__author_email__'],\n     url=about['__url__'],\n     packages=packages,\n-    package_data={'': ['LICENSE', 'NOTICE'], 'requests': ['*.pem']},\n+    package_data={'': ['LICENSE', 'NOTICE']},\n     package_dir={'requests': 'requests'},\n     include_package_data=True,\n     python_requires=\">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*\",\n@@ -94,6 +94,7 @@ setup(\n         'Programming Language :: Python :: 3.6',\n         'Programming Language :: Python :: 3.7',\n         'Programming Language :: Python :: 3.8',\n+        'Programming Language :: Python :: 3.9',\n         'Programming Language :: Python :: Implementation :: CPython',\n         'Programming Language :: Python :: Implementation :: PyPy'\n     ],\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_d3deiyMYh1pU4DuL3N4gvuks",
+        "status": "completed",
+        "input": {
+          "command": "git show 0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\ndiff --git a/.github/workflows/run-tests.yml b/.github/workflows/run-tests.yml\nindex 82bca72d..c9fd8100 100644\n--- a/.github/workflows/run-tests.yml\n+++ b/.github/workflows/run-tests.yml\n@@ -13,7 +13,7 @@ jobs:\n     strategy:\n       fail-fast: false\n       matrix:\n-        python-version: [\"3.9\", \"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\", \"3.15-dev\", \"pypy-3.11\"]\n+        python-version: [\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\", \"3.15-dev\", \"pypy-3.11\"]\n         os: [ubuntu-22.04, macOS-latest, windows-latest]\n         # Pypy-3.11 can't install openssl-sys with rust\n         # which prevents us from testing in GHA.\n@@ -45,10 +45,10 @@ jobs:\n \n     steps:\n       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd\n-      - name: 'Set up Python 3.9'\n+      - name: 'Set up Python 3.10'\n         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405\n         with:\n-          python-version: '3.9'\n+          python-version: '3.10'\n       - name: Install dependencies\n         run: |\n           make\n@@ -65,10 +65,10 @@ jobs:\n \n     steps:\n       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd\n-      - name: 'Set up Python 3.9'\n+      - name: 'Set up Python 3.10'\n         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405\n         with:\n-          python-version: '3.9'\n+          python-version: '3.10'\n       - name: Install dependencies\n         run: |\n           make\ndiff --git a/README.md b/README.md\nindex 74adab80..66640ff0 100644\n--- a/README.md\n+++ b/README.md\n@@ -33,7 +33,7 @@ Requests is available on PyPI:\n $ python -m pip install requests\n ```\n \n-Requests officially supports Python 3.9+.\n+Requests officially supports Python 3.10+.\n \n ## Supported Features & Best–Practices\n \ndiff --git a/pyproject.toml b/pyproject.toml\nindex 8f4fe5ba..f9513bf0 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -14,7 +14,7 @@ maintainers = [\n     {name = \"Ian Stapleton Cordasco\", email=\"graffatcolmingov@gmail.com\"},\n     {name = \"Nate Prewitt\", email=\"nate.prewitt@gmail.com\"}\n ]\n-requires-python = \">=3.9\"\n+requires-python = \">=3.10\"\n dependencies = [\n     \"charset_normalizer>=2,<4\",\n     \"idna>=2.5,<4\",\n@@ -32,7 +32,6 @@ classifiers = [\n     \"Operating System :: OS Independent\",\n     \"Programming Language :: Python\",\n     \"Programming Language :: Python :: 3\",\n-    \"Programming Language :: Python :: 3.9\",\n     \"Programming Language :: Python :: 3.10\",\n     \"Programming Language :: Python :: 3.11\",\n     \"Programming Language :: Python :: 3.12\",\n@@ -85,8 +84,7 @@ select = [\n     \"UP\",     # pyupgrade\n     \"T10\",    # flake8-debugger (replaces debug-statements hook)\n ]\n-# UP036: Remove once Python 3.10 is the minimum supported version\n-ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\", \"UP036\"]\n+ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\"]\n per-file-ignores = {\"src/requests/__init__.py\" = [\"E402\", \"F401\"], \"src/requests/compat.py\" = [\"E402\", \"F401\"], \"tests/compat.py\" = [\"F401\"]}\n \n [tool.ruff.lint.isort]\ndiff --git a/setup.py b/setup.py\nindex f5f816ae..1095518a 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -1,7 +1,7 @@\n import sys\n \n-if sys.version_info < (3, 9):\n-    sys.stderr.write(\"Requests requires Python 3.9 or later.\\n\")\n+if sys.version_info < (3, 10):  # noqa: UP036\n+    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n     sys.exit(1)\n \n from setuptools import setup\ndiff --git a/tox.ini b/tox.ini\nindex 70c28551..b316359a 100644\n--- a/tox.ini\n+++ b/tox.ini\n@@ -1,5 +1,5 @@\n [tox]\n-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}\n+envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}\n \n [testenv]\n deps = -rrequirements-dev.txt\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 28097,
+    "output": 802,
+    "messages": 10
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/8f8ea343b3d3f4ebb88148f91c5146e663698df9f73f56919149358217a7cb91",
+  "completed": true
+}
