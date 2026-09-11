@@ -393,6 +393,28 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## A cosmetic artifact left in a running suite, deliberately
+
+The brief tasks were generated before the corpus was cleaned, so two of the six
+questions in `B-colinhacks-zod-01` render with a stray bullet:
+`5. - what was that thing where...`.
+
+Regenerating the task files mid-run was the tempting fix and would have been
+the wrong one. The runner reads prompts at trial time, so later models would
+have received different prompts from earlier ones — one suite measuring two
+treatments, which is the exact failure the dirty-tree guard exists to prevent.
+Restarting instead would have discarded roughly ninety minutes of completed
+trials to correct a bullet.
+
+It is cosmetic rather than material, and the difference matters. In the corpus
+scorer a leading hyphen made the CLI reject the invocation, so eleven questions
+were never asked. In a brief the question is prose the agent reads, the meaning
+is unchanged, and all four arms see the identical prompt — so the comparison is
+unaffected in a way that is checkable rather than merely asserted.
+
+Regenerate with `node bench/agents/tasks/build-brief.mjs` once no suite is
+running.
+
 ## Eleven cases scored zero because of a stray hyphen
 
 The corpus reported 11 of 174 questions as returning nothing. On repositories
