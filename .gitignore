@@ -27,3 +27,9 @@ site/public/install.sh
 
 # Editor/agent state, machine-specific and not part of the project.
 .antigravitycli/
+
+# The embedder evaluation pool: 12k commit messages, regenerable in seconds
+# from the pinned clones by `node bench/embedders/build-pool.mjs`. Committing
+# 3 MB of other projects' commit text to carry a derived artefact is not worth
+# it; the scores beside it are the result.
+bench/results/embedders/pool.json

@@ -1,0 +1,14 @@
+{
+  "model": "all-MiniLM-L6-v2",
+  "kind": "transformer",
+  "hf": "Xenova/all-MiniLM-L6-v2",
+  "note": "22M params, 384d, the common baseline",
+  "documents": 12101,
+  "elapsedMs": 344904,
+  "n": 174,
+  "hit1": 0.20689655172413793,
+  "hit5": 0.4540229885057471,
+  "hit10": 0.5574712643678161,
+  "recall50": 0.7413793103448276,
+  "mrr": 0.32414487851337354
+}

@@ -1,0 +1,14 @@
+{
+  "model": "potion-base-32M",
+  "kind": "static",
+  "hf": "minishlab/potion-base-32M",
+  "note": "larger general-purpose, 512d",
+  "documents": 12101,
+  "elapsedMs": 5725,
+  "n": 174,
+  "hit1": 0.22413793103448276,
+  "hit5": 0.39655172413793105,
+  "hit10": 0.4827586206896552,
+  "recall50": 0.7241379310344828,
+  "mrr": 0.30932390710289515
+}

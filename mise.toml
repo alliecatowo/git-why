@@ -66,6 +66,14 @@ description = "Measure index size per record across the pinned real clones"
 depends = ["build"]
 run = "node bench/index-size.mjs"
 
+[tasks."bench:embedders"]
+description = "Compare embedding models on a fixed pool: potion variants against BGE and Jina"
+depends = ["build"]
+run = [
+  "node bench/embedders/build-pool.mjs",
+  "node bench/embedders/score.mjs --report",
+]
+
 [tasks."bench:diagnose"]
 description = "Where do gold commits rank, and why are the missing ones missing?"
 depends = ["build"]

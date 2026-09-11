@@ -1,0 +1,14 @@
+{
+  "model": "potion-code-16M-v2",
+  "kind": "static",
+  "hf": "minishlab/potion-code-16M-v2",
+  "note": "shipped default, code-tuned, 256d",
+  "documents": 12101,
+  "elapsedMs": 2781,
+  "n": 174,
+  "hit1": 0.19540229885057472,
+  "hit5": 0.40804597701149425,
+  "hit10": 0.5,
+  "recall50": 0.7528735632183908,
+  "mrr": 0.30501526687774155
+}

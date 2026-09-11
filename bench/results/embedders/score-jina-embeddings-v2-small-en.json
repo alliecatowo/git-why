@@ -1,0 +1,14 @@
+{
+  "model": "jina-embeddings-v2-small-en",
+  "kind": "transformer",
+  "hf": "Xenova/jina-embeddings-v2-small-en",
+  "note": "33M params, 512d, long context",
+  "documents": 12101,
+  "elapsedMs": 532147,
+  "n": 174,
+  "hit1": 0.3333333333333333,
+  "hit5": 0.5402298850574713,
+  "hit10": 0.6149425287356322,
+  "recall50": 0.7988505747126436,
+  "mrr": 0.4309491272062806
+}

@@ -1,0 +1,14 @@
+{
+  "model": "potion-retrieval-32M",
+  "kind": "static",
+  "hf": "minishlab/potion-retrieval-32M",
+  "note": "retrieval-tuned prose, 512d",
+  "documents": 12101,
+  "elapsedMs": 5307,
+  "n": 174,
+  "hit1": 0.12643678160919541,
+  "hit5": 0.28160919540229884,
+  "hit10": 0.3735632183908046,
+  "recall50": 0.6436781609195402,
+  "mrr": 0.20943525349541894
+}

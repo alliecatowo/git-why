@@ -1,0 +1,14 @@
+{
+  "model": "bge-small-en-v1.5",
+  "kind": "transformer",
+  "hf": "Xenova/bge-small-en-v1.5",
+  "note": "33M params, 384d",
+  "documents": 12101,
+  "elapsedMs": 623016,
+  "n": 174,
+  "hit1": 0.20114942528735633,
+  "hit5": 0.4425287356321839,
+  "hit10": 0.5287356321839081,
+  "recall50": 0.7183908045977011,
+  "mrr": 0.30471342869270407
+}
