@@ -199,7 +199,9 @@ called.
   limits.
 - **[`docs/report.md`](docs/report.md)** — the benchmark report this
   README's numbers come from.
-- **[`docs/spec.md`](docs/spec.md)** — the product specification.
+- **[`docs/spec.md`](docs/spec.md)** — the build specification this was
+  written against. Source comments cite its sections, so it is kept as
+  provenance rather than as user documentation.
 
 ## Development
 
