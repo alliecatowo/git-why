@@ -8,7 +8,13 @@
  * this module.
  */
 
-import type { CommitHit, IndexStatus, OrdinalAnswer } from '../types.js';
+import type {
+  AuthorStake,
+  CommitHit,
+  IndexStatus,
+  OrdinalAnswer,
+  TimelineEpisode,
+} from '../types.js';
 import { sanitizeForTerminal } from './sanitize.js';
 
 const INDENT = '   ';
@@ -104,16 +110,78 @@ function renderAnswer(answer: OrdinalAnswer): string {
   return `${parts.join('  ')}${suffix}`;
 }
 
+/**
+ * `--owners` answers "who established this area". The ranked commits are the
+ * evidence for that answer, not the answer, so the roster leads.
+ *
+ * `weight` is a summed rank score, not a percentage, and printing it raw
+ * invites reading it as one. It is rendered as a share of the total stake
+ * instead, which is what the number is actually comparable on, and the
+ * commit count is shown beside it because a large share off two commits and
+ * a large share off forty mean different things.
+ */
+function renderOwners(owners: readonly AuthorStake[]): string {
+  const lines: string[] = [];
+  const total = owners.reduce((acc, o) => acc + o.weight, 0);
+  lines.push('owners, by relevance of their commits:');
+  owners.forEach((o, i) => {
+    const share = total > 0 ? `${Math.round((o.weight / total) * 100)}%` : '-';
+    const span =
+      formatDate(o.firstTime) === formatDate(o.lastTime)
+        ? formatDate(o.firstTime)
+        : `${formatDate(o.firstTime)}..${formatDate(o.lastTime)}`;
+    const plural = o.commits === 1 ? 'commit' : 'commits';
+    lines.push(
+      `${INDENT}${i + 1}. ${s(o.name)} <${s(o.email)}>  ${share}  ${o.commits} ${plural}  ${span}`,
+    );
+    // One commit each, so the claim can be checked without a second query.
+    const top = o.topCommits[0];
+    if (top !== undefined) {
+      lines.push(`${INDENT}${INDENT}${shortSha(top.sha)}  ${s(top.subject)}`);
+    }
+  });
+  return lines.join('\n');
+}
+
+/**
+ * `--timeline` is a chronology of one thing, ordered by ancestry rather than
+ * by relevance, so it renders as a list rather than as ranked results. Its
+ * episodes are also drawn from the lineage chain, not from the ranking, which
+ * is why they are shown instead of the ranked list rather than beside it.
+ */
+function renderTimeline(episodes: readonly TimelineEpisode[]): string {
+  const lines: string[] = ['timeline:'];
+  for (const ep of episodes) {
+    const kind = ep.kind.padEnd(10);
+    lines.push(
+      `${INDENT}${formatDate(ep.committerTime)}  ${kind}  ${shortSha(ep.sha)}  ${s(ep.subject)}`,
+    );
+  }
+  return lines.join('\n');
+}
+
 export function renderSearchHuman(response: {
   readonly query: string;
   readonly results: readonly CommitHit[];
   readonly warnings: readonly string[];
   readonly answer?: OrdinalAnswer | null;
+  readonly timeline?: readonly TimelineEpisode[] | null;
+  readonly owners?: readonly AuthorStake[] | null;
 }): string {
   const lines: string[] = [];
 
   if (response.answer != null) {
     lines.push(renderAnswer(response.answer));
+    lines.push('');
+  }
+
+  if (response.timeline != null && response.timeline.length > 0) {
+    lines.push(renderTimeline(response.timeline));
+    lines.push('');
+  }
+
+  if (response.owners != null && response.owners.length > 0) {
+    lines.push(renderOwners(response.owners));
     lines.push('');
   }
 

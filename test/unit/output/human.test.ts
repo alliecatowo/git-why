@@ -249,3 +249,98 @@ test('no answer means no answer line, so ordinary queries are unchanged', () => 
   const out = renderSearchHuman({ query: 'q', results: [makeHit()], warnings: [] });
   assert.ok(out.startsWith('1. 91ad203'));
 });
+
+// `--owners` and `--timeline` had the same defect as the ordinal answer: the
+// response carried a fully computed result and the human renderer dropped it,
+// so both flags printed an ordinary ranked list and nothing else. The
+// landing-page demo of `--owners` showed no owners at all.
+test('owners lead the results, with share, commit count, active span and a checkable commit', () => {
+  const out = renderSearchHuman({
+    query: 'TLS backend abstraction',
+    results: [makeHit()],
+    warnings: [],
+    owners: [
+      {
+        name: 'Daniel Stenberg',
+        email: 'daniel@example.invalid',
+        weight: 3,
+        commits: 9,
+        firstTime: 1406671547, // 2014-07-29
+        lastTime: 1643268970, // 2022-01-27
+        topCommits: [
+          {
+            sha: '2218c3a'.padEnd(40, '0'),
+            subject: 'vtls: pass on the right SNI name',
+            committerTime: 1643268970,
+          },
+        ],
+      },
+      {
+        name: 'Steve Holme',
+        email: 'steve@example.invalid',
+        weight: 1,
+        commits: 1,
+        firstTime: 1406671547,
+        lastTime: 1406671547,
+        topCommits: [],
+      },
+    ],
+  });
+  // weight is a summed rank score, not a percentage; it is rendered as a
+  // share of the total so it is comparable rather than merely large.
+  assert.ok(
+    out.includes(
+      '1. Daniel Stenberg <daniel@example.invalid>  75%  9 commits  2014-07-29..2022-01-27',
+    ),
+  );
+  assert.ok(out.includes('2218c3a  vtls: pass on the right SNI name'));
+  // A single-day span is not printed as a range against itself.
+  assert.ok(out.includes('2. Steve Holme <steve@example.invalid>  25%  1 commit  2014-07-29'));
+  assert.ok(out.indexOf('owners,') < out.indexOf('1. 91ad203'));
+});
+
+test('a timeline renders in ancestry order with each episode kind', () => {
+  const out = renderSearchHuman({
+    query: 'HTTP/2 multiplexing',
+    results: [],
+    warnings: [],
+    timeline: [
+      {
+        sha: 'a'.repeat(40),
+        kind: 'introduced',
+        committerTime: 1403136000,
+        subject: 'first',
+        evidence: null,
+      },
+      {
+        sha: 'b'.repeat(40),
+        kind: 'modified',
+        committerTime: 1416441600,
+        subject: 'middle',
+        evidence: null,
+      },
+      {
+        sha: 'c'.repeat(40),
+        kind: 'removed',
+        committerTime: 1424390400,
+        subject: 'gone',
+        evidence: null,
+      },
+    ],
+  });
+  const lines = out.split('\n');
+  assert.equal(lines[0], 'timeline:');
+  assert.ok(lines[1]?.includes('introduced') && lines[1]?.includes('first'));
+  assert.ok(lines[3]?.includes('removed') && lines[3]?.includes('gone'));
+});
+
+test('empty owners and timeline add no heading, so an ordinary query is unchanged', () => {
+  const out = renderSearchHuman({
+    query: 'q',
+    results: [makeHit()],
+    warnings: [],
+    owners: [],
+    timeline: [],
+  });
+  assert.ok(out.startsWith('1. 91ad203'));
+});
