@@ -56,6 +56,9 @@ const ALLOWED_TOP_LEVEL = new Set([
   'dist',
   'schema',
   'man',
+  // The Claude Code plugin: manifest, MCP registration, skill and agent.
+  // Shipped with the CLI so installing the tool installs the integration.
+  'plugin',
 ]);
 
 function fail(message) {
