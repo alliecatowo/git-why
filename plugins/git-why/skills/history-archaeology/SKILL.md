@@ -51,7 +51,10 @@ where it pays:
   reason was recorded; the code does not.
 - **You need to know who to ask.** `--owners` reports who established an area
   by the relevance of their commits, rather than who last reformatted it
-  (`git blame`) or who committed most often (`git shortlog`).
+  (`git blame`) or who committed most often (`git shortlog`). Unlike everything
+  else on this page, this one has **no accuracy measurement** — "who owns this"
+  has no agreed ground truth. Treat the roster as a starting point for asking a
+  human, not as a fact.
 
 ## How to ask
 

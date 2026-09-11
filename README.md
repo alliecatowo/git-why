@@ -119,11 +119,11 @@ methodology, limits, and the negative results are in
 
 <!-- generated:corpus-table -->
 
-174 questions derived mechanically from 6 pinned real repositories (curl,
-redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable
-by keyword search** before it enters the set — if `git log --grep` or
-`git log -S` finds the answer from the question's own words, the case is
-discarded. What remains is the regime this tool exists for.
+174 **recall** questions — you remember a problem but cannot name anything in the
+commit that fixed it — derived mechanically from 6 pinned real repositories
+(curl, redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable by
+keyword search** before it enters the set: if `git log --grep` or `git log -S` finds the
+answer from the question's own words, the case is discarded.
 
 | strategy                   | Hit@1     | Hit@5     | MRR       | returned nothing |
 | -------------------------- | --------- | --------- | --------- | ---------------- |

@@ -6,7 +6,7 @@ project's `AGENTS.md`, or point `opencode.json` at the config below.
 ## Tool routing
 
 Three tools, three questions. Picking wrong is the common failure, and these
-boundaries are measured, not guessed — 174 questions from six real repositories
+boundaries are measured, not guessed — 174 recall questions from six real repositories
 plus a cross-file corpus.
 
 - **`zg "<query>"`** — where something is in the CURRENT code.

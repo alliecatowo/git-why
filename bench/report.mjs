@@ -839,11 +839,11 @@ function readmeBlocks() {
   // that moves when the corpus is regenerated, and a stale one silently
   // misstates every rate beside it.
   let table =
-    `${main.cases} questions derived mechanically from ${repoNames.length} pinned real repositories (curl,\n` +
-    'redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable\n' +
-    'by keyword search** before it enters the set — if `git log --grep` or\n' +
-    "`git log -S` finds the answer from the question's own words, the case is\n" +
-    'discarded. What remains is the regime this tool exists for.\n\n';
+    `${main.cases} **recall** questions — you remember a problem but cannot name anything in the\n` +
+    `commit that fixed it — derived mechanically from ${repoNames.length} pinned real repositories\n` +
+    '(curl, redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable by\n' +
+    'keyword search** before it enters the set: if `git log --grep` or `git log -S` finds the\n' +
+    "answer from the question's own words, the case is discarded.\n\n";
   table +=
     '| strategy | Hit@1 | Hit@5 | MRR | returned nothing |\n| --- | --- | --- | --- | --- |\n';
   for (const r of main.rows) {
