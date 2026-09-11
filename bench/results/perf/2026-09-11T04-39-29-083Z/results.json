@@ -1,0 +1,42 @@
+{
+  "runId": "2026-09-11T04-39-29-083Z",
+  "generatedAt": "2026-09-11T04:39:29.083Z",
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpuModel": "Apple M2",
+    "cpuCount": 8,
+    "totalMemBytes": 8589934592
+  },
+  "referenceCorpus": {
+    "kind": "synthetic-bench-fixture",
+    "fixtureId": "task-queue",
+    "path": "/Users/allie/.cache/git-why-bench/0199f07e4778/fixtures/task-queue",
+    "commitCount": 135
+  },
+  "realRepo": {
+    "path": "/Users/allie/.cache/git-why-bench/0199f07e4778/external/curl-curl",
+    "name": "curl-curl",
+    "indexedCommits": 30000,
+    "recordCount": 182772,
+    "diskBytes": 1467044415,
+    "warmupRuns": 3,
+    "requestedSamples": 20,
+    "successfulSamples": 20,
+    "latencyMs": {
+      "n": 20,
+      "p50": 3668.76575,
+      "p95": 4228.16625,
+      "min": 3461.065208,
+      "max": 4443.758833,
+      "mean": 3769.61366045
+    },
+    "note": "Read-only: every query passes --no-refresh, so this workload cannot write to or mutate the clone it measures."
+  },
+  "knownGaps": [
+    "Per-phase timing breakdown is not part of the frozen --json contract; only total external wall time is measured.",
+    "Loaded-process query loop is approximated via warm fresh-process calls, not a true in-process repeat.",
+    "Every mutating workload (new commits, rename/rebase, concurrent updater) runs against the synthetic fixture, because it has to modify the repository it measures. Only the read-only query workloads can be pointed at a real clone."
+  ],
+  "workloads": {}
+}

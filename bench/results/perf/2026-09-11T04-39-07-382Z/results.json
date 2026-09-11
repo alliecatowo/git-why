@@ -1,0 +1,27 @@
+{
+  "runId": "2026-09-11T04-39-07-382Z",
+  "generatedAt": "2026-09-11T04:39:07.382Z",
+  "hardware": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpuModel": "Apple M2",
+    "cpuCount": 8,
+    "totalMemBytes": 8589934592
+  },
+  "referenceCorpus": {
+    "kind": "synthetic-bench-fixture",
+    "fixtureId": "task-queue",
+    "path": "/Users/allie/.cache/git-why-bench/0199f07e4778/fixtures/task-queue",
+    "commitCount": 135
+  },
+  "realRepo": {
+    "path": "/Users/allie/.cache/git-why-bench/0199f07e4778/external/curl-curl",
+    "skipped": "index state is unknown; run `git why index` in that clone first. This workload is read-only by design and will not build one."
+  },
+  "knownGaps": [
+    "Per-phase timing breakdown is not part of the frozen --json contract; only total external wall time is measured.",
+    "Loaded-process query loop is approximated via warm fresh-process calls, not a true in-process repeat.",
+    "Every mutating workload (new commits, rename/rebase, concurrent updater) runs against the synthetic fixture, because it has to modify the repository it measures. Only the read-only query workloads can be pointed at a real clone."
+  ],
+  "workloads": {}
+}

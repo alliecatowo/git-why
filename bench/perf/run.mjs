@@ -110,17 +110,28 @@ async function main() {
     generatedAt: new Date().toISOString(),
     hardware: hardwareInfo(),
     referenceCorpus: {
-      kind: args.repo ? 'pinned-public-repo' : 'synthetic-bench-fixture',
-      fixtureId: args.repo ? null : args.fixture,
-      path: args.repo ?? baseFixtureDir,
-      commitCount: args.repo ? null : baseManifest.commitCount,
+      kind: 'synthetic-bench-fixture',
+      fixtureId: args.fixture,
+      path: baseFixtureDir,
+      commitCount: baseManifest.commitCount,
     },
+    // A real clone, measured separately and read-only. It is NOT the reference
+    // corpus: most workloads here add commits, rename branches and rebase, and
+    // doing that to someone's pinned clone would corrupt the thing being
+    // measured. Only the read-only query workloads run against it.
+    //
+    // `--repo` previously set `referenceCorpus.kind` to 'pinned-public-repo'
+    // and changed nothing else, so a run against curl reported curl's path
+    // beside the fixture's 486 ms. A real curl query takes about eight times
+    // that. Relabelling a measurement is not making it.
+    realRepo: null,
     knownGaps: [
       'Per-phase timing breakdown is not part of the frozen --json contract; only total external wall time is measured.',
       'Loaded-process query loop is approximated via warm fresh-process calls, not a true in-process repeat.',
+      'Every mutating workload (new commits, rename/rebase, concurrent updater) runs against the synthetic fixture, because it has to modify the repository it measures. Only the read-only query workloads can be pointed at a real clone.',
       args.repo
         ? null
-        : 'No pinned public repository was supplied (--repo=); reference corpus is a synthetic fixture, not the 10k-commit target scale.',
+        : 'No real repository was supplied (--repo=); every number here is from a synthetic fixture, not the 10k-commit target scale.',
     ].filter(Boolean),
     workloads: {},
   };
@@ -432,6 +443,58 @@ async function main() {
       coherenceNote:
         "A coherent single index implies the raced final record count equals a normal serial first-use build's record count (no duplicate-record inflation).",
     };
+  }
+
+  // ---- 12: a REAL repository, read-only ------------------------------------
+  //
+  // The point of the whole tool is large histories, so a latency figure from a
+  // 135-commit fixture is the least interesting number in this file. This runs
+  // the same query workload against a real clone, with `--no-refresh` so it
+  // cannot write to or mutate the repository it was pointed at.
+  if (args.repo && only('realRepoQuery')) {
+    if (!existsSync(join(args.repo, '.git')) && !existsSync(join(args.repo, 'HEAD'))) {
+      fail(`--repo=${args.repo} is not a Git repository.`);
+    }
+    const statusRes = statusJson(cliPath, args.repo);
+    let status = null;
+    try {
+      status = JSON.parse(statusRes.stdout);
+    } catch {
+      /* reported as null below rather than guessed at */
+    }
+    // An index that is absent or stale would measure a build, not a query, and
+    // this workload must not build one -- that would mutate the clone.
+    // The status envelope nests everything under `index`; reading `state` from
+    // the top level silently yields undefined and skips the workload.
+    const ready = status?.index?.state === 'current';
+    if (!ready) {
+      results.realRepo = {
+        path: args.repo,
+        skipped: `index state is ${status?.index?.state ?? 'unknown'}; run \`git why index\` in that clone first. This workload is read-only by design and will not build one.`,
+      };
+    } else {
+      const warmupRuns = 3;
+      for (let i = 0; i < warmupRuns; i++)
+        runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: args.repo });
+      const sampleCount = 20;
+      const samples = [];
+      for (let i = 0; i < sampleCount; i++) {
+        const r = runOnce(cliPath, [QUERY, '--json', '--no-refresh'], { cwd: args.repo });
+        if (r.exitCode === 0) samples.push(r.elapsedMs);
+      }
+      results.realRepo = {
+        path: args.repo,
+        name: args.repo.split('/').pop(),
+        indexedCommits: status?.index?.indexedCommits ?? null,
+        recordCount: status?.index?.recordCount ?? null,
+        diskBytes: status?.index?.diskBytes ?? null,
+        warmupRuns,
+        requestedSamples: sampleCount,
+        successfulSamples: samples.length,
+        latencyMs: summarizeLatencies(samples),
+        note: 'Read-only: every query passes --no-refresh, so this workload cannot write to or mutate the clone it measures.',
+      };
+    }
   }
 
   writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));

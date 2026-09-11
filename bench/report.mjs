@@ -103,11 +103,25 @@ if (!testDirName)
 const testDir = join(retrievalDir, testDirName);
 const testSummary = readJson(join(testDir, 'summary.json'));
 
+// A perf run can legitimately be partial -- `--only=realRepoQuery` measures one
+// workload against a real clone and nothing else. Taking the newest directory
+// unconditionally therefore emptied section 6 the moment such a run landed,
+// which is the same way the external-v2 ablation silently vanished. Each
+// section takes the newest run that actually has its data.
 const perfDirs = listDirs(join(RESULTS_DIR, 'perf'), '');
-const perfDirName = perfDirs.at(-1);
-if (!perfDirName)
+const perfRun = (predicate) => {
+  for (const name of [...perfDirs].reverse()) {
+    const data = readJson(join(RESULTS_DIR, 'perf', name, 'results.json'));
+    if (data && predicate(data)) return { name, data };
+  }
+  return null;
+};
+const fullPerf = perfRun((d) => Object.keys(d.workloads ?? {}).length > 0);
+if (!fullPerf)
   throw new Error('No perf run found under bench/results/perf. Run bench/perf/run.mjs first.');
-const perfResults = readJson(join(RESULTS_DIR, 'perf', perfDirName, 'results.json'));
+const perfDirName = fullPerf.name;
+const perfResults = fullPerf.data;
+const realRepoPerf = perfRun((d) => d.realRepo?.latencyMs != null);
 
 const protocol = readJson(join(REPO_ROOT, 'bench', 'protocol.json'));
 
@@ -658,6 +672,32 @@ if (cm.skipped.length > 0) {
 // 6. CLI latency / index cost / memory / disk / parallel
 md += '## 6. CLI latency, first-index cost, memory, disk, parallel behavior\n\n';
 md += `Perf run: \`${perfDirName}\` on ${hw.cpuModel} / ${hw.cpuCount} cores / ${(hw.totalMemBytes / 1e9).toFixed(1)} GB, against the \`${perfResults.referenceCorpus.fixtureId}\` fixture (${perfResults.referenceCorpus.commitCount} commits).\n\n`;
+
+if (realRepoPerf?.data.realRepo?.latencyMs) {
+  const rr = realRepoPerf.data.realRepo;
+  md += '### Read this before the fixture numbers: a real repository\n\n';
+  md +=
+    'Every other measurement in this section is against a ' +
+    `${perfResults.referenceCorpus.commitCount}-commit synthetic fixture, because the workloads add ` +
+    'commits, rename branches and rebase, and doing that to a real clone would corrupt the thing ' +
+    'being measured. That makes them useful for comparing one change to another and misleading as ' +
+    'an answer to "how fast is it". The query workload is the exception: it is read-only, so it can ' +
+    'run against a real clone.\n\n';
+  md += `Run \`${realRepoPerf.name}\`, against \`${rr.name}\`:\n\n`;
+  md +=
+    '| | commits | records | index on disk | p50 | p95 | n |\n|---|---:|---:|---:|---:|---:|---:|\n';
+  md += `| ${rr.name} | ${rr.indexedCommits?.toLocaleString('en-US') ?? 'n/a'} | ${rr.recordCount?.toLocaleString('en-US') ?? 'n/a'} | ${rr.diskBytes == null ? 'n/a' : `${(rr.diskBytes / 1024 ** 3).toFixed(2)} GiB`} | ${ms(rr.latencyMs.p50)} | ${ms(rr.latencyMs.p95)} | ${rr.latencyMs.n} |\n`;
+  const fixtureFresh = perfResults.workloads.freshProcessCurrentIndex;
+  if (fixtureFresh) {
+    md += `| the fixture | ${perfResults.referenceCorpus.commitCount} | | | ${ms(fixtureFresh.latencyMs.p50)} | ${ms(fixtureFresh.latencyMs.p95)} | ${fixtureFresh.latencyMs.n} |\n`;
+    md += `\nAbout ${(rr.latencyMs.p50 / fixtureFresh.latencyMs.p50).toFixed(1)}x slower on the real repository. `;
+  }
+  md +=
+    'That is the number to quote, and it is not fast: a query on a 30,000-commit history takes a ' +
+    'few seconds, not the sub-second the fixture suggests. It is a one-shot CLI with no daemon, so ' +
+    'this includes process start and model load on every invocation. ' +
+    `Every query passed \`--no-refresh\`, so the workload could not write to or mutate the clone.\n\n`;
+}
 md += '**Known gaps in this run** (from the runner itself, not omitted silently):\n\n';
 for (const g of perfResults.knownGaps) md += `- ${g}\n`;
 md += '\n';
@@ -896,12 +936,16 @@ function readmeBlocks() {
     scale += `| Index across ${indexRows.repos.length} real repos (${commits.toLocaleString('en-US')} commits) | ${Math.min(...kb).toFixed(2)}–${Math.max(...kb).toFixed(2)} KB/record |\n`;
     scale += `| ${biggest.repo} (${biggest.commits.toLocaleString('en-US')} commits) | ${biggest.size}, ${biggest.kbPerRecord.toFixed(2)} KB/record |\n`;
   }
+  // Lead with the real repository. A latency figure from a 135-commit fixture
+  // is the least interesting number this project can report, given that the
+  // entire premise is large histories -- and it is 7x faster than the truth.
+  const real = realRepoPerf?.data.realRepo;
+  if (real?.latencyMs) {
+    scale += `| Warm query on ${real.name} (${real.indexedCommits.toLocaleString('en-US')} commits), p50 / p95, n=${real.latencyMs.n} | ${ms(real.latencyMs.p50)} / ${ms(real.latencyMs.p95)} |\n`;
+  }
   if (fresh) {
-    // Naming the corpus matters here: this is measured on a small fixture, and
-    // sitting unqualified beside a 30,000-commit row it reads as if it were
-    // curl's latency.
     const corpus = perfResults.referenceCorpus;
-    scale += `| Warm query, fresh process (p50 / p95, n=${fresh.latencyMs.n}) | ${ms(fresh.latencyMs.p50)} / ${ms(fresh.latencyMs.p95)} on a ${corpus.commitCount}-commit fixture |\n`;
+    scale += `| The same query on a ${corpus.commitCount}-commit fixture | ${ms(fresh.latencyMs.p50)} / ${ms(fresh.latencyMs.p95)} |\n`;
   }
   if (ablation) {
     scale += `| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 ${ablation.hit5 >= 0 ? '+' : ''}${num(ablation.hit5)} |\n`;

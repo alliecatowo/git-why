@@ -183,7 +183,8 @@ provider's own accounting database.
 
 | model                 | paired n | accuracy W-L | median tool calls saved |
 | --------------------- | -------: | -----------: | ----------------------: |
-| deepseek-v4-flash     |        8 |          0-0 |                       2 |
+| claude-haiku-4-5      |        9 |          1-1 |                       1 |
+| deepseek-v4-flash     |        8 |          0-0 |                       3 |
 | gemini-2.5-flash-lite |        6 |          2-1 |                       1 |
 | gemini-3.1-flash-lite |        7 |          2-0 |                       1 |
 
@@ -197,12 +198,13 @@ Method, per-arm figures and the registered hypothesis are in the
 
 <!-- generated:scale -->
 
-| measurement                                 | result                                  |
-| ------------------------------------------- | --------------------------------------- |
-| Index across 6 real repos (56,781 commits)  | 5.50–6.98 KB/record                     |
-| curl (30,000 commits)                       | 1.00 GiB, 5.74 KB/record                |
-| Warm query, fresh process (p50 / p95, n=30) | 477 ms / 508 ms on a 135-commit fixture |
-| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 +0.375           |
+| measurement                                               | result                        |
+| --------------------------------------------------------- | ----------------------------- |
+| Index across 6 real repos (56,781 commits)                | 5.50–6.98 KB/record           |
+| curl (30,000 commits)                                     | 1.00 GiB, 5.74 KB/record      |
+| Warm query on curl-curl (30,000 commits), p50 / p95, n=20 | 3669 ms / 4228 ms             |
+| The same query on a 135-commit fixture                    | 477 ms / 508 ms               |
+| Diff/evidence ingestion, real-repo ablation               | earns its cost, ΔHit@5 +0.375 |
 
 <!-- /generated:scale -->
 
