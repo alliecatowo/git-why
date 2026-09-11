@@ -901,6 +901,17 @@ async function runOnePlannedTrial(
   record.cache_read_tokens = trialResult.usage.cacheReadTokens;
   record.cache_write_tokens = trialResult.usage.cacheWriteTokens;
   record.actual_billed_cost = trialResult.actualBilledCost;
+
+  // Independent confirmation that the summed usage is right. Recorded whether
+  // it agrees or not: a silent mismatch is exactly the failure this exists to
+  // surface.
+  const reconciled = workspace ? reconcileTokens(profile.profileRoot) : null;
+  record.token_cross_check = reconciled;
+  record.token_cross_check_agrees =
+    reconciled === null || record.input_tokens === null
+      ? null
+      : Math.abs(reconciled.input - record.input_tokens) <=
+        Math.max(1, 0.02 * Math.max(reconciled.input, record.input_tokens));
   record.estimated_list_price_cost = null; // zero-priced free-tier models: no list price to estimate
   record.tool_output_bytes = JSON.stringify(trialResult.rawEvents).length;
   record.exit_reason = trialResult.exitReason;
@@ -985,6 +996,44 @@ async function runOnePlannedTrial(
   }
 
   return finish();
+}
+
+/**
+ * Reconciles the harness's token counts against OpenCode's own database.
+ *
+ * This is the check that would have caught the original defect, where usage
+ * was read from the final step_finish event alone and recorded 69k input
+ * tokens against 2.56M real ones. A benchmark that reports cost has to prove
+ * its cost numbers rather than assert them, and the provider's own accounting
+ * is the only independent source available.
+ *
+ * Returns null when the database is unreadable, which is a missing check, not
+ * a passing one -- the caller records the difference.
+ */
+function reconcileTokens(profileRoot) {
+  const db = join(profileRoot, '.local', 'share', 'opencode', 'opencode.db');
+  if (!existsSync(db)) return null;
+  const out = spawnSync('sqlite3', [`file:${db}?mode=ro`, 'SELECT data FROM message'], {
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (out.status !== 0 || !out.stdout) return null;
+  let input = 0;
+  let output = 0;
+  let messages = 0;
+  for (const line of out.stdout.split('\n')) {
+    if (line.trim() === '') continue;
+    try {
+      const tokens = JSON.parse(line).tokens ?? {};
+      input += tokens.input ?? 0;
+      output += tokens.output ?? 0;
+      messages += 1;
+    } catch {
+      // A row that will not parse is skipped rather than failing the trial;
+      // a partial cross-check still catches an order-of-magnitude error.
+    }
+  }
+  return { input, output, messages };
 }
 
 function gitHeadOfThisRepoOrNull() {
