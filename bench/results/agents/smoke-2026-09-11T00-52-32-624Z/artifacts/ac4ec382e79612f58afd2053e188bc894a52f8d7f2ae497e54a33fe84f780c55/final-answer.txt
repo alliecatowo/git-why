@@ -1,0 +1,16 @@
+The task is straightforward. Let me implement `clampDelay` in `/workspace/src/utils.cjs`:
+
+Implementation verified. Final state of `src/utils.cjs`:
+
+```js
+function clampDelay(value) {
+  return Math.min(5000, Math.max(100, value));
+}
+module.exports = { clampDelay };
+```
+
+## Summary
+
+- Ran the required verification command: `pwd` → `/workspace`, `git rev-parse --show-toplevel` → `/workspace`, `git rev-parse HEAD` → `96b308a20980554af509a525430daddfaa4b670e` (all match).
+- Implemented `clampDelay(value)` in `/workspace/src/utils.cjs` using `Math.min(5000, Math.max(100, value))`, which returns a number clamped to the inclusive range **100 through 5000**.
+- Verified with test cases: values below 100 clamp to 100, values above 5000 clamp to 5000, and in-range values pass through unchanged (including non-integers).

@@ -182,7 +182,6 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'CLI Reference', link: '/guide/cli-reference' },
       { text: 'Benchmarks', link: '/guide/benchmarks' },
-      { text: 'Run dashboard', link: '/guide/run-dashboard' },
       { text: 'FAQ', link: '/guide/faq' },
       {
         text: 'v0.1.0',
@@ -208,7 +207,6 @@ export default defineConfig({
             { text: 'CLI reference', link: '/guide/cli-reference' },
             { text: 'Operations & guarantees', link: '/guide/operations' },
             { text: 'Benchmarks', link: '/guide/benchmarks' },
-            { text: 'Run dashboard', link: '/guide/run-dashboard' },
           ],
         },
         {

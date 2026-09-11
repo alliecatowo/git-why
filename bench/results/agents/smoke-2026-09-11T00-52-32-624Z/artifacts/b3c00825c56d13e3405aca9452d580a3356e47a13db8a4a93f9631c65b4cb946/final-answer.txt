@@ -1,0 +1,34 @@
+Verified: pwd=/workspace, toplevel=/workspace, HEAD=42adaf0b82df138b4f3344624fb12c5acab7ccb1. Now let me examine the file and its history.
+
+The file has three relevant commits. Let me examine each one in detail.
+
+Let me check the HEAD commit and whether there are related commits (e.g., tests, other files) referencing the compatibility behavior.
+
+I have the complete picture now. Let me verify the file content at each intermediate commit to confirm the exact behavior changes.
+
+## Explanation
+
+Based purely on the repository history, the browser cookie compatibility behavior in `src/cookies.cjs` was **introduced and then removed**, which is why the file now returns the default value. The file's entire history consists of four commits (all authored by "Fixture Bot", all on the same day):
+
+### 1. `ed818d0` — "Introduce browser cookie compatibility" (00:26:40)
+This commit **created** `src/cookies.cjs` (the `src/` directory did not exist before it). The function returned:
+```js
+function configured() { return 'browser cookie compatibility'; }
+```
+The commit message explains why the compatibility behavior was added: *"The affected browser dropped a required attribute, so a compatibility mode preserved sessions."* In other words, a browser update dropped a required cookie attribute that would have broken sessions, so this compatibility mode was introduced to keep sessions working.
+
+### 2. `a531967` — "Adjust browser cookie compatibility rollout" (01:26:40)
+This commit removed only a trailing blank line (`1 deletion`) — **no behavioral change**. Its message, *"The rollout was monitored before its final retirement,"* signals that the compatibility mode was always intended as a temporary, monitored rollout.
+
+### 3. `d85c97e` — "Remove browser cookie compatibility" (02:26:40)
+This commit changed the return value from `'browser cookie compatibility'` to `'default'` — i.e., the compatibility behavior was **removed**, reverting to the default configuration. The commit message gives the reason: *"Usage of the affected browser family stayed below the retirement threshold for two quarters."* The affected browser's usage had fallen low enough, for long enough, that the compatibility mode was no longer worth keeping and was retired.
+
+### 4. `42adaf0` — "Current browser cookie compatibility state" (03:26:40, HEAD)
+This is an empty commit (no file changes) that simply marks the current state.
+
+## Verification of scope
+- `git log --follow -- src/cookies.cjs` shows exactly these three changing commits (`ed818d0`, `a531967`, `d85c97e`) plus the empty HEAD commit `42adaf0`.
+- No other commit in the repository touches this file or any other file referencing "browser cookie compatibility" (checked with `--grep` and `-S` searches).
+
+## Conclusion
+The behavior changed because of a planned, monitored lifecycle: the compatibility mode was **introduced** (`ed818d0`) when an affected browser dropped a required cookie attribute that threatened session preservation, its rollout was **adjusted/monitored** (`a531967`), and it was **removed** (`d85c97e`) once usage of the affected browser family stayed below the retirement threshold for two quarters, returning `configured()` to its `'default'` state — which is the behavior seen at HEAD (`42adaf0`). No code was modified.

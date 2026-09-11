@@ -1,0 +1,12 @@
+No, `requests` no longer supports Python 3.9. Support for Python 3.9 was dropped in commit `0c2bbe7`.
+
+The commit message and diff explicitly state the change:
+
+> **Drop support for Python 3.9 (#7196)**
+>
+> ```diff
+> -requires-python = ">=3.9"
+> +requires-python = ">=3.10"
+> ...
+> -    "Programming Language :: Python :: 3.9",
+> ```

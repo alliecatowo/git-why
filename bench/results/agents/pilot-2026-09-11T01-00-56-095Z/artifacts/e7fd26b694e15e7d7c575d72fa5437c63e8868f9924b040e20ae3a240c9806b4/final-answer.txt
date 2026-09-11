@@ -1,0 +1,18 @@
+Redis first introduced the streams data type with the `XADD` command in the commit **`79866a6361829ed0602dedff9cb378c66977227a`**.
+
+This commit added the initial implementation of the Streams data type, including the `XADD` command. The commit message states:
+> "Streams: 12 commits squashed into the initial Streams implementation."
+
+The diff confirms this, showing the addition of `t_stream.c`, `listpack.c`, and the registration of the `xadd` command in the `redisCommandTable`:
+
+```c
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+```
+
+And its implementation:
+
+```c
++/* XADD key [field value] [field value] ... */
++void xaddCommand(client *c) {
+...
+```

@@ -1,0 +1,40 @@
+Verified. Now let me examine the repository structure and the target file.
+
+The current file has a stub `normalizeToken` that just returns the value. Let me check the git history for context.
+
+Three commits are relevant. Let me examine each one.
+
+Now let me check if there are any tests or other references to `normalizeToken` to confirm expected behavior.
+
+The grep tool is failing; let me use ripgrep directly via bash.
+
+The context is clear from git history:
+- `357cbf6` introduced `normalizeToken` as an identity function
+- `7928fef` added compatibility behavior: empty string (`""`) → `null` ("A legacy identity provider uses an empty token to signal that consent must be renewed")
+- `55342b6` (current HEAD) reverted that compatibility line during a "cleanup," which caused the unexpected result
+
+Restoring the intended behavior:
+
+Now let me verify the change and run a quick sanity test:
+
+The task is complete. Here's a summary of what I did:
+
+## Summary
+
+**Problem:** The legacy sign-in integration in `src/session.cjs` was returning an unexpected result after a cleanup.
+
+**Root cause (from git history):**
+1. `357cbf6` — `normalizeToken` was introduced as a simple identity function (`return value`).
+2. `7928fef` — Compatibility behavior was added: `if (value === "") return null;`, with the commit message explaining *"A legacy identity provider uses an empty token to signal that consent must be renewed."*
+3. `55342b6` (current HEAD) — A "cleanup" reverted that compatibility line, causing empty tokens to pass through unchanged and breaking the legacy sign-in integration.
+
+**Fix:** Restored the intended behavior in `/workspace/src/session.cjs`:
+
+```js
+function normalizeToken(value) {
+  if (value === "") return null;
+  return value;
+}
+```
+
+**Verification:** A quick Node sanity check confirmed ordinary inputs are unchanged (`"abc123"` → `"abc123"`, `null` → `null`, `42` → `42`, `undefined` → `undefined`), while only the empty string is normalized to `null` (`""` → `null`) — exactly matching the behavior introduced in commit `7928fef`.

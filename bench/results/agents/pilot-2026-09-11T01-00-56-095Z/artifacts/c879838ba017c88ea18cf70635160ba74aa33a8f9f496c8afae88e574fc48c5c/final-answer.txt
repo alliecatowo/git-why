@@ -1,0 +1,13 @@
+Yes, ripgrep's special ignore-file name used to be `.rgignore` in its early days.
+
+It was changed to `.ignore` (while maintaining support for `.rgignore` for backward compatibility) in commit `cc90511`.
+
+**Supporting quote from commit `cc90511`:**
+
+> Switch from .rgignore to .ignore.
+> 
+> But don't actually remove support for .rgignore until the next semver
+> bump.
+> 
+> Note that this puts us in line with the silver searcher:
+> https://github.com/ggreer/the_silver_searcher/pull/974

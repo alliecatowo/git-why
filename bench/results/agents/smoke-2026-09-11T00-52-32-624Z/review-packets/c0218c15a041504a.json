@@ -1,0 +1,54 @@
+{
+  "id": "c0218c15a041504a",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "I'll start with the required preflight command.Preflight verified: `/workspace`, `/workspace`, and `aa150827a936441f92d851f180717a3ea0db14b2` all match. Now the required `git why` check.`git why` returned a result. Now let me investigate the history of `src/session.cjs`.Verified. No code was modified.\n\n## Findings\n\n**First commit introducing consent renewal handling in `src/session.cjs`:**\n\n`86793c1592ed4cfd8c54a3338d2eaded152ae263` — \"Introduce consent renewal handling\" by Fixture Bot, 2025-03-16 15:33:20 +0000.\n\nThat commit creates `src/session.cjs` with:\n```js\nfunction configured() { return 'consent renewal handling'; }\nmodule.exports = { configured };\n```\n\n### Evidence\n- `git log --all --oneline --follow -- src/session.cjs` returns exactly three commits, with `86793c1` being the earliest:\n  - `86793c1` Introduce consent renewal handling\n  - `30e911d` Adjust consent renewal handling rollout\n  - `0422e76` Remove consent renewal handling\n- `git log --all -S 'consent renewal handling' -- src/session.cjs` shows only `86793c1` (introduced) and `0422e76` (removed).\n- `git show 86793c1` confirms the file is `new file mode 100644` containing the behavior; the later commits only tweak the rollout then remove it.\n\nThe commit to cite is **`86793c1592ed4cfd8c54a3338d2eaded152ae263`** (short: `86793c1`), \"Introduce consent renewal handling\".",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

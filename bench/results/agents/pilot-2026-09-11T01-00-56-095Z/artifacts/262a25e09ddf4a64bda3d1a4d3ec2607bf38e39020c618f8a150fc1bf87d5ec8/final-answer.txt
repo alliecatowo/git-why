@@ -1,0 +1,5 @@
+The `requests` library switched its default text-encoding guesser from `chardet` to `charset_normalizer` to avoid the licensing constraints associated with `chardet`, which is licensed under the LGPL. The transition to the MIT-licensed `charset_normalizer` was made to address concerns from downstream projects that may have difficulty bundling LGPL-licensed dependencies.
+
+This change was established in commit **2ed84f5** ("Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)"), with the commit message stating:
+
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests..."

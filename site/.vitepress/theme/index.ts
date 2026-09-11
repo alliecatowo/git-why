@@ -1,11 +1,11 @@
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import BenchDashboard from './BenchDashboard.vue';
+import Cast from './Cast.vue';
 import './custom.css';
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    app.component('BenchDashboard', BenchDashboard);
+    app.component('Cast', Cast);
   },
 } satisfies Theme;

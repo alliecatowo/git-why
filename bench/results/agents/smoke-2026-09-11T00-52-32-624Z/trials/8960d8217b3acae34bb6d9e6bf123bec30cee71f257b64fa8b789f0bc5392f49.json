@@ -1,0 +1,113 @@
+{
+  "task_id": "T17",
+  "task_stratum": "temporal",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "corpus_fingerprint": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "implementation_sha": "537738c4ac8020573b05f1e0160555a2a9e24bd5",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T00:57:05.154Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "9a0d040da0f27c6bc74f3d8c3659830dc0e16fc37e452072162823337d12a5fc",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": "pending_blinded_review",
+  "wall_ms": 24234,
+  "tool_calls": 7,
+  "history_calls": 3,
+  "zg_calls": 1,
+  "git_why_calls": 1,
+  "input_tokens": 2515,
+  "output_tokens": 766,
+  "cache_read_tokens": 39296,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0006482100000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 17438,
+  "index_build_ms": 2023,
+  "model_download_ms": null,
+  "index_disk_bytes": 6052708,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-11T00-52-32-624Z/events/T17-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "8960d8217b3acae34bb6d9e6bf123bec30cee71f257b64fa8b789f0bc5392f49",
+  "indexed_commits": 126,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  123 / 123 files\n  Entities    123\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_QXOd9myCkyOiauaPlmB83024",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20 -- src/session.cjs",
+          "workdir": "/workspace"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_k1iNeZgGfM3ZKqCdlRWC3538",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- src/session.cjs; echo \"---\"; git show --stat 86793c1; echo \"---\"; git show 86793c1 -- src/session.cjs",
+          "workdir": "/workspace"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n---\ncommit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\n src/session.cjs | 3 +++\n 1 file changed, 3 insertions(+)\n---\ncommit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..4d42b8c\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'consent renewal handling'; }\n+module.exports = { configured };\n+\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_QCM0Ezxlr1lsgRkWvDsy9137",
+        "status": "completed",
+        "input": {
+          "command": "git log --reverse --format='%H %ad %s' --date=short -- src/session.cjs; echo \"--- graph ---\"; git log --oneline --graph --all | head -20",
+          "workdir": "/workspace"
+        },
+        "output": "86793c1592ed4cfd8c54a3338d2eaded152ae263 2025-03-16 Introduce consent renewal handling\n30e911d204f0849b895a114f8c75a89cacdb30d5 2025-03-16 Adjust consent renewal handling rollout\n0422e76e94a3828eaf21512e7c77b1fb20385f0c 2025-03-16 Remove consent renewal handling\n--- graph ---\n* aa15082 Current consent renewal handling state\n* 0422e76 Remove consent renewal handling\n* 30e911d Adjust consent renewal handling rollout\n* 86793c1 Introduce consent renewal handling\n* f6b9076 chore: relay follow-up 122\n* dbaad29 chore: cache follow-up 121\n* 66916d6 chore: policy follow-up 120\n* 227d31e chore: worker follow-up 119\n* caed068 chore: adapter follow-up 118\n* 418f7b4 chore: queue follow-up 117\n* 3399992 chore: session follow-up 116\n* d4d3327 chore: gateway follow-up 115\n* aeffee1 chore: relay follow-up 114\n* 3626d51 chore: cache follow-up 113\n* d85fc77 chore: policy follow-up 112\n* 73e5383 chore: worker follow-up 111\n* 19b6e61 chore: adapter follow-up 110\n* 1e717e9 chore: queue follow-up 109\n* 15d127d chore: session follow-up 108\n* 2457235 chore: gateway follow-up 107\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 3,
+        "evidence_used": true
+      }
+    ],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "aa150827a936441f92d851f180717a3ea0db14b2"
+    }
+  },
+  "review_packet_id": "a507c28bfd25157e",
+  "artifacts_dir": "artifacts/8960d8217b3acae34bb6d9e6bf123bec30cee71f257b64fa8b789f0bc5392f49",
+  "completed": true
+}

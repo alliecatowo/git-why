@@ -1,0 +1,50 @@
+{
+  "id": "1bf027d7f998c935",
+  "prompt": "Explain, based only on repository history, why the browser cookie compatibility behavior in src/cookies.cjs changed. Cite the commits you rely on. Do not modify code.\n",
+  "answer": "Preflight passed. Now let me examine the file and its history.\n\nLet me check for any other related commits in the repo history for broader context.\n\nI have the complete history. Here is my analysis.\n\n## Summary\n\nThe browser cookie compatibility behavior in `src/cookies.cjs` changed because the feature went through a full lifecycle — **introduced → monitored → removed** — driven by browser usage metrics and a session-preservation bug. The file is the sole locus of that behavior, and its entire history consists of four commits (all by \"Fixture Bot\" on 2025-03-12):\n\n### 1. Introduced — commit `ed818d0` \"Introduce browser cookie compatibility\"\n- Created `src/cookies.cjs` with `configured()` returning `'browser cookie compatibility'`.\n- Commit message rationale: *\"The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\"*\n- **Why the behavior appeared:** a browser removed a required (cookie) attribute, which would have broken sessions, so a compatibility mode was introduced to keep sessions working for that browser.\n\n### 2. Adjusted — commit `a531967` \"Adjust browser cookie compatibility rollout\"\n- Only removed a trailing blank line in the file.\n- Commit message rationale: *\"The rollout was monitored before its final retirement.\"*\n- **Why it changed:** the compatibility rollout was being deliberately monitored as a precursor to eventually retiring the feature — no functional change, just prep for the teardown.\n\n### 3. Removed — commit `d85c97e` \"Remove browser cookie compatibility\"\n- Changed `configured()` to return `'default'`, reverting the compatibility behavior.\n- Commit message rationale: *\"Usage of the affected browser family stayed below the retirement threshold for two quarters.\"*\n- **Why the behavior changed (the removal):** telemetry during the monitored rollout showed usage of the affected browser family remained below the retirement threshold for two consecutive quarters, so the compatibility mode was no longer worth keeping and was retired, restoring the default behavior.\n\n### 4. Current state — commit `42adaf0` \"Current browser cookie compatibility state\" (HEAD)\n- An empty commit with no diff; it just records the final state, where `src/cookies.cjs` returns `'default'`.\n\n## Conclusion\n\nThe compatibility behavior changed (and ultimately disappeared) because it was a temporary, metric-gated workaround: it was introduced (`ed818d0`) to preserve sessions after a browser dropped a required cookie attribute, its rollout was monitored (`a531967`), and it was removed (`d85c97e`) once usage of the affected browser family stayed below the retirement threshold for two quarters — leaving HEAD's `'default'` state (`42adaf0`). No code was modified.",
+  "rubric": {
+    "mustMentionAny": [
+      "browser",
+      "cookies"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "The affected browser dropped a required attribute, so a compatibility mode preserved sessions.",
+      "removal": "Usage of the affected browser family stayed below the retirement threshold for two quarters.",
+      "temporalKind": null
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "ed818d0",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "a531967",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "d85c97e",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "42adaf0",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "browser",
+      "cookies"
+    ],
+    "mentionedKeywords": [
+      "browser",
+      "cookies"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

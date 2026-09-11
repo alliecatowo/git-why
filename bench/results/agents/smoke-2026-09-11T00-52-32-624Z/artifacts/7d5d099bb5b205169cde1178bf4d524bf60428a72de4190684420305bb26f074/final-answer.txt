@@ -1,0 +1,26 @@
+Preflight checks passed. Now let me examine the current `src/session.cjs` and its history.
+
+The current file is a stub (consent renewal handling was recently removed). Let me examine the history in detail to confirm which commit first introduced the behavior.
+
+The history is clear. Let me verify there are no other commits in the full history mentioning consent renewal (e.g., renames or other files).
+
+## Answer
+
+The first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:
+
+**`86793c1` — "Introduce consent renewal handling"** (full hash: `86793c1592ed4cfd8c54a3338d2eaded152ae263`)
+
+### How I verified it
+
+The linear history for `src/session.cjs` contains exactly four relevant commits:
+
+| Commit | Message | Change to `src/session.cjs` |
+|---|---|---|
+| `86793c1` | **Introduce consent renewal handling** | Creates the file with `function configured() { return 'consent renewal handling'; }` |
+| `30e911d` | Adjust consent renewal handling rollout | Removes a trailing blank line only |
+| `0422e76` | Remove consent renewal handling | Changes the return value back to `'default'` |
+| `aa15082` | Current consent renewal handling state | No file changes (HEAD) |
+
+`86793c1` is the earliest commit touching the file and is the one that introduced the behavior — the diff shows it creating `src/session.cjs` for the first time with the "consent renewal handling" logic (`+function configured() { return 'consent renewal handling'; }`). The subsequent commits only adjusted/removed that behavior.
+
+I did not modify any code.

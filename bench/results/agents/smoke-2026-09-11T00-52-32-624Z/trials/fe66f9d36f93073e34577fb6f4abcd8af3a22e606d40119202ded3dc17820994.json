@@ -1,0 +1,92 @@
+{
+  "task_id": "T21",
+  "task_stratum": "coding",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "96b308a20980554af509a525430daddfaa4b670e",
+  "corpus_fingerprint": "96b308a20980554af509a525430daddfaa4b670e",
+  "implementation_sha": "38c2ef474070f58909f7720e2c357bb31a46f6c9",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T00:54:32.233Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "7e18f69c7ccbcf180134f5871241b50e631fd2193a0c75567b86ccf6013a0dc0",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 1,
+  "hidden_tests_total": 1,
+  "evidence_grade": null,
+  "wall_ms": 26360,
+  "tool_calls": 9,
+  "history_calls": 1,
+  "zg_calls": 1,
+  "git_why_calls": 1,
+  "input_tokens": 8251,
+  "output_tokens": 848,
+  "cache_read_tokens": 49024,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00104849,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 19327,
+  "index_build_ms": 2141,
+  "model_download_ms": null,
+  "index_disk_bytes": 6039476,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-11T00-52-32-624Z/events/T21-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "fe66f9d36f93073e34577fb6f4abcd8af3a22e606d40119202ded3dc17820994",
+  "indexed_commits": 123,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  123 / 123 files\n  Entities    123\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_3AY5Q0vMavmy19CaB0IW4490",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -10; echo \"---\"; git why \"clampDelay\" --no-refresh 2>&1 | head -50"
+        },
+        "output": "96b308a Add src/utils.cjs\n88b299c chore: relay follow-up 122\n3d3880e chore: cache follow-up 121\n01c7c17 chore: policy follow-up 120\n6079ffa chore: worker follow-up 119\n36d949a chore: adapter follow-up 118\n377910b chore: queue follow-up 117\n4c79a78 chore: session follow-up 116\ne5a56f8 chore: gateway follow-up 115\n05f41a8 chore: relay follow-up 114\n---\n1. 96b308a  Add src/utils.cjs\n   2025-03-21 · Fixture Bot\n\n   src/utils.cjs\n   +function clampDelay(value) {\n   +  return undefined;\n   +}\n   +module.exports = { clampDelay };\n\n2. 9d8dedd  chore: relay follow-up 066\n   2025-03-18 · Fixture Bot\n\n   notes/release-065.md\n   +# Change note 66\n   +\n   +Routine relay follow-up for an unrelated subsystem.\n\n3. 1ee4c5a  chore: relay follow-up 026\n   2025-03-17 · Fixture Bot\n\n   notes/release-025.md\n   +# Change note 26\n   +\n   +Routine relay follow-up for an unrelated subsystem.\n\n4. 88b299c  chore: relay follow-up 122\n   2025-03-21 · Fixture Bot\n\n   notes/release-121.md\n   +# Change note 122\n   +\n   +Routine relay follow-up for an unrelated subsystem.\n\n5. 7e8107c  chore: relay follow-up 074\n   2025-03-19 · Fixture Bot\n\n   notes/release-073.md\n   +# Change note 74\n   +\n   +Routine relay follow-up for an unrelated subsystem.\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      }
+    ],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "96b308a20980554af509a525430daddfaa4b670e"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/fe66f9d36f93073e34577fb6f4abcd8af3a22e606d40119202ded3dc17820994",
+  "completed": true
+}

@@ -1,0 +1,50 @@
+{
+  "id": "40e19ac14c381955",
+  "prompt": "Explain, based only on repository history, why the browser cookie compatibility behavior in src/cookies.cjs changed. Cite the commits you rely on. Do not modify code.\n",
+  "answer": "Preflight passed. Now running the required `git why` check:\n\n`git why` returned a result. Now let me investigate the history of `src/cookies.cjs`:\n\nThree commits touched this file. Let me examine each:\n\nLet me check for related commits and broader context around this feature:\n\nLet me verify with `git blame` and confirm the commit chronology:\n\nI now have the complete picture from the repository history. Let me confirm no changes were made to the working tree:\n\n## Answer\n\nBased only on the repository history, the browser cookie compatibility behavior in `src/cookies.cjs` went through a full introduce → monitor → remove lifecycle, driven by a browser-family deprecation and its subsequent usage decline. Four commits tell the story (all authored by \"Fixture Bot\" on 2025-03-12):\n\n**1. `ed818d0` — \"Introduce browser cookie compatibility\" (00:26:40)**\nCreated `src/cookies.cjs` with `configured()` returning `'browser cookie compatibility'`. The commit message explains why: *\"The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\"* A browser family removed a required attribute (relevant to cookie handling), which would have broken sessions, so a compatibility mode was introduced to keep sessions working.\n\n**2. `a531967` — \"Adjust browser cookie compatibility rollout\" (01:26:40)**\nOnly removed a trailing blank line (1 deletion). The message states: *\"The rollout was monitored before its final retirement.\"* — the compatibility mode was put under monitoring in preparation for its eventual removal.\n\n**3. `d85c97e` — \"Remove browser cookie compatibility\" (02:26:40)**\nChanged `configured()` from returning `'browser cookie compatibility'` to returning `'default'`. This is the commit that actually changed the behavior. Its message gives the reason: *\"Usage of the affected browser family stayed below the retirement threshold for two quarters.\"* The browser family that required the workaround had been below the retirement threshold for two consecutive quarters, so the compatibility code was no longer justified and was removed, reverting to the default behavior.\n\n**4. `42adaf0` — \"Current browser cookie compatibility state\" (03:26:40, HEAD)**\nAn empty commit (no diff) marking the current state; the working tree matches the post-removal state from `d85c97e`.\n\n`git blame` confirms the current file: line 1 (`function configured() { return 'default'; }`) comes from `d85c97e`, and line 2 (`module.exports = { configured };`) from `ed818d0`.\n\n**Conclusion:** The behavior changed from `'browser cookie compatibility'` to `'default'` because the compatibility mode had been introduced (`ed818d0`) to preserve sessions after the affected browser dropped a required attribute, was monitored during rollout (`a531967`), and was finally removed (`d85c97e`) once usage of that browser family stayed below the retirement threshold for two quarters. No code was modified.",
+  "rubric": {
+    "mustMentionAny": [
+      "browser",
+      "cookies"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "The affected browser dropped a required attribute, so a compatibility mode preserved sessions.",
+      "removal": "Usage of the affected browser family stayed below the retirement threshold for two quarters.",
+      "temporalKind": null
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "ed818d0",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "a531967",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "d85c97e",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "42adaf0",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "browser",
+      "cookies"
+    ],
+    "mentionedKeywords": [
+      "browser",
+      "cookies"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

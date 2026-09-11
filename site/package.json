@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "asciinema-player": "^3.17.0"
   }
 }

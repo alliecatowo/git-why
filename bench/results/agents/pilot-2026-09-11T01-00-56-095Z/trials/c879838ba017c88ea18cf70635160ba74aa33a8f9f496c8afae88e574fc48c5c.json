@@ -1,0 +1,121 @@
+{
+  "task_id": "X-ripgrep-03",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "ca8dea2fd61215ae605d8860b00d753da1bd2192",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:02:49.079Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "fca5c9ff0baa137d44b83b391fe95ec4783f45b2ba52d63f129b22342e6a40eb",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "cc90511ab29d3c37e873acac0fd80f90473f54bb",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "cc90511"
+    ]
+  },
+  "wall_ms": 80416,
+  "tool_calls": 6,
+  "history_calls": 4,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 21641,
+  "output_tokens": 310,
+  "cache_read_tokens": 34482,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0067373,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 43369,
+  "index_build_ms": 33057,
+  "model_download_ms": null,
+  "index_disk_bytes": 91397716,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-ripgrep-03-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "c879838ba017c88ea18cf70635160ba74aa33a8f9f496c8afae88e574fc48c5c",
+  "indexed_commits": 2287,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_X117VeR202zV1diCe2HPvcII",
+        "status": "completed",
+        "input": {
+          "command": "git log -G \"ignore\" --reverse --oneline | head -n 20"
+        },
+        "output": "9d1e619 initial commit\n883ceb3 add readme\nb55ecf3 globbing by regex\n065c449 File path filtering works and is pretty fast.\n1c8379f Implementing core functionality.\nc809679 Lots of improvements. Most notably, removal of memory maps for searching.\n5450aed Make \"before\" context work.\n812cdb1 Lots of progress:\nd8d7560 TODOs and some cleanup/refactoring.\n7a149c2 More progress. With coloring!\n1a3e7c0 Trying CI.\n9948e0c Only create the Grep searcher once.\na744ec1 Rename xrep to ripgrep.\nf83cd63 Add integration tests.\n9bf7696 Initial cut at a benchmark suite for CLI search tools.\n2b943ed Make file type filtering a lot faster.\n466cd70 More benchmarks for subtitle corpus.\n3c05954 initial set of benchmarks\nfdca741 Stream results when feasible.\n92c918e --no-ignore implies --no-ignore-parent\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_OBGVfFvp4W031voXvvzT7Up2",
+        "status": "completed",
+        "input": {
+          "command": "git show 92c918e"
+        },
+        "output": "commit 92c918ebd982604eac93cd15690acf75617c0df4\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Wed Sep 14 14:33:37 2016 -0400\n\n    --no-ignore implies --no-ignore-parent\n\ndiff --git a/src/args.rs b/src/args.rs\nindex 1ddc049..0c9895f 100644\n--- a/src/args.rs\n+++ b/src/args.rs\n@@ -124,6 +124,7 @@ Less common options:\n \n     --no-ignore\n         Don't respect ignore files (.gitignore, .rgignore, etc.)\n+        This implies --no-ignore-parent.\n \n     --no-ignore-parent\n         Don't respect ignore files in parent directories.\n@@ -338,7 +339,9 @@ impl RawArgs {\n             line_number: !self.flag_no_line_number && self.flag_line_number,\n             mmap: mmap,\n             no_ignore: self.flag_no_ignore,\n-            no_ignore_parent: self.flag_no_ignore_parent,\n+            no_ignore_parent:\n+                // --no-ignore implies --no-ignore-parent\n+                self.flag_no_ignore_parent || self.flag_no_ignore,\n             quiet: self.flag_quiet,\n             replace: self.flag_replace.clone().map(|s| s.into_bytes()),\n             text: self.flag_text,\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_1ZLRNDghL5B0otP9Y66tTNBC",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \".ignore\" --oneline --reverse | head -n 10"
+        },
+        "output": "065c449 File path filtering works and is pretty fast.\n1c8379f Implementing core functionality.\n812cdb1 Lots of progress:\n9948e0c Only create the Grep searcher once.\ncc90511 Switch from .rgignore to .ignore.\n346bad7 Fix handling of absolute patterns in parent gitignore files.\n8eeb0c0 Add --no-ignore-vcs flag.\nbaebfd7 changelog 0.2.0\nd79add3 Move all gitignore matching to separate crate.\nb272be2 Add parallel recursive directory iterator.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_YulpTU2DyeddF563RYyOhcR0",
+        "status": "completed",
+        "input": {
+          "command": "git show cc90511"
+        },
+        "output": "commit cc90511ab29d3c37e873acac0fd80f90473f54bb\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Fri Sep 23 22:44:17 2016 -0400\n\n    Switch from .rgignore to .ignore.\n    \n    But don't actually remove support for .rgignore until the next semver\n    bump.\n    \n    Note that this puts us in line with the silver searcher:\n    https://github.com/ggreer/the_silver_searcher/pull/974\n    \n    Fixes #40\n\ndiff --git a/README.md b/README.md\nindex 6332e60..2319503 100644\n--- a/README.md\n+++ b/README.md\n@@ -145,9 +145,9 @@ files, ignore hidden files and directories and skip binary files:\n $ rg foobar\n ```\n \n-The above command also respects all `.rgignore` files, including in parent\n-directories. `.rgignore` files can be used when `.gitignore` files are\n-insufficient. In all cases, `.rgignore` patterns take precedence over\n+The above command also respects all `.ignore` files, including in parent\n+directories. `.ignore` files can be used when `.gitignore` files are\n+insufficient. In all cases, `.ignore` patterns take precedence over\n `.gitignore`.\n \n To ignore all ignore files, use `-u`. To additionally search hidden files\ndiff --git a/doc/rg.1 b/doc/rg.1\nindex 300ad1b..9d47e27 100644\n--- a/doc/rg.1\n+++ b/doc/rg.1\n@@ -211,8 +211,8 @@ Never use memory maps, even when they might be faster.\n .RE\n .TP\n .B \\-\\-no\\-ignore\n-Don\\[aq]t respect ignore files (.gitignore, .rgignore, etc.) This\n-implies \\-\\-no\\-ignore\\-parent.\n+Don\\[aq]t respect ignore files (.gitignore, .ignore, etc.) This implies\n+\\-\\-no\\-ignore\\-parent.\n .RS\n .RE\n .TP\ndiff --git a/doc/rg.1.md b/doc/rg.1.md\nindex 81e974e..224ff1a 100644\n--- a/doc/rg.1.md\n+++ b/doc/rg.1.md\n@@ -137,7 +137,7 @@ the raw speed of grep.\n : Never use memory maps, even when they might be faster.\n \n --no-ignore\n-: Don't respect ignore files (.gitignore, .rgignore, etc.)\n+: Don't respect ignore files (.gitignore, .ignore, etc.)\n   This implies --no-ignore-parent.\n \n --no-ignore-parent\ndiff --git a/src/args.rs b/src/args.rs\nindex 777556d..4b5052a 100644\n--- a/src/args.rs\n+++ b/src/args.rs\n@@ -137,7 +137,7 @@ Less common options:\n         Never use memory maps, even when they might be faster.\n \n     --no-ignore\n-        Don't respect ignore files (.gitignore, .rgignore, etc.)\n+        Don't respect ignore files (.gitignore, .ignore, etc.)\n         This implies --no-ignore-parent.\n \n     --no-ignore-parent\ndiff --git a/src/gitignore.rs b/src/gitignore.rs\nindex 76e0be7..2bbebd6 100644\n--- a/src/gitignore.rs\n+++ b/src/gitignore.rs\n@@ -9,7 +9,7 @@ The motivation for this submodule is performance and portability:\n 2. We could shell out to a `git` sub-command like ls-files or status, but it\n    seems better to not rely on the existence of external programs for a search\n    tool. Besides, we need to implement this logic anyway to support things like\n-   an .rgignore file.\n+   an .ignore file.\n \n The key implementation detail here is that a single gitignore file is compiled\n into a single RegexSet, which can be used to report which globs match a\ndiff --git a/src/ignore.rs b/src/ignore.rs\nindex d784f99..0195420 100644\n--- a/src/ignore.rs\n+++ b/src/ignore.rs\n@@ -5,7 +5,7 @@ whether a *single* file path should be searched or not.\n In general, there are two ways to ignore a particular file:\n \n 1. Specify an ignore rule in some \"global\" configuration, such as a\n-   $HOME/.rgignore or on the command line.\n+   $HOME/.ignore or on the command line.\n 2. A specific ignore file (like .gitignore) found during directory traversal.\n \n The `IgnoreDir` type handles ignore patterns for any one particular directory\n@@ -24,6 +24,7 @@ use types::Types;\n \n const IGNORE_NAMES: &'static [&'static str] = &[\n     \".gitignore\",\n+    \".ignore\",\n     \".rgignore\",\n ];\n \ndiff --git a/tests/tests.rs b/tests/tests.rs\nindex e2aedc3..3823cee 100644\n--- a/tests/tests.rs\n+++ b/tests/tests.rs\n@@ -377,6 +377,11 @@ sherlock!(ignore_git, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n     wd.assert_err(&mut cmd);\n });\n \n+sherlock!(ignore_generic, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n+    wd.create(\".ignore\", \"sherlock\\n\");\n+    wd.assert_err(&mut cmd);\n+});\n+\n sherlock!(ignore_ripgrep, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n     wd.create(\".rgignore\", \"sherlock\\n\");\n     wd.assert_err(&mut cmd);\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 21641,
+    "output": 310,
+    "messages": 8
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/c879838ba017c88ea18cf70635160ba74aa33a8f9f496c8afae88e574fc48c5c",
+  "completed": true
+}

@@ -1,0 +1,28 @@
+Preflight and `git why` confirmed. Now let me examine the repository and the target file.
+
+The history is clear: commit `7928fef` added the compatibility branch `if (value === "") return null;`, and commit `55342b6` (the current HEAD) removed it during a cleanup. Let me check for tests to confirm the intended behavior.
+
+No tests exist; the fix is a direct restoration. The intended behavior per commit `7928fef`: an empty token (`""`) must be converted to `null` (the legacy identity provider uses an empty token to signal consent renewal), while all other inputs pass through unchanged. Let me restore that line.
+
+The fix is complete and verified. 
+
+## Summary
+
+**Task:** Restore the intended behavior in `src/session.cjs` after a cleanup broke a legacy sign-in integration, without changing ordinary inputs.
+
+**Root cause found via repository history:** `git why` surfaced a chain of three commits on `src/session.cjs`:
+1. `357cbf6` — introduced `normalizeToken` as an identity function.
+2. `7928fef` — *"Restore compatibility behavior for normalizeToken"*: added `if (value === "") return null;` because *"A legacy identity provider uses an empty token to signal that consent must be renewed."*
+3. `55342b6` (current HEAD) — *"Revert compatibility branch during src/session.cjs cleanup"*: removed that branch, causing the legacy sign-in integration to now receive `""` instead of `null` for consent renewal.
+
+**Change made** in `/workspace/src/session.cjs`:
+```js
+function normalizeToken(value) {
+  if (value === "") return null;
+  return value;
+}
+```
+
+**Verification:**
+- `git diff` shows the file now exactly matches commit `7928fef` (blob `4225003`), i.e., the compatibility behavior is fully restored.
+- Runtime check with Node: `"abc"` → `"abc"` (ordinary inputs unchanged), `""` → `null` (legacy consent-renewal signal restored), while `null`/`undefined`/`0` pass through unchanged.

@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-09-11T01:09:14.635Z",
+  "note": "Real recorded sessions. Timings are actual latency; output is whatever the tool printed.",
+  "casts": [
+    {
+      "name": "ask",
+      "title": "Asking a question you cannot grep for",
+      "file": "ask.cast"
+    },
+    {
+      "name": "owners",
+      "title": "Who established an area",
+      "file": "owners.cast"
+    },
+    {
+      "name": "first",
+      "title": "When something was first introduced",
+      "file": "first.cast"
+    },
+    {
+      "name": "agent",
+      "title": "An agent investigating why code is the way it is",
+      "file": "agent.cast"
+    },
+    {
+      "name": "index",
+      "title": "Index management",
+      "file": "index.cast"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "task_id": "T1",
+  "task_stratum": "coding",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "55342b69a9650b00174fd47aa2a2b8946025a467",
+  "corpus_fingerprint": "55342b69a9650b00174fd47aa2a2b8946025a467",
+  "implementation_sha": "537738c4ac8020573b05f1e0160555a2a9e24bd5",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T00:56:17.704Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "4b790ac459214bb393f65a31f0ee59b93fd54f9a6d6b06979a03930c1f2f2fa6",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 2,
+  "hidden_tests_total": 2,
+  "evidence_grade": {
+    "goldSha": "7928fef9513663bde805d8ac88ec40011fb5a188",
+    "citedGoldSha": true,
+    "citedShaCount": 5,
+    "matchedTokens": [
+      "7928fef"
+    ]
+  },
+  "wall_ms": 61036,
+  "tool_calls": 19,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 15143,
+  "output_tokens": 1663,
+  "cache_read_tokens": 93184,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00196349,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 38488,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-11T00-52-32-624Z/events/T1-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "430572ffd0199f1bcc64fefc8a0cc7afc98aa5a4916b9a860ca7e75eca27fac5",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_k3rw060hm8a269vbvreicauc",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20 --all"
+        },
+        "output": "55342b6 Revert compatibility branch during src/session.cjs cleanup\n7928fef Restore compatibility behavior for normalizeToken\n357cbf6 Introduce normalizeToken in the src/session.cjs adapter\n7cf041b chore: relay follow-up 122\naa8f349 chore: cache follow-up 121\n59a2aae chore: policy follow-up 120\n2b1f5d0 chore: worker follow-up 119\n0c7354a chore: adapter follow-up 118\nc5a91ca chore: queue follow-up 117\n15cc2ca chore: session follow-up 116\n7cbf04c chore: gateway follow-up 115\n245bbcd chore: relay follow-up 114\n932daf3 chore: cache follow-up 113\ncf3a696 chore: policy follow-up 112\n0a47cce chore: worker follow-up 111\n3dcee49 chore: adapter follow-up 110\na51c076 chore: queue follow-up 109\n91e462a chore: session follow-up 108\n0e395b6 chore: gateway follow-up 107\n96d1afa chore: relay follow-up 106\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_80877ciuwgaqa6cwmae3ytz0",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -- src/session.cjs"
+        },
+        "output": "55342b6 Revert compatibility branch during src/session.cjs cleanup\n7928fef Restore compatibility behavior for normalizeToken\n357cbf6 Introduce normalizeToken in the src/session.cjs adapter\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_dzgj42tivlik9a1bztdid9hh",
+        "status": "completed",
+        "input": {
+          "command": "git show 357cbf6 -- src/session.cjs"
+        },
+        "output": "commit 357cbf6f6a14d5cb7ee4640b80d7abc5b5e20786\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 03:06:40 2025 +0000\n\n    Introduce normalizeToken in the src/session.cjs adapter\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..873fce5\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,5 @@\n+function normalizeToken(value) {\n+  return value;\n+}\n+\n+module.exports = { normalizeToken };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3zimixov14mvzdi8gco0017s",
+        "status": "completed",
+        "input": {
+          "command": "git show 7928fef -- src/session.cjs"
+        },
+        "output": "commit 7928fef9513663bde805d8ac88ec40011fb5a188\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 04:06:40 2025 +0000\n\n    Restore compatibility behavior for normalizeToken\n    \n    A legacy identity provider uses an empty token to signal that consent must be renewed.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 873fce5..4225003 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,4 +1,5 @@\n function normalizeToken(value) {\n+  if (value === \"\") return null;\n   return value;\n }\n \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_2937zzhdwypgixpea46dyzmu",
+        "status": "completed",
+        "input": {
+          "command": "git show 55342b6 -- src/session.cjs"
+        },
+        "output": "commit 55342b69a9650b00174fd47aa2a2b8946025a467\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Feb 26 05:06:40 2025 +0000\n\n    Revert compatibility branch during src/session.cjs cleanup\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 4225003..873fce5 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,5 +1,4 @@\n function normalizeToken(value) {\n-  if (value === \"\") return null;\n   return value;\n }\n \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_slgckcd9vljbl3fotiti0ed6",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | wc -l && git log --all --oneline -- notes | head -30"
+        },
+        "output": "125\n7cf041b chore: relay follow-up 122\naa8f349 chore: cache follow-up 121\n59a2aae chore: policy follow-up 120\n2b1f5d0 chore: worker follow-up 119\n0c7354a chore: adapter follow-up 118\nc5a91ca chore: queue follow-up 117\n15cc2ca chore: session follow-up 116\n7cbf04c chore: gateway follow-up 115\n245bbcd chore: relay follow-up 114\n932daf3 chore: cache follow-up 113\ncf3a696 chore: policy follow-up 112\n0a47cce chore: worker follow-up 111\n3dcee49 chore: adapter follow-up 110\na51c076 chore: queue follow-up 109\n91e462a chore: session follow-up 108\n0e395b6 chore: gateway follow-up 107\n96d1afa chore: relay follow-up 106\ne232261 chore: cache follow-up 105\n7ac9cc7 chore: policy follow-up 104\n76de966 chore: worker follow-up 103\n9433f5d chore: adapter follow-up 102\n634f3f0 chore: queue follow-up 101\n4836873 chore: session follow-up 100\n9483720 chore: gateway follow-up 099\n2bccc6c chore: relay follow-up 098\n02e38c8 chore: cache follow-up 097\n2d969d3 chore: policy follow-up 096\n4f23007 chore: worker follow-up 095\n9b04eb7 chore: adapter follow-up 094\nfb534d8 chore: queue follow-up 093\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "55342b69a9650b00174fd47aa2a2b8946025a467"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/430572ffd0199f1bcc64fefc8a0cc7afc98aa5a4916b9a860ca7e75eca27fac5",
+  "completed": true
+}

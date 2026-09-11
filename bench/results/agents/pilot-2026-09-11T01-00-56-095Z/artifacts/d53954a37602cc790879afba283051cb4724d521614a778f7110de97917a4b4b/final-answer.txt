@@ -1,0 +1,9 @@
+Yes, `curl` can print transfer stats as JSON using the `-w` or `--write-out` option with the `%{json}` variable.
+
+This feature was added in commit `04c03416e` (titled "writeout: support to generate JSON output"). The commit message confirms the functionality:
+
+> "This commit adds support to generate JSON via the writeout feature:
+>
+>     -w "%{json}"
+>
+> It leverages the existing infrastructure as much as possible."

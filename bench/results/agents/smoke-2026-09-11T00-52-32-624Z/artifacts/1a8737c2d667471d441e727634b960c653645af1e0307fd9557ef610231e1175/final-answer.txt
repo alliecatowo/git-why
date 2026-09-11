@@ -1,0 +1,23 @@
+I'll start with the required preflight command.Preflight verified: `/workspace`, `/workspace`, and `aa150827a936441f92d851f180717a3ea0db14b2` all match. Now the required `git why` check.`git why` returned a result. Now let me investigate the history of `src/session.cjs`.Verified. No code was modified.
+
+## Findings
+
+**First commit introducing consent renewal handling in `src/session.cjs`:**
+
+`86793c1592ed4cfd8c54a3338d2eaded152ae263` — "Introduce consent renewal handling" by Fixture Bot, 2025-03-16 15:33:20 +0000.
+
+That commit creates `src/session.cjs` with:
+```js
+function configured() { return 'consent renewal handling'; }
+module.exports = { configured };
+```
+
+### Evidence
+- `git log --all --oneline --follow -- src/session.cjs` returns exactly three commits, with `86793c1` being the earliest:
+  - `86793c1` Introduce consent renewal handling
+  - `30e911d` Adjust consent renewal handling rollout
+  - `0422e76` Remove consent renewal handling
+- `git log --all -S 'consent renewal handling' -- src/session.cjs` shows only `86793c1` (introduced) and `0422e76` (removed).
+- `git show 86793c1` confirms the file is `new file mode 100644` containing the behavior; the later commits only tweak the rollout then remove it.
+
+The commit to cite is **`86793c1592ed4cfd8c54a3338d2eaded152ae263`** (short: `86793c1`), "Introduce consent renewal handling".

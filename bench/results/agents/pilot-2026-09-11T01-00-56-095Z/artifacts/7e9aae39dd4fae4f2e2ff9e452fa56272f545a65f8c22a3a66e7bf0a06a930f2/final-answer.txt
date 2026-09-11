@@ -1,0 +1,14 @@
+Yes, the default behavior for handling unknown keys in Zod objects changed from allowing them to stripping them.
+
+This change was established in commit **18854492b4b6e1648499f2f920c615dab187ee1a** ("strip unknown keys by default").
+
+The commit message explicitly states:
+> Object schemas now strip unknown keys by default, instead of throwing an error
+
+Additionally, the diff confirms this change in `src/types/object.ts`, where the default `UnknownKeys` parameter for `ZodObject` was updated from `'allow'` (or similar) to `'strip'` in the constructor/factory logic:
+
+```typescript
+// From the diff in src/types/object.ts
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+```

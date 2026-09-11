@@ -1,0 +1,31 @@
+Preflight passed. Now running the required `git why` check:
+
+`git why` returned a result. Now let me investigate the history of `src/cookies.cjs`:
+
+Three commits touched this file. Let me examine each:
+
+Let me check for related commits and broader context around this feature:
+
+Let me verify with `git blame` and confirm the commit chronology:
+
+I now have the complete picture from the repository history. Let me confirm no changes were made to the working tree:
+
+## Answer
+
+Based only on the repository history, the browser cookie compatibility behavior in `src/cookies.cjs` went through a full introduce → monitor → remove lifecycle, driven by a browser-family deprecation and its subsequent usage decline. Four commits tell the story (all authored by "Fixture Bot" on 2025-03-12):
+
+**1. `ed818d0` — "Introduce browser cookie compatibility" (00:26:40)**
+Created `src/cookies.cjs` with `configured()` returning `'browser cookie compatibility'`. The commit message explains why: *"The affected browser dropped a required attribute, so a compatibility mode preserved sessions."* A browser family removed a required attribute (relevant to cookie handling), which would have broken sessions, so a compatibility mode was introduced to keep sessions working.
+
+**2. `a531967` — "Adjust browser cookie compatibility rollout" (01:26:40)**
+Only removed a trailing blank line (1 deletion). The message states: *"The rollout was monitored before its final retirement."* — the compatibility mode was put under monitoring in preparation for its eventual removal.
+
+**3. `d85c97e` — "Remove browser cookie compatibility" (02:26:40)**
+Changed `configured()` from returning `'browser cookie compatibility'` to returning `'default'`. This is the commit that actually changed the behavior. Its message gives the reason: *"Usage of the affected browser family stayed below the retirement threshold for two quarters."* The browser family that required the workaround had been below the retirement threshold for two consecutive quarters, so the compatibility code was no longer justified and was removed, reverting to the default behavior.
+
+**4. `42adaf0` — "Current browser cookie compatibility state" (03:26:40, HEAD)**
+An empty commit (no diff) marking the current state; the working tree matches the post-removal state from `d85c97e`.
+
+`git blame` confirms the current file: line 1 (`function configured() { return 'default'; }`) comes from `d85c97e`, and line 2 (`module.exports = { configured };`) from `ed818d0`.
+
+**Conclusion:** The behavior changed from `'browser cookie compatibility'` to `'default'` because the compatibility mode had been introduced (`ed818d0`) to preserve sessions after the affected browser dropped a required attribute, was monitored during rollout (`a531967`), and was finally removed (`d85c97e`) once usage of that browser family stayed below the retirement threshold for two quarters. No code was modified.

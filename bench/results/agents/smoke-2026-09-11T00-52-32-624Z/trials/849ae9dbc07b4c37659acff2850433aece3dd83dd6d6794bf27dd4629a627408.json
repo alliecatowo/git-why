@@ -1,0 +1,92 @@
+{
+  "task_id": "T21",
+  "task_stratum": "coding",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "96b308a20980554af509a525430daddfaa4b670e",
+  "corpus_fingerprint": "96b308a20980554af509a525430daddfaa4b670e",
+  "implementation_sha": "537738c4ac8020573b05f1e0160555a2a9e24bd5",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T00:55:51.028Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "cce2a2f3696feba783807dd9884135b8543dafb4938a4eba3e8acf02801c65bd",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": true,
+  "hidden_tests_passed": 1,
+  "hidden_tests_total": 1,
+  "evidence_grade": null,
+  "wall_ms": 22269,
+  "tool_calls": 10,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 2381,
+  "output_tokens": 854,
+  "cache_read_tokens": 54400,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0007914500000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 19360,
+  "index_build_ms": 2185,
+  "model_download_ms": null,
+  "index_disk_bytes": 6039476,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-11T00-52-32-624Z/events/T21-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "849ae9dbc07b4c37659acff2850433aece3dd83dd6d6794bf27dd4629a627408",
+  "indexed_commits": 123,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_01_eqMOwS0SpLai6okiAcx81757",
+        "status": "completed",
+        "input": {
+          "command": "ls -la /workspace; git log --oneline -10"
+        },
+        "output": "total 4\ndrwxr-xr-x   5 bench bench  160 Sep 11 00:55 .\ndrwxr-xr-x   1 root  root  4096 Sep 11 00:55 ..\ndrwxr-xr-x  14 bench bench  448 Sep 11 00:55 .git\ndrwxr-xr-x 124 bench bench 3968 Sep 11 00:55 notes\ndrwxr-xr-x   3 bench bench   96 Sep 11 00:55 src\n96b308a Add src/utils.cjs\n88b299c chore: relay follow-up 122\n3d3880e chore: cache follow-up 121\n01c7c17 chore: policy follow-up 120\n6079ffa chore: worker follow-up 119\n36d949a chore: adapter follow-up 118\n377910b chore: queue follow-up 117\n4c79a78 chore: session follow-up 116\ne5a56f8 chore: gateway follow-up 115\n05f41a8 chore: relay follow-up 114\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_jXckDdgset6XD7Bl56Hr9693",
+        "status": "completed",
+        "input": {
+          "command": "git show 96b308a --stat; echo \"===\"; git show 96b308a"
+        },
+        "output": "commit 96b308a20980554af509a525430daddfaa4b670e\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Mar 21 06:40:00 2025 +0000\n\n    Add src/utils.cjs\n\n src/utils.cjs | 4 ++++\n 1 file changed, 4 insertions(+)\n===\ncommit 96b308a20980554af509a525430daddfaa4b670e\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Fri Mar 21 06:40:00 2025 +0000\n\n    Add src/utils.cjs\n\ndiff --git a/src/utils.cjs b/src/utils.cjs\nnew file mode 100644\nindex 0000000..9d0654e\n--- /dev/null\n+++ b/src/utils.cjs\n@@ -0,0 +1,4 @@\n+function clampDelay(value) {\n+  return undefined;\n+}\n+module.exports = { clampDelay };\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 1,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": true,
+  "forced_use_passed": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "96b308a20980554af509a525430daddfaa4b670e"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/849ae9dbc07b4c37659acff2850433aece3dd83dd6d6794bf27dd4629a627408",
+  "completed": true
+}

@@ -1,0 +1,21 @@
+Done. Preflight verified (`pwd` = `/workspace`, toplevel = `/workspace`, HEAD = `96b308a20980554af509a525430daddfaa4b670e`), and `zg query --fts function --limit 1` returned the expected hit at `src/utils.cjs:1-3`.
+
+I implemented `clampDelay` in `/workspace/src/utils.cjs`:
+
+```js
+function clampDelay(value) {
+  const num = Number(value);
+  if (Number.isNaN(num)) {
+    return 100;
+  }
+  return Math.min(5000, Math.max(100, num));
+}
+```
+
+Behavior:
+- Values below 100 (including negatives/0) → `100`
+- Values within range → unchanged
+- Values above 5000 → `5000`
+- Non-numeric/`NaN` inputs → `100` (still returns a number in range)
+
+Verified with Node: `-5→100`, `50→100`, `100→100`, `250→250`, `5000→5000`, `99999→5000`, `NaN→100`.

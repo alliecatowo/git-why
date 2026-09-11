@@ -1,0 +1,10 @@
+diff --git a/src/session.cjs b/src/session.cjs
+index 873fce5..4225003 100644
+--- a/src/session.cjs
++++ b/src/session.cjs
+@@ -1,4 +1,5 @@
+ function normalizeToken(value) {
++  if (value === "") return null;
+   return value;
+ }
+ 

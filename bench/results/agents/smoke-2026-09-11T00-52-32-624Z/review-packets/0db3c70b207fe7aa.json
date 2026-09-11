@@ -1,0 +1,54 @@
+{
+  "id": "0db3c70b207fe7aa",
+  "prompt": "Use the repository history to identify the first commit that introduced the consent renewal handling behavior in src/session.cjs. Cite the commit. Do not modify code.\n",
+  "answer": "Preflight checks passed. Now let me examine the current `src/session.cjs` and its history.\n\nThe current file is a stub (consent renewal handling was recently removed). Let me examine the history in detail to confirm which commit first introduced the behavior.\n\nThe history is clear. Let me verify there are no other commits in the full history mentioning consent renewal (e.g., renames or other files).\n\n## Answer\n\nThe first commit that introduced the consent renewal handling behavior in `src/session.cjs` is:\n\n**`86793c1` — \"Introduce consent renewal handling\"** (full hash: `86793c1592ed4cfd8c54a3338d2eaded152ae263`)\n\n### How I verified it\n\nThe linear history for `src/session.cjs` contains exactly four relevant commits:\n\n| Commit | Message | Change to `src/session.cjs` |\n|---|---|---|\n| `86793c1` | **Introduce consent renewal handling** | Creates the file with `function configured() { return 'consent renewal handling'; }` |\n| `30e911d` | Adjust consent renewal handling rollout | Removes a trailing blank line only |\n| `0422e76` | Remove consent renewal handling | Changes the return value back to `'default'` |\n| `aa15082` | Current consent renewal handling state | No file changes (HEAD) |\n\n`86793c1` is the earliest commit touching the file and is the one that introduced the behavior — the diff shows it creating `src/session.cjs` for the first time with the \"consent renewal handling\" logic (`+function configured() { return 'consent renewal handling'; }`). The subsequent commits only adjusted/removed that behavior.\n\nI did not modify any code.",
+  "rubric": {
+    "mustMentionAny": [
+      "consent",
+      "session"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "A legacy identity provider signals expired consent with a special token value.",
+      "removal": "The legacy identity provider was retired.",
+      "temporalKind": "first"
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "86793c1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "86793c1592ed4cfd8c54a3338d2eaded152ae263",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "30e911d",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "0422e76",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "aa15082",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "consent",
+      "session"
+    ],
+    "mentionedKeywords": [
+      "consent",
+      "session"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

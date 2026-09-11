@@ -1,0 +1,54 @@
+{
+  "id": "ad6edc3774af0c10",
+  "prompt": "Explain, based only on repository history, why the browser cookie compatibility behavior in src/cookies.cjs changed. Cite the commits you rely on. Do not modify code.\n",
+  "answer": "I'll start with the required preflight command.Preflight verified: `/workspace`, `/workspace`, `42adaf0b82df138b4f3344624fb12c5acab7ccb1`. Now the required `zg` query.`zg` returned a hit at `src/cookies.cjs:1`. Now let me examine the file and its Git history.The file history shows three commits. Let me examine each in detail.Let me inspect the HEAD commit and any related files/tests/docs.## Answer\n\n**Preflight (verified):** `pwd` = `/workspace`, `git rev-parse --show-toplevel` = `/workspace`, `git rev-parse HEAD` = `42adaf0b82df138b4f3344624fb12c5acab7ccb1`.\n\n**`zg` check:** `zg query --fts function --limit 1` returned 1 hit — `src/cookies.cjs:1` (`function configured() ...`).\n\n### Why the browser cookie compatibility behavior changed\n\n`src/cookies.cjs` currently contains only `configured() { return 'default'; }`. Its complete history is a linear four-commit sequence (no merges, branches, tags, notes, or other refs), and the *only* source of rationale in the repo is the commit messages — the code carries no comments, and nothing in `notes/` or any test/doc mentions cookies or compatibility. The behavior changed in two real steps:\n\n**1. It was introduced — commit `ed818d0` \"Introduce browser cookie compatibility\"**\n- This commit created the file with `function configured() { return 'browser cookie compatibility'; }`.\n- Rationale from the commit body: *\"The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\"*\n\n**2. It was removed — commit `d85c97e` \"Remove browser cookie compatibility\"**\n- This commit flipped the return value to `'default'`.\n- Rationale from the commit body: *\"Usage of the affected browser family stayed below the retirement threshold for two quarters.\"*\n\nTogether, that is the explanation: the compatibility mode existed only to keep sessions working for a browser family that had dropped a required cookie attribute; once measured usage of that browser family stayed below the retirement threshold for two quarters, the compatibility behavior was retired and the code reverted to the default configuration.\n\n### Commits in sequence, with exact diffs\n\n| Order | Commit | Subject | Effect on `src/cookies.cjs` | Stated reason |\n|---|---|---|---|---|\n| 1 | `ed818d0` | Introduce browser cookie compatibility | New file, `configured()` → `'browser cookie compatibility'` | Affected browser dropped a required attribute; compatibility mode preserved sessions |\n| 2 | `a531967` | Adjust browser cookie compatibility rollout | **Whitespace only** — deleted a trailing blank line; behavior unchanged | Rollout was monitored before its final retirement |\n| 3 | `d85c97e` | Remove browser cookie compatibility | `configured()` → `'default'` | Usage stayed below the retirement threshold for two quarters |\n| 4 | `42adaf0` (HEAD) | Current browser cookie compatibility state | Empty commit (no diff) | — |\n\n### Caveats worth flagging\n- Commit `a531967` (\"Adjust ... rollout\") is **not** a behavioral change: its diff only removes one trailing blank line, and `configured()` still returned `'browser cookie compatibility'`. The actual compatibility→default change happened in `d85c97e`.\n- `42adaf0` at HEAD is an empty follow-up commit with no content change.\n- All rationale is derived purely from repository history (commit messages and diffs); no external sources or files outside Git history document the decision.\n\nNo code was modified.",
+  "rubric": {
+    "mustMentionAny": [
+      "browser",
+      "cookies"
+    ],
+    "mustCiteShaFromAllowedAncestry": true,
+    "mustNotFabricate": "Claims must be supported by the visible commit messages.",
+    "referenceAnswer": {
+      "introduction": "The affected browser dropped a required attribute, so a compatibility mode preserved sessions.",
+      "removal": "Usage of the affected browser family stayed below the retirement threshold for two quarters.",
+      "temporalKind": null
+    }
+  },
+  "mechanicalChecks": {
+    "citedShas": [
+      {
+        "sha": "42adaf0b82df138b4f3344624fb12c5acab7ccb1",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "ed818d0",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "d85c97e",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "a531967",
+        "existsInAllowedAncestry": true
+      },
+      {
+        "sha": "42adaf0",
+        "existsInAllowedAncestry": true
+      }
+    ],
+    "anyInventedShaCited": false,
+    "keywordPool": [
+      "browser",
+      "cookies"
+    ],
+    "mentionedKeywords": [
+      "browser",
+      "cookies"
+    ],
+    "anyExpectedKeywordMentioned": true
+  },
+  "humanGrade": null,
+  "humanJustification": null
+}

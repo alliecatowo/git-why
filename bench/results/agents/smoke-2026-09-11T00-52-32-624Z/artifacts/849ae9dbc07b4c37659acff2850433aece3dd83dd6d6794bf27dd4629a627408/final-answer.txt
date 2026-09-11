@@ -1,0 +1,16 @@
+Done.
+
+**Preflight:** Confirmed `pwd` = `/workspace`, `git rev-parse --show-toplevel` = `/workspace`, `git rev-parse HEAD` = `96b308a20980554af509a525430daddfaa4b670e`.
+
+**Repository lookup:** Ran `git why "function" --no-refresh -n 1`, which returned commit `96b308a` ("Add src/utils.cjs") showing the original stub.
+
+**Implementation:** Edited `/workspace/src/utils.cjs`:
+
+```js
+function clampDelay(value) {
+  return Math.min(5000, Math.max(100, value));
+}
+module.exports = { clampDelay };
+```
+
+**Verification:** `clampDelay(50) → 100`, `clampDelay(6000) → 5000`, `clampDelay(250) → 250`, and the inclusive boundaries `100 → 100`, `5000 → 5000` all behave as required.

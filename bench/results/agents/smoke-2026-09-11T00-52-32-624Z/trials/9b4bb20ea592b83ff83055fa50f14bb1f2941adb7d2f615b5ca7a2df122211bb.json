@@ -1,0 +1,111 @@
+{
+  "task_id": "T17",
+  "task_stratum": "temporal",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "corpus_fingerprint": "aa150827a936441f92d851f180717a3ea0db14b2",
+  "implementation_sha": "38c2ef474070f58909f7720e2c357bb31a46f6c9",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T00:52:37.112Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "0df464d93526812abf09c1005872f54c5d5c77d139dfef8462eef2facdcbc554",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": "pending_blinded_review",
+  "wall_ms": 17862,
+  "tool_calls": 7,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 7796,
+  "output_tokens": 784,
+  "cache_read_tokens": 33408,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00084828,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 20490,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-11T00-52-32-624Z/events/T17-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "9b4bb20ea592b83ff83055fa50f14bb1f2941adb7d2f615b5ca7a2df122211bb",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_00_IP6W5CvdJDWewSaPn5Q05033",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -- src/session.cjs | head -50; echo \"---\"; ls -la src/session.cjs"
+        },
+        "output": "0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n---\n-rw-r--r-- 1 bench bench 77 Sep 11 00:52 src/session.cjs\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_BDz6mXjjoU3JBJh4tYsa8850",
+        "status": "completed",
+        "input": {
+          "command": "cat src/session.cjs; echo \"==== full log ====\"; git log --oneline --all | head -50"
+        },
+        "output": "function configured() { return 'default'; }\nmodule.exports = { configured };\n==== full log ====\naa15082 Current consent renewal handling state\n0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\nf6b9076 chore: relay follow-up 122\ndbaad29 chore: cache follow-up 121\n66916d6 chore: policy follow-up 120\n227d31e chore: worker follow-up 119\ncaed068 chore: adapter follow-up 118\n418f7b4 chore: queue follow-up 117\n3399992 chore: session follow-up 116\nd4d3327 chore: gateway follow-up 115\naeffee1 chore: relay follow-up 114\n3626d51 chore: cache follow-up 113\nd85fc77 chore: policy follow-up 112\n73e5383 chore: worker follow-up 111\n19b6e61 chore: adapter follow-up 110\n1e717e9 chore: queue follow-up 109\n15d127d chore: session follow-up 108\n2457235 chore: gateway follow-up 107\n051f017 chore: relay follow-up 106\n0657b1d chore: cache follow-up 105\ncf8a3de chore: policy follow-up 104\n7c4337f chore: worker follow-up 103\n0e01cac chore: adapter follow-up 102\nc90420b chore: queue follow-up 101\ncab12af chore: session follow-up 100\ne0f9aa4 chore: gateway follow-up 099\na3b8081 chore: relay follow-up 098\ne5acda7 chore: cache follow-up 097\n65307f5 chore: policy follow-up 096\n2a073be chore: worker follow-up 095\nf2a5175 chore: adapter follow-up 094\n330b1b6 chore: queue follow-up 093\n06fe732 chore: session follow-up 092\n9f1fab0 chore: gateway follow-up 091\n2d13e07 chore: relay follow-up 090\n8327153 chore: cache follow-up 089\n3c99cc2 chore: policy follow-up 088\n9499235 chore: worker follow-up 087\n29e1e1b chore: adapter follow-up 086\n31f2f6f chore: queue follow-up 085\n98dae78 chore: session follow-up 084\n8a541a9 chore: gateway follow-up 083\n6e4b1d2 chore: relay follow-up 082\n51cce48 chore: cache follow-up 081\ncefa609 chore: policy follow-up 080\n28c2cb1 chore: worker follow-up 079\ndbf4d90 chore: adapter follow-up 078\nea9b9db chore: queue follow-up 077\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_01_QyBuQd5FCMiXlbMP6qU98707",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 86793c1; echo \"====\"; git show 86793c1 -- src/session.cjs"
+        },
+        "output": "commit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\n src/session.cjs | 3 +++\n 1 file changed, 3 insertions(+)\n====\ncommit 86793c1592ed4cfd8c54a3338d2eaded152ae263\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 15:33:20 2025 +0000\n\n    Introduce consent renewal handling\n    \n    A legacy identity provider signals expired consent with a special token value.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nnew file mode 100644\nindex 0000000..4d42b8c\n--- /dev/null\n+++ b/src/session.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'consent renewal handling'; }\n+module.exports = { configured };\n+\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_VAPF12JHnprAEQJWf59w9560",
+        "status": "completed",
+        "input": {
+          "command": "echo \"--- file existence at parent f6b9076 ---\"; git ls-tree f6b9076 -- src/session.cjs; echo \"(empty above = absent)\"; echo \"--- full hash ---\"; git rev-parse 86793c1; echo \"--- current file history (all commits touching it) ---\"; git log --oneline --all --follow -- src/session.cjs"
+        },
+        "output": "--- file existence at parent f6b9076 ---\n(empty above = absent)\n--- full hash ---\n86793c1592ed4cfd8c54a3338d2eaded152ae263\n--- current file history (all commits touching it) ---\n0422e76 Remove consent renewal handling\n30e911d Adjust consent renewal handling rollout\n86793c1 Introduce consent renewal handling\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_00_VtPIFF0VjyynIb9zdqqw7391",
+        "status": "completed",
+        "input": {
+          "command": "git show 30e911d -- src/session.cjs; echo \"====================\"; git show 0422e76 -- src/session.cjs"
+        },
+        "output": "commit 30e911d204f0849b895a114f8c75a89cacdb30d5\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 16:33:20 2025 +0000\n\n    Adjust consent renewal handling rollout\n    \n    The rollout was monitored before its final retirement.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex 4d42b8c..dd7d198 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,3 +1,2 @@\n function configured() { return 'consent renewal handling'; }\n module.exports = { configured };\n-\n====================\ncommit 0422e76e94a3828eaf21512e7c77b1fb20385f0c\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Sun Mar 16 17:33:20 2025 +0000\n\n    Remove consent renewal handling\n    \n    The legacy identity provider was retired.\n\ndiff --git a/src/session.cjs b/src/session.cjs\nindex dd7d198..1c5cdca 100644\n--- a/src/session.cjs\n+++ b/src/session.cjs\n@@ -1,2 +1,2 @@\n-function configured() { return 'consent renewal handling'; }\n+function configured() { return 'default'; }\n module.exports = { configured };\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "aa150827a936441f92d851f180717a3ea0db14b2"
+    }
+  },
+  "review_packet_id": "5d373b00c23df736",
+  "artifacts_dir": "artifacts/9b4bb20ea592b83ff83055fa50f14bb1f2941adb7d2f615b5ca7a2df122211bb",
+  "completed": true
+}

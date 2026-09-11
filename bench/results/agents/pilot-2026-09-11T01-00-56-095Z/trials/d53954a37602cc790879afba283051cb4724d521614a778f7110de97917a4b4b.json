@@ -1,0 +1,125 @@
+{
+  "task_id": "X-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "ca8dea2fd61215ae605d8860b00d753da1bd2192",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T01:02:05.167Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "a48e73dbed3cf486bff6deb10c4d9444cd5915925d5a748e9e5864fefa2a4c7a",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "04c03416e68fd635a15cae8201872f5c29fdcca8",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "04c03416e"
+    ]
+  },
+  "wall_ms": 35747,
+  "tool_calls": 8,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 30617,
+  "output_tokens": 330,
+  "cache_read_tokens": 22117,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.008702175,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 28721,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T01-00-56-095Z/events/X-curl-01-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "d53954a37602cc790879afba283051cb4724d521614a778f7110de97917a4b4b",
+  "zg_index_build_ms": 35350,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_UkvONbB4DPemXaKcgkpfY98R",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"%{json}\" --oneline --reverse"
+        },
+        "output": "7631f2b75 test 970: verify --write-out '%{json}'\n1a46b218d RELEASE-NOTES: synced\nb4799e978 RELEASE-NOTES: synced\n6fc805d0c test972: verify the json output with jsonlint\n33ac97e1c tests-httpd: basic infra to run curl against an apache httpd plus nghttpx for h3\n671158242 connections: introduce http/3 happy eyeballs\nd9ccc75b0 http2: fix upload busy loop\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_hkRg97LqM7lS5ngGqrhJIr54",
+        "status": "completed",
+        "input": {
+          "command": "git show 7631f2b75 --oneline | head -n 20"
+        },
+        "output": "7631f2b75 test 970: verify --write-out '%{json}'\ndiff --git a/lib/getinfo.c b/lib/getinfo.c\nindex 2b8f2303e..9aac5e2b8 100644\n--- a/lib/getinfo.c\n+++ b/lib/getinfo.c\n@@ -5,7 +5,7 @@\n  *                            | (__| |_| |  _ <| |___\n  *                             \\___|\\___/|_| \\_\\_____|\n  *\n- * Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.\n+ * Copyright (C) 1998 - 2020, Daniel Stenberg, <daniel@haxx.se>, et al.\n  *\n  * This software is licensed as described in the file COPYING, which\n  * you should have received as part of this distribution. The terms\n@@ -147,6 +147,20 @@ static CURLcode getinfo_long(struct Curl_easy *data, CURLINFO info,\n     long          *to_long;\n   } lptr;\n \n+#ifdef DEBUGBUILD\n+  char *timestr = getenv(\"CURL_TIME\");\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_JE1WEF4da37v3PsIp86h98l2",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"json\" --oneline --grep=\"write-out\""
+        },
+        "output": "65ca22946 tool_writeout: refactor write-out and write-out json\n7631f2b75 test 970: verify --write-out '%{json}'\n04c03416e writeout: support to generate JSON output\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_xaE2MLjpy6Chkj97wr3OWzs8",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c03416e --stat"
+        },
+        "output": "commit 04c03416e68fd635a15cae8201872f5c29fdcca8\nAuthor: Mathias Gumz <mg@2hoch5.com>\nDate:   Sat Feb 1 18:55:24 2020 +0100\n\n    writeout: support to generate JSON output\n    \n    This commit adds support to generate JSON via the writeout feature:\n    \n        -w \"%{json}\"\n    \n    It leverages the existing infrastructure as much as possible. Thus,\n    generating the JSON on STDERR is possible by:\n    \n        -w \"%{stderr}%{json}\"\n    \n    This implements a variant of\n    https://github.com/curl/curl/wiki/JSON#--write-out-json.\n    \n    Closes #4870\n\n docs/cmdline-opts/write-out.d   |   3 +\n lib/version.c                   |  10 +++\n packages/Symbian/group/curl.mmp |   1 +\n src/Makefile.inc                |   2 +\n src/tool_writeout.c             | 160 +++++++++++++++++------------------\n src/tool_writeout.h             |  57 ++++++++++++-\n src/tool_writeout_json.c        | 181 ++++++++++++++++++++++++++++++++++++++++\n src/tool_writeout_json.h        |  30 +++++++\n 8 files changed, 361 insertions(+), 83 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_0hk1O3XlJ5Hs2e40w9akYoYK",
+        "status": "completed",
+        "input": {
+          "command": "git show 04c03416e:docs/cmdline-opts/write-out.d"
+        },
+        "output": "Long: write-out\nShort: w\nArg: <format>\nHelp: Use output FORMAT after completion\n---\nMake curl display information on stdout after a completed transfer. The format\nis a string that may contain plain text mixed with any number of\nvariables. The format can be specified as a literal \"string\", or you can have\ncurl read the format from a file with \"@filename\" and to tell curl to read the\nformat from stdin you write \"@-\".\n\nThe variables present in the output format will be substituted by the value or\ntext that curl thinks fit, as described below. All variables are specified as\n%{variable_name} and to output a normal % you just write them as %%. You can\noutput a newline by using \\\\n, a carriage return with \\\\r and a tab space with\n\\\\t.\n\nThe output will be written to standard output, but this can be switched to\nstandard error by using %{stderr}.\n\n.B NOTE:\nThe %-symbol is a special symbol in the win32-environment, where all\noccurrences of % must be doubled when using this option.\n\nThe variables available are:\n.RS\n.TP 15\n.B content_type\nThe Content-Type of the requested document, if there was any.\n.TP\n.B filename_effective\nThe ultimate filename that curl writes out to. This is only meaningful if curl\nis told to write to a file with the --remote-name or --output\noption. It's most useful in combination with the --remote-header-name\noption. (Added in 7.26.0)\n.TP\n.B ftp_entry_path\nThe initial path curl ended up in when logging on to the remote FTP\nserver. (Added in 7.15.4)\n.TP\n.B http_code\nThe numerical response code that was found in the last retrieved HTTP(S) or\nFTP(s) transfer. In 7.18.2 the alias \\fBresponse_code\\fP was added to show the\nsame info.\n.TP\n.B http_connect\nThe numerical code that was found in the last response (from a proxy) to a\ncurl CONNECT request. (Added in 7.12.4)\n.TP\n.B http_version\nThe http version that was effectively used. (Added in 7.50.0)\n.TP\n.B json\nA JSON object with all available keys.\n.TP\n.B local_ip\nThe IP address of the local end of the most recently done connection - can be\neither IPv4 or IPv6 (Added in 7.29.0)\n.TP\n.B local_port\nThe local port number of the most recently done connection (Added in 7.29.0)\n.TP\n.B num_connects\nNumber of new connects made in the recent transfer. (Added in 7.12.3)\n.TP\n.B num_redirects\nNumber of redirects that were followed in the request. (Added in 7.12.3)\n.TP\n.B proxy_ssl_verify_result\nThe result of the HTTPS proxy's SSL peer certificate verification that was\nrequested. 0 means the verification was successful. (Added in 7.52.0)\n.TP\n.B redirect_url\nWhen an HTTP request was made without --location to follow redirects (or when\n--max-redir is met), this variable will show the actual URL a redirect\n\\fIwould\\fP have gone to. (Added in 7.18.2)\n.TP\n.B remote_ip\nThe remote IP address of the most recently done connection - can be either\nIPv4 or IPv6 (Added in 7.29.0)\n.TP\n.B remote_port\nThe remote port number of the most recently done connection (Added in 7.29.0)\n.TP\n.B scheme\nThe URL scheme (sometimes called protocol) that was effectively used (Added in 7.52.0)\n.TP\n.B size_download\nThe total amount of bytes that were downloaded.\n.TP\n.B size_header\nThe total amount of bytes of the downloaded headers.\n.TP\n.B size_request\nThe total amount of bytes that were sent in the HTTP request.\n.TP\n.B size_upload\nThe total amount of bytes that were uploaded.\n.TP\n.B speed_download\nThe average download speed that curl measured for the complete download. Bytes\nper second.\n.TP\n.B speed_upload\nThe average upload speed that curl measured for the complete upload. Bytes per\nsecond.\n.TP\n.B ssl_verify_result\nThe result of the SSL peer certificate verification that was requested. 0\nmeans the verification was successful. (Added in 7.19.0)\n.TP\n.B stderr\nFrom this point on, the --write-out output will be written to standard\nerror. (Added in 7.63.0)\n.TP\n.B stdout\nFrom this point on, the --write-out output will be written to standard output.\nThis is the default, but can be used to switch back after switching to stderr.\n(Added in 7.63.0)\n.TP\n.B time_appconnect\nThe time, in seconds, it took from the start until the SSL/SSH/etc\nconnect/handshake to the remote host was completed. (Added in 7.19.0)\n.TP\n.B time_connect\nThe time, in seconds, it took from the start until the TCP connect to the\nremote host (or proxy) was completed.\n.TP\n.B time_namelookup\nThe time, in seconds, it took from the start until the name resolving was\ncompleted.\n.TP\n.B time_pretransfer\nThe time, in seconds, it took from the start until the file transfer was just\nabout to begin. This includes all pre-transfer commands and negotiations that\nare specific to the particular protocol(s) involved.\n.TP\n.B time_redirect\nThe time, in seconds, it took for all redirection steps including name lookup,\nconnect, pretransfer and transfer before the final transaction was\nstarted. time_redirect shows the complete execution time for multiple\nredirections. (Added in 7.12.3)\n.TP\n.B time_starttransfer\nThe time, in seconds, it took from the start until the first byte was just\nabout to be transferred. This includes time_pretransfer and also the time the\nserver needed to calculate the result.\n.TP\n.B time_total\nThe total time, in seconds, that the full operation lasted.\n.TP\n.B url_effective\nThe URL that was fetched last. This is most meaningful if you've told curl\nto follow location: headers.\n.RE\n.IP\nIf this option is used several times, the last one will be used.\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 30617,
+    "output": 330,
+    "messages": 10
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/d53954a37602cc790879afba283051cb4724d521614a778f7110de97917a4b4b",
+  "completed": true
+}

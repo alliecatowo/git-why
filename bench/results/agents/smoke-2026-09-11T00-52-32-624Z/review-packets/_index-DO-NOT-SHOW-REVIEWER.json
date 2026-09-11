@@ -1,0 +1,42 @@
+{
+  "5d373b00c23df736": {
+    "taskId": "T17",
+    "arm": "A",
+    "repetition": 1
+  },
+  "40e19ac14c381955": {
+    "taskId": "T13",
+    "arm": "D",
+    "repetition": 1
+  },
+  "987b9e770b2d3663": {
+    "taskId": "T13",
+    "arm": "A",
+    "repetition": 1
+  },
+  "c0218c15a041504a": {
+    "taskId": "T17",
+    "arm": "D",
+    "repetition": 1
+  },
+  "1bf027d7f998c935": {
+    "taskId": "T13",
+    "arm": "C",
+    "repetition": 1
+  },
+  "0db3c70b207fe7aa": {
+    "taskId": "T17",
+    "arm": "B",
+    "repetition": 1
+  },
+  "ad6edc3774af0c10": {
+    "taskId": "T13",
+    "arm": "B",
+    "repetition": 1
+  },
+  "a507c28bfd25157e": {
+    "taskId": "T17",
+    "arm": "C",
+    "repetition": 1
+  }
+}

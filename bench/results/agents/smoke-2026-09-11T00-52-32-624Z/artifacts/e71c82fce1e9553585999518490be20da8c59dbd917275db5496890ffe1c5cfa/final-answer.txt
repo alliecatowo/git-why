@@ -1,0 +1,20 @@
+Preflight passed (`/workspace`, `/workspace`, `55342b6…`) and `zg query --fts function --limit 1` returned a hit on `src/session.cjs`.
+
+I restored the intended behavior in `src/session.cjs`. Git history showed commit `7928fef` ("Restore compatibility behavior for normalizeToken") added a compatibility branch because "a legacy identity provider uses an empty token to signal that consent must be renewed", and the most recent commit `55342b6` removed it during a cleanup. I re-applied that exact branch:
+
+```js
+function normalizeToken(value) {
+  if (value === "") return null;
+  return value;
+}
+
+module.exports = { normalizeToken };
+```
+
+Verification (via Node):
+- `normalizeToken("")` → `null` (the restored legacy signal)
+- `normalizeToken("abc")` → `"abc"`
+- `normalizeToken(0)` → `0`
+- other ordinary inputs pass through unchanged
+
+The resulting `git diff` matches the historical restore commit exactly, so ordinary inputs are untouched while the empty-string consent-renewal case is fixed.

@@ -1,0 +1,174 @@
+{
+  "task_id": "T13",
+  "task_stratum": "rubric",
+  "arm": "A",
+  "repetition": 1,
+  "base_sha": "42adaf0b82df138b4f3344624fb12c5acab7ccb1",
+  "corpus_fingerprint": "42adaf0b82df138b4f3344624fb12c5acab7ccb1",
+  "implementation_sha": "38c2ef474070f58909f7720e2c357bb31a46f6c9",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T00:53:38.440Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "ae0228749d8514b9ee2d73bec59af451e40e9b868d0838f515584a12fcfc1687",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": "pending_blinded_review",
+  "wall_ms": 46919,
+  "tool_calls": 16,
+  "history_calls": 12,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 12020,
+  "output_tokens": 1721,
+  "cache_read_tokens": 68352,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0015697200000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 37926,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/smoke-2026-09-11T00-52-32-624Z/events/T13-A-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "b3c00825c56d13e3405aca9452d580a3356e47a13db8a4a93f9631c65b4cb946",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "call_lzqvvtarhnrk64zn8dmykngf",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --follow -- src/cookies.cjs"
+        },
+        "output": "d85c97e Remove browser cookie compatibility\na531967 Adjust browser cookie compatibility rollout\ned818d0 Introduce browser cookie compatibility\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_hyv1nnci28rzv6itj1b8wbru",
+        "status": "completed",
+        "input": {
+          "command": "git show ed818d0 --stat && git show ed818d0"
+        },
+        "output": "commit ed818d03ea6f779a348b2f0643ea6021d3cec7b0\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 00:26:40 2025 +0000\n\n    Introduce browser cookie compatibility\n    \n    The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\n\n src/cookies.cjs | 3 +++\n 1 file changed, 3 insertions(+)\ncommit ed818d03ea6f779a348b2f0643ea6021d3cec7b0\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 00:26:40 2025 +0000\n\n    Introduce browser cookie compatibility\n    \n    The affected browser dropped a required attribute, so a compatibility mode preserved sessions.\n\ndiff --git a/src/cookies.cjs b/src/cookies.cjs\nnew file mode 100644\nindex 0000000..a9088b5\n--- /dev/null\n+++ b/src/cookies.cjs\n@@ -0,0 +1,3 @@\n+function configured() { return 'browser cookie compatibility'; }\n+module.exports = { configured };\n+\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3kw6n35btny2tli9bwie4m5m",
+        "status": "completed",
+        "input": {
+          "command": "git show a531967 --stat && git show a531967"
+        },
+        "output": "commit a531967009a1b047a1e3b70096985dc053537618\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 01:26:40 2025 +0000\n\n    Adjust browser cookie compatibility rollout\n    \n    The rollout was monitored before its final retirement.\n\n src/cookies.cjs | 1 -\n 1 file changed, 1 deletion(-)\ncommit a531967009a1b047a1e3b70096985dc053537618\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 01:26:40 2025 +0000\n\n    Adjust browser cookie compatibility rollout\n    \n    The rollout was monitored before its final retirement.\n\ndiff --git a/src/cookies.cjs b/src/cookies.cjs\nindex a9088b5..718ecda 100644\n--- a/src/cookies.cjs\n+++ b/src/cookies.cjs\n@@ -1,3 +1,2 @@\n function configured() { return 'browser cookie compatibility'; }\n module.exports = { configured };\n-\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_0sh9ak9fnnj1o3nianm9n48c",
+        "status": "completed",
+        "input": {
+          "command": "git show d85c97e --stat && git show d85c97e"
+        },
+        "output": "commit d85c97ef33ea6523650c923c15223b11adf5ee00\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 02:26:40 2025 +0000\n\n    Remove browser cookie compatibility\n    \n    Usage of the affected browser family stayed below the retirement threshold for two quarters.\n\n src/cookies.cjs | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\ncommit d85c97ef33ea6523650c923c15223b11adf5ee00\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 02:26:40 2025 +0000\n\n    Remove browser cookie compatibility\n    \n    Usage of the affected browser family stayed below the retirement threshold for two quarters.\n\ndiff --git a/src/cookies.cjs b/src/cookies.cjs\nindex 718ecda..1c5cdca 100644\n--- a/src/cookies.cjs\n+++ b/src/cookies.cjs\n@@ -1,2 +1,2 @@\n-function configured() { return 'browser cookie compatibility'; }\n+function configured() { return 'default'; }\n module.exports = { configured };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_grjzzhj5w7akkmk1hgfuf249",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20"
+        },
+        "output": "42adaf0 Current browser cookie compatibility state\nd85c97e Remove browser cookie compatibility\na531967 Adjust browser cookie compatibility rollout\ned818d0 Introduce browser cookie compatibility\n872b01b chore: relay follow-up 122\n842dd84 chore: cache follow-up 121\na54a91d chore: policy follow-up 120\n94aa317 chore: worker follow-up 119\n57ed809 chore: adapter follow-up 118\n81bb49e chore: queue follow-up 117\ne83b496 chore: session follow-up 116\n9be5104 chore: gateway follow-up 115\n99b23e3 chore: relay follow-up 114\nbb832ba chore: cache follow-up 113\n741ab1b chore: policy follow-up 112\n1ca6e1d chore: worker follow-up 111\n89303f9 chore: adapter follow-up 110\n595b4e4 chore: queue follow-up 109\n5a57457 chore: session follow-up 108\n780a052 chore: gateway follow-up 107\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_1sgod010kdicsfu4b3mtqc5k",
+        "status": "completed",
+        "input": {
+          "command": "git show 42adaf0 --stat && git show 42adaf0"
+        },
+        "output": "commit 42adaf0b82df138b4f3344624fb12c5acab7ccb1\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 03:26:40 2025 +0000\n\n    Current browser cookie compatibility state\ncommit 42adaf0b82df138b4f3344624fb12c5acab7ccb1\nAuthor: Fixture Bot <fixture-bot@git-why.bench>\nDate:   Wed Mar 12 03:26:40 2025 +0000\n\n    Current browser cookie compatibility state\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_3mt472ta5uj0qnfzd1g64sxi",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --grep -i \"cookie\" ; git log --all --oneline | head -50"
+        },
+        "output": "fatal: ambiguous argument 'cookie': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n42adaf0 Current browser cookie compatibility state\nd85c97e Remove browser cookie compatibility\na531967 Adjust browser cookie compatibility rollout\ned818d0 Introduce browser cookie compatibility\n872b01b chore: relay follow-up 122\n842dd84 chore: cache follow-up 121\na54a91d chore: policy follow-up 120\n94aa317 chore: worker follow-up 119\n57ed809 chore: adapter follow-up 118\n81bb49e chore: queue follow-up 117\ne83b496 chore: session follow-up 116\n9be5104 chore: gateway follow-up 115\n99b23e3 chore: relay follow-up 114\nbb832ba chore: cache follow-up 113\n741ab1b chore: policy follow-up 112\n1ca6e1d chore: worker follow-up 111\n89303f9 chore: adapter follow-up 110\n595b4e4 chore: queue follow-up 109\n5a57457 chore: session follow-up 108\n780a052 chore: gateway follow-up 107\nddad0ff chore: relay follow-up 106\n534dfd4 chore: cache follow-up 105\n9dfcde8 chore: policy follow-up 104\nb503485 chore: worker follow-up 103\n281724f chore: adapter follow-up 102\nb22e2b9 chore: queue follow-up 101\nced18d0 chore: session follow-up 100\n67c6e8d chore: gateway follow-up 099\n4512197 chore: relay follow-up 098\na5cd0af chore: cache follow-up 097\n4eb87ce chore: policy follow-up 096\nd0a25d9 chore: worker follow-up 095\nd6ef253 chore: adapter follow-up 094\nd060379 chore: queue follow-up 093\n4c146fd chore: session follow-up 092\nc797362 chore: gateway follow-up 091\ne70aad7 chore: relay follow-up 090\n8b741d1 chore: cache follow-up 089\n07b634c chore: policy follow-up 088\ne0262e8 chore: worker follow-up 087\nc84258f chore: adapter follow-up 086\n5638cd3 chore: queue follow-up 085\naf374a0 chore: session follow-up 084\n529029e chore: gateway follow-up 083\nd9e83cf chore: relay follow-up 082\nff90d15 chore: cache follow-up 081\nb9c7064 chore: policy follow-up 080\nae2a657 chore: worker follow-up 079\n84fac33 chore: adapter follow-up 078\nec6a5a4 chore: queue follow-up 077\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_f727yeb6j709booyftznjdl8",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"cookie\" --regexp-ignore-case"
+        },
+        "output": "42adaf0 Current browser cookie compatibility state\nd85c97e Remove browser cookie compatibility\na531967 Adjust browser cookie compatibility rollout\ned818d0 Introduce browser cookie compatibility\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_lcxc8jiv5w2atrk4yhhn5i96",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -S \"browser cookie compatibility\" -- . ':!src/cookies.cjs'"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_gnz2vej0pfmn6wnhzst26rkt",
+        "status": "completed",
+        "input": {
+          "command": "git show 872b01b:src/cookies.cjs 2>&1; echo \"---\"; git ls-tree 872b01b src/"
+        },
+        "output": "fatal: path 'src/cookies.cjs' exists on disk, but not in '872b01b'\n---\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_u5u19pkmd71xtfynowhg0o8m",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline --diff-filter=A -- src/ ; echo \"---first commit of repo---\"; git log --all --oneline | tail -5; git rev-list --max-parents=0 --all"
+        },
+        "output": "ed818d0 Introduce browser cookie compatibility\n---first commit of repo---\n09063fb chore: queue follow-up 005\n084e5eb chore: session follow-up 004\ndcccf42 chore: gateway follow-up 003\n2bfb0ca chore: relay follow-up 002\ne1cd2fc chore: cache follow-up 001\ne1cd2fca31eaea136fe2114f730e312663520b1e\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "call_ex7py9tku5s625ed6okxp48z",
+        "status": "completed",
+        "input": {
+          "command": "for c in ed818d0 a531967 d85c97e 42adaf0; do echo \"=== $c ===\"; git show $c:src/cookies.cjs | cat -A; done"
+        },
+        "output": "=== ed818d0 ===\nfunction configured() { return 'browser cookie compatibility'; }$\nmodule.exports = { configured };$\n$\n=== a531967 ===\nfunction configured() { return 'browser cookie compatibility'; }$\nmodule.exports = { configured };$\n=== d85c97e ===\nfunction configured() { return 'default'; }$\nmodule.exports = { configured };$\n=== 42adaf0 ===\nfunction configured() { return 'default'; }$\nmodule.exports = { configured };$\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "42adaf0b82df138b4f3344624fb12c5acab7ccb1"
+    }
+  },
+  "review_packet_id": "987b9e770b2d3663",
+  "artifacts_dir": "artifacts/b3c00825c56d13e3405aca9452d580a3356e47a13db8a4a93f9631c65b4cb946",
+  "completed": true
+}

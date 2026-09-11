@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T21:16:13.186Z",
+  "updatedAt": "2026-09-11T01:00:56.096Z",
   "retrieval": {
     "state": "completed",
     "runId": "2026-09-10T02-19-34-615Z",
@@ -11,9 +11,9 @@
   },
   "agent": {
     "state": "running",
-    "stage": "Pilot · TRAP-retry, TRAP-cache, TRAP-stale, CTRL-retry",
-    "runId": "2026-09-10T21-16-13-185Z",
-    "planned": 32,
+    "stage": "Pilot · X-curl-01, X-curl-02, X-redis-01, X-redis-02, X-requests-01, X-requests-02, X-ripgrep-03, X-caddy-01, X-zod-01",
+    "runId": "2026-09-11T01-00-56-095Z",
+    "planned": 36,
     "completed": 0,
     "note": "Live isolated OpenCode trials are in progress."
   }

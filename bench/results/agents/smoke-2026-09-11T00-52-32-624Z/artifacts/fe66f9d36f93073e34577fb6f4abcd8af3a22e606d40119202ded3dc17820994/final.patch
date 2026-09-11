@@ -1,0 +1,14 @@
+diff --git a/src/utils.cjs b/src/utils.cjs
+index 9d0654e..94f5d81 100644
+--- a/src/utils.cjs
++++ b/src/utils.cjs
+@@ -1,4 +1,8 @@
+ function clampDelay(value) {
+-  return undefined;
++  const num = Number(value);
++  if (Number.isNaN(num)) {
++    return 100;
++  }
++  return Math.min(5000, Math.max(100, num));
+ }
+ module.exports = { clampDelay };
