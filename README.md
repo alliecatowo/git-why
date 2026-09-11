@@ -159,12 +159,12 @@ That boundary is the honest positioning, and the shipped
 
 <!-- generated:scale -->
 
-| measurement                                 | result                        |
-| ------------------------------------------- | ----------------------------- |
-| Index across 6 real repos (56,781 commits)  | 5.50–6.98 KB/record           |
-| curl (30,000 commits)                       | 1.00 GiB, 5.74 KB/record      |
-| Warm query, fresh process (p50 / p95, n=30) | 477 ms / 508 ms               |
-| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 +0.375 |
+| measurement                                 | result                                  |
+| ------------------------------------------- | --------------------------------------- |
+| Index across 6 real repos (56,781 commits)  | 5.50–6.98 KB/record                     |
+| curl (30,000 commits)                       | 1.00 GiB, 5.74 KB/record                |
+| Warm query, fresh process (p50 / p95, n=30) | 477 ms / 508 ms on a 135-commit fixture |
+| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 +0.375           |
 
 <!-- /generated:scale -->
 
