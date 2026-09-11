@@ -1,0 +1,15 @@
+The curl security bug where following a redirect could leak credentials to a different protocol or port was addressed in commit `620ea21410030a9977396b4661806bc187231b79` (associated with CVE-2022-27774).
+
+The fix introduced logic in `Curl_follow` (in `lib/transfer.c`) to check if a redirect is occurring to a different port or protocol than the original request. If so, and unless explicitly permitted, curl now clears the credentials:
+
+> +    /* Clear auth if this redirects to a different port number or protocol,
+> +       unless permitted */
+> +    if(!data->set.allow_auth_to_host && (type != FOLLOW_FAKE)) {
+> ...
+> +      if(clear) {
+> +        Curl_safefree(data->state.aptr.user);
+> +        Curl_safefree(data->state.aptr.passwd);
+> +      }
+> +    }
+
+This change ensures that credentials (user/password) are not automatically sent when curl follows a redirect to a potentially untrusted different host (different protocol or port).
