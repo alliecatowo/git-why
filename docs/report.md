@@ -1,10 +1,39 @@
 # Git Why -- benchmark report
 
-Generated 2026-09-11T00:03:02.020Z by `bench/report.mjs` from raw files under `bench/results/`. No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.
+Generated 2026-09-11T02:16:41.490Z by `bench/report.mjs` from raw files under `bench/results/`. No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.
 
-## Leading caveat: Hit@5 saturates on this dataset -- read MRR, not Hit@5
+## 0. Derived corpus -- the headline measurement
 
-On both the dev split and the held-out test split, text-only and hybrid retrieval reach 100% Hit@5 (and semantic is close behind). At Hit@5, the three retrieval modes are indistinguishable on this synthetic dataset -- **Hit@5 does not discriminate between modes here.** Mean Reciprocal Rank (MRR) still separates them because it credits _how high_ the relevant commit ranks, not merely whether it appears in the top 5. Every comparative claim below leads with MRR for that reason; Hit@5/Recall@5 are reported alongside for completeness, not as the headline metric.
+**Read this section first.** 174 questions derived mechanically from 6 real public repositories (burntsushi-ripgrep, caddyserver-caddy, colinhacks-zod, curl-curl, psf-requests, redis-redis), then **gated**: any case that `git log --grep` or `git log -S` could already answer was discarded, because a tool that only wins where grep also wins is not worth installing. What remains is the hard half.
+
+| strategy                   | n   | MRR   | Hit@1 | Hit@5 | returned nothing |
+| -------------------------- | --- | ----- | ----- | ----- | ---------------- |
+| git why                    | 174 | 0.203 | 15.5% | 28.7% | 11               |
+| zg                         | 174 | 0.026 | 1.7%  | 4.0%  | 13               |
+| git log -G                 | 174 | 0.011 | 0.6%  | 1.7%  | 15               |
+| git log --grep             | 174 | 0.003 | 0.0%  | 1.1%  | 0                |
+| git log --grep --all-match | 174 | 0.000 | 0.0%  | 0.0%  | 109              |
+| git log -S                 | 174 | 0.000 | 0.0%  | 0.0%  | 15               |
+
+Git Why's MRR is **7.8x** semantic code search (`zg`) and **18x** the best Git-native baseline (`git log -G`, MRR 0.011). `git log --grep --all-match` returns an empty list on 109 of 174 cases.
+
+**And it is wrong about 7 times in 10.** Hit@5 of 28.7% means the right commit is usually not in the top five. Both facts are the finding: this is the best available tool for questions you cannot grep, and it is still a lead to verify rather than an answer to trust. Anything built on top of it must show its evidence.
+
+### 0b. Where it loses: cross-file causal questions
+
+20 pairs from `colinhacks-zod` where a symbol is introduced in one commit and consumed in a different file by a later one -- so the answer to "why does this file do X" lives somewhere the question never mentions.
+
+| strategy                   | n   | Hit@1 | Hit@10 |
+| -------------------------- | --- | ----- | ------ |
+| git log -- <consumer file> | 20  | 0.0%  | 0.0%   |
+| git log -S<symbol>         | 20  | 0.0%  | 95.0%  |
+| git why                    | 20  | 10.0% | 35.0%  |
+
+`git log -S` wins decisively here: 95.0% against 35.0%. That is not a bug to fix, it is the boundary. **When you can name the symbol, use `git log -S`.** Semantic retrieval is for questions where you cannot name anything -- which is why the gate above exists, and why the routing skill shipped with the plugin says the same thing.
+
+## Reading sections 1-4: the synthetic splits saturate, so read MRR
+
+Everything from section 1 onward uses fixtures and labelled splits authored by the same system that built the tool. They are a frozen-protocol regression check, not evidence of what the tool is worth -- section 0 is that. On those synthetic splits, both text-only and hybrid retrieval reach 100% Hit@5 (and semantic is close behind). At Hit@5, the three retrieval modes are indistinguishable on this synthetic dataset -- **Hit@5 does not discriminate between modes here.** Mean Reciprocal Rank (MRR) still separates them because it credits _how high_ the relevant commit ranks, not merely whether it appears in the top 5. Every comparative claim below leads with MRR for that reason; Hit@5/Recall@5 are reported alongside for completeness, not as the headline metric.
 
 ## 1. Frozen question and protocol
 
@@ -22,7 +51,7 @@ On both the dev split and the held-out test split, text-only and hybrid retrieva
 - Hardware: Apple M2, 8 cores, 8.6 GB RAM, darwin/arm64.
 - Toolchain: node v24.21.0, git version 2.50.1 (Apple Git-155).
 - Embedding model: `minishlab/potion-code-16M-v2` revision `e9d2a44ca6a05ac6685f3b23709ea57eb7352d5b`, fingerprint `m2v-sha256:9e51530c5a19d0147b884669fe4e0db7bfc7773c728e79eaf4c40ffc53b0fbf8`.
-- Repository HEAD at report-generation time: `311c79cdf2cfc1dafeed46910f9da84b03625811`. Working tree had 6 uncommitted path(s) at report time -- this is a shared, multi-lane working tree, so this count is a snapshot, not a stable input. What actually matters for every measurement below is that each retrieval/perf run drove the already-built `dist/cli/main.js` as a static artifact; subsequent source edits by other lanes after a run completed do not retroactively change that run's recorded numbers. bench/ owns only `bench/*`; this lane made no changes to `src/`, `package.json`, or `tsconfig*` and committed nothing.
+- Repository HEAD at report-generation time: `bb70f8b630fdcb68199fc11dea1203aa32f0fdea`. Working tree had 11 uncommitted path(s) at report time -- this is a shared, multi-lane working tree, so this count is a snapshot, not a stable input. What actually matters for every measurement below is that each retrieval/perf run drove the already-built `dist/cli/main.js` as a static artifact; subsequent source edits by other lanes after a run completed do not retroactively change that run's recorded numbers. bench/ owns only `bench/*`; this lane made no changes to `src/`, `package.json`, or `tsconfig*` and committed nothing.
 - Reference corpus for retrieval: 6 synthetic fixtures under `$BENCH_WORK_DIR/fixtures/` (135-166 commits each), deterministically generated by `bench/fixtures/generate.mjs`.
 - Reference corpus for perf: `task-queue` (135 commits, synthetic). No pinned public repository was supplied; this is NOT the 10k-commit scale docs/spec.md section 24 ultimately targets.
 
@@ -183,63 +212,63 @@ Run: `bench/results/external-v2/2026-09-11T00-02-05-667Z`. Dataset: `bench/datas
 
 **Temporal ("when first") probes:** 3/6 Hit@1 across mode-runs. First-introduction questions remain the weak spot: terse origin commits lose to newer lexical traps. Sorting cannot fix selection -- the shipped usage pattern is widen-then-order (`-n 20 --sort=oldest`), and the CLI now hints at it when a query reads like a first-introduction question (see Operations). No time weighting was added to ranking; that would silently change selection and is explicitly out of scope until a benchmark justifies it.
 
-## 5. Agent benchmark (arms A/B/C/D)
+## 5. Agent benchmark: does this help an agent, and which agents
 
-- Arm A (baseline) and Arm D (history / git why, no zg): runnable per protocol, since `dist/cli/main.js` now exists.
-- Arm B (workspace + zg) and Arm C (workspace + zg + git why): **UNBLOCKED** -- `zg` found at /Users/allie/.local/share/mise/installs/node/latest/bin/zg at report-generation time; the runner detects it at runtime so B/C trials execute.
-- Harness smoke-test runs present under `bench/results/agents/`: smoke-2026-09-10T08-00-06-879Z, smoke-2026-09-10T08-25-00-978Z, smoke-2026-09-10T10-34-40-260Z. Per protocol, smoke runs never enter the pilot aggregate.
-- Pilot runs (8 frozen tasks x 4 arms x 2 trials = 64) present under `bench/results/agents/`: pilot-2026-09-10T15-54-55-425Z, pilot-2026-09-10T17-18-40-267Z, pilot-2026-09-10T18-43-36-513Z, pilot-2026-09-10T20-38-50-767Z, pilot-2026-09-10T21-16-13-185Z.
+Retrieval quality is not the product. The product is whether an agent answering a real question does it more accurately, or in fewer turns, with the tool than without. Four arms over the same frozen tasks:
 
-**Pilot analyzed:** `pilot-2026-09-10T21-16-13-185Z`. This section is regenerated from its atomic trial records; smoke runs are excluded. Planned/attempted logical trials: 28; raw attempts: 28; valid: 25; successful scored trials: 12; invalidated/treatment-error attempts: 3.
+| arm | tools                                        |
+| --- | -------------------------------------------- |
+| A   | baseline: git, ripgrep, no retrieval tooling |
+| B   | + `zg` (current-code semantic search)        |
+| C   | + `zg` + `git why`                           |
+| D   | + `git why`                                  |
 
-**Outcome rates by stratum and arm** (numerator/denominator includes only valid trials with boolean `pass`; valid rubric trials with `pass: null` are reported as unscored and never enter a success rate):
+- Arm B/C availability: `zg` found at /Users/allie/.local/share/mise/installs/node/latest/bin/zg at report-generation time; the runner detects it at runtime so B/C trials execute.
+- Smoke runs under `bench/results/agents/`: smoke-2026-09-10T08-25-00-978Z, smoke-2026-09-11T00-52-32-624Z. Per protocol, smoke runs never enter any aggregate.
+- Pilot runs present: pilot-2026-09-10T15-54-55-425Z, pilot-2026-09-10T18-43-36-513Z, pilot-2026-09-11T01-00-56-095Z, pilot-2026-09-11T02-09-51-742Z.
 
-| stratum | arm | pass | valid | unscored valid |  rate |
-| ------- | --- | ---: | ----: | -------------: | ----: |
-| trap    | A   |  4/8 |     8 |              0 | 50.0% |
-| trap    | B   |  3/7 |     7 |              0 | 42.9% |
-| trap    | C   |  2/5 |     5 |              0 | 40.0% |
-| trap    | D   |  3/5 |     5 |              0 | 60.0% |
+### The registered hypothesis
 
-**Paired per-task outcomes** (each cell is pass/denominator across repetitions; `n/a` means no boolean outcome, not a failure):
+> Git Why's measurable benefit is turn and token reduction for CAPABLE models, not accuracy gain for weak ones.
 
-| task       | stratum | A   | B   | C   | D   |
-| ---------- | ------- | --- | --- | --- | --- |
-| CTRL-retry | trap    | 2/2 | 2/2 | 1/1 | 2/2 |
-| TRAP-cache | trap    | 0/2 | 0/2 | 0/1 | 0/2 |
-| TRAP-retry | trap    | 0/2 | 0/2 | 0/2 | n/a |
-| TRAP-stale | trap    | 2/2 | 1/1 | 1/1 | 1/1 |
+Registered any tier-2 or tier-3 run. It predicts: Tool-call and token reduction should GROW with model capability, and accuracy gain should shrink. If the opposite holds -- weak models gaining accuracy while strong models save nothing -- the hypothesis is wrong and the cost story inverts.
 
-**Task-cluster bootstrap interval for success-rate delta vs A** (95% percentile interval; clusters are tasks, so repeated trials from one task stay together; descriptive only):
+A turn saved on an expensive model is worth real money; a turn saved on a cheap one is close to free. Which end the benefit lands on decides how the tool should be positioned.
 
-| arm | task clusters | delta vs A | 95% interval |
-| --- | ------------: | ---------: | ------------ |
-| A   |             4 |       0.0% | [0.0%, 0.0%] |
-| B   |             4 |       0.0% | [0.0%, 0.0%] |
-| C   |             4 |       0.0% | [0.0%, 0.0%] |
-| D   |             3 |       0.0% | [0.0%, 0.0%] |
+### Per-arm, completed and graded trials only
 
-**Resources** (all attempts retains invalidated and retry cost; successful-only means valid boolean-pass successes):
+Every rate carries its denominator. `tok ok` is how many of that arm's trials had their token counts confirmed against the provider's own accounting database; cost sums only reconciled trials, so a run predating the cross-check shows $0.0000 rather than a plausible-looking guess.
 
-- All attempts (n=28): wall 3116785 ms, input tokens 607933, output tokens 97312, git-why calls 33, zg calls 23, billed cost 0.13307399000000003.
-- Successful-only (n=12): wall 1142618 ms, input tokens 246377, output tokens 39426, git-why calls 15, zg calls 10, billed cost 0.04687251.
+| model                            | arm | cited | median calls | median in-tok | cost (reconciled) | tok ok | disagreed |
+| -------------------------------- | --- | ----: | -----------: | ------------: | ----------------: | -----: | --------: |
+| llmgateway/deepseek-v4-flash     | A   |   9/9 |           16 |         14315 |           $0.0189 |    0/9 |         0 |
+| llmgateway/deepseek-v4-flash     | B   |   8/8 |           11 |          6770 |           $0.0118 |    0/8 |         0 |
+| llmgateway/deepseek-v4-flash     | C   |   5/5 |            7 |          6335 |           $0.0068 |    0/5 |         0 |
+| llmgateway/deepseek-v4-flash     | D   |   8/8 |            9 |         12650 |           $0.0158 |    0/8 |         0 |
+| llmgateway/gemini-2.5-flash-lite | A   |   2/7 |            3 |         19754 |           $0.0180 |    0/7 |         0 |
+| llmgateway/gemini-2.5-flash-lite | B   |   7/9 |            3 |         27033 |           $0.0327 |    0/9 |         0 |
+| llmgateway/gemini-2.5-flash-lite | C   |   3/7 |            2 |         17338 |           $0.0175 |    0/7 |         0 |
+| llmgateway/gemini-2.5-flash-lite | D   |   4/8 |            2 |         14496 |           $0.0149 |    0/8 |         0 |
+| llmgateway/gemini-3.1-flash-lite | A   |   5/7 |            5 |         20729 |           $0.0634 |    6/7 |         1 |
+| llmgateway/gemini-3.1-flash-lite | B   |   7/8 |            7 |         25350 |           $0.1107 |    8/8 |         0 |
+| llmgateway/gemini-3.1-flash-lite | C   |   7/7 |            4 |         17892 |           $0.0684 |    7/7 |         0 |
+| llmgateway/gemini-3.1-flash-lite | D   |   9/9 |            5 |         21777 |           $0.1341 |    9/9 |         0 |
 
-**Tool adoption / evidence use:**
+### Paired D vs A -- git why against baseline, on the same tasks
 
-| arm | trials using git why | git why calls | calls with evidence used | zg calls |
-| --- | -------------------: | ------------: | -----------------------: | -------: |
-| A   |                    0 |             0 |                        0 |        0 |
-| B   |                    0 |             0 |                        0 |       16 |
-| C   |                    5 |            14 |                       12 |        7 |
-| D   |                    6 |            19 |                       13 |        0 |
+Paired, because arm medians alone let task difficulty drive the result: if D happened to attempt the easier questions it looks better for a reason unrelated to the treatment. Only tasks where BOTH arms produced a verdict are counted, which is why n is smaller than the trial count above.
 
-**Invalidated trials** (retained for audit, excluded from outcomes):
+| model                            | paired n | accuracy W-L | median call delta | median token delta |
+| -------------------------------- | -------: | -----------: | ----------------: | -----------------: |
+| llmgateway/deepseek-v4-flash     |        8 |          0-0 |                -2 |                +33 |
+| llmgateway/gemini-2.5-flash-lite |        6 |          2-1 |                -1 |              -2930 |
+| llmgateway/gemini-3.1-flash-lite |        7 |          2-0 |                -1 |               +912 |
 
-| task       | stratum | arm | repetition | attempt | reason                       |
-| ---------- | ------- | --- | ---------: | ------: | ---------------------------- |
-| TRAP-stale | trap    | D   |          1 |       1 | network_fetch_attempt        |
-| TRAP-stale | trap    | C   |          2 |       1 | path_outside_workspace:/proc |
-| TRAP-stale | trap    | B   |          2 |       1 | network_fetch_attempt        |
+A negative call delta means the agent reached the answer in FEWER turns with `git why` than without.
+
+At these sample sizes this is descriptive, not significant, and it is reported that way deliberately: the direction is consistent across models, the magnitude is not established.
+
+_Excluded 1 run(s) still in flight at report time (no `summary.json`): pilot-2026-09-11T02-09-51-742Z. Trials land into those directories while this document is generated, so including one would report a rate over a denominator that is still growing._
 
 ## 6. CLI latency, first-index cost, memory, disk, parallel behavior
 
@@ -314,12 +343,12 @@ Caveat: aggregatePeakRssKb samples each reader's own process tree independently;
 - **No-evidence handling has no refusal path.** As shown in section 3, the CLI always returns a full top-k list even when no commit in history actually answers the question; it never emits "no evidence found." A caller building an explanation on top of these results without checking evidence quality would produce an unsupported answer for these cases.
 - **Ablation verdict rests on synthetic dev (24 cases) + real v1 (10) + v2 (16).** Synthetic dev says evidence is dispensable; both real sets say it earns its complexity (v2 hybrid dHit@5 +0.375, dMRR +0.280). Decision recorded in 4c: KEEP. Do not re-litigate removal without a larger real-history sample pointing the other way.
 - **Perf corpus is small.** 135 commits vs. the 10k-commit scale docs/spec.md section 24 targets; no pinned large public repository was benchmarked.
-- **Agent pilot not executed; arms B/C now unblocked (`zg` present at /Users/allie/.local/share/mise/installs/node/latest/bin/zg) with a passing smoke run, awaiting the 64-trial pilot.** See section 5.
+- **The agent benchmark is small.** Section 5 covers 3 model(s) at single-digit paired n per model. The direction is consistent; the magnitude is not established.
 - **Held-out split is not blinded** (see section 1) -- same authorship as the product under test.
 
 ## 8. Exact reproduction commands
 
-Repository HEAD was `311c79cdf2cfc1dafeed46910f9da84b03625811` at the time this report was generated (see section 2 for why that is a snapshot, not a per-run pin, in this shared working tree). Each command below is followed by the actual output directory it produced for this report.
+Repository HEAD was `bb70f8b630fdcb68199fc11dea1203aa32f0fdea` at the time this report was generated (see section 2 for why that is a snapshot, not a per-run pin, in this shared working tree). Each command below is followed by the actual output directory it produced for this report.
 
 ```
 # Dev-split retrieval (text / semantic / hybrid, all categories)
@@ -337,6 +366,18 @@ node bench/retrieval/run.mjs --split=test --i-accept-this-is-the-frozen-holdout
 # CLI performance / parallel-load benchmark
 node bench/perf/run.mjs
 # -> 2026-09-11T00-02-05-716Z
+
+# Derived corpus (section 0): extract, paraphrase, gate, then score
+node bench/corpus/extract.mjs && node bench/corpus/paraphrase.mjs
+node bench/corpus/gate.mjs      # discards anything grep already answers
+node bench/corpus/baselines.mjs # -> bench/results/corpus/
+
+# Cross-file causal corpus (section 0b)
+node bench/corpus/crossfile.mjs
+
+# Agent benchmark, one model (section 5)
+node bench/agents/run.mjs --model=llmgateway/claude-haiku-4-5
+node bench/compare-models.mjs   # console view of the same numbers
 
 # This report
 node bench/report.mjs

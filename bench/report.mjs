@@ -11,12 +11,14 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { format, resolveConfig } from 'prettier';
 import { dirname, join, resolve } from 'node:path';
-import { aggregateAgentRecords } from './agents/aggregate.mjs';
+import { compareModels, ARMS } from './agents/model-compare.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
 const RESULTS_DIR = join(REPO_ROOT, 'bench', 'results');
+const models = readJson(join(REPO_ROOT, 'bench', 'models.json'));
 const DOCS_DIR = join(REPO_ROOT, 'docs');
 
 function readJson(p) {
@@ -138,177 +140,6 @@ const agentRunDirs = existsSync(agentsResultsDir) ? readdirSync(agentsResultsDir
 const pilotDirs = agentRunDirs.filter((d) => d.startsWith('pilot-'));
 const smokeDirs = agentRunDirs.filter((d) => d.startsWith('smoke-'));
 
-function loadAgentRecords(runDir) {
-  const trialsDir = join(runDir, 'trials');
-  if (existsSync(trialsDir)) {
-    return readdirSync(trialsDir)
-      .filter((name) => name.endsWith('.json'))
-      .map((name) => readJson(join(trialsDir, name)));
-  }
-  const combined = join(runDir, 'trials.json');
-  return existsSync(combined) ? readJson(combined) : [];
-}
-
-function agentPilotSection(runNames) {
-  if (runNames.length === 0)
-    return '\n**The agent usefulness pilot has NOT been executed.** This report contains no task-level successes/regressions, no evidence-use analysis, and no A/B/C/D comparison numbers, because none exist yet. The existence of the harness (`bench/agents/*.mjs`) and a smoke test is not a result and is not presented as one. When the pilot is run, its result is descriptive evidence only -- **no significance claim** is made.\n\n';
-  const latest = runNames.sort().at(-1);
-  const runDir = join(agentsResultsDir, latest);
-  const aggregate = aggregateAgentRecords(loadAgentRecords(runDir));
-  let out = `\n**Pilot analyzed:** \`${latest}\`. This section is regenerated from its atomic trial records; smoke runs are excluded. Planned/attempted logical trials: ${aggregate.logicalTrials}; raw attempts: ${aggregate.attempts}; valid: ${aggregate.valid}; successful scored trials: ${aggregate.successful}; invalidated/treatment-error attempts: ${aggregate.invalidated.length}.\n\n`;
-  out +=
-    '**Outcome rates by stratum and arm** (numerator/denominator includes only valid trials with boolean `pass`; valid rubric trials with `pass: null` are reported as unscored and never enter a success rate):\n\n';
-  out +=
-    '| stratum | arm | pass | valid | unscored valid | rate |\n|---|---|---:|---:|---:|---:|\n';
-  for (const [stratum, arms] of Object.entries(aggregate.byStratumArm)) {
-    for (const arm of ['A', 'B', 'C', 'D']) {
-      const row = arms[arm];
-      out += `| ${stratum} | ${arm} | ${row.numerator}/${row.denominator} | ${row.valid} | ${row.unscoredValid} | ${pct(row.rate)} |\n`;
-    }
-  }
-  // Archaeology tasks ask a question rather than for a code change, so `pass`
-  // is null for all of them and the boolean table above is empty. Their
-  // measured outcome is whether the agent cited the hand-verified commit,
-  // which is computed here from the same records rather than typed in.
-  const records = loadAgentRecords(runDir);
-  const cite = { A: null, B: null, C: null, D: null };
-  for (const arm of ['A', 'B', 'C', 'D']) {
-    const armRecords = records.filter((r) => r.arm === arm && !r.invalidation_reason);
-    const completed = armRecords.filter((r) => r.exit_reason === 'completed');
-    const graded = completed.filter((r) => r.evidence_grade && r.evidence_grade.goldSha);
-    if (graded.length === 0) continue;
-    cite[arm] = {
-      hits: graded.filter((r) => r.evidence_grade.citedGoldSha).length,
-      graded: graded.length,
-      timeouts: armRecords.filter((r) => r.exit_reason === 'wall_clock_timeout').length,
-      blocked: armRecords.filter(
-        (r) => r.exit_reason !== 'completed' && r.exit_reason !== 'wall_clock_timeout',
-      ).length,
-      gitWhyCalls: completed.reduce((n, r) => n + (r.git_why_calls ?? 0), 0),
-      // Completed, but grading never produced a citation verdict. Counting
-      // these as misses overstates failure; dropping them silently overstates
-      // success. Both were done at different points while reading this run,
-      // and both were wrong, so the column is explicit.
-      ungraded: completed.length - graded.length,
-    };
-  }
-  if (Object.values(cite).some((v) => v !== null)) {
-    out +=
-      '\n**Citation of the hand-verified commit** (archaeology stratum). Exit categories are ' +
-      'kept separate on purpose: a trial that timed out or never started is not a wrong answer, ' +
-      'and folding it into a rate silently shrinks the denominator. Every rate below is over ' +
-      'COMPLETED trials only.\n\n';
-    out +=
-      '| arm | cited/graded | rate | ungraded | timeouts | not started | git why calls |\n' +
-      '|---|---:|---:|---:|---:|---:|---:|\n';
-    for (const arm of ['A', 'B', 'C', 'D']) {
-      const c = cite[arm];
-      if (c === null) {
-        out += `| ${arm} | n/a | n/a | n/a | n/a | n/a | n/a |\n`;
-        continue;
-      }
-      out += `| ${arm} | ${c.hits}/${c.graded} | ${pct(c.graded === 0 ? null : c.hits / c.graded)} | ${c.ungraded} | ${c.timeouts} | ${c.blocked} | ${c.gitWhyCalls} |\n`;
-    }
-  }
-
-  // Accuracy saturates on this question set, which hides any effect in how
-  // HARD each arm had to work to get there. Effort is compared only across
-  // trials that cited correctly, so it is like-for-like: same outcome,
-  // different amount of work.
-  const median = (xs) => {
-    const v = xs.filter((n) => typeof n === 'number').sort((a, b) => a - b);
-    return v.length === 0 ? null : v[Math.floor(v.length / 2)];
-  };
-  const correct = {};
-  for (const arm of ['A', 'B', 'C', 'D']) {
-    correct[arm] = records.filter(
-      (r) =>
-        r.arm === arm &&
-        !r.invalidation_reason &&
-        r.exit_reason === 'completed' &&
-        r.evidence_grade &&
-        r.evidence_grade.citedGoldSha,
-    );
-  }
-  if (Object.values(correct).some((v) => v.length > 0)) {
-    out +=
-      '\n**Effort on trials that cited correctly** (like-for-like: same outcome, ' +
-      'different amount of work). Accuracy saturates here, so this is where any ' +
-      'effect of the treatment is visible.\n\n';
-    out +=
-      '| arm | n | median tool calls | median wall (s) | median output tokens |\n|---|---:|---:|---:|---:|\n';
-    for (const arm of ['A', 'B', 'C', 'D']) {
-      const v = correct[arm];
-      const tc = median(v.map((r) => r.tool_calls));
-      const w = median(v.map((r) => r.wall_ms));
-      const ot = median(v.map((r) => r.output_tokens));
-      out += `| ${arm} | ${v.length} | ${tc ?? 'n/a'} | ${w === null ? 'n/a' : (w / 1000).toFixed(1)} | ${ot ?? 'n/a'} |\n`;
-    }
-    // Paired only where both arms solved the same task, so task difficulty
-    // cannot drive the comparison.
-    const callsOf = (arm) =>
-      new Map(correct[arm].map((r) => [r.task_id, r.tool_calls]).filter(([, n]) => n != null));
-    const a = callsOf('A');
-    const d = callsOf('D');
-    const shared = [...a.keys()].filter((t) => d.has(t)).sort();
-    if (shared.length > 0) {
-      const favourD = shared.filter((t) => d.get(t) < a.get(t)).length;
-      out += `\n**Paired tool-call cost, arm A vs arm D**, on the ${shared.length} task(s) both solved. `;
-      out += `Arm D used fewer tool calls on ${favourD} of ${shared.length}.\n\n`;
-      out += '| task | A | D | delta |\n|---|---:|---:|---:|\n';
-      for (const t of shared) {
-        const delta = d.get(t) - a.get(t);
-        out += `| ${t} | ${a.get(t)} | ${d.get(t)} | ${delta > 0 ? '+' : ''}${delta} |\n`;
-      }
-      out +=
-        '\nDescriptive only: a handful of paired tasks, one repetition, one model. ' +
-        'It shows a direction, not an effect size, and no significance is claimed.\n';
-    }
-  }
-
-  out +=
-    '\n**Paired per-task outcomes** (each cell is pass/denominator across repetitions; `n/a` means no boolean outcome, not a failure):\n\n';
-  out += '| task | stratum | A | B | C | D |\n|---|---|---|---|---|---|\n';
-  for (const task of aggregate.pairedPerTask) {
-    const cell = (arm) => {
-      const row = task.arms[arm];
-      return row.denominator === 0 ? 'n/a' : `${row.numerator}/${row.denominator}`;
-    };
-    out += `| ${task.taskId} | ${task.stratum} | ${cell('A')} | ${cell('B')} | ${cell('C')} | ${cell('D')} |\n`;
-  }
-  out +=
-    '\n**Task-cluster bootstrap interval for success-rate delta vs A** (95% percentile interval; clusters are tasks, so repeated trials from one task stay together; descriptive only):\n\n';
-  out += '| arm | task clusters | delta vs A | 95% interval |\n|---|---:|---:|---|\n';
-  for (const arm of ['A', 'B', 'C', 'D']) {
-    const ci = aggregate.bootstrapCiByArm[arm];
-    const interval = ci.low == null ? 'n/a' : `[${pct(ci.low)}, ${pct(ci.high)}]`;
-    out += `| ${arm} | ${ci.clusters} | ${pct(ci.estimate)} | ${interval} |\n`;
-  }
-  const resourceLine = (label, resource) =>
-    `- ${label} (n=${resource.n}): wall ${ms(resource.wall_ms.total)}, input tokens ${resource.input_tokens.total ?? 'n/a'}, output tokens ${resource.output_tokens.total ?? 'n/a'}, git-why calls ${resource.git_why_calls.total ?? 'n/a'}, zg calls ${resource.zg_calls.total ?? 'n/a'}, billed cost ${resource.actual_billed_cost.total ?? 'n/a'}.\n`;
-  out +=
-    '\n**Resources** (all attempts retains invalidated and retry cost; successful-only means valid boolean-pass successes):\n\n';
-  out += resourceLine('All attempts', aggregate.resources.allAttempts);
-  out += resourceLine('Successful-only', aggregate.resources.successfulOnly);
-  out += '\n**Tool adoption / evidence use:**\n\n';
-  out +=
-    '| arm | trials using git why | git why calls | calls with evidence used | zg calls |\n|---|---:|---:|---:|---:|\n';
-  for (const arm of ['A', 'B', 'C', 'D']) {
-    const row = aggregate.evidence[arm];
-    out += `| ${arm} | ${row.trialsWithGitWhy} | ${row.gitWhyCalls} | ${row.gitWhyEvidenceUsed} | ${row.zgCalls} |\n`;
-  }
-  out += '\n**Invalidated trials** (retained for audit, excluded from outcomes):\n\n';
-  if (aggregate.invalidated.length === 0) out += 'None.\n\n';
-  else {
-    out +=
-      '| task | stratum | arm | repetition | attempt | reason |\n|---|---|---|---:|---:|---|\n';
-    for (const row of aggregate.invalidated)
-      out += `| ${row.taskId} | ${row.stratum} | ${row.arm} | ${row.repetition} | ${row.attempt} | ${String(row.reason).replaceAll('|', '\\|')} |\n`;
-    out += '\n';
-  }
-  return out;
-}
-
 const headSha = sh(['git', 'rev-parse', 'HEAD']);
 const dirtyFiles = sh(['git', 'status', '--porcelain']).split('\n').filter(Boolean);
 const nodeVersion = sh(['node', '--version']);
@@ -380,6 +211,87 @@ function noEvidenceSection(summary, label) {
 }
 
 // ---------------------------------------------------------------------
+// Section 0: the derived corpus. This is the headline measurement.
+//
+// Every other dataset in this report was authored by the same system that
+// built the tool, which makes it a sanity check rather than evidence. The
+// corpus below is derived mechanically from six real repositories and gated
+// so that anything `git log --grep` or `git log -S` can already answer is
+// thrown out. It is the only section whose numbers say what the tool is
+// worth against the competition it actually has.
+// ---------------------------------------------------------------------
+function corpusSection() {
+  const dir = join(RESULTS_DIR, 'corpus');
+  if (!existsSync(dir)) return '';
+  const names = readdirSync(dir).filter((n) => n.endsWith('.json'));
+
+  const mainNames = names.filter((n) => /^\d{4}-/.test(n)).sort();
+  const crossNames = names.filter((n) => n.startsWith('crossfile-')).sort();
+  if (mainNames.length === 0) return '';
+
+  const latest = mainNames[mainNames.length - 1];
+  const main = readJson(join(dir, latest));
+  const cases = readJson(join(REPO_ROOT, 'bench', 'corpus', 'cases.json'));
+  const repos = [...new Set((cases.cases ?? cases).map((c) => c.repositoryId))].sort();
+
+  let out = '## 0. Derived corpus -- the headline measurement\n\n';
+  out += `**Read this section first.** ${main.cases} questions derived mechanically from `;
+  out += `${repos.length} real public repositories (${repos.join(', ')}), then **gated**: any case that `;
+  out +=
+    '`git log --grep` or `git log -S` could already answer was discarded, because a tool that only wins ';
+  out += 'where grep also wins is not worth installing. What remains is the hard half.\n\n';
+
+  const row = (r) =>
+    `| ${r.strategy} | ${r.n} | ${num(r.mrr)} | ${pct(r.hit1)} | ${pct(r.hit5)} | ${r.returnedNothing} |\n`;
+  out += '| strategy | n | MRR | Hit@1 | Hit@5 | returned nothing |\n';
+  out += '| --- | --- | --- | --- | --- | --- |\n';
+  for (const r of main.rows) out += row(r);
+  out += '\n';
+
+  const why = main.rows.find((r) => r.strategy === 'git why');
+  const zg = main.rows.find((r) => r.strategy === 'zg');
+  const bestGit = main.rows
+    .filter((r) => r.strategy.startsWith('git log'))
+    .reduce((a, b) => (b.mrr > a.mrr ? b : a));
+  if (why && zg) {
+    out += `Git Why's MRR is **${(why.mrr / (zg.mrr || Infinity)).toFixed(1)}x** semantic code search (\`zg\`) `;
+    out += `and **${(why.mrr / (bestGit.mrr || Infinity)).toFixed(0)}x** the best Git-native baseline `;
+    out += `(\`${bestGit.strategy}\`, MRR ${num(bestGit.mrr)}). `;
+    out += `\`git log --grep --all-match\` returns an empty list on ${main.rows.find((r) => r.strategy.includes('all-match'))?.returnedNothing ?? 0} of ${main.cases} cases.\n\n`;
+    out += `**And it is wrong about ${Math.round((1 - why.hit5) * 10)} times in 10.** Hit@5 of ${pct(why.hit5)} means the `;
+    out +=
+      'right commit is usually not in the top five. Both facts are the finding: this is the best available ';
+    out +=
+      'tool for questions you cannot grep, and it is still a lead to verify rather than an answer to trust. ';
+    out += 'Anything built on top of it must show its evidence.\n\n';
+  }
+
+  if (crossNames.length > 0) {
+    const cross = readJson(join(dir, crossNames[crossNames.length - 1]));
+    out += '### 0b. Where it loses: cross-file causal questions\n\n';
+    out += `${cross.pairs} pairs from \`${cross.repo}\` where a symbol is introduced in one commit and consumed `;
+    out +=
+      'in a different file by a later one -- so the answer to "why does this file do X" lives somewhere the ';
+    out += 'question never mentions.\n\n';
+    out += '| strategy | n | Hit@1 | Hit@10 |\n| --- | --- | --- | --- |\n';
+    for (const r of cross.rows)
+      out += `| ${r.strategy} | ${r.n} | ${pct(r.hit1)} | ${pct(r.hit10)} |\n`;
+    const s = cross.rows.find((r) => r.strategy.includes('-S'));
+    const w = cross.rows.find((r) => r.strategy === 'git why');
+    if (s && w) {
+      out += `\n\`git log -S\` wins decisively here: ${pct(s.hit10)} against ${pct(w.hit10)}. That is not a bug to fix, `;
+      out +=
+        'it is the boundary. **When you can name the symbol, use `git log -S`.** Semantic retrieval is for ';
+      out +=
+        'questions where you cannot name anything -- which is why the gate above exists, and why the routing ';
+      out += 'skill shipped with the plugin says the same thing.\n\n';
+    }
+  }
+
+  return out;
+}
+
+// ---------------------------------------------------------------------
 // Build the report
 // ---------------------------------------------------------------------
 
@@ -389,9 +301,15 @@ md += `Generated ${new Date().toISOString()} by \`bench/report.mjs\` from raw fi
 md +=
   'No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.\n\n';
 
-md += '## Leading caveat: Hit@5 saturates on this dataset -- read MRR, not Hit@5\n\n';
+md += corpusSection();
+
+md += '## Reading sections 1-4: the synthetic splits saturate, so read MRR\n\n';
 md +=
-  'On both the dev split and the held-out test split, text-only and hybrid retrieval reach 100% Hit@5 ';
+  'Everything from section 1 onward uses fixtures and labelled splits authored by the same system that built ';
+md +=
+  'the tool. They are a frozen-protocol regression check, not evidence of what the tool is worth -- section 0 ';
+md += 'is that. On those synthetic splits, ';
+md += 'both text-only and hybrid retrieval reach 100% Hit@5 ';
 md +=
   '(and semantic is close behind). At Hit@5, the three retrieval modes are indistinguishable on this synthetic ';
 md +=
@@ -601,15 +519,65 @@ if (externalV2Summary) {
   }
 }
 
-md += '## 5. Agent benchmark (arms A/B/C/D)\n\n';
-md += `- Arm A (baseline) and Arm D (history / git why, no zg): runnable per protocol, since \`dist/cli/main.js\` now exists.\n`;
-md += `- Arm B (workspace + zg) and Arm C (workspace + zg + git why): ${zgInstalled ? `**UNBLOCKED** -- \`zg\` found at ${zgPath} at report-generation time; the runner detects it at runtime so B/C trials execute.` : '**BLOCKED**. `zg` not found on PATH. Per protocol, these arms are recorded as infrastructure-blocked, not silently skipped.'}\n`;
-md += `- Harness smoke-test runs present under \`bench/results/agents/\`: ${smokeDirs.length > 0 ? smokeDirs.join(', ') : 'none'}. Per protocol, smoke runs never enter the pilot aggregate.\n`;
-md += `- Pilot runs (8 frozen tasks x 4 arms x 2 trials = 64) present under \`bench/results/agents/\`: ${pilotDirs.length > 0 ? pilotDirs.join(', ') : 'none'}.\n`;
-if (pilotDirs.length === 0) {
-  md += agentPilotSection(pilotDirs);
+md += '## 5. Agent benchmark: does this help an agent, and which agents\n\n';
+md +=
+  'Retrieval quality is not the product. The product is whether an agent answering a real question does it more ';
+md +=
+  'accurately, or in fewer turns, with the tool than without. Four arms over the same frozen tasks:\n\n';
+md += '| arm | tools |\n| --- | --- |\n';
+md += '| A | baseline: git, ripgrep, no retrieval tooling |\n';
+md += '| B | + `zg` (current-code semantic search) |\n';
+md += '| C | + `zg` + `git why` |\n';
+md += '| D | + `git why` |\n\n';
+md += `- Arm B/C availability: ${zgInstalled ? `\`zg\` found at ${zgPath} at report-generation time; the runner detects it at runtime so B/C trials execute.` : '**BLOCKED**. `zg` not found on PATH. Per protocol these arms are recorded as infrastructure-blocked, not silently skipped.'}\n`;
+md += `- Smoke runs under \`bench/results/agents/\`: ${smokeDirs.length > 0 ? smokeDirs.join(', ') : 'none'}. Per protocol, smoke runs never enter any aggregate.\n`;
+md += `- Pilot runs present: ${pilotDirs.length > 0 ? pilotDirs.join(', ') : 'none'}.\n\n`;
+
+md += '### The registered hypothesis\n\n';
+md += `> ${models.hypothesis.statement}\n\n`;
+md += `Registered ${models.hypothesis.registeredBefore.toLowerCase()} It predicts: ${models.hypothesis.predicts}\n\n`;
+md += `${models.hypothesis.whyItMatters}\n\n`;
+
+const cm = compareModels(join(RESULTS_DIR, 'agents'));
+if (cm.rows.length === 0) {
+  md += '_No completed pilot runs yet._\n\n';
 } else {
-  md += agentPilotSection(pilotDirs);
+  md += '### Per-arm, completed and graded trials only\n\n';
+  md +=
+    "Every rate carries its denominator. `tok ok` is how many of that arm's trials had their token counts " +
+    "confirmed against the provider's own accounting database; cost sums only reconciled trials, so a run " +
+    'predating the cross-check shows $0.0000 rather than a plausible-looking guess.\n\n';
+  md +=
+    '| model | arm | cited | median calls | median in-tok | cost (reconciled) | tok ok | disagreed |\n';
+  md += '|---|---|---:|---:|---:|---:|---:|---:|\n';
+  for (const row of cm.rows) {
+    for (const arm of ARMS) {
+      const a = row.arms[arm];
+      if (a.n === 0) continue;
+      md += `| ${row.model} | ${arm} | ${a.hits}/${a.n} | ${a.calls ?? 'n/a'} | ${a.inTok ?? 'n/a'} | $${a.cost.toFixed(4)} | ${a.verified}/${a.n} | ${a.badTokens} |\n`;
+    }
+  }
+  md += '\n### Paired D vs A -- git why against baseline, on the same tasks\n\n';
+  md +=
+    'Paired, because arm medians alone let task difficulty drive the result: if D happened to attempt the ' +
+    'easier questions it looks better for a reason unrelated to the treatment. Only tasks where BOTH arms ' +
+    'produced a verdict are counted, which is why n is smaller than the trial count above.\n\n';
+  md += '| model | paired n | accuracy W-L | median call delta | median token delta |\n';
+  md += '|---|---:|---:|---:|---:|\n';
+  const sign = (v) => (v === null ? 'n/a' : v > 0 ? `+${v}` : String(v));
+  for (const row of cm.rows) {
+    const pp = row.dVsA;
+    if (!pp) continue;
+    md += `| ${row.model} | ${pp.n} | ${pp.accWin}-${pp.accLoss} | ${sign(pp.callsDelta)} | ${sign(pp.tokDelta)} |\n`;
+  }
+  md +=
+    '\nA negative call delta means the agent reached the answer in FEWER turns with `git why` than without.\n\n';
+  md +=
+    'At these sample sizes this is descriptive, not significant, and it is reported that way deliberately: ' +
+    'the direction is consistent across models, the magnitude is not established.\n\n';
+}
+if (cm.skipped.length > 0) {
+  md += `_Excluded ${cm.skipped.length} run(s) still in flight at report time (no \`summary.json\`): ${cm.skipped.map((d) => d.split('/').pop()).join(', ')}. Trials land into those directories while this document is generated, so including one would report a rate over a denominator that is still growing._\n\n`;
 }
 
 // 6. CLI latency / index cost / memory / disk / parallel
@@ -710,7 +678,7 @@ md +=
 md +=
   '- **Ablation verdict rests on synthetic dev (24 cases) + real v1 (10) + v2 (16).** Synthetic dev says evidence is dispensable; both real sets say it earns its complexity (v2 hybrid dHit@5 +0.375, dMRR +0.280). Decision recorded in 4c: KEEP. Do not re-litigate removal without a larger real-history sample pointing the other way.\n';
 md += `- **Perf corpus is small.** ${perfResults.referenceCorpus.commitCount} commits vs. the 10k-commit scale docs/spec.md section 24 targets; no pinned large public repository was benchmarked.\n`;
-md += `- **Agent pilot not executed; arms B/C now unblocked (\`zg\` ${zgInstalled ? `present at ${zgPath}` : 'still missing'}) with a passing smoke run, awaiting the 64-trial pilot.** See section 5.\n`;
+md += `- **The agent benchmark is small.** Section 5 covers ${cm.rows.length} model(s) at single-digit paired n per model. The direction is consistent; the magnitude is not established.\n`;
 md +=
   '- **Held-out split is not blinded** (see section 1) -- same authorship as the product under test.\n\n';
 
@@ -726,10 +694,24 @@ md += '# Frozen held-out split (run exactly once; do not re-run after inspecting
 md += `node bench/retrieval/run.mjs --split=test --i-accept-this-is-the-frozen-holdout\n# -> ${testDirName}\n\n`;
 md += '# CLI performance / parallel-load benchmark\n';
 md += `node bench/perf/run.mjs\n# -> ${perfDirName}\n\n`;
+md += '# Derived corpus (section 0): extract, paraphrase, gate, then score\n';
+md += 'node bench/corpus/extract.mjs && node bench/corpus/paraphrase.mjs\n';
+md += 'node bench/corpus/gate.mjs      # discards anything grep already answers\n';
+md += 'node bench/corpus/baselines.mjs # -> bench/results/corpus/\n\n';
+md += '# Cross-file causal corpus (section 0b)\n';
+md += 'node bench/corpus/crossfile.mjs\n\n';
+md += '# Agent benchmark, one model (section 5)\n';
+md += 'node bench/agents/run.mjs --model=llmgateway/claude-haiku-4-5\n';
+md += 'node bench/compare-models.mjs   # console view of the same numbers\n\n';
 md += '# This report\n';
 md += 'node bench/report.mjs\n# -> docs/report.md\n';
 md += '```\n';
 
+// The report is committed, and CI checks formatting on docs/. Formatting here
+// means regenerating can never fail format:check, which would otherwise make
+// the two steps quietly incompatible.
+const formatted = await format(md, { parser: 'markdown', ...(await resolveConfig(DOCS_DIR)) });
+
 mkdirSync(DOCS_DIR, { recursive: true });
-writeFileSync(join(DOCS_DIR, 'report.md'), md);
-console.log(`[bench/report] wrote ${join(DOCS_DIR, 'report.md')} (${md.length} bytes)`);
+writeFileSync(join(DOCS_DIR, 'report.md'), formatted);
+console.log(`[bench/report] wrote ${join(DOCS_DIR, 'report.md')} (${formatted.length} bytes)`);

@@ -1,124 +1,31 @@
 #!/usr/bin/env node
 /**
- * Compares arms across models, to answer which end of the market this helps.
+ * Console view of the cross-model comparison, for use while tiers are running.
  *
  * The registered hypothesis (bench/models.json) is that Git Why's benefit is
  * turn and token reduction for CAPABLE models rather than accuracy gain for
- * weak ones. Those imply opposite positioning, so the comparison reports both
- * axes for every model instead of picking one.
+ * weak ones. Those imply opposite positioning, so both axes are reported for
+ * every model instead of picking one.
  *
- * Everything is PAIRED. Comparing arm medians alone lets task difficulty drive
- * the result: if arm D happened to attempt the easier questions it looks
- * better for a reason that has nothing to do with the treatment. Only tasks
- * where both arms produced a verdict are counted.
+ * All the arithmetic lives in bench/agents/model-compare.mjs, shared with
+ * bench/report.mjs so the console and the published document cannot disagree.
  *
- *   node bench/compare-models.mjs [--runs <glob-dir>]
+ *   node bench/compare-models.mjs
  */
 
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { compareModels, ARMS } from './agents/model-compare.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const RESULTS = join(ROOT, 'bench', 'results', 'agents');
-
-function loadRun(dir) {
-  const trialsDir = join(dir, 'trials');
-  if (!existsSync(trialsDir)) return [];
-  return readdirSync(trialsDir)
-    .filter((n) => n.endsWith('.json'))
-    .map((n) => JSON.parse(readFileSync(join(trialsDir, n), 'utf8')));
-}
-
-const median = (xs) => {
-  const v = xs.filter((n) => typeof n === 'number' && Number.isFinite(n)).sort((a, b) => a - b);
-  return v.length === 0 ? null : v[Math.floor(v.length / 2)];
-};
-const sum = (xs) => xs.reduce((a, b) => a + (b ?? 0), 0);
-
-/** A trial counts only if it ran to completion and produced a verdict. */
-function graded(records, arm) {
-  return records.filter(
-    (r) =>
-      r.arm === arm &&
-      !r.invalidation_reason &&
-      r.exit_reason === 'completed' &&
-      r.evidence_grade &&
-      r.evidence_grade.goldSha,
-  );
-}
-
-const runs = readdirSync(RESULTS)
-  .filter((n) => n.startsWith('pilot-'))
-  .map((n) => join(RESULTS, n))
-  .map((dir) => ({ dir, records: loadRun(dir) }))
-  .filter((r) => r.records.length > 0);
-
-// Group by the model actually recorded on the trials, not by directory name.
-const byModel = new Map();
-for (const { dir, records } of runs) {
-  const model = records[0].model_id ?? 'unknown';
-  if (!byModel.has(model)) byModel.set(model, { model, dir, records: [] });
-  byModel.get(model).records.push(...records);
-}
-
-const rows = [];
-for (const { model, records } of byModel.values()) {
-  const arms = {};
-  for (const arm of ['A', 'B', 'C', 'D']) {
-    const g = graded(records, arm);
-    arms[arm] = {
-      n: g.length,
-      hits: g.filter((r) => r.evidence_grade.citedGoldSha).length,
-      calls: median(g.map((r) => r.tool_calls)),
-      inTok: median(g.map((r) => r.input_tokens)),
-      outTok: median(g.map((r) => r.output_tokens)),
-      // Cost is summed over trials whose token counts RECONCILE against the
-      // provider's own database. A trial whose accounting disagrees has an
-      // unreliable cost, and averaging it in would quietly corrupt the column
-      // that matters most.
-      cost: sum(
-        g.filter((r) => r.token_cross_check_agrees !== false).map((r) => r.actual_billed_cost),
-      ),
-      verified: g.filter((r) => r.token_cross_check_agrees === true).length,
-      unverified: g.filter((r) => r.token_cross_check_agrees === null).length,
-      // Cross-check disagreements invalidate the cost column, so they are
-      // surfaced rather than averaged away.
-      badTokens: g.filter((r) => r.token_cross_check_agrees === false).length,
-    };
-  }
-
-  // Paired: only tasks where BOTH arms produced a verdict.
-  const paired = (x, y) => {
-    const byTask = new Map();
-    for (const arm of [x, y]) {
-      for (const r of graded(records, arm)) {
-        const e = byTask.get(r.task_id) ?? {};
-        e[arm] = r;
-        byTask.set(r.task_id, e);
-      }
-    }
-    const both = [...byTask.values()].filter((e) => e[x] && e[y]);
-    if (both.length === 0) return null;
-    const correct = (r) => (r.evidence_grade.citedGoldSha ? 1 : 0);
-    return {
-      n: both.length,
-      accWin: both.filter((e) => correct(e[y]) > correct(e[x])).length,
-      accLoss: both.filter((e) => correct(e[x]) > correct(e[y])).length,
-      callsDelta: median(both.map((e) => (e[y].tool_calls ?? 0) - (e[x].tool_calls ?? 0))),
-      tokDelta: median(both.map((e) => (e[y].input_tokens ?? 0) - (e[x].input_tokens ?? 0))),
-    };
-  };
-
-  rows.push({ model, arms, dVsA: paired('A', 'D'), cVsB: paired('B', 'C') });
-}
+const { rows, skipped } = compareModels(join(ROOT, 'bench', 'results', 'agents'));
 
 console.log('\nPer-arm, graded trials only (n = trials that ran and produced a verdict)\n');
 console.log(
   `${'model'.padEnd(34)}${'arm'.padEnd(5)}${'cited'.padEnd(10)}${'calls'.padEnd(7)}${'in tok'.padEnd(9)}${'cost'.padEnd(11)}${'tok ok'.padEnd(8)}bad-tok`,
 );
 for (const row of rows) {
-  for (const arm of ['A', 'B', 'C', 'D']) {
+  for (const arm of ARMS) {
     const a = row.arms[arm];
     if (a.n === 0) continue;
     console.log(
@@ -140,6 +47,13 @@ for (const row of rows) {
   );
 }
 
+if (skipped.length > 0) {
+  console.log(
+    `\nExcluded ${skipped.length} run(s) still in flight (no summary.json): ` +
+      skipped.map((s) => s.split('/').pop()).join(', '),
+  );
+}
+
 console.log(
   '\n"tok ok" is how many of that arm\'s trials had their token counts confirmed\n' +
     "against the provider's own database. Cost sums only reconciled trials;\n" +
@@ -147,7 +61,7 @@ console.log(
 );
 
 console.log(
-  '\nA negative call delta means git why reached the answer in FEWER turns.\n' +
+  'A negative call delta means git why reached the answer in FEWER turns.\n' +
     'The registered prediction is that this grows more negative as models get\n' +
     'more capable, while the accuracy win-loss shrinks toward zero.\n',
 );
