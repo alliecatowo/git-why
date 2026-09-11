@@ -1,0 +1,36 @@
+**Yes**, ripgrep's special ignore-file name indeed used to be **`.rgignore`** before it was switched to **`.ignore`**.
+
+### Supporting Commit details
+* **Commit SHA**: `cc90511ab29d3c37e873acac0fd80f90473f54bb` (short SHA: `cc90511`)
+* **Author**: Andrew Gallant
+* **Date**: Fri Sep 23 22:44:17 2016 -0400
+
+---
+
+### Quoted Commit Message
+```text
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+---
+
+### Supporting Diff Excerpt (from `src/ignore.rs`)
+```diff
+--- a/src/ignore.rs
++++ b/src/ignore.rs
+@@ -24,6 +24,7 @@ use types::Types;
+ 
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```

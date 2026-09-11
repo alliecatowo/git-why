@@ -1,0 +1,29 @@
+The `requests` library switched its default text-encoding guesser from `chardet` to `charset_normalizer` (for Python 3) to **remove license ambiguity** for downstream projects. Specifically, `chardet` is licensed under the LGPL (Lesser General Public License), which created legal uncertainty for projects that bundled/packaged `requests` and its dependencies (like `chardet`) into a single binary/artifact, as they might be forced to comply with the LGPL. Switching to the MIT-licensed `charset_normalizer` resolved this issue.
+
+---
+
+### Supporting Commit details
+
+* **Commit SHA:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`
+* **Commit Message:**
+  > **Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)**
+  > 
+  > Although using the (non-vendored) chardet library is fine for requests
+  > itself, but using a LGPL dependency the story is a lot less clear
+  > for downstream projects, particularly ones that might like to bundle
+  > requests (and thus chardet) in to a single binary -- think something
+  > similar to what docker-compose is doing. By including an LGPL'd module
+  > it is no longer clear if the resulting artefact must also be LGPL'd.
+  > 
+  > By changing out this dependency for one under MIT we remove all
+  > license ambiguity.
+
+* **Supporting Quote from `HISTORY.md` in the diff of that commit:**
+  ```markdown
+  **Dependencies**
+
+  - Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3
+    to remove license ambiguity for projects bundling requests. If `chardet`
+    is already installed on your machine it will be used instead of `charset_normalizer`
+    to keep backwards compatibility.
+  ```

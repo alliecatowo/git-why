@@ -1,0 +1,37 @@
+No, **requests** does not support Python 3.9 anymore. Support for Python 3.9 was dropped.
+
+### Commit that established the drop:
+* **Commit SHA:** `0c2bbe73982a70623fb81bf16b2507ea0ca80b99` (or `0c2bbe7`)
+* **Author:** Nate Prewitt
+* **Date:** Fri Feb 6 08:02:46 2026 -0700
+
+---
+
+### Supporting Quotes
+
+#### 1. Commit Message
+```text
+Drop support for Python 3.9 (#7196)
+```
+
+#### 2. Diffs showing the drop:
+
+**In `pyproject.toml`:**
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+```
+
+**In `README.md`:**
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+**In `setup.py`:**
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```

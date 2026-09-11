@@ -173,8 +173,9 @@ provider's own accounting database.
 | deepseek-v4-flash     |        8 |          0-0 |                       3 |
 | gemini-2.5-flash-lite |        6 |          2-1 |                       1 |
 | gemini-3.1-flash-lite |        7 |          2-0 |                       1 |
+| gemini-3.5-flash      |        6 |          0-0 |                  4 more |
 
-Every model reached the answer in the same number of turns or fewer. At single-digit paired n per model this is descriptive, not significant, and it is reported that way
+Results are mixed across models. At single-digit paired n per model this is descriptive, not significant, and it is reported that way
 deliberately — the direction is consistent, the magnitude is not established. Full method and per-arm figures in the benchmark report.
 
 <!-- /generated:agent -->

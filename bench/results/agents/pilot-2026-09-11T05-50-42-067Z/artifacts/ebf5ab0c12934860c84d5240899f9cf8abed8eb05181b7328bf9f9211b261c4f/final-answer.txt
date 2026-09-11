@@ -1,0 +1,112 @@
+I will first execute the required verification bash command before performing any other shell operations.I will use the `git why` tool to search the commit history for changes related to credential leaks when following redirects to different protocols or ports.I will inspect the details of the commit mentioned in the follow-up commit message (620ea21410030).I will run `git show --stat 620ea21410030a9977396b4661806bc187231b79` to inspect the full list of files touched in this commit.I will examine the follow-up commit `139a54e` (referenced earlier) to check if it also made related changes.I will check the repository status to ensure no files were modified.### Question Summary
+There was a curl security bug (associated with **CVE-2022-27774**) where following a redirect could leak credentials to a different protocol or port. 
+
+---
+
+### What the Fix Changed
+
+The fix introduces check logic in `Curl_follow()` (where curl handles redirects and Location-following) to automatically clear the HTTP username and password credentials if the redirect destination uses a different port number or protocol scheme, unless sending authorization credentials to other hosts is explicitly allowed via configuration.
+
+Specifically, it:
+1. Compares the redirect destination port against the original port (`data->info.conn_remote_port`). If they differ, it sets a clear flag to `TRUE`.
+2. Compares the redirect destination protocol scheme against the original protocol (`data->info.conn_protocol`). If they differ, it sets a clear flag to `TRUE`.
+3. If the clear flag is `TRUE` (and the transfer is not a fake follow and credentials transfer is not explicitly configured to allow auth to other hosts), it frees and clears the username and password buffers:
+   ```c
+   Curl_safefree(data->state.aptr.user);
+   Curl_safefree(data->state.aptr.passwd);
+   ```
+
+A follow-up fix was also merged to prevent SRP (Secure Remote Password) credentials from being leaked over OpenSSL TLS redirects by using `Curl_allow_auth_to_host()`.
+
+---
+
+### Citations and Commit Details
+
+#### 1. Primary Commit SHA: `620ea21410030a9977396b4661806bc187231b79`
+* **Subject Line:** `transfer: redirects to other protocols or ports clear auth`
+* **Author:** Daniel Stenberg
+* **Date:** Mon Apr 25 16:24:33 2022 +0200
+* **Commit Message:**
+  ```text
+  transfer: redirects to other protocols or ports clear auth
+  
+  ... unless explicitly permitted.
+  
+  Bug: https://curl.se/docs/CVE-2022-27774.html
+  Reported-by: Harry Sintonen
+  Closes #8748
+  ```
+* **Relevant Diff (from `lib/transfer.c`):**
+  ```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
++      char *portnum;
++      int port;
++      bool clear = FALSE;
++
++      if(data->set.use_port && data->state.allow_port)
++        /* a custom port is used */
++        port = (int)data->set.use_port;
++      else {
++        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,
++                          CURLU_DEFAULT_PORT);
++        if(uc) {
++          free(newurl);
++          return Curl_uc_to_curlcode(uc);
++        }
++        port = atoi(portnum);
++        free(portnum);
++      }
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
++        char *scheme;
++        const struct Curl_handler *p;
++        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);
++        if(uc) {
++          free(newurl);
++          return Curl_uc_to_curlcode(uc);
++        }
++
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
++        free(scheme);
++      }
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
++    }
+  ```
+
+---
+
+#### 2. Follow-Up Commit SHA: `139a54ed0a172adaaf1a78d6f4fff50b2c3f9e08`
+* **Subject Line:** `openssl: don't leak the SRP credentials in redirects either`
+* **Author:** Daniel Stenberg
+* **Date:** Mon Apr 25 17:59:15 2022 +0200
+* **Commit Message:**
+  ```text
+  openssl: don't leak the SRP credentials in redirects either
+  
+  Follow-up to 620ea21410030
+  
+  Reported-by: Harry Sintonen
+  Closes #8751
+  ```
+* **Relevant Diff (from `lib/vtls/openssl.c`):**
+  ```c
+ #ifdef USE_OPENSSL_SRP
+-  if(ssl_authtype == CURL_TLSAUTH_SRP) {
++  if((ssl_authtype == CURL_TLSAUTH_SRP) &&
++     Curl_allow_auth_to_host(data)) {
+     char * const ssl_username = SSL_SET_OPTION(username);
+  ```

@@ -1,0 +1,60 @@
+I'll start with the required verification command.All three values match. Now let me investigate.Let me confirm nothing later reverted this, and check the current tree state.## Answer
+
+**Python 3.9 support was dropped.** As of this commit (`dae7ef63`), requests officially supports **Python 3.10+**.
+
+### Supporting commit
+
+**SHA: `0c2bbe73982a70623fb81bf16b2507ea0ca80b99`** (short: `0c2bbe7`)
+Author: Nate Prewitt · Date: Fri Feb 6 08:02:46 2026 · PR #7196
+
+Commit message (the entire message):
+
+> ```
+> Drop support for Python 3.9 (#7196)
+> ```
+
+Key diff excerpts from that commit:
+
+`pyproject.toml` — the authoritative packaging floor and trove classifier:
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+@@
+     "Programming Language :: Python :: 3",
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+`setup.py` — hard runtime guard:
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+     sys.exit(1)
+```
+
+`README.md`:
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+`tox.ini` and `.github/workflows/run-tests.yml` also dropped `py39` / `"3.9"` from the test matrix.
+
+### Corroboration
+
+`HISTORY.md` at HEAD records it under the **2.33.0 (2026-03-25)** release notes:
+
+> **Deprecations**
+> - Dropped support for Python 3.9 following its end of support. (#7196)
+
+### Verification that it still holds at HEAD
+
+- `git merge-base --is-ancestor 0c2bbe7 HEAD` → true, so the commit is in HEAD's history (100 commits before HEAD).
+- Current working tree confirms nothing reverted it: `pyproject.toml` has `requires-python = ">=3.10"`, classifiers run `3.10`–`3.15` with no `3.9`, `setup.py` errors with "Requests requires Python 3.10 or later.", and `README.md` line 38 reads "Requests officially supports Python 3.10+."
+
+### Note on a near-miss commit
+Don't confuse this with `579cd9f` ("Drop pypy 3.9 and add pypy 3.11 support", 2025-05-02) — that dropped **PyPy** 3.9 only, while CPython 3.9 remained supported. The CPython 3.9 removal is `0c2bbe7`. Also, `2edca11` is when 3.9 became the *minimum* (dropping 3.8), not when 3.9 was dropped.
+
+No files were modified.

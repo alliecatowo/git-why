@@ -1,0 +1,71 @@
+Redis first got the streams data type with commands like `XADD` on **August 30, 2017**, via a squash-merge commit by Salvatore Sanfilippo (antirez).
+
+### Commit Information
+- **Commit SHA:** `79866a6361829ed0602dedff9cb378c66977227a`
+- **Author:** antirez <antirez@gmail.com>
+- **Date:** Wed Aug 30 12:40:27 2017 +0200
+- **Commit Message:** 
+  > `Streams: 12 commits squashed into the initial Streams implementation.`
+
+---
+
+### Supporting Diff Excerpts
+
+1. **Adding the `OBJ_STREAM` type and encoder definitions** in `src/server.h`:
+   ```diff
+   @@ -451,6 +452,7 @@ typedef long long mstime_t; /* millisecond time type. */
+    #define OBJ_SET 2
+    #define OBJ_ZSET 3
+    #define OBJ_HASH 4
+   +#define OBJ_STREAM 5
+    
+    /* The "module" object type is a special one that signals that the object
+   @@ -575,6 +577,7 @@ typedef struct RedisModuleDigest {
+    #define OBJ_ENCODING_SKIPLIST 7  /* Encoded as skiplist */
+    #define OBJ_ENCODING_EMBSTR 8  /* Embedded sds string encoding */
+    #define OBJ_ENCODING_QUICKLIST 9 /* Encoded as linked list of ziplists */
+   +#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
+   ```
+
+2. **Registering `XADD` and `XRANGE` commands** in the global command table in `src/server.c`:
+   ```diff
+   @@ -302,6 +302,8 @@ struct redisCommand redisCommandTable[] = {
+        {"pfcount",pfcountCommand,-2,"r",0,NULL,1,-1,1,0,0},
+        {"pfmerge",pfmergeCommand,-2,"wm",0,NULL,1,-1,1,0,0},
+        {"pfdebug",pfdebugCommand,-3,"w",0,NULL,0,0,0,0,0},
+   +    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+   +    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+   ```
+
+3. **Declaring and defining `xaddCommand`** in `src/server.h` and the newly added file `src/t_stream.c`:
+   In `src/server.h`:
+   ```diff
+   +void xaddCommand(client *c);
+   +void xrangeCommand(client *c);
+   ```
+   In `src/t_stream.c`:
+   ```c
+   /* XADD key [field value] [field value] ... */
+   void xaddCommand(client *c) {
+       if ((c->argc % 2) == 1) {
+           addReplyError(c,"wrong number of arguments for XADD");
+           return;
+       }
+
+       /* Lookup the stream at key. */
+       robj *o;
+       stream *s;
+       if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
+       s = o->ptr;
+
+       /* Append using the low level function and return the ID. */
+       streamID id;
+       streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+       sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
+       addReplySds(c,reply);
+
+       signalModifiedKey(c->db,c->argv[1]);
+       notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+       server.dirty++;
+   }
+   ```

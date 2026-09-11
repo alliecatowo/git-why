@@ -1,0 +1,109 @@
+{
+  "task_id": "X-ripgrep-03",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "52dd4c544264d953a46f4f9b9ad4aeb1ea6481cf",
+  "model_id": "llmgateway/gemini-3.5-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T06:44:24.862Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "0d1f764bc7b5936122e72af9fb3265ad21531556883fbed93392dce95b8f1b5f",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "cc90511ab29d3c37e873acac0fd80f90473f54bb",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "cc90511ab29d3c37e873acac0fd80f90473f54bb"
+    ]
+  },
+  "wall_ms": 25823,
+  "tool_calls": 8,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 24729,
+  "output_tokens": 952,
+  "cache_read_tokens": 53362,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0675168,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 37309,
+  "index_build_ms": 31963,
+  "model_download_ms": null,
+  "index_disk_bytes": 91397716,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T05-50-42-067Z/events/X-ripgrep-03-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "3199b101e1bc65659542a67b1e5e4b2cfe214043d4587529b6dee1ff3d3682f1",
+  "indexed_commits": 2287,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  216 / 216 files\n  Entities    5,359\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_2W0jNyC2N4KvaaVnuXGzpmvn",
+        "status": "completed",
+        "input": {
+          "command": "git log --grep=\"ignore\" --oneline -n 100"
+        },
+        "output": "3fce3b5 ignore-0.4.33\n020687a ignore,globset: increase pool capacity\n5ed408e ignore-0.4.32\n435f59f ignore: skip loading unreachable ignore files\n59e318f ignore-0.4.31\na9dc222 cargo: set `rust-version` on all crates\n227381d ignore-0.4.30\nb621e65 ignore: add incremental checking\nc55818f ignore: more pathutil clean-up\n6e527e9 ignore: add routine for checking if a path is hidden or not\n626b895 ignore: refactor `is_hidden`\n0d7054d ignore: fix deadlock when visitor panics\nd798261 deps: bump ignore version\n40ffc6e ignore-0.4.29\n324f7ef ignore-0.4.28\n241b87b ignore: support `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM` for `core.excludesFile`\nb6849da ignore/walk: add `WalkBuilder::empty` and `WalkBuilder::from_iter`\n9548e86 ignore/types: add PKGBUILD type\nbc3ad92 ignore/types: add Rocq `.v` files\n93acfe2 ignore/types: add `proto` for filtering to protobuf files\n77d27e8 ignore/types: add Mojo type\n68b3c9e ignore: fetch directory entry metadata in batches\n653d7f5 ignore: add multi-root parent matcher regression tests\nf127579 ignore: add depth to more errors\n48b0c79 ignore-0.4.27\nc10f151 ignore: always include depth in errors\ndfe4a81 ignore/types: add Hurl\n82313cf ignore-0.4.26\n43e2f08 ignore: fix parent gitignore matching across multiple roots\n79a23e0 ignore: use named fields in `Ignore`\n9b84e15 ignore/types: add `container` type that covers both `Dockerfile` and `Containerfile`\n57c190d ignore-0.4.25\n85edf4c ignore: only stat `.jj` if we actually care\n24e88dc ignore/types: add `ssa` type\nc03e49b deps: bump to ignore 0.4.24\n70ae735 ignore-0.4.24\nb610d1c ignore: fix global gitignore bug that arises with absolute paths\n9ec0852 ignore/types: add lowercase R extensions\nf0faa91 doc: clarify `--ignore-file` precedence\n293ef80 test: add another regression test for gitignore matching bug\nfa80aab test: add regression test for fixed gitignore bug\n0407e10 ignore: fix problem with searching whitelisted hidden files\n2924d0c ignore: add `min_depth` option\ne42432c ignore: clarify `WalkBuilder::filter_entry`\n5566236 ignore/types: add GDScript files (*.gd) for the Godot Engine\n3f565b5 ignore/types: add Qt types for resource files and ui declaration\nc007d89 doc: clarify that `.git` is covered by `--hidden` and not `--ignore-vcs`\n56d03a1 ignore/types: include missing files for the tf type\ne166f27 ignore/types: add gleam\n83d9467 ignore/types: add LLVM to default types\n6887122 ignore/types: add ColdFusion and BoxLang\n06210b3 ignore/types: add `.env` to `sh` file type\nba23ced ignore/types: add scdoc\n6244e63 ignore/types: add Kconfig\n75e17fc ignore/types: add `*.dtso` to `devicetree` type\n99b7957 ignore/doc: explain that `require_git(false)` will ascend above git roots\nb0c6d4c ignore/types: add `*.svelte.ts` to Svelte file type glob\ne83828f ignore/types: add `*.rake` extension to list of Ruby file types\n72a1303 ignore/types: add typst\n5be67c1 ignore/types: include msbuild solution filters\nd869038 ignore: improve multithreading heuristic\n75970fd ignore: don't process command line arguments in reverse order\n380809f ignore/types: add Makefile.*\n94ea38d ignore: support `.jj` as well as `.git`\n4836284 ignore/gitignore: skip BOM at start of ignore file\n7c004f2 ignore/types: detect `WORKSPACE.bzlmod` for bazel file type\n14f4957 ignore: fix filtering searching subdir or .ignore in parent dir\n90a680a impl: switch most atomic ops to `Relaxed` ordering\n5fbc4fe ignore/types: fix Seed7 file extension\n004370b ignore/types: add support for Seed7 files\n312a788 deps: bump ignore to 0.4.23\nac02f54 ignore-0.4.23\n0a0893a ignore: add debug log message when opening gitignore file\n2acf25c ignore/types: add WGSL to the default file types\n8000769 ignore/types: add Vue\n3ad0e83 ignore/walk: correct build_parallel() documentation\n9da0995 ignore/types: add 'svelte' to the default file types\n44aa5a4 deps: bump ignore to 0.4.22\n2c38975 ignore-0.4.22\nb9c7749 ignore: fix reference cycle for compiled matchers\n67dd809 ignore: add some 'allow(dead_code)' annotations\n56c7ad1 ignore/types: add Lean\n2a4dba3 ignore/types: add meson.options\n51aa339 deps: bump ignore to 0.4.21\n381c521 ignore-0.4.21\n30d06b3 changelog: note that --no-ignore --ignore-vcs works as expected\n58e7d2e doc: add docs about .ignore/.rgignore in parent directories\n6d7550d ignore: Avoid contention on num_pending\n922bad2 ignore: improve 'excludesFile' parsing\n53679e4 ignore: simplify the work-stealing strategy\nf16ea08 ignore: polish\nabfa65c ignore/types: add *.sarif for SARIF format files\nd938e95 ignore: use work-stealing stack instead of Arc<Mutex<Vec<_>>>\ncad1f5f ignore: fix filtering when searching subdirectories\nd596f6e ignore/types: add *.vsh to V type\n6cd9479 ignore: implement FusedIterator for Walk\n51765f2 ignore: apply rustfmt\n962d47e ignore/types: add Prolog file types\n19b6a45 ignore/types: tweak Gradle file types\nfed4fea ignore/types: add csproj\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_naE5HvnrponThW4med0jYxKo",
+        "status": "completed",
+        "input": {
+          "command": "git log --grep=\"rgignore\" --oneline"
+        },
+        "output": "653d7f5 ignore: add multi-root parent matcher regression tests\n58e7d2e doc: add docs about .ignore/.rgignore in parent directories\nf3241fd cli: '--no-ignore-dot' should also '.rgignore'\n711426a cli: add --no-require-git flag\n052c857 doc: mention .ignore and .rgignore more prominently\n718a00f ripgrep: add --ignore-file-case-insensitive\n5ff9b2f Merge pull request #41 from BurntSushi/generic-ignore\ncc90511 Switch from .rgignore to .ignore.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_JcU2j5PykhrKEK2FuNhQjudB",
+        "status": "completed",
+        "input": {
+          "command": "git show cc90511"
+        },
+        "output": "commit cc90511ab29d3c37e873acac0fd80f90473f54bb\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Fri Sep 23 22:44:17 2016 -0400\n\n    Switch from .rgignore to .ignore.\n    \n    But don't actually remove support for .rgignore until the next semver\n    bump.\n    \n    Note that this puts us in line with the silver searcher:\n    https://github.com/ggreer/the_silver_searcher/pull/974\n    \n    Fixes #40\n\ndiff --git a/README.md b/README.md\nindex 6332e60..2319503 100644\n--- a/README.md\n+++ b/README.md\n@@ -145,9 +145,9 @@ files, ignore hidden files and directories and skip binary files:\n $ rg foobar\n ```\n \n-The above command also respects all `.rgignore` files, including in parent\n-directories. `.rgignore` files can be used when `.gitignore` files are\n-insufficient. In all cases, `.rgignore` patterns take precedence over\n+The above command also respects all `.ignore` files, including in parent\n+directories. `.ignore` files can be used when `.gitignore` files are\n+insufficient. In all cases, `.ignore` patterns take precedence over\n `.gitignore`.\n \n To ignore all ignore files, use `-u`. To additionally search hidden files\ndiff --git a/doc/rg.1 b/doc/rg.1\nindex 300ad1b..9d47e27 100644\n--- a/doc/rg.1\n+++ b/doc/rg.1\n@@ -211,8 +211,8 @@ Never use memory maps, even when they might be faster.\n .RE\n .TP\n .B \\-\\-no\\-ignore\n-Don\\[aq]t respect ignore files (.gitignore, .rgignore, etc.) This\n-implies \\-\\-no\\-ignore\\-parent.\n+Don\\[aq]t respect ignore files (.gitignore, .ignore, etc.) This implies\n+\\-\\-no\\-ignore\\-parent.\n .RS\n .RE\n .TP\ndiff --git a/doc/rg.1.md b/doc/rg.1.md\nindex 81e974e..224ff1a 100644\n--- a/doc/rg.1.md\n+++ b/doc/rg.1.md\n@@ -137,7 +137,7 @@ the raw speed of grep.\n : Never use memory maps, even when they might be faster.\n \n --no-ignore\n-: Don't respect ignore files (.gitignore, .rgignore, etc.)\n+: Don't respect ignore files (.gitignore, .ignore, etc.)\n   This implies --no-ignore-parent.\n \n --no-ignore-parent\ndiff --git a/src/args.rs b/src/args.rs\nindex 777556d..4b5052a 100644\n--- a/src/args.rs\n+++ b/src/args.rs\n@@ -137,7 +137,7 @@ Less common options:\n         Never use memory maps, even when they might be faster.\n \n     --no-ignore\n-        Don't respect ignore files (.gitignore, .rgignore, etc.)\n+        Don't respect ignore files (.gitignore, .ignore, etc.)\n         This implies --no-ignore-parent.\n \n     --no-ignore-parent\ndiff --git a/src/gitignore.rs b/src/gitignore.rs\nindex 76e0be7..2bbebd6 100644\n--- a/src/gitignore.rs\n+++ b/src/gitignore.rs\n@@ -9,7 +9,7 @@ The motivation for this submodule is performance and portability:\n 2. We could shell out to a `git` sub-command like ls-files or status, but it\n    seems better to not rely on the existence of external programs for a search\n    tool. Besides, we need to implement this logic anyway to support things like\n-   an .rgignore file.\n+   an .ignore file.\n \n The key implementation detail here is that a single gitignore file is compiled\n into a single RegexSet, which can be used to report which globs match a\ndiff --git a/src/ignore.rs b/src/ignore.rs\nindex d784f99..0195420 100644\n--- a/src/ignore.rs\n+++ b/src/ignore.rs\n@@ -5,7 +5,7 @@ whether a *single* file path should be searched or not.\n In general, there are two ways to ignore a particular file:\n \n 1. Specify an ignore rule in some \"global\" configuration, such as a\n-   $HOME/.rgignore or on the command line.\n+   $HOME/.ignore or on the command line.\n 2. A specific ignore file (like .gitignore) found during directory traversal.\n \n The `IgnoreDir` type handles ignore patterns for any one particular directory\n@@ -24,6 +24,7 @@ use types::Types;\n \n const IGNORE_NAMES: &'static [&'static str] = &[\n     \".gitignore\",\n+    \".ignore\",\n     \".rgignore\",\n ];\n \ndiff --git a/tests/tests.rs b/tests/tests.rs\nindex e2aedc3..3823cee 100644\n--- a/tests/tests.rs\n+++ b/tests/tests.rs\n@@ -377,6 +377,11 @@ sherlock!(ignore_git, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n     wd.assert_err(&mut cmd);\n });\n \n+sherlock!(ignore_generic, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n+    wd.create(\".ignore\", \"sherlock\\n\");\n+    wd.assert_err(&mut cmd);\n+});\n+\n sherlock!(ignore_ripgrep, \"Sherlock\", \".\", |wd: WorkDir, mut cmd: Command| {\n     wd.create(\".rgignore\", \"sherlock\\n\");\n     wd.assert_err(&mut cmd);\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 24729,
+    "output": 952,
+    "messages": 10
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/3199b101e1bc65659542a67b1e5e4b2cfe214043d4587529b6dee1ff3d3682f1",
+  "completed": true
+}

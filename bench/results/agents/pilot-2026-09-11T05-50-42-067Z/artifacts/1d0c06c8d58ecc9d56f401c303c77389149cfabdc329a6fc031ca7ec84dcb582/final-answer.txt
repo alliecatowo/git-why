@@ -1,0 +1,20 @@
+The requests library switched its default text-encoding guesser on Python 3 from `chardet` to `charset_normalizer` to **remove license ambiguity** for downstream projects. 
+
+Specifically, `chardet` is licensed under the **LGPL** (Lesser General Public License). While using it as a separate dependency is fine for `requests` itself, it created licensing/legal ambiguity for downstream projects—especially those that bundle/repackage `requests` and its dependencies into a single binary or artifact (such as `docker-compose`). In those cases, it was unclear whether the resulting bundled artifact would also have to be licensed under the LGPL. Replacing `chardet` with `charset_normalizer`, which is **MIT-licensed**, resolved this issue.
+
+---
+
+### Supporting Commit details:
+
+* **Commit SHA:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`
+* **Subject:** `Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)`
+* **Author:** Ash Berlin-Taylor <ash_github@firemirror.com>
+* **Date:** Wed Jul 7 00:55:02 2021 +0100
+
+#### Quote from the Commit Message:
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+>
+> By changing out this dependency for one under MIT we remove all license ambiguity."
+
+#### Quote from updated documentation in the commit (`docs/user/advanced.rst`):
+> "The ``chardet`` library is an LGPL-licenced dependency and some users of requests cannot depend on mandatory LGPL-licensed dependencies."

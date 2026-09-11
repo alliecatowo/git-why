@@ -1,0 +1,63 @@
+Yes, Caddy has had to raise its minimum Go version specifically because of the HTTP/3 library it depends on (`quic-go`). In fact, this has happened multiple times. 
+
+Below are three specific commits from this repository's history establishing this fact:
+
+---
+
+### 1. Commit `8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe` (Abbreviated: `8cb1bb4a`)
+* **Date:** Fri Feb 24 13:35:56 2023 -0700
+* **Commit Message:** 
+  > `go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)`
+* **Supporting Diff (from `README.md`):**
+  ```markdown
+  Requirements:
+   
+  -- [Go 1.18 or newer](https://golang.org/dl/)
+  +- [Go 1.19 or newer](https://golang.org/dl/)
+  ```
+* **Supporting Diff (from `go.mod`):**
+  ```go
+  -	github.com/quic-go/quic-go v0.32.0
+  +	github.com/quic-go/quic-go v0.33.0
+  ...
+  -	github.com/quic-go/qtls-go1-18 v0.2.0 // indirect
+  ```
+  *(Note that removing `qtls-go1-18` dropped support for Go 1.18, requiring a minimum of Go 1.19.)*
+
+---
+
+### 2. Commit `f45a6de20dd19e82e58c85b37e03957b2203b544` (Abbreviated: `f45a6de2`)
+* **Date:** Fri Jul 21 21:00:48 2023 -0700
+* **Commit Message:** 
+  > `go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)`
+* **Supporting Diff (from `go.mod`):**
+  ```go
+  -go 1.19
+  +go 1.20
+   
+   require (
+  ...
+  -	github.com/quic-go/quic-go v0.36.2
+  +	github.com/quic-go/quic-go v0.37.0
+  ...
+  -	github.com/quic-go/qtls-go1-19 v0.3.2 // indirect
+  ```
+  *(The minimum Go requirement was bumped from Go 1.19 to Go 1.20.)*
+
+---
+
+### 3. Commit `697cc593a17fcb39087161b058fc1dba8b767060` (Abbreviated: `697cc593`)
+* **Date:** Thu Jan 25 10:58:19 2024 -0800
+* **Commit Message:** 
+  > `chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)`
+* **Supporting Diff (from `go.mod`):**
+  ```go
+  -go 1.20
+  +go 1.21
+  ...
+  -	github.com/quic-go/quic-go v0.40.1
+  +	github.com/quic-go/quic-go v0.41.0
+  ...
+  -	github.com/quic-go/qtls-go1-20 v0.4.1 // indirect
+  ```
+  *(The minimum Go requirement was bumped from Go 1.20 to Go 1.21.)*

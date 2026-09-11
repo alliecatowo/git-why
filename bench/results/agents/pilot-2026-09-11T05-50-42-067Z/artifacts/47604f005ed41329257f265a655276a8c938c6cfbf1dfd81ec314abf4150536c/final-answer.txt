@@ -1,0 +1,55 @@
+Redis first got the streams data type and commands like `XADD` with the initial Streams implementation in commit **`79866a6361829ed0602dedff9cb378c66977227a`** (authored on August 30, 2017).
+
+### Commit Details:
+* **Commit SHA:** `79866a6361829ed0602dedff9cb378c66977227a`
+* **Author:** Salvatore Sanfilippo (antirez) `<antirez@gmail.com>`
+* **Author Date:** Wed Aug 30 12:40:27 2017 +0200
+* **Commit Date:** Fri Dec 1 10:24:24 2017 +0100
+* **Commit Message:** 
+  > Streams: 12 commits squashed into the initial Streams implementation.
+
+---
+
+### Supporting Quotes & Diff Sections:
+
+1. **`src/server.c`** addition of `XADD` and `XRANGE` to the `redisCommandTable`:
+   ```diff
+   diff --git a/src/server.c b/src/server.c
+   index 7498a25fd..2c3647db6 100644
+   --- a/src/server.c
+   +++ b/src/server.c
+   @@ -302,6 +302,8 @@ struct redisCommand redisCommandTable[] = {
+        {"pfcount",pfcountCommand,-2,"r",0,NULL,1,-1,1,0,0},
+        {"pfmerge",pfmergeCommand,-2,"wm",0,NULL,1,-1,1,0,0},
+        {"pfdebug",pfdebugCommand,-3,"w",0,NULL,0,0,0,0,0},
+   +    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+   +    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+        {"post",securityWarningCommand,-1,"lt",0,NULL,0,0,0,0,0},
+   ```
+
+2. Creation of **`src/t_stream.c`**, which implements low-level stream encoding and stream command handlers:
+   ```c
+   /* XADD key [field value] [field value] ... */
+   void xaddCommand(client *c) {
+       if ((c->argc % 2) == 1) {
+           addReplyError(c,"wrong number of arguments for XADD");
+           return;
+       }
+   
+       /* Lookup the stream at key. */
+       robj *o;
+       stream *s;
+       if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
+       s = o->ptr;
+   
+       /* Append using the low level function and return the ID. */
+       streamID id;
+       streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
+       sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
+       addReplySds(c,reply);
+   
+       signalModifiedKey(c->db,c->argv[1]);
+       notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
+       server.dirty++;
+   }
+   ```

@@ -1,0 +1,48 @@
+Yes, the default handling of unknown keys in Zod object schemas changed. 
+
+Historically, the progression of default unknown key handling has been:
+1. **Zod v1**: Zod objects were **strict** by default—meaning they rejected unknown keys and threw an error if extra properties were passed.
+2. **Early Zod v2 pre-releases**: The default was changed to **allow/passthrough** unknown keys (extra keys were kept in the parsed output).
+3. **Zod v2.0.0-beta.1 onwards**: The default was changed to **strip** unknown keys. This is when extra keys started disappearing by default.
+
+---
+
+### Supporting Commit details
+
+The commit that changed this default behavior to stripping unknown keys is **`18854492b4b6e1648499f2f920c615dab187ee1a`** (short SHA: `18854492`).
+
+#### Commit Message
+> strip unknown keys by default
+
+#### Supporting Diff Quotes
+
+From `README.md`:
+```diff
+ In almost all cases, you'll be able to upgrade to Zod 2 without changing any code. Here are some of the (very minor) breaking changes:
+ 
+ - Parsing now returns a _deep clone_ of the data you pass in. Previously it returned the exact same object you passed in.
+ - Relatedly, Zod _no longer_ supports cyclical _data_. Recursive schemas are still supported, but Zod can't properly parse nested objects that contain cycles.
+- - Object schemas now _allow_ unknown keys by default, instead of throwing an error
++ - Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+```diff
+ #### Unknown keys
+ 
+- Zod object schemas allow unknown keys.
++ By default Zod object schema strip unknown keys from the output.
+ 
+-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
++ > ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+```
+
+From `src/types/object.ts` (where `unknownKeys` is assigned inside `ZodObject.create`):
+```diff
+@@ -388,7 +388,7 @@ export class ZodObject<
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```

@@ -1,0 +1,39 @@
+The `requests` library switched its default text-encoding guesser from `chardet` to `charset_normalizer` (for Python 3) primarily to resolve **licensing concerns and ambiguities**. Specifically, `chardet` is licensed under the **LGPL** (Lesser General Public License), which creates licensing uncertainty for downstream projects—especially those that compile or bundle `requests` and its dependencies into a single binary. To eliminate this licensing ambiguity, `requests` switched its default character detection dependency to the **MIT-licensed** `charset_normalizer`.
+
+---
+
+### Supporting Commit details
+
+* **Commit SHA:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3`
+* **Commit Subject:** `Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)`
+* **Author:** Ash Berlin-Taylor (`ash_github@firemirror.com`)
+* **Date:** Wed Jul 7 00:55:02 2021 +0100
+
+---
+
+### Key Quotes Supporting the Answer
+
+#### 1. From the Commit Message:
+> "Although using the (non-vendored) chardet library is fine for requests itself, but using a LGPL dependency the story is a lot less clear for downstream projects, particularly ones that might like to bundle requests (and thus chardet) in to a single binary -- think something similar to what docker-compose is doing. By including an LGPL'd module it is no longer clear if the resulting artefact must also be LGPL'd.
+> 
+> By changing out this dependency for one under MIT we remove all license ambiguity."
+
+#### 2. From the `HISTORY.md` Diff:
+```markdown
+- Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3
+  to remove license ambiguity for projects bundling requests. If `chardet`
+  is already installed on your machine it will be used instead of `charset_normalizer`
+  to keep backwards compatibility.
+```
+
+#### 3. From the `docs/user/advanced.rst` Diff:
+```rst
+If ``chardet`` is installed, ``requests`` uses it, however for python3
+``chardet`` is no longer a mandatory dependency. The ``chardet``
+library is an LGPL-licenced dependency and some users of requests
+cannot depend on mandatory LGPL-licensed dependencies.
+
+When you install ``request`` without specifying ``[use_chardet_on_py3]]`` extra,
+and ``chardet`` is not already installed, ``requests`` uses ``charset-normalizer``
+(MIT-licensed) to guess the encoding.
+```

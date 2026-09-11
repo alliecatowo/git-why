@@ -1,0 +1,124 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "52dd4c544264d953a46f4f9b9ad4aeb1ea6481cf",
+  "model_id": "llmgateway/gemini-3.5-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T06:00:18.199Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "13ffa06df68d0dfe76dcd4f0166bdef4a3ce1d7ef1cf437791cffbe79c0fe5d8",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "79866a6361829ed0602dedff9cb378c66977227a",
+    "citedGoldSha": true,
+    "citedShaCount": 1,
+    "matchedTokens": [
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ]
+  },
+  "wall_ms": 36426,
+  "tool_calls": 9,
+  "history_calls": 5,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 29154,
+  "output_tokens": 1279,
+  "cache_read_tokens": 59177,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.08073254999999999,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 53705,
+  "index_build_ms": 187396,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T05-50-42-067Z/events/X-redis-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "c770d74ffc3085367585d2f922b85a2e5d4a3f34a17da34ec5b45c9cc82c9961",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_h00cNGeszsh1LShMJCgpFrJD",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"xaddCommand\" --oneline --reverse"
+        },
+        "output": "79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n867816003 Auto-generate the command table from JSON files (#9656)\n1f76bb17d Reimplement cli hints based on command arg docs (#10515)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_sNd2S81hMfI0Ul80L1FXNzaE",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a636 --stat"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\n src/Makefile          |   2 +-\n src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/listpack.h        |  61 ++++\n src/listpack_malloc.h |  44 +++\n src/object.c          |   7 +\n src/rax.c             |  24 +-\n src/rax.h             |   1 +\n src/rdb.h             |   3 +-\n src/server.c          |   2 +\n src/server.h          |   9 +\n src/stream.h          |  21 ++\n src/t_stream.c        | 376 ++++++++++++++++++++++++\n 12 files changed, 1323 insertions(+), 10 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_sYDOq50S1vYhQ3kJ0SROHkNr",
+        "status": "completed",
+        "input": {
+          "command": "git log --follow --oneline src/t_stream.c | tail -n 10"
+        },
+        "output": "0adb43b68 Streams: XREAD ability to block fixed.\n6a1c92d52 Streams: synchronous xread fixes and improvements.\nfa61720d3 Streams: XREAD, first draft. Handling of blocked clients still missing.\ne65b4825f Streams: XREAD arguments parsing.\n4086dff47 Streams: augment client.bpop with XREAD specific fields.\n439120c62 Streams: implement stream object release.\nec9bbe96b Streams: XLEN command.\n485014cc7 Streams: RDB saving.\n100d43c1a Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_ysNsRQG3f68FgZJLPgHaQPXY",
+        "status": "completed",
+        "input": {
+          "command": "git show 79866a6361829ed0602dedff9cb378c66977227a --quiet --show-signature -p -- src/server.c src/t_stream.c"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/server.c b/src/server.c\nindex 7498a25fd..2c3647db6 100644\n--- a/src/server.c\n+++ b/src/server.c\n@@ -302,6 +302,8 @@ struct redisCommand redisCommandTable[] = {\n     {\"pfcount\",pfcountCommand,-2,\"r\",0,NULL,1,-1,1,0,0},\n     {\"pfmerge\",pfmergeCommand,-2,\"wm\",0,NULL,1,-1,1,0,0},\n     {\"pfdebug\",pfdebugCommand,-3,\"w\",0,NULL,0,0,0,0,0},\n+    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n+    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n     {\"post\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"host:\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"latency\",latencyCommand,-2,\"aslt\",0,NULL,0,0,0,0,0}\ndiff --git a/src/t_stream.c b/src/t_stream.c\nnew file mode 100644\nindex 000000000..c64f5059f\n--- /dev/null\n+++ b/src/t_stream.c\n@@ -0,0 +1,376 @@\n+/*\n+ * Copyright (c) 2017, Salvatore Sanfilippo <antirez at gmail dot com>\n+ * All rights reserved.\n+ *\n+ * Redistribution and use in source and binary forms, with or without\n+ * modification, are permitted provided that the following conditions are met:\n+ *\n+ *   * Redistributions of source code must retain the above copyright notice,\n+ *     this list of conditions and the following disclaimer.\n+ *   * Redistributions in binary form must reproduce the above copyright\n+ *     notice, this list of conditions and the following disclaimer in the\n+ *     documentation and/or other materials provided with the distribution.\n+ *   * Neither the name of Redis nor the names of its contributors may be used\n+ *     to endorse or promote products derived from this software without\n+ *     specific prior written permission.\n+ *\n+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE\n+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\n+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n+ * POSSIBILITY OF SUCH DAMAGE.\n+ */\n+\n+/* TODO:\n+ * - After loading a stream, populate the last ID.\n+ */\n+\n+#include \"server.h\"\n+#include \"listpack.h\"\n+#include \"endianconv.h\"\n+#include \"stream.h\"\n+\n+#define STREAM_BYTES_PER_LISTPACK 4096\n+\n+/* -----------------------------------------------------------------------\n+ * Low level stream encoding: a radix tree of listpacks.\n+ * ----------------------------------------------------------------------- */\n+\n+/* Create a new stream data structure. */\n+stream *streamNew(void) {\n+    stream *s = zmalloc(sizeof(*s));\n+    s->rax = raxNew();\n+    s->length = 0;\n+    s->last_id.ms = 0;\n+    s->last_id.seq = 0;\n+    return s;\n+}\n+\n+/* Generate the next stream item ID given the previous one. If the current\n+ * milliseconds Unix time is greater than the previous one, just use this\n+ * as time part and start with sequence part of zero. Otherwise we use the\n+ * previous time (and never go backward) and increment the sequence. */\n+void streamNextID(streamID *last_id, streamID *new_id) {\n+    uint64_t ms = mstime();\n+    if (ms > last_id->ms) {\n+        new_id->ms = ms;\n+        new_id->seq = 0;\n+    } else {\n+        new_id->ms = last_id->ms;\n+        new_id->seq = last_id->seq+1;\n+    }\n+}\n+\n+/* This is just a wrapper for lpAppend() to directly use a 64 bit integer\n+ * instead of a string. */\n+unsigned char *lpAppendInteger(unsigned char *lp, int64_t value) {\n+    char buf[LONG_STR_SIZE];\n+    int slen = ll2string(buf,sizeof(buf),value);\n+    return lpAppend(lp,(unsigned char*)buf,slen);\n+}\n+\n+/* This is a wrapper function for lpGet() to directly get an integer value\n+ * from the listpack (that may store numbers as a string), converting\n+ * the string if needed. */\n+int64_t lpGetInteger(unsigned char *ele) {\n+    int64_t v;\n+    unsigned char *e = lpGet(ele,&v,NULL);\n+    if (e == NULL) return v;\n+    /* The following code path should never be used for how listpacks work:\n+     * they should always be able to store an int64_t value in integer\n+     * encoded form. However the implementation may change. */\n+    int retval = string2ll((char*)e,v,&v);\n+    serverAssert(retval != 0);\n+    return v;\n+}\n+\n+/* Convert the specified stream entry ID as a 128 bit big endian number, so\n+ * that the IDs can be sorted lexicographically. */\n+void streamEncodeID(void *buf, streamID *id) {\n+    uint64_t e[2];\n+    e[0] = htonu64(id->ms);\n+    e[1] = htonu64(id->seq);\n+    memcpy(buf,e,sizeof(e));\n+}\n+\n+/* This is the reverse of streamEncodeID(): the decoded ID will be stored\n+ * in the 'id' structure passed by reference. The buffer 'buf' must point\n+ * to a 128 bit big-endian encoded ID. */\n+void streamDecodeID(void *buf, streamID *id) {\n+    uint64_t e[2];\n+    memcpy(e,buf,sizeof(e));\n+    id->ms = ntohu64(e[0]);\n+    id->seq = ntohu64(e[1]);\n+}\n+\n+/* Adds a new item into the stream 's' having the specified number of\n+ * field-value pairs as specified in 'numfields' and stored into 'argv'.\n+ * Returns the new entry ID populating the 'added_id' structure. */\n+void streamAppendItem(stream *s, robj **argv, int numfields, streamID *added_id) {\n+    raxIterator ri;\n+    raxStart(&ri,s->rax);\n+    raxSeek(&ri,\"$\",NULL,0);\n+\n+    size_t lp_bytes = 0;        /* Total bytes in the tail listpack. */\n+    unsigned char *lp = NULL;   /* Tail listpack pointer. */\n+\n+    /* Get a reference to the tail node listpack. */\n+    if (raxNext(&ri)) {\n+        lp = ri.data;\n+        lp_bytes = lpBytes(lp);\n+    }\n+    raxStop(&ri);\n+\n+    /* Generate the new entry ID. */\n+    streamID id;\n+    streamNextID(&s->last_id,&id);\n+\n+    /* We have to add the key into the radix tree in lexicographic order,\n+     * to do so we consider the ID as a single 128 bit number written in\n+     * big endian, so that the most significant bytes are the first ones. */\n+    uint64_t rax_key[2];    /* Key in the radix tree containing the listpack.*/\n+    uint64_t entry_id[2];   /* Entry ID of the new item as 128 bit string. */\n+    streamEncodeID(entry_id,&id);\n+\n+    /* Create a new listpack and radix tree node if needed. */\n+    if (lp == NULL || lp_bytes > STREAM_BYTES_PER_LISTPACK) {\n+        lp = lpNew();\n+        rax_key[0] = entry_id[0];\n+        rax_key[1] = entry_id[1];\n+        raxInsert(s->rax,(unsigned char*)&rax_key,sizeof(rax_key),lp,NULL);\n+    } else {\n+        serverAssert(ri.key_len == sizeof(rax_key));\n+        memcpy(rax_key,ri.key,sizeof(rax_key));\n+    }\n+\n+    /* Populate the listpack with the new entry. */\n+    lp = lpAppend(lp,(unsigned char*)entry_id,sizeof(entry_id));\n+    lp = lpAppendInteger(lp,numfields);\n+    for (int i = 0; i < numfields; i++) {\n+        sds field = argv[i*2]->ptr, value = argv[i*2+1]->ptr;\n+        lp = lpAppend(lp,(unsigned char*)field,sdslen(field));\n+        lp = lpAppend(lp,(unsigned char*)value,sdslen(value));\n+    }\n+\n+    /* Insert back into the tree in order to update the listpack pointer. */\n+    raxInsert(s->rax,(unsigned char*)&rax_key,sizeof(rax_key),lp,NULL);\n+    s->length++;\n+    s->last_id = id;\n+    if (added_id) *added_id = id;\n+    raxShow(s->rax);\n+}\n+\n+/* Send the specified range to the client 'c'. The range the client will\n+ * receive is between start and end inclusive, if 'count' is non zero, no more\n+ * than 'count' elemnets are sent. The 'end' pointer can be NULL to mean that\n+ * we want all the elements from 'start' till the end of the stream. */\n+size_t streamReplyWithRange(client *c, stream *s, streamID *start, streamID *end, size_t count) {\n+    void *arraylen_ptr = addDeferredMultiBulkLength(c);\n+    size_t arraylen = 0;\n+\n+    /* Seek the radix tree node that contains our start item. */\n+    uint64_t key[2];\n+    uint64_t end_key[2];\n+    streamEncodeID(key,start);\n+    if (end) streamEncodeID(end_key,end);\n+    raxIterator ri;\n+    raxStart(&ri,s->rax);\n+\n+    /* Seek the correct node in the radix tree. */\n+    if (start->ms || start->seq) {\n+        raxSeek(&ri,\"<=\",(unsigned char*)key,sizeof(key));\n+        if (raxEOF(&ri)) raxSeek(&ri,\">\",(unsigned char*)key,sizeof(key));\n+    } else {\n+        raxSeek(&ri,\"^\",NULL,0);\n+    }\n+\n+    /* For every radix tree node, iterate the corresponding listpack,\n+     * returning elmeents when they are within range. */\n+    while (raxNext(&ri)) {\n+        serverAssert(ri.key_len == sizeof(key));\n+        unsigned char *lp = ri.data;\n+        unsigned char *lp_ele = lpFirst(lp);\n+        while(lp_ele) {\n+            int64_t e_len;\n+            unsigned char buf[LP_INTBUF_SIZE];\n+            unsigned char *e = lpGet(lp_ele,&e_len,buf);\n+            serverAssert(e_len == sizeof(streamID));\n+\n+            /* Seek next field: number of elements. */\n+            lp_ele = lpNext(lp,lp_ele);\n+            if (memcmp(e,key,sizeof(key)) >= 0) { /* If current >= start */\n+                if (end && memcmp(e,end_key,sizeof(key)) > 0) {\n+                    break; /* We are already out of range. */\n+                }\n+                streamID thisid;\n+                streamDecodeID(e,&thisid);\n+                sds replyid = sdscatfmt(sdsempty(),\"+%U.%U\\r\\n\",\n+                              thisid.ms,thisid.seq);\n+\n+                /* Emit this stream entry in the client output. */\n+                addReplyMultiBulkLen(c,2);\n+                addReplySds(c,replyid);\n+                int64_t numfields = lpGetInteger(lp_ele);\n+                lp_ele = lpNext(lp,lp_ele);\n+                addReplyMultiBulkLen(c,numfields*2);\n+                for (int64_t i = 0; i < numfields; i++) {\n+                    /* Emit two items (key-value) per iteration. */\n+                    for (int k = 0; k < 2; k++) {\n+                        e = lpGet(lp_ele,&e_len,buf);\n+                        addReplyBulkCBuffer(c,e,e_len);\n+                        lp_ele = lpNext(lp,lp_ele);\n+                    }\n+                }\n+\n+                arraylen++;\n+                if (count && count == arraylen) break;\n+            } else {\n+                /* If we do not emit, we have to discard. */\n+                int64_t numfields = lpGetInteger(lp_ele);\n+                lp_ele = lpNext(lp,lp_ele);\n+                for (int64_t i = 0; i < numfields*2; i++)\n+                    lp_ele = lpNext(lp,lp_ele);\n+            }\n+        }\n+        if (count && count == arraylen) break;\n+    }\n+    raxStop(&ri);\n+    setDeferredMultiBulkLength(c,arraylen_ptr,arraylen);\n+    return arraylen;\n+}\n+\n+/* -----------------------------------------------------------------------\n+ * Stream commands implementation\n+ * ----------------------------------------------------------------------- */\n+\n+/* Look the stream at 'key' and return the corresponding stream object.\n+ * The function creates a key setting it to an empty stream if needed. */\n+robj *streamTypeLookupWriteOrCreate(client *c, robj *key) {\n+    robj *o = lookupKeyWrite(c->db,key);\n+    if (o == NULL) {\n+        o = createStreamObject();\n+        dbAdd(c->db,key,o);\n+    } else {\n+        if (o->type != OBJ_STREAM) {\n+            addReply(c,shared.wrongtypeerr);\n+            return NULL;\n+        }\n+    }\n+    return o;\n+}\n+\n+/* Helper function to convert a string to an unsigned long long value.\n+ * The function attempts to use the faster string2ll() function inside\n+ * Redis: if it fails, strtoull() is used instead. The function returns\n+ * 1 if the conversion happened successfully or 0 if the number is\n+ * invalid or out of range. */\n+int string2ull(const char *s, unsigned long long *value) {\n+    long long ll;\n+    if (string2ll(s,strlen(s),&ll)) {\n+        if (ll < 0) return 0; /* Negative values are out of range. */\n+        *value = ll;\n+        return 1;\n+    }\n+    errno = 0;\n+    *value = strtoull(s,NULL,10);\n+    if (errno == EINVAL || errno == ERANGE) return 0; /* strtoull() failed. */\n+    return 1; /* Conversion done! */\n+}\n+\n+/* Parse a stream ID in the format given by clients to Redis, that is\n+ * <ms>.<seq>, and converts it into a streamID structure. If\n+ * the specified ID is invalid C_ERR is returned and an error is reported\n+ * to the client, otherwise C_OK is returned. The ID may be in incomplete\n+ * form, just stating the milliseconds time part of the stream. In such a case\n+ * the missing part is set according to the value of 'missing_seq' parameter.\n+ * The IDs \"-\" and \"+\" specify respectively the minimum and maximum IDs\n+ * that can be represented. */\n+int streamParseIDOrReply(client *c, robj *o, streamID *id, uint64_t missing_seq) {\n+    char buf[128];\n+    if (sdslen(o->ptr) > sizeof(buf)-1) goto invalid;\n+    memcpy(buf,o->ptr,sdslen(o->ptr)+1);\n+\n+    /* Handle the \"-\" and \"+\" special cases. */\n+    if (buf[0] == '-' && buf[1] == '\\0') {\n+        id->ms = 0;\n+        id->seq = 0;\n+        return C_OK;\n+    } else if (buf[0] == '+' && buf[1] == '\\0') {\n+        id->ms = UINT64_MAX;\n+        id->seq = UINT64_MAX;\n+        return C_OK;\n+    }\n+\n+    /* Parse <ms>.<seq> form. */\n+    char *dot = strchr(buf,'.');\n+    if (dot) *dot = '\\0';\n+    uint64_t ms, seq;\n+    if (string2ull(buf,&ms) == 0) goto invalid;\n+    if (dot && string2ull(dot+1,&seq) == 0) goto invalid;\n+    if (!dot) seq = missing_seq;\n+    id->ms = ms;\n+    id->seq = seq;\n+    return C_OK;\n+\n+invalid:\n+    addReplyError(c,\"Invalid stream ID specified as stream command argument\");\n+    return C_ERR;\n+}\n+\n+/* XADD key [field value] [field value] ... */\n+void xaddCommand(client *c) {\n+    if ((c->argc % 2) == 1) {\n+        addReplyError(c,\"wrong number of arguments for XADD\");\n+        return;\n+    }\n+\n+    /* Lookup the stream at key. */\n+    robj *o;\n+    stream *s;\n+    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;\n+    s = o->ptr;\n+\n+    /* Append using the low level function and return the ID. */\n+    streamID id;\n+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);\n+    sds reply = sdscatfmt(sdsempty(),\"+%U.%U\\r\\n\",id.ms,id.seq);\n+    addReplySds(c,reply);\n+\n+    signalModifiedKey(c->db,c->argv[1]);\n+    notifyKeyspaceEvent(NOTIFY_HASH,\"xadd\",c->argv[1],c->db->id);\n+    server.dirty++;\n+}\n+\n+/* XRANGE key start end [COUNT <n>] */\n+void xrangeCommand(client *c) {\n+    robj *o;\n+    stream *s;\n+    streamID startid, endid;\n+    long long count = 0;\n+\n+    if (streamParseIDOrReply(c,c->argv[2],&startid,0) == C_ERR) return;\n+    if (streamParseIDOrReply(c,c->argv[3],&endid,UINT64_MAX) == C_ERR) return;\n+\n+    /* Parse the COUNT option if any. */\n+    if (c->argc > 4) {\n+        if (strcasecmp(c->argv[4]->ptr,\"COUNT\") == 0) {\n+            if (getLongLongFromObjectOrReply(c,c->argv[5],&count,NULL) != C_OK)\n+                return;\n+        } else {\n+            addReply(c,shared.syntaxerr);\n+            return;\n+        }\n+    }\n+\n+    /* Return the specified range to the user. */\n+    if ((o = lookupKeyReadOrReply(c,c->argv[1],shared.emptymultibulk)) == NULL\n+        || checkType(c,o,OBJ_STREAM)) return;\n+    s = o->ptr;\n+    streamReplyWithRange(c,s,&startid,&endid,count);\n+}\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_cpNsXaYfhBOK3T4Hj3xqzjhD",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 79866a6361829ed0602dedff9cb378c66977227a"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 29154,
+    "output": 1279,
+    "messages": 11
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/c770d74ffc3085367585d2f922b85a2e5d4a3f34a17da34ec5b45c9cc82c9961",
+  "completed": true
+}

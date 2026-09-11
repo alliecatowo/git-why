@@ -1,0 +1,95 @@
+The security vulnerability where curl leaked credentials when following redirects to other protocols or ports is identified as **CVE-2022-27774** (and the closely related **CVE-2022-27776**).
+
+Here are the details of what the fix changed, along with the establishing commit SHAs and supporting diffs.
+
+---
+
+### 1. The Core Fix for CVE-2022-27774
+The primary fix is in commit **`620ea21410030a9977396b4661806bc187231b79`** (*"transfer: redirects to other protocols or ports clear auth"*).
+
+#### **What the fix changed:**
+The fix modified `Curl_follow()` in `lib/transfer.c`. When following a redirect, if `--location-trusted` is not explicitly permitted (i.e. `!data->set.allow_auth_to_other_hosts`), it retrieves the redirected URL's port number and scheme (protocol). If the redirected port or scheme differs from the original connection's port or scheme, the credentials (`data->state.aptr.user` and `data->state.aptr.passwd`) are cleared/freed.
+
+#### **Supporting Diff Quote:**
+```c
++    /* Clear auth if this redirects to a different port number or protocol,
++       unless permitted */
++    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
++      char *portnum;
++      int port;
++      bool clear = FALSE;
++
++      if(data->set.use_port && data->state.allow_port)
++        /* a custom port is used */
++        port = (int)data->set.use_port;
++      else {
++        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,
++                          CURLU_DEFAULT_PORT);
++        if(uc) {
++          free(newurl);
++          return Curl_uc_to_curlcode(uc);
++        }
++        port = atoi(portnum);
++        free(portnum);
++      }
++      if(port != data->info.conn_remote_port) {
++        infof(data, "Clear auth, redirects to port from %u to %u",
++              data->info.conn_remote_port, port);
++        clear = TRUE;
++      }
++      else {
++        char *scheme;
++        const struct Curl_handler *p;
++        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);
++        if(uc) {
++          free(newurl);
++          return Curl_uc_to_curlcode(uc);
++        }
++
++        p = Curl_builtin_scheme(scheme);
++        if(p && (p->protocol != data->info.conn_protocol)) {
++          infof(data, "Clear auth, redirects scheme from %s to %s",
++                data->info.conn_scheme, scheme);
++          clear = TRUE;
++        }
++        free(scheme);
++      }
++      if(clear) {
++        Curl_safefree(data->state.aptr.user);
++        Curl_safefree(data->state.aptr.passwd);
++      }
++    }
+```
+
+---
+
+### 2. The Companion Fix for CVE-2022-27776
+The companion security fix is in commit **`6e659993952aa5f90f48864be84a1bbb047fc258`** (*"http: avoid auth/cookie on redirects same host diff port"*).
+
+#### **What the fix changed:**
+This fix introduced and updated `allow_auth_to_host()` in `lib/http.c` to prevent HTTP auth headers, cookies, and other sensitive headers from being sent to a redirected host if the port number or protocol differs from the original request, even if the hostname matches.
+
+#### **Supporting Diff Quote:**
+```c
++/*
++ * allow_auth_to_host() tells if autentication, cookies or other "sensitive
++ * data" can (still) be sent to this host.
++ */
++static bool allow_auth_to_host(struct Curl_easy *data)
++{
++  struct connectdata *conn = data->conn;
++  return (!data->state.this_is_a_follow ||
++          data->set.allow_auth_to_other_hosts ||
++          (data->state.first_host &&
++           strcasecompare(data->state.first_host, conn->host.name) &&
++           (data->state.first_remote_port == conn->remote_port) &&
++           (data->state.first_remote_protocol == conn->handler->protocol)));
++}
+```
+
+---
+
+### 3. Follow-up TLS-SRP Credential Fixes
+To prevent leaking SRP credentials on redirects, companion fixes were also pushed to the SSL backends:
+- **OpenSSL:** Commit **`139a54ed0a172adaaf1a78d6f4fff50b2c3f9e08`** (*"openssl: don't leak the SRP credentials in redirects either"*) exposed `Curl_allow_auth_to_host()` globally and integrated it into the OpenSSL SRP backend step.
+- **GnuTLS:** Commit **`093531556203decd92d92bccd431edbe5561781c`** (*"gnutls: don't leak the SRP credentials in redirects"*) used `Curl_allow_auth_to_host()` in the GnuTLS SRP backend setup.

@@ -1,0 +1,37 @@
+The requests library switched its default text-encoding guesser on Python 3 from `chardet` to `charset_normalizer` primarily to **resolve licensing concerns for downstream projects**. 
+
+`chardet` is licensed under the LGPL (Lesser General Public License), which creates licensing ambiguity and potential compliance issues for downstream projects that bundle or compile `requests` alongside its dependencies into a single artifact/binary (such as `docker-compose`). In contrast, `charset_normalizer` is licensed under the permissive **MIT License**. Swapping `chardet` for `charset_normalizer` as the default on Python 3 removed this license ambiguity for downstream consumers.
+
+---
+
+### Supporting Commit details
+
+* **Commit SHA:** `2ed84f55b22f19a1e1e8eea2e50963dce62052d3` (short: `2ed84f55`)
+* **Commit Message Header:** `Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)`
+
+#### Quote from the Commit Message:
+> "Although using the (non-vendored) chardet library is fine for requests
+> itself, but using a LGPL dependency the story is a lot less clear
+> for downstream projects, particularly ones that might like to bundle
+> requests (and thus chardet) in to a single binary -- think something
+> similar to what docker-compose is doing. By including an LGPL'd module
+> it is no longer clear if the resulting artefact must also be LGPL'd.
+> 
+> By changing out this dependency for one under MIT we remove all
+> license ambiguity."
+
+#### Quote from the Diff (`HISTORY.md`):
+```markdown
+- Instead of `chardet`, use the MIT-licensed `charset_normalizer` for Python3
+  to remove license ambiguity for projects bundling requests. If `chardet`
+  is already installed on your machine it will be used instead of `charset_normalizer`
+  to keep backwards compatibility.
+```
+
+#### Quote from the Diff (`docs/user/advanced.rst`):
+```rst
+If ``chardet`` is installed, ``requests`` uses it, however for python3
+``chardet`` is no longer a mandatory dependency. The ``chardet``
+library is an LGPL-licenced dependency and some users of requests
+cannot depend on mandatory LGPL-licensed dependencies.
+```

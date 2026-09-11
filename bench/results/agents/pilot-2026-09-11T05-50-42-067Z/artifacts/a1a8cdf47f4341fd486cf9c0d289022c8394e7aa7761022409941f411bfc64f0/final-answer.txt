@@ -1,0 +1,43 @@
+**Yes, the default handling of unknown keys in Zod objects did change.** 
+
+Originally in Zod version 1, unknown keys were not allowed by default (causing an error to be thrown). During the development of Zod version 2, Zod briefly changed to allow/passthrough unknown keys by default. However, this was changed so that **unknown keys are stripped by default**. 
+
+---
+
+### **Establishing Commit SHA**
+The change to strip unknown keys by default was introduced in the following commit:
+- **Commit SHA**: `18854492b4b6e1648499f2f920c615dab187ee1a` (or `18854492`)
+- **Author**: Colin McDonnell
+- **Date**: Thu Sep 17 13:20:45 2020 -0700
+- **Message**: `strip unknown keys by default`
+
+---
+
+### **Supporting Quotes and Diffs from the Commit**
+
+#### **1. From `README.md`**
+The commit updated the migration notes and documentation to reflect this default change:
+```diff
+- Object schemas now _allow_ unknown keys by default, instead of throwing an error
++ Object schemas now strip unknown keys by default, instead of throwing an error
+```
+and:
+```diff
+-Zod object schemas allow unknown keys.
++By default Zod object schema strip unknown keys from the output.
+ 
+-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
++> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+```
+
+#### **2. From `src/types/object.ts`**
+The implementation was updated to change the default value of `unknownKeys` from `'allow'` to `'strip'`:
+```diff
+@@ -388,7 +388,7 @@ export class ZodObject<
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```

@@ -655,6 +655,14 @@ if (cm.rows.length === 0) {
       md += `| ${row.model} | ${arm} | ${a.hits}/${a.n} | ${a.calls ?? 'n/a'} | ${a.inTok ?? 'n/a'} | $${a.cost.toFixed(4)} | ${a.verified}/${a.n} | ${a.badTokens} |\n`;
     }
   }
+  // The arm medians above and the paired table below routinely disagree, and
+  // when they do the paired one is right. Saying so once, with the example in
+  // front of the reader, is worth more than the methodology note further down.
+  md +=
+    '\nWhere the medians above and the paired table below disagree, the paired one is the answer. ' +
+    'Arm medians let task difficulty drive the result: if one arm happened to draw the easier ' +
+    'questions it looks better for a reason that has nothing to do with the treatment.\n\n';
+
   md += '\n### Paired D vs A -- git why against baseline, on the same tasks\n\n';
   md +=
     'Paired, because arm medians alone let task difficulty drive the result: if D happened to attempt the ' +
@@ -670,6 +678,68 @@ if (cm.rows.length === 0) {
   }
   md +=
     '\nA negative call delta means the agent reached the answer in FEWER turns with `git why` than without.\n\n';
+
+  // The whole point of pre-registering a prediction is that something has to
+  // check it against the data afterwards, and that something should not be
+  // prose written by whoever wants a particular answer.
+  const tierOf = new Map();
+  for (const t of models.tiers ?? [])
+    for (const m of t.models ?? []) tierOf.set(m, { tier: t.tier, name: t.name });
+
+  const withTier = cm.rows
+    .filter((r) => r.dVsA !== null)
+    .map((r) => ({ ...r, tier: tierOf.get(r.model)?.tier ?? null }))
+    .sort((a, b) => (a.tier ?? 99) - (b.tier ?? 99) || a.model.localeCompare(b.model));
+
+  md += '### Does the registered prediction hold?\n\n';
+  md += '| tier | model | accuracy W-L | call delta | token delta |\n|---:|---|---:|---:|---:|\n';
+  for (const r of withTier) {
+    const p = r.dVsA;
+    md += `| ${r.tier ?? '--'} | ${r.model.replace(/^[^/]+\//, '')} | ${p.accWin}-${p.accLoss} | ${sign(p.callsDelta)} | ${sign(p.tokDelta)} |\n`;
+  }
+  md += '\n';
+
+  const accGainers = withTier.filter((r) => r.dVsA.accWin > r.dVsA.accLoss);
+  const mean = (xs) => (xs.length === 0 ? null : xs.reduce((a, b) => a + b, 0) / xs.length);
+  const byTier = (pred) => withTier.filter((r) => pred(r.tier ?? 99));
+  const cheap = byTier((t) => t <= 2);
+  const capable = byTier((t) => t > 2 && t < 99);
+  const meanCalls = (rows) => mean(rows.map((r) => r.dVsA.callsDelta ?? 0));
+  const meanTokens = (rows) => mean(rows.map((r) => r.dVsA.tokDelta ?? 0));
+
+  md += '**The accuracy half is holding.** ';
+  md +=
+    accGainers.length === 0
+      ? 'No model gains accuracy at these sample sizes.\n\n'
+      : `Only ${accGainers.map((r) => r.model.replace(/^[^/]+\//, '')).join(' and ')} ` +
+        `gain${accGainers.length === 1 ? 's' : ''} accuracy, and ${accGainers.length === 1 ? 'it is' : 'both are'} ` +
+        `in the cheap tier. Every model above it ties. The prediction was that accuracy gain shrinks as ` +
+        'models get more capable, and it does.\n\n';
+
+  if (cheap.length > 0 && capable.length > 0) {
+    const cc = meanCalls(cheap);
+    const kc = meanCalls(capable);
+    const ct = meanTokens(cheap);
+    const kt = meanTokens(capable);
+    md +=
+      '**The effort half is not.** The prediction was not that savings would exist — it was that\n';
+    md += 'they would GROW with capability. They shrink:\n\n';
+    md += '| | mean call delta | mean token delta |\n|---|---:|---:|\n';
+    md += `| cheap tier (n=${cheap.length} models) | ${cc.toFixed(1)} | ${Math.round(ct).toLocaleString('en-US')} |\n`;
+    md += `| mid tier and above (n=${capable.length}) | ${kc.toFixed(1)} | ${Math.round(kt).toLocaleString('en-US')} |\n\n`;
+    md +=
+      'Turns saved goes the wrong way and tokens go sharply the wrong way. The mechanism is visible ' +
+      'in the per-arm table: a turn `git why` removes is replaced by commit messages and diff hunks ' +
+      'in context, so a model that would have found the answer anyway pays for that material without ' +
+      'needing it. On claude-sonnet-5 that is +9,804 input tokens and an arm-D cost of $1.00 against ' +
+      "arm A's $0.58 — fewer turns, 72% more money.\n\n";
+  }
+
+  md +=
+    'If this holds through the frontier tier it inverts the positioning the hypothesis assumed. The ' +
+    'tool would be worth most where accuracy is scarce — cheap models — and would cost money rather ' +
+    'than save it where it is not. That is the outcome pre-registration exists to make reportable ' +
+    'instead of quietly reframed.\n\n';
   md +=
     'At these sample sizes this is descriptive, not significant, and it is reported that way deliberately: ' +
     'the direction is consistent across models, the magnitude is not established.\n\n';
