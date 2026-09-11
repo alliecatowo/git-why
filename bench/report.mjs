@@ -132,6 +132,19 @@ const externalV2PerQuery = externalV2RunDir
   ? readJson(join(externalV2RunDir, 'per-query.json'))
   : null;
 
+// The ablation is a separate, more expensive pass that most runs skip, so the
+// newest run usually has none. Taking the newest run unconditionally made the
+// ablation section disappear from the report the moment a plain run landed
+// after it -- while the README went on quoting a figure the report no longer
+// showed. Each section picks the newest run that actually has its data, which
+// is what the comment above this block always claimed the picker did.
+const externalV2AblationDirName = [...externalV2Dirs]
+  .reverse()
+  .find((d) => readJson(join(RESULTS_DIR, 'external-v2', d, 'summary.json'))?.ablation != null);
+const externalV2AblationSummary = externalV2AblationDirName
+  ? readJson(join(RESULTS_DIR, 'external-v2', externalV2AblationDirName, 'summary.json'))
+  : null;
+
 // Live environment checks -- not hand-asserted.
 const zgPath = sh(['which', 'zg']);
 const zgInstalled = zgPath.length > 0;
@@ -498,14 +511,15 @@ if (externalV2Summary) {
     md += '\n';
   }
   md += missList(externalMisses(externalV2PerQuery));
-  if (externalV2Summary.ablation) {
+  if (externalV2AblationSummary) {
     md += '**Evidence ablation (v2, summary+evidence minus summary-only):**\n\n';
+    md += `Run: \`${externalV2AblationDirName}\` -- the most recent run that includes an ablation pass, which is not necessarily the most recent run.\n\n`;
     md += '| mode | dHit@1 | dHit@3 | dHit@5 | dMRR |\n|---|---|---|---|---|\n';
-    for (const row of externalV2Summary.ablation.overallByMode ?? []) {
+    for (const row of externalV2AblationSummary.ablation.overallByMode ?? []) {
       const d = row.diff_evidenceMinusSummaryOnly;
       md += `| ${row.mode} | ${num(d.hit1)} | ${num(d.hit3)} | ${num(d.hit5)} | ${num(d.mrr)} |\n`;
     }
-    const v2Hybrid = (externalV2Summary.ablation.overallByMode ?? []).find(
+    const v2Hybrid = (externalV2AblationSummary.ablation.overallByMode ?? []).find(
       (r) => r.mode === 'hybrid',
     )?.diff_evidenceMinusSummaryOnly;
     md += `\n**Verdict: diff/evidence ingestion earns its complexity on real history.** Hybrid gains ${num(v2Hybrid?.hit5)} Hit@5 and ${num(v2Hybrid?.mrr)} MRR from evidence records, positive in every mode. This reverses the synthetic-dev reading (section 4), where evidence looked useless because summaries alone saturated. Decision: KEEP diff/evidence ingestion and retrieval; do not remove. Caveat: n=16 answerable, single authored set -- consistent direction, not a precise magnitude.\n\n`;
@@ -808,7 +822,30 @@ function readmeBlocks() {
     'still fails on most of them. Treat results as leads to verify with `git show`,\n' +
     'never as established fact.\n';
 
-  return { corpus: table, crossfile, honesty, cases: main.cases };
+  // The scale table. Every row is read from a run rather than remembered --
+  // the test-count row that used to sit here said 333 when the suite had 340,
+  // which is what a hand-maintained number does given a week.
+  const fresh = perfResults.workloads.freshProcessCurrentIndex;
+  const ablation = (externalV2AblationSummary?.ablation?.overallByMode ?? []).find(
+    (r) => r.mode === 'hybrid',
+  )?.diff_evidenceMinusSummaryOnly;
+  const indexRows = readJson(join(REPO_ROOT, 'bench', 'results', 'index-size.json'));
+  let scale = '| measurement | result |\n| --- | --- |\n';
+  if (indexRows) {
+    const kb = indexRows.repos.map((r) => r.kbPerRecord);
+    const commits = indexRows.repos.reduce((a, r) => a + r.commits, 0);
+    const biggest = indexRows.repos.reduce((a, b) => (b.commits > a.commits ? b : a));
+    scale += `| Index across ${indexRows.repos.length} real repos (${commits.toLocaleString('en-US')} commits) | ${Math.min(...kb).toFixed(2)}–${Math.max(...kb).toFixed(2)} KB/record |\n`;
+    scale += `| ${biggest.repo} (${biggest.commits.toLocaleString('en-US')} commits) | ${biggest.size}, ${biggest.kbPerRecord.toFixed(2)} KB/record |\n`;
+  }
+  if (fresh) {
+    scale += `| Warm query, fresh process (p50 / p95, n=${fresh.latencyMs.n}) | ${ms(fresh.latencyMs.p50)} / ${ms(fresh.latencyMs.p95)} |\n`;
+  }
+  if (ablation) {
+    scale += `| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 ${ablation.hit5 >= 0 ? '+' : ''}${num(ablation.hit5)} |\n`;
+  }
+
+  return { corpus: table, crossfile, honesty, scale, cases: main.cases };
 }
 
 function replaceMarked(source, name, body) {
@@ -826,6 +863,7 @@ if (blocks !== null) {
   const before = readFileSync(readmePath, 'utf8');
   let after = replaceMarked(before, 'corpus-table', blocks.corpus);
   if (blocks.crossfile) after = replaceMarked(after, 'crossfile', blocks.crossfile);
+  after = replaceMarked(after, 'scale', blocks.scale);
   after = replaceMarked(after, 'honesty', blocks.honesty);
   after = await format(after, { parser: 'markdown', ...(await resolveConfig(readmePath)) });
 

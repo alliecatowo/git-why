@@ -1,0 +1,12 @@
+{
+  "note": "Measured index size per repository. `size` is the human-readable on-disk figure reported by du -h on .git/why, `kbPerRecord` is bytes/records from `git why status --json`. Regenerate by indexing each pinned clone and reading status.",
+  "measuredAt": "2026-09-10",
+  "repos": [
+    { "repo": "curl", "commits": 30000, "size": "1.00 GiB", "kbPerRecord": 5.74 },
+    { "repo": "redis", "commits": 12110, "size": "450 MiB", "kbPerRecord": 6.92 },
+    { "repo": "requests", "commits": 6494, "size": "106 MiB", "kbPerRecord": 5.5 },
+    { "repo": "zod", "commits": 3210, "size": "162 MiB", "kbPerRecord": 6.52 },
+    { "repo": "caddy", "commits": 2680, "size": "130 MiB", "kbPerRecord": 6.98 },
+    { "repo": "ripgrep", "commits": 2287, "size": "87 MiB", "kbPerRecord": 6.94 }
+  ]
+}
