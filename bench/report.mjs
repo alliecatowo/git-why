@@ -1038,7 +1038,6 @@ function readmeBlocks() {
   // The scale table. Every row is read from a run rather than remembered --
   // the test-count row that used to sit here said 333 when the suite had 340,
   // which is what a hand-maintained number does given a week.
-  const fresh = perfResults.workloads.freshProcessCurrentIndex;
   const ablation = (externalV2AblationSummary?.ablation?.overallByMode ?? []).find(
     (r) => r.mode === 'hybrid',
   )?.diff_evidenceMinusSummaryOnly;
