@@ -22,6 +22,20 @@ import { join } from 'node:path';
 
 export const ARMS = ['A', 'B', 'C', 'D'];
 
+/**
+ * Which task set a trial belongs to.
+ *
+ * `B-` tasks are six-question briefs scored 0..6; `X-` tasks are
+ * single-question lookups scored pass/fail. Pooling them would average a score
+ * into a bit and report the result as though one measurement had been made.
+ */
+export function taskFamily(taskId) {
+  if (typeof taskId !== 'string') return 'unknown';
+  if (taskId.startsWith('B-')) return 'brief';
+  if (taskId.startsWith('X-')) return 'lookup';
+  return 'other';
+}
+
 export const median = (xs) => {
   const v = xs.filter((n) => typeof n === 'number' && Number.isFinite(n)).sort((a, b) => a - b);
   return v.length === 0 ? null : v[Math.floor(v.length / 2)];
@@ -90,17 +104,25 @@ export function compareModels(resultsDir, opts = {}) {
     .map((dir) => ({ dir, records: loadRun(dir) }))
     .filter((r) => r.records.length > 0);
 
-  // Group by the model recorded on the trials, not by directory name: one
-  // model can span several directories after a re-run.
-  const byModel = new Map();
+  // Group by model AND task family. One model can span several directories
+  // after a re-run, which should pool — but a run against six-question briefs
+  // and a run against single-question lookups must NOT, and they would have:
+  // the grouping was by model alone, so a model's brief scores would have been
+  // averaged into its older binary outcomes as though they measured the same
+  // thing.
+  const byGroup = new Map();
   for (const { records } of runs) {
-    const model = records[0].model_id ?? 'unknown';
-    if (!byModel.has(model)) byModel.set(model, { model, records: [] });
-    byModel.get(model).records.push(...records);
+    for (const record of records) {
+      const model = record.model_id ?? 'unknown';
+      const family = taskFamily(record.task_id);
+      const key = `${model}\u0000${family}`;
+      if (!byGroup.has(key)) byGroup.set(key, { model, family, records: [] });
+      byGroup.get(key).records.push(record);
+    }
   }
 
   const rows = [];
-  for (const { model, records } of byModel.values()) {
+  for (const { model, family, records } of byGroup.values()) {
     const arms = {};
     for (const arm of ARMS) {
       const g = graded(records, arm);
@@ -162,9 +184,9 @@ export function compareModels(resultsDir, opts = {}) {
       };
     };
 
-    rows.push({ model, arms, dVsA: paired('A', 'D'), cVsB: paired('B', 'C') });
+    rows.push({ model, family, arms, dVsA: paired('A', 'D'), cVsB: paired('B', 'C') });
   }
 
-  rows.sort((a, b) => a.model.localeCompare(b.model));
+  rows.sort((a, b) => a.family.localeCompare(b.family) || a.model.localeCompare(b.model));
   return { rows, skipped };
 }

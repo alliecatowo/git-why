@@ -20,30 +20,37 @@ import { compareModels, ARMS } from './agents/model-compare.mjs';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const { rows, skipped } = compareModels(join(ROOT, 'bench', 'results', 'agents'));
 
+const families = [...new Set(rows.map((r) => r.family))];
+console.log(
+  `\nTask families present: ${families.join(', ')}. ` +
+    'Briefs are six questions scored 0..6; lookups are one question, pass/fail.\n' +
+    'They are never pooled -- averaging a score into a bit would report one number for two measurements.\n',
+);
+
 console.log('\nPer-arm, graded trials only (n = trials that ran and produced a verdict)\n');
 console.log(
-  `${'model'.padEnd(34)}${'arm'.padEnd(5)}${'score'.padEnd(10)}${'calls'.padEnd(7)}${'in tok'.padEnd(9)}${'cost'.padEnd(11)}${'tok ok'.padEnd(8)}bad-tok`,
+  `${'family'.padEnd(8)}${'model'.padEnd(34)}${'arm'.padEnd(5)}${'score'.padEnd(10)}${'calls'.padEnd(7)}${'in tok'.padEnd(9)}${'cost'.padEnd(11)}${'tok ok'.padEnd(8)}bad-tok`,
 );
 for (const row of rows) {
   for (const arm of ARMS) {
     const a = row.arms[arm];
     if (a.n === 0) continue;
     console.log(
-      `${row.model.slice(0, 33).padEnd(34)}${arm.padEnd(5)}${`${a.points}/${a.pointsOutOf}`.padEnd(10)}${String(a.calls ?? '-').padEnd(7)}${String(a.inTok ?? '-').padEnd(9)}${`$${a.cost.toFixed(4)}`.padEnd(11)}${`${a.verified}/${a.n}`.padEnd(8)}${a.badTokens || ''}`,
+      `${row.family.padEnd(8)}${row.model.slice(0, 33).padEnd(34)}${arm.padEnd(5)}${`${a.points}/${a.pointsOutOf}`.padEnd(10)}${String(a.calls ?? '-').padEnd(7)}${String(a.inTok ?? '-').padEnd(9)}${`$${a.cost.toFixed(4)}`.padEnd(11)}${`${a.verified}/${a.n}`.padEnd(8)}${a.badTokens || ''}`,
     );
   }
 }
 
 console.log('\nPaired D vs A (git why against baseline), same tasks only\n');
 console.log(
-  `${'model'.padEnd(34)}${'n'.padEnd(5)}${'points A>D'.padEnd(14)}${'W-L'.padEnd(8)}${'call delta'.padEnd(12)}token delta`,
+  `${'family'.padEnd(8)}${'model'.padEnd(34)}${'n'.padEnd(5)}${'points A>D'.padEnd(14)}${'W-L'.padEnd(8)}${'call delta'.padEnd(12)}token delta`,
 );
 for (const row of rows) {
   const p = row.dVsA;
   if (!p) continue;
   const sign = (v) => (v === null ? '-' : v > 0 ? `+${v}` : String(v));
   console.log(
-    `${row.model.slice(0, 33).padEnd(34)}${String(p.n).padEnd(5)}${(p.pointsOutOf === null ? '-' : `${p.pointsX}->${p.pointsY}/${p.pointsOutOf}`).padEnd(14)}${`${p.accWin}-${p.accLoss}`.padEnd(8)}${sign(p.callsDelta).padEnd(12)}${sign(p.tokDelta)}`,
+    `${row.family.padEnd(8)}${row.model.slice(0, 33).padEnd(34)}${String(p.n).padEnd(5)}${(p.pointsOutOf === null ? '-' : `${p.pointsX}->${p.pointsY}/${p.pointsOutOf}`).padEnd(14)}${`${p.accWin}-${p.accLoss}`.padEnd(8)}${sign(p.callsDelta).padEnd(12)}${sign(p.tokDelta)}`,
   );
 }
 
