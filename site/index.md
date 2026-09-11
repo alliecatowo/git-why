@@ -36,7 +36,7 @@ No identifier to grep for, no file to scope to — the question shares almost no
 vocabulary with the commit that answers it. That mismatch is the whole reason
 this exists.
 
-<Cast src="/casts/owners.cast" title='git why "TLS backend abstraction and vtls layer" --owners' />
+<Cast src="/casts/owners.cast" title='git why "TLS backend abstraction and vtls layer" --owners -n 20' />
 
 `git blame` credits whoever last touched a line; `git shortlog` credits churn.
 This weights commits by relevance instead.

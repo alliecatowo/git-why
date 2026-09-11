@@ -57,6 +57,8 @@ Options:
   --after=<anchor>      Temporal anchor when non-ISO (tags, SHA, or a query)
   --between=<a>,<b>     Prefer commits between two temporal anchors
   --around=<anchor>     Prefer commits near a date, tag, or SHA
+  --owners              Who established this area, ranked by relevance of their
+                        commits rather than by surviving lines or commit count
   --group <query>       Additional retrieval group; fuse groups at commit level
   --after=<date>        Only commits at or after this date (UTC, ISO-8601)
   --before=<date>       Only commits strictly before this date (UTC, ISO-8601)

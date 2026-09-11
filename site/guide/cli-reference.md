@@ -12,25 +12,54 @@ does not reach the tool.
 
 ## Options
 
-| Flag                   | Meaning                                                                                                        |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `-n <1-50>`            | Distinct commits to return. Default 5, max 50.                                                                 |
-| `-- <path>...`         | Restrict to literal historical paths; a trailing `/` means a directory prefix.                                 |
-| `--after=<date>`       | Only commits at or after this date (UTC, ISO-8601).                                                            |
-| `--before=<date>`      | Only commits strictly before this date (UTC, ISO-8601).                                                        |
-| `--author=<substring>` | Case-insensitive substring of author name or email.                                                            |
-| `--text`               | Full-text search only.                                                                                         |
-| `--semantic`           | Vector search only (default is hybrid).                                                                        |
-| `--sort=<order>`       | `relevance` (default), `oldest`, or `newest`. Reorders the selected commits; never changes which are returned. |
-| `--json`               | Emit the versioned JSON envelope on stdout.                                                                    |
-| `--no-refresh`         | Never create, mutate, or repair the index; requires one to exist.                                              |
-| `--offline`            | Also forbid model downloads.                                                                                   |
-| `--max-bytes=<n>`      | Bound rendered output, including JSON framing (default 16384, max 262144).                                     |
-| `--lock-timeout=<sec>` | Seconds to wait for another process (default 30).                                                              |
-| `--query <text>`       | Explicit query text, for text that looks like a command or option.                                             |
-| `-h`                   | Show help (via `git why -h`; see note below).                                                                  |
-| `--help`               | Show help when calling the `git-why` binary directly.                                                          |
-| `--version`            | Show the version.                                                                                              |
+<!-- generated:options -->
+
+| Flag                       | Meaning                                                                                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-n <count>`               | Number of distinct commits to return (default 5, max 50)                                                                                                            |
+| `--text`                   | Full-text search only                                                                                                                                               |
+| `--semantic`               | Vector search only (default is hybrid)                                                                                                                              |
+| `--sort=<order>`           | relevance (default), oldest, or newest. Reorders the selected commits; never changes which are returned                                                             |
+| `--first --last --removed` | Resolve/order an introduction, last change, or removal                                                                                                              |
+| `--timeline`               | Return the history-oriented retrieval view                                                                                                                          |
+| `--before=<anchor>`        | Temporal anchor when non-ISO (tags, SHA, or a query); ISO dates remain history filters                                                                              |
+| `--after=<anchor>`         | Temporal anchor when non-ISO (tags, SHA, or a query)                                                                                                                |
+| `--between=<a>,<b>`        | Prefer commits between two temporal anchors                                                                                                                         |
+| `--around=<anchor>`        | Prefer commits near a date, tag, or SHA                                                                                                                             |
+| `--owners`                 | Who established this area, ranked by relevance of their commits rather than by surviving lines or commit count                                                      |
+| `--group <query>`          | Additional retrieval group; fuse groups at commit level                                                                                                             |
+| `--after=<date>`           | Only commits at or after this date (UTC, ISO-8601)                                                                                                                  |
+| `--before=<date>`          | Only commits strictly before this date (UTC, ISO-8601)                                                                                                              |
+| `--author=<substring>`     | Case-insensitive substring of author name or email                                                                                                                  |
+| `--json`                   | Emit the versioned JSON envelope on stdout                                                                                                                          |
+| `--refresh=<mode>`         | off: never create, mutate, or repair the index; requires one to exist. wait: refresh normally (the default); spelled out for scripts that want to say so explicitly |
+| `--no-refresh`             | Alias for --refresh=off                                                                                                                                             |
+| `--offline`                | Also forbid model downloads                                                                                                                                         |
+| `--max-bytes=<n>`          | Bound rendered output, including JSON framing (default 16384)                                                                                                       |
+| `--lock-timeout=<sec>`     | Seconds to wait for another process (default 30)                                                                                                                    |
+| `--verbose`                | Also report model loading and download progress on stderr                                                                                                           |
+| `--query <text>`           | Explicit query text, for text that looks like a command or option                                                                                                   |
+| `--help`                   | Show this help                                                                                                                                                      |
+| `--version`                | Show the version                                                                                                                                                    |
+
+<!-- /generated:options -->
+
+Flags below that apply to a subcommand rather than to a query:
+
+<!-- generated:command-options -->
+
+| Flag                  | Meaning                                                                                                                                                         |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--if-needed`         | With index: exit 0 immediately if the index is already current, so it is cheap to run unconditionally                                                           |
+| `--check-ready`       | With status: exit non-zero unless the index exists, is current for the repository's refs, and covers every reachable commit. For scripts that gate on readiness |
+| `--use-default-model` | With rebuild: re-embed with the default model rather than the one recorded in the existing index                                                                |
+
+<!-- /generated:command-options -->
+
+These two tables are generated from `git why -h` by
+`site/scripts/gen-cli-reference.mjs`, and CI fails if they drift. The
+hand-maintained version of this page documented fourteen flags while the tool
+had twenty-six.
 
 Default mode is **hybrid** (both `--text` and `--semantic` branches, fused
 with RRF); passing either flag runs a single branch instead.
@@ -43,14 +72,13 @@ For "when was this first introduced?" questions, widen the pool first
 
 ## Lifecycle commands
 
-| Command                               | Effect                                                 |
-| ------------------------------------- | ------------------------------------------------------ |
-| `git why index`                       | Create or reconcile the index.                         |
-| `git why status`                      | Report index state without mutating anything.          |
-| `git why status --json`               | Same, machine-readable.                                |
-| `git why rebuild`                     | Replace derived index data.                            |
-| `git why rebuild --use-default-model` | Rebuild, forcing the default embedding model.          |
-| `git why gc`                          | Reconcile and compact, without downloading embeddings. |
+| Command                 | Effect                                                 |
+| ----------------------- | ------------------------------------------------------ |
+| `git why index`         | Create or reconcile the index.                         |
+| `git why status`        | Report index state without mutating anything.          |
+| `git why status --json` | Same, machine-readable.                                |
+| `git why rebuild`       | Replace derived index data.                            |
+| `git why gc`            | Reconcile and compact, without downloading embeddings. |
 
 ## Exit codes
 

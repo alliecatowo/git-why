@@ -23,7 +23,7 @@ it, neither dates the reason.
 
 ## Who established an area
 
-<Cast src="/casts/owners.cast" title='git why "TLS backend abstraction and vtls layer" --owners' />
+<Cast src="/casts/owners.cast" title='git why "TLS backend abstraction and vtls layer" --owners -n 20' />
 
 `git blame` credits whoever last touched a line, so a formatting sweep reassigns
 authorship. `git shortlog` counts commits, so mechanical churn outranks design.

@@ -61,6 +61,16 @@ jobs:
         working-directory: site
         run: npm ci
 
+      # The CLI reference tables are generated from `git why -h`. The
+      # hand-maintained version drifted to documenting fourteen flags out of
+      # twenty-seven, with every temporal flag missing, so the page is checked
+      # rather than trusted.
+      - name: Install root dependencies (for the CLI the reference is generated from)
+        run: npm ci
+      - run: npm run build
+      - name: CLI reference matches --help
+        run: node site/scripts/gen-cli-reference.mjs --check
+
       - name: Build site
         working-directory: site
         run: npm run build
