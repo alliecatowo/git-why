@@ -195,6 +195,46 @@ support` — two days _after_ the commit that actually added the `Cancel` and
 `CancelToken` classes, which ranks ninth. Widening to twenty and sorting by
 oldest puts the correct commit first. See `docs/report.md`.
 
+## Ordinal answers: `--first`, `--last`, `--removed`
+
+For that same question there is a better tool than widening the pool.
+`--first`, `--last` and `--removed` do not reorder the ranked list at all;
+they resolve an endpoint from the **lineage table**, which tracks when a term
+or path was valid across the commit DAG.
+
+That means the answer is frequently **not among the results**, which is the
+point — it is the commit retrieval missed:
+
+```console
+$ git why "when was HTTP/3 support first introduced" --first
+
+introduced: 3af0e76  HTTP3: initial (experimental) support  2019-07-21  (by http3)
+
+1. 011788f  msh3: fix the QUIC disconnect function
+   ...
+```
+
+On curl's 30,000 commits, `3af0e76` does not appear in the top ten. Sorting or
+widening could not have found it; the ranked list below the answer is not a
+worse view of it, it does not contain it.
+
+Three things to know about the answer line:
+
+- **Ancestry, never timestamps.** Ordinals walk the commit DAG, because
+  rebases and cherry-picks rewrite dates on exactly the repositories where the
+  question is worth asking.
+- **`(by <token>)` names what the interval was keyed on**, and you should read
+  it. An ordinal resolved through the wrong term is wrong in a way the SHA
+  alone does not reveal.
+- **`--first` is more trustworthy than `--last` and `--removed`.**
+  Regenerated files such as `RELEASE-NOTES` make a term appear and disappear
+  for reasons unrelated to the feature, which the earliest mention survives
+  and the most recent one does not. `docs/decisions.md` records the
+  measurement and why it is not fixed in 0.1.0.
+
+`--timeline` renders the whole chain instead of one endpoint, in ancestry
+order, for "how did this evolve" rather than "when did this happen".
+
 ## Help output
 
 `git why -h` and `git-why --help` both work. `git why --help` does not reach
