@@ -1,0 +1,73 @@
+{
+  "purpose": "Model comparison across intelligence and price classes, to test whether Git Why's value is making weak models smarter or making strong models cheaper.",
+  "hypothesis": {
+    "statement": "Git Why's measurable benefit is turn and token reduction for CAPABLE models, not accuracy gain for weak ones.",
+    "registeredBefore": "Any tier-2 or tier-3 run.",
+    "priorEvidence": "With deepseek-v4-flash (capable) it halved median tool calls, 16 to 9, at identical accuracy on 7 of 8 paired tasks. With gemini-2.5-flash-lite (weak) accuracy separated but zg explained more of the gain than git why did, whose paired edge was one task wide at n=7.",
+    "predicts": "Tool-call and token reduction should GROW with model capability, and accuracy gain should shrink. If the opposite holds -- weak models gaining accuracy while strong models save nothing -- the hypothesis is wrong and the cost story inverts.",
+    "falsifiable": true,
+    "whyItMatters": "A turn saved on an expensive model is worth real money; a turn saved on a cheap one is close to free. Which end the benefit lands on decides how the tool should be positioned."
+  },
+  "ordering": "Tiers run in order. A tier only runs if the one before it produced valid trials with reconciled token accounting -- the harness has produced eight plausible-but-wrong results in this project's history, and none of them announced itself. Cheap models are how that gets caught before it is expensive.",
+  "tiers": [
+    {
+      "tier": 1,
+      "name": "validation",
+      "spendClass": "negligible",
+      "purpose": "Prove the harness is sound. Not a comparison.",
+      "models": ["llmgateway/deepseek-v4-flash"],
+      "gate": "Trials valid, tokens non-null and reconciled against the provider's own accounting, tool calls counted, arm A has no treatment."
+    },
+    {
+      "tier": 2,
+      "name": "cheap tier comparison",
+      "spendClass": "low",
+      "models": [
+        "llmgateway/gemini-3.1-flash-lite",
+        "llmgateway/claude-haiku-4-5",
+        "llmgateway/deepseek-v4-flash"
+      ],
+      "gate": "A visible difference between arms on at least one measure. If every arm ties at every tier the benchmark cannot discriminate and going further wastes money."
+    },
+    {
+      "tier": 3,
+      "name": "mid tier",
+      "spendClass": "moderate",
+      "models": ["llmgateway/claude-sonnet-5", "llmgateway/gemini-3.5-flash"]
+    },
+    {
+      "tier": 4,
+      "name": "frontier",
+      "spendClass": "high",
+      "models": ["llmgateway/claude-opus-5", "openai/gpt-5.6-luna", "openai/gpt-5.6-terra"],
+      "note": "openai/ is the direct-credit provider, not DevPass."
+    },
+    {
+      "tier": 5,
+      "name": "most expensive, last",
+      "spendClass": "highest",
+      "models": ["openai/gpt-5.6-sol"],
+      "note": "Run only after every other tier has produced usable numbers. Explicitly last at the owner's instruction because it burns usage fastest."
+    }
+  ],
+  "arms": {
+    "A": "baseline: git, ripgrep, no retrieval tooling",
+    "B": "+ zg (current-code semantic search)",
+    "C": "+ zg + git why",
+    "D": "+ git why"
+  },
+  "measures": [
+    "citation accuracy against the hand-verified commit",
+    "tool calls to reach the answer, paired per task",
+    "input and output tokens, summed across every step_finish event",
+    "wall clock",
+    "observed cost, from provider accounting rather than estimated from a price list",
+    "cost per correct answer, which is the number that actually decides whether this is worth installing"
+  ],
+  "reportingRules": [
+    "Every rate carries its numerator and denominator.",
+    "Exit categories stay separate: completed, timed out, budget exceeded, never started. A trial that did not run is not a wrong answer.",
+    "Paired comparisons only, on tasks both arms attempted. Arm medians alone let task difficulty drive the result.",
+    "Descriptive only. No significance claims at these sample sizes."
+  ]
+}
