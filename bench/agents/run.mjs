@@ -299,6 +299,43 @@ function armNeedsZg(arm) {
   return arm === 'B' || arm === 'C';
 }
 
+/**
+ * Refuses to benchmark a working tree that is not what a commit says it is.
+ *
+ * `preparePackagedGitWhy()` runs `npm pack`, which packs whatever `dist/`
+ * currently holds — so a run started mid-edit measures a half-finished tool,
+ * and a run spanning a rebuild measures two different tools under one model's
+ * name. That happened: a retrieval change landed between two models of the
+ * same suite, and their results were no longer comparable.
+ *
+ * A benchmark whose subject cannot be named is not a benchmark. `--allow-dirty`
+ * exists for deliberate experiments on an uncommitted change, and says so in
+ * the records rather than being silent about it.
+ */
+function assertReproducibleTree(allowDirty) {
+  const status = execFileSync('git', ['status', '--porcelain', '--untracked-files=no'], {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+  }).trim();
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+  }).trim();
+  if (status.length === 0) return { head, dirty: false };
+  const files = status.split('\n').slice(0, 10).join('\n');
+  if (!allowDirty) {
+    fail(
+      `the working tree has uncommitted changes, so this run could not be attributed to a commit:\n${files}\n\n` +
+        'Commit them, or pass --allow-dirty to record the run as unattributable.',
+    );
+  }
+  console.warn(
+    `[bench/agents] WARNING: running against a DIRTY tree at ${head.slice(0, 8)}. ` +
+      'These results cannot be reproduced from a commit.',
+  );
+  return { head, dirty: true };
+}
+
 function preparePackagedGitWhy() {
   const tarballsDir = benchWorkSubdir('tools', 'tarballs');
   rmSync(PACKAGED_TOOL_DIR, { recursive: true, force: true });
@@ -1127,6 +1164,12 @@ async function main() {
       '[bench/agents] zg is not installed. Arms B and C will be recorded as infrastructure_blocked, not skipped or faked.',
     );
   }
+
+  // Name the subject before measuring it.
+  const tree = assertReproducibleTree(process.argv.includes('--allow-dirty'));
+  console.log(
+    `[bench/agents] implementation ${tree.head.slice(0, 12)}${tree.dirty ? ' (DIRTY)' : ''}`,
+  );
 
   // Sweep tool dirs from runs that are no longer alive before installing ours.
   cleanupPackagedToolDirs();
