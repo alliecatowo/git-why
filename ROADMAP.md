@@ -206,3 +206,8 @@ Recorded so they are not mistaken for oversights:
   the embedder.
 - **`git log -S` wins when you can name the symbol** (0.950 vs 0.350). No
   amount of new corpora changes that, and the skill should keep saying so.
+- **`--last` and `--removed` are weaker than `--first`**, because regenerated
+  files like `RELEASE-NOTES` make a token appear and disappear for reasons
+  unrelated to the feature. Excluding such files from lineage seeding is the
+  obvious fix and is a retrieval change, so it needs measuring against the
+  174-case corpus first. See `docs/decisions.md`.

@@ -393,6 +393,40 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## Ordinals are only as good as the token the interval is keyed on
+
+Found while making the human renderer show the ordinal answer at all (it was
+computed and then discarded, so nobody had looked at one outside `--json`).
+
+On curl the answers separate sharply by kind:
+
+| query                                                | answer                                                     | verdict |
+| ---------------------------------------------------- | ---------------------------------------------------------- | ------- |
+| `"when was HTTP/3 support first introduced" --first` | `3af0e76 HTTP3: initial (experimental) support` 2019-07-21 | correct |
+| `"HTTP/3 support" --last`                            | `a496d46 RELEASE-NOTES: synced` 2023-02-28                 | useless |
+| `"HTTP/3 support" --removed`                         | `0cafff2 RELEASE-NOTES: synced` 2023-02-20                 | wrong   |
+
+All three are keyed on the same token, `http3`, and all three are the honest
+endpoints of that token's validity interval. The problem is what the interval
+covers: `RELEASE-NOTES` is regenerated wholesale every release, so the token
+appears and disappears from it for reasons that have nothing to do with the
+feature. `--first` survives this because the earliest commit mentioning
+`http3` really is the one that introduced it; `--last` and `--removed` do not,
+because the most recent appearance and disappearance are both churn.
+
+This is why the rendered answer names its key — `(by http3)` — rather than
+presenting a bare SHA. An ordinal resolved through the wrong document is
+wrong in a way the SHA alone does not reveal, and a reader who can see the
+key can judge it.
+
+**Not fixed for 0.1.0, deliberately.** The obvious change is to exclude
+regenerated prose files from lineage seeding, and that is a retrieval change:
+it has to be measured against the 174-case corpus before shipping, because
+`isProseOnlyCommit` already exists for ranking and the prose-commit penalty
+built on it was measured and rejected. Making an unmeasured version of the
+same idea load-bearing for ordinals late in a release is how the other seven
+rejected optimisations would have gotten in.
+
 ## Where retrieval actually fails: the semantic gap, not indexing or ranking
 
 Three hypotheses were tested against the derived corpus. Two were wrong, and
