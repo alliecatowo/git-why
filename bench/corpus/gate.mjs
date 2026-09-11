@@ -18,7 +18,7 @@
 
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { benchWorkSubdir } from '../lib/workdir.mjs';
 
@@ -107,7 +107,10 @@ writeFileSync(
   `${JSON.stringify(
     {
       generatedAt: new Date().toISOString(),
-      derivedFrom: IN,
+      // Repository-relative: this file is committed, and an absolute path
+      // records the author's checkout location while telling a reader nothing
+      // they could use.
+      derivedFrom: relative(ROOT, IN),
       scopeLimit:
         "Every case here is one that `git log --grep` and `git log -S` FAIL to answer from the question's own words. That is the point -- Git Why exists for questions you cannot turn into a search term -- but it means these numbers describe hard cases, not a random sample of developer questions. Keyword search would win on the easy ones, and does: on the unparaphrased corpus `git log --grep --all-match` scores 1.000 MRR.",
       kept: kept.length,

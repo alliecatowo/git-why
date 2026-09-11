@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-10T22:01:45.968Z",
-  "derivedFrom": "/Users/allie/Develop/git-why/bench/corpus/paraphrased.json",
+  "derivedFrom": "bench/corpus/paraphrased.json",
   "scopeLimit": "Every case here is one that `git log --grep` and `git log -S` FAIL to answer from the question's own words. That is the point -- Git Why exists for questions you cannot turn into a search term -- but it means these numbers describe hard cases, not a random sample of developer questions. Keyword search would win on the easy ones, and does: on the unparaphrased corpus `git log --grep --all-match` scores 1.000 MRR.",
   "kept": 174,
   "rejectedAsAnswerableBySearch": 84,
@@ -707,7 +707,7 @@
       ],
       "subject": "Fix compilation warning in KeySpace_ServerEventCallback and add CFLAGS=-Werror flag for module CI (#12786)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "--------- Co-authored-by: Viktor Söderqvist <viktor.soderqvist@est.tech>"
+      "originalSentence": "--------- Co-authored-by: Viktor S\u00f6derqvist <viktor.soderqvist@est.tech>"
     },
     {
       "id": "recall-redis-redis-22cc9b51",
@@ -935,7 +935,7 @@
       ],
       "subject": "Fix sort_ro get-keys function return wrong key number (#12522)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "Before： ``` 127.0.0.1:6379> command getkeys sort_ro key (empty array) 127.0.0.1:6379> ``` After: ``` 127.0.0.1:6379> command getkeys sort_ro key 1) \"key\" 127.0.0.1:6379> ```"
+      "originalSentence": "Before\uff1a ``` 127.0.0.1:6379> command getkeys sort_ro key (empty array) 127.0.0.1:6379> ``` After: ``` 127.0.0.1:6379> command getkeys sort_ro key 1) \"key\" 127.0.0.1:6379> ```"
     },
     {
       "id": "recall-redis-redis-1407ac1f",
@@ -1631,7 +1631,7 @@
       ],
       "subject": "fix(v4): stop catch resurrecting issues an optional already resolved (#6440)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "Appending `.catch()` to a chain that parses could make it stop parsing, which is backwards — catch can only ever turn failure into success."
+      "originalSentence": "Appending `.catch()` to a chain that parses could make it stop parsing, which is backwards \u2014 catch can only ever turn failure into success."
     },
     {
       "id": "recall-colinhacks-zod-b63db248",
@@ -1763,7 +1763,7 @@
       ],
       "subject": "Improve Portuguese localization and add Brazilian Portuguese (pt-BR) (#6076)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "In an article-aware locale the fall-through contracts onto the raw key and emits \"Formato dcredit_card inválido\" rather than degrading to untranslated text, so the key carries pt's existing translation."
+      "originalSentence": "In an article-aware locale the fall-through contracts onto the raw key and emits \"Formato dcredit_card inv\u00e1lido\" rather than degrading to untranslated text, so the key carries pt's existing translation."
     },
     {
       "id": "recall-colinhacks-zod-536ee3b0",
@@ -1847,7 +1847,7 @@
       ],
       "subject": "fix(v4): stop the object JIT fastpass keeping a swallowed issue's value (#6407)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "While here, collapse the identical arms of the required-in branch's assignment — it shrinks the generated source by four lines per key."
+      "originalSentence": "While here, collapse the identical arms of the required-in branch's assignment \u2014 it shrinks the generated source by four lines per key."
     },
     {
       "id": "recall-colinhacks-zod-b53e53cc",
@@ -1919,7 +1919,7 @@
       ],
       "subject": "fix(v4): clarify infinite number errors (#5906)",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "`z.number()` is finite-by-default in v4, so `Infinity` fails with an `invalid_type` issue — but the English message read \"Invalid input: expected number, received number\", which names the same type on both sides and tells the user nothing."
+      "originalSentence": "`z.number()` is finite-by-default in v4, so `Infinity` fails with an `invalid_type` issue \u2014 but the English message read \"Invalid input: expected number, received number\", which names the same type on both sides and tells the user nothing."
     },
     {
       "id": "recall-colinhacks-zod-0a76f3d7",
@@ -2075,7 +2075,7 @@
       ],
       "subject": "fix(docs-v3): rename README.md to home.md so Vercel serves it",
       "derivation": "first substantive sentence of the commit body; rejected if it echoes the subject, reads as a changelog line, or is about test coverage rather than behaviour",
-      "originalSentence": "Vercel stopped serving root-level README.md from static deployments (deployments from identical source served it on May 4 but 404 it since May 19), which broke v3.zod.dev — docsify fetches the homepage markdown client-side."
+      "originalSentence": "Vercel stopped serving root-level README.md from static deployments (deployments from identical source served it on May 4 but 404 it since May 19), which broke v3.zod.dev \u2014 docsify fetches the homepage markdown client-side."
     },
     {
       "id": "recall-colinhacks-zod-ee7376ad",
