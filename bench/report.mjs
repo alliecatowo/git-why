@@ -763,11 +763,9 @@ if (cm.rows.length === 0) {
     md += `| cheap tier (n=${cheap.length} models) | ${cc.toFixed(1)} | ${Math.round(ct).toLocaleString('en-US')} |\n`;
     md += `| mid tier and above (n=${capable.length}) | ${kc.toFixed(1)} | ${Math.round(kt).toLocaleString('en-US')} |\n\n`;
     md +=
-      'Turns saved goes the wrong way and tokens go sharply the wrong way. The mechanism is visible ' +
-      'in the per-arm table: a turn `git why` removes is replaced by commit messages and diff hunks ' +
-      'in context, so a model that would have found the answer anyway pays for that material without ' +
-      'needing it. On claude-sonnet-5 that is +9,804 input tokens and an arm-D cost of $1.00 against ' +
-      "arm A's $0.58 — fewer turns, 72% more money.\n\n";
+      'The mechanism for the token increases is visible in the per-arm table: a turn `git why` ' +
+      'removes is replaced by commit messages and diff hunks in context, so a model that would ' +
+      'have found the answer anyway pays for that material without needing it.\n\n';
   }
 
   md +=

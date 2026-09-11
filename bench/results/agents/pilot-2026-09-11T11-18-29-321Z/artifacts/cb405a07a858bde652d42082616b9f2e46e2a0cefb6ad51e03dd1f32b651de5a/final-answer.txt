@@ -1,0 +1,31 @@
+The following brief answers the questions based on the `redis-redis` repository history:
+
+1.  **What went wrong when adding a new access rule tried to strip out existing overlapping ones?**
+    The search for overlapping rules did not resume from the correct location after a match was found, causing the system to skip over subsequent rules and potentially leave rules uncompacted or remove valid ones.
+    *   **Commit SHA:** `7c179f9bf4390512196b3a2b2ad6d0f4cb625c8a`
+    *   **Quote:** "However, there when a match was found, the search was not resumed at the right location, but instead after the original position of the original command."
+
+2.  **Why did the background maintenance job start doing both shrinking and growing at once?**
+    This change was introduced when hash table resizing was refactored to be more aggressive and unified in the cron loop to handle both expanding and shrinking dynamically based on load.
+    *   **Commit SHA:** `8cd62f82ca7a42755ea606e3bf8e28f244055152`
+    *   **Quote:** "This allowed cleaning some ugly code, among others: loops that run twice on the main dict and expires dict, and duplicate code for allocating and releasing this data structure."
+
+3.  **What was that bug where things went wrong when a file ended up with handle number zero?**
+    The system attempted to avoid leaking file handles when dealing with empty (zero-byte) files in the `redis-check-aof` tool.
+    *   **Commit SHA:** `ae09d4d3e86c0c279435b863777553258c4cc816`
+    *   **Quote:** "redis-check-aof.c: Avoid leaking file handle if file is zero bytes"
+
+4.  **What was the bug where the database quit growing itself after it had already been expanded once during snapshot loading?**
+    The `should_expand_db` flag was incorrectly set to zero after the first expansion, preventing subsequent databases from expanding during RDB loading.
+    *   **Commit SHA:** `b730404c2f6af3d3945957bae16a830afab9f314`
+    *   **Quote:** "Currently, during RDB loading, once a `dbExpand` is performed, the `should_expand_db` flag is set to 0. This causes the remaining DBs unable to do `dbExpand` when there are multiple DBs."
+
+5.  **What happened when the bit-position lookup was pointed at a list instead of a string?**
+    The commands `BITCOUNT` and `BITPOS` returned 0 for non-existing keys even if the provided arguments were invalid (e.g., non-integer offsets), because the code performed a non-existence check before validating parameters.
+    *   **Commit SHA:** `1407ac1f3ece8f7e4094f92e649e5d0b7c5e5bde`
+    *   **Quote:** "The reason is that we judged non-existing before parameter checking and returned."
+
+6.  **What was that flaky test where the expiration sweep didn't properly skip over sparse buckets?**
+    The test failed because the expiration scan logic incorrectly failed to skip dictionaries with high proportions of empty buckets, leading to timeout issues and failure to properly handle slot skipping.
+    *   **Commit SHA:** `f20774eced7eba5dfb9cf9b76ed5d6aa3950177c`
+    *   **Quote:** "It is easy to see the active expire timeout in the modified test, for example, let's assume that there is only 1 expired key in the DB, and the size / buckets ratio is less than 1%, which means that we will skip it..."

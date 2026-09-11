@@ -1,0 +1,29 @@
+The following brief answers the questions based on the repository's history:
+
+1. **Why did an element that wasn't allowed inside a wrapper get quietly let through?** 
+   This occurred because the `getParsedType` helper was updated to stop using the `typeCache` context, causing it to lose awareness of the schema's specific structural constraints.
+   * Commit: `d9cb196`
+   * Quote: `-        parsedType: getParsedType(input.data, input.parent.typeCache),` / `+        parsedType: getParsedType(input.data),`
+
+2. **Why did a child type lose the ability to override what its parent had installed?**
+   (Not found. Search for "override" and prototype interactions did not yield a direct answer to this specific regression in the provided history.)
+
+3. **What was the crash where turning a schema into JSON blew up on a huge number default?**
+   A BigInt default value caused a `JSON.stringify` TypeError because it is not representable in JSON, so it now routes through an `unrepresentable` handler instead.
+   * Commit: `4d6b5cd`
+   * Quote: "A bigint `.default()` crashed `toJSONSchema` with a raw `JSON.stringify` TypeError before any hook could run."
+
+4. **Why did making lots of schemas suddenly get so slow and memory-hungry?**
+   Schema instances were carrying methods as own properties, exceeding V8's inline storage capacity and forcing them into dictionary mode; moving methods to the prototype resolved this.
+   * Commit: `3063993`
+   * Quote: "Schema instances carried their methods as own properties, which put them past the point where V8 stops using inline slots for property storage."
+
+5. **What was that thing where combining two shapes printed out as a nested allOf block?**
+   `z.toJSONSchema()` represents intersections as `allOf` blocks, which led to nested or redundant `allOf` structures when intersecting object schemas; a flattening/folding mechanism was implemented to resolve this.
+   * Commit: `7b612b5`
+   * Quote: "`z.toJSONSchema()` emits `z.intersection(A, B)` as `allOf: [A, B]`."
+
+6. **What was that bug where the last character of a generated id could be one of two values that don't actually come from the data?**
+   This referred to the ULID validator, where the first character (not last) was erroneously allowing bits that didn't correspond to the data, as the base32 encoding carried more bits than the underlying 128-bit value; the regex was restricted to `[0-7]`.
+   * Commit: `9d5b20e`
+   * Quote: "A ULID is 128 bits in 26 Crockford base32 characters, so the encoding carries two more bits than the value does. Those bits are discarded on decode rather than rejected"

@@ -1,0 +1,460 @@
+Let me start by exploring the repository structure and understanding its history.
+
+This is the ripgrep repository. Let me investigate each question using git history and search. Let me start by examining the CHANGELOG and git log for relevant clues.
+
+Let me use the `zg` tool and also explore git history. Let me work through each question methodically.
+
+**Question 1: manual page rendered an odd-looking dash under certain doc tools**
+
+This sounds like a man page issue with `\-` (dash) in roff. Let me search.
+
+`74959a1 man: escape all hyphens in flag names` looks very relevant to question 1 about "odd-looking dash". Let me examine it.
+
+This answers **Question 1**: The bug where the manual page rendered an odd-looking dash under certain doc tools. The fix was escaping hyphens in flag names in roff text, because some roff renderers would use a special Unicode hyphen. Commit `74959a14cbcce19e2471b0d281ea5cdbd248527d`.
+
+**Question 2: dependency we bumped so the thing would finally build on that router firmware**
+
+Router firmware suggests something like a MIPS router with OpenWrt. Let me search.
+
+"router firmware" — Let me think about jemalloc. jemalloc is often used for embedded routers. Let me look at the jemalloc commits.
+
+This answers **Question 2**: The dependency bumped so the thing would finally build on that router firmware (OpenWrt) is `jemallocator` → `tikv-jemallocator`. The reason was an important fix for compilation on `riscv64gc-unknown-linux-musl` (relevant for OpenWrt routers). Commit `53279db4143f4307c2b1b27f2cd32a43b0496205`.
+
+**Question 3: that thing we got rid of because it kept breaking and caused nothing but trouble**
+
+This is a bit vague. Let me think about things ripgrep removed. Could be the "crate" simd/avx, or parallel decoder, or... Let me think. "kept breaking and caused nothing but trouble." Could relate to the "cross" tool, or a Python dependency, or the `zsh` completion gen, or maybe the "PCRE2" linking. Let me search git log for removal commits.
+
+Actually, could this be about `libc` version, or about the "cint" ... Let me search for commits about removing things that caused trouble.
+
+Let me think about grep -i "trouble". Or maybe the removal of the `grep` dependency? Let me look at things that were "got rid of".
+
+Let me search for removal-related commits in the changelog, or search for phrases.
+
+Let me think harder about "kept breaking and caused nothing but trouble". This phrasing suggests something hinted in commit messages. Let me search more specifically for phrases like "trouble" or look at the changelog structure for removed features.
+
+Actually, "BREAKING: regex: finally remove CRLF hack" (9d62eb9) — this "finally remove" suggests a longstanding hack that caused trouble. Let me examine it.
+
+Also there's the possibility about the "PCRE2", or "inner literal extractor". Let me look at "regex: remove old inner literal extractor" and "finally remove CRLF hack".
+
+Let me examine these.
+
+This is a "giant hack" and "assuredly did not work in all cases", and "finally remove". This is a strong candidate. But let me reconsider question 3 phrasing: "that thing we got rid of because it kept breaking and caused nothing but trouble". 
+
+The CRLF hack fits "kept breaking" and "caused nothing but trouble" pretty well. But let me also check other candidates, like the "cross" tool, or SIMD, or the `zsh` thing.
+
+Actually, let me reconsider. This question pattern seems like it could be about something more specific. Let me search the changelog for phrases.
+
+Let me look at other candidates first. Let me look at the "inner literal extractor" removal and also search for commit messages about things that "kept breaking".
+
+Let me reconsider — the CRLF hack removal commit says "And assuredly did not work in all cases" and "this giant hack". The brief says "kept breaking and caused nothing but trouble". This is a strong match. However, let me also double check if there's a more literal match.
+
+Let me search for the phrase "nothing but trouble" or "kept breaking" in the git history.
+
+Not it. Let me reconsider. The question says "that thing we got rid of because it kept breaking and caused nothing but trouble." This is likely referring to something removed due to fragility. Let me look at the benchsuite removal (5ebb3ad) and SIMD info removal.
+
+Actually, let me reconsider the whole set. This brief appears to be crafted so each answer maps to a specific commit. Let me consider what "kept breaking" a lot in ripgrep's history.
+
+Let me look at a few more candidates. Let me check the "cripto" ... Actually let me look at what got removed because it kept breaking. Let me search the changelog for removal-related bug entries.
+
+Actually, a strong candidate: The `cross` tool, or the CI. Let me reconsider "5dec4b8 ci: drop custom Cross images" 
+
+Or maybe the "SIMD" approaches. Let me look at readme SIMD removal.
+
+Let me instead think about it from a different angle—maybe it's a well-known ripgrep thing. Actually, I recall ripgrep once had a lot of trouble with... hmm.
+
+Let me look at git log more broadly for removal of something fragile. Let me search for "unstable" or "flaky".
+
+
+
+Let me look at "06b66ef deps: get rid of unstable feature" and reconsider. But actually, let me reconsider whether the question could be about `cross` tool or build system. Let me re-read question 3: "what was that thing we got rid of because it kept breaking and caused nothing but trouble?"
+
+Given the pattern with the other questions being specific bugs, this one about a "thing" is more of a conceptual/commit. Let me look at the CRLF hack more — it says "giant hack", "assuredly did not work in all cases", and the removal is "finally remove". This suggests it kept breaking.
+
+But wait, let me reconsider. There might be an even clearer candidate. Let me look at what was "got rid of because it kept breaking" - maybe the `simd` fanciness. Let me check `c78c323 readme: remove outdated SIMD info` and the removal of the SIMD-aware matchers.
+
+Actually, I recall ripgrep's development had a lot of trouble with the "memchr" SIMD and with "parallel" matching. But let me look at the AVX/SIMD history.
+
+Let me search for commits about removing SIMD implementations that were troublesome.
+
+Actually — I think a very strong candidate is the removal of the old "crate" type in the regex crates. Let me look at the changelog for well-known "we removed X" entries.
+
+Let me approach differently and look at the big changelog entries over time for removals. Let me grep CHANGELOG.md.
+
+Not the best fit. Let me reconsider. Let me think about the phrasing "kept breaking and caused nothing but trouble". 
+
+This strongly suggests a commit message describing frustration. Let me grep p in git log for words like "god", "pain", "again".
+
+
+
+Let me reconsider. Let me look at the question from the intended mapping perspective. The brief's questions seem each crafted to point at a specific notable commit. Let me reconsider question 3 in context of the whole set:
+
+1. man page dash → 74959a1 (hyphens in man) 
+2. router firmware build dep → jemalloc→tikv-jemallocator
+3. that thing we got rid of → ?
+4. bundled executables resolved eagerly on Windows → ?
+5. names ending in two dots → globe bug
+6. capping results / surrounding lines multi-line → ?
+
+For question 3, "we got rid of because it kept breaking and caused nothing but trouble" — let me think about well-known ripgrep removals. There's the removal of the `--files-with-matches`... no. Let me think about "crates.io" or the reading/writing of the "concurrent" ...
+
+Actually I bet this refers to the removal of the "automatic SIMD/memchr" ... no.
+
+Let me reconsider — maybe it's about `termcolor`'s windows / or about the `libc` version pinning. Hmm.
+
+Let me reconsider the benchsuite removals: "5ebb3ad benchsuite: remove sift, pt and ucg". These are other grep tools removed from benchmarks because they kept breaking? Let me check.
+
+Actually let me reconsider: maybe the "thing" is the `jemalloc` itself... no that was bumped not removed (question 2).
+
+Let me look at "7099e17 cargo: remove dependency patches" — dependency patches could cause trouble. Let me check.
+
+Actually, let me reconsider the possibility that it's about the whole "SIMD" runtime detection. Hmm.
+
+Let me take yet another angle and grep git-log messages for when something was removed explicitly due to breakage, like "it was broken" or "never worked".
+
+
+
+Let me reconsider. I think the CRLF hack is actually the best candidate for "kept breaking and caused nothing but trouble" since it was a "giant hack that assuredly did not work in all cases." But let me verify against the changelog to see if the CRLF removal is described that way. 
+
+Actually, wait. Let me reconsider all questions looking at the changelog to understand which commits are "notable" in the brief-writer's mind. Let me look at the very recent CHANGELOG (HEAD is at ignore-0.4.33, 2025). 
+
+Let me look at recent CHANGELOG entries and bug fixes. Question 4 (Windows bundled executables eager resolution), 5 (names ending in two dots), 6 (capping results + surrounding lines multi-line) are likely recent bug fixes in the CHANGELOG. Let me grep the CHANGELOG.
+
+I've found the recent relevant entries. Line 85: "Don't resolve helper binaries on Windows when `-z/--search-zip` isn't used." → **Question 4**, and line 113: "Fix bug with `-m/--max-count` and `-U/--multiline` showing too many matches." → **Question 6**. Line 123 confirms Question 1.
+
+Let me read the CHANGELOG around these lines to get details and find the corresponding commits. Let me read lines 80-130.
+
+I have the CHANGELOG references. Now let me find the corresponding commits for questions 4, 5, 6. Let me search commits.
+
+**Question 4**: "Don't resolve helper binaries on Windows when `-z/--search-zip` isn't used" (PERF #2111). The question asks "why did all the bundled executables get resolved eagerly when running on Windows?" Let me find the commit.
+
+**Question 5**: "Fix a bug where ripgrep would mishandle globs that ended with a `.`" (BUG #2990). Wait, question 5 is "names ending in two dots were treated as though they had no filename at all". That's the glob ending with `.` bug. Let me find that commit.
+
+**Question 6**: "Fix bug with `-m/--max-count` and `-U/--multiline` showing too many matches" (BUG #2094, #3076).
+
+Let me find the commits for each of these. Let me search git log.
+
+**Question 4** - search for helper binaries / zip resolution on Windows.
+**Question 5** - glob ending with `.` (two dots).
+**Question 6** - max-count with multiline.
+
+Let me search git log for these.
+
+Let me look at these commits. First, question 4 - the "resolve helper binaries on Windows". The commits I found for #2111 don't directly match. Let me look more carefully. Let me search for the perf #2111 fix commit specifically, and also look at the search-zip helper binary resolution.
+
+Let me look at the commit that changed behavior so helper binaries are resolved lazily. Let me search git log for relevant terms.
+
+`9164158 core: don't build decompression reader unless we intend to use it` is likely the fix for the eager resolution. Let me examine it and check if it references #2111.
+
+Let me also examine the other candidate commits: `4df1298` (question 5) and the max-count/multiline fix (question 6).
+
+Let me get all of these in parallel.
+
+Excellent. **Question 5** is answered by `4df1298`: The bug where names ending in two dots (or ending with a `.`) were treated as though they had no filename at all. Previously, the `file_name` function treated any path whose last byte was `.` as returning None (imitating `std::path::Path::file_name` which returns None for `..`), but the semantic was implemented incorrectly — so a glob/file ending in `.` was treated as empty string with no filename.
+
+Wait, but the question says "names ending in two dots". Let me re-read the commit. It says "if you have a glob that ends in a `.`, it was instead treated as the empty string". The claim was imitating `Path::file_name` which "Returns None if the path terminates in `..`". So "names ending in two dots" = the case of `..` — but the buggy code treated any trailing `.` (including single dot) as None. The commit title says "bug where trailing `.` in file name was incorrectly handled". 
+
+Hmm, but the question specifically says "names ending in two dots were treated as though they had no filename at all". Let me reconsider. The `Path::file_name` returns None if path terminates in `..` (two dots). The buggy implementation used `last_byte() == b'.'` which would treat a path ending in `..` as having no filename, but ALSO incorrectly treated paths ending in a single `.` the same way. The correct semantic (per std) is only `..`. So names ending in `..` correctly should return None, but single-dot names shouldn't.
+
+Actually wait — the question phrasing "names ending in two dots were treated as though they had no filename at all" — this is exactly the behavior being described/fixed. Actually the fix makes the behavior match std: only `..` (two dots) correctly returns None. So the question describes the bug in terms of what it *should* look like, i.e., matching std's `..` behavior. Hmm, but it says "treated as though they had no filename at all" as a bug.
+
+Let me look more at the full diff to understand exactly.
+
+Actually, let me re-read: The old code treated any path ending in `.` (last byte == '.') as None. This meant `foo.` (single trailing dot) had no filename — that's the bug (glob ending in `.` incorrectly handled, matching std contract wrongly where only `..` should return None). So the bug is: "names ending in two dots" = `..` — wait, std says returns None for `..`. So the desired behavior in the fix is: terminate in `..` → None; terminate in single `.` → treated as a file with name.
+
+Let me look at the full new implementation to see how it handles `..`.
+
+Let me get the rest of the diff.
+
+**Question 4** is answered by `9164158`: "core: don't build decompression reader unless we intend to use it". This explains why the bundled executables (decompression helper binaries) got resolved eagerly on Windows: they were built/resolved eagerly for security purposes, and on Windows the various binaries are eagerly resolved. The fix makes resolution lazy unless `-z/--search-zip` is used.
+
+**Question 6** is the max-count + multiline bug. Let me find that commit. The references were BUG #2094, #3076. Let me search.
+
+Let me get the rest of the 4df1298 diff and find the question 6 commit.
+
+Now I understand question 5 well. The bug: the old `file_name` returned None whenever the last byte was `.`, which meant a file/glob name ending in `..` was treated as having no filename at all (in imitation of std's `..` behavior), but it incorrectly also caught single `.`. The fix implements the correct std semantic — only `..` returns None, and a path ending in a single `.` is now a real filename.
+
+So question 5's phrasing "names ending in two dots were treated as though they had no filename at all" matches commit `4df1298`. Actually, let me reconsider — the question says "names ending in two dots". The buggy code treated *any trailing dot* (including two dots `..`) as None. Actually the previous behavior correctly matches std for `..` (both return None) but incorrectly for single dot. So "names ending in two dots" being treated as no filename is actually the *intended* std behavior. Hmm.
+
+Wait, let me reread. The question: "what was the bug where names ending in two dots were treated as though they had no filename at all?" 
+
+Actually the old `file_name` returned None for *any* name ending in `.`, which includes names ending in `..`. So a name ending in two dots... Actually a name ending in two dots like `foo..` — last byte is `.` → returns None (treated as no filename). That IS the bug being described. The commit fixes it to only return None for exactly `..` (the path component being `..`).
+
+Hmm, but actually with the fix, `foo..` would now return Some("foo..") since got != "..". So the bug "names ending in two dots were treated as though they had no filename" is fixed by 4df1298. But actually the question mentions "two dots" specifically. Let me re-read the fix test: `!asdf./` (a glob ending in a single dot). And the commit title "trailing `.` in file name". 
+
+The question is a bit loose in the phrasing, but the commit `4df1298` clearly addresses "a bug where ripgrep would mishandle globs that ended with a `.`" and the description mentions imitating `Path::file_name` which "Returns None if the path terminates in `..`". So "names ending in two dots" likely refers to the `..` case from the std contract that they were trying to imitate. This is a solid match.
+
+Now **Question 6**: "the bug where capping the number of results could not be trusted anymore once surrounding lines were added to multi-line spellings". Let me find the max-count + multiline fix commit. References BUG #2094, #3076, and there's `fdea972 doc: clarify a case where -m/--max-count is not strictly respected` and `0ca96e0 printer: fix context bug when --max-count is used`. Let me search for the specific fix commit.
+
+Let me search git log for max-count and multiline fixes.</parameter>
+Let me search git log for the max-count/multiline bug fix commit.
+
+Let me look for the specific fix commit for the max-count + surrounding context + multiline bug. The CHANGELOG says BUG #2094 and #3076. Let me search commit messages that reference both issues or "fdea972" is a doc clarification. Let me look at the commit that actually fixed it. Let me search the git log messages near the 15.0.0 release. Let me look at `fdea972` first since it clarifies, then find the actual fix.
+
+This is related but is a doc clarification (for #2843). The question 6 asks about the actual bug fix: "the bug where capping the number of results could not be trusted anymore once surrounding lines were added to multi-line spellings." Let me find the actual fix commit referenced by BUG #2094/#3076. Let me search the git history for the commit that fixed that.
+
+Let me look at `0ca96e0 printer: fix context bug when --max-count is used` — this is an older bug fix (from ripgrep 0.10 era). Let me check it and also search for a more recent fix around 15.0.0.
+
+Actually, let me look for the commit that specifically fixes the max-count + multiline too-many-matches bug. Let me search git log messages around the 15.0.0 timeframe (2025-10). The CHANGELOG lists the fix under 15.0.0. Let me look at commits between 15.0.0's commit and find the one referencing #3076 or #2094.
+
+Let me grep git log for "3076" and "2094".
+
+
+
+I found the relevant commits for question 6: `5c42c8c` (test for the fix, closes #2094) and `9d8016d` ("printer: finish removal of `max_matches`", fixes #3076), and the refactor `a6e0be3`. Let me examine these to understand the main fix commit. The question mentions "capping the number of results could not be trusted anymore once surrounding lines were added to multi-line spellings". Let me look at the main refactor commit and `5c42c8c`.
+
+Let me find the main fix commit (the `--max-count` refactor mentioned). Let me look at `a6e0be3` and `9d8016d` and `5c42c8c`.
+
+The question 6 mentions "multi-line spellings" - probably "multi-line patterns" and "surrounding lines" = context lines. The bug is that when a multiline match has context (surrounding) lines added, the max-count capping broke and printed more than the limit. The fix moved `max_matches` to the searcher crate so it's handled correctly before context lines are "expanded"/sunk.
+
+Let me examine `9d8016d` for the reasoning.
+
+Now let me look at the main refactor commit `a6e0be3` which has the details, and the test commit `5c42c8c`. Let me examine `a6e0be3`.
+
+This is the definitive answer for **Question 6**: commit `a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4` "searcher: move 'max matches' from printer to searcher". The bug: the max-count limit couldn't be trusted anymore once surrounding (context) lines were added to multi-line matches. The printer was responsible for the max-matches limit, but in multiline mode with context lines, the printer isn't fundamentally in charge of how matches are found/reported, leading to more matches than the cap. Fix moved `max_matches` handling into the `grep-searcher` crate.
+
+Now let me confirm the commit SHA for question 4's fix and question 2. Let me also double check question 1's commit SHA (74959a1 - confirmed).
+
+Let me collect all the SHAs:
+1. `74959a1` (74959a14cbcce19e2471b0d281ea5cdbd248527d) - man page hyphens
+2. `53279db` (53279db4143f4307c2b1b27f2cd32a43b0496205) - jemalloc→tikv-jemallocator for OpenWrt
+3. Need to decide. Let me re-examine — question 3 is still unresolved.
+4. `9164158` (916415857f084e63efda03cf25a67fe7f6d24244) - don't build decompression reader eagerly on Windows
+5. `4df1298` (4df1298127695ed1e76937f16de1a0135677ccf5) - trailing dot glob bug
+6. `a6e0be3` (a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4) - max-count multiline bug
+
+Now for question 3, I still need to decide. Let me reconsider the strong candidate: the CRLF hack removal. Let me re-read question 3: "what was that thing we got rid of because it kept breaking and caused nothing but trouble?"
+
+The CRLF hack commit (9d62eb9): "BREAKING: regex: finally remove CRLF hack", "this giant hack in ripgrep to enable it. (And assuredly did not work in all cases.)". This matches "kept breaking". But "caused nothing but trouble" is a strong emotional phrase.
+
+Let me reconsider whether there's a better candidate that phrase matches. Let me search for commits that removed something with strong language. Let me look for the "simd" or "memchr" or the whole "crate" features.
+
+Actually, let me reconsider — maybe the "thing" is the **`jemalloc`** feature or the cross tool. But let me look at what's described most like "kept breaking and caused nothing but trouble."
+
+Let me search the git history for commits removing things where the message says things like "trouble", "hassle", "pain", "broken".
+
+Actually, let me reconsider another strong candidate: the removal of the `--path-separator`... no.
+
+Let me look for the removal of something related to "crates.io badges" or "default-grep" ... 
+
+Let me look at the changelog for notable "removed" items across versions. Let me grep for "REMOVED\|removed\|Removed" in CHANGELOG.
+
+Actually, let me reconsider the question in the context of the WHOLE brief being about a specific set of recent-ish commits. Questions 1,4,5,6 are all from around 15.0.0/2025. Question 2 (OpenWrt) is 2024. Question 3 might also be a notable recent removal.
+
+Let me look at "cdeff3e _rg: remove group-stripping functionality" — this is a zsh completion thing. Let me check it.
+
+Actually, let me reconsider the "simd" angle. Let me look at commit history about removing SIMD.
+
+Let me think about the phrase "kept breaking" more concretely. Let me search for commits mentioning "kept" or "again" removed of build infra.
+
+Let me look at `cbfbe93 snap: remove snapcraft configuration` — snap kept breaking? Hmm. Let me check it.
+
+Let me examine a few candidates' messages to find the best "kept breaking and caused nothing but trouble" match. Let me look at the CRLF hack removal more thoroughly vs others.
+
+Actually, I'll reconsider question 3 within the mapping. The questions are all about *recent* decisions "before you touch anything" - these are recent commits. Given the recent commits I've found are from 2025, question 3's "thing we got rid of because it kept breaking" — let me check if the CRLF hack was removed recently (June 2023). That's older than others but still relevant.
+
+Let me look for a better recent match. Let me check `5dec4b8 ci: drop custom Cross images` and `cbfbe93 snap: remove snapcraft configuration`.
+
+Let me look at these and the CRLF commit.
+
+Actually, let me reconsider. Let me look at the `docs`/`pkg` — maybe the "thing" is the **`asciidoc`/`a2x`** man page generation pipeline, since there's `49de7b1 ci: disable man page check` and `16a1221 doc: use asciidoctor instead of a2x`. But those are man-related (question 1).
+
+Let me look at `5ebb3ad benchsuite: remove sift, pt and ucg` - these are other grep tools that kept breaking in benchmarks. Let me check.
+
+Let me look at several candidates.Let me investigate question 3 further. Let me examine several removal-candidate commits.
+
+These aren't quite "kept breaking and caused nothing but trouble." Let me reconsider the CRLF hack which is my strongest candidate. Actually, let me reconsider the whole set again. Perhaps question 3 refers to something else notable.
+
+Let me think about "that thing we got rid of because it kept breaking" — this is likely a well-known story in ripgrep's development. One famous one is the removal of the "parallel" feature in the regex engine, or the removal of the `-P` PCRE2... 
+
+Actually, another very famous one: **the removal of SIMD acceleration from the grep crates** because it caused portability/compile trouble. But that's the regex crate's territory.
+
+Let me reconsider. Actually, I recall Andrew Gallant has often complained about `jemalloc` on some platforms, and about the `cross` tool, and about the NFA/automata.
+
+Let me look for a commit where he removed something and used strong "trouble" language. Let me grep the full git log message bodies.
+
+Let me search git log -p for phrases like "more trouble", "caused", "headaches".
+
+
+
+Two very strong candidates appear:
+
+1. `6ffb4b7466c914a2683847b5fb4e30ea16749e94` — "Snap has caused a number of nonsensical bug reports, and not even the..." — This is about removing Snap! This matches "kept breaking and caused nothing but trouble" (nonsensical bug reports).
+
+2. `c9ebcbd8abe48c8336fb4826df7e9b6fb179de03` — "Rewrites the char_to_escaped_literal..." hmm no.
+
+Let me examine `6ffb4b74` — the Snap removal. This strongly matches "caused nothing but trouble" (nonsensical bug reports).
+
+Let me examine it.
+
+This is a strong match for **Question 3**: the **Snap** packages. The commit `6ffb4b7466c914a2683847b5fb4e30ea16749e94` ("doc: go away snap") says "Snap has caused a number of nonsensical bug reports" and "none of them seem to work right and generate a number of very strange bug reports". This matches "kept breaking and caused nothing but trouble" perfectly.
+
+However, let me reconsider whether the CRLF hack or the Snap is the intended answer. The question says "that thing we got rid of because it kept breaking and caused nothing but trouble". The Snap fits "caused nothing but trouble" very directly (nonsensical/strange bug reports). The "keep breaking" → "none of them seem to work right". 
+
+Yes, I'm confident **Question 3 = Snap** removal, commit `6ffb4b74`.
+
+Wait, but let me reconsider the CRLF hack. Actually the CRLF hack is more of a "giant hack" kept in code, whereas Snap is a distribution mechanism "got rid of". Question 3 says "that thing we got rid of" — Snap was literally got rid of. The CRLF hack was removed too but the phrase "caused nothing but trouble" fits Snap's "nonsensical bug reports" best.
+
+Let me finalize with the Snap answer for question 3.
+
+Now let me verify the full SHAs for all answers and confirm details.
+
+Let me get the full SHA for `6ffb4b74`, `74959a1`, `53279db`, `9164158`, `4df1298`, `a6e0be3`.
+
+All already captured above:
+1. Question 1: `74959a14cbcce19e2471b0d281ea5cdbd248527d`
+2. Question 2: `53279db4143f4307c2b1b27f2cd32a43b0496205`
+3. Question 3: `6ffb4b7466c914a2683847b5fb4e30ea16749e94`
+4. Question 4: `916415857f084e63efda03cf25a67fe7f6d24244`
+5. Question 5: `4df1298127695ed1e76937f16de1a0135677ccf5`
+6. Question 6: `a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4`
+
+Let me double-check question 1's exact quote and question 5's behavior once more. For question 5, the question says "names ending in two dots were treated as though they had no filename at all". Let me make sure this maps correctly.
+
+The old `file_name` code: `if path.last_byte().map_or(true, |b| b == b'.') { return None; }`. This returns None for any path whose last byte is `.`. For a name ending in two dots like `foo..`, last byte is `.` → returns None → treated as having no filename. The commit was imitating `Path::file_name` which returns None for `..`. So yes — "names ending in two dots" (and any trailing dot) treated as having no filename. The fix makes only an exact `..` component return None.
+
+Wait, but actually with the fix, `foo..` would now be treated as a valid filename `foo..`. Hmm. But the question is about the *bug* — the bug was that names (like ending in two dots) were treated as having no filename. The fix (4df1298) corrected this. So the question is "what was the bug where names ending in two dots were treated as though they had no filename at all?" — the answer is commit 4df1298 which fixed that incorrect treatment.
+
+Actually wait — I need to be careful. The commit's stated fix is about a single trailing dot being mishandled (treating it as empty string instead of a filename). But the question describes "two dots". Let me reconsider.
+
+The std `Path::file_name` returns None if the path terminates in `..`. So names ending in `..` SHOULD have no filename. The buggy ripgrep code treated ANY trailing dot (single or `..`) as no filename, which incorrectly included single-dot names. But for `..` it happened to be correct.
+
+Hmm, the question's phrasing "names ending in two dots were treated as though they had no filename at all" — that's actually the correct std behavior for `..`, not a bug. Unless the question is loosely describing the old behavior before the fix.
+
+Wait, let me re-read once more. Given the commit and test are about a trailing `.` (single dot), and the CHANGELOG says "globs that ended with a `.`", I think the question's "two dots" is a slightly loose paraphrase. The commit message explicitly quotes std's contract "Returns None if the path terminates in `..`" — the "two dots" wording in the question likely derives from this.
+
+Let me reconsider — maybe there's a different interpretation. Let me re-read the old code once more. Actually, let me reconsider whether the fix changes `..` handling too.
+
+Old behavior: returns None for any path ending in `.` (including `..` and `foo.`).
+New behavior: returns None only if path is empty, or the final component is exactly `..`.
+
+So the bug being described: "names ending in two dots were treated as though they had no filename at all" — before the fix, yes, `foo..` → None. After the fix it's Some. So the question might genuinely be describing the OLD (buggy) treatment of trailing-dot names including two dots.
+
+Actually, I think the intended answer is definitely commit `4df1298`. The question is describing the bug fixed there (trailing dot/`..` names treated as having no filename). This is the only commit that matches "names ending in two dots" / "no filename".
+
+Let me verify by reviewing the question wording once more: "names ending in two dots were treated as though they had no filename at all". Yes, this is the `Path::file_name` / `..` contract that the fix commit addresses. Commit 4df1298.
+
+Let me now verify question 4's quote specifically about Windows eagerness. The commit 9164158 says: "on Windows, the various binaries are eagerly resolved." And "The eager resolution was added later for security purposes." This is precisely why bundled executables got resolved eagerly on Windows. 
+
+Now let me also double check that I should mention that the eager resolution was for security purposes. The commit says "The eager resolution was added later for security purposes. But the 'eager' part isn't actually necessary."
+
+Good. Let me verify these SHAs are reachable from HEAD (in this repo). They all appeared in the git log we saw, so they are present.
+
+Let me now also verify question 6's phrasing "surrounding lines were added to multi-line spellings" = "context lines" added to "multi-line mode". The commit a6e0be3 talks about "handling context lines correctly" in "multi-line mode". 
+
+Let me finalize the brief. But first, let me double-check the actual SHA prefix for question 1 commit — verify it's `74959a1`.
+
+All confirmed. Let me also sanity-check that question 4's commit doesn't conflict with question 2 (both relate to "eager" something). Question 2 is about the jemalloc dependency for building; question 4 is about decompression helper binaries being eagerly resolved on Windows. Distinct.
+
+Let me write up the final brief.
+
+Let me also double check the exact quote lines I'll cite from each commit diff/message.
+
+Q1 (74959a1): "Apparently, if we don't do this, some roff renderers with use a special Unicode hyphen. That in turn makes searching a man page not work as one would expect." — and the diff line `let name = flag.name_long().replace("-", r"\-");`
+
+Q2 (53279db): "it contains an [important fix for compilation on riscv64gc-unknown-linux-musl][fix], I bumped into this when I was trying to [build ripgrep on OpenWrt][openwrt]."
+
+Q3 (6ffb4b74): "Snap has caused a number of nonsensical bug reports, and not even the `--classic` flag seems capable of fixing them."
+
+Q4 (9164158): "In particular, on Windows, the various binaries are eagerly resolved." and "The eager resolution was added later for security purposes. But the 'eager' part isn't actually necessary."
+
+Q5 (4df1298): "I was trying to imitate the contract of [`std::path::Path::file_name`]: ... > Returns None if the path terminates in `..`." and diff removing `if path.last_byte().map_or(true, |b| b == b'.') { return None; }`.
+
+Q6 (a6e0be3): "The main problem here is that 'max matches' refers to the shorter of 'one match per line' or 'a single match.' ... But in multi-line mode, they can." and "in order to fix a bug in how we handle the 'max matches' limit in multi-line mode while simultaneously handling context lines correctly."
+
+I have everything I need. Let me write the final brief.
+
+I should present the brief with numbered answers, each with an answer, the commit SHA, and a quoted supporting line. I won't modify files. I'll present it in my final message.I have all the information needed. Let me verify the full SHAs are all present in the repository before finalizing.
+
+All six SHAs are confirmed. Let me write the final brief.
+
+## Engineering brief: decisions in `burntsushi-ripgrep` history
+
+I investigated the repository's git history (HEAD `3fce3b5`, root `/workspace`) and answered all six questions, each with its establishing commit SHA and a supporting quote from that commit's message or diff.
+
+---
+
+### 1. Manual page rendered an odd-looking dash under certain doc tools
+
+**Answer:** The man page was generated with unescaped hyphens in flag names, so some roff renderers substituted a special Unicode hyphen, breaking text-searchability of the man page. The fix escapes every hyphen in flag names as `\-` in the roff output.
+
+**Commit SHA:** `74959a14cbcce19e2471b0d281ea5cdbd248527d`
+(author: `man: escape all hyphens in flag names`)
+
+**Supporting line (message):**
+> "Apparently, if we don't do this, some roff renderers with use a special Unicode hyphen. That in turn makes searching a man page not work as one would expect."
+
+**Supporting line (diff):**
+> `let name = flag.name_long().replace("-", r"\-");`
+
+---
+
+### 2. Dependency bumped so it would build on router firmware
+
+**Answer:** Swapped the `jemallocator` dependency for `tikv-jemallocator`, which contains a fix for compilation on `riscv64gc-unknown-linux-musl` that blocked building ripgrep on OpenWrt routers.
+
+**Commit SHA:** `53279db4143f4307c2b1b27f2cd32a43b0496205`
+(author: `deps: switch to tikv-jemallocator`)
+
+**Supporting line (message):**
+> "It is now a recommended crate for jemalloc and it contains an [important fix for compilation on riscv64gc-unknown-linux-musl][fix], I bumped into this when I was trying to [build ripgrep on OpenWrt][openwrt]."
+
+---
+
+### 3. Thing we got rid of because it kept breaking and caused nothing but trouble
+
+**Answer:** The Snap packaging/installation route. Snap packages produced a stream of nonsensical/strange bug reports that couldn't be fixed (even with `--classic`), so Snap was dropped from the README and its own note was added to the issue template.
+
+**Commit SHA:** `6ffb4b7466c914a2683847b5fb4e30ea16749e94`
+(author: `doc: go away snap`)
+
+**Supporting line (message):**
+> "Snap has caused a number of nonsensical bug reports, and not even the `--classic` flag seems capable of fixing them."
+
+---
+
+### 4. Why bundled executables got resolved eagerly when running on Windows
+
+**Answer:** The decompression helper binaries (used by `-z/--search-zip`) were built/resolved eagerly for security reasons, and on Windows building that reader eagerly resolves those binaries' paths. The fix only constructs the decompression reader when `--search-zip` is actually enabled, making resolution lazy.
+
+**Commit SHA:** `916415857f084e63efda03cf25a67fe7f6d24244`
+(author: `core: don't build decompression reader unless we intend to use it`)
+
+**Supporting line (message):**
+> "Building it can consume resources. In particular, on Windows, the various binaries are eagerly resolved. ... The earger resolution was added later for security purposes. But the 'eager' part isn't actually necessary."
+
+**Supporting line (diff, doc comment):**
+> "We do this because building the reader can sometimes do non-trivial work (like resolving the paths of decompression binaries on Windows)."
+
+---
+
+### 5. Bug where names ending in two dots were treated as having no filename at all
+
+**Answer:** `file_name` in `globset` returned `None` whenever a path's last byte was `.` (in a misguided attempt to imitate `std::path::Path::file_name`, which returns `None` only when the path terminates in `..`). This wrongly treated names with a trailing dot (e.g. globs/names ending in `.`/`..`) as having no filename, so a trailing-dot glob matched only the empty string. The fix makes only the exact `..` component yield `None`.
+
+**Commit SHA:** `4df1298127695ed1e76937f16de1a0135677ccf5`
+(author: `globset: fix bug where trailing `.` in file name was incorrectly handled`)
+
+**Supporting line (message):**
+> "I was trying to imitate the contract of [`std::path::Path::file_name`]: 'Returns None if the path terminates in `..`.' But the status quo clearly did not implement this. And as a result, if you have a glob that ends in a `.`, it was instead treated as the empty string (which only matches the empty string)."
+
+**Supporting line (diff):**
+> `-  if path.last_byte().map_or(true, |b| b == b'.') {` / `+  if got == &b".."[..] { return None; }`
+
+---
+
+### 6. Bug where capping results couldn't be trusted once surrounding lines were added to multi-line matches
+
+**Answer:** With `-m/--max-count` plus `-U/--multiline` and context, too many matches were printed. The max-count limit was enforced in the printer, but in multi-line mode match counting and context expansion are handled by the searcher, so the printer's cap couldn't be honored. The fix moved "max matches" handling out of `grep-printer` and into `grep-searcher`.
+
+**Commit SHA:** `a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4`
+(author: `searcher: move "max matches" from printer to searcher`, "Fixes #3076, Closes #3094")
+
+**Supporting line (message):**
+> "The main problem here is that 'max matches' refers to the shorter of 'one match per line' or 'a single match.' ... But in multi-line mode, they can. ... The printer was previously responsible for this. But for $reasons, the printer is fundamentally not in charge of how matches are found and reported."
+
+**Supporting line (message):**
+> "I believe is necessary in order to fix a bug in how we handle the 'max matches' limit in multi-line mode while simultaneously handling context lines correctly."
+
+---
+
+All six questions are answered with verified commit SHAs reachable in this repository. No files were modified.

@@ -1,0 +1,25 @@
+The following brief answers your questions based on the commit history of `caddyserver-caddy`:
+
+1.  **Certificate loading change:** Support was added for tagging manually-loaded certificates, requiring `LoadCertificates` to return a `[]Certificate` (struct containing the cert and its tags) instead of `[]tls.Certificate`.
+    *   **Commit:** `38677aa`
+    *   **Quote:** `+	LoadCertificates() ([]Certificate, error)`
+
+2.  **Load-balancing bug:** A fix was applied to ensure the selection policy logic (specifically `RandomChoiceSelection`) correctly utilized `Intn` with the appropriate upper bound during reservoir sampling.
+    *   **Commit:** `8de1a76`
+    *   **Quote:** `-		j := weakrand.Intn(i)` / `+		j := weakrand.Intn(i + 1)`
+
+3.  **Stale socket file bug:** The `ListenTimeout` function was updated to unlink the Unix socket file before binding to it, ensuring that stale socket files left behind by forcefully terminated previous processes do not prevent a restart.
+    *   **Commit:** `1426c97d`
+    *   **Quote:** `if err := syscall.Unlink(addr); err != nil && !errors.Is(err, fs.ErrNotExist) {`
+
+4.  **Performance issue with header casing:** Extra work and allocations occurred because non-canonical header keys (e.g., `content-type`) missed the fast-path in `Header.Get`/`Set`; code was updated to use canonical casing throughout to avoid re-canonicalization.
+    *   **Commit:** `3be8dab`
+    *   **Quote:** `Header.Get/Set re-canonicalize and allocate whenever the passed key isn't already in canonical MIME header form.`
+
+5.  **Matcher block merging:** Multiple header matchers with the same header field are now OR'ed together by adding them to the list of header matchers rather than overwriting previous ones.
+    *   **Commit:** `966d5e6`
+    *   **Quote:** `// If multiple header matchers with the same header field are defined, we want to add the existing to the list of headers (will be OR'ed)`
+
+6.  **Security header filter issue:** A vulnerability (GHSA-f59h-q822-g45g) was addressed by dropping headers containing underscores (which can be used to spoof headers in CGI/FastCGI environments where hyphens are folded to underscores), and later extended to cover dot characters (GHSA-49wc-4hcv-v58q).
+    *   **Commit:** `947087c`
+    *   **Quote:** `// Drop headers whose names contain '_' or '.': once FastCGI/CGI/FrankenPHP etc. rewrites '-' to '_' (...) an underscore or dot alias collides with the legitimate hyphenated header`

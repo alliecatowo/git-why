@@ -1,0 +1,19 @@
+The following brief answers the questions based on the `burntsushi-ripgrep` repository history:
+
+1.  **Bug where man page rendered an odd-looking dash:**
+    The manual page issue was caused by Pandoc’s conversion of markdown to roff, specifically regarding how dashes were rendered and handled. This was addressed in commit **8c869cb** ("update man page") and further clarified in **598b162**, where the documentation was updated to note the usefulness of `-e/--regexp` for patterns starting with a dash, noting: *"This is also useful when searching for patterns that start with a dash."*
+
+2.  **Dependency bumped for router firmware build:**
+    The issue of building on router firmware was addressed by switching to use `jemalloc` when building with `musl`, as musl's default allocator caused severe performance regressions in static binaries. This change was implemented in commit **03bf37f** ("alloc: use jemalloc when building with musl"), with the message stating: *"It turns out that musl's allocator is slow enough to cause a fairly noticeable performance regression when ripgrep is built as a static binary with musl. We fix this by using jemalloc when building with musl."*
+
+3.  **The thing that kept breaking and caused trouble:**
+    The `simd-accel` Cargo feature was removed because it frequently broke due to its reliance on unstable Rust features for UTF-16 transcoding optimization. This was nuked in commit **e9abbc1** ("cargo: nuke 'simd-accel' from orbit"), where the commit message states: *"This feature causes nothing but problems and is frequently broken."*
+
+4.  **Why bundled executables were resolved eagerly on Windows:**
+    This issue (specifically regarding COM executables on Windows) was addressed in commit **da8ecdd** ("cli: make resolve_binary take COM executables into account"), which explains that previously ripgrep assumed `.exe` was the only valid extension for executables found in the PATH. The fix updated the resolution logic to check both `.com` and `.exe` extensions, as noted: *"...unless the binary is a COM executable (we're on Windows, duh)."*
+
+5.  **Bug where names ending in two dots were treated as having no filename:**
+    This bug regarding glob handling of trailing dots was fixed in commit **4df1298** ("globset: fix bug where trailing `.` in file name was incorrectly handled"), which corrected the file name logic to match the standard library's `std::path::Path::file_name` contract, as the previous implementation incorrectly treated names ending in a dot as empty strings.
+
+6.  **Bug where capping results could not be trusted with multi-line surrounding lines:**
+    This issue, where matching limits (`--max-count`) interacted incorrectly with context lines (`--after-context`), was resolved in commit **0ca96e0** ("printer: fix context bug when --max-count is used"). The fix ensured that context line tracking correctly accounted for the match limit, with the message explaining: *"In the case where after-context is requested with a match count limit, we need to be careful not to reset the state tracking the remaining context lines."*

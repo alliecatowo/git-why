@@ -1,0 +1,31 @@
+The following brief provides answers to the requested questions regarding the history of the `curl-curl` repository:
+
+1. **Why did the help output show the short version of an option twice when I spelled it out too?**
+   This was due to the internal `gen.pl` tool and the associated `MANPAGE.md` template structure, which generated help output by automatically appending both short and long forms, leading to redundant information when the manual entries were not correctly formatted to avoid this.
+   - **Commit SHA:** `b8c35f4`
+   - **Quote:** `Help: (short text for the --help output for this option)`
+
+2. **Why were non-English filenames getting corrupted on Windows builds?**
+   This was caused by the incorrect use of standard case-insensitive string comparison functions (`strcasecmp`) that were not locale-aware, failing specifically in non-English (e.g., Turkish) environments where character mapping differs from ASCII standards.
+   - **Commit SHA:** `a579d67`
+   - **Quote:** `I thus introduced a totally new internal function in libcurl (called Curl_ascii_equal) for doing case insentive comparisons for english-(ascii?) style strings`
+
+3. **Why did upgrading the crypto library suddenly flood us with deprecation warnings?**
+   The upgrade to OpenSSL 3 marked previously used functions (like those with DES or MD5 prefixes) as deprecated, and curl did not yet have replacements for these functions, causing the compiler to emit warnings.
+   - **Commit SHA:** `cab0402`
+   - **Quote:** `OpenSSL 3 has deprecated some of the functions libcurl uses such as those with DES, MD5 and ENGINE prefix. We don't have replacements for those functions so the warnings were disabled`
+
+4. **What was the case that only worked when we knew the length up front?**
+   In HTTP/2 and other specific transfer scenarios, the upload data size needs to be provided upfront (using `CURLOPT_INFILESIZE_LARGE` or `CURLOPT_POSTFIELDSIZE_LARGE`) to enable better error checking and to distinguish between cases where the size is truly unknown versus when it is zero.
+   - **Commit SHA:** `43f7ffb`
+   - **Quote:** `You can set the total size of the data you are sending... For some transfer types it may be required and it allows for better error checking.`
+
+5. **What was that test calling the memory-free helper that newer compilers kept flagging under strict warning flags?**
+   This refers to various instances where examples and test code lacked proper `stdlib.h` inclusions or used incorrect casting (such as `size_t` to `curl_socklen_t`) that resulted in compiler warnings about potential data loss or implicit declarations, which were corrected to be cleaner and warning-free.
+   - **Commit SHA:** `2f0c118`
+   - **Quote:** `typecast below avoid warning on at least win64: conversion from 'size_t' to 'curl_socklen_t', possible loss of data`
+
+6. **What was that thing that made it safe to call the header accessors in a loop without the returned values getting trashed?**
+   The storage for header data returned by `curl_easy_header()` and `curl_easy_nextheader()` was moved to reside in struct-specific memory (`data->state.headerout`) instead of a shared location, ensuring each call maintained its own valid buffer for the duration of a loop.
+   - **Commit SHA:** `0561637`
+   - **Quote:** `By letting curl_easy_header() and curl_easy_nextheader() store the header data in their own struct storage... it makes it possible for applications to use them both in a loop.`

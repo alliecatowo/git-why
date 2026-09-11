@@ -45,14 +45,14 @@ for (const row of rows) {
 
 console.log('\nPaired D vs A (git why against baseline), same tasks only\n');
 console.log(
-  `${'family'.padEnd(8)}${'model'.padEnd(34)}${'n'.padEnd(5)}${'points A>D'.padEnd(14)}${'W-L'.padEnd(8)}${'call delta'.padEnd(12)}token delta`,
+  `${'family'.padEnd(8)}${'model'.padEnd(34)}${'n'.padEnd(5)}${'points A>D'.padEnd(14)}${'W-L'.padEnd(8)}${'call delta'.padEnd(12)}${'calls -/+'.padEnd(11)}token delta`,
 );
 for (const row of rows) {
   const p = row.dVsA;
   if (!p) continue;
   const sign = (v) => (v === null ? '-' : v > 0 ? `+${v}` : String(v));
   console.log(
-    `${row.family.padEnd(8)}${row.model.slice(0, 33).padEnd(34)}${String(p.n).padEnd(5)}${(p.pointsOutOf === null ? '-' : `${p.pointsX}->${p.pointsY}/${p.pointsOutOf}`).padEnd(14)}${`${p.accWin}-${p.accLoss}`.padEnd(8)}${sign(p.callsDelta).padEnd(12)}${sign(p.tokDelta)}`,
+    `${row.family.padEnd(8)}${row.model.slice(0, 33).padEnd(34)}${String(p.n).padEnd(5)}${(p.pointsOutOf === null ? '-' : `${p.pointsX}->${p.pointsY}/${p.pointsOutOf}`).padEnd(14)}${`${p.accWin}-${p.accLoss}`.padEnd(8)}${sign(p.callsDelta).padEnd(12)}${`${p.callsCheaper}/${p.callsDearer}`.padEnd(11)}${sign(p.tokDelta)}`,
   );
 }
 

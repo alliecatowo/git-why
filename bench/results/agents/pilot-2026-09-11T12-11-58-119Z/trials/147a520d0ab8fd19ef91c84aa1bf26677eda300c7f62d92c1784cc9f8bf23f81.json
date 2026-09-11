@@ -1,0 +1,394 @@
+{
+  "task_id": "B-burntsushi-ripgrep-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "corpus_fingerprint": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+  "implementation_sha": "0d8bfea847c6be95b8109f3c608f30cd7aeb0729",
+  "packed_tool_sha256": "c9002cf44d62a6e407e05436b7e4079ee4981ed38355ed720b50ad921f13d772",
+  "model_id": "llmgateway/deepseek-v4-flash",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T12:12:31.863Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "0d95c79f461c09227b1076af476f7b7a323248bc879f86777a6bf175e81e920d",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 5,
+    "outOf": 6,
+    "found": [
+      true,
+      true,
+      false,
+      true,
+      true,
+      true
+    ],
+    "citedShaCount": 28,
+    "citedGoldSha": true,
+    "goldSha": "74959a14cbcce19e2471b0d281ea5cdbd248527d"
+  },
+  "wall_ms": 407643,
+  "tool_calls": 39,
+  "history_calls": 34,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 65037,
+  "output_tokens": 12687,
+  "cache_read_tokens": 503296,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.00955351,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 220881,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T12-11-58-119Z/events/B-burntsushi-ripgrep-01-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "147a520d0ab8fd19ef91c84aa1bf26677eda300c7f62d92c1784cc9f8bf23f81",
+  "zg_index_build_ms": 10675,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  216 / 216 files\n  Entities    5,359\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-a530b24895a2dda5",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline -20"
+        },
+        "output": "3fce3b5 ignore-0.4.33\n5055264 globset-0.4.20\n020687a ignore,globset: increase pool capacity\n7525479 ci: fix binary discovery\n5ed408e ignore-0.4.32\n435f59f ignore: skip loading unreachable ignore files\ndffd776 ci: attest build provenance for release archives\nf9c05a9 index: remove incorrect README\n8372866 index: add some initial indexing scaffolding\nd99ac34 core: add `index` module\nd57de83 nvim: enable all Cargo features\n2ed0c00 flags: disable many flags when indexing is enabled\n59e318f ignore-0.4.31\na9dc222 cargo: set `rust-version` on all crates\nbe739c7 index: add grep-index crate\nd958105 cargo: add new build-time `unstable-index` feature\n227381d ignore-0.4.30\nb621e65 ignore: add incremental checking\nc55818f ignore: more pathutil clean-up\n6e527e9 ignore: add routine for checking if a path is hidden or not\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-87d19bc62038e534",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"man|dash|hyphen|asciidoc|roff\" | head -40"
+        },
+        "output": "2ed0c00 flags: disable many flags when indexing is enabled\n8bca2eb doc: fix typo in man page\ncac9870 doc: update date in man page template\n72a5291 doc: update date in man page template\nd4b77a8 searcher: fix a performance bug with `-A/--after-context`\n8c6595c searcher: fix performance bug with `-A/--after-context` when searching `stdin`\n924ba10 test: fix `Command::current_dir` API\n74959a1 man: escape all hyphens in flag names\n75970fd ignore: don't process command line arguments in reverse order\nf89cdba doc: update date in man page template\nea99421 doc: fix transcription bug in ugrep benchmark command\nb6ef99e doc: remove unused man page template\n8697946 release/doc: set date in man page\n5dc424d doc: scrub mentions of asciidoc/asciidoctor\n040d8f2 ci: improve docs for manual build-and-publish scripts\n601e122 ignore/types: add Windows Command Prompt files\nb92550b readme: add install command for ALT Linux\nfc69bd3 readme: update install commands for Debian/Ubuntu\ne824531 edition: manual changes\nd636511 doc: sync --help output with man page\nde0c24f benchsuite: add ugrep commands to benchmarks\n16a1221 doc: use asciidoctor instead of a2x\n49de7b1 ci: disable man page check\n12e4180 doc: remove CPU features from man pages\n5c1eac4 changelog: highlight a bad performance regression\nd1389db search: better errors for preprocessor commands\nb41e596 doc: escape braces in AsciiDoc\n87a6276 doc: add section on PCRE2 performance\n004bb35 ripgrep/printer: fix small performance regression\n9d7448b doc: shorten Rust nightly brew install command\nc8e9f25 ci: fix macOS asciidoc installation\n9305f89 ci: fix man page generation on macOS\ncb47be9 ci: build man page on ARM cross-compile\nd65966e ignore: fix performance regression on Windows\na2a7f58 doc: fix asciidoc->man formatting\n6553940 doc: generate man page\n7e0fa1c Add a type for man pages\n712311f Don't create command until we know we can test it\n01358a1 man: synchronize man page with --help\nb7c3cf3 Add test for option-arguments with leading hyphens\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-921e110d09628c3b",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | wc -l"
+        },
+        "output": "2287\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-ba07816570f7b370",
+        "status": "completed",
+        "input": {
+          "command": "git show 74959a1 --stat; echo \"=====\"; git show 74959a1 | head -60"
+        },
+        "output": "commit 74959a14cbcce19e2471b0d281ea5cdbd248527d\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sat Sep 6 14:50:22 2025 -0400\n\n    man: escape all hyphens in flag names\n    \n    Apparently, if we don't do this, some roff renderers with use a special\n    Unicode hyphen. That in turn makes searching a man page not work as one\n    would expect.\n    \n    Fixes #3140\n\n CHANGELOG.md                 | 2 ++\n crates/core/flags/defs.rs    | 6 +++---\n crates/core/flags/doc/man.rs | 4 ++--\n 3 files changed, 7 insertions(+), 5 deletions(-)\n=====\ncommit 74959a14cbcce19e2471b0d281ea5cdbd248527d\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sat Sep 6 14:50:22 2025 -0400\n\n    man: escape all hyphens in flag names\n    \n    Apparently, if we don't do this, some roff renderers with use a special\n    Unicode hyphen. That in turn makes searching a man page not work as one\n    would expect.\n    \n    Fixes #3140\n\ndiff --git a/CHANGELOG.md b/CHANGELOG.md\nindex 1bb6e84..89a9639 100644\n--- a/CHANGELOG.md\n+++ b/CHANGELOG.md\n@@ -27,6 +27,8 @@ Bug fixes:\n   Fix a bug where ripgrep would mishandle globs that ended with a `.`.\n * [BUG #3108](https://github.com/BurntSushi/ripgrep/issues/3108):\n   Fix a bug where `-q --files-without-match` inverted the exit code.\n+* [BUG #3140](https://github.com/BurntSushi/ripgrep/issues/3140):\n+  Ensure hyphens in flag names are escaped in the roff text for the man page.\n \n Feature enhancements:\n \ndiff --git a/crates/core/flags/defs.rs b/crates/core/flags/defs.rs\nindex 30f5cdc..6e53a4f 100644\n--- a/crates/core/flags/defs.rs\n+++ b/crates/core/flags/defs.rs\n@@ -5576,9 +5576,9 @@ don't need preprocessing. For example, given the following shell script,\n     pdftotext \"$1\" -\n .EE\n .sp\n-then it is possible to use \\fB\\-\\-pre\\fP \\fIpre-pdftotext\\fP \\fB--pre-glob\n-'\\fP\\fI*.pdf\\fP\\fB'\\fP to make it so ripgrep only executes the\n-\\fIpre-pdftotext\\fP command on files with a \\fI.pdf\\fP extension.\n+then it is possible to use \\fB\\-\\-pre\\fP \\fIpre-pdftotext\\fP\n+\\fB\\-\\-pre\\-glob\\fP '\\fI*.pdf\\fP' to make it so ripgrep only executes\n+the \\fIpre-pdftotext\\fP command on files with a \\fI.pdf\\fP extension.\n .sp\n Multiple \\flag{pre-glob} flags may be used. Globbing rules match\n \\fBgitignore\\fP globs. Precede a glob with a \\fB!\\fP to exclude it.\ndiff --git a/crates/core/flags/doc/man.rs b/crates/core/flags/doc/man.rs\nindex e0ed13b..9fa35e1 100644\n--- a/crates/core/flags/doc/man.rs\n+++ b/crates/core/flags/doc/man.rs\n@@ -53,7 +53,7 @@ fn generate_flag(flag: &'static dyn Flag, out: &mut String) {\n         write!(out, r\", \");\n     }\n \n-    let name = flag.name_long();\n+    let name = flag.name_long().replace(\"-\", r\"\\-\");\n     write!(out, r\"\\fB\\-\\-{name}\\fP\");\n     if let Some(var) = flag.doc_variable() {\n         write!(out, r\"=\\fI{var}\\fP\");\n@@ -71,7 +71,7 @@ fn generate_flag(flag: &'static dyn Flag, out: &mut String) {\n         if let Some(name) = flag.name_short() {\n             write!(out, r\"\\-{}/\", char::from(name));\n         }\n-        write!(out, r\"\\-\\-{}\", flag.name_long());\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-89aeb16292d41f4e",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all --grep=\"router\\|firmware\\|mips\\|openwrt\\|LEDE\" -i | head -20"
+        },
+        "output": "6244e63 ignore/types: add Kconfig\n53279db deps: switch to tikv-jemallocator\n3bfa125 ci: replace mips with powerpc64, aarch64 and s390x\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-b383bb13d8886455",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"busybox|musl|router|firmware|linker|binutils\" | head -20"
+        },
+        "output": "48a6ad9 ci: add support for `aarch64-unknown-linux-musl`\nc33f623 cargo: explicitly configure musl to be statically linked\n5e81c60 ci: use musl to build debian artifact\nbf0ddc4 ci: fix musl docker build\n3de31f7 ci: fix musl deployment\n5ce2d73 ci: use cross for musl x86_64 builds\n03bf37f alloc: use jemalloc when building with musl\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-8badb1c8d5b822d5",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"jemalloc|tickv\" | head -20"
+        },
+        "output": "d5b85d4 deps: bump to tikv-jemallocator 0.7.0\n53279db deps: switch to tikv-jemallocator\n2e20783 deps: upgrade to jemallocator 0.5\n03bf37f alloc: use jemalloc when building with musl\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-98f818d93e77f297",
+        "status": "completed",
+        "input": {
+          "command": "git show 53279db | head -80"
+        },
+        "output": "commit 53279db4143f4307c2b1b27f2cd32a43b0496205\nAuthor: Aleksey Vasilenko <aleksey.vasilenko@gmail.com>\nDate:   Thu Sep 12 17:27:46 2024 +0300\n\n    deps: switch to tikv-jemallocator\n    \n    It is now a recommended crate for jemalloc and it contains an\n    [important fix for compilation on riscv64gc-unknown-linux-musl][fix],\n    I bumped into this when I was trying to\n    [build ripgrep on OpenWrt][openwrt].\n    \n    Closes #2889\n    \n    [fix]: https://github.com/tikv/jemallocator/pull/67\n    [openwrt]: https://github.com/openwrt/packages/pull/24961\n\ndiff --git a/Cargo.lock b/Cargo.lock\nindex fac37ce..49af1f7 100644\n--- a/Cargo.lock\n+++ b/Cargo.lock\n@@ -261,26 +261,6 @@ version = \"1.0.15\"\n source = \"registry+https://github.com/rust-lang/crates.io-index\"\n checksum = \"4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c\"\n \n-[[package]]\n-name = \"jemalloc-sys\"\n-version = \"0.5.4+5.3.0-patched\"\n-source = \"registry+https://github.com/rust-lang/crates.io-index\"\n-checksum = \"ac6c1946e1cea1788cbfde01c993b52a10e2da07f4bac608228d1bed20bfebf2\"\n-dependencies = [\n- \"cc\",\n- \"libc\",\n-]\n-\n-[[package]]\n-name = \"jemallocator\"\n-version = \"0.5.4\"\n-source = \"registry+https://github.com/rust-lang/crates.io-index\"\n-checksum = \"a0de374a9f8e63150e6f5e8a60cc14c668226d7a347d8aee1a45766e3c4dd3bc\"\n-dependencies = [\n- \"jemalloc-sys\",\n- \"libc\",\n-]\n-\n [[package]]\n name = \"jobserver\"\n version = \"0.1.33\"\n@@ -413,7 +393,6 @@ dependencies = [\n  \"bstr\",\n  \"grep\",\n  \"ignore\",\n- \"jemallocator\",\n  \"lexopt\",\n  \"log\",\n  \"serde\",\n@@ -421,6 +400,7 @@ dependencies = [\n  \"serde_json\",\n  \"termcolor\",\n  \"textwrap\",\n+ \"tikv-jemallocator\",\n  \"walkdir\",\n ]\n \n@@ -503,6 +483,26 @@ version = \"0.16.2\"\n source = \"registry+https://github.com/rust-lang/crates.io-index\"\n checksum = \"c13547615a44dc9c452a8a534638acdf07120d4b6847c8178705da06306a3057\"\n \n+[[package]]\n+name = \"tikv-jemalloc-sys\"\n+version = \"0.6.0+5.3.0-1-ge13ca993e8ccb9ba9847cc330696e02839f328f7\"\n+source = \"registry+https://github.com/rust-lang/crates.io-index\"\n+checksum = \"cd3c60906412afa9c2b5b5a48ca6a5abe5736aec9eb48ad05037a677e52e4e2d\"\n+dependencies = [\n+ \"cc\",\n+ \"libc\",\n+]\n+\n+[[package]]\n+name = \"tikv-jemallocator\"\n+version = \"0.6.0\"\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-9eaac5ea517bcf3a",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"remove|drop|delete|getting rid|abandon|deprecate\" | head -40"
+        },
+        "output": "f9c05a9 index: remove incorrect README\ncdeff3e _rg: remove group-stripping functionality\n79d393a release: remove riscv64 and powerpc64 artifacts\n2ebd768 doc: remove CentOS/RHEL installation instructions\nab4665a globset: remove `__Nonexhaustive` work-around\nb6ef99e doc: remove unused man page template\ne92e2ef cli: remove stray `dbg!`\n5dec4b8 ci: drop custom Cross images\nb0f6645 ci: remove local deb build-and-publish script\nae2a099 printer: drop dependency on `base64` crate\n9c84575 printer: drop dependency on serde_derive\n7099e17 cargo: remove dependency patches\n9c6732b printer: remove 'subl' alias\n6d17b3e deps: drop thread_local, lazy_static and once_cell\n3ad7a0d crates: remove hard-coded links\n6cdb99e deps: drop bytecount in favor of memchr_iter(..).count()\nd67809d github: remove dependabot configuration\n3ac4541 regex: remove old inner literal extractor\na68db3a deps: drop temporary patch and move to bstr 1.6\n9d62eb9 BREAKING: regex: finally remove CRLF hack\n6b19be2 crates/grep: remove 'deny(missing_docs)'\ne95254a deps: remove ignore's dependency on crossbeam-utils\n28bff84 deps: remove 'num_cpus'\nd1570de ci: remove `fetch-depth` parameter from the checkout action\n6a13a4f searcher: remove stray 'dbg!'\n5370064 warnings: remove/tweak some dead code\n0f502a9 cargo: remove \"readme\" field\n3f33a83 searcher: remove variable shadowing\ne5639cf globset: remove regex unicode dependency\nc55e7af benchsuite: remove -a flag from grep\n5ebb3ad benchsuite: remove sift, pt and ucg\ncbfbe93 snap: remove snapcraft configuration\n655e332 crates.io: remove badges\nc0d7824 ci: remove Travis and appveyor specific stuff\n12e4180 doc: remove CPU features from man pages\n75cbe88 cli: add --no-unicode, deprecate --no-pcre2-unicode\n88f46d1 tests: remove existing test directory\nc78c323 readme: remove outdated SIMD info\n5011dba ignore: remove unused parameter\n31807f8 deps: drop tempfile\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-a2991d5a3ac8a55a",
+        "status": "completed",
+        "input": {
+          "command": "git show 9d62eb9 | head -60"
+        },
+        "output": "commit 9d62eb997a19efbf5e96d28870f8edad9bde1b9b\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Fri Jun 16 14:36:27 2023 -0400\n\n    BREAKING: regex: finally remove CRLF hack\n    \n    Now that Rust's regex crate finally supports a CRLF mode, we can remove\n    this giant hack in ripgrep to enable it. (And assuredly did not work in\n    all cases.)\n    \n    The way this works in the regex engine is actually subtly different than\n    what ripgrep previously did. Namely, --crlf would previously treat\n    either \\r\\n or \\n as a line terminator. But now it treats \\r\\n, \\n and\n    \\r as line terminators. In effect, it is implemented by treating \\r and\n    \\n as line terminators, but ^ and $ will never match at a position\n    between a \\r and a \\n.\n    \n    So basically this means that $ will end up matching in more cases than\n    it might be intended too, but I don't expect this to be a big problem in\n    practice.\n    \n    Note that passing --crlf to ripgrep and enabling CRLF mode in the regex\n    via the `R` inline flag (e.g., `(?R:$)`) are subtly different. The `R`\n    flag just controls the regex engine, but --crlf instructs all of ripgrep\n    to use \\r\\n as a line terminator. There are likely some inconsistencies\n    or corner cases that are wrong as a result of this cognitive dissonance,\n    but we choose to leave well enough alone for now.\n    \n    Fixing this for real will probably require re-thinking how line\n    terminators are handled in ripgrep. For example, one \"problem\" with how\n    they're handled now is that ripgrep will re-insert its own line\n    terminators when printing output instead of copying the input. This is\n    maybe not so great and perhaps unexpected. (ripgrep probably can't get\n    away with not inserting any line terminators. Users probably expect\n    files that don't end with a line terminator whose last line matches to\n    have a line terminator inserted.)\n\ndiff --git a/crates/regex/src/config.rs b/crates/regex/src/config.rs\nindex ed1c2f8..8d785b6 100644\n--- a/crates/regex/src/config.rs\n+++ b/crates/regex/src/config.rs\n@@ -6,7 +6,7 @@ use {\n };\n \n use crate::{\n-    ast::AstAnalysis, crlf::crlfify, error::Error, literal::LiteralSets,\n+    ast::AstAnalysis, error::Error, literal::LiteralSets,\n     multi::alternation_literals, non_matching::non_matching_bytes,\n     strip::strip_from_match,\n };\n@@ -75,6 +75,7 @@ impl Config {\n             .case_insensitive(self.is_case_insensitive(&analysis))\n             .multi_line(self.multi_line)\n             .dot_matches_new_line(self.dot_matches_new_line)\n+            .crlf(self.crlf)\n             .swap_greed(self.swap_greed)\n             .unicode(self.unicode)\n             .build()\n@@ -88,8 +89,7 @@ impl Config {\n             original: pattern.to_string(),\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-aa764497a49bd06f",
+        "status": "completed",
+        "input": {
+          "command": "git log --all -p --grep=\"trouble\" -i | head -40"
+        },
+        "output": "commit 36091591f09bd1a20caa557f92180830753ae0fa\nAuthor: dana <dana@dana.is>\nDate:   Wed Oct 11 19:00:11 2017 -0500\n\n    Add troubleshooting notes re: conflicting tools/aliases\n\ndiff --git a/README.md b/README.md\nindex d0d76cb..2031f7a 100644\n--- a/README.md\n+++ b/README.md\n@@ -487,3 +487,26 @@ was later deprecated in\n available [here][msys issue explanation].\n \n [msys issue explanation]: https://github.com/BurntSushi/ripgrep/issues/281#issuecomment-269093893\n+\n+#### When I run `rg` it executes some other command!\n+\n+It's likely that you have a shell alias or even another tool called `rg` which\n+is interfering with `ripgrep` — run `which rg` to see what it is.\n+\n+(Notably, the `rails` plug-in for\n+[Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#rails) sets\n+up an `rg` alias for `rails generate`.)\n+\n+Problems like this can be resolved in one of several ways:\n+\n+* If you're using the OMZ `rails` plug-in, disable it by editing the `plugins`\n+  array in your zsh configuration.\n+* Temporarily bypass an existing `rg` alias by calling `ripgrep` as\n+  `command rg`, `\\rg`, or `'rg'`.\n+* Temporarily bypass an existing alias or another tool named `rg` by calling\n+  `ripgrep` by its full path (e.g., `/usr/bin/rg` or `/usr/local/bin/rg`).\n+* Permanently disable an existing `rg` alias by adding `unalias rg` to the\n+  bottom of your shell configuration file (e.g., `.bash_profile` or `.zshrc`).\n+* Give `ripgrep` its own alias that doesn't conflict with other tools/aliases by\n+  adding a line like the following to the bottom of your shell configuration\n+  file: `alias ripgrep='command rg'`\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-88b8421002c7d716",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"flaky|unstable|fragile|trouble|headache|nightmare\" | head -20"
+        },
+        "output": "d958105 cargo: add new build-time `unstable-index` feature\na5d9e03 test: attempt to fix flaky time-reliant test\n06b66ef deps: get rid of unstable feature\n3609159 Add troubleshooting notes re: conflicting tools/aliases\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-8f8e650883f77277",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"deno|node|npm|grunt|brotli|upx|strip\" | head"
+        },
+        "output": "cdeff3e _rg: remove group-stripping functionality\n50b2472 ci: strip release binaries on macOS\nd9bd261 regex: some small cleanup in 'strip.rs'\n290fd2a readme: mention Zstandard and Brotli\ne7829c0 cli: fix bug where last byte was stripped\n276e2c9 searcher: always strip BOM\n57500ad changelog: brotli/zstd addition\n0b04553 grep-cli: support Brotli/Zstd decompression\n1ae1211 ignore/types: add/update brotli, bzip2, gzip, xz, zstd\n30ca3ec ci: strip ripgrep binary on Unix\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-a6c5711da081318f",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"automaton|NFA|full matcher|ngram|two-pass|reverse\" | head -20"
+        },
+        "output": "75970fd ignore: don't process command line arguments in reverse order\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-9871d9fe02465569",
+        "status": "completed",
+        "input": {
+          "command": "git show 06b66ef | head -40"
+        },
+        "output": "commit 06b66efd59b83012d34a3c11e72b4c4901ae756a\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Tue Jul 17 20:24:36 2018 -0400\n\n    deps: get rid of unstable feature\n    \n    This was introduced as a temporary measure for dealing with the regex\n    crate's unstable feature, but it was never included in a release of\n    ripgrep. Thus, we remove it. The regex crate will now automatically enable\n    SIMD optimizations when available.\n\ndiff --git a/Cargo.toml b/Cargo.toml\nindex 15653fd..04fade1 100644\n--- a/Cargo.toml\n+++ b/Cargo.toml\n@@ -69,13 +69,13 @@ default-features = false\n features = [\"suggestions\", \"color\"]\n \n [features]\n-avx-accel = [\"bytecount/avx-accel\", \"regex/unstable\"]\n+avx-accel = [\n+  \"bytecount/avx-accel\",\n+]\n simd-accel = [\n   \"bytecount/simd-accel\",\n   \"encoding_rs/simd-accel\",\n-  \"regex/unstable\",\n ]\n-unstable = [\"regex/unstable\"]\n \n [profile.release]\n debug = true\ndiff --git a/appveyor.yml b/appveyor.yml\nindex 73626d4..26daf22 100644\n--- a/appveyor.yml\n+++ b/appveyor.yml\n@@ -50,7 +50,7 @@ test_script:\n \n before_deploy:\n   # Generate artifacts for release\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-8a526960a1de5b1e",
+        "status": "completed",
+        "input": {
+          "command": "git log --all -p --grep=\"gain\\|again\\|annoy\\|frustrat\\|nightmare\" -i | grep -E \"^commit |^    \" | head -40"
+        },
+        "output": "commit 2ed0c006fee4c441add774a711d9122a88477619\n    flags: disable many flags when indexing is enabled\n    \n    The indexing feature will be born with a lot of restrictions on it in\n    order to bootstrap and end-to-end working system. For example, getting\n    the `--pre` flag (and similar) working correctly is somewhat of a\n    hazard, since you'd need to specify the same transformation during both\n    indexing and not.\n    \n    We disable pretty much any kind of filtering or transform related flags\n    other than what the default provides. Again, we'll relax at least most\n    of these in the future. But let's start here.\n     &SortFiles,\n         if let Some(ref sort) = low.sort {\n             sort.supported()?;\n         }\n         // We modify the mode in-place on `low` so that subsequent conversions\n         // see the correct mode.\ncommit b0c6d4c34afed68cfdc9dde98046716b1e773651\n    ignore/types: add `*.svelte.ts` to Svelte file type glob\n    \n    I was somewhat unsure about adding this, since `.svelte.ts` seems\n    primarily like a TypeScript file and it could be surprising to show up\n    in a search for Svelte files. In particular, ripgrep doesn't know how to\n    only search the Svelte stuff inside of a `.svelte.ts` file, so you could\n    end up with lots of false positives.\n    \n    However, I was swayed[1] by the argument that the extension does\n    actually include `svelte` in it, so maybe this is fine. Please open an\n    issue if this change ends up being too annoying for most users.\n    \n    Closes #2874, Closes #2909\n    \n    [1]: https://github.com/BurntSushi/ripgrep/issues/2874#issuecomment-3126892931\n     (&[\"sql\"], &[\"*.sql\", \"*.psql\"]),\n     (&[\"stylus\"], &[\"*.styl\"]),\n     (&[\"sv\"], &[\"*.v\", \"*.vg\", \"*.sv\", \"*.svh\", \"*.h\"]),\n     (&[\"svg\"], &[\"*.svg\"]),\n     (&[\"swift\"], &[\"*.swift\"]),\n     (&[\"swig\"], &[\"*.def\", \"*.i\"]),\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-8c1c33e85c47a2f1",
+        "status": "completed",
+        "input": {
+          "command": "git log --all -p --grep=\"never worked\\|kept breaking\\|was broken\\|doesn't work\\|barely\\|whitespace\" -i | grep -E \"^commit |^    \" | head -30"
+        },
+        "output": "commit 038524a580072e9346ee9f782679618e380f4f2e\n    printer: trim before applying max column windowing\n    \n    Previously, we were applying the -M/--max-columns flag *before* triming\n    prefix ASCII whitespace. But this doesn't make a whole lot of sense. We\n    should be trimming first, but the result of trimming is ultimately what\n    we'll be printing and that's what -M/--max-columns should be applied to.\n    \n    Fixes #2458\n         let mut count = 0;\n         let mut stepper = LineStep::new(line_term, 0, bytes.len());\n         while let Some((start, end)) = stepper.next(bytes) {\n             self.write_prelude(\n                 self.sunk.absolute_byte_offset() + line.start() as u64,\n                 self.sunk.line_number().map(|n| n + count),\n                 Some(matches[0].start() as u64 + 1),\n             )?;\n             count += 1;\n             if self.exceeds_max_columns(&bytes[line]) {\n                 self.write_exceeded_line(bytes, line, matches, &mut midx)?;\n             } else {\n                     Some(m.start().saturating_sub(line.start()) as u64 + 1),\n                 )?;\n                 count += 1;\n                 if self.exceeds_max_columns(&bytes[line]) {\n                     self.write_exceeded_line(bytes, line, &[m], &mut 0)?;\n                     continue;\n                 }\n                 while !line.is_empty() {\n                     if m.end() <= line.start() {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-90d53d8eb80f2bb3",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"2111|resolve helper|search-zip|search zip|lazy.*helper|helper.*lazy\" | head"
+        },
+        "output": "6a055d9 doc: clarify errors for -z/--search-zip\nd857ad6 complete: add --no-pre, improve --pre/--search-zip exclusivity\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-a33536ddad2b68e0",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"2990|two dot|two-dot|ending with a |trailing\" | head"
+        },
+        "output": "4df1298 globset: fix bug where trailing `.` in file name was incorrectly handled\n9f0e88b ignore: fix gitignore parsing bug for trailing \\/\n4b5e789 Strip trailing whitespace in gitignore patterns.\n71ad9bf Fix trailing recursive globs in gitignore.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-9f328f20db186a1b",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"3076|2094|max-count|multiline.*too many|too many match\" | head"
+        },
+        "output": "fdea972 doc: clarify a case where -m/--max-count is not strictly respected\n0ca96e0 printer: fix context bug when --max-count is used\n58aca2e Add -m/--max-count flag.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-ad1cc9e829ebb2c0",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"2111|search_zip|search-zip|lazy.*(gzip|xz|brotli|zstd)|resolve.*Windows|Windows.*resolve|decompressor|decompress helper\" | head"
+        },
+        "output": "6a055d9 doc: clarify errors for -z/--search-zip\nd857ad6 complete: add --no-pre, improve --pre/--search-zip exclusivity\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-8ae96987754906eb",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"helper|gzip|xz|brotli|zstd|decompress\" | head -30"
+        },
+        "output": "9164158 core: don't build decompression reader unless we intend to use it\n290fd2a readme: mention Zstandard and Brotli\n57500ad changelog: brotli/zstd addition\n0b04553 grep-cli: support Brotli/Zstd decompression\n1ae1211 ignore/types: add/update brotli, bzip2, gzip, xz, zstd\n0d11497 tests: be looser with gzip failure\n1d09d4d ripgrep: add support for lz4 decompression\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-b1fb68b14a9f5f60",
+        "status": "completed",
+        "input": {
+          "command": "git show 9164158 | head -80"
+        },
+        "output": "commit 916415857f084e63efda03cf25a67fe7f6d24244\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sun Oct 12 14:18:14 2025 -0400\n\n    core: don't build decompression reader unless we intend to use it\n    \n    Building it can consume resources. In particular, on Windows, the\n    various binaries are eagerly resolved.\n    \n    I think this originally wasn't done. The eager resolution was added\n    later for security purposes. But the \"eager\" part isn't actually\n    necessary.\n    \n    It would probably be better to change the decompression reader to do\n    lazy resolution only when the binary is needed. But this will at least\n    avoid doing anything when the `-z/--search-zip` flag isn't used. But\n    when it is, ripgrep will still eagerly resolve all possible binaries.\n    \n    Fixes #2111\n\ndiff --git a/crates/core/search.rs b/crates/core/search.rs\nindex d03433f..2fb4cba 100644\n--- a/crates/core/search.rs\n+++ b/crates/core/search.rs\n@@ -41,7 +41,6 @@ impl Default for Config {\n pub(crate) struct SearchWorkerBuilder {\n     config: Config,\n     command_builder: grep::cli::CommandReaderBuilder,\n-    decomp_builder: grep::cli::DecompressionReaderBuilder,\n }\n \n impl Default for SearchWorkerBuilder {\n@@ -53,17 +52,10 @@ impl Default for SearchWorkerBuilder {\n impl SearchWorkerBuilder {\n     /// Create a new builder for configuring and constructing a search worker.\n     pub(crate) fn new() -> SearchWorkerBuilder {\n-        let mut cmd_builder = grep::cli::CommandReaderBuilder::new();\n-        cmd_builder.async_stderr(true);\n+        let mut command_builder = grep::cli::CommandReaderBuilder::new();\n+        command_builder.async_stderr(true);\n \n-        let mut decomp_builder = grep::cli::DecompressionReaderBuilder::new();\n-        decomp_builder.async_stderr(true);\n-\n-        SearchWorkerBuilder {\n-            config: Config::default(),\n-            command_builder: cmd_builder,\n-            decomp_builder,\n-        }\n+        SearchWorkerBuilder { config: Config::default(), command_builder }\n     }\n \n     /// Create a new search worker using the given searcher, matcher and\n@@ -76,7 +68,12 @@ impl SearchWorkerBuilder {\n     ) -> SearchWorker<W> {\n         let config = self.config.clone();\n         let command_builder = self.command_builder.clone();\n-        let decomp_builder = self.decomp_builder.clone();\n+        let decomp_builder = config.search_zip.then(|| {\n+            let mut decomp_builder =\n+                grep::cli::DecompressionReaderBuilder::new();\n+            decomp_builder.async_stderr(true);\n+            decomp_builder\n+        });\n         SearchWorker {\n             config,\n             command_builder,\n@@ -233,7 +230,11 @@ impl<W: WriteColor> Printer<W> {\n pub(crate) struct SearchWorker<W> {\n     config: Config,\n     command_builder: grep::cli::CommandReaderBuilder,\n-    decomp_builder: grep::cli::DecompressionReaderBuilder,\n+    /// This is `None` when `search_zip` is not enabled, since in this case it\n+    /// can never be used. We do this because building the reader can sometimes\n+    /// do non-trivial work (like resolving the paths of decompression binaries\n+    /// on Windows).\n+    decomp_builder: Option<grep::cli::DecompressionReaderBuilder>,\n     matcher: PatternMatcher,\n     searcher: grep::searcher::Searcher,\n     printer: Printer<W>,\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-9b5017cc73737e46",
+        "status": "completed",
+        "input": {
+          "command": "git show 4df1298 | head -60"
+        },
+        "output": "commit 4df1298127695ed1e76937f16de1a0135677ccf5\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sun Aug 17 17:18:27 2025 -0400\n\n    globset: fix bug where trailing `.` in file name was incorrectly handled\n    \n    I'm not sure why I did this, but I think I was trying to imitate the\n    contract of [`std::path::Path::file_name`]:\n    \n    > Returns None if the path terminates in `..`.\n    \n    But the status quo clearly did not implement this. And as a result, if\n    you have a glob that ends in a `.`, it was instead treated as the empty\n    string (which only matches the empty string).\n    \n    We fix this by implementing the semantic from the standard library\n    correctly.\n    \n    Fixes #2990\n    \n    [`std::path::Path::file_name`]: https://doc.rust-lang.org/std/path/struct.Path.html#method.file_name\n\ndiff --git a/CHANGELOG.md b/CHANGELOG.md\nindex e0159bb..e37735e 100644\n--- a/CHANGELOG.md\n+++ b/CHANGELOG.md\n@@ -23,6 +23,8 @@ Bug fixes:\n   Ignore a UTF-8 BOM marker at the start of `.gitignore` (and similar files).\n * [BUG #2944](https://github.com/BurntSushi/ripgrep/pull/2944):\n   Fix a bug where the \"bytes searched\" in `--stats` output could be incorrect.\n+* [BUG #2990](https://github.com/BurntSushi/ripgrep/issues/2990):\n+  Fix a bug where ripgrep would mishandle globs that ended with a `.`.\n \n Feature enhancements:\n \ndiff --git a/crates/globset/src/pathutil.rs b/crates/globset/src/pathutil.rs\nindex 8488e74..861f61b 100644\n--- a/crates/globset/src/pathutil.rs\n+++ b/crates/globset/src/pathutil.rs\n@@ -4,21 +4,25 @@ use bstr::{ByteSlice, ByteVec};\n \n /// The final component of the path, if it is a normal file.\n ///\n-/// If the path terminates in `.`, `..`, or consists solely of a root of\n-/// prefix, file_name will return None.\n+/// If the path terminates in `..`, or consists solely of a root of prefix,\n+/// file_name will return `None`.\n pub(crate) fn file_name<'a>(path: &Cow<'a, [u8]>) -> Option<Cow<'a, [u8]>> {\n-    if path.last_byte().map_or(true, |b| b == b'.') {\n+    if path.is_empty() {\n         return None;\n     }\n     let last_slash = path.rfind_byte(b'/').map(|i| i + 1).unwrap_or(0);\n-    Some(match *path {\n+    let got = match *path {\n         Cow::Borrowed(path) => Cow::Borrowed(&path[last_slash..]),\n         Cow::Owned(ref path) => {\n             let mut path = path.clone();\n             path.drain_bytes(..last_slash);\n             Cow::Owned(path)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-9e4fa84be2bd4d5d",
+        "status": "completed",
+        "input": {
+          "command": "git show 4df1298 | sed -n '60,110p'"
+        },
+        "output": "             Cow::Owned(path)\n         }\n-    })\n+    };\n+    if got == &b\"..\"[..] {\n+        return None;\n+    }\n+    Some(got)\n }\n \n /// Return a file extension given a path's file name.\ndiff --git a/tests/regression.rs b/tests/regression.rs\nindex 4fd3c0f..ecc1205 100644\n--- a/tests/regression.rs\n+++ b/tests/regression.rs\n@@ -1461,3 +1461,19 @@ rgtest!(r2944_incorrect_bytes_searched, |dir: Dir, mut cmd: TestCommand| {\n     let got = cmd.args(&[\"--stats\", \"-m2\", \"foo\", \".\"]).stdout();\n     assert!(got.contains(\"10 bytes searched\\n\"));\n });\n+\n+// See: https://github.com/BurntSushi/ripgrep/issues/2990\n+#[cfg(unix)]\n+rgtest!(r2990_trip_over_trailing_dot, |dir: Dir, _cmd: TestCommand| {\n+    dir.create_dir(\"asdf\");\n+    dir.create_dir(\"asdf.\");\n+    dir.create(\"asdf/foo\", \"\");\n+    dir.create(\"asdf./foo\", \"\");\n+\n+    let got = dir.command().args(&[\"--files\", \"-g\", \"!asdf/\"]).stdout();\n+    eqnice!(\"asdf./foo\\n\", got);\n+\n+    // This used to ignore the glob given and included `asdf./foo` in output.\n+    let got = dir.command().args(&[\"--files\", \"-g\", \"!asdf./\"]).stdout();\n+    eqnice!(\"asdf/foo\\n\", got);\n+});\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-b6dbe0993665eb03",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i -E \"max.count|maxcount|multi.?line|context.*max|max.*context|2094|3076|surround\" | head -30"
+        },
+        "output": "fdea972 doc: clarify a case where -m/--max-count is not strictly respected\nc45ec16 doc: clarify `--multiline --count`\n8b5d3d1 printer: hack in a fix for `-l/--files-with-matches` when using `--pcre2 --multiline` with look-around\n91afd42 printer: fix duplicative replacement in multiline mode\nefd9cfb grep: fix bugs in handling multi-line look-around\n656aa12 printer: fix multi-line replacement bug\n0ca96e0 printer: fix context bug when --max-count is used\n581a35e impl: fix --multiline anchored match bug\n94e4b8e printer: fix --vimgrep for multi-line mode\n184c158 doc: add -U/--multiline to common options\ndb256c8 ripgrep: suggest -U/--multiline\n7d93d2a ripgrep: add --no-multiline-dotall\n58aca2e Add -m/--max-count flag.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-839dec4d00f58efd",
+        "status": "completed",
+        "input": {
+          "command": "git show fdea972 | head -80"
+        },
+        "output": "commit fdea9723cac34b6e93e259c2366c94e8319de0ca\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Mon Sep 22 22:12:15 2025 -0400\n\n    doc: clarify a case where -m/--max-count is not strictly respected\n    \n    In #2843, it's requested that these trailing contextual lines should be\n    displayed as non-matching because they exceed the limit. While\n    reasonable, I think that:\n    \n    1. This would be a weird complication to the implementation.\n    2. This would overall be less intuitive and more complex. Today, there\n       is never a case where ripgrep emits a matching line in a way where\n       the match isn't highlighted.\n    \n    Closes #2843\n\ndiff --git a/crates/core/flags/defs.rs b/crates/core/flags/defs.rs\nindex bbe1348..65e74c5 100644\n--- a/crates/core/flags/defs.rs\n+++ b/crates/core/flags/defs.rs\n@@ -3898,6 +3898,10 @@ When \\flag{multiline} is used, a single match that spans multiple lines is only\n counted once for the purposes of this limit. Multiple matches in a single line\n are counted only once, as they would be in non-multiline mode.\n .sp\n+When combined with \\flag{after-context} or \\flag{context}, it's possible for\n+more matches than the maximum to be printed if contextual lines contain a\n+match.\n+.sp\n Note that \\fB0\\fP is a legal value but not likely to be useful. When used,\n ripgrep won't search anything.\n \"\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-83b20c617f5b3b58",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | xargs -I{} echo {} ; echo \"---searching---\"; git log --all -p --grep=\"3076\\|2094\" -i | grep -E \"^commit |^    \" | head -40"
+        },
+        "output": "3fce3b5 ignore-0.4.33\n5055264 globset-0.4.20\n020687a ignore,globset: increase pool capacity\n7525479 ci: fix binary discovery\n5ed408e ignore-0.4.32\n435f59f ignore: skip loading unreachable ignore files\ndffd776 ci: attest build provenance for release archives\nf9c05a9 index: remove incorrect README\n8372866 index: add some initial indexing scaffolding\nd99ac34 core: add `index` module\nd57de83 nvim: enable all Cargo features\n2ed0c00 flags: disable many flags when indexing is enabled\n59e318f ignore-0.4.31\na9dc222 cargo: set `rust-version` on all crates\nbe739c7 index: add grep-index crate\nd958105 cargo: add new build-time `unstable-index` feature\n227381d ignore-0.4.30\nb621e65 ignore: add incremental checking\nc55818f ignore: more pathutil clean-up\n6e527e9 ignore: add routine for checking if a path is hidden or not\n626b895 ignore: refactor `is_hidden`\nc035d23 msrv: bump to Rust 1.96\nfc3dd04 doc: update OpenSubtitles benchmark corpus URL in README\n0d7054d ignore: fix deadlock when visitor panics\n5e16a5c changelog: start next section\nf91cde0 pkg/brew: update tap\ne89fff8 15.2.0\nd798261 deps: bump ignore version\n576005b grep-searcher-0.1.17\n432976d grep-pcre2-0.1.10\n41e0ae7 grep-matcher-0.1.9\n40ffc6e ignore-0.4.29\n28c687d globset-0.4.19\nf03c67e changelog: 15.2.0\ne988d4b deps: update everything\nd5b85d4 deps: bump to tikv-jemallocator 0.7.0\n324f7ef ignore-0.4.28\n241b87b ignore: support `GIT_CONFIG_GLOBAL` and `GIT_CONFIG_SYSTEM` for `core.excludesFile`\nb6849da ignore/walk: add `WalkBuilder::empty` and `WalkBuilder::from_iter`\n8bca2eb doc: fix typo in man page\n61a9fd8 doc: fix typo\ne7b0f89 lint: use `cloned()` or `copied()` when we can\n767086d searcher: hint at sequential memory map reading\n9548e86 ignore/types: add PKGBUILD type\n3b62573 deps: upgrade the lower bound for termcolor from 1.1.0 to 1.4.0\nbc3ad92 ignore/types: add Rocq `.v` files\n93acfe2 ignore/types: add `proto` for filtering to protobuf files\n77d27e8 ignore/types: add Mojo type\nf55548b globset: fix `matches_all` false positives\n2c23e39 changelog: bring unreleased changes up to date\n68b3c9e ignore: fetch directory entry metadata in batches\n653d7f5 ignore: add multi-root parent matcher regression tests\n068a63e globset: reduce owned path copying in globset\n3a57099 doc: fix typo\nf2f3d00 _rg: change some compadd -q to -r\n2394f72 test-complete: misc. improvements\nb357caa _rg: use _numbers where applicable\na709a3b _rg: improve existing type functions\n42e6e85 _rg: improve colour- and type-spec completion\nc4f34e0 _rg: update $no pattern to account for --require-git and --unicode\nf168a87 _rg: eliminate superfluous group comments\n365edbf _rg: misc. spec fixes\n640ad85 _rg: add missing groups\ncdeff3e _rg: remove group-stripping functionality\ne015672 doc: fix typos in code comments\nb009b5b doc: fix typos in comments\n---searching---\nxargs: unmatched single quote; by default quotes are special to xargs unless you use the -0 option\ncommit 5c42c8c48f4163ba7c0662cb70dbf61f9d670d9a\n    test: add regression test for fixed bug\n    \n    It turns out that #2094 was fixed in my `--max-count` refactor a few\n    commits back. This commit adds a regression test for it.\n    \n    Closes #2094\n     eqnice!(\"1:\\n2:\\n2:\\n2:\\n\", cmd.args(&[\"-won\", \"\", \"test\"]).stdout());\n     dir.create(\ncommit 9d8016d10c94a5af2768eb6dd0440386a7d317a0\n    printer: finish removal of `max_matches`\n    \n    This finishes what I started in commit\n    a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4.\n    Specifically, the `max_matches` configuration has been moved to the\n    `grep-searcher` crate and *removed* from the `grep-printer` crate. The\n    commit message has the details for why we're doing this, but the short\n    story is to fix #3076.\n    \n    Note that this is a breaking change for `grep-printer`, so this will\n    require a semver incompatible release.\n     ) -> grep::printer::JSON<W> {\n         grep::printer::JSONBuilder::new()\n             .pretty(false)\n             .always_begin_end(false)\n             .replacement(self.replace.clone().map(|r| r.into()))\n             .build(wtr)\n             .exclude_zero(!self.include_zero)\n             .hyperlink(self.hyperlink_config.clone())\n             .kind(kind)\n             .path(self.with_filename)\n             .path_terminator(self.path_terminator.clone())\n             .separator_field(b\":\".to_vec())\n     grep_matcher::{Match, Matcher},\n     serde_json as json,\n     pretty: bool,\n     always_begin_end: bool,\n     replacement: Arc<Option<Vec<u8>>>,\n     fn default() -> Config {\n         Config {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-845eb999002aa4d8",
+        "status": "completed",
+        "input": {
+          "command": "git show 9d8016d | head -70"
+        },
+        "output": "commit 9d8016d10c94a5af2768eb6dd0440386a7d317a0\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Sat Oct 4 08:55:37 2025 -0400\n\n    printer: finish removal of `max_matches`\n    \n    This finishes what I started in commit\n    a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4.\n    Specifically, the `max_matches` configuration has been moved to the\n    `grep-searcher` crate and *removed* from the `grep-printer` crate. The\n    commit message has the details for why we're doing this, but the short\n    story is to fix #3076.\n    \n    Note that this is a breaking change for `grep-printer`, so this will\n    require a semver incompatible release.\n\ndiff --git a/crates/core/flags/hiargs.rs b/crates/core/flags/hiargs.rs\nindex a0b3282..a98bde2 100644\n--- a/crates/core/flags/hiargs.rs\n+++ b/crates/core/flags/hiargs.rs\n@@ -596,7 +596,6 @@ impl HiArgs {\n     ) -> grep::printer::JSON<W> {\n         grep::printer::JSONBuilder::new()\n             .pretty(false)\n-            .max_matches(self.max_count)\n             .always_begin_end(false)\n             .replacement(self.replace.clone().map(|r| r.into()))\n             .build(wtr)\n@@ -656,7 +655,6 @@ impl HiArgs {\n             .exclude_zero(!self.include_zero)\n             .hyperlink(self.hyperlink_config.clone())\n             .kind(kind)\n-            .max_matches(self.max_count)\n             .path(self.with_filename)\n             .path_terminator(self.path_terminator.clone())\n             .separator_field(b\":\".to_vec())\ndiff --git a/crates/printer/src/json.rs b/crates/printer/src/json.rs\nindex 313a13f..f108c05 100644\n--- a/crates/printer/src/json.rs\n+++ b/crates/printer/src/json.rs\n@@ -7,9 +7,7 @@ use std::{\n \n use {\n     grep_matcher::{Match, Matcher},\n-    grep_searcher::{\n-        Searcher, Sink, SinkContext, SinkContextKind, SinkFinish, SinkMatch,\n-    },\n+    grep_searcher::{Searcher, Sink, SinkContext, SinkFinish, SinkMatch},\n     serde_json as json,\n };\n \n@@ -26,7 +24,6 @@ use crate::{\n #[derive(Debug, Clone)]\n struct Config {\n     pretty: bool,\n-    max_matches: Option<u64>,\n     always_begin_end: bool,\n     replacement: Arc<Option<Vec<u8>>>,\n }\n@@ -35,7 +32,6 @@ impl Default for Config {\n     fn default() -> Config {\n         Config {\n             pretty: false,\n-            max_matches: None,\n             always_begin_end: false,\n             replacement: Arc::new(None),\n         }\n@@ -85,16 +81,6 @@ impl JSONBuilder {\n         self\n     }\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-a62316e27c8cf0c5",
+        "status": "completed",
+        "input": {
+          "command": "git show a6e0be3 | head -90"
+        },
+        "output": "commit a6e0be3c909c5c09e5fb402c907f3beb88cfb4c4\nAuthor: Pavel Safronov <pv.safronov@gmail.com>\nDate:   Sun Jul 6 17:37:07 2025 +0000\n\n    searcher: move \"max matches\" from printer to searcher\n    \n    This is a bit of a brutal change, but I believe is necessary in order to\n    fix a bug in how we handle the \"max matches\" limit in multi-line mode\n    while simultaneously handling context lines correctly.\n    \n    The main problem here is that \"max matches\" refers to the shorter of\n    \"one match per line\" or \"a single match.\" In typical grep, matches\n    *can't* span multiple lines, so there's never a difference. But in\n    multi-line mode, they can. So match counts necessarily must be handled\n    differently for multi-line mode.\n    \n    The printer was previously responsible for this. But for $reasons, the\n    printer is fundamentally not in charge of how matches are found and\n    reported.\n    \n    See my comments in #3094 for even more context.\n    \n    This is a breaking change for `grep-printer`.\n    \n    Fixes #3076, Closes #3094\n\ndiff --git a/CHANGELOG.md b/CHANGELOG.md\nindex 89a9639..dcc23d0 100644\n--- a/CHANGELOG.md\n+++ b/CHANGELOG.md\n@@ -25,6 +25,8 @@ Bug fixes:\n   Fix a bug where the \"bytes searched\" in `--stats` output could be incorrect.\n * [BUG #2990](https://github.com/BurntSushi/ripgrep/issues/2990):\n   Fix a bug where ripgrep would mishandle globs that ended with a `.`.\n+* [BUG #3076](https://github.com/BurntSushi/ripgrep/issues/3076):\n+  Fix bug with `-m/--max-count` and `-U/--multiline` showing too many matches.\n * [BUG #3108](https://github.com/BurntSushi/ripgrep/issues/3108):\n   Fix a bug where `-q --files-without-match` inverted the exit code.\n * [BUG #3140](https://github.com/BurntSushi/ripgrep/issues/3140):\ndiff --git a/crates/core/flags/defs.rs b/crates/core/flags/defs.rs\nindex 6e53a4f..c2320d7 100644\n--- a/crates/core/flags/defs.rs\n+++ b/crates/core/flags/defs.rs\n@@ -3877,6 +3877,10 @@ impl Flag for MaxCount {\n         r\"\n Limit the number of matching lines per file searched to \\fINUM\\fP.\n .sp\n+When \\flag{multiline} is used, a single match that spans multiple lines is only\n+counted once for the purposes of this limit. Multiple matches in a single line\n+are counted only once, as they would be in non-multiline mode.\n+.sp\n Note that \\fB0\\fP is a legal value but not likely to be useful. When used,\n ripgrep won't search anything.\n \"\ndiff --git a/crates/core/flags/hiargs.rs b/crates/core/flags/hiargs.rs\nindex 7bf63e7..6f440ff 100644\n--- a/crates/core/flags/hiargs.rs\n+++ b/crates/core/flags/hiargs.rs\n@@ -617,7 +617,6 @@ impl HiArgs {\n             .hyperlink(self.hyperlink_config.clone())\n             .max_columns_preview(self.max_columns_preview)\n             .max_columns(self.max_columns)\n-            .max_matches(self.max_count)\n             .only_matching(self.only_matching)\n             .path(self.with_filename)\n             .path_terminator(self.path_terminator.clone())\n@@ -719,6 +718,7 @@ impl HiArgs {\n         };\n         let mut builder = grep::searcher::SearcherBuilder::new();\n         builder\n+            .max_matches(self.max_count)\n             .line_terminator(line_term)\n             .invert_match(self.invert_match)\n             .line_number(self.line_number)\ndiff --git a/crates/printer/src/standard.rs b/crates/printer/src/standard.rs\nindex b6f62ff..494901a 100644\n--- a/crates/printer/src/standard.rs\n+++ b/crates/printer/src/standard.rs\n@@ -11,8 +11,7 @@ use {\n     bstr::ByteSlice,\n     grep_matcher::{Match, Matcher},\n     grep_searcher::{\n-        LineStep, Searcher, Sink, SinkContext, SinkContextKind, SinkFinish,\n-        SinkMatch,\n+        LineStep, Searcher, Sink, SinkContext, SinkFinish, SinkMatch,\n     },\n     termcolor::{ColorSpec, NoColor, WriteColor},\n };\n@@ -46,7 +45,6 @@ struct Config {\n     replacement: Arc<Option<Vec<u8>>>,\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-85c02c15165b803c",
+        "status": "completed",
+        "input": {
+          "command": "git show cbfbe93 | head -40"
+        },
+        "output": "commit cbfbe9312faa96d67a68fd61ec3b3fa9d3d74ad8\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Fri May 8 08:15:45 2020 -0400\n\n    snap: remove snapcraft configuration\n    \n    This hasn't been updated in ages and it's not clear what purpose it's\n    serving.\n\ndiff --git a/snapcraft.yaml b/snapcraft.yaml\ndeleted file mode 100644\nindex 52f4c7b..0000000\n--- a/snapcraft.yaml\n+++ /dev/null\n@@ -1,15 +0,0 @@\n-name: ripgrep # you probably want to 'snapcraft register <name>'\n-version: '0.8.1' # just for humans, typically '1.2+git' or '1.3.2'\n-summary: Fast file searcher # 79 char long summary\n-description: |\n-  ripgrep combines the usability of The Silver Searcher with the raw speed of grep.\n-grade: stable # must be 'stable' to release into candidate/stable channels\n-confinement: classic # use 'strict' once you have the right plugs and slots\n-parts:\n-  ripgrep:\n-    plugin: rust\n-    source: .\n-apps:\n-  rg:\n-    adapter: none\n-    command: ./bin/rg\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-a3222dd247fc1b94",
+        "status": "completed",
+        "input": {
+          "command": "git show 5ebb3ad | head -40"
+        },
+        "output": "commit 5ebb3ad03921921324cf399e0a9c4cf1d874c48e\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Wed Oct 14 15:01:15 2020 -0400\n\n    benchsuite: remove sift, pt and ucg\n    \n    None of these tools got particularly popular (except for pt briefly),\n    but they do not appear to be active projects nowadays. While ucg was\n    fast, sift and pt were ecscruiating slow in a number of cases that\n    required special care in the benchmarks.\n    \n    This also fixes the ordering of benchmark output to reflect the ordering\n    in the source of the benchsuite script.\n\ndiff --git a/benchsuite/benchsuite b/benchsuite/benchsuite\nindex 9353cf4..f8cf6ea 100755\n--- a/benchsuite/benchsuite\n+++ b/benchsuite/benchsuite\n@@ -71,15 +71,8 @@ def bench_linux_literal_default(suite_dir):\n     return Benchmark(pattern=pat, commands=[\n         mkcmd('rg', ['rg', pat]),\n         mkcmd('ag', ['ag', pat]),\n-        # ucg reports the exact same matches as ag and rg even though it\n-        # doesn't read gitignore files. Instead, it has a file whitelist\n-        # that happens to match up exactly with the gitignores for this search.\n-        mkcmd('ucg', ['ucg', pat]),\n         # I guess setting LC_ALL=en_US.UTF-8 probably isn't necessarily the\n         # default, but I'd guess it to be on most desktop systems.\n-        mkcmd('pt', ['pt', pat]),\n-        # sift reports an extra line here for a binary file matched.\n-        mkcmd('sift', ['sift', pat]),\n         mkcmd('git grep', ['git', 'grep', pat], env={'LC_ALL': 'en_US.UTF-8'}),\n     ])\n \n@@ -102,16 +95,12 @@ def bench_linux_literal(suite_dir):\n         return Command(*args, **kwargs)\n \n     return Benchmark(pattern=pat, commands=[\n-        mkcmd('rg (ignore)', ['rg', '-n', pat]),\n-        mkcmd('rg (ignore) (mmap)', ['rg', '-n', '--mmap', pat]),\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-bb1170c5adf9d654",
+        "status": "completed",
+        "input": {
+          "command": "git log --all -p --grep=\"more trouble\\|caused\\|headache\\|pain in\\|hassle\\|annoyance\\|broken on\\|kept\" -i | grep -E \"^commit |^    [A-Z][a-z]\" | grep -B0 -A1 \"^commit\" | head -80"
+        },
+        "output": "commit 75970fd16b4d5f8ff9fb1d9c157467eb166acf23\n    When searching in parallel with many more arguments than threads, the\n--\ncommit c9ebcbd8abe48c8336fb4826df7e9b6fb179de03\n    Rewrites the char_to_escaped_literal and bytes_to_escaped_literal\ncommit bb8601b2bafb5e68181cbbb84e6ffa4f7a72bf16\n    Some of the new hyperlink work caused ripgrep to stop compiling\n--\ncommit b9c774937fc285e6668be9823c4bf231a61fc4a8\n    It looks like there is a reference cycle caused by the compiled\n--\ncommit 92c81b122548ab42586314ea535bb46ea41f1b10\n    This commit adds `anyhow` as a dependency and switches over to it from\n--\ncommit f608d4d9b3ab210b7e6964ca7d1d7dc9c077329e\n    This essentially takes the work done in #2483 and does a bit of a\n--\ncommit fdfc418be55ff91e0c2efad6a3e27db054cb5534\n    It looks like it's possible for mmap to succeed on 32-bit systems even\n--\ncommit 52d7f474206eb517c7284448777ed839c0cae8bb\n    Due to how walkdir works if symlinks are not followed, symlinks to\n--\ncommit 6ffd434232b46df4f94bd3db9197f154aca7d2f1\n    This feature solves a major reason I was skeptical of using ripgrep, so\ncommit 0863c75a5a819dc94754f3465246366ffd5d541f\n    This method was supposed to panic whenever the given path wasn't under\n--\ncommit 7a44cad599d7602ccd4395136c14587c159a37a3\n    Until a new release of atty, we pin winapi to a version that works.\ncommit 6ffb4b7466c914a2683847b5fb4e30ea16749e94\n    Snap has caused a number of nonsensical bug reports, and not even the\ncommit bf51058eb27458c4f01d4cbf8bf4ee0d80fac61e\n    On Unix-like systems, the atty behavior has always been correct.\n--\ncommit 361698b90a6b31feac78ac2f16082342f750a1e1\n    This commit fixes a bug where `rg --hidden .` would behave differently\n--\ncommit 706323ad8f2600db7d46482a7d95972b1416c0eb\n    This adds a few tests that check for bugs reported here:\n--\ncommit 73c9ac4da57d817f8dc4b0d3648e91c5c837112c\n    The test is severely constrained to the specific ANSI formatting of\n--\ncommit 8bbe58d623db78a32b04eabff9a69667ad23ff7b\n    Add support for additional text encodings.\n--\ncommit de5cb7d22e00c18dfce082a68b0cf45924b56e7f\n    Remove special ^C handling.\n--\ncommit 2dce0dc0df3c9ade3d89dd1ed673213d76760509\n    Fix a bug with handling --ignore-file.\n--\ncommit 104d740f769256ee6beeaef5a0d1c245947c0ce9\n    Don't quit if opening a file fails.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "chatcmpl-tool-b3f4bde6bcc6a433",
+        "status": "completed",
+        "input": {
+          "command": "git show 6ffb4b74 | head -60"
+        },
+        "output": "commit 6ffb4b7466c914a2683847b5fb4e30ea16749e94\nAuthor: Andrew Gallant <jamslam@gmail.com>\nDate:   Mon Apr 30 15:25:51 2018 -0400\n\n    doc: go away snap\n    \n    Snap has caused a number of nonsensical bug reports, and not even the\n    `--classic` flag seems capable of fixing them. Therefore, remove snap\n    from the README and put in a special line in the ISSUE_TEMPLATE about\n    snap.\n    \n    FIxes #902\n\ndiff --git a/ISSUE_TEMPLATE.md b/ISSUE_TEMPLATE.md\nindex bf9abe9..d851750 100644\n--- a/ISSUE_TEMPLATE.md\n+++ b/ISSUE_TEMPLATE.md\n@@ -2,6 +2,12 @@\n \n Replace this text with the output of `rg --version`.\n \n+#### How did you install ripgrep?\n+\n+If you installed ripgrep with snap and are getting strange file permission or\n+file not found errors, then please do not file a bug. Instead, use one of the\n+Github binary releases.\n+\n #### What operating system are you using ripgrep on?\n \n Replace this text with your operating system and version.\ndiff --git a/README.md b/README.md\nindex 0ed617c..84a0011 100644\n--- a/README.md\n+++ b/README.md\n@@ -265,17 +265,10 @@ $ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep\n $ sudo dpkg -i ripgrep_0.8.1_amd64.deb\n ```\n \n-If you're an **Ubuntu** user, ripgrep can be installed from the `snap` store.\n-\n-* Note that if you are using `16.04 LTS` or later, snap is already installed.\n-* For older versions you can install snap using\n-  [this guide](https://docs.snapcraft.io/core/install-ubuntu).\n-\n-For the latest stable release:\n-\n-```\n-$ sudo snap install --classic rg\n-```\n+(N.B. Various snaps for ripgrep on Ubuntu are also available, but none of them\n+seem to work right and generate a number of very strange bug reports that I\n+don't know how to fix and don't have the time to fix. Therefore, it is no\n+longer a recommended installation option.)\n \n If you're a **Rust programmer**, ripgrep can be installed with `cargo`.\n * Note that the minimum supported version of Rust for ripgrep is **1.20**,\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 65037,
+    "output": 12687,
+    "messages": 31
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "3fce3b5bb0236da2df6d99672afb8a719642eca7"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/147a520d0ab8fd19ef91c84aa1bf26677eda300c7f62d92c1784cc9f8bf23f81",
+  "completed": true
+}

@@ -183,12 +183,13 @@ provider's own accounting database.
 
 | model                 | paired n | accuracy W-L | median tool calls saved |
 | --------------------- | -------: | -----------: | ----------------------: |
+| gemini-3.1-flash-lite |        6 |          1-2 |                     2.5 |
 | claude-haiku-4-5      |        9 |          1-1 |                       1 |
 | claude-sonnet-5       |        8 |          0-0 |                       1 |
-| deepseek-v4-flash     |        8 |          0-0 |                       3 |
+| deepseek-v4-flash     |        8 |          0-0 |                     3.5 |
 | gemini-2.5-flash-lite |        6 |          2-1 |                       1 |
 | gemini-3.1-flash-lite |        7 |          2-0 |                       1 |
-| gemini-3.5-flash      |        6 |          0-0 |                  4 more |
+| gemini-3.5-flash      |        6 |          0-0 |                0.5 more |
 
 Results are mixed across models. At single-digit paired n per model this is descriptive, not significant, and it is reported that way
 deliberately — the direction is consistent, the magnitude is not established. Full method and per-arm figures in the benchmark report.

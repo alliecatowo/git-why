@@ -1,0 +1,165 @@
+{
+  "task_id": "B-caddyserver-caddy-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "corpus_fingerprint": "56ae39bdcc1d64661038683e30ea49cad0b0121d",
+  "implementation_sha": "638d06ea99c476f89f7ede909cfafb000fea7cb7",
+  "packed_tool_sha256": "2b2808ab545eab4238d37536834b565e0d546687748219d0c4ca32f8de9a7870",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T12:09:04.474Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "17cdf4bb9d66c63fbdd5aeb0128207a4d73324eb43108898284af4e9afc6812b",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 2,
+    "outOf": 6,
+    "found": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      true
+    ],
+    "citedShaCount": 6,
+    "citedGoldSha": true,
+    "goldSha": "9738f49b952a337cdaf42175a0e92b01974c0e3c"
+  },
+  "wall_ms": 42797,
+  "tool_calls": 14,
+  "history_calls": 3,
+  "zg_calls": 0,
+  "git_why_calls": 10,
+  "input_tokens": 58791,
+  "output_tokens": 997,
+  "cache_read_tokens": 296762,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0236123,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 262823,
+  "index_build_ms": 42934,
+  "model_download_ms": null,
+  "index_disk_bytes": 135805019,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T11-18-29-321Z/events/B-caddyserver-caddy-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "06146974bfc8debbcc6acb218a5ddf3ac24e021ce098a3ce6fe5cd68b2ca3cb6",
+  "indexed_commits": 2680,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_rZme94tewVpsvAGITARdevei",
+        "status": "completed",
+        "input": {
+          "command": "git log --grep=\"stale socket\""
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_m4ir4dbDMIJRqrfEbsjhK6Mt",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"socket\" --no-patch --oneline"
+        },
+        "output": "e05f57dc listen: don't wedge a reloaded listener sharing a socket on Windows (#7999)\n8257349b chore: preserve canonical header keys (#7964)\n3be8dabc caddyhttp: use canonical header key casing to avoid re-canonicalization (#7911)\n25b3eab6 Merge commit from fork\n997d3f6b encode: add standard benchmark and conformance harness (#7804)\nfcc7860d reverseproxy: replace placeholders specified for sni while using http3 (#7737)\n6a64bb2c listeners: clean up stale Unix socket files on Windows (#7676)\n6772ffb8 Revert \"listeners: Add support for named socket activation (#7243)\"\n03e6e439 reverseproxy: fix X-Forwarded-* headers for Unix socket requests (#7463)\n62134d65 reverseproxy: fix error when remote address is not an IP (#7429)\n8aca108d reverseproxy: do not disable keepalive if proxy protocol is used (#7300)\n156ce99d listeners: Add support for named socket activation (#7243)\nd7185fd0 caddyhttp: Add `trusted_proxies_unix` for trusting unix socket `X-Forwarded-*` headers (#7265)\n7fb39ec1 reverseproxy: Use http1.1 upgrade for websocket for extended connect of http2 and http3 (#7305)\nde6b7800 caddyhttp: Add server options `keepalive_idle` and `keepalive_count` (#7298)\n2ec28bca reverse_proxy: use http1 for outbound tls requests with placeholder that are likely websockets (#7296)\n2f1d2709 httpcaddyfile: Map default_bind to BindHost in globalACMEDefaults (#7278)\n7590c9ca caddyhttp: Free up quic listener when stopping (#7177)\nd7621fdb tests: tests for error handling & metrics in admin endpoints (#6805)\n50778b55 fix: disable h3 for unix domain socket (#6769)\n328fb614 reverseproxy: Only handle websocket protocol (#6740)\n9c0c71e5 reverseproxy: Rewrite requests and responses for websocket over http2 (#6567)\nc6f29799 caddyhttp: Close http3 server gracefully (#6213)\n48ce47f1 reverseproxy: Use correct cases for websocket related headers (#6621)\nc8a76d00 docs: expand proxy protocol docs (#6620)\n4b1a9b6c core: Implement socket activation listeners (#6573)\nddb1d2c2 caddyhttp: add http.request.local{,.host,.port} placeholder (#6182)\n7f227b9d chore: upgrade deps (#6198)\ndc12bd97 proxyprotocol: use github.com/pires/go-proxyproto (#5915)\n174c19a9 core: Apply SO_REUSEPORT to UDP sockets (#5725)\n7c82e265 core: quic listener will manage the underlying socket by itself (#5749)\n88b4fbf2 go.mod: Upgrade dependencies incl. x/net/http\n8d304a45 cmd: Split unix sockets for admin endpoint addresses (#5696)\nf66493ef core: Allow loopback hosts for admin endpoint (fix #5650) (#5664)\n710824c3 core: Embed net.UDPConn to gain optimizations (#5606)\n22927e27 core: Add optional unix socket file permissions (#4741)\n9563666b Fix compile on Windows, hopefully\n29452647 caddyhttp: Fix h3 shutdown (#5541)\n36546cd8 go.mod: Upgrade several dependencies\n99d47050 core: Eliminate unnecessary shutdown delay on Unix (#5413)\ne3909cc3 reverseproxy: refactor HTTP transport layer (#5369)\nee7c92ec reverseproxy: Mask the WS close message when we're the client (#5199)\nfe91de67 go.mod: Upgrade select dependencies\ne3e8aabb core: Refactor and improve listener logic (#5089)\n1426c97d core: Reuse unix sockets (UDS) and don't try to serve HTTP/3 over UDS (#5063)\nc7a6bc59 caddyhttp: responseRecorder save status in all cases (#5049)\n66476d8c reverseproxy: Close hijacked conns on reload/quit (#4895)\nd3c3fa10 core: Refactor listeners; use SO_REUSEPORT on Unix (#4705)\n59286d2c notify: Don't send ready after error (fix #5003)\n687a4b9e cmd: Enhance CLI docs\n258bc82b cmd: Migrate to `spf13/cobra`, remove single-dash arg support (#4565)\nc79c0862 caddyhttp: Enable HTTP/3 by default (#4707)\n141872ed chore: Bump up to Go 1.19, minimum 1.18 (#4925)\nd058dee1 reverseproxy: Refactor dial address parsing, augment command parsing (#4616)\n64a3218f core: Simplify shared listeners, fix deadline bug\nf6d5ec2f chore: Upgrade smallstep libs (#4307)\na056fcd7 chore: Upgrade smallstep libs (#4291)\nd8822110 reverseproxy: Keep path to unix socket as dial address (#4232)\necd5eeab go.mod: Update direct dependencies\ne3c369d4 logging: Implement dial timeout for net writer (fix #4083) (#4172)\nf35a7fa4 encode,staticfiles: Content negotiation, precompressed files (#4045)\nc9861106 httpcaddyfile: Warn if site address uses unspecified IP (close #4004)\n59071ea1 cmd: Implement sd_notify() to notify systemd about readiness (#3963)\nebc278ec metrics: allow disabling OpenMetrics negotiation (#3944)\nc7efb030 reverseproxy: Fix dial placeholders, SRV, active health checks (#3780)\naa9c3eb7 reverseproxy: default to port 80 for upstreams in Caddyfile (#3772)\nbc453fa6 reverseproxy: Correct alternate port for active health checks (#3693)\n996af091 cmd: Support admin endpoint on unix socket (#3320)\n1dc4ec2d admin: Disallow websockets\na507a5bb reverseproxy: Remove circuitbreaker module (see #3331)\nf5ccb904 admin: Disable host checking if wildcard interface is specified\na3bdc222 admin: Always enforce Host header checks\n341d4fb8 Remove some non-essential plugins from this repo (#2780)\ne42514ad caddyhttp: Clean up; move some code around\nf596fd77 caddyhttp: Add support for listener wrapper modules\nb8cba626 Refactor for CertMagic v0.10; prepare for PKI app\n04ec3c5f Update readme\nfdabac51 Improve docs, especially w.r.t. placeholders and template actions\n95ed603d Improve godocs all around\nc3bcd967 logging: Implement net writer (#2884)\n3c90e370 v2: Module documentation; refactor LoadModule(); new caddy struct tags (#2924)\n93bc1b72 core: Use port ranges to avoid OOM with bad inputs (#2859)\na458544d Minor enhancements/fixes to rewrite directive and template virt req's\n1e31be8d reverse_proxy: Allow dynamic backends (closes #990 and #1539)\n715e6ddf go.mod: Update dependencies\nc11e3bff Add file-server and reverse-proxy subcommands\ne73b1173 reverse_proxy: Ability to mutate headers; set upstream placeholders\n3b80c505 Update v2 readme in prep for beta1\n0830fbad Reconcile upstream dial addresses and request host/URL information\n026df7c5 reverse_proxy: WIP refactor and support for FastCGI\nd25008d2 Move listen address functions into caddy package; fix unix bug\nf5b4f268 Implement encode middleware (#2)\n1136e2cf Add reverse proxy\nf976aa74 Merged in deadlines (pull request #1)\n86e2d1b0 Rudimentary start of HTTP servers\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_MvCSGOKveX8cOZ3B0afDE860",
+        "status": "completed",
+        "input": {
+          "command": "git show 1426c97d"
+        },
+        "output": "commit 1426c97da57fc84d8b584a960c43fbb58df68b80\nAuthor: Matt Holt <mholt@users.noreply.github.com>\nDate:   Wed Sep 21 12:55:23 2022 -0600\n\n    core: Reuse unix sockets (UDS) and don't try to serve HTTP/3 over UDS (#5063)\n    \n    * core: Reuse unix sockets\n    \n    * Don't serve HTTP/3 over unix sockets\n    \n    This requires upstream support, if even useful\n    \n    * Don't use unix build tag... yet\n    \n    * Fix build tag\n    \n    * Allow ErrNotExist when unlinking socket\n\ndiff --git a/listen.go b/listen.go\nindex 2c4a0b28..268785a3 100644\n--- a/listen.go\n+++ b/listen.go\n@@ -1,4 +1,21 @@\n-//go:build !linux\n+// Copyright 2015 Matthew Holt and The Caddy Authors\n+//\n+// Licensed under the Apache License, Version 2.0 (the \"License\");\n+// you may not use this file except in compliance with the License.\n+// You may obtain a copy of the License at\n+//\n+//     http://www.apache.org/licenses/LICENSE-2.0\n+//\n+// Unless required by applicable law or agreed to in writing, software\n+// distributed under the License is distributed on an \"AS IS\" BASIS,\n+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n+// See the License for the specific language governing permissions and\n+// limitations under the License.\n+\n+// TODO: Go 1.19 introduced the \"unix\" build tag. We have to support Go 1.18 until Go 1.20 is released.\n+// When Go 1.19 is our minimum, change this build tag to simply \"!unix\".\n+// (see similar change needed in listen_unix.go)\n+//go:build !(aix || android || darwin || dragonfly || freebsd || hurd || illumos || ios || linux || netbsd || openbsd || solaris)\n \n package caddy\n \ndiff --git a/listen_linux.go b/listen_linux.go\ndeleted file mode 100644\nindex b1220ce4..00000000\n--- a/listen_linux.go\n+++ /dev/null\n@@ -1,34 +0,0 @@\n-package caddy\n-\n-import (\n-\t\"context\"\n-\t\"net\"\n-\t\"syscall\"\n-\t\"time\"\n-\n-\t\"go.uber.org/zap\"\n-\t\"golang.org/x/sys/unix\"\n-)\n-\n-// ListenTimeout is the same as Listen, but with a configurable keep-alive timeout duration.\n-func ListenTimeout(network, addr string, keepalivePeriod time.Duration) (net.Listener, error) {\n-\t// check to see if plugin provides listener\n-\tif ln, err := getListenerFromPlugin(network, addr); err != nil || ln != nil {\n-\t\treturn ln, err\n-\t}\n-\n-\tconfig := &net.ListenConfig{Control: reusePort, KeepAlive: keepalivePeriod}\n-\treturn config.Listen(context.Background(), network, addr)\n-}\n-\n-func reusePort(network, address string, conn syscall.RawConn) error {\n-\treturn conn.Control(func(descriptor uintptr) {\n-\t\tif err := unix.SetsockoptInt(int(descriptor), unix.SOL_SOCKET, unix.SO_REUSEPORT, 1); err != nil {\n-\t\t\tLog().Error(\"setting SO_REUSEPORT\",\n-\t\t\t\tzap.String(\"network\", network),\n-\t\t\t\tzap.String(\"address\", address),\n-\t\t\t\tzap.Uintptr(\"descriptor\", descriptor),\n-\t\t\t\tzap.Error(err))\n-\t\t}\n-\t})\n-}\ndiff --git a/listen_unix.go b/listen_unix.go\nnew file mode 100644\nindex 00000000..f7b62794\n--- /dev/null\n+++ b/listen_unix.go\n@@ -0,0 +1,115 @@\n+// Copyright 2015 Matthew Holt and The Caddy Authors\n+//\n+// Licensed under the Apache License, Version 2.0 (the \"License\");\n+// you may not use this file except in compliance with the License.\n+// You may obtain a copy of the License at\n+//\n+//     http://www.apache.org/licenses/LICENSE-2.0\n+//\n+// Unless required by applicable law or agreed to in writing, software\n+// distributed under the License is distributed on an \"AS IS\" BASIS,\n+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n+// See the License for the specific language governing permissions and\n+// limitations under the License.\n+\n+// TODO: Go 1.19 introduced the \"unix\" build tag. We have to support Go 1.18 until Go 1.20 is released.\n+// When Go 1.19 is our minimum, remove this build tag, since \"_unix\" in the filename will do this.\n+// (see also change needed in listen.go)\n+//go:build aix || android || darwin || dragonfly || freebsd || hurd || illumos || ios || linux || netbsd || openbsd || solaris\n+\n+package caddy\n+\n+import (\n+\t\"context\"\n+\t\"errors\"\n+\t\"io/fs\"\n+\t\"net\"\n+\t\"sync\"\n+\t\"syscall\"\n+\t\"time\"\n+\n+\t\"go.uber.org/zap\"\n+\t\"golang.org/x/sys/unix\"\n+)\n+\n+// ListenTimeout is the same as Listen, but with a configurable keep-alive timeout duration.\n+func ListenTimeout(network, addr string, keepalivePeriod time.Duration) (net.Listener, error) {\n+\t// check to see if plugin provides listener\n+\tif ln, err := getListenerFromPlugin(network, addr); err != nil || ln != nil {\n+\t\treturn ln, err\n+\t}\n+\n+\tsocketKey := listenerKey(network, addr)\n+\tif isUnixNetwork(network) {\n+\t\tunixSocketsMu.Lock()\n+\t\tdefer unixSocketsMu.Unlock()\n+\n+\t\tsocket, exists := unixSockets[socketKey]\n+\t\tif exists {\n+\t\t\t// make copy of file descriptor\n+\t\t\tsocketFile, err := socket.File() // dup() deep down\n+\t\t\tif err != nil {\n+\t\t\t\treturn nil, err\n+\t\t\t}\n+\n+\t\t\t// use copy to make new listener\n+\t\t\tln, err := net.FileListener(socketFile)\n+\t\t\tif err != nil {\n+\t\t\t\treturn nil, err\n+\t\t\t}\n+\n+\t\t\t// the old socket fd will likely be closed soon, so replace it in the map\n+\t\t\tunixSockets[socketKey] = ln.(*net.UnixListener)\n+\n+\t\t\treturn ln.(*net.UnixListener), nil\n+\t\t}\n+\n+\t\t// from what I can tell after some quick research, it's quite common for programs to\n+\t\t// leave their socket file behind after they close, so the typical pattern is to\n+\t\t// unlink it before you bind to it -- this is often crucial if the last program using\n+\t\t// it was killed forcefully without a chance to clean up the socket, but there is a\n+\t\t// race, as the comment in net.UnixListener.close() explains... oh well?\n+\t\tif err := syscall.Unlink(addr); err != nil && !errors.Is(err, fs.ErrNotExist) {\n+\t\t\treturn nil, err\n+\t\t}\n+\t}\n+\n+\tconfig := &net.ListenConfig{Control: reusePort, KeepAlive: keepalivePeriod}\n+\n+\tln, err := config.Listen(context.Background(), network, addr)\n+\tif err != nil {\n+\t\treturn nil, err\n+\t}\n+\n+\tif uln, ok := ln.(*net.UnixListener); ok {\n+\t\t// TODO: ideally, we should unlink the socket once we know we're done using it\n+\t\t// (i.e. either on exit or a new config that doesn't use this socket; in UsagePool\n+\t\t// terms, when the reference count reaches 0), but given that we unlink existing\n+\t\t// socket before we create the new one anyway (see above), we don't necessarily\n+\t\t// need to clean up after ourselves; still, doing so would probably be more tidy\n+\t\tuln.SetUnlinkOnClose(false)\n+\t\tunixSockets[socketKey] = uln\n+\t}\n+\n+\treturn ln, nil\n+}\n+\n+// reusePort sets SO_REUSEPORT. Ineffective for unix sockets.\n+func reusePort(network, address string, conn syscall.RawConn) error {\n+\treturn conn.Control(func(descriptor uintptr) {\n+\t\tif err := unix.SetsockoptInt(int(descriptor), unix.SOL_SOCKET, unix.SO_REUSEPORT, 1); err != nil {\n+\t\t\tLog().Error(\"setting SO_REUSEPORT\",\n+\t\t\t\tzap.String(\"network\", network),\n+\t\t\t\tzap.String(\"address\", address),\n+\t\t\t\tzap.Uintptr(\"descriptor\", descriptor),\n+\t\t\t\tzap.Error(err))\n+\t\t}\n+\t})\n+}\n+\n+// unixSockets keeps track of the currently-active unix sockets\n+// so we can transfer their FDs gracefully during reloads.\n+var (\n+\tunixSockets   = make(map[string]*net.UnixListener)\n+\tunixSocketsMu sync.Mutex\n+)\ndiff --git a/modules/caddyhttp/app.go b/modules/caddyhttp/app.go\nindex 84b0b941..c9a55431 100644\n--- a/modules/caddyhttp/app.go\n+++ b/modules/caddyhttp/app.go\n@@ -409,7 +409,7 @@ func (app *App) Start() error {\n \t\t\t\t\tln = tls.NewListener(ln, tlsCfg)\n \n \t\t\t\t\t// enable HTTP/3 if configured\n-\t\t\t\t\tif srv.protocol(\"h3\") {\n+\t\t\t\t\tif srv.protocol(\"h3\") && !listenAddr.IsUnixNetwork() {\n \t\t\t\t\t\tapp.logger.Info(\"enabling HTTP/3 listener\", zap.String(\"addr\", hostport))\n \t\t\t\t\t\tif err := srv.serveHTTP3(hostport, tlsCfg); err != nil {\n \t\t\t\t\t\t\treturn err\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 8,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 58791,
+    "output": 997,
+    "messages": 16
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "56ae39bdcc1d64661038683e30ea49cad0b0121d"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/06146974bfc8debbcc6acb218a5ddf3ac24e021ce098a3ce6fe5cd68b2ca3cb6",
+  "completed": true
+}

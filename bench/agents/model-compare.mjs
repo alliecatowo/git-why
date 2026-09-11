@@ -36,9 +36,22 @@ export function taskFamily(taskId) {
   return 'other';
 }
 
+/**
+ * The true median: the average of the two middle values when the count is
+ * even, not the upper one.
+ *
+ * `v[Math.floor(v.length / 2)]` is right for odd counts and biased upward for
+ * even ones, and the paired comparisons here run at n=6 to n=9 where even is
+ * common. On gemini-3.1-flash-lite the per-task call deltas were
+ * -114, -16, -13, +8, +11, +14: a true median of -2.5, reported as +8. The
+ * tool halved the median tool calls for that model and the table said it cost
+ * eight more.
+ */
 export const median = (xs) => {
   const v = xs.filter((n) => typeof n === 'number' && Number.isFinite(n)).sort((a, b) => a - b);
-  return v.length === 0 ? null : v[Math.floor(v.length / 2)];
+  if (v.length === 0) return null;
+  const mid = Math.floor(v.length / 2);
+  return v.length % 2 === 1 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
 };
 const sum = (xs) => xs.reduce((a, b) => a + (b ?? 0), 0);
 
@@ -181,6 +194,12 @@ export function compareModels(resultsDir, opts = {}) {
         pointsOutOf: scored.length > 0 ? sum(scored.map((e) => outOf(e[x]))) : null,
         callsDelta: median(both.map((e) => (e[y].tool_calls ?? 0) - (e[x].tool_calls ?? 0))),
         tokDelta: median(both.map((e) => (e[y].input_tokens ?? 0) - (e[x].input_tokens ?? 0))),
+        // A median over six tasks hides a split. On gemini-3.1-flash-lite the
+        // tool saved 114, 16 and 13 calls on three tasks and cost 8, 11 and 14
+        // on the others — one number cannot say that, so the direction count
+        // is reported beside it.
+        callsCheaper: both.filter((e) => (e[y].tool_calls ?? 0) < (e[x].tool_calls ?? 0)).length,
+        callsDearer: both.filter((e) => (e[y].tool_calls ?? 0) > (e[x].tool_calls ?? 0)).length,
       };
     };
 

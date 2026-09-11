@@ -1,0 +1,169 @@
+{
+  "task_id": "B-curl-curl-01",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "20a460844f3f16aed1f9b8dcf3de915b544b5762",
+  "packed_tool_sha256": "2b2808ab545eab4238d37536834b565e0d546687748219d0c4ca32f8de9a7870",
+  "model_id": "llmgateway/gemini-3.1-flash-lite",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T11:57:15.065Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "4d50c764ecfd621f42c1ae6765b2b7c574a0bfa1bf8430e8b0c40c2491def705",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "score": 2,
+    "outOf": 6,
+    "found": [
+      false,
+      false,
+      true,
+      false,
+      false,
+      true
+    ],
+    "citedShaCount": 6,
+    "citedGoldSha": true,
+    "goldSha": "33866a31c3ce14590b8d1f6039fefcde8460e577"
+  },
+  "wall_ms": 153521,
+  "tool_calls": 15,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 12,
+  "input_tokens": 46136,
+  "output_tokens": 1240,
+  "cache_read_tokens": 222740,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0189625,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 161821,
+  "index_build_ms": 559246,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105075197,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T11-18-29-321Z/events/B-curl-curl-01-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "48926a6d75fe2bf560e1924f400f18cca779c27d23658280e5b3f74af9960f02",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 32139,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "bash_50WfCbpq0ceWJSA2BEkEg8VJ",
+        "status": "completed",
+        "input": {
+          "command": "git log -S \"help output\" --oneline -p -10 | grep -C 5 \"short\""
+        },
+        "output": "-\n-Daniel Stenberg (19 Dec 2008)\n-- curl_multi_timeout() could return a timeout value of 0 even though nothing\n-  was actually ready to get done, as the internal time resolution is higher\n-  than the returned millisecond timer. Therefore it could cause applications\n-  running on fast processors to do short bursts of busy-loops.\n-  curl_multi_timeout() will now only return 0 if the timeout is actually\n-  alreay triggered.\n-\n-- Using the libssh2 0.19 function libssh2_session_block_directions(), libcurl\n-  now has an improved ability to do right when the multi interface (both\n--\n-Daniel Stenberg (8 Jun 2008)\n-- Due to the three new libcurl changes and the massive command line option\n-  change I decided we'll mark it by bumping the next release number to 7.19.0!\n-\n-- curl the tool now deals with its command line options somewhat differently!\n-  All boolean options (such as -O, -I, -v etc), both short and long versions,\n-  now always switch on/enable the option named. Using the same option multiple\n-  times thus make no difference. To switch off one of those options, you need\n-  to use the long version of the option and type --no-OPTION. Like to disable\n-  verbose mode you use --no-verbose!\n-\n--\n-    rather go straight to DO\n-\n-  o we had multiple states for which the internal function returned no socket\n-    at all to wait for, with the effect that libcurl calls the socket callback\n-    (when curl_multi_socket() is used) with REMOVE prematurely (as it would be\n-    added again within very shortly)\n-\n-  o when in DO and DOING states, the HTTP and HTTPS protocol handler functions\n-    didn't return that the socket should be waited for writing, but instead it\n-    was treated as if no socket was needing monitoring so again REMOVE was\n-    called prematurely.\n--\n-- Allow SFTP quote commands chmod, chown, chgrp to set a value of 0.\n-\n-Dan F (9 May 2007)\n-- Kristian Gunstone fixed a problem where overwriting an uploaded file with\n-  sftp didn't truncate it first, which would corrupt the file if the new\n-  file was shorter than the old.\n-\n-Dan F (8 May 2007)\n-- Added FTPS test cases 406 and 407\n-\n-Daniel S (8 May 2007)\n--\n-- David McCreedy fixed libcurl to no longer ignore AUTH failures and now it\n-  reacts properly according to the CURLOPT_FTP_SSL setting.\n-\n-- Dan Fandrich fixed two TFTP problems: Fixed a bug whereby a received file\n-  whose length was a multiple of 512 bytes could have random garbage\n-  appended. Also, stop processing TFTP packets which are too short to be\n-  legal.\n-\n-- Ilja van Sprundel reported a possible crash in the curl tool when using\n-  \"curl hostwithoutslash -d data -G\"\n-\n--\n-- Ulf H�rnhammar fixed a format string (printf style) problem in the Negotiate\n-  code. It should however not be the cause of any troubles. He also fixed a\n-  few similar problems in the HTTP test server code.\n-\n-Daniel (17 February 2006)\n-- Shmulik Regev provided a fix for the DNS cache when using short life times,\n-  as previously it could be holding on to old cached entries longer than\n-  requested.\n-\n-Daniel (11 February 2006)\n-- Karl Moerder added the CURLOPT_CONNECT_ONLY and CURLINFO_LASTSOCKET options\n--\n-  source connection. This is because it needs to force a new in case the\n-  source and target is the same host, and the host name check is trickier now\n-  when the source is identified with a full URL instead of a plain host name\n-  like before.\n-\n-  TODO (short-term) for 3rd party transfers: quote support. The options are\n-  there, we need to add test cases to verify their functionality.\n-\n-  TODO (long-term) for 3rd party transfers: IPv6 support (EPRT and EPSV etc)\n-  and SSL/TSL support.\n-\n--\n-  of clues on this, and based on his suggestion I've now removed the check of\n-  that byte since it seems to be able to contain 1 or 5.\n-\n-Daniel (10 January 2005)\n-- Pavel Orehov reported memory problems with the multi interface in bug report\n-  #1098843. In short, a shared DNS cache was setup for a multi handle and when\n-  the shared cache was deleted before the individual easy handles, the latter\n-  cleanups caused read/writes to already freed memory.\n-\n-- Hzhijun reported a memory leak in the SSL certificate code, that leaked the\n-  remote certificate name when it didn't match the used host name.\n--\n-- Made the configure checks for strerror_r() not exit the configure script\n-  when built for cross-compiling.\n-\n-Daniel (3 June 2004)\n-- Chris Gaukroger pointed out that 'make test' attempts to run the tests even\n-  if curl is built cross-compiled. I've now made it output a short message\n-  instead, saying it isn't possible to do.\n-\n-- Alexander Krasnostavsky brought FTP 3rd party transfer support to libcurl.\n-  You can now use libcurl to transfer files between two remote hosts using\n-  FTP. There are a bunch of new options to control this with:\n--\n-  connection reset when trying to re-use a connection. It should then simply\n-  create a new connection and resend the request.\n-\n-Daniel (19 April 2004)\n-- No more 512 byte limit for host name (inclusing name + password) in libcurl.\n-  An added bonus is that we use less memory for the typical (shorter URL)\n-  case.\n-\n-- Cleaned up the sources to better use the terms 'hostname' and 'path'\n-  internally when referring to that data. The buffers used for keep that info\n-  is called 'namebuffer' and 'pathbuffer'. Much easier to read and understand\n--\n-  simple initial ntlm testing.\n-\n-- Found and fixed a minor memory leak on re-used connections with\n-  proxy-authentication.\n-\n-- I removed -@ and -Z as valid short options. They were very rarely used (@\n-  wasn't even documented).\n-\n-- Serge Semashko introduced CURLOPT_PROXYAUTH, and make it work when set to\n-  CURLAUTH_NTLM and/or CURLAUTH_BASIC. The PROXAUTH is similar to HTTPAUTH,\n-  but is for the proxy connection only, and HTTPAUTH is for the remote host.\n--\n-\n-Version 7.10.3-pre2 (4 Dec 2002)\n-\n-Daniel (4 Dec 2002)\n-- Lots of work with Malcolm Dodds made me add a temporary code fix that now\n-  shortens the timeout waiting for the 226 or 250 line after a completed\n-  FTP transfer.\n-\n-  If no data is received within 60 seconds, this is taken as a sign of a dead\n-  control connection and we bail out.\n-\n--\n-- Philip Gladstone found a problem in how HTTP requests were sent if the\n-  request couldn't be sent all at once.\n-\n-- Emil found and corrected a bad connection timeout comparison that made curl\n-  use the longest of connect-timeout and timout as a timeout value, instead of\n-  the shortest as it was supposed to!\n-\n-- Aron Roberts provided updated information about LDAP URL syntax to go into\n-  the manual as a replacement for the old references.\n-\n-Daniel (17 February 2002)\n--\n-- Oops. I ruined Nico's socklen_t define in config-vms.h, corrected it now.\n-\n-- An older item not mentioned here before: CURL_GLOBAL_WIN32 is a define for\n-  windows users to curl_global_init(), that makes libcurl init the winsock\n-  stuff. If libcurl is all socket stuff you do, then allowing it to fiddle\n-  with this is a comfortable shortcut to fame.\n-\n-Version 7.8.1-pre5\n-\n-Daniel (14 August 2001)\n-- Nico Baggus provided more feedback from his VMS porting efforts and a few\n--\n-Daniel (6 December 2000)\n-- Massimo Squillace correctly described how libcurl could use session ids when\n-  doing SSL connections.\n-\n-- James Griffiths found out that curl would crash if the file you specify with\n-  -o is shorter than the URL! This took some hours to fully hunt down, but it\n-  is fixed now.\n-\n-Daniel (5 December 2000)\n-- Jaepil Kim sent us makefiles that build curl using the free windows borland\n-  compiler. The root makefile now accepts 'make borland' to build curl with\n--\n-   thought, to make it capable of downloading compressed HTTP documents and\n-   uncompress them on the fly. I didn't mean the zlib parts of curl to become\n-   more than minor so this means I halt the zlib expedition for now and wait\n-   until someone either writes the code or zlib gets updated and better\n-   adjusted for this kind of usage.  I won't get into details here, but a\n-   short a summary is suitable:\n-   - zlib can't automatically detect whether to use zlib or gzip\n-     decompression methods.\n-   - zlib is very neat for reading gzipped files from a file descriptor,\n-     although not as nice for reading buffer-based data such as we would\n-     want it.\n--\n-   dirs.\n-\n- Daniel (28 September 1999)\n- - Added libz functionality. This should enable decompressing gzip, compress\n-   or deflate encoding HTTP documents. It also makes curl send an accept that\n-   it accepts that kind of encoding. Compressed contents usually shortens\n-   download time. I *need* someone to tell me a site that uses compressed HTTP\n-   documents so that I can test this out properly.\n-\n- - As a result of the adding of zlib awareness, I changed the version string\n-   a little. I plan to add openldap version reporting in there too.\n--\n-\n- - I corrected a few minor things that made the compiler complain when\n-   -Wall -pedantic was used.\n-\n- - I'm moving the official curl web page to curl.haxx.nu. I think it\n-   will make it easier to remember as it is a lot shorter and less cryptic.\n-   The old one still works and shows the same info.\n-\n- Daniel (11 August 1999)\n- - Albert Chin-A-Young mailed me another correction for NROFF in the\n-   configure.in that is supposed to be better for IRIX users.\n--\n-\n- Daniel Stenberg (Nov 11, 1998)\n- - Made the HTTP header-checker accept white spaces before the HTTP/1.? line.\n-   Appearantly some proxies/sites add such at times (my test proxy did when I\n-   downloaded a gopher page with it)!\n- - Moved the former -h to -M and made -h show the short help text instead. I\n-   had to enable a forced help text option. Now an even shorter help text will\n-   be presented when an unknown option and similar, is used.\n- - stdcheaders.h didn't work with IRIX 6.4 native cc compiler. I hope my\n-   changes don't make other versions go nuts instead.\n-\n- Daniel Stenberg (Nov 10, 1998)\n--\n- - Ok, I expanded the tgz-target to update the version string on each occation\n-   I build a release archive!\n- - I reacted on Angus Mackay's initiative and remade the parameter parser to\n-   be more getopt compliant. Curl now supports \"merged\" flags as in\n-\tcurl -lsv ftp.site.com\n-   Do note that I had to move three short-names of the options. Parameters\n-   that needs an additional string such as -x must be stand-alone or the\n-   last in a merged sequence:\n-\tcurl -lsx my-proxy ftp.site.com\n-   is ok, but using the flags in a different order like '-lxs' would cause\n-   unexpected results (as the 's' option would be skipped).\n--\n- Kjell Ericson\n- - Pointed out how to correct the 3 warnings in win32-compiles.\n-\n- Daniel Stenberg\n- - Removed all calls to exit().\n- - Made the short help text get written to stdout instead of stderr.\n- - Made this file instead of keeping these comments in the source.\n- - Made two callback hooks, that enable external programs to use urlget()\n-   easier and to grab the output/offer the input easier.\n- - It is evident that Win32-compiles are painful. I watched the output from\n-   the Borland C++ v5 and it was awful. Just ignore all those warnings.\n--\n+++ b/docs/cmdline-opts/MANPAGE.md\n@@ -26,6 +26,7 @@ Each file has a set of meta-data and a body of text.\n     Mutexed: (space separated list of options this overrides)\n     Requires: (space separated list of features this option requres)\n     See-also: (space separated list of related options)\n+    Help: (short text for the --help output for this option)\n     --- (end of meta-data)\n \n ### Body\n@@ -37,11 +38,15 @@ correct markup that shows both short and long version.\n ## Header\n \n `page-header` is the nroff formatted file that will be output before the\n-generated options output.\n+generated options output for the master man page.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "bash_aW3rOZebnUtbgs9M1ojoZS0V",
+        "status": "completed",
+        "input": {
+          "command": "git log -G \"memory-free\" --oneline"
+        },
+        "output": "(no output)"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 7,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 9,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 6,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 46136,
+    "output": 1240,
+    "messages": 17
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/48926a6d75fe2bf560e1924f400f18cca779c27d23658280e5b3f74af9960f02",
+  "completed": true
+}
