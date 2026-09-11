@@ -49,9 +49,7 @@ onBeforeUnmount(() => player?.dispose?.());
   <figure class="cast">
     <figcaption v-if="title">{{ title }}</figcaption>
     <div ref="host" />
-    <p class="cast-note">
-      A real recorded session. Timings are actual latency.
-    </p>
+    <p class="cast-note">A real recorded session. Timings are actual latency.</p>
   </figure>
 </template>
 

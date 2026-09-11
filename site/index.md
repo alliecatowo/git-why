@@ -50,7 +50,7 @@ unprompted, finds the commit, verifies it with `git show`, and reports the
 measured numbers — including the one axis that regressed.
 
 That guidance is the product. An earlier recording of this same task, where the
-tool was merely *mentioned* rather than explained, ended with the agent ignoring
+tool was merely _mentioned_ rather than explained, ended with the agent ignoring
 it entirely. The skill is what makes the difference.
 
 ## Honest numbers
@@ -58,20 +58,19 @@ it entirely. The skill is what makes the difference.
 On 174 questions derived from six real repositories, each verified
 **unanswerable by keyword search** before entering the set:
 
-| strategy | Hit@5 | MRR |
-| --- | --- | --- |
-| **git why** | **0.287** | **0.203** |
-| zg | 0.040 | 0.026 |
-| `git log --grep` | 0.011 | 0.003 |
-| `git log -S` | 0.000 | 0.000 |
+| strategy         | Hit@5     | MRR       |
+| ---------------- | --------- | --------- |
+| **git why**      | **0.287** | **0.203** |
+| zg               | 0.040     | 0.026     |
+| `git log --grep` | 0.011     | 0.003     |
+| `git log -S`     | 0.000     | 0.000     |
 
 **18x the best Git-native strategy** — and wrong roughly seven times in ten.
 Both halves are true and both are on the [benchmarks page](/guide/benchmarks).
 
-When you *can* name the symbol, `git log -S` beats this 0.950 to 0.350. The
+When you _can_ name the symbol, `git log -S` beats this 0.950 to 0.350. The
 shipped agent skill says so, because a tool that oversells itself makes an
 agent worse at its job.
-
 
 ## Why a semantic index, not a grep
 
