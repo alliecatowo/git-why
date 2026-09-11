@@ -11,9 +11,14 @@ Local-first semantic + full-text search over Git history. It returns the
 actual commit, its author's real words, and the relevant diff. It retrieves
 evidence; it does not generate an explanation of its own.
 
-Real output from `mise run demo`, which rebuilds the fixture repository from
-`bench/fixtures/demo/build.mjs` and runs these queries. Nothing here is
-hand-written.
+Real output from `mise run demo`, which rebuilds a small fixture repository
+from `bench/fixtures/demo/build.mjs` and runs these two queries against it.
+Nothing here is hand-written, and you can reproduce it in one command.
+
+For output against **real repositories** — curl, zod, redis — including a
+worked case where this is the wrong tool, see
+[`docs/examples.md`](docs/examples.md) or the
+[recorded terminal sessions](https://alliecatowo.github.io/git-why/guide/examples).
 
 ```text
 $ git why "that bizarre bug where reconnecting subscribed twice"
@@ -65,18 +70,23 @@ subcommand `git why`. No alias setup needed. More install paths — pinned
 versions, a GitHub release tarball, building from source, uninstalling —
 are in [`docs/install.md`](docs/install.md).
 
-## Use it with Claude Code
+## Use it with an agent
 
-```sh
-npm install -g @alliecatowo/git-why
-```
+Two plugins ship in `plugins/`:
 
-Two plugins ship in `plugins/`: `git-why` on its own, and `git-why-full`
-which pairs it with [`zg`](https://zvec.org) and adds an explorer agent.
-OpenCode users get `opencode/` instead. It registers the MCP
-server and ships a skill that teaches an agent **when to reach for history and
-when not to** — including the case where `git log -S` is the better tool, since
-a skill that oversells its own tool makes an agent worse at its job.
+| plugin         | what you get                                                                                                                           |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `git-why`      | The MCP server, a routing skill, and an index-management skill.                                                                        |
+| `git-why-full` | The same, plus [`zg`](https://zvec.org) for current-code search and a history-explorer agent for questions that need several searches. |
+
+OpenCode users get `opencode/` — an `opencode.json` with the MCP registration
+and an `AGENTS.md` fragment.
+
+What the skill actually teaches is **when not to reach for history**. It tells
+an agent to use `git log -S` when it can name the symbol, because that is a
+case this tool measurably loses (Hit@10 0.950 against 0.350), and to use code
+search rather than history for the current state of the code. A skill that
+claims its own tool is always best makes an agent worse at its job.
 
 See [`docs/plugin.md`](docs/plugin.md).
 
@@ -203,8 +213,8 @@ called.
   submodules, monorepos, disk use, and the shared model cache.
 - **[`docs/examples.md`](docs/examples.md)** — real output on real
   repositories, including a case where this is the wrong tool.
-- **[`docs/plugin.md`](docs/plugin.md)** — the Claude Code plugin, its skill,
-  and why it has no hook.
+- **[`docs/plugin.md`](docs/plugin.md)** — both plugins, the MCP tools, the
+  skills, and why there is no hook.
 - **[`docs/decisions.md`](docs/decisions.md)** — what was tried and rejected,
   with the measurements. Seven optimisations that did not work.
 - **[`docs/install.md`](docs/install.md)** — every install path and
@@ -221,14 +231,21 @@ called.
 ## Development
 
 ```sh
-mise setup     # install dependencies, then doctor
-mise check     # format, lint, typecheck, unit tests
-mise test:integration
-mise test:package
-mise site:build   # build the docs/marketing site in site/
+mise setup             # install dependencies, then doctor
+mise check             # format, lint, typecheck, protocol hash, unit tests
+mise test:integration  # real repositories, real storage, real locks
+mise test:package      # pack, install into a clean prefix, invoke through Git
+mise site:build        # build the docs/marketing site in site/
+mise tasks             # everything else, including every benchmark
 ```
 
-See [`docs/contributing.md`](docs/contributing.md) for module ownership.
+Numbers in `README.md`, `site/index.md` and `docs/report.md` are written by
+`bench/report.mjs` from raw run data — CI fails if you edit one by hand. The
+man page, the site's CLI reference and all three shell completions are checked
+against `git why -h`, which is the only place the flag set is defined.
+
+See [`docs/contributing.md`](docs/contributing.md) for module ownership and how
+to cut a release.
 
 ## License
 
