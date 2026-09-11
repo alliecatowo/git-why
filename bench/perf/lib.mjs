@@ -130,6 +130,22 @@ function sumRssKb(pids) {
   return values.length ? values.reduce((a, b) => a + b, 0) : null;
 }
 
+/**
+ * Nearest-rank percentile: the smallest value at or above the p-th position.
+ *
+ * Deliberately NOT the arithmetic median for even counts — p50 here is the
+ * lower-middle sample rather than the average of the two middle ones. That is
+ * a standard definition and the one most latency tooling uses, and it is
+ * stated because the distinction has already caused a real error elsewhere in
+ * this repository: a paired-comparison median that took the UPPER-middle value
+ * reported +8 tool calls where the truth was -2.5 (bench/agents/model-compare.mjs).
+ *
+ * It is safe here in a way it was not there. Latencies are positive and
+ * unimodal, so the two definitions differ by less than one sample step — on
+ * the published curl run, far less than the 291 ms between min and max. A
+ * paired DELTA is signed and can be bimodal, which is what made the same
+ * shortcut change a conclusion.
+ */
 export function percentile(sortedAscending, p) {
   if (sortedAscending.length === 0) return null;
   const idx = Math.min(

@@ -49,3 +49,31 @@ test('the choice does not depend on argument order', () => {
     assert.equal(preferTrial(a, b), preferTrial(b, a));
   }
 });
+
+// The median returned `v[Math.floor(v.length / 2)]`, which is right for odd
+// counts and biased upward for even ones. Paired comparisons run at n=6 to
+// n=9, so even is common — and on a signed, bimodal delta the bias changed a
+// conclusion: per-task call deltas of -114, -16, -13, +8, +11, +14 have a true
+// median of -2.5 and were reported as +8.
+import { median } from './model-compare.mjs';
+
+test('an even-length median averages the two middle values', () => {
+  assert.equal(median([1, 2, 3, 4]), 2.5);
+  assert.equal(median([-114, -16, -13, 8, 11, 14]), -2.5);
+});
+
+test('an odd-length median is the middle value', () => {
+  assert.equal(median([1, 2, 3]), 2);
+  assert.equal(median([5]), 5);
+});
+
+test('the median does not depend on input order', () => {
+  assert.equal(median([14, -13, 8, -114, 11, -16]), median([-114, -16, -13, 8, 11, 14]));
+});
+
+test('non-numeric entries are excluded rather than coerced', () => {
+  // A null tool_calls must not become a zero and drag the median toward it.
+  assert.equal(median([1, null, 3, undefined, NaN]), 2);
+  assert.equal(median([]), null);
+  assert.equal(median([null, undefined]), null);
+});
