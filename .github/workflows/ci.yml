@@ -43,6 +43,11 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test:unit
+      # The README's headline numbers are written by bench/report.mjs from raw
+      # run data. CONTRIBUTING says no number there may be hand-edited; this is
+      # what makes that enforceable rather than merely asked for.
+      - name: README numbers match the measurements
+        run: node bench/report.mjs --check
 
   # Smoke-test that the documentation site still builds. The real deploy
   # happens in pages.yml, on pushes to main only.

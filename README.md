@@ -100,13 +100,16 @@ never committed at all — Git Why will not manufacture those.
 
 ## Measured, not claimed
 
-Every number is generated from raw run data by `bench/report.mjs`, never typed
-by hand. Full methodology, limits, and the negative results in
+Every number below is written into this file by `bench/report.mjs` from raw
+run data, and CI fails if it drifts — no figure here was typed by hand. Full
+methodology, limits, and the negative results are in
 [`docs/report.md`](docs/report.md).
 
 ### Against the tools you would otherwise use
 
-174 questions derived mechanically from six pinned real repositories (curl,
+<!-- generated:corpus-table -->
+
+174 questions derived mechanically from 6 pinned real repositories (curl,
 redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable
 by keyword search** before it enters the set — if `git log --grep` or
 `git log -S` finds the answer from the question's own words, the case is
@@ -121,14 +124,19 @@ discarded. What remains is the regime this tool exists for.
 | git log --grep --all-match | 0.000     | 0.000     | 0.000     | **109**          |
 | git log -S                 | 0.000     | 0.000     | 0.000     | 15               |
 
-**7.8x `zg` and 18x the best Git-native strategy** — and the only approach that
-answers nearly every question rather than returning an empty set.
+**7.8x `zg` and 18x the best Git-native strategy** — and the only approach that answers nearly every question rather than returning an empty set.
+
+<!-- /generated:corpus-table -->
 
 ### Where it loses
+
+<!-- generated:crossfile -->
 
 When you can name the symbol, use pickaxe search instead. On cross-file causal
 questions, `git log -S` scores Hit@10 **0.950** against `git why`'s 0.350.
 Semantic search has no advantage over a tool you can hand the exact literal.
+
+<!-- /generated:crossfile -->
 
 That boundary is the honest positioning, and the shipped
 [skill](plugins/git-why/skills/history-archaeology/SKILL.md) tells agents both halves:
@@ -159,10 +167,14 @@ That is worth stating rather than hiding: it means no easy gain is being left
 unclaimed, and the remaining headroom is in the embedding itself, which would
 need a larger model or a learned reranker.
 
+<!-- generated:honesty -->
+
 **It is also wrong most of the time.** Hit@5 of 0.287 means it misses roughly
 seven hard questions in ten. It beats every alternative on those questions and
 still fails on most of them. Treat results as leads to verify with `git show`,
 never as established fact.
+
+<!-- /generated:honesty -->
 
 ## When to use ordinary Git instead
 

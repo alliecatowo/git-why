@@ -715,6 +715,129 @@ md += '```\n';
 // the two steps quietly incompatible.
 const formatted = await format(md, { parser: 'markdown', ...(await resolveConfig(DOCS_DIR)) });
 
-mkdirSync(DOCS_DIR, { recursive: true });
-writeFileSync(join(DOCS_DIR, 'report.md'), formatted);
-console.log(`[bench/report] wrote ${join(DOCS_DIR, 'report.md')} (${formatted.length} bytes)`);
+// `--check` verifies the README without writing anything.
+//
+// It deliberately does NOT check docs/report.md. That document records the
+// machine and moment it was generated on -- the absolute path `zg` was found
+// at, the repository HEAD, how many paths were uncommitted -- so two correct
+// runs on different machines produce different bytes and a byte comparison
+// would fail on every commit while saying nothing about whether a measurement
+// moved. The README carries only measurements, so it is checkable.
+const checkOnly = process.argv.includes('--check');
+const reportPath = join(DOCS_DIR, 'report.md');
+if (!checkOnly) {
+  mkdirSync(DOCS_DIR, { recursive: true });
+  writeFileSync(reportPath, formatted);
+  console.log(`[bench/report] wrote ${reportPath} (${formatted.length} bytes)`);
+}
+
+// ---------------------------------------------------------------------
+// The README's headline numbers, from the same source as section 0.
+//
+// CONTRIBUTING.md says no number in the README may be hand-edited because
+// they are generated. They were not: they were typed, and the claim that they
+// were not was itself the kind of thing this project keeps catching. Now they
+// are generated, between markers, with the surrounding argument left in prose.
+//
+// `--check` fails instead of writing, so CI catches a README that has drifted
+// from the measurements it cites.
+// ---------------------------------------------------------------------
+function readmeBlocks() {
+  const dir = join(RESULTS_DIR, 'corpus');
+  if (!existsSync(dir)) return null;
+  const names = readdirSync(dir).filter((n) => n.endsWith('.json'));
+  const mainNames = names.filter((n) => /^\d{4}-/.test(n)).sort();
+  const crossNames = names.filter((n) => n.startsWith('crossfile-')).sort();
+  if (mainNames.length === 0) return null;
+
+  const main = readJson(join(dir, mainNames[mainNames.length - 1]));
+  const label = {
+    'git why': '**git why**',
+    zg: 'zg (semantic code search)',
+  };
+  const bold = (v, on) => (on ? `**${v}**` : v);
+  const repoNames = [
+    ...new Set(
+      (readJson(join(REPO_ROOT, 'bench', 'corpus', 'cases.json')).cases ?? []).map(
+        (c) => c.repositoryId,
+      ),
+    ),
+  ];
+  // The denominator is the number most worth generating. It is the first thing
+  // that moves when the corpus is regenerated, and a stale one silently
+  // misstates every rate beside it.
+  let table =
+    `${main.cases} questions derived mechanically from ${repoNames.length} pinned real repositories (curl,\n` +
+    'redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable\n' +
+    'by keyword search** before it enters the set — if `git log --grep` or\n' +
+    "`git log -S` finds the answer from the question's own words, the case is\n" +
+    'discarded. What remains is the regime this tool exists for.\n\n';
+  table +=
+    '| strategy | Hit@1 | Hit@5 | MRR | returned nothing |\n| --- | --- | --- | --- | --- |\n';
+  for (const r of main.rows) {
+    const lead = r.strategy === 'git why';
+    const nothing =
+      r.returnedNothing > main.cases / 2 ? `**${r.returnedNothing}**` : r.returnedNothing;
+    table += `| ${label[r.strategy] ?? r.strategy} | ${bold(num(r.hit1), lead)} | ${bold(num(r.hit5), lead)} | ${bold(num(r.mrr), lead)} | ${nothing} |\n`;
+  }
+
+  const why = main.rows.find((r) => r.strategy === 'git why');
+  const zg = main.rows.find((r) => r.strategy === 'zg');
+  const bestGit = main.rows
+    .filter((r) => r.strategy.startsWith('git log'))
+    .reduce((a, b) => (b.mrr > a.mrr ? b : a));
+  table +=
+    `\n**${(why.mrr / zg.mrr).toFixed(1)}x \`zg\` and ${(why.mrr / bestGit.mrr).toFixed(0)}x the best Git-native strategy** ` +
+    '— and the only approach that answers nearly every question rather than returning an empty set.\n';
+
+  let crossfile = '';
+  if (crossNames.length > 0) {
+    const cross = readJson(join(dir, crossNames[crossNames.length - 1]));
+    const pick = cross.rows.find((r) => r.strategy.includes('-S'));
+    const w = cross.rows.find((r) => r.strategy === 'git why');
+    crossfile =
+      'When you can name the symbol, use pickaxe search instead. On cross-file causal\n' +
+      `questions, \`git log -S\` scores Hit@10 **${num(pick.hit10)}** against \`git why\`'s ${num(w.hit10)}.\n` +
+      'Semantic search has no advantage over a tool you can hand the exact literal.\n';
+  }
+
+  const misses = Math.round((1 - why.hit5) * 10);
+  const honesty =
+    `**It is also wrong most of the time.** Hit@5 of ${num(why.hit5)} means it misses roughly\n` +
+    `${['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][misses] ?? misses} hard questions in ten. It beats every alternative on those questions and\n` +
+    'still fails on most of them. Treat results as leads to verify with `git show`,\n' +
+    'never as established fact.\n';
+
+  return { corpus: table, crossfile, honesty, cases: main.cases };
+}
+
+function replaceMarked(source, name, body) {
+  const open = `<!-- generated:${name} -->`;
+  const close = `<!-- /generated:${name} -->`;
+  const start = source.indexOf(open);
+  const end = source.indexOf(close);
+  if (start < 0 || end < 0) throw new Error(`bench/report: missing ${open} markers in README.md`);
+  return `${source.slice(0, start + open.length)}\n\n${body}\n${source.slice(end)}`;
+}
+
+const blocks = readmeBlocks();
+if (blocks !== null) {
+  const readmePath = join(REPO_ROOT, 'README.md');
+  const before = readFileSync(readmePath, 'utf8');
+  let after = replaceMarked(before, 'corpus-table', blocks.corpus);
+  if (blocks.crossfile) after = replaceMarked(after, 'crossfile', blocks.crossfile);
+  after = replaceMarked(after, 'honesty', blocks.honesty);
+  after = await format(after, { parser: 'markdown', ...(await resolveConfig(readmePath)) });
+
+  if (checkOnly) {
+    if (after !== before) {
+      console.error('[bench/report] README.md is stale. Run `node bench/report.mjs`.');
+      process.exitCode = 1;
+    } else {
+      console.log('[bench/report] README.md numbers are current.');
+    }
+  } else {
+    writeFileSync(readmePath, after);
+    console.log('[bench/report] refreshed README.md headline numbers');
+  }
+}
