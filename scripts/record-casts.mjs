@@ -122,7 +122,13 @@ if (!existsSync(join(cliDir, 'main.js'))) {
 
 // A shim directory so the recording shows `git why`, the way people type it,
 // rather than a path to dist/cli/main.js.
-const shim = join(OUT, '.bin');
+//
+// It lives OUTSIDE the published cast directory. These shims hardcode absolute
+// local paths -- the node binary and this checkout -- and when they were
+// written into site/public/casts/ they were committed and then served from the
+// public site, publishing the author's home directory layout for no reason.
+const SCRATCH = join(ROOT, '.tmp', 'cast-shims');
+const shim = join(SCRATCH, 'bin');
 mkdirSync(shim, { recursive: true });
 writeFileSync(
   join(shim, 'git-why'),
@@ -150,7 +156,7 @@ function blockNetworkTools(shimDir) {
 
 // A second shim directory that also shadows network tools, used by scenarios
 // marked isolateNetwork.
-const blockShim = join(OUT, '.bin-isolated');
+const blockShim = join(SCRATCH, 'bin-isolated');
 mkdirSync(blockShim, { recursive: true });
 writeFileSync(
   join(blockShim, 'git-why'),

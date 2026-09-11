@@ -1,3 +1,0 @@
-#!/bin/sh
-echo "gh: disabled for this recording; the answer is in the repository" >&2
-exit 127
