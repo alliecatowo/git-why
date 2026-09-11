@@ -853,29 +853,41 @@ function replaceMarked(source, name, body) {
   const close = `<!-- /generated:${name} -->`;
   const start = source.indexOf(open);
   const end = source.indexOf(close);
-  if (start < 0 || end < 0) throw new Error(`bench/report: missing ${open} markers in README.md`);
+  if (start < 0 || end < 0) throw new Error(`bench/report: missing ${open} markers`);
   return `${source.slice(0, start + open.length)}\n\n${body}\n${source.slice(end)}`;
 }
 
 const blocks = readmeBlocks();
 if (blocks !== null) {
-  const readmePath = join(REPO_ROOT, 'README.md');
-  const before = readFileSync(readmePath, 'utf8');
-  let after = replaceMarked(before, 'corpus-table', blocks.corpus);
-  if (blocks.crossfile) after = replaceMarked(after, 'crossfile', blocks.crossfile);
-  after = replaceMarked(after, 'scale', blocks.scale);
-  after = replaceMarked(after, 'honesty', blocks.honesty);
-  after = await format(after, { parser: 'markdown', ...(await resolveConfig(readmePath)) });
-
-  if (checkOnly) {
-    if (after !== before) {
-      console.error('[bench/report] README.md is stale. Run `node bench/report.mjs`.');
-      process.exitCode = 1;
-    } else {
-      console.log('[bench/report] README.md numbers are current.');
+  // Both marketing surfaces are filled from the same blocks, so the landing
+  // page cannot quietly lead with a friendlier number than the README. It
+  // used to: the site's headline was the hand-authored set at Hit@5 0.900,
+  // whose questions were written by someone who had already seen the commits.
+  for (const [label, relative, names] of [
+    ['README.md', 'README.md', ['corpus-table', 'crossfile', 'scale', 'honesty']],
+    ['site/index.md', join('site', 'index.md'), ['corpus-table', 'crossfile', 'scale', 'honesty']],
+  ]) {
+    const target = join(REPO_ROOT, relative);
+    const before = readFileSync(target, 'utf8');
+    let after = before;
+    for (const name of names) {
+      const body =
+        name === 'corpus-table' ? blocks.corpus : blocks[name === 'crossfile' ? 'crossfile' : name];
+      if (!body) continue;
+      after = replaceMarked(after, name, body);
     }
-  } else {
-    writeFileSync(readmePath, after);
-    console.log('[bench/report] refreshed README.md headline numbers');
+    after = await format(after, { parser: 'markdown', ...(await resolveConfig(target)) });
+
+    if (checkOnly) {
+      if (after !== before) {
+        console.error(`[bench/report] ${label} is stale. Run \`node bench/report.mjs\`.`);
+        process.exitCode = 1;
+      } else {
+        console.log(`[bench/report] ${label} numbers are current.`);
+      }
+    } else {
+      writeFileSync(target, after);
+      console.log(`[bench/report] refreshed ${label} headline numbers`);
+    }
   }
 }

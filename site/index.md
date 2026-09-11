@@ -135,19 +135,62 @@ first query and first index.
 
 ## Measured, not claimed
 
-Full methodology, dataset provenance, and the real-repository numbers are in
-the [benchmark report](/guide/benchmarks). The headline: real-repository
-retrieval (not the saturated synthetic fixtures) is the number worth weighing.
-Commit counts and index sizes below are the recorded scale of the external
-benchmark runs (`bench/results/external/`); latency is fresh-process warm-cache
-CLI time on the `task-queue` reference fixture (135 commits).
+Every number below is written into this page by `bench/report.mjs` from raw run
+data, and CI fails if it drifts. Full methodology, dataset provenance and the
+negative results are in the [benchmark report](/guide/benchmarks).
 
-| Measurement                                                         | Result                          |
-| ------------------------------------------------------------------- | ------------------------------- |
-| Index `expressjs/express`                                           | 6167 commits, 126 MiB index     |
-| Index `axios/axios`                                                 | 2185 commits, 80.8 MiB index    |
-| Warm query, fresh process (p50 / p95)                               | 496 ms / 509 ms                 |
-| Real-repository retrieval (10 hand-authored cases, express + axios) | Hit@5 90%, Hit@1 60%, MRR 0.733 |
+<!-- generated:corpus-table -->
+
+174 questions derived mechanically from 6 pinned real repositories (curl,
+redis, requests, ripgrep, caddy, zod). Every question is verified **unanswerable
+by keyword search** before it enters the set — if `git log --grep` or
+`git log -S` finds the answer from the question's own words, the case is
+discarded. What remains is the regime this tool exists for.
+
+| strategy                   | Hit@1     | Hit@5     | MRR       | returned nothing |
+| -------------------------- | --------- | --------- | --------- | ---------------- |
+| **git why**                | **0.155** | **0.287** | **0.203** | 11               |
+| zg (semantic code search)  | 0.017     | 0.040     | 0.026     | 13               |
+| git log -G                 | 0.006     | 0.017     | 0.011     | 15               |
+| git log --grep             | 0.000     | 0.011     | 0.003     | 0                |
+| git log --grep --all-match | 0.000     | 0.000     | 0.000     | **109**          |
+| git log -S                 | 0.000     | 0.000     | 0.000     | 15               |
+
+**7.8x `zg` and 18x the best Git-native strategy** — and the only approach that answers nearly every question rather than returning an empty set.
+
+<!-- /generated:corpus-table -->
+
+<!-- generated:crossfile -->
+
+When you can name the symbol, use pickaxe search instead. On cross-file causal
+questions, `git log -S` scores Hit@10 **0.950** against `git why`'s 0.350.
+Semantic search has no advantage over a tool you can hand the exact literal.
+
+<!-- /generated:crossfile -->
+
+That boundary is in the
+[skill shipped with the plugin](/guide/examples#when-not-to-use-this), because
+a tool that oversells itself makes an agent worse at its job.
+
+<!-- generated:scale -->
+
+| measurement                                 | result                        |
+| ------------------------------------------- | ----------------------------- |
+| Index across 6 real repos (56,781 commits)  | 5.50–6.98 KB/record           |
+| curl (30,000 commits)                       | 1.00 GiB, 5.74 KB/record      |
+| Warm query, fresh process (p50 / p95, n=30) | 477 ms / 508 ms               |
+| Diff/evidence ingestion, real-repo ablation | earns its cost, ΔHit@5 +0.375 |
+
+<!-- /generated:scale -->
+
+<!-- generated:honesty -->
+
+**It is also wrong most of the time.** Hit@5 of 0.287 means it misses roughly
+seven hard questions in ten. It beats every alternative on those questions and
+still fails on most of them. Treat results as leads to verify with `git show`,
+never as established fact.
+
+<!-- /generated:honesty -->
 
 ## When to use ordinary Git instead
 
