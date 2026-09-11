@@ -24,3 +24,6 @@ site/public/install.sh
 .env
 .env.*
 **/auth.json
+
+# Editor/agent state, machine-specific and not part of the project.
+.antigravitycli/
