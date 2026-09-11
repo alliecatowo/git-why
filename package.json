@@ -53,14 +53,15 @@
     "format": "prettier --write .",
     "test:unit": "npm run build:test && node --test --test-concurrency=4 \".tmp/tsc-test/test/unit/**/*.test.js\"",
     "test:integration": "npm run build:test && node --test --test-concurrency=2 --test-timeout=600000 \".tmp/tsc-test/test/integration/**/*.test.js\"",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run bench:freeze && npm run test:unit && npm run test:bench",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run bench:freeze && npm run verify:plugins && npm run test:unit && npm run test:bench",
     "build:test": "tsc -p tsconfig.test.json && node scripts/copy-test-assets.mjs",
     "test:bench": "node --test bench/agents/*.test.mjs",
     "site:install": "npm install --prefix site",
     "site:dev": "npm run --prefix site dev",
     "site:build": "npm run --prefix site build",
     "bench:freeze": "node bench/freeze-protocol.mjs",
-    "bench:corpus": "node bench/corpus/baselines.mjs --cases bench/corpus/cases.json"
+    "bench:corpus": "node bench/corpus/baselines.mjs --cases bench/corpus/cases.json",
+    "verify:plugins": "node scripts/verify-plugins.mjs"
   },
   "dependencies": {
     "@zvec/zvec": "0.7.1"

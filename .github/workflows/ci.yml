@@ -64,3 +64,28 @@ jobs:
       - name: Build site
         working-directory: site
         run: npm run build
+
+  # Packaging is verified separately because it is the check most likely to
+  # catch a release-breaking mistake that unit tests cannot see: a file missing
+  # from the tarball, a lost shebang, a man page that does not land where
+  # install.sh looks for it, or `git why --help` failing to dispatch through
+  # Git. It needs no network and no embedding model, so unlike the integration
+  # suite it is a reliable always-green gate.
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.21.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node scripts/verify-package.mjs
+      - name: Shell completions are emitted for every supported shell
+        run: |
+          for sh in bash zsh fish; do
+            node dist/cli/main.js completion "$sh" > /dev/null
+          done
+      - name: Plugin manifests are valid JSON with the required fields
+        run: node scripts/verify-plugins.mjs
