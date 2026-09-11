@@ -861,10 +861,16 @@ function readmeBlocks() {
       'question does it more accurately, or in fewer turns, with the tool than without. Four arms\n' +
       'over the same frozen tasks, paired per task, with token counts reconciled against the\n' +
       "provider's own accounting database.\n\n";
-    agent += '| model | paired n | accuracy W-L | median tool calls saved |\n|---|---:|---:|---:|\n';
+    agent +=
+      '| model | paired n | accuracy W-L | median tool calls saved |\n|---|---:|---:|---:|\n';
     for (const r of paired) {
       const d = r.dVsA;
-      const saved = d.callsDelta === null ? 'n/a' : d.callsDelta <= 0 ? String(-d.callsDelta) : `${d.callsDelta} more`;
+      const saved =
+        d.callsDelta === null
+          ? 'n/a'
+          : d.callsDelta <= 0
+            ? String(-d.callsDelta)
+            : `${d.callsDelta} more`;
       agent += `| ${r.model.replace(/^[^/]+\//, '')} | ${d.n} | ${d.accWin}-${d.accLoss} | ${saved} |\n`;
     }
     const savings = paired.map((r) => r.dVsA.callsDelta).filter((v) => typeof v === 'number');
@@ -896,7 +902,11 @@ if (blocks !== null) {
   // whose questions were written by someone who had already seen the commits.
   for (const [label, relative, names] of [
     ['README.md', 'README.md', ['corpus-table', 'crossfile', 'agent', 'scale', 'honesty']],
-    ['site/index.md', join('site', 'index.md'), ['corpus-table', 'crossfile', 'agent', 'scale', 'honesty']],
+    [
+      'site/index.md',
+      join('site', 'index.md'),
+      ['corpus-table', 'crossfile', 'agent', 'scale', 'honesty'],
+    ],
   ]) {
     const target = join(REPO_ROOT, relative);
     const before = readFileSync(target, 'utf8');
