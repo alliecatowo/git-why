@@ -51,6 +51,21 @@ description = "Run the bounded CLI/system measurements"
 depends = ["build"]
 run = "node bench/perf/run.mjs"
 
+[tasks."bench:corpus"]
+description = "Rebuild the 174-case derived corpus and score every baseline against it"
+depends = ["build"]
+run = [
+  "node bench/corpus/extract.mjs",
+  "node bench/corpus/paraphrase.mjs",
+  "node bench/corpus/gate.mjs",
+  "node bench/corpus/baselines.mjs",
+]
+
+[tasks."bench:crossfile"]
+description = "Score the cross-file causal corpus, where git log -S wins"
+depends = ["build"]
+run = "node bench/corpus/crossfile.mjs"
+
 [tasks."bench:agents:smoke"]
 description = "Run the 16 free-model smoke trials"
 depends = ["build"]
@@ -61,6 +76,10 @@ description = "Run the 64 free-model pilot trials"
 depends = ["build"]
 run = "node bench/agents/run.mjs --stage=pilot"
 
+[tasks."bench:models"]
+description = "Compare arms across every model that has completed a pilot"
+run = "node bench/compare-models.mjs"
+
 [tasks."bench:freeze"]
 description = "Verify bench/protocol.json still matches its own hash"
 run = "node bench/freeze-protocol.mjs"
@@ -68,6 +87,15 @@ run = "node bench/freeze-protocol.mjs"
 [tasks."bench:report"]
 description = "Generate tables and the report from saved records"
 run = "node bench/report.mjs"
+
+[tasks."verify:plugins"]
+description = "Validate both plugin manifests, their MCP commands and skill frontmatter"
+run = "node scripts/verify-plugins.mjs"
+
+[tasks.casts]
+description = "Re-record the asciinema demos; --only <name> for one scenario"
+depends = ["build"]
+run = "node scripts/record-casts.mjs"
 
 [tasks."repo:create"]
 description = "Idempotently create/verify and push the authorized public repository"
