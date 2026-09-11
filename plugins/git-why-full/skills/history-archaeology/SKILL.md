@@ -116,5 +116,13 @@ you. `--first` is the most reliable of the three: `--last` and `--removed` are
 often keyed on regenerated files like RELEASE-NOTES, where a term appears and
 disappears for reasons unrelated to the feature.
 
-The index builds at roughly 5.9 KB per record and answers in under half a
-second on a 30,000-commit repository, so it is cheap to keep current.
+## What it costs
+
+A search is **seconds, not milliseconds**: measured p50 3.7s, p95 4.2s on a
+30,000-commit repository. There is no daemon, so every invocation pays process
+start and model load. Budget for that — ask one well-formed question rather
+than sweeping several phrasings, and do not put `git why` in a loop.
+
+The index itself is roughly 5.9 KB per record and `index --if-needed` returns
+in about 0.2s when it is already current, so keeping it fresh is cheap even
+though querying is not.
