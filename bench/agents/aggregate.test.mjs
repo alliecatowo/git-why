@@ -82,3 +82,67 @@ test('bootstrap CI clusters repetitions by task and is deterministic', () => {
   assert.equal(one.estimate, 0);
   assert.deepEqual(one, two);
 });
+
+// A network attempt is a command, not a word. `NETWORK_RE` used to be
+// `\bcurl\b` matched against every string of every tool call, and one of the
+// benchmark repositories is curl — so listing its directory, or an agent
+// writing "the curl repository", invalidated the trial. It cost 11 of 51 curl
+// trials against 1 of 139 everywhere else: a whole repository's worth of data,
+// lost to a substring.
+import { auditTrajectory } from './audit.mjs';
+
+const audit = (calls) =>
+  auditTrajectory({
+    rawEvents: [{ type: 'x' }],
+    toolCalls: [
+      // The preflight the audit requires as the first bash call.
+      {
+        tool: 'bash',
+        input: { command: 'pwd && git rev-parse --show-toplevel && git rev-parse HEAD' },
+      },
+      ...calls,
+    ],
+    workspaceDir: '/workspace',
+    executionWorkspaceDir: '/workspace',
+    baseSha: 'a'.repeat(40),
+  }).violations;
+
+test('working in a repository named curl is not a network attempt', () => {
+  const violations = audit([
+    { tool: 'read', input: { filePath: '/workspace/curl-curl/README' } },
+    { tool: 'bash', input: { command: 'git log --grep=curl --oneline -20' } },
+    { tool: 'bash', input: { command: 'grep -rn curl lib/' } },
+    { tool: 'bash', input: { command: 'git why "why does curl retry on reset" --no-refresh' } },
+  ]);
+  assert.ok(
+    !violations.includes('network_fetch_attempt'),
+    `expected no network violation, got ${JSON.stringify(violations)}`,
+  );
+});
+
+test('an actual fetch is still caught, in every command position', () => {
+  for (const command of [
+    'curl https://example.com',
+    'sudo curl -O http://example.com/x',
+    'ls -la && curl http://example.com',
+    'wget http://example.com',
+    'git clone https://github.com/foo/bar',
+    'npm install left-pad',
+    'pip install requests',
+  ]) {
+    const violations = audit([{ tool: 'bash', input: { command } }]);
+    assert.ok(
+      violations.includes('network_fetch_attempt'),
+      `expected ${JSON.stringify(command)} to be flagged, got ${JSON.stringify(violations)}`,
+    );
+  }
+});
+
+test('a non-shell tool cannot fetch, so its contents are not scanned for commands', () => {
+  // A file whose CONTENTS are a curl command is being read, not run.
+  const violations = audit([
+    { tool: 'read', input: { filePath: '/workspace/scripts/fetch.sh' } },
+    { tool: 'grep', input: { pattern: 'curl https://' } },
+  ]);
+  assert.ok(!violations.includes('network_fetch_attempt'), JSON.stringify(violations));
+});

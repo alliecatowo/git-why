@@ -11,8 +11,21 @@ const EVALUATOR_MARKERS = [
   '_index-do-not-show-reviewer',
   'transcript',
 ];
-const NETWORK_RE =
-  /\b(?:curl|wget|fetch\s+https?:|git\s+clone\s+https?:|npm\s+(?:install|view)|pip\s+install)\b/i;
+/**
+ * A network attempt is a COMMAND, not a word.
+ *
+ * This used to be `\bcurl\b`, matched against every string in every tool
+ * call. One of the benchmark repositories is curl, so listing its directory,
+ * reading its README, or an agent writing "the curl repository" invalidated
+ * the trial. It cost 11 of 51 curl trials against 1 of 139 everywhere else —
+ * a whole repository's worth of data, lost to a word.
+ *
+ * So the pattern now requires command position: the start of a line, or after
+ * a shell separator. `curl` in prose, in a path, or in a repository name is
+ * not a fetch.
+ */
+const NETWORK_COMMAND_RE =
+  /(?:^|[\n;&|(]|&&|\|\|)\s*(?:sudo\s+)?(?:curl|wget|nc|ncat|telnet)\b|\bgit\s+(?:clone|fetch|pull|remote\s+update)\s+(?:https?|git|ssh):|\bnpm\s+(?:install|view|publish)\b|\bpip\s+install\b|\bfetch\s+https?:/i;
 
 function strings(value, out = []) {
   if (typeof value === 'string') out.push(value);
@@ -113,11 +126,15 @@ export function auditTrajectory({
     violations.push('preflight_missing_or_not_first_bash_call');
   }
   for (const call of calls) {
+    // Only a shell call can fetch anything. Scanning every string of every
+    // tool meant a `read` of a file that happens to mention curl counted as an
+    // attempt to run it.
+    const isShell = call.tool === 'bash';
     for (const text of strings(call.input)) {
       const normalized = text.replace(/\\/g, '/').toLowerCase();
       if (EVALUATOR_MARKERS.some((marker) => normalized.includes(marker)))
         violations.push('evaluator_material_reference');
-      if (NETWORK_RE.test(text)) violations.push('network_fetch_attempt');
+      if (isShell && NETWORK_COMMAND_RE.test(text)) violations.push('network_fetch_attempt');
       for (const match of text.matchAll(/(?:^|\s)(\/[\w@%+.,:=~\-/]+)/g)) {
         const path = match[1];
         // `//` is commonly a search pattern or a URL delimiter, not a

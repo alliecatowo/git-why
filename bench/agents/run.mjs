@@ -126,7 +126,11 @@ const DEFAULT_MODEL = process.env.BENCH_MODEL || 'llmgateway/deepseek-v4-flash';
  * point, not a better measurement of the same one.
  */
 const BUDGETS = {
-  wallClockMs: 8 * 60_000,
+  // Overridable for the same reason the tool-call budget is: a budget sized
+  // for a one-question lookup truncates a six-question brief, and a truncated
+  // trial is not a wrong answer -- it is no measurement at all. Six
+  // investigations in one session need room that eight minutes does not give.
+  wallClockMs: Number(process.env.BENCH_WALL_CLOCK_MS ?? 8 * 60_000),
   toolCalls: Number(process.env.BENCH_TOOL_CALL_BUDGET ?? 60),
   generatedTokens: null,
 };
