@@ -26,6 +26,11 @@ surface rather than a diff against one.
   `AGENTS.md` fragment for OpenCode.
 - Shell completions for bash, zsh and fish via `git why completion <shell>`,
   completing both the `git why` and `git-why` spellings.
+- An optional daemon: `git why server on|off|status`. Holds the index, the
+  embedding model and the lineage table open between queries — 569 ms to
+  286 ms on a 30,000-commit repository. `--daemon=direct|server|auto`
+  (`GIT_WHY_MODE`); `auto` falls back to running directly whenever the daemon
+  cannot help, so it can never be the reason a search fails.
 
 ### Measured
 

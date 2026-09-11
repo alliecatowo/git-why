@@ -107,6 +107,10 @@ export function compareModels(resultsDir, opts = {}) {
       arms[arm] = {
         n: g.length,
         hits: g.filter((r) => r.evidence_grade.citedGoldSha).length,
+        points: sum(
+          g.map((r) => r.evidence_grade.score ?? (r.evidence_grade.citedGoldSha ? 1 : 0)),
+        ),
+        pointsOutOf: sum(g.map((r) => r.evidence_grade.outOf ?? 1)),
         calls: median(g.map((r) => r.tool_calls)),
         inTok: median(g.map((r) => r.input_tokens)),
         outTok: median(g.map((r) => r.output_tokens)),
@@ -134,11 +138,25 @@ export function compareModels(resultsDir, opts = {}) {
       }
       const both = [...byTask.values()].filter((e) => e[x] && e[y]);
       if (both.length === 0) return null;
-      const correct = (r) => (r.evidence_grade.citedGoldSha ? 1 : 0);
+      // A brief scores 0..N; a single-question task scores 0 or 1. Reading the
+      // score where one exists is what turns one bit per expensive agent
+      // session into six, which is the whole reason the brief tasks exist.
+      const correct = (r) =>
+        typeof r.evidence_grade.score === 'number'
+          ? r.evidence_grade.score
+          : r.evidence_grade.citedGoldSha
+            ? 1
+            : 0;
+      const outOf = (r) => r.evidence_grade.outOf ?? 1;
+      const scored = both.filter((e) => typeof e[x].evidence_grade.score === 'number');
       return {
         n: both.length,
         accWin: both.filter((e) => correct(e[y]) > correct(e[x])).length,
         accLoss: both.filter((e) => correct(e[x]) > correct(e[y])).length,
+        /** Total questions answered correctly, present only for brief tasks. */
+        pointsX: scored.length > 0 ? sum(scored.map((e) => correct(e[x]))) : null,
+        pointsY: scored.length > 0 ? sum(scored.map((e) => correct(e[y]))) : null,
+        pointsOutOf: scored.length > 0 ? sum(scored.map((e) => outOf(e[x]))) : null,
         callsDelta: median(both.map((e) => (e[y].tool_calls ?? 0) - (e[x].tool_calls ?? 0))),
         tokDelta: median(both.map((e) => (e[y].input_tokens ?? 0) - (e[x].input_tokens ?? 0))),
       };

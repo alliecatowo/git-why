@@ -30,6 +30,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'CLI Reference', link: '/guide/cli-reference' },
+      { text: 'Daemon', link: '/guide/daemon' },
       { text: 'Benchmarks', link: '/guide/benchmarks' },
       { text: 'FAQ', link: '/guide/faq' },
       {
@@ -54,8 +55,8 @@ export default defineConfig({
         {
           text: 'Reference',
           items: [
-            { text: 'Examples', link: '/guide/examples' },
             { text: 'CLI reference', link: '/guide/cli-reference' },
+            { text: 'Daemon', link: '/guide/daemon' },
             { text: 'Operations & guarantees', link: '/guide/operations' },
             { text: 'Benchmarks', link: '/guide/benchmarks' },
           ],

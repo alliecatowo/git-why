@@ -179,6 +179,46 @@ export function gradeEvidenceCitation({ goldSha, finalAnswer, finalPatch }) {
 }
 
 /**
+ * Scores a multi-question brief: one point per question whose gold commit is
+ * cited anywhere in the answer.
+ *
+ * Order is not required. An agent that answers the questions out of order, or
+ * cites a commit under the wrong number, has still found it — and penalising
+ * presentation would measure formatting rather than retrieval. What IS
+ * required is that the commit appears at all, which is the thing the treatment
+ * is supposed to help with.
+ *
+ * Returning a score out of N rather than a pass/fail is the point of these
+ * tasks: at single-digit paired sample sizes, one bit per expensive agent
+ * session is close to no signal, and six is enough to see a difference.
+ */
+export function gradeBrief({ goldShas, finalAnswer, finalPatch }) {
+  if (!Array.isArray(goldShas) || goldShas.length === 0) return null;
+  const haystack = `${finalAnswer ?? ''}\n${finalPatch ?? ''}`;
+  const cited = [...new Set(haystack.match(/\b[0-9a-f]{7,40}\b/g) ?? [])].map((s) =>
+    s.toLowerCase(),
+  );
+  const matched = goldShas.map((gold) => {
+    const g = String(gold).toLowerCase();
+    // Agents abbreviate; accept any prefix of at least 7 characters either way.
+    return cited.some((c) => g.startsWith(c) || c.startsWith(g));
+  });
+  const score = matched.filter(Boolean).length;
+  return {
+    score,
+    outOf: goldShas.length,
+    /** Which questions were found, so a partial brief can be inspected. */
+    found: matched,
+    citedShaCount: cited.length,
+    // Kept so the existing paired comparison, which reads `citedGoldSha`, can
+    // treat "found anything at all" as the binary it used to get. The score is
+    // the measure that matters; this is for continuity of the older tables.
+    citedGoldSha: score > 0,
+    goldSha: goldShas[0],
+  };
+}
+
+/**
  * Grades a trap task on what the agent DID, not on what it cited.
  *
  * The earlier task sets asked "which commit introduced X", which a code-search
@@ -322,11 +362,20 @@ export function gradeTrial({
   // it however well it searches. Scoring against it produced a clean 0% in all
   // four arms -- a number that looked like a finding about git why and was
   // actually a property of the harness.
-  const citation = gradeEvidenceCitation({
-    goldSha: taskMeta.originalFixSha ?? taskMeta.goldSha,
-    finalAnswer: trialResult.finalAnswer ?? '',
-    finalPatch: trialResult.finalPatch ?? '',
-  });
+  // A brief carries one gold commit per question and is scored out of N; a
+  // single-question task keeps the original binary citation grade.
+  const briefGoldShas = taskMeta.briefGoldShas;
+  const citation = Array.isArray(briefGoldShas)
+    ? gradeBrief({
+        goldShas: briefGoldShas,
+        finalAnswer: trialResult.finalAnswer ?? '',
+        finalPatch: trialResult.finalPatch ?? '',
+      })
+    : gradeEvidenceCitation({
+        goldSha: taskMeta.originalFixSha ?? taskMeta.goldSha,
+        finalAnswer: trialResult.finalAnswer ?? '',
+        finalPatch: trialResult.finalPatch ?? '',
+      });
   return {
     pass: coding.applicable ? coding.pass : null,
     hiddenTestsPassed: coding.hiddenTestsPassed,

@@ -263,6 +263,9 @@ function loadTaskMeta(taskId) {
     // from any branch the agent can see, so grading citations against it can
     // only ever score zero -- which is exactly what it did.
     originalFixSha: manifest.labels?.originalFixSha ?? null,
+    // A brief carries one gold commit per question and is scored out of N.
+    briefGoldShas: manifest.labels?.briefGoldShas ?? null,
+    questionCount: manifest.questionCount ?? null,
     introducedSha: manifest.labels?.introducedSha ?? null,
     sourceRepoDir: manifest.sourceRepoDir,
     promptText: readFileSync(promptPath, 'utf8'),

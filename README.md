@@ -90,6 +90,21 @@ claims its own tool is always best makes an agent worse at its job.
 
 See [`docs/plugin.md`](docs/plugin.md).
 
+## Make it faster (optional)
+
+```sh
+git why server on
+```
+
+Holds the index, the embedding model and the lineage table open between
+queries. On curl — 30,000 commits — that is 569 ms a query down to 286 ms.
+Searches use it automatically once it is running.
+
+It can never be the reason a search fails: if no daemon is running, or it is
+unreachable, or your index moved under it, the query runs directly instead.
+`--daemon=direct` opts out, `--daemon=server` requires one. See
+[`docs/daemon.md`](docs/daemon.md).
+
 ## Why
 
 `git log --grep` only matches words you already know. The reason code
@@ -235,6 +250,8 @@ called.
   install, how retrieval works, CLI reference, FAQ.
 - **[`ROADMAP.md`](ROADMAP.md)** — pull requests, `gh why`, wikis, and what
   would need measuring before any of it ships.
+- **[`docs/daemon.md`](docs/daemon.md)** — the optional daemon: what it holds
+  warm, why it can never break a search, and its security posture.
 - **[`docs/indexes.md`](docs/indexes.md)** — where indexes live, worktrees,
   submodules, monorepos, disk use, and the shared model cache.
 - **[`docs/examples.md`](docs/examples.md)** — real output on real
