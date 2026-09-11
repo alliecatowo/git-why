@@ -59,12 +59,22 @@ Which is "right" depends on what you mean by owns, and nothing here settles it.
 ```console
 $ git why "when was HTTP/3 support first introduced" --first
 
-answer: 3af0e76d  HTTP3: initial (experimental) support   2019-07-21
+introduced: 3af0e76  HTTP3: initial (experimental) support  2019-07-21  (by http3)
+
+1. 011788f  msh3: fix the QUIC disconnect function
+   ...
 ```
 
 Ordinals come from ancestry, never timestamps, because rebases and cherry-picks
 rewrite commit dates on exactly the repositories where the question is worth
 asking.
+
+Note what the ranked results underneath are doing here: nothing useful. The
+answer is resolved from the lineage table, not from the ranking, so on a
+30,000-commit repository it routinely names a commit that ordinary retrieval
+never surfaces — `3af0e76` is not in the top ten. `(by http3)` names the token
+the interval was keyed on, which is what makes the claim checkable: an ordinal
+resolved by the wrong token is wrong in a way the SHA alone will not show you.
 
 ## Checking whether a constraint expired
 

@@ -160,7 +160,16 @@ writeFileSync(
 blockNetworkTools(blockShim);
 
 let recorded = 0;
-for (const s of SCENARIOS) {
+// Re-recording one scenario should not mean re-running the agent session,
+// which takes minutes and costs tokens.
+const only = arg('only', null);
+const selected = only === null ? SCENARIOS : SCENARIOS.filter((x) => x.name === only);
+if (selected.length === 0) {
+  console.error(`no scenario named ${only}; have: ${SCENARIOS.map((x) => x.name).join(', ')}`);
+  process.exit(1);
+}
+
+for (const s of selected) {
   if (!existsSync(join(s.repo, '.git'))) {
     console.error(`[skip] ${s.name}: no repository at ${s.repo}`);
     continue;
@@ -219,4 +228,4 @@ writeFileSync(
     2,
   )}\n`,
 );
-console.log(`\nrecorded ${recorded}/${SCENARIOS.length}`);
+console.log(`\nrecorded ${recorded}/${selected.length}`);

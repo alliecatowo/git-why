@@ -106,6 +106,8 @@ function buildEnvelope(
         : {
             sha: response.answer.sha,
             kind: response.answer.kind,
+            subject: response.answer.subject,
+            committerTime: response.answer.committerTime,
             viaToken: response.answer.viaToken,
             viaPath: response.answer.viaPath,
             confidence: response.answer.confidence,

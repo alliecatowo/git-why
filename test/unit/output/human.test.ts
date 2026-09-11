@@ -176,3 +176,76 @@ test('a missing index reports null fields without crashing', () => {
   assert.ok(out.includes('missing'));
   assert.ok(out.includes('never'));
 });
+
+// The ordinal answer is resolved from the lineage table, not from the ranked
+// list, so it is routinely absent from `results`. Rendering only the list
+// therefore hid the answer the flag was asked for -- `--first` printed ten
+// unrelated commits and nothing else, and the answer was reachable only via
+// `--json`. These tests pin the answer to the human output.
+test('an ordinal answer leads the results, with subject, date and what it was keyed on', () => {
+  const out = renderSearchHuman({
+    query: 'when was HTTP/3 support first introduced',
+    results: [makeHit()],
+    warnings: [],
+    answer: {
+      sha: '3af0e76d1e71995b7790c74e79b76af86ee7c681',
+      kind: 'introduced',
+      subject: 'HTTP3: initial (experimental) support',
+      committerTime: 1563667200, // 2019-07-21
+      viaToken: 'http3',
+      viaPath: null,
+      confidence: 'explicit',
+    },
+  });
+  const first = out.split('\n')[0];
+  assert.equal(
+    first,
+    'introduced: 3af0e76  HTTP3: initial (experimental) support  2019-07-21  (by http3)',
+  );
+  // It leads: the answer is the answer, the results are surrounding evidence.
+  assert.ok(out.indexOf('introduced:') < out.indexOf('1. 91ad203'));
+});
+
+test('the three ordinal kinds are labelled distinctly', () => {
+  const base = {
+    sha: 'c'.repeat(40),
+    subject: 'Drop the vendored parser',
+    committerTime: 1563667200,
+    viaToken: null,
+    viaPath: 'src/parser.ts',
+    confidence: 'explicit',
+  } as const;
+  const render = (kind: 'introduced' | 'last_modified' | 'removed') =>
+    renderSearchHuman({ query: 'q', results: [], warnings: [], answer: { ...base, kind } }).split(
+      '\n',
+    )[0] ?? '';
+  assert.match(render('introduced'), /^introduced: /);
+  assert.match(render('last_modified'), /^last changed: /);
+  assert.match(render('removed'), /^removed: /);
+  // Keying by path rather than token is named the same way, so the claim
+  // stays checkable either way.
+  assert.ok(render('removed').endsWith('(by src/parser.ts)'));
+});
+
+test('an answer with no subject or date still renders its SHA rather than vanishing', () => {
+  const out = renderSearchHuman({
+    query: 'q',
+    results: [],
+    warnings: [],
+    answer: {
+      sha: 'd'.repeat(40),
+      kind: 'introduced',
+      subject: null,
+      committerTime: null,
+      viaToken: null,
+      viaPath: null,
+      confidence: 'inferred',
+    },
+  });
+  assert.equal(out.split('\n')[0], 'introduced: ddddddd');
+});
+
+test('no answer means no answer line, so ordinary queries are unchanged', () => {
+  const out = renderSearchHuman({ query: 'q', results: [makeHit()], warnings: [] });
+  assert.ok(out.startsWith('1. 91ad203'));
+});

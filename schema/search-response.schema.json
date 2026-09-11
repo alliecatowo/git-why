@@ -320,13 +320,19 @@
     "answer": {
       "type": ["object", "null"],
       "additionalProperties": false,
-      "required": ["sha", "kind", "viaToken", "viaPath", "confidence"],
+      "required": ["sha", "kind", "subject", "committerTime", "viaToken", "viaPath", "confidence"],
       "properties": {
         "sha": {
           "type": "string"
         },
         "kind": {
           "enum": ["introduced", "last_modified", "removed"]
+        },
+        "subject": {
+          "type": ["string", "null"]
+        },
+        "committerTime": {
+          "type": ["number", "null"]
         },
         "viaToken": {
           "type": ["string", "null"]

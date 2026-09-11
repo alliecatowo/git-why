@@ -452,6 +452,12 @@ export async function search(
             ? interval.lastRemovedSha
             : null;
     if (endpoint !== null) {
+      // The endpoint comes from the lineage table, so it is usually NOT among
+      // `results` -- it is the commit retrieval missed, which is the whole
+      // reason the ordinal path exists. Fetching its subject and date here is
+      // one lookup of one commit, and without it every caller is left holding
+      // a bare SHA with no way to render it.
+      const answerCommit = (await store.fetchCommits([endpoint])).get(endpoint);
       answer = {
         sha: endpoint,
         kind:
@@ -460,6 +466,8 @@ export async function search(
             : constraint.type === 'last'
               ? 'last_modified'
               : 'introduced',
+        subject: answerCommit?.subject ?? null,
+        committerTime: answerCommit?.committerTime ?? null,
         viaToken,
         viaPath,
         confidence: constraint.confidence,

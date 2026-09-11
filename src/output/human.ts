@@ -8,7 +8,7 @@
  * this module.
  */
 
-import type { CommitHit, IndexStatus } from '../types.js';
+import type { CommitHit, IndexStatus, OrdinalAnswer } from '../types.js';
 import { sanitizeForTerminal } from './sanitize.js';
 
 const INDENT = '   ';
@@ -75,12 +75,47 @@ function renderResult(hit: CommitHit, index: number): string {
   return lines.join('\n');
 }
 
+/**
+ * `--first`, `--last` and `--removed` resolve an ordinal from the lineage
+ * table, and that commit is usually NOT in the ranked list -- it is precisely
+ * the one retrieval missed. Rendering the list alone therefore hides the
+ * answer the flag was asked for: on curl, `--first` on "when was HTTP/3
+ * support first introduced" answers `3af0e76d HTTP3: initial (experimental)
+ * support` while the printed results are ten unrelated commits.
+ *
+ * It leads rather than trails the results, because it is the answer and they
+ * are the surrounding evidence.
+ */
+function renderAnswer(answer: OrdinalAnswer): string {
+  const label =
+    answer.kind === 'introduced'
+      ? 'introduced'
+      : answer.kind === 'last_modified'
+        ? 'last changed'
+        : 'removed';
+  const parts = [`${label}: ${shortSha(answer.sha)}`];
+  if (answer.subject !== null) parts.push(s(answer.subject));
+  if (answer.committerTime !== null) parts.push(formatDate(answer.committerTime));
+  const via = answer.viaToken ?? answer.viaPath;
+  // Naming what the interval was keyed on is what makes the claim checkable:
+  // an ordinal resolved via the wrong token is wrong in a way the SHA alone
+  // does not reveal.
+  const suffix = via === null ? '' : `  (by ${s(via)})`;
+  return `${parts.join('  ')}${suffix}`;
+}
+
 export function renderSearchHuman(response: {
   readonly query: string;
   readonly results: readonly CommitHit[];
   readonly warnings: readonly string[];
+  readonly answer?: OrdinalAnswer | null;
 }): string {
   const lines: string[] = [];
+
+  if (response.answer != null) {
+    lines.push(renderAnswer(response.answer));
+    lines.push('');
+  }
 
   if (response.results.length === 0) {
     lines.push(`No match found in the indexed history for "${s(response.query)}".`);

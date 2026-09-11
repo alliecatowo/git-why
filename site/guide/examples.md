@@ -33,6 +33,19 @@ Measured against both on curl: it agrees with `shortlog` on the top author and
 differs in the tail; `blame` disagrees outright. Which is "right" depends on
 what you mean by _owns_, and nothing here settles that.
 
+## When something was first introduced
+
+<Cast src="/casts/first.cast" title='git why "when was HTTP/3 support first introduced" --first' />
+
+Watch what the ranked results are doing here: nothing useful. The answer line
+comes from the lineage table, not from the ranking, so on a 30,000-commit
+repository it names a commit ordinary retrieval never surfaces — `3af0e76` is
+not in the top ten below it.
+
+`(by http3)` names the token the interval was keyed on. That is what makes the
+claim checkable: an ordinal resolved by the wrong token is wrong in a way the
+SHA alone will not show you.
+
 ## How something evolved
 
 <Cast src="/casts/timeline.cast" title='git why "HTTP/2 multiplexing support" --timeline' />

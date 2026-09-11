@@ -496,6 +496,16 @@ export type OrdinalKind = 'introduced' | 'last_modified' | 'removed';
 export interface OrdinalAnswer {
   readonly sha: string;
   readonly kind: OrdinalKind;
+  /**
+   * The answer commit is resolved from the lineage table, not from the ranked
+   * list, so it is frequently NOT among `results` -- on curl, "when was HTTP/3
+   * first introduced" answers `3af0e76d` while the top ten results contain
+   * nothing of the sort. Carrying the subject and date here is what lets a
+   * renderer show the answer at all; without them a caller would have to shell
+   * out to `git show` to learn what the SHA it was handed actually is.
+   */
+  readonly subject: string | null;
+  readonly committerTime: number | null;
   /** Exactly one of these is set, naming what the interval was keyed on. */
   readonly viaToken: string | null;
   readonly viaPath: string | null;
