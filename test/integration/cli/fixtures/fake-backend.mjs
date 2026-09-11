@@ -105,7 +105,7 @@ function defaultSearchResponse(request) {
         parents: [],
         messageExcerpt: 'This is a fake commit used only by test/integration/cli.',
         rankScore: 0.5,
-        scores: { fused: 0.5, temporal: 1, final: 0.5 },
+        scores: { fused: 0.5, temporal: 1, overlap: 1, final: 0.5 },
         matchedBy: request.mode === 'hybrid' ? ['text', 'semantic'] : [request.mode],
         linkDistance: 0,
         evidence: [],

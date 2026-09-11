@@ -15,7 +15,7 @@ the answer is deliberately in a different file than the question.
 | you want to know                  | tool                 | why                                                                  |
 | --------------------------------- | -------------------- | -------------------------------------------------------------------- |
 | where something **is**, right now | `zg`                 | searches the working tree                                            |
-| **why** it is that way            | `git why`            | searches history; ~18x `git log --grep` on questions you cannot grep |
+| **why** it is that way            | `git why`            | searches history; ~20x `git log --grep` on questions you cannot grep |
 | what touched a **known symbol**   | `git log -S<symbol>` | 0.950 vs 0.350 — beats semantic search when you have the literal     |
 | history of one **file**           | `git log -- <path>`  | exact, cheap, blind to other files                                   |
 | who wrote a **line**              | `git blame`          | line-level, and biased toward whoever last reformatted               |
@@ -77,7 +77,7 @@ wrong. Three questions worth one search each:
 
 ## Trusting the answer
 
-`git why` misses roughly seven hard questions in ten. It is still far better
+`git why` misses roughly two hard questions in three. It is still far better
 than the alternatives on those questions, and both facts matter: treat a result
 as a strong lead, verify it with `git show`, and if nothing looks relevant say
 the history does not record a reason rather than assembling one from a weak

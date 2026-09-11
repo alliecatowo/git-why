@@ -393,6 +393,77 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## What finally improved retrieval: lexical overlap, and a pool to rerank
+
+Seven optimisations were measured and rejected before this one. The difference
+was not a better idea; it was asking a different question. Every earlier
+attempt asked "does this rank better". This one started by asking **where the
+right commit actually is**.
+
+`bench/corpus/rank-profile.mjs` requests a deep result list and records the
+gold commit's position:
+
+| gold commit rank | cases |       |
+| ---------------- | ----: | ----- |
+| 1                |    27 | 16.6% |
+| 2-5              |    27 | 16.6% |
+| 6-50             |    40 | 24.5% |
+| never retrieved  |    69 | 42.3% |
+
+That splits the misses into two problems needing opposite work. 69 are a
+**recall** problem: the commit is not in the pool at all, and no reordering can
+help. But 40 — a quarter of the corpus — are **retrieved and ranked badly**,
+and reordering is exactly what fixes those.
+
+**The signal.** RRF fuses the two branches by rank POSITION, which deliberately
+discards magnitude; that is what makes it robust to branches whose scores are
+on different scales. The cost is that a commit the lexical branch matched
+strongly and one it matched barely contribute identically if they landed at the
+same rank. `src/search/overlap.ts` puts a bounded amount back: the fraction of
+the question's content words appearing in the commit's own subject and body,
+as a multiplier in [1, 2]. Never the diff — the message is a claim about the
+change as a whole, a diff hunk may be incidental.
+
+**Validated, not fitted.** The variant was chosen by looking at the corpus, so
+scoring it on the same corpus would measure how well the guess was tailored.
+The weight was swept on a deterministic dev half and evaluated once on the
+held-out half:
+
+| held-out half | Hit@1 | Hit@5 |   MRR |
+| ------------- | ----: | ----: | ----: |
+| before        | 0.127 | 0.296 | 0.200 |
+| after         | 0.183 | 0.324 | 0.252 |
+
++26% MRR, +44% Hit@1, on cases the weight never saw. Four other variants were
+tried in the same lab — evidence count, subject-only overlap, branch agreement,
+and a combination — and none survived the held-out split.
+
+**The half that nearly hid the result.** Shipped naively, the full-corpus gain
+was +0.009 MRR, a fifth of what the lab predicted, and Hit@5 went _down_. The
+lab reordered the top 50; the live search sized its candidate pool to the
+caller's limit, so a commit RRF put 7th was never fetched and nothing could
+promote it. **A reranker needs a pool larger than its output.** With the pool at
+20:
+
+| full 174-case corpus | Hit@1 | Hit@5 |   MRR |
+| -------------------- | ----: | ----: | ----: |
+| before               | 0.155 | 0.287 | 0.203 |
+| after                | 0.172 | 0.333 | 0.233 |
+
+**Depth 20, not 50, and that is measured too.** Hit@5 is flat past depth 10 and
+MRR has all but plateaued by 20 (0.278 against 0.281 at 50), while depth 50
+cost a query without a daemon 569 ms -> 1885 ms. At 20 it is 851 ms, and 384 ms
+with the daemon. Quality is the product's acknowledged ceiling and latency is
+not, so paying ~50% of a query for +18% Hit@5 is the right side of that trade —
+but it IS a trade, and the numbers for both sides are here rather than only the
+flattering one.
+
+**One tokenizer, not two.** The boost reuses the alphabet the rest of retrieval
+uses, including the rejoin that makes `HTTP/3` and `http3` the same token.
+Widening happens on the DOCUMENT side: tokenizing the question to both `http`
+and `http3` would make a commit saying `http3` satisfy one requirement and fail
+the other, scoring 2/3 for a full match.
+
 ## The lineage table was loaded on every query and read on almost none
 
 The first optimisation in this project that worked, found by asking a question

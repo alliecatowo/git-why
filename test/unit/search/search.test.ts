@@ -345,15 +345,40 @@ test('an ordinary non-temporal query still takes the byte-identical identity pat
   assert.equal(response.temporal.intent, 'none');
   assert.equal(response.coreQuery, baseRequest.query);
   assert.equal(response.warnings.length, 0);
-  // The gate itself, at the full-response level: `final` must be the exact
-  // fused RRF value, byte-for-bit, not merely "close" -- see docs/spec.md's
-  // hard gate that a non-temporal query ranks bit-identically to the
-  // pre-temporal path. (temporal === 1 and w === 0 are proven separately in
+  // The gate itself, at the full-response level: the TEMPORAL term must be
+  // exactly the identity, byte-for-bit, not merely "close" -- see docs/spec.md's
+  // hard gate that a non-temporal query is not silently reordered by temporal
+  // scoring. (temporal === 1 and w === 0 are proven separately in
   // test/unit/search/temporal/score.test.ts; this proves the full response
   // actually uses them that way.)
+  //
+  // `final` is no longer `fused` outright, because lexical overlap multiplies
+  // it (src/search/overlap.ts). That factor is asserted exactly rather than
+  // waved at, so this still fails if anything else starts touching the score.
   for (const result of response.results) {
     assert.equal(result.scores.temporal, 1);
+    assert.ok(
+      result.scores.overlap >= 1 && result.scores.overlap <= 2,
+      `overlap must stay in [1, 2], got ${result.scores.overlap}`,
+    );
+    assert.equal(result.scores.final, result.scores.fused * result.scores.overlap);
+    assert.equal(result.rankScore, result.scores.final);
+  }
+});
+
+test('a query of only stop words leaves every score untouched', async () => {
+  // The boost divides by the number of content words in the question. A query
+  // with none must return the identity, not NaN — and a NaN score would sort
+  // unpredictably rather than fail loudly.
+  const response = await search(
+    { ...baseRequest, query: 'what is it that we did' },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  for (const result of response.results) {
+    assert.equal(result.scores.overlap, 1);
     assert.equal(result.scores.final, result.scores.fused);
-    assert.equal(result.rankScore, result.scores.fused);
+    assert.ok(Number.isFinite(result.rankScore));
   }
 });

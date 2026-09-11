@@ -522,14 +522,20 @@ export interface TimelineEpisode {
 }
 
 /**
- * The three numbers behind a result's position, kept separate so a bad
- * ranking can be diagnosed without re-running anything: `final = fused *
- * temporal ** w`. When the constraint is `none`, `temporal` is 1 and `final`
- * equals `fused`.
+ * The numbers behind a result's position, kept separate so a bad ranking can
+ * be diagnosed without re-running anything:
+ * `final = fused * temporal ** w * overlap * prosePenalty`.
+ * When the constraint is `none`, `temporal` is 1.
  */
 export interface HitScores {
   readonly fused: number;
   readonly temporal: number;
+  /**
+   * Lexical overlap between the question and this commit's own message, in
+   * [1, 2]. RRF fuses by rank position and discards magnitude; this puts a
+   * bounded amount back. 1 means no shared content words.
+   */
+  readonly overlap: number;
   readonly final: number;
 }
 

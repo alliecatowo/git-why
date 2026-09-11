@@ -15,7 +15,7 @@ wins and the disagreement is worth reporting.
 These are measured boundaries, not preferences:
 
 - **`git why "<natural question>"`** — when you cannot name the exact symbol.
-  On questions keyword search cannot answer it scores roughly 18x `git log
+  On questions keyword search cannot answer it scores roughly 20x `git log
 --grep`. Ask it the way a colleague would ask, vaguely; technical rephrasing
   measurably does not help.
 - **`git log -S<symbol>`** — when you CAN name the symbol. It beats semantic

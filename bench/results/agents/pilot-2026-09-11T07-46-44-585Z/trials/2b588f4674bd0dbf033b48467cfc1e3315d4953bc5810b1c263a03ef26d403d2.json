@@ -1,0 +1,230 @@
+{
+  "task_id": "B-colinhacks-zod-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "corpus_fingerprint": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "implementation_sha": "777e968e8f7c282be96dc551f1e27984b146e4bd",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T08:16:11.355Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "f6b2446118ac54a80a0b651d8acc6d1db125d3c34836fbc4b249014185fcfc83",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 298092,
+  "tool_calls": 26,
+  "history_calls": 8,
+  "zg_calls": 0,
+  "git_why_calls": 17,
+  "input_tokens": 91337,
+  "output_tokens": 2090,
+  "cache_read_tokens": 786788,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.18046579999999995,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 292891,
+  "index_build_ms": 64821,
+  "model_download_ms": null,
+  "index_disk_bytes": 169442011,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T07-46-44-585Z/events/B-colinhacks-zod-01-D-r1-a1.jsonl",
+  "exit_reason": "nonzero_exit",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited 1",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "2b588f4674bd0dbf033b48467cfc1e3315d4953bc5810b1c263a03ef26d403d2",
+  "indexed_commits": 3210,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_VIAJR0VTQ575xrnKpuLjMp",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline | head -50"
+        },
+        "output": "62311eb2 4.6.1\n2efa8b80 ci: give the npm wait a real budget and drop the back-publish path (#6583)\nb12aa523 fix: preserve unique tags with defaulted discriminators (#6582)\ndd9c36fa fix(v4): defer recursive object index inference (#6580)\n574d480f fix(locales): clarify Tajik discriminator value message\nc532d766 test(locales): cover Tajik error branches\n3b154992 feat(lang): add Tajik (`tg`) locale\n1c51cbe0 4.6.0\n661673ae docs: make the 9thCO logo visible on the light theme\n6de10dce docs: reconcile the sponsor listings against every active sponsorship (#6579)\n213ee75d feat(compile): add z.withParser for externally generated parsers (#6575)\nf9465d4e docs: reconcile the sponsor listings with active sponsorships (#6576)\nf7fd5548 perf(v4): drop the lookaheads from the email regex (#6573)\n36f17960 fix(v4): stop the memoizer from pinning a finished parse (#6572)\n22bed613 feat(v4): add z.iban() string format with mod-97 checksum (#6571)\nc5b9bcb3 bench: measure what a runtime island's leaked indent cost the generated source\ne54716cb docs(ecosystem): add @apical-ts/craft (#5946)\ndcbcf052 fix(compile): unwind the doc indent when a child generator throws (#6570)\n277613a6 docs: move the release procedure to the maintainer-local notes\neb1c1089 ci: release only on workflow_dispatch behind the npm environment (#6569)\n741981ff perf(compile): for-in record walk, cheaper issue finalization, and a generative compile differential (#6567)\n804e0f52 perf: seal the CommonJS exports so require(\"zod\") stops reading through a getter (#6564)\n6f048367 fix(v4): derive JSON Schema constraints by folding checks in the converter (#6554)\ne4d67f3e Migrate development and CI to Nub (#6562)\n7a002366 fix(v4): don't let format checks overwrite tighter min/max bounds (#6553)\n5489a532 test(v4): pin the check-chain case that keeps compiled validate's definite guard (#6551)\ne7604717 docs: attribute the compiled failure cost to the fallback, not the double pass\n764ac59f perf(v4): settle z.validate on the first failure in parse order (#6544)\n07917f4c test(v4): pin the lazy safeParse error's stack behavior (#6548)\n62e6624b feat(v4): add .validate() and .validateAsync() to Zod Classic (#6547)\ncafbee47 fix(v4): parse recursive schemas built by a factory (#6530)\n4d730882 Release the parsed input once a failing safeParse builds its error (#6543)\n90269c60 Keep a numeric TS enum's reverse-mapping keys out of `.options` (#6542)\n18e71c71 Rename the JSON Schema `process` helper so bundler polyfills cannot collide (#6541)\n68aca3dc docs: cover the 4.5 API surface that never made it into the reference\neca96871 fix(v4): enforce the six JSON Schema keywords fromJSONSchema silently dropped (#6535)\n81ded991 perf: answer z.validate from the compiled fast path on invalid input (#6538)\n51caf010 refactor: collapse cachedInternal back into cached (#6540)\nabfb3897 feat(v4): make z.properties() a schema, and give z.instanceof() a .properties() method (#6536)\n69f2a7ff Collapse toZod's normalizer and move its docs to the API reference (#6539)\nbf990216 perf: move util.cached's accessor to a prototype (#6537)\nbec73bea perf(v4): build the safeParse error on first read (#6519)\n07c43e2a Keep the runtime base64 regexes linear so composed parse paths cannot overflow (#6534)\nbc1157e7 docs: use a Response example for z.properties()\n2ec972ec refactor: collapse toZod's enum leaf normalizer to a dummy union (#6533)\n68a609ac Widen literal inputs in property check types (#6520)\n0227e53d docs: bump the star pill's GitHub mark to 20px\n84dd3b0f perf: build literal and enum pattern regexes lazily (#6531)\nf83ab511 fix(v4): reject component-only strings from z.emoji() (#6532)\n74f9a6d3 docs: drop the toZod enum block from basics and pin the page's curation rule in a comment\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_8Wvg9U1c7svqNiXr2vVwj4",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --grep=\"innerType\\|inner\" --oneline | head -20"
+        },
+        "output": "eab51ff3 fix(v4): emit record numeric keys as strings in toJSONSchema (#6497)\n7ce3e77d fix(v4): run a wrapper's inner schema on its own payload (#6462)\nbadf0b78 fix(v4): build the catch context from the input that failed (#6192)\n7cfc0122 fix(v4): keep a wrapper's stored value only on the side it belongs to\n6574e784 fix(v4): stop catch resurrecting issues an optional already resolved (#6440)\nf101d8ca Preserve callsites in parse stack traces (#5910)\n11c9268b revert(core): drop the exactOptional parse prototype from #6432 (#6438)\n45fdeda5 fix(v4): refine optin into a three-rung ladder, retire the fallback payload flag (#6419)\n07b0c3d8 fix: preserve explicit superRefine issue input (#6053)\n79cfedea feat(v4): expose the owning schema on check-originated issues (#6420)\neb4682c9 fix(json-schema): resolve tuple minItems past transform and catch in input mode (#6418)\n78b523f0 fix(json-schema): keep preprocess object properties required in input mode (#6133)\n973b1b44 fix(v4): strip output-typed catch values from the input JSON Schema (#6409)\nfbe8ad1b fix(v4): allow dynamic `.catch()` under `unrepresentable: \"any\"` (#5273) (#5925)\nc2be4f81 fix(v4): generalize optin/fallback to transform; restore preprocess on absent keys (#5941)\n1cab6938 fix(v4): restore catch handling for absent object keys (#5937) (#5939)\n02c2baf7 Make z.preprocess defer optionality to inner schema (#5929)\n411f6c64 fix(v4): resolve stack overflow in toJSONSchema for recursive lazy with describe (#5797)\n60ff3987 fix(v4): preserve parent path when treeifying nested union/key/element issues\n85928549 Zod 4 (#4074)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_N2YzgKg6YBhHLG0isWP3Sn",
+        "status": "completed",
+        "input": {
+          "command": "git show 7ce3e77d --stat | head -50"
+        },
+        "output": "commit 7ce3e77dfbca80bfa2ab3c73a84e0454570d7158\nAuthor: Colin McDonnell <3084745+colinhacks@users.noreply.github.com>\nDate:   Mon Aug 24 22:51:20 2026 -0700\n\n    fix(v4): run a wrapper's inner schema on its own payload (#6462)\n    \n    A pipe hands its `out` schema the caller's issues array, so an unrecognized key can survive to an enclosing intersection that may yet reconcile it. Two wrappers on the far side of that pipe read someone else's issue as their own inner failing, substituted for it, and cleared the array.\n    \n    For `.catch()` that lost the strict violation, and where an intersection was the reason the key was forwarded at all, it substituted the fallback into one side of the merge and threw `Unmergable intersection` out of `safeParse`. `.optional()` over a defaulted inner had the same hole. Neither wrapper had any business substituting: `z.any()` cannot fail and a default cannot fail.\n    \n    Both fired because they shared a payload with their inner schema and so could not tell whose issues they were looking at. The inner now gets a payload of its own, as it did in v3 and as the compiled path already did. Everything that existed to undo the inner's damage to the shared payload goes with it — the pre-run value capture, the defensive copy of the issues array, and the truncation and abort resets in both wrappers. `issues.length = 0` no longer appears anywhere in `core/`.\n    \n    One flag is carried across by hand. The memoizer marks a payload whose value is a node still being parsed, and that mark describes the value, which still propagates. Without it an enclosing readonly froze a half-built object — silently dropping a key under the JIT, and throwing `TypeError` out of `parse` for records, tuples, arrays and jitless objects — and a check on the back-edge ran against the in-progress node.\n    \n    Bundle is 2 B smaller raw and 5 B smaller gzipped on a classic fixture, unchanged on `zod/mini`. Retained bytes per schema are identical, and failure-path allocation drops about 24 B per parse with no measurable change on the success path.\n    \n    Refs #6192\n\n packages/zod/src/v4/classic/tests/catch.test.ts    | 75 ++++++++++++++++++++++\n packages/zod/src/v4/classic/tests/optional.test.ts | 12 ++++\n packages/zod/src/v4/core/schemas.ts                | 49 ++++++--------\n 3 files changed, 105 insertions(+), 31 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_eLODpKthofIQeYbPH8JOMm",
+        "status": "completed",
+        "input": {
+          "command": "git show 7ce3e77d | head -200"
+        },
+        "output": "commit 7ce3e77dfbca80bfa2ab3c73a84e0454570d7158\nAuthor: Colin McDonnell <3084745+colinhacks@users.noreply.github.com>\nDate:   Mon Aug 24 22:51:20 2026 -0700\n\n    fix(v4): run a wrapper's inner schema on its own payload (#6462)\n    \n    A pipe hands its `out` schema the caller's issues array, so an unrecognized key can survive to an enclosing intersection that may yet reconcile it. Two wrappers on the far side of that pipe read someone else's issue as their own inner failing, substituted for it, and cleared the array.\n    \n    For `.catch()` that lost the strict violation, and where an intersection was the reason the key was forwarded at all, it substituted the fallback into one side of the merge and threw `Unmergable intersection` out of `safeParse`. `.optional()` over a defaulted inner had the same hole. Neither wrapper had any business substituting: `z.any()` cannot fail and a default cannot fail.\n    \n    Both fired because they shared a payload with their inner schema and so could not tell whose issues they were looking at. The inner now gets a payload of its own, as it did in v3 and as the compiled path already did. Everything that existed to undo the inner's damage to the shared payload goes with it — the pre-run value capture, the defensive copy of the issues array, and the truncation and abort resets in both wrappers. `issues.length = 0` no longer appears anywhere in `core/`.\n    \n    One flag is carried across by hand. The memoizer marks a payload whose value is a node still being parsed, and that mark describes the value, which still propagates. Without it an enclosing readonly froze a half-built object — silently dropping a key under the JIT, and throwing `TypeError` out of `parse` for records, tuples, arrays and jitless objects — and a check on the back-edge ran against the in-progress node.\n    \n    Bundle is 2 B smaller raw and 5 B smaller gzipped on a classic fixture, unchanged on `zod/mini`. Retained bytes per schema are identical, and failure-path allocation drops about 24 B per parse with no measurable change on the success path.\n    \n    Refs #6192\n\ndiff --git a/packages/zod/src/v4/classic/tests/catch.test.ts b/packages/zod/src/v4/classic/tests/catch.test.ts\nindex cbc22f6c..dd53c441 100644\n--- a/packages/zod/src/v4/classic/tests/catch.test.ts\n+++ b/packages/zod/src/v4/classic/tests/catch.test.ts\n@@ -308,6 +308,81 @@ test(\"catch ctx carries the rest of the payload through\", () => {\n   expect(seen.aborted).toBe(true);\n });\n \n+test(\"catch does not swallow an issue it did not cause\", () => {\n+  // A pipe hands its `out` schema the caller's issues array so an unrecognized key can survive to an enclosing intersection. The catch must not read that as its own inner failing.\n+  const result = z.strictObject({ a: z.string() }).pipe(z.any().catch(\"CAUGHT\")).safeParse({ a: \"x\", extra: 1 });\n+\n+  expect(result.success).toBe(false);\n+  expect(result.error!.issues.map((i) => i.code)).toEqual([\"unrecognized_keys\"]);\n+});\n+\n+test(\"catch does not break intersection reconciliation\", () => {\n+  // Forwarding the unrecognized key is what lets the intersection reconcile it. A catch that fired on it substituted its fallback into one side, and the merge threw out of safeParse.\n+  const schema = z.intersection(\n+    z.strictObject({ a: z.string() }).pipe(z.any().catch(\"CAUGHT\")),\n+    z.strictObject({ b: z.string() })\n+  );\n+\n+  expect(schema.parse({ a: \"x\", b: \"y\" })).toEqual({ a: \"x\", b: \"y\" });\n+});\n+\n+test(\"catch propagates a back-edge to whatever wraps it\", () => {\n+  // The memoizer marks a payload whose value is a node still being parsed. That mark has to survive the catch: an enclosing readonly must not freeze a half-built object, and the node's checks belong to the node itself rather than to the back-edge.\n+  const Node: any = z.object({\n+    get self() {\n+      return z\n+        .lazy(() => Node)\n+        .catch(null)\n+        .readonly()\n+        .optional();\n+    },\n+  });\n+  const cyclic: any = {};\n+  cyclic.self = cyclic;\n+  const frozen = Node.safeParse(cyclic);\n+  expect(frozen.success).toBe(true);\n+  expect(Object.keys(frozen.data)).toEqual([\"self\"]);\n+\n+  let checks = 0;\n+  const Checked: any = z.object({\n+    get self() {\n+      return z\n+        .lazy(() => Checked)\n+        .catch(null)\n+        .refine(() => {\n+          checks++;\n+          return true;\n+        })\n+        .optional();\n+    },\n+  });\n+  const cyclic2: any = {};\n+  cyclic2.self = cyclic2;\n+  Checked.safeParse(cyclic2);\n+  expect(checks).toBe(0);\n+});\n+\n+test(\"a catch that fires does not rescue an issue from outside it\", () => {\n+  // The callback still runs and still computes its fallback — the inner schema really did fail. What it cannot do is answer for the unrecognized key the pipe forwarded past it, so the parse fails anyway.\n+  let fired = 0;\n+  const result = z\n+    .strictObject({ a: z.string() })\n+    .pipe(\n+      z\n+        .object({ a: z.string() })\n+        .refine(() => false)\n+        .catch(() => {\n+          fired++;\n+          return { a: \"FALLBACK\" };\n+        })\n+    )\n+    .safeParse({ a: \"x\", extra: 1 });\n+\n+  expect(fired).toBe(1);\n+  expect(result.success).toBe(false);\n+  expect(result.error!.issues.map((i) => i.code)).toEqual([\"unrecognized_keys\"]);\n+});\n+\n test(\"direction-aware catch\", () => {\n   const schema = z.string().catch(\"fallback\");\n \ndiff --git a/packages/zod/src/v4/classic/tests/optional.test.ts b/packages/zod/src/v4/classic/tests/optional.test.ts\nindex f4194f58..fc0e40be 100644\n--- a/packages/zod/src/v4/classic/tests/optional.test.ts\n+++ b/packages/zod/src/v4/classic/tests/optional.test.ts\n@@ -352,3 +352,15 @@ test(\"swallowed issue on an absent optional key drops its value\", async () => {\n   expect(schema.safeParse({ a: \"x\" }).success).toEqual(false);\n   expect(schema.safeParse({ a: \"x\" }, { jitless: true }).success).toEqual(false);\n });\n+\n+test(\"optional does not swallow an issue it did not cause\", () => {\n+  // A pipe hands its `out` schema the caller's issues array so an unrecognized key can survive to an enclosing intersection. A defaulted inner substituting for absence must not read that as its own failing and drop it.\n+  const result = z\n+    .strictObject({ a: z.string() })\n+    .transform((): number | undefined => undefined)\n+    .pipe(z.number().default(5).optional())\n+    .safeParse({ a: \"x\", extra: 1 });\n+\n+  expect(result.success).toBe(false);\n+  expect(result.error!.issues.map((i) => i.code)).toEqual([\"unrecognized_keys\"]);\n+});\ndiff --git a/packages/zod/src/v4/core/schemas.ts b/packages/zod/src/v4/core/schemas.ts\nindex 741dc050..14be13e7 100644\n--- a/packages/zod/src/v4/core/schemas.ts\n+++ b/packages/zod/src/v4/core/schemas.ts\n@@ -3757,14 +3757,10 @@ export interface $ZodOptional<T extends SomeType = $ZodType> extends $ZodType {\n   _zod: $ZodOptionalInternals<T>;\n }\n \n-function handleOptionalResult(result: ParsePayload) {\n-  // A substituting schema that still failed has no usable answer; yield undefined. Truncate rather than rebind, and clear the abort flag with it: a pipe shares its issues array with the next schema, so an outer holder reads the same one.\n-  if (result.issues.length) {\n-    result.issues.length = 0;\n-    result.value = undefined;\n-    result.aborted = false;\n-  }\n-  return result;\n+function handleOptionalResult(payload: ParsePayload, result: ParsePayload) {\n+  // A substituting schema that still failed has no usable answer; yield undefined. Its issues are simply dropped: it ran on a payload of its own, so there is no shared array to truncate and nothing of the caller's to lose with it.\n+  payload.value = result.issues.length ? undefined : result.value;\n+  return payload;\n }\n \n export const $ZodOptional: core.$constructor<$ZodOptional> = /*@__PURE__*/ core.$constructor(\n@@ -3790,9 +3786,10 @@ export const $ZodOptional: core.$constructor<$ZodOptional> = /*@__PURE__*/ core.\n       if (payload.value === undefined) {\n         // Only the top rung substitutes a value for absence; everything else leaves it intact, which is what .optional() means.\n         if (def.innerType._zod.optin !== \"defaulted\") return payload;\n-        const result = def.innerType._zod.run(payload, ctx);\n-        if (result instanceof Promise) return result.then(handleOptionalResult);\n-        return handleOptionalResult(result);\n+        // Its own payload, for the same reason $ZodCatch gets one: a pipe forwards an unrecognized key through the caller's issues array, and this must not read that as the substituting schema failing and drop it.\n+        const result = def.innerType._zod.run({ value: payload.value, issues: [] }, ctx);\n+        if (result instanceof Promise) return result.then((result) => handleOptionalResult(payload, result));\n+        return handleOptionalResult(payload, result);\n       }\n       return def.innerType._zod.run(payload, ctx);\n     };\n@@ -4180,32 +4177,23 @@ export interface $ZodCatch<T extends SomeType = $ZodType> extends $ZodType {\n   _zod: $ZodCatchInternals<T>;\n }\n \n-function handleCatchResult(\n-  payload: ParsePayload,\n-  result: ParsePayload,\n-  input: unknown,\n-  def: $ZodCatchDef,\n-  ctx: ParseContextInternal\n-) {\n+function handleCatchResult(payload: ParsePayload, result: ParsePayload, def: $ZodCatchDef, ctx: ParseContextInternal) {\n   if (!result.issues.length) {\n     payload.value = result.value;\n+    // The value carries up, so the flag describing it has to carry with it: a back-edge into a node still being parsed must not be frozen by an enclosing readonly, and its checks belong to the node itself. Guarded so the ordinary case adds no own property.\n+    if (result.memo) payload.memo = true;\n     return payload;\n   }\n \n-  // `value` and `issues` are pinned rather than left to the spread, because the payload keeps moving around this call: the inner run has already replaced `value` with whatever it coerced or transformed, and the truncation below empties the issues array in place. Everything else on the payload carries through untouched.\n+  // Spread the inner's own payload, not ours: `value` has to stay the input the catch was handed, and the inner ran on a payload of its own so its issues are already private to this call.\n   payload.value = def.catchValue({\n-    ...payload,\n-    value: input,\n-    issues: [...result.issues],\n+    ...result,\n+    value: payload.value,\n     error: {\n       issues: result.issues.map((iss) => util.finalizeIssue(iss, ctx, core.config())),\n     },\n-    input,\n+    input: payload.value,\n   });\n-\n-  // Truncate rather than rebind: as a pipe's `out` this shares the caller's array. See handleOptionalResult.\n-  payload.issues.length = 0;\n-  payload.aborted = false;\n   return payload;\n }\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_fUxjhSog41HW8ygUw49Ht2",
+        "status": "completed",
+        "input": {
+          "command": "git show a88a080 --stat"
+        },
+        "output": "commit a88a080f0b9782a87b5732cb9cd96fc2b1a71794\nAuthor: Colin McDonnell <colinmcd94@gmail.com>\nDate:   Tue Jun 3 14:57:57 2025 -0700\n\n    Improve prototype tests\n\n .../zod/src/v4/classic/tests/prototypes.test.ts    | 12 ++++----\n packages/zod/src/v4/core/core.ts                   |  2 +-\n packages/zod/src/v4/mini/tests/prototypes.test.ts  | 32 ++++++++++++++++++----\n 3 files changed, 33 insertions(+), 13 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_vQ0PMdUhxi3CbUnZhkqxeI",
+        "status": "completed",
+        "input": {
+          "command": "git show a88a080"
+        },
+        "output": "commit a88a080f0b9782a87b5732cb9cd96fc2b1a71794\nAuthor: Colin McDonnell <colinmcd94@gmail.com>\nDate:   Tue Jun 3 14:57:57 2025 -0700\n\n    Improve prototype tests\n\ndiff --git a/packages/zod/src/v4/classic/tests/prototypes.test.ts b/packages/zod/src/v4/classic/tests/prototypes.test.ts\nindex 54c89956..058bf6cb 100644\n--- a/packages/zod/src/v4/classic/tests/prototypes.test.ts\n+++ b/packages/zod/src/v4/classic/tests/prototypes.test.ts\n@@ -4,20 +4,20 @@ import * as z from \"zod/v4\";\n declare module \"zod/v4\" {\n   interface ZodType {\n     /** @deprecated */\n-    dostuff(): string;\n+    _classic(): string;\n   }\n }\n \n test(\"prototype extension\", () => {\n-  z.ZodType.prototype.dostuff = function () {\n-    return \"stuff\";\n+  z.ZodType.prototype._classic = function () {\n+    return \"_classic\";\n   };\n \n   // should pass\n-  const result = z.string().dostuff();\n-  expect(result).toBe(\"stuff\");\n+  const result = z.string()._classic();\n+  expect(result).toBe(\"_classic\");\n   // expectTypeOf<typeof result>().toEqualTypeOf<string>();\n \n   // clean up\n-  z.ZodType.prototype.fun = undefined;\n+  z.ZodType.prototype._classic = undefined;\n });\ndiff --git a/packages/zod/src/v4/core/core.ts b/packages/zod/src/v4/core/core.ts\nindex 25778635..25738017 100644\n--- a/packages/zod/src/v4/core/core.ts\n+++ b/packages/zod/src/v4/core/core.ts\n@@ -26,7 +26,7 @@ export /*@__NO_SIDE_EFFECTS__*/ function $constructor<T extends ZodTrait, D = T[\n     initializer(inst, def);\n     // support prototype modifications\n     for (const k in _.prototype) {\n-      Object.defineProperty(inst, k, { value: (_.prototype as any)[k].bind(inst) });\n+      if (!(k in inst)) Object.defineProperty(inst, k, { value: (_.prototype as any)[k].bind(inst) });\n     }\n     inst._zod.constr = _;\n     inst._zod.def = def;\ndiff --git a/packages/zod/src/v4/mini/tests/prototypes.test.ts b/packages/zod/src/v4/mini/tests/prototypes.test.ts\nindex e09c1dc8..b5609f1f 100644\n--- a/packages/zod/src/v4/mini/tests/prototypes.test.ts\n+++ b/packages/zod/src/v4/mini/tests/prototypes.test.ts\n@@ -4,20 +4,40 @@ import * as z from \"zod/v4-mini\";\n declare module \"zod/v4/core\" {\n   interface $ZodType {\n     /** @deprecated */\n-    fun(): string;\n+    _core(): string;\n   }\n }\n \n test(\"prototype extension\", () => {\n-  z.ZodMiniType.prototype.fun = function () {\n-    return \"fun\";\n+  z.core.$ZodType.prototype._core = function () {\n+    return \"_core\";\n   };\n \n   // should pass\n-  const result = z.string().fun();\n-  expect(result).toBe(\"fun\");\n+  const result = z.string()._core();\n+  expect(result).toBe(\"_core\");\n   // expectTypeOf<typeof result>().toEqualTypeOf<string>();\n \n   // clean up\n-  z.ZodMiniType.prototype.fun = undefined;\n+  z.ZodMiniType.prototype._core = undefined;\n+});\n+\n+declare module \"zod/v4/mini\" {\n+  interface ZodMiniType {\n+    /** @deprecated */\n+    _mini(): string;\n+  }\n+}\n+\n+test(\"prototype extension\", () => {\n+  z.ZodMiniType.prototype._mini = function () {\n+    return \"_mini\";\n+  };\n+\n+  // should pass\n+  const result = z.string()._mini();\n+  expect(result).toBe(\"_mini\");\n+\n+  // clean up\n+  z.ZodMiniType.prototype._mini = undefined;\n });\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_KuoCJEJOqjSeB93l4KsLgz",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --grep=\"default\" --grep=\"number\" --oneline --all-match | head -30"
+        },
+        "output": "764ac59f perf(v4): settle z.validate on the first failure in parse order (#6544)\nabfb3897 feat(v4): make z.properties() a schema, and give z.instanceof() a .properties() method (#6536)\n8d896186 fix(v4): stop emitting a multipleOf that JSON Schema rejects (#6468)\n7cfc0122 fix(v4): keep a wrapper's stored value only on the side it belongs to\nd4108872 fix(v4): correct the date/time format keywords in both JSON Schema directions (#6452)\n6074828e fix(v4): make fromJSONSchema propertyNames compose with the other object keywords (#6411)\n97edd70a fix(toJSONSchema): constrain closed tuple length (#6194)\nc8f06d36 fix(v4): clarify infinite number errors (#5906)\n85928549 Zod 4 (#4074)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_bNMDqJf1N6cB71EUcSCp6V",
+        "status": "completed",
+        "input": {
+          "command": "git show c8f06d36 --stat"
+        },
+        "output": "commit c8f06d36fc1b56b99c8a12b2a3270394387cb507\nAuthor: Colin McDonnell <3084745+colinhacks@users.noreply.github.com>\nDate:   Thu Aug 13 13:46:00 2026 -0700\n\n    fix(v4): clarify infinite number errors (#5906)\n    \n    `z.number()` is finite-by-default in v4, so `Infinity` fails with an `invalid_type` issue — but the English message read \"Invalid input: expected number, received number\", which names the same type on both sides and tells the user nothing. `$ZodNumber` already writes a precise `received` onto the issue; the locale ignored it and recomputed `util.parsedType(issue.input)`, which returns plain `\"number\"` for a non-finite value. `NaN` only read correctly by accident, through the `nan` → `\"NaN\"` entry in the type dictionary.\n    \n    The English locale now resolves the display name through a single `getTypeName` helper, which returns the stringified value when the input is a non-finite number. `parsedType` is left alone — it names types, and it's public API via `export * as util`.\n    \n    `received` was also the hardcoded literal `\"Infinity\"`, so `-Infinity` lost its sign in the issue data, not just the message. It's `String(input)` now, which fixes the sign for every locale even though the wording change is English-only. The other 49 locales still say \"received number\"; fixing those wants a type-dictionary entry per locale rather than a short-circuit of the dictionary.\n    \n    Closes #5697.\n\n packages/zod/src/v4/classic/tests/number.test.ts | 12 ++++++------\n packages/zod/src/v4/core/schemas.ts              |  2 +-\n packages/zod/src/v4/locales/en.ts                | 11 +++++++++--\n 3 files changed, 16 insertions(+), 9 deletions(-)\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 3,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 3,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 3,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 3,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 2,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 91337,
+    "output": 2090,
+    "messages": 28
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67"
+    }
+  },
+  "completed": true
+}

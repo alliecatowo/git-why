@@ -158,8 +158,8 @@ before you delete something that looks pointless.
 ## Honest expectations
 
 On hard questions — ones where `git log --grep` and `git log -S` both provably
-fail — `git why` returns the right commit in the top five about 29% of the
-time. That is roughly 18x the best Git-native alternative on those questions,
+fail — `git why` returns the right commit in the top five about 33% of the
+time. That is roughly 20x the best Git-native alternative on those questions,
 and it is wrong most of the time.
 
 Treat a result as a lead: read it, confirm it with `git show`, and if nothing

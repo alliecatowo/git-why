@@ -243,7 +243,7 @@ test('--max-bytes truncation produces valid, bounded JSON end-to-end', async () 
       parents: [],
       messageExcerpt: 'x'.repeat(200),
       rankScore: 0.5,
-      scores: { fused: 0.5, temporal: 1, final: 0.5 },
+      scores: { fused: 0.5, temporal: 1, overlap: 1, final: 0.5 },
       matchedBy: ['text'],
       linkDistance: 0,
       evidence: [

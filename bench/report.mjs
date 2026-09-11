@@ -1063,12 +1063,14 @@ function readmeBlocks() {
       'Semantic search has no advantage over a tool you can hand the exact literal.\n';
   }
 
-  const misses = Math.round((1 - why.hit5) * 10);
+  // Stated as a percentage rather than "N in ten": rounding 66.7% to "seven in
+  // ten" overstates the miss rate, and this is the one number that must not
+  // drift in the flattering direction OR the unflattering one.
   const honesty =
-    `**It is also wrong most of the time.** Hit@5 of ${num(why.hit5)} means it misses roughly\n` +
-    `${['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][misses] ?? misses} hard questions in ten. It beats every alternative on those questions and\n` +
-    'still fails on most of them. Treat results as leads to verify with `git show`,\n' +
-    'never as established fact.\n';
+    `**It is also wrong most of the time.** Hit@5 of ${num(why.hit5)} means the right commit is\n` +
+    `outside the top five on ${pct(1 - why.hit5)} of these questions. It beats every alternative on\n` +
+    'them and still fails on most. Treat a result as a lead to verify with `git show`, never as\n' +
+    'established fact.\n';
 
   // The scale table. Every row is read from a run rather than remembered --
   // the test-count row that used to sit here said 333 when the suite had 340,

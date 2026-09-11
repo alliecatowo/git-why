@@ -195,12 +195,15 @@
           "scores": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["fused", "temporal", "final"],
+            "required": ["fused", "temporal", "overlap", "final"],
             "properties": {
               "fused": {
                 "type": "number"
               },
               "temporal": {
+                "type": "number"
+              },
+              "overlap": {
                 "type": "number"
               },
               "final": {

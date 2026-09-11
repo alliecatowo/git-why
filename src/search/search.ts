@@ -41,10 +41,35 @@ import { applyTemporal, exponentFor, temporalScore } from './temporal/score.js';
 import { PROSE_ONLY_PENALTY } from './temporal/tuning.js';
 import { expandQuery, selectExpansionTerms } from './expansion.js';
 import { aggregateOwners } from './owners.js';
+import { messageOverlapBoost } from './overlap.js';
 import { expandStructuralCandidates } from './expand.js';
 import type { ExpandedRank } from './expand.js';
 
 const MAX_MESSAGE_EXCERPT_CHARS = 280;
+
+/**
+ * How many commits to rank before reordering and cutting to the caller's limit.
+ *
+ * A reranker needs a pool larger than its output or it has nothing to promote:
+ * sized to the caller's limit, a commit RRF put 7th is never fetched, so
+ * nothing can lift it into a top-5 answer. On the derived corpus 40 of 163
+ * gold commits sit between rank 6 and 50 — a quarter of the corpus, invisible
+ * to a pool of five.
+ *
+ * Depth is not free, though, and the curve saturates early. Measured over the
+ * same retrieved candidates:
+ *
+ *   depth   Hit@1   Hit@5   MRR
+ *       5   0.215   0.331   0.258
+ *      10   0.215   0.337   0.269
+ *      20   0.215   0.337   0.278
+ *      50   0.215   0.337   0.281
+ *
+ * Hit@5 is flat past 10 and MRR has all but plateaued by 20, while going to 50
+ * cost a query without a daemon 569 ms -> 1885 ms. 20 buys essentially all of
+ * the quality for a fraction of the work.
+ */
+const RERANK_POOL_DEPTH = 20;
 
 /** Top documents whose vocabulary seeds the pseudo-relevance-feedback pass. */
 const PRF_SEED_DOCS = 5;
@@ -192,7 +217,22 @@ export async function search(
       const queryVectorPromise = embedder.embedQuery(boundedQuery);
       semanticFetch = async (topK) => store.searchSemantic(await queryVectorPromise, filter, topK);
     }
-    return rankCommits({ n: request.limit, lexicalFetch, semanticFetch });
+    // Retrieve deeper than the caller asked for.
+    //
+    // The overlap boost reorders candidates; it cannot promote a commit that
+    // was never a candidate. Sizing the pool to `request.limit` means a commit
+    // ranked 7th by RRF is never fetched, so no amount of reranking can lift
+    // it into a top-5 answer. Measured on the derived corpus, 40 of 163 gold
+    // commits sit between rank 6 and 50 — a quarter of the corpus, invisible
+    // to a pool of five.
+    //
+    // Evidence is still fetched only for the results actually returned, so the
+    // extra work is one batched commit lookup, not 50 diffs.
+    return rankCommits({
+      n: Math.max(request.limit, RERANK_POOL_DEPTH),
+      lexicalFetch,
+      semanticFetch,
+    });
   };
   const firstPass = await Promise.all([rankFor(coreQuery), ...request.groups.map(rankFor)]);
 
@@ -255,7 +295,7 @@ export async function search(
       : ranked;
   const candidateRanks =
     constraint.type === 'none' && !expandAlways
-      ? ranked.slice(0, request.limit)
+      ? ranked.slice(0, Math.max(request.limit, RERANK_POOL_DEPTH))
       : temporalRanksForExpansion;
   const commits = await store.fetchCommits(candidateRanks.map((r) => r.sha));
 
@@ -354,11 +394,18 @@ export async function search(
       );
       // Prose-only commits are demoted, not dropped: see PROSE_ONLY_PENALTY.
       const prose = isProseOnlyCommit(commit) ? PROSE_ONLY_PENALTY : 1;
+      // RRF fuses by rank position and throws away magnitude. This puts a
+      // bounded amount back, measured against the words the author wrote.
+      // Applied to the CORE query, not the raw one: temporal words like
+      // "when was" are not evidence about a commit, and counting them would
+      // dilute every overlap under an ordinal constraint.
+      const overlap = messageOverlapBoost(coreQuery, commit.subject, commit.body ?? '');
       return {
         rank,
         commit,
         temporal,
-        final: applyTemporal(rank.score, temporal, w) * prose,
+        overlap,
+        final: applyTemporal(rank.score, temporal, w) * prose * overlap,
       };
     })
     .sort((a, b) => b.final - a.final || (a.commit.sha < b.commit.sha ? -1 : 1));
@@ -412,7 +459,7 @@ export async function search(
   }
   const temporalRanks = chosen;
   const results: CommitHit[] = [];
-  for (const { rank: r, commit, temporal, final } of temporalRanks) {
+  for (const { rank: r, commit, temporal, overlap, final } of temporalRanks) {
     const evidence = await chooseEvidence(
       rankResult.lexicalRecordsBySha.get(r.sha) ?? [],
       rankResult.semanticRecordsBySha.get(r.sha) ?? [],
@@ -431,7 +478,7 @@ export async function search(
       rankScore: final,
       // The temporal layer replaces these when a constraint is in force. With
       // the identity constraint, `final` is exactly the fused RRF value.
-      scores: { fused: r.score, temporal, final },
+      scores: { fused: r.score, temporal, overlap, final },
       matchedBy: r.matchedBy,
       evidence,
       linkDistance: (r as ExpandedRank).linkDistance ?? 0,

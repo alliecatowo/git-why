@@ -1,0 +1,82 @@
+{
+  "task_id": "B-redis-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "777e968e8f7c282be96dc551f1e27984b146e4bd",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T08:38:56.762Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "b48dd573fc739b0cf2f78a9627e845a9f08487f168b7710a823be36b05489a75",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 9294,
+  "tool_calls": 2,
+  "history_calls": 1,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 6853,
+  "output_tokens": 195,
+  "cache_read_tokens": 6720,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0085,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 12028,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T07-46-44-585Z/events/B-redis-redis-01-B-r1-a1.jsonl",
+  "exit_reason": "nonzero_exit",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited 1",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "7eb0165d89283447d4ac37b75fc98998f5ee24a2b84e10094fd91b3e128e62d1",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_FAHpl4SZFrfO9BarFd6pgd",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline | head -50"
+        },
+        "output": "e64d91c37 Fix dict use-after-free problem in kvs->rehashing (#13154)\nbad33f873 fix wrong data type conversion in zrangeResultBeginStore (#13148)\ne04d41d78 Prevent lua error_reply abuse from causing errorstats to become larger (#13141)\naeada2014 Avoid unnecessary dict shrink in zremrangeGenericCommand (#13143)\n7b070423b Fix dictionary use-after-free in active expire and make kvstore iter to respect EMPTY flag (#13135)\n98a6e55d4 Add missing REDIS_STATIC in quicklist (#13147)\n3f725b861 Change mmap rand bits as a temporary mitigation to resolve asan bug (#13150)\n1d77a8e2c Makefile respect user's REDIS_CFLAGS and OPT (#13073)\n3b3d16f74 Add KVSTORE_FREE_EMPTY_DICTS to cluster mode keys / expires kvstore (#13072)\nad28d222e Lua eval scripts first in first out LRU eviction (#13108)\na8e745117 Xread last entry in stream (#7388) (#13117)\n9efc6ad6a Add API RedisModule_ClusterKeySlot and RedisModule_ClusterCanonicalKeyNameInSlot (#13069)\n9c065c417 Enable accept4() on *BSD (#13104)\nda727ad44 Fix redis-check-aof incorrectly considering data in manifest format as MP-AOF (#12958)\n3c8d15f8c Pick random slot for a node to distribute operation across slots in redis-benchmark (#12986)\n5fdaa53d2 Fix conversion of numbers in lua args to redis args (#13115)\n4979cf02f Change crc16 slot table to be fixed size character array instead of pointer to strings (#13112)\n9738ba984 Check user's oom_score_adj write permission for oom-score-adj test (#13111)\n28976a900 Fix PONG message processing for primary-ship tracking during failovers (#13055)\nad1273033 Implement defragmentation for pubsub kvstore (#13058)\n33ea43258 Call finalizerProc when free the aeTimeEvent in ae (#13101)\ndf75153d7 Fix reply schemas validator build issue due to new regular expression (#13103)\na50bbcb65 redis-cli fixes around help hints version filtering (#13097)\n4cae99e78 Add overhead of all DBs and rehashing dict count to info. (#12913)\nf17381a38 Fix propagation of entries_read by calling streamPropagateGroupID unconditionally (#12898)\ncc9fbd270 freeDictIfNeeded when kvstoreEmpty (#13098)\na7abc2f06 SCRIPT FLUSH run truly async, close lua interpreter in bio (#13087)\n763827c98 Fix redis-cli --count (for --scan, --bigkeys, etc) was ignored unless --pattern was also used (#13092)\n0a12f380e Optimize DEL on expired keys (#13080)\n104b20760 Fix size stat in malloc(0) and cleanups around zmalloc file (#13068)\nbfcaa7db0 Fix minor memory leak in rewriteSetObject (#13086)\n4a265554a Expose lua os.clock() api (#12971)\n165afc5f2 Determine the large limit of the quicklist node based on fill (#12659)\n820a4e45f Edit the history field of xinfo-consumers (#13078)\n5b9fc4652 Add new allocator.muzzy field to memory-stats reply schema (#13076)\nf6785df66 Defragger improvements around large bins (#12996)\nca5cac998 xinfo-stream add minimum to seen-time, skip logreqres in fuzzer (#13056)\n3c2ea1ea9 Fix wathced client test timing issue caused by late close (#13062)\n4e3be944f Fix timing issue in blockedclient test (#13071)\nfc3a68d8f add -fno-omit-frame-pointer to default complication flags (#12973)\n6df42df29 Adds a README to the command JSON files (#13066)\n8876d264a Calculate the incremental rehash time more precisely (#13063)\n9103ccc39 AOF_FSYNC_EVERYSEC higher resolution, change aof_last_fsync and aof_flush_postponed_start to use mstime (#13041)\ndd92dd8fb redis-cli - fix sscanf incorrect return-value check warnings (#13059)\n50d6fe8c4 Add metrics for WATCH (#12966)\nc85487374 Minor optimization in kvstoreDictAddRaw when dict exists (#13054)\n063de675e zunionInterDiffGenericCommand use ztrycalloc to avoid OOM panic (#13052)\n32f44da51 Increase tolerance range to block reprocess tests to avoid timing issues (#13053)\nc1d2ac2a7 Do not include gossip about receiver in cluster messages (#13046)\ne9c795e77 Fix loading rdb opcode RDB_OPCODE_RESIZEDB (#13050)\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 6853,
+    "output": 195,
+    "messages": 4
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "completed": true
+}

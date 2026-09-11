@@ -35,14 +35,16 @@ surface rather than a diff against one.
 ### Measured
 
 - On 174 questions derived from six real repositories and verified
-  unanswerable by keyword search: MRR 0.203, against 0.026 for `zg` and 0.003
-  for `git log --grep`.
+  unanswerable by keyword search: MRR 0.233, Hit@5 0.333, against 0.026 for
+  `zg` and 0.003 for `git log --grep`.
 - `git log -S` beats this tool 0.950 to 0.350 on cross-file causal questions.
   The shipped skill says so, because a tool that oversells itself makes an
   agent worse at its job.
 - Index at 5.51–7.84 KB per record across six real repositories. Warm query on
   curl (30,000 commits, 182,772 records): p50 807 ms, p95 1199 ms.
-- Seven optimisations implemented, measured, and rejected. See
+- Eight optimisations implemented and measured; one survived. Lexical overlap
+  reranked over a deeper candidate pool gained +26% MRR on a held-out split.
+  The other seven did not improve MRR and were rejected. See
   [`docs/decisions.md`](docs/decisions.md).
 - Agent benchmark across several models, four arms, paired per task, with
   token counts reconciled against the provider's own accounting. See section 5
@@ -50,7 +52,7 @@ surface rather than a diff against one.
 
 ### Known limits
 
-- It misses roughly seven hard questions in ten (Hit@5 0.287). Results are
+- It misses roughly two hard questions in three (Hit@5 0.333). Results are
   leads to verify with `git show`, not established fact.
 - `--last` and `--removed` are weaker than `--first`, because regenerated files
   make a term appear and disappear for reasons unrelated to the feature.

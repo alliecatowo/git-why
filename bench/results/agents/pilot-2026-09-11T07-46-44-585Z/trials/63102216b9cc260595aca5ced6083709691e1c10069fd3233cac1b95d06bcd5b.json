@@ -1,0 +1,92 @@
+{
+  "task_id": "B-redis-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "777e968e8f7c282be96dc551f1e27984b146e4bd",
+  "model_id": "llmgateway/claude-haiku-4-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T08:18:42.104Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "9168da2e3585baa5f7ddce5937dfeb25e045532791a1d1cfb390234a025fa510",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "hidden_tests_passed": null,
+  "hidden_tests_total": null,
+  "evidence_grade": null,
+  "wall_ms": 27044,
+  "tool_calls": 5,
+  "history_calls": 0,
+  "zg_calls": 0,
+  "git_why_calls": 4,
+  "input_tokens": 19132,
+  "output_tokens": 434,
+  "cache_read_tokens": 30222,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0243242,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 74420,
+  "index_build_ms": 207311,
+  "model_download_ms": null,
+  "index_disk_bytes": 471707976,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T07-46-44-585Z/events/B-redis-redis-01-D-r1-a1.jsonl",
+  "exit_reason": "nonzero_exit",
+  "infrastructure_error": null,
+  "treatment_error": "opencode exited 1",
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "63102216b9cc260595aca5ced6083709691e1c10069fd3233cac1b95d06bcd5b",
+  "indexed_commits": 12110,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      },
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 19132,
+    "output": 434,
+    "messages": 7
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "completed": true
+}

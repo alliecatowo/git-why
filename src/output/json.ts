@@ -87,6 +87,7 @@ function buildEnvelope(
       scores: {
         fused: hit.scores.fused,
         temporal: hit.scores.temporal,
+        overlap: hit.scores.overlap,
         final: hit.scores.final,
       },
       matchedBy: [...hit.matchedBy],

@@ -142,14 +142,14 @@ answer from the question's own words, the case is discarded.
 
 | strategy                   | Hit@1     | Hit@5     | MRR       | returned nothing |
 | -------------------------- | --------- | --------- | --------- | ---------------- |
-| **git why**                | **0.155** | **0.287** | **0.203** | 11               |
+| **git why**                | **0.172** | **0.333** | **0.233** | 11               |
 | zg (semantic code search)  | 0.017     | 0.040     | 0.026     | 13               |
 | git log -G                 | 0.006     | 0.017     | 0.011     | 15               |
 | git log --grep             | 0.000     | 0.011     | 0.003     | 0                |
 | git log --grep --all-match | 0.000     | 0.000     | 0.000     | **109**          |
 | git log -S                 | 0.000     | 0.000     | 0.000     | 15               |
 
-**7.8x `zg` and 18x the best Git-native strategy** — and the only approach that answers nearly every question rather than returning an empty set.
+**8.9x `zg` and 20x the best Git-native strategy** — and the only approach that answers nearly every question rather than returning an empty set.
 
 <!-- /generated:corpus-table -->
 
@@ -203,30 +203,41 @@ Method, per-arm figures and the registered hypothesis: [`docs/report.md`](docs/r
 | ------------------------------------------------------------ | ----------------------------- |
 | Index across 6 real repos (56,781 commits)                   | 5.51–7.84 KB/record           |
 | curl-curl (30,000 commits, 182,772 records)                  | 1.37 GiB, 7.84 KB/record      |
-| Query on curl-curl (30,000 commits) with `git why server on` | 286 ms p50, 301 ms p95        |
-| The same query with no daemon                                | 569 ms p50, 597 ms p95        |
+| Query on curl-curl (30,000 commits) with `git why server on` | 384 ms p50, 491 ms p95        |
+| The same query with no daemon                                | 851 ms p50, 1371 ms p95       |
 | Diff/evidence ingestion, real-repo ablation                  | earns its cost, ΔHit@5 +0.375 |
 
 <!-- /generated:scale -->
 
-### What does not work
+### What works, and what does not
 
-Seven optimisations were implemented and measured; **none improved MRR** over
-asking the question plainly: a prose-tuned embedding model, pseudo-relevance
+**Eight optimisations were implemented and measured. One survived.**
+
+The one that did: lexical overlap between the question and the commit's own
+message, reranked over a candidate pool deeper than the result list. Weight
+chosen on a dev half, evaluated once on the held-out half — **+26% MRR and
++44% Hit@1 on cases it never saw**. Shipped.
+
+The seven that did not: a prose-tuned embedding model, pseudo-relevance
 feedback, a prose-commit penalty, caller-side query restatement, wider result
-windows, structural expansion, and phrase fusion. The shipped default is the
-best configuration among everything tried.
+windows, structural expansion, and phrase fusion. None improved MRR.
 
-That is worth stating rather than hiding: it means no easy gain is being left
-unclaimed, and the remaining headroom is in the embedding itself, which would
-need a larger model or a learned reranker.
+What made the difference was not a better idea but a different question. The
+seven all asked "does this rank better". The one that worked started by asking
+where the right commit actually is — and found that a quarter of the corpus is
+retrieved but ranked below 5, which is a reordering problem, while 42% is never
+retrieved at all, which is not. See
+[`docs/decisions.md`](docs/decisions.md).
+
+The remaining headroom is that 42%: a recall problem in the embedding itself,
+which would need a larger model or a learned reranker.
 
 <!-- generated:honesty -->
 
-**It is also wrong most of the time.** Hit@5 of 0.287 means it misses roughly
-seven hard questions in ten. It beats every alternative on those questions and
-still fails on most of them. Treat results as leads to verify with `git show`,
-never as established fact.
+**It is also wrong most of the time.** Hit@5 of 0.333 means the right commit is
+outside the top five on 66.7% of these questions. It beats every alternative on
+them and still fails on most. Treat a result as a lead to verify with `git show`, never as
+established fact.
 
 <!-- /generated:honesty -->
 
