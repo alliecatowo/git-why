@@ -264,6 +264,35 @@ function corpusSection() {
   for (const r of main.rows) out += row(r);
   out += '\n';
 
+  // The per-repository split is not decoration. Cases survive the gate at very
+  // different rates, so "six repositories" implies more even sampling than this
+  // is, and the aggregate is dominated by whichever projects write the longest
+  // commit messages.
+  const perRepo = new Map();
+  for (const c of cases.cases ?? cases)
+    perRepo.set(c.repositoryId, (perRepo.get(c.repositoryId) ?? 0) + 1);
+  const ranked = [...perRepo.entries()].sort((a, b) => b[1] - a[1]);
+  if (ranked.length > 1) {
+    const total = main.cases || 1;
+    const topShare = Math.round(((ranked[0][1] + ranked[1][1]) / total) * 100);
+    out +=
+      '**How the cases are distributed.** "Six repositories" implies more even sampling than\n';
+    out += 'this is:\n\n';
+    out += '| repository | cases |\n| --- | ---: |\n';
+    for (const [repo, n] of ranked) out += `| ${repo} | ${n} |\n`;
+    const least = ranked[ranked.length - 1];
+    out += `\n${ranked[0][0]} and ${ranked[1][0]} supply ${topShare}% of the corpus; ${least[0]} supplies ${least[1]}. `;
+    out +=
+      'That is a consequence of the gate, not a sampling choice: a case survives only if a commit\n';
+    out +=
+      'body contains a substantive sentence that keyword search then cannot find, and repositories\n';
+    out +=
+      'whose commit messages are terse yield almost none. So the figures below are weighted toward\n';
+    out +=
+      'projects that write long commit messages — which is also the population with the most\n';
+    out += 'recoverable reasoning, so the skew flatters the tool rather than handicapping it.\n\n';
+  }
+
   const why = main.rows.find((r) => r.strategy === 'git why');
   const zg = main.rows.find((r) => r.strategy === 'zg');
   const bestGit = main.rows
