@@ -85,7 +85,6 @@ function cleanupPackagedToolDirs() {
     }
   }
 }
-const DASHBOARD_STATUS_FILE = join(REPO_ROOT, 'site', 'public', 'bench-status.json');
 
 const ARMS = ['A', 'B', 'C', 'D'];
 
@@ -562,20 +561,6 @@ function forcedUseSatisfied(arm, instrumentation) {
   const calls = armNeedsZg(arm) ? instrumentation.zg : arm === 'D' ? instrumentation.gitWhy : null;
   if (calls === null) return true;
   return calls.some((call) => call.status === 'completed' && call.result_count > 0);
-}
-
-function writeDashboardStatus(agent) {
-  let prior = {};
-  try {
-    prior = JSON.parse(readFileSync(DASHBOARD_STATUS_FILE, 'utf8'));
-  } catch {
-    // The dashboard is optional for headless benchmark use; its absence must
-    // never invalidate a benchmark result.
-  }
-  writeFileSync(
-    DASHBOARD_STATUS_FILE,
-    JSON.stringify({ ...prior, updatedAt: new Date().toISOString(), agent }, null, 2) + '\n',
-  );
 }
 
 /** Build the randomized, interleaved execution plan: within each
@@ -1132,15 +1117,6 @@ async function main() {
   const reviewDir = join(outDir, 'review-packets');
   mkdirSync(outDir, { recursive: true });
 
-  writeDashboardStatus({
-    state: 'running',
-    stage: `${isSmoke ? 'Smoke' : 'Pilot'} · ${taskIds.join(', ')}`,
-    runId,
-    planned: plannedCount,
-    completed: 0,
-    note: 'Live isolated OpenCode trials are in progress.',
-  });
-
   const resumable = plan.filter((item) => {
     const manifestHash = sha256(readFileSync(privateManifestPath(item.taskId), 'utf8'));
     const key = trialKey({
@@ -1243,15 +1219,6 @@ async function main() {
     aggregate: aggregateAgentRecords(allRecords),
   };
   writeFileSync(join(outDir, 'summary.json'), JSON.stringify(summary, null, 2));
-  writeDashboardStatus({
-    state: 'completed',
-    stage: isSmoke ? 'Smoke' : 'Pilot',
-    runId,
-    planned: plannedCount,
-    completed: attempted,
-    note: `${summary.valid} valid trials; ${summary.blocked} infrastructure-blocked.`,
-  });
-
   console.log(`\n[bench/agents] wrote ${attempted} trial records to ${outDir}`);
   console.log(JSON.stringify(summary, null, 2));
   if (isSmoke) {
