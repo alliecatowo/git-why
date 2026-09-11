@@ -282,6 +282,36 @@ function main() {
       }
     }
 
+    // Shell completions are hand-written data files, and they drift the same
+    // way the man page did: bash was missing one flag, zsh five, fish ten,
+    // including every anchored temporal flag. A completion that omits a flag
+    // teaches users the flag does not exist.
+    console.log('verify-package: every --help flag appears in each completion...');
+    for (const shell of ['bash', 'zsh', 'fish']) {
+      const script = run(
+        process.execPath,
+        [path.join(repoRoot, 'dist', 'cli', 'main.js'), 'completion', shell],
+        { cwd: work },
+      );
+      const help = run(
+        process.execPath,
+        [path.join(repoRoot, 'dist', 'cli', 'main.js'), '--help'],
+        {
+          cwd: work,
+        },
+      );
+      const flags = [...new Set(help.match(/(?<![\w-])--[a-z][a-z0-9-]*/g) ?? [])];
+      // fish spells a long option `-l name`, not `--name`.
+      const missing = flags.filter(
+        (f) => !script.includes(f) && !new RegExp(`-l\\s+${f.slice(2)}(\\s|$)`, 'm').test(script),
+      );
+      if (missing.length > 0) {
+        fail(`${shell} completion is missing: ${missing.join(', ')}`);
+      } else {
+        console.log(`verify-package: ${shell} completion covers all ${flags.length} flags.`);
+      }
+    }
+
     if (process.exitCode !== 1) {
       console.log('\nverify-package: all checks passed.');
     }

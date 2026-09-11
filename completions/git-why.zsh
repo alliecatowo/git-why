@@ -39,6 +39,11 @@ _git-why() {
     '--offline[Never download model artifacts]' \
     '--verbose[Progress and diagnostics on stderr]' \
     '--author=[Restrict to an author]:author:' \
+    '--between=[Prefer commits between two anchors]:a,b:' \
+    '--query[Explicit query text, for text that looks like an option]:text:' \
+    '--max-bytes=[Bound rendered output, including JSON framing]:bytes:' \
+    '--lock-timeout=[Seconds to wait for another process]:seconds:' \
+    '--use-default-model[rebuild: re-embed with the default model]' \
     '-n[Number of commits to return]:count:' \
     '--help[Show help]' \
     '--version[Show version]' \

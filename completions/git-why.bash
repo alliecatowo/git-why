@@ -14,7 +14,7 @@ _git_why_complete() {
   local flags="--text --semantic --json --owners --first --last --removed --timeline \
 --sort= --before= --after= --between= --around= --group= --refresh= --no-refresh \
 --if-needed --check-ready --use-default-model --offline --verbose --max-bytes= \
---lock-timeout= --author= --help --version -n"
+--lock-timeout= --author= --query --help --version -n"
 
   case "$prev" in
     --sort) COMPREPLY=( $(compgen -W "relevance oldest newest" -- "$cur") ); return ;;
