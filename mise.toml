@@ -66,6 +66,18 @@ description = "Measure index size per record across the pinned real clones"
 depends = ["build"]
 run = "node bench/index-size.mjs"
 
+[tasks."bench:diagnose"]
+description = "Where do gold commits rank, and why are the missing ones missing?"
+depends = ["build"]
+run = [
+  "node bench/corpus/rank-profile.mjs --depth 50",
+  "node bench/corpus/recall-probe.mjs",
+]
+
+[tasks."bench:rerank-lab"]
+description = "Evaluate reranking variants offline over already-retrieved candidates"
+run = "node bench/corpus/rerank-lab.mjs"
+
 [tasks."bench:crossfile"]
 description = "Score the cross-file causal corpus, where git log -S wins"
 depends = ["build"]

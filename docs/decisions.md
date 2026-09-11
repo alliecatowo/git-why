@@ -393,6 +393,50 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## The remaining 42% is the embedding, and that is now proven rather than assumed
+
+After the reranking work, the corpus splits cleanly: a third of gold commits
+land in the top five, a quarter are retrieved but ranked below it, and 42% are
+never retrieved at all. That last group is the ceiling, and "the embedding
+cannot bridge the vocabulary gap" was the assumed explanation — the expensive
+one to fix, and therefore the one worth checking before believing.
+
+`bench/corpus/recall-probe.mjs` rules out the cheap explanations by asking for
+each missing commit using **its own subject line**. If that fails, the problem
+is upstream of meaning and no paraphrase would ever have worked.
+
+|                                                                     | of 69 never-retrieved |
+| ------------------------------------------------------------------- | --------------------: |
+| not in the repository (a corpus fault)                              |                     0 |
+| indexed but not findable by its own words (tokenization, filtering) |                     0 |
+| findable by its own words, not by the paraphrase                    |                **69** |
+
+**Every one is a genuine semantic gap.** There is no coverage bug hiding in
+there, no tokenization problem, nothing filtered out. And retrieval is sharp
+where it works: 63 of the 69 rank **first** when asked for by their own
+subject.
+
+The gap is real and large:
+
+| the question                                                                       | the commit that answers it                                      |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| "the very first header slot got visited twice when you walked through all of them" | `tool_writeout_json. fix the output for duplicate header names` |
+| "a finished stream sometimes left response data unread and hanging"                | `http2: set drain on stream end`                                |
+| "handing libcurl a connection our app had already established itself"              | `test1960: verify CURL_SOCKOPT_ALREADY_CONNECTED`               |
+
+**The corpus is not the problem either, and that was worth checking.** A
+paraphrase stripped of all content would be unanswerable by anything and would
+depress the ceiling unfairly. Exactly one of the 174 cases is like that — _"what
+was that issue a GitHub user reported that we eventually closed?"_ — and it is
+deliberately left in. Removing cases because they are hard is how a benchmark
+stops measuring anything, and one case in 174 is not worth the precedent.
+
+**What this rules in and out.** Nothing in indexing, tokenization, filtering or
+ranking will move that 42%; those were the hypotheses and they are dead. It
+needs a model that can relate "visited twice" to "duplicate names", which means
+a larger embedding or a learned reranker — both outside the current dependency
+budget, and both now supported by evidence rather than by assumption.
+
 ## What finally improved retrieval: lexical overlap, and a pool to rerank
 
 Seven optimisations were measured and rejected before this one. The difference

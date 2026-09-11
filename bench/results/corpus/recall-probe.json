@@ -1,0 +1,424 @@
+{
+  "total": 69,
+  "verdicts": {
+    "notIndexed": [],
+    "notFindable": [],
+    "semanticGap": [
+      {
+        "id": "recall-curl-curl-842be672",
+        "subject": "tool_writeout_json. fix the output for duplicate header names",
+        "question": "what was that bug where the very first header slot got visited twice when you walked through all of them",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-8cfc936f",
+        "subject": "cmake: fix enabling LDAPS on Windows",
+        "question": "what was that tweak to make the behavior line up with what the other build systems already did",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-e4dfe6fc",
+        "subject": "test1960: verify CURL_SOCKOPT_ALREADY_CONNECTED",
+        "question": "what was that issue with handing libcurl a connection our app had already established itself through the socket-setup callback",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-41dfb7f5",
+        "subject": "tool_operate: fix scanbuild compiler warning",
+        "question": "what was that static analysis warning about a null value handed to a number parser in debug builds?",
+        "rankByOwnWords": 4
+      },
+      {
+        "id": "recall-curl-curl-6841f2ed",
+        "subject": "curl: make --silent work stand-alone",
+        "question": "what was that issue a GitHub user reported that we eventually closed?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-87ed650d",
+        "subject": "http2: set drain on stream end",
+        "question": "why did a finished stream sometimes leave response data unread and hanging?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-964ff768",
+        "subject": "openssl: rename 'errcode_t' to 'sslerr_t'",
+        "question": "what broke the build when a system header redefined one of our own types?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-daf4e6a3",
+        "subject": "curl.1: make help, version and manual sections \"custom\"",
+        "question": "why were a couple of our build switches acting like plain on/off toggles when they weren't?",
+        "rankByOwnWords": 12
+      },
+      {
+        "id": "recall-curl-curl-efbf0211",
+        "subject": "smb: return error on upload without size",
+        "question": "what was the case that only worked when we knew the length up front?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-5309e321",
+        "subject": "windows: always use curl's basename() implementation",
+        "question": "why were non-English filenames getting corrupted on Windows builds?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-38262c94",
+        "subject": "rustls: improve error messages",
+        "question": "where did we swap those raw error numbers for human-readable messages?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-33866a31",
+        "subject": "no-clobber.d: only use long form options in man page text",
+        "question": "Why did the help output show the short version of an option twice when I spelled it out too?",
+        "rankByOwnWords": 5
+      },
+      {
+        "id": "recall-curl-curl-cace68e2",
+        "subject": "openldap: fix missing sasl symbols at build in specific configs",
+        "question": "What was that build issue where the detected version line came out with empty parentheses?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-curl-curl-9e93bd47",
+        "subject": "vtls: Manage current easy handle in nested cfilter calls",
+        "question": "What was the bug where an inner call wiped out data the outer one still needed and then it blew up?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-763827c9",
+        "subject": "Fix redis-cli --count (for --scan, --bigkeys, etc) was ignored unless --pattern was also used (#13092)",
+        "question": "What was that bug where asking the command line tool to show only a few results was ignored on older versions?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-104b2076",
+        "subject": "Fix size stat in malloc(0) and cleanups around zmalloc file (#13068)",
+        "question": "What was that bug where asking for zero bytes of memory behaved strangely?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-165afc5f",
+        "subject": "Determine the large limit of the quicklist node based on fill (#12659)",
+        "question": "What was that bug where really huge values didn't get the compact storage treatment they should have?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-4e3be944",
+        "subject": "Fix timing issue in blockedclient test (#13071)",
+        "question": "What was that bug where a test that should have failed when a command hung just passed instead?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-fc3a68d8",
+        "subject": "add -fno-omit-frame-pointer to default complication flags (#12973)",
+        "question": "What was that issue where stack traces were useless because the binary had been compiled too aggressively?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-dd92dd8f",
+        "subject": "redis-cli - fix sscanf incorrect return-value check warnings (#13059)",
+        "question": "What was that bug where reading numbers didn't stop when the input ran out?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-063de675",
+        "subject": "zunionInterDiffGenericCommand use ztrycalloc to avoid OOM panic (#13052)",
+        "question": "why did the server crash with an out-of-memory panic when we sent a huge command with tons of arguments under memory pressure?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-e9c795e7",
+        "subject": "Fix loading rdb opcode RDB_OPCODE_RESIZEDB (#13050)",
+        "question": "why did the expiry table start sizing itself from the wrong count after that refactor?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-7ca0b84a",
+        "subject": "Fix loading rdb opcode RDB_OPCODE_SLOT_INFO (#13049)",
+        "question": "why did the expired-keys store start resizing based on the wrong table's numbers?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-676f27ac",
+        "subject": "Fix the failure of defrag test under 32-bit (#13013)",
+        "question": "why did the memory compaction tests only fall over when running in cluster mode?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-886b1170",
+        "subject": "Fix dict don't rehash when there is child test (#13035)",
+        "question": "why did the background maintenance job start doing both shrinking and growing at once?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-1f00c951",
+        "subject": "Prevent LSET command from causing quicklist plain node size to exceed 4GB (#12955)",
+        "question": "why did items sometimes vanish or get corrupted when we added and then immediately removed them from a list?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-9a7d3118",
+        "subject": "Fix dict resize allow test (#13016)",
+        "question": "why did the background maintenance job start doing both shrinking and growing at once?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-45a35a79",
+        "subject": "Fix timeout not being set in module blockClient case (#13011)",
+        "question": "why did that feature break because some value was never assigned?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-c5273cae",
+        "subject": "Add RM_TryCalloc() and RM_TryRealloc() (#12985)",
+        "question": "what was that change letting extensions deal with running out of memory?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-8d0156eb",
+        "subject": "Set the correct id for tempDb (#12947)",
+        "question": "how did we let extensions know which database an item came from while loading a dump?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-85a239b3",
+        "subject": "Change dictGetSafeIterator to dictGetIterator in pubsub (#12931)",
+        "question": "what was the issue where a pitfall in the client list walker hid a client being freed early?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-131d95f2",
+        "subject": "Fix race in slot dict resize test (#12942)",
+        "question": "why could the table never reach its target load after further deletions?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-99c468c3",
+        "subject": "Fix crash caused by pubsubShardUnsubscribeAllChannelsInSlot not deleting the client (#12896)",
+        "question": "what was the bug where walking the list of connections never finished and blew up an assertion because an entry was left dangling?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-b730404c",
+        "subject": "Fix multi dbs donot dbExpand when loading RDB (#12840)",
+        "question": "what was the bug where the database quit growing itself after it had already been expanded once during snapshot loading?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-764838d6",
+        "subject": "Check whether the client is NULL in luaCreateFunction (#12829)",
+        "question": "why was support first added for loading scripts out of the snapshot file?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-91309f79",
+        "subject": "Fix compilation warning in KeySpace_ServerEventCallback and add CFLAGS=-Werror flag for module CI (#12786)",
+        "question": "what was that change that was made jointly with another contributor?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-22cc9b51",
+        "subject": "Use CLZ in _dictNextExp to get the next power of two (#12815)",
+        "question": "what was that bug where our hash table wasn't resizing right because we stopped recalculating its next size often enough?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-fe363063",
+        "subject": "Fix DB iterator not resetting pauserehash causing dict being unable to rehash (#12757)",
+        "question": "what was that crash when we walked over a database while it was being changed?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-fe37e4fc",
+        "subject": "Cleanup nested module keyspace notifications (#12630)",
+        "question": "What was that setting that let a plugin hear about changes made while it was already handling another change?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-31c3172d",
+        "subject": "Better standardize around assertions (#12539)",
+        "question": "Why were our safety checks quietly doing nothing in some builds?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-4ba144a4",
+        "subject": "Add logreqres:skip flag to new INFO obuf limit test (#12537)",
+        "question": "what was that freshly added test that kept breaking the response format checker",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-b59f53ef",
+        "subject": "Fix sort_ro get-keys function return wrong key number (#12522)",
+        "question": "why did pulling the keys out of the read-only ordering command return nothing",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-1407ac1f",
+        "subject": "BITCOUNT and BITPOS with non-existing key and illegal arguments should return error, not 0 (#11734)",
+        "question": "what happened when the bit-position lookup was pointed at a list instead of a string",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-c98a28a8",
+        "subject": "Fix LREM count LONG_MIN overflow minor issue (#12465)",
+        "question": "what was the problem with allowing an out-of-range count when deleting matching list entries",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-965dc90b",
+        "subject": "change return type to be consistant (#12479)",
+        "question": "what was the mismatch where a save helper returned a narrower signed type than the value it passed along",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-redis-redis-90ab91f0",
+        "subject": "fix false success and a memory leak for ACL selector with bad parenthesis combination (#12452)",
+        "question": "what was the bug where the combining logic never checked whether it was already mid-merge",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-burntsushi-ripgrep-f55548ba",
+        "subject": "globset: fix `matches_all` false positives",
+        "question": "What was that bug where using the same matching style for several patterns could skip one?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-burntsushi-ripgrep-d4b77a8d",
+        "subject": "searcher: fix a performance bug with `-A/--after-context`",
+        "question": "how come search time hardly changed no matter how much trailing context you asked for?",
+        "rankByOwnWords": 4
+      },
+      {
+        "id": "recall-burntsushi-ripgrep-de2567a4",
+        "subject": "printer: fix panic in replacements in look-around corner case",
+        "question": "what was that mess where the layering between components kept leaking and breaking things?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-burntsushi-ripgrep-5f5da483",
+        "subject": "globset: support nested alternates",
+        "question": "what was the bug where our curly-brace file filters stopped finding anything inside those bundled folders?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-burntsushi-ripgrep-bfe2def1",
+        "subject": "tests: add test for filtering hidden files",
+        "question": "what was the bug that only started showing up after we moved past that earlier release?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-burntsushi-ripgrep-e9abbc1a",
+        "subject": "cargo: nuke 'simd-accel' from orbit",
+        "question": "what was that thing we got rid of because it kept breaking and caused nothing but trouble?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-319f47f4",
+        "subject": "Emit a length-aware base64url pattern in toJSONSchema (#6527)",
+        "question": "Why did importing that bundle choke or throw weird parse errors instead of giving us the right backfill later?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-40b4d0b3",
+        "subject": "fix(ci): read zod's latest version with npm view when picking the backfill dist-tag",
+        "question": "Why did the page for the ecosystem viewer keep hitting GitHub and dying every once in a while?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-5ff95665",
+        "subject": "Stop re-exporting the compile internals from zod/v4/core (#6511)",
+        "question": "Why did the docs page pretend to refresh every day when it never actually changed?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-81065739",
+        "subject": "chore(docs): build with Turbopack",
+        "question": "Why did the public API grow two helper functions that just say yes/no to whether some value fits a schema?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-908c9e17",
+        "subject": "fix(docs): retry the GitHub stars fetch and log the real status",
+        "question": "Why did validating something build a whole result object just to throw it away?",
+        "rankByOwnWords": 9
+      },
+      {
+        "id": "recall-colinhacks-zod-019ae299",
+        "subject": "fix(docs): drop ISR on the docs route so the home page hydrates",
+        "question": "Why did we clear those tables and it looked like nothing was stored anymore?",
+        "rankByOwnWords": 5
+      },
+      {
+        "id": "recall-colinhacks-zod-604464c3",
+        "subject": "fix(locales): da/nn/no/sv called an IP address a range (#6430)",
+        "question": "what was the naming difference we settled on between the formats that describe one address and those that describe a whole block?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-5b34c0ce",
+        "subject": "Improve Portuguese localization and add Brazilian Portuguese (pt-BR) (#6076)",
+        "question": "why did one language's error text come out with the field name mashed into the middle of it?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-942bf8cb",
+        "subject": "feat(v4): parse input containing reference cycles (#6387)",
+        "question": "why couldn't I catch the failure when my data had a loop in it?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-4cc4053d",
+        "subject": "fix: honor loose mode for closed record key schemas (#6157)",
+        "question": "why did one code path skip that check while the other one didn't?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-faf33a28",
+        "subject": "fix: surface @deprecated on re-exported compat aliases (#6072)",
+        "question": "Why wouldn't a type annotation carry through into the published type definitions?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-9d20fdc3",
+        "subject": "fix(v4): preserve z.preprocess input narrowing (#5967)",
+        "question": "Why did the input type on our preprocessed schemas disappear after that change?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-2715c12e",
+        "subject": "fix(v4): preserve default English locale across tree-shaken bundles (#5959)",
+        "question": "Why did every validation failure in the production bundle just say \"Invalid input\"?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-9c540db8",
+        "subject": "fix(v4): re-check the record key after the key schema runs (#6355)",
+        "question": "what was that one where a field literally named after the object prototype got saved under the wrong name?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-573fcb75",
+        "subject": "fix(errors): use own-property semantics in every error-tree walker (#6213)",
+        "question": "what was that path-building code that silently used a built-in method instead of making a nested entry?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-f722bcdd",
+        "subject": "ci: build with pinned TypeScript, add TS 6 and 7 legs (#6345)",
+        "question": "what was the breakage where installing the newest compiler package left core APIs undefined?",
+        "rankByOwnWords": 1
+      },
+      {
+        "id": "recall-colinhacks-zod-fbe8ad1b",
+        "subject": "fix(v4): allow dynamic `.catch()` under `unrepresentable: \"any\"` (#5273) (#5925)",
+        "question": "what was the case where we were generating a fallback value by calling the recovery function with nothing?",
+        "rankByOwnWords": 1
+      }
+    ],
+    "probeFailed": []
+  }
+}
