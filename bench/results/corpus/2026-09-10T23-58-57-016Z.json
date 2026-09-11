@@ -1,0 +1,53 @@
+{
+  "cases": 174,
+  "rows": [
+    {
+      "strategy": "git why",
+      "n": 174,
+      "hit1": 0.15517241379310345,
+      "hit5": 0.28735632183908044,
+      "mrr": 0.20268199233716475,
+      "returnedNothing": 11
+    },
+    {
+      "strategy": "zg",
+      "n": 174,
+      "hit1": 0.017241379310344827,
+      "hit5": 0.040229885057471264,
+      "mrr": 0.026053639846743294,
+      "returnedNothing": 13
+    },
+    {
+      "strategy": "git log -G",
+      "n": 174,
+      "hit1": 0.005747126436781609,
+      "hit5": 0.017241379310344827,
+      "mrr": 0.011494252873563218,
+      "returnedNothing": 15
+    },
+    {
+      "strategy": "git log --grep",
+      "n": 174,
+      "hit1": 0,
+      "hit5": 0.011494252873563218,
+      "mrr": 0.002586206896551724,
+      "returnedNothing": 0
+    },
+    {
+      "strategy": "git log --grep --all-match",
+      "n": 174,
+      "hit1": 0,
+      "hit5": 0,
+      "mrr": 0,
+      "returnedNothing": 109
+    },
+    {
+      "strategy": "git log -S",
+      "n": 174,
+      "hit1": 0,
+      "hit5": 0,
+      "mrr": 0,
+      "returnedNothing": 15
+    }
+  ]
+}

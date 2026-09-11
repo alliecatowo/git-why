@@ -1,0 +1,893 @@
+[
+  {
+    "id": "ext2-d-curl-01",
+    "repositoryId": "curl-curl",
+    "split": "dev",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Can curl print transfer stats as JSON with -w/--write-out? I thought I saw a -w \"%{json}\" example floating around.",
+    "relevantShas": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8"
+    ],
+    "rankedShas": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8",
+      "4133a69f2daa476bb6d902687f1dd6660ea9c3c5",
+      "160b640a8b67dd5f5dfdc7c0da650dc24d211da6",
+      "d9b7f6e750ad415ec384d88970bd718b163e1c1f",
+      "bc7ecc71c0c11d22fdbe6415a7945bfc43dc3c33"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 2177,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-curl-02",
+    "repositoryId": "curl-curl",
+    "split": "dev",
+    "category": "regression",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "There was a curl security bug where following a redirect could leak credentials to a different protocol or port — what did the fix change?",
+    "relevantShas": [
+      "620ea21410030a9977396b4661806bc187231b79"
+    ],
+    "rankedShas": [
+      "830018aa38817547dddfc9e4e706eaad758a579b",
+      "c5cffce56e4c6f6c26e82438a61abf85e39cac4a",
+      "f7815fa93ce4bb69fb4b1a3e2d79473b94a647d1",
+      "821a0854f67cf8b4544613c1b8c1bb2d4c9e2194",
+      "a737864a1c82fe0843e4d02faf771406f612f1ba"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 1799,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-curl-01",
+    "repositoryId": "curl-curl",
+    "split": "dev",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Can curl print transfer stats as JSON with -w/--write-out? I thought I saw a -w \"%{json}\" example floating around.",
+    "relevantShas": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8"
+    ],
+    "rankedShas": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8",
+      "65ca2294619f865362332ceddc622db92d0f50a6",
+      "4133a69f2daa476bb6d902687f1dd6660ea9c3c5",
+      "8d9802b0aed12932612847f4267a42d08b7bfa71",
+      "0c1e767e83ec669d213868db8887e19386f717b2"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 2334,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-curl-02",
+    "repositoryId": "curl-curl",
+    "split": "dev",
+    "category": "regression",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "There was a curl security bug where following a redirect could leak credentials to a different protocol or port — what did the fix change?",
+    "relevantShas": [
+      "620ea21410030a9977396b4661806bc187231b79"
+    ],
+    "rankedShas": [
+      "7e35eb77292fe6464889ddc8329c6a64136f969d",
+      "830018aa38817547dddfc9e4e706eaad758a579b",
+      "060f7ca2d2a7f5c8845a62a143c1d9fa988d1269",
+      "6f82ebd8ae7c7ae529a91931d2537d35375124f1",
+      "a50fac0e633f1c33dc86bf7274990083a12d42c4"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 1851,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-curl-01",
+    "repositoryId": "curl-curl",
+    "split": "dev",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Can curl print transfer stats as JSON with -w/--write-out? I thought I saw a -w \"%{json}\" example floating around.",
+    "relevantShas": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8"
+    ],
+    "rankedShas": [
+      "04c03416e68fd635a15cae8201872f5c29fdcca8",
+      "4133a69f2daa476bb6d902687f1dd6660ea9c3c5",
+      "65ca2294619f865362332ceddc622db92d0f50a6",
+      "0c1e767e83ec669d213868db8887e19386f717b2",
+      "fb11e45f9cd3fbd5f4c284c762f39b0cf75449bf"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 2033,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-curl-02",
+    "repositoryId": "curl-curl",
+    "split": "dev",
+    "category": "regression",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "There was a curl security bug where following a redirect could leak credentials to a different protocol or port — what did the fix change?",
+    "relevantShas": [
+      "620ea21410030a9977396b4661806bc187231b79"
+    ],
+    "rankedShas": [
+      "830018aa38817547dddfc9e4e706eaad758a579b",
+      "f7815fa93ce4bb69fb4b1a3e2d79473b94a647d1",
+      "7603a29fc3db05d354b5adf41d69f781437704ca",
+      "821a0854f67cf8b4544613c1b8c1bb2d4c9e2194",
+      "38c994b83b857ece2c9a483f3d6871c4a1521331"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 2099,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-redis-01",
+    "repositoryId": "redis-redis",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "When did Redis first get the streams data type with commands like XADD?",
+    "relevantShas": [
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ],
+    "rankedShas": [
+      "2a2954086a28b9969882158a5b0630c3f944c051",
+      "2bd36616bafcafa7137a7dbcb5d3539a6873fb2e",
+      "50595a58898474acf12e33137a83d4201b4b2d29",
+      "60acac4cd02913385c461465d4cca06d6c015ba7",
+      "7a41b402c1a5caae30dcd234d3d01c7f76ca5757"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 956,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-redis-02",
+    "repositoryId": "redis-redis",
+    "split": "dev",
+    "category": "rename",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "The LPOS command has an option for which matching element to return — I remember it being called FIRST in early examples, but now everything says RANK. Did it get renamed?",
+    "relevantShas": [
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776"
+    ],
+    "rankedShas": [
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776",
+      "b57d0eb418dd8622bfc054239320ad7de9ccd752",
+      "ca58198a76e70e148a06b4c695502d51c4ffe5cc",
+      "9204a9b2c2f6eb59767ab0bddcde62c75e8c20b0",
+      "135998ed8d0fc92d7ee6e23b1a66353f5900695f"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 863,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-redis-01",
+    "repositoryId": "redis-redis",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "When did Redis first get the streams data type with commands like XADD?",
+    "relevantShas": [
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ],
+    "rankedShas": [
+      "8d24f8b46b3c544fef33427ca1f2582d92c59dd4",
+      "19b06935d59a39021330670776eb6b79002599c8",
+      "3b260149e0996b8ee12510b0b9508bca56743269",
+      "8597991e8f7662a43e91b852f942f0998e39bcfc",
+      "f328194d12e06a748aac7a35b1dda179bfc6cb0f"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 1140,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-redis-02",
+    "repositoryId": "redis-redis",
+    "split": "dev",
+    "category": "rename",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "The LPOS command has an option for which matching element to return — I remember it being called FIRST in early examples, but now everything says RANK. Did it get renamed?",
+    "relevantShas": [
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776"
+    ],
+    "rankedShas": [
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776",
+      "a6fd2a46d101d4df23ade2e28cbc04656c721b2b",
+      "39feee8e3a6fee885aee60672a9dde0dfd08896c",
+      "15d57c35c3122606187be2fb7da22d081e444474",
+      "dfe90acbd58b5cd62f32a9823c29ac5c53b42b26"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 981,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-redis-01",
+    "repositoryId": "redis-redis",
+    "split": "dev",
+    "category": "exact_identifier",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "When did Redis first get the streams data type with commands like XADD?",
+    "relevantShas": [
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ],
+    "rankedShas": [
+      "8597991e8f7662a43e91b852f942f0998e39bcfc",
+      "ae9065d8080cff60efb97676de5f3bfb26c74285",
+      "3b260149e0996b8ee12510b0b9508bca56743269",
+      "19b06935d59a39021330670776eb6b79002599c8",
+      "60acac4cd02913385c461465d4cca06d6c015ba7"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 1039,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-redis-02",
+    "repositoryId": "redis-redis",
+    "split": "dev",
+    "category": "rename",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "The LPOS command has an option for which matching element to return — I remember it being called FIRST in early examples, but now everything says RANK. Did it get renamed?",
+    "relevantShas": [
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776"
+    ],
+    "rankedShas": [
+      "a5a3a7bbc61203398ecc1d5b52c76214f5672776",
+      "b57d0eb418dd8622bfc054239320ad7de9ccd752",
+      "a6fd2a46d101d4df23ade2e28cbc04656c721b2b",
+      "ca58198a76e70e148a06b4c695502d51c4ffe5cc",
+      "15d57c35c3122606187be2fb7da22d081e444474"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 1124,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-requests-01",
+    "repositoryId": "psf-requests",
+    "split": "dev",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Why did the requests library switch its default text-encoding guesser — wasn't it chardet before, and now it's something else?",
+    "relevantShas": [
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ],
+    "rankedShas": [
+      "8a81a437d2357be314e8715d3827b8fec8f0055b",
+      "d12eac8669bc820c7fdd4efe47032112a6b41a1b",
+      "253cba373bc393526a15da38aa364ac10631e53c",
+      "538de55607eb1db8299f2b83421a91b9f533cb50",
+      "497695864b4866ba688c06ad4987560db81a617e"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 434,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-requests-02",
+    "repositoryId": "psf-requests",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Does requests still support Python 3.9, or was that version dropped?",
+    "relevantShas": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+    ],
+    "rankedShas": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+      "28855fd43a68bf26fec23aa9b548239e13255edf",
+      "bc04dfd6dad4cb02cd92f5daa81eb562d280a761",
+      "58cea7a7282999adafdc19a4e82e2d09207ab568",
+      "2edca11103c1c27dd8b572dab544b7f48cf3b446"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 363,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-requests-01",
+    "repositoryId": "psf-requests",
+    "split": "dev",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Why did the requests library switch its default text-encoding guesser — wasn't it chardet before, and now it's something else?",
+    "relevantShas": [
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ],
+    "rankedShas": [
+      "5ee8b348ebab9a7c427a87355dd089c83ee74be9",
+      "20f802764142a1886db239ff7b147e3b5433e5f9",
+      "b725bfd3fb3e6bec9e15009985b8d30bdee66f51",
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3",
+      "c5b6a107eb9af0fd6a1a48c7bf0276fbf71e9157"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 668,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.25
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.25
+  },
+  {
+    "id": "ext2-d-requests-02",
+    "repositoryId": "psf-requests",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Does requests still support Python 3.9, or was that version dropped?",
+    "relevantShas": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+    ],
+    "rankedShas": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+      "2edca11103c1c27dd8b572dab544b7f48cf3b446",
+      "a1a6a549a0143d9b32717dbe3d75cd543ae5a4f6",
+      "579cd9f23319ebc65b71613f59e2b7b37d67276d",
+      "8484144c676a09573178dc2da3f026118be48673"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 626,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-requests-01",
+    "repositoryId": "psf-requests",
+    "split": "dev",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Why did the requests library switch its default text-encoding guesser — wasn't it chardet before, and now it's something else?",
+    "relevantShas": [
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ],
+    "rankedShas": [
+      "b725bfd3fb3e6bec9e15009985b8d30bdee66f51",
+      "253cba373bc393526a15da38aa364ac10631e53c",
+      "20f802764142a1886db239ff7b147e3b5433e5f9",
+      "538de55607eb1db8299f2b83421a91b9f533cb50",
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 645,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.2
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": true,
+    "reciprocalRank": 0.2
+  },
+  {
+    "id": "ext2-d-requests-02",
+    "repositoryId": "psf-requests",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Does requests still support Python 3.9, or was that version dropped?",
+    "relevantShas": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+    ],
+    "rankedShas": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+      "2edca11103c1c27dd8b572dab544b7f48cf3b446",
+      "579cd9f23319ebc65b71613f59e2b7b37d67276d",
+      "58cea7a7282999adafdc19a4e82e2d09207ab568",
+      "28855fd43a68bf26fec23aa9b548239e13255edf"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 631,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-ripgrep-03",
+    "repositoryId": "burntsushi-ripgrep",
+    "split": "dev",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Did ripgrep's special ignore-file name used to be something other than '.ignore'? I have a vague memory of it being called something else in the early days.",
+    "relevantShas": [
+      "cc90511ab29d3c37e873acac0fd80f90473f54bb"
+    ],
+    "rankedShas": [
+      "4ab1862dc04783b6615807d4b4511388c6b30364",
+      "99bf2b01dc261bccc6912ad733fc5f353ac411d5",
+      "d938e955af7a39ac0245b1ce84924f7f4a2141ac",
+      "7098daf6a86d04e1eeb2d4d6bd4a66475e232860",
+      "cbebb010a78e0199e4fecafd198847d880b6e3e6"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 376,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-ripgrep-03",
+    "repositoryId": "burntsushi-ripgrep",
+    "split": "dev",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Did ripgrep's special ignore-file name used to be something other than '.ignore'? I have a vague memory of it being called something else in the early days.",
+    "relevantShas": [
+      "cc90511ab29d3c37e873acac0fd80f90473f54bb"
+    ],
+    "rankedShas": [
+      "92dc402f7f598c3d0045f94df9988bbe1c0c79cf",
+      "0a0893a76506518e766033d03f5b6d7c7a7a8525",
+      "c4c43c733ee9a44d3a48aa7f22284a6db6f0f9c6",
+      "69095cf5c370b378261ca0470b3f030ddcbb7186",
+      "e6cac8b119d0d50646b3ba1aaf53e648c779901a"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 580,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-ripgrep-03",
+    "repositoryId": "burntsushi-ripgrep",
+    "split": "dev",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Did ripgrep's special ignore-file name used to be something other than '.ignore'? I have a vague memory of it being called something else in the early days.",
+    "relevantShas": [
+      "cc90511ab29d3c37e873acac0fd80f90473f54bb"
+    ],
+    "rankedShas": [
+      "b610d1cb1506feab33459c5853e4c0d0cb16a6e2",
+      "3cb4d1337e9846c0518e3e2dfc4f7b007b16a288",
+      "b71a110ccf1c9cfe5f4c447cc3878a2e45ed7b8f",
+      "92dc402f7f598c3d0045f94df9988bbe1c0c79cf",
+      "7098daf6a86d04e1eeb2d4d6bd4a66475e232860"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 597,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-caddy-01",
+    "repositoryId": "caddyserver-caddy",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "Did caddy ever have to raise its minimum Go version specifically because of the HTTP/3 library it depends on?",
+    "relevantShas": [
+      "f45a6de20dd19e82e58c85b37e03957b2203b544"
+    ],
+    "rankedShas": [
+      "e62b5fb58619364051551a7ee614fb9949cfe69a",
+      "c3fb5f4d3fb3eed9136f766cb88f2d8ac54de685",
+      "c79c08627d36e9871dedd3c7d8889d7d710134c2",
+      "1426c97da57fc84d8b584a960c43fbb58df68b80",
+      "4b1a9b6cc1aa521e21289afa276d29952a97d8f3"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 449,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": false,
+      "hit5": false,
+      "recall5": 0,
+      "mrr": 0
+    },
+    "hit1": false,
+    "hit3": false,
+    "hit5": false,
+    "reciprocalRank": 0
+  },
+  {
+    "id": "ext2-d-caddy-01",
+    "repositoryId": "caddyserver-caddy",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "Did caddy ever have to raise its minimum Go version specifically because of the HTTP/3 library it depends on?",
+    "relevantShas": [
+      "f45a6de20dd19e82e58c85b37e03957b2203b544"
+    ],
+    "rankedShas": [
+      "f45a6de20dd19e82e58c85b37e03957b2203b544",
+      "8cb3cf540c2d083721a1717b9ddf2657b7eb5102",
+      "17ae5acaba536e98cfa86ddcd6967801f1fa1bbe",
+      "c3b5b1811c119b896c5f70e3275ca835e7df5460",
+      "fc7340e11aa9ca6326909aedfd36bb2c5b53d2a8"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 681,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-caddy-01",
+    "repositoryId": "caddyserver-caddy",
+    "split": "dev",
+    "category": "number_version",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "Did caddy ever have to raise its minimum Go version specifically because of the HTTP/3 library it depends on?",
+    "relevantShas": [
+      "f45a6de20dd19e82e58c85b37e03957b2203b544"
+    ],
+    "rankedShas": [
+      "fc7340e11aa9ca6326909aedfd36bb2c5b53d2a8",
+      "e62b5fb58619364051551a7ee614fb9949cfe69a",
+      "f45a6de20dd19e82e58c85b37e03957b2203b544",
+      "8cb3cf540c2d083721a1717b9ddf2657b7eb5102",
+      "c3fb5f4d3fb3eed9136f766cb88f2d8ac54de685"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 665,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.3333333333333333
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.3333333333333333
+  },
+  {
+    "id": "ext2-d-zod-01",
+    "repositoryId": "colinhacks-zod",
+    "split": "dev",
+    "category": "migration",
+    "mode": "text",
+    "arm": "summary+evidence",
+    "query": "I thought zod objects used to keep properties I didn't define — now extra keys just disappear. Did the default handling of unknown keys change?",
+    "relevantShas": [
+      "18854492b4b6e1648499f2f920c615dab187ee1a"
+    ],
+    "rankedShas": [
+      "880b8f09f33c3196411109c008f635b32f88547e",
+      "18854492b4b6e1648499f2f920c615dab187ee1a",
+      "68ca0c9d9ad691f74aff28bcdbd7967d6eb60e58",
+      "e043c186680f68f049102230e48b6022d2013d61",
+      "7d0532e3e9162a33f1bf98d566c2183a0a0ef842"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 479,
+    "scored": {
+      "applicable": true,
+      "hit1": false,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 0.5
+    },
+    "hit1": false,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 0.5
+  },
+  {
+    "id": "ext2-d-zod-01",
+    "repositoryId": "colinhacks-zod",
+    "split": "dev",
+    "category": "migration",
+    "mode": "semantic",
+    "arm": "summary+evidence",
+    "query": "I thought zod objects used to keep properties I didn't define — now extra keys just disappear. Did the default handling of unknown keys change?",
+    "relevantShas": [
+      "18854492b4b6e1648499f2f920c615dab187ee1a"
+    ],
+    "rankedShas": [
+      "18854492b4b6e1648499f2f920c615dab187ee1a",
+      "880b8f09f33c3196411109c008f635b32f88547e",
+      "5f1d578080ad5325a40a393267c720250d8b53dc",
+      "7d0532e3e9162a33f1bf98d566c2183a0a0ef842",
+      "e043c186680f68f049102230e48b6022d2013d61"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 707,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  },
+  {
+    "id": "ext2-d-zod-01",
+    "repositoryId": "colinhacks-zod",
+    "split": "dev",
+    "category": "migration",
+    "mode": "hybrid",
+    "arm": "summary+evidence",
+    "query": "I thought zod objects used to keep properties I didn't define — now extra keys just disappear. Did the default handling of unknown keys change?",
+    "relevantShas": [
+      "18854492b4b6e1648499f2f920c615dab187ee1a"
+    ],
+    "rankedShas": [
+      "18854492b4b6e1648499f2f920c615dab187ee1a",
+      "880b8f09f33c3196411109c008f635b32f88547e",
+      "5f1d578080ad5325a40a393267c720250d8b53dc",
+      "e043c186680f68f049102230e48b6022d2013d61",
+      "7d0532e3e9162a33f1bf98d566c2183a0a0ef842"
+    ],
+    "exitCode": 0,
+    "elapsedMs": 664,
+    "scored": {
+      "applicable": true,
+      "hit1": true,
+      "hit3": true,
+      "hit5": true,
+      "recall5": 1,
+      "mrr": 1
+    },
+    "hit1": true,
+    "hit3": true,
+    "hit5": true,
+    "reciprocalRank": 1
+  }
+]
