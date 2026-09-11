@@ -1,19 +1,19 @@
 # Git Why -- benchmark report
 
-Generated 2026-09-11T02:16:41.490Z by `bench/report.mjs` from raw files under `bench/results/`. No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.
+Generated 2026-09-11T02:21:27.380Z by `bench/report.mjs` from raw files under `bench/results/`. No percentage in this document is hand-entered; regenerate with `node bench/report.mjs` to reproduce every number from the same source files.
 
 ## 0. Derived corpus -- the headline measurement
 
 **Read this section first.** 174 questions derived mechanically from 6 real public repositories (burntsushi-ripgrep, caddyserver-caddy, colinhacks-zod, curl-curl, psf-requests, redis-redis), then **gated**: any case that `git log --grep` or `git log -S` could already answer was discarded, because a tool that only wins where grep also wins is not worth installing. What remains is the hard half.
 
-| strategy                   | n   | MRR   | Hit@1 | Hit@5 | returned nothing |
-| -------------------------- | --- | ----- | ----- | ----- | ---------------- |
-| git why                    | 174 | 0.203 | 15.5% | 28.7% | 11               |
-| zg                         | 174 | 0.026 | 1.7%  | 4.0%  | 13               |
-| git log -G                 | 174 | 0.011 | 0.6%  | 1.7%  | 15               |
-| git log --grep             | 174 | 0.003 | 0.0%  | 1.1%  | 0                |
-| git log --grep --all-match | 174 | 0.000 | 0.0%  | 0.0%  | 109              |
-| git log -S                 | 174 | 0.000 | 0.0%  | 0.0%  | 15               |
+| strategy                     | n   | MRR   | Hit@1 | Hit@5 | returned nothing |
+| ---------------------------- | --- | ----- | ----- | ----- | ---------------- |
+| `git why`                    | 174 | 0.203 | 15.5% | 28.7% | 11               |
+| `zg`                         | 174 | 0.026 | 1.7%  | 4.0%  | 13               |
+| `git log -G`                 | 174 | 0.011 | 0.6%  | 1.7%  | 15               |
+| `git log --grep`             | 174 | 0.003 | 0.0%  | 1.1%  | 0                |
+| `git log --grep --all-match` | 174 | 0.000 | 0.0%  | 0.0%  | 109              |
+| `git log -S`                 | 174 | 0.000 | 0.0%  | 0.0%  | 15               |
 
 Git Why's MRR is **7.8x** semantic code search (`zg`) and **18x** the best Git-native baseline (`git log -G`, MRR 0.011). `git log --grep --all-match` returns an empty list on 109 of 174 cases.
 
@@ -23,11 +23,11 @@ Git Why's MRR is **7.8x** semantic code search (`zg`) and **18x** the best Git-n
 
 20 pairs from `colinhacks-zod` where a symbol is introduced in one commit and consumed in a different file by a later one -- so the answer to "why does this file do X" lives somewhere the question never mentions.
 
-| strategy                   | n   | Hit@1 | Hit@10 |
-| -------------------------- | --- | ----- | ------ |
-| git log -- <consumer file> | 20  | 0.0%  | 0.0%   |
-| git log -S<symbol>         | 20  | 0.0%  | 95.0%  |
-| git why                    | 20  | 10.0% | 35.0%  |
+| strategy                     | n   | Hit@1 | Hit@10 |
+| ---------------------------- | --- | ----- | ------ |
+| `git log -- <consumer file>` | 20  | 0.0%  | 0.0%   |
+| `git log -S<symbol>`         | 20  | 0.0%  | 95.0%  |
+| `git why`                    | 20  | 10.0% | 35.0%  |
 
 `git log -S` wins decisively here: 95.0% against 35.0%. That is not a bug to fix, it is the boundary. **When you can name the symbol, use `git log -S`.** Semantic retrieval is for questions where you cannot name anything -- which is why the gate above exists, and why the routing skill shipped with the plugin says the same thing.
 
@@ -51,7 +51,7 @@ Everything from section 1 onward uses fixtures and labelled splits authored by t
 - Hardware: Apple M2, 8 cores, 8.6 GB RAM, darwin/arm64.
 - Toolchain: node v24.21.0, git version 2.50.1 (Apple Git-155).
 - Embedding model: `minishlab/potion-code-16M-v2` revision `e9d2a44ca6a05ac6685f3b23709ea57eb7352d5b`, fingerprint `m2v-sha256:9e51530c5a19d0147b884669fe4e0db7bfc7773c728e79eaf4c40ffc53b0fbf8`.
-- Repository HEAD at report-generation time: `bb70f8b630fdcb68199fc11dea1203aa32f0fdea`. Working tree had 11 uncommitted path(s) at report time -- this is a shared, multi-lane working tree, so this count is a snapshot, not a stable input. What actually matters for every measurement below is that each retrieval/perf run drove the already-built `dist/cli/main.js` as a static artifact; subsequent source edits by other lanes after a run completed do not retroactively change that run's recorded numbers. bench/ owns only `bench/*`; this lane made no changes to `src/`, `package.json`, or `tsconfig*` and committed nothing.
+- Repository HEAD at report-generation time: `a252527fc1caeafa1303ca63dc9c1ff13802cd2d`. Working tree had 9 uncommitted path(s) at report time -- this is a shared, multi-lane working tree, so this count is a snapshot, not a stable input. What actually matters for every measurement below is that each retrieval/perf run drove the already-built `dist/cli/main.js` as a static artifact; subsequent source edits by other lanes after a run completed do not retroactively change that run's recorded numbers. bench/ owns only `bench/*`; this lane made no changes to `src/`, `package.json`, or `tsconfig*` and committed nothing.
 - Reference corpus for retrieval: 6 synthetic fixtures under `$BENCH_WORK_DIR/fixtures/` (135-166 commits each), deterministically generated by `bench/fixtures/generate.mjs`.
 - Reference corpus for perf: `task-queue` (135 commits, synthetic). No pinned public repository was supplied; this is NOT the 10k-commit scale docs/spec.md section 24 ultimately targets.
 
@@ -348,7 +348,7 @@ Caveat: aggregatePeakRssKb samples each reader's own process tree independently;
 
 ## 8. Exact reproduction commands
 
-Repository HEAD was `bb70f8b630fdcb68199fc11dea1203aa32f0fdea` at the time this report was generated (see section 2 for why that is a snapshot, not a per-run pin, in this shared working tree). Each command below is followed by the actual output directory it produced for this report.
+Repository HEAD was `a252527fc1caeafa1303ca63dc9c1ff13802cd2d` at the time this report was generated (see section 2 for why that is a snapshot, not a per-run pin, in this shared working tree). Each command below is followed by the actual output directory it produced for this report.
 
 ```
 # Dev-split retrieval (text / semantic / hybrid, all categories)

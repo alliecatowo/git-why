@@ -241,8 +241,11 @@ function corpusSection() {
     '`git log --grep` or `git log -S` could already answer was discarded, because a tool that only wins ';
   out += 'where grep also wins is not worth installing. What remains is the hard half.\n\n';
 
+  // Backticks are not decoration: strategy names contain angle-bracket
+  // placeholders like `git log -- <consumer file>`, which the docs site parses
+  // as an unclosed HTML tag and fails the build on.
   const row = (r) =>
-    `| ${r.strategy} | ${r.n} | ${num(r.mrr)} | ${pct(r.hit1)} | ${pct(r.hit5)} | ${r.returnedNothing} |\n`;
+    `| \`${r.strategy}\` | ${r.n} | ${num(r.mrr)} | ${pct(r.hit1)} | ${pct(r.hit5)} | ${r.returnedNothing} |\n`;
   out += '| strategy | n | MRR | Hit@1 | Hit@5 | returned nothing |\n';
   out += '| --- | --- | --- | --- | --- | --- |\n';
   for (const r of main.rows) out += row(r);
@@ -275,7 +278,7 @@ function corpusSection() {
     out += 'question never mentions.\n\n';
     out += '| strategy | n | Hit@1 | Hit@10 |\n| --- | --- | --- | --- |\n';
     for (const r of cross.rows)
-      out += `| ${r.strategy} | ${r.n} | ${pct(r.hit1)} | ${pct(r.hit10)} |\n`;
+      out += `| \`${r.strategy}\` | ${r.n} | ${pct(r.hit1)} | ${pct(r.hit10)} |\n`;
     const s = cross.rows.find((r) => r.strategy.includes('-S'));
     const w = cross.rows.find((r) => r.strategy === 'git why');
     if (s && w) {
