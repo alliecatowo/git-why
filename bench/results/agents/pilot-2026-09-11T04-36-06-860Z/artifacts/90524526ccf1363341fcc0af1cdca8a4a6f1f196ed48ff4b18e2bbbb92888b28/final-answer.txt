@@ -1,0 +1,48 @@
+Verified. Now let's investigate.This is the key commit — let's look at its message and diff in detail.This commit introduces catchall but the default unknownKeys is still `'allow'`. Let's find when the default changed from `'allow'` to `'strip'`.Found it: `18854492 strip unknown keys by default`. Let's inspect this commit.This is the exact commit. Let's also check the README diff for extra context and parser.ts change.This confirms the exact commit and even explicitly documents "Object schemas now _allow_ unknown keys by default, instead of throwing an error" → "Object schemas now strip unknown keys by default". Let's double check this is on the main branch history (reachable from HEAD).Confirmed, this commit is in the direct history of HEAD. Let's also verify the parser.ts change to be thorough.I have everything needed. Let me also confirm the date/context (this was part of the "Zod 2" pre-release effort) and check nothing later reverted this default.Confirmed the default remains `"strip"` in the current codebase at HEAD (v3 types.ts), consistent with the historical commit that established it.
+
+## Answer
+
+Yes — the default changed. Zod object schemas originally (pre-Zod-2, ~v0.x/early v1) **allowed** unknown keys by default; the change to **strip** them by default was made deliberately in Zod 2.
+
+**Commit:** `18854492b4b6e1648499f2f920c615dab187ee1a` — "strip unknown keys by default" (Colin McDonnell, Thu Sep 17 13:20:45 2020 -0700). This commit is a direct ancestor of `HEAD` (62311eb2c4a93c7348a8b1c5abbde1ec77c66b67).
+
+The commit message is a single line, `strip unknown keys by default`, and the diff spells out the intent explicitly. From the README diff in that same commit:
+
+```diff
+ - Relatedly, Zod _no longer_ supports cyclical _data_. Recursive schemas are still supported, but Zod can't properly parse nested objects that contain cycles.
+-- Object schemas now _allow_ unknown keys by default, instead of throwing an error
+++ Object schemas now strip unknown keys by default, instead of throwing an error
+```
+
+and further down:
+
+```diff
+ #### Unknown keys
+
+--Zod object schemas allow unknown keys.
+++By default Zod object schema strip unknown keys from the output.
+
+--> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.
+++> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.
+```
+
+And the code change that actually enforces the new default, in `src/types/object.ts`:
+
+```diff
+ export class ZodObject<
+   T extends z.ZodRawShape,
+-  UnknownKeys extends UnknownKeysParam = 'allow',
++  UnknownKeys extends UnknownKeysParam = 'passthrough',
+```
+```diff
+     return new ZodObject({
+       t: z.ZodTypes.object,
+       shape: () => shape,
+-      unknownKeys: 'allow',
++      unknownKeys: 'strip',
+       catchall: ZodNever.create(),
+```
+
+(the `'allow'` mode was simultaneously renamed to `'passthrough'` — today's `.passthrough()` — while the object constructor's own default `unknownKeys` was switched from allowing/passing-through extras to `'strip'`.)
+
+This behavior persists to the pinned commit: in the current `packages/zod/src/v3/types.ts`, the object constructors (`ZodObject.create`, `strictCreate`, etc.) still set `unknownKeys: "strip"` as the default, matching what commit `18854492` introduced back in 2020 for the Zod 2 release.

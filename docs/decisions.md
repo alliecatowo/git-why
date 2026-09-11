@@ -393,6 +393,53 @@ This is a re-measurement after fixing known defects, not a new configuration:
 the cases, split, grading and gold commits are unchanged, and the earlier run
 is superseded because the code under test was crashing.
 
+## The lineage table was loaded on every query and read on almost none
+
+The first optimisation in this project that worked, found by asking a question
+the benchmark suite had never asked: not "is retrieval good" but "where does
+the time go".
+
+`Backend.search()` constructs a `JsonLineageStore` on every call, and the
+constructor read and indexed the whole file eagerly. On curl that file is
+**35 MB of JSON, about two seconds to parse and index**. Only ordinal and
+timeline constraints ever consult it — `--first`, `--last`, `--removed`,
+`--timeline` — so an ordinary `git why "..."` paid those two seconds for a
+structure nothing then looked at.
+
+The fix is two independent halves, both needed:
+
+1. **`JsonLineageStore` loads on first lookup, not in the constructor.** The
+   caller cannot know in advance whether a lookup is coming, so the store has
+   to be the thing that decides.
+2. **`search()` only resolves an interval when an ordinal or timeline
+   constraint asks for one.** Structural expansion was already gated this way;
+   this closed the last unconditional path in.
+
+Measured on curl (30,000 commits, 182,772 records), interleaving the two builds
+so drifting machine load hits both equally:
+
+|                               |         before |         after |
+| ----------------------------- | -------------: | ------------: |
+| plain hybrid query, p50       |        3767 ms |       1402 ms |
+| full perf workload, p50 / p95 | 3776 / 4368 ms | 807 / 1199 ms |
+
+**4.7x on the published workload.** Output is unchanged: eleven query shapes —
+plain, `--text`, `--semantic`, each ordinal, `--timeline`, `--owners`, an
+anchored temporal query — produce byte-identical JSON before and after. That is
+the whole safety argument, and it is why this did not need a corpus re-run:
+nothing about ranking changed, a value that was computed and discarded is no
+longer computed.
+
+**What made it findable.** Every previous optimisation attempt here asked
+"does this rank better". None asked "what is this spending time on". The
+profile was four CLI invocations — `status`, `--text`, `--semantic`, hybrid —
+which is about ten minutes of work and pointed straight at it.
+
+**What it changes downstream.** Process start and opening the index is now
+about 40% of a query rather than a small slice of a much slower one, which
+makes a resident process the next real lever rather than a rounding error. See
+`ROADMAP.md`.
+
 ## Ordinals are only as good as the token the interval is keyed on
 
 Found while making the human renderer show the ordinal answer at all (it was

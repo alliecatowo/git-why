@@ -1,0 +1,36 @@
+All three checks match. Now let's investigate.Found it: `8cb1bb4a go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)` bumped `go 1.17` → `go 1.18`. Let me verify this commit's full message and diff.This confirms it — commit `8cb1bb4` explicitly ties the Go minimum version bump to a quic-go (HTTP/3 library) upgrade. Let's also check the related PR/issue text if referenced, and double check there isn't an even more explicit later bump tied to HTTP/3 (e.g., Go 1.20 min for later quic-go versions).Found multiple direct examples. Let me verify the third one (697cc593) as well for completeness.I have strong, multiple, unambiguous confirmations. Let me finalize my answer with the clearest, most explicit example.
+
+## Answer
+
+**Yes.** Caddy has raised its minimum Go version multiple times specifically because of upgrades to `quic-go` — the third-party library that implements Caddy's HTTP/3 support (`github.com/quic-go/quic-go`, imported directly in `modules/caddyhttp/server.go` and `listeners.go` for the HTTP/3 listener/transport).
+
+### Primary supporting commit
+
+**`8cb1bb4af30b880f981b1ae6fdb13e5944bfaefe`** — *"go.mod: Upgrade quic-go to v0.33.0 (Go 1.19 min)"* (Matthew Holt, 2023-02-24)
+
+The commit message itself states the causal link in its title: the quic-go upgrade to v0.33.0 required Go 1.19 as the minimum. The diff shows:
+
+`go.mod`:
+```diff
+-	github.com/quic-go/quic-go v0.32.0
++	github.com/quic-go/quic-go v0.33.0
+```
+(plus corresponding `qtls-go1-19`/`qtls-go1-20` bumps used by quic-go's TLS stack)
+
+`README.md`:
+```diff
+ Requirements:
+
+-- [Go 1.18 or newer](https://golang.org/dl/)
++- [Go 1.19 or newer](https://golang.org/dl/)
+```
+
+There is no other unrelated change in this commit — it's exclusively a quic-go dependency bump paired with the Go minimum-version bump, making the causality explicit.
+
+### Corroborating commits (same pattern repeated later)
+
+- **`f45a6de20dd19e82e58c85b37e03957b2203b544`** — *"go.mod: Update quic-go to v0.37.0, bump to Go 1.20 minimum (#5644)"* (Marten Seemann, 2023-07-22). Title again directly ties the quic-go update to the Go minimum bump; diff moves `go.mod` from `go 1.19` to `go 1.20` alongside `quic-go v0.36.2` → `v0.37.0`.
+
+- **`697cc593a17fcb39087161b058fc1dba8b767060`** — *"chore: Update quic-go to v0.41.0, bump Go minimum to 1.21 (#6043)"* (Marten Seemann, 2024-01-25). Same pattern: `quic-go v0.40.1` → `v0.41.0`, `go.mod` `go 1.20` → `go 1.21`, README requirement bumped to "Go 1.21 or newer."
+
+All three commits were authored either by Matthew Holt (Caddy's creator) or Marten Seemann (quic-go's maintainer), and each commit's title explicitly states the quic-go/HTTP-3-library version bump as the reason for the Go minimum version increase — this wasn't incidental; it happened repeatedly as a recurring pattern whenever quic-go itself raised its own Go version requirement.

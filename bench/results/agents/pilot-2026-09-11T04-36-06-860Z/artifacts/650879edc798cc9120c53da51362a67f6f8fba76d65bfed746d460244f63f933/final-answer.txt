@@ -1,0 +1,32 @@
+Verified. Now let's investigate.Found it — the initial squashed commit that added `t_stream.c` and the `XADD` command. Let's inspect it in detail.This confirms it — commit `79866a6361829ed0602dedff9cb378c66977227a` on **2017-08-30** introduces `t_stream.c`, adds `XADD` and `XRANGE` to the command table, and creates the `OBJ_STREAM` type.I have all the evidence needed to answer definitively.
+
+## Answer
+
+**Redis first got the Streams data type (with commands like `XADD`) on August 30, 2017**, in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`** — *"Streams: 12 commits squashed into the initial Streams implementation."* (Author: antirez, Date: Wed Aug 30 12:40:27 2017 +0200)
+
+This commit:
+
+- Adds the new file **`src/t_stream.c`** (376 lines), implementing the low-level stream encoding (a radix tree of listpacks), `streamNew()`, `streamAppendItem()`, and the command implementations including `xaddCommand`.
+- Registers the new commands in **`src/server.c`**'s command table:
+  ```c
+  +    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
+  +    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+  ```
+- Adds the new object type in **`src/server.h`**:
+  ```c
+  +#define OBJ_STREAM 5
+  ...
+  +#define OBJ_ENCODING_STREAM 10 /* Encoded as a radix tree of listpacks */
+  ...
+  +/* Stream data type. */
+  +stream *streamNew(void);
+  ...
+  +robj *createStreamObject(void);
+  ```
+- Adds new supporting files `src/stream.h`, and vendors in `src/listpack.c`/`src/listpack.h` (the compact encoding streams are built on).
+
+This is a squash commit (per its message, folding together 12 earlier WIP commits — visible in the subsequent history, e.g. `100d43c1a "Streams: assign value of 6 to OBJ_STREAM..."`, `485014cc7 "Streams: RDB saving."`, `ec9bbe96b "Streams: XLEN command."`, etc.) that represents the first point in the repository's history where the Streams type and `XADD` command exist. Later commits (e.g. `19b06935d "Streams: fix XADD API and keyspace notifications"`, Dec 2017) refined `XADD`'s options, but `79866a636` is the commit that establishes the data type and command's initial existence.
+
+No earlier commit in this history references streams or `XADD`; I did not need to invent or guess a SHA — this one is directly verifiable via `git log --follow -- src/t_stream.c` and `git show`.

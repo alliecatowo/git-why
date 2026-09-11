@@ -118,11 +118,11 @@ disappears for reasons unrelated to the feature.
 
 ## What it costs
 
-A search is **seconds, not milliseconds**: measured p50 3.7s, p95 4.2s on a
-30,000-commit repository. There is no daemon, so every invocation pays process
-start and model load. Budget for that — ask one well-formed question rather
-than sweeping several phrasings, and do not put `git why` in a loop.
+A search is **under a second** on a large repository: measured p50 807 ms,
+p95 1199 ms on 30,000 commits. Not free, but cheap enough to ask a question
+rather than guess. Still ask one well-formed question instead of sweeping
+several phrasings — each one is a fresh process.
 
-The index itself is roughly 5.9 KB per record and `index --if-needed` returns
-in about 0.2s when it is already current, so keeping it fresh is cheap even
-though querying is not.
+The index is roughly 5.9 KB per record, and `index --if-needed` returns in
+about 0.2s when it is already current, so keeping it fresh costs almost
+nothing.

@@ -1,0 +1,37 @@
+Verified. Now let's investigate the LPOS command history.Found it directly.I have confirmed and verified the commit is in the current HEAD's history. Here's my final answer:
+
+## Answer
+
+**Yes, it got renamed.** The LPOS option was originally called `FIRST` and was renamed to `RANK`.
+
+**Supporting commit:** `a5a3a7bbc61203398ecc1d5b52c76214f5672776`
+
+**Commit message:**
+```
+LPOS: option FIRST renamed RANK.
+```
+
+**Supporting diff excerpts** (from `src/t_list.c`):
+```diff
+-/* LPOS key element [FIRST rank] [COUNT num-matches] [MAXLEN len]
++/* LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]
+  *
+- * FIRST "rank" is the position of the match, so if it is 1, the first match
++ * The "rank" is the position of the match, so if it is 1, the first match
+...
+-        if (!strcasecmp(opt,"FIRST") && moreargs) {
++        if (!strcasecmp(opt,"RANK") && moreargs) {
+             j++;
+             if (getLongFromObjectOrReply(c, c->argv[j], &rank, NULL) != C_OK)
+                 return;
+             if (rank == 0) {
+-                addReplyError(c,"FIRST can't be zero: use 1 to start from "
++                addReplyError(c,"RANK can't be zero: use 1 to start from "
+                                 "the first match, 2 from the second, ...");
+```
+
+And the corresponding test renames in `tests/unit/type/list.tcl` (e.g. `LPOS FIRST (positive and negative rank) option` → `LPOS RANK (positive and negative rank) option`, with all `FIRST 1`/`FIRST -1` etc. test invocations changed to `RANK 1`/`RANK -1`).
+
+**Context on the history:** This commit is dated Wed Jun 24 2020, by antirez, and is part of the original development of the LPOS command (which itself began life even earlier under the name `LRANK`, per commit `a7936ef96 "LRANK: Add command (the command will be renamed LPOS)."`). So the full naming evolution was: `LRANK` command with implicit first-match semantics → renamed to `LPOS` with a `FIRST` option → that option itself renamed to `RANK` in commit `a5a3a7bbc`, which is the commit that produced the final `RANK` naming still in use today.
+
+I verified this commit `a5a3a7bbc` is an ancestor of the current `HEAD` (`e64d91c37105bc2e23816b6f81b9ffc5e5d99801`), so it is genuinely part of this repository's history reachable from the pinned commit. No files were modified during this investigation.

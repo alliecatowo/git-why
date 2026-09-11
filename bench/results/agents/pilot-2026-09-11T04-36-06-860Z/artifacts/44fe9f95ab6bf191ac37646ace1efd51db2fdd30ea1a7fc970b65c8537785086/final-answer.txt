@@ -1,0 +1,49 @@
+Verified. Now let's search for the security fix.This matches exactly. Let's look at the actual fix commit `620ea2141`.This is exactly the fix. Let's also check the commit date is within the repo history and confirm HEAD is after this commit (repo has 30,000 commits, so this old commit should exist).The commit is confirmed to be part of this repository's history, prior to the pinned HEAD.
+
+## Answer
+
+**The bug (CVE-2022-27774):** When curl followed an HTTP redirect that pointed to a different host/protocol/port combination, it could still send previously-set credentials (from a URL-embedded user:password) to the new destination — even if that destination was a different port or an entirely different protocol than the original request. This meant a malicious or compromised server could redirect the client to another service (e.g., a different port on the same host, or FTP instead of HTTP) and receive the user's credentials that were never meant for it.
+
+**The fix — commit `620ea21410030a9977396b4661806bc187231b79`** ("transfer: redirects to other protocols or ports clear auth"):
+
+The commit message states:
+> transfer: redirects to other protocols or ports clear auth
+>
+> ... unless explicitly permitted.
+>
+> Bug: https://curl.se/docs/CVE-2022-27774.html
+> Reported-by: Harry Sintonen
+> Closes #8748
+
+The diff to `lib/transfer.c` adds logic in `Curl_follow()` that, after computing the redirect target, checks whether the new port or protocol/scheme differs from the current connection's port/protocol, and if so — and unless the new `allow_auth_to_other_hosts` option permits it — clears the stored username/password before following the redirect:
+
+```c
+/* Clear auth if this redirects to a different port number or protocol,
+   unless permitted */
+if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {
+  ...
+  if(port != data->info.conn_remote_port) {
+    infof(data, "Clear auth, redirects to port from %u to %u",
+          data->info.conn_remote_port, port);
+    clear = TRUE;
+  }
+  else {
+    ...
+    p = Curl_builtin_scheme(scheme);
+    if(p && (p->protocol != data->info.conn_protocol)) {
+      infof(data, "Clear auth, redirects scheme from %s to %s",
+            data->info.conn_scheme, scheme);
+      clear = TRUE;
+    }
+    ...
+  }
+  if(clear) {
+    Curl_safefree(data->state.aptr.user);
+    Curl_safefree(data->state.aptr.passwd);
+  }
+}
+```
+
+So the fix changed curl's redirect-following code to detect a change of port or protocol/scheme on redirect and, in that case, wipe out the saved username and password before issuing the redirected request — preventing credentials from leaking to a different protocol or port unless the caller explicitly opts in (via the new `CURLOPT_ALLOW_AUTH_TO_OTHER_HOST`-style flag, `allow_auth_to_other_hosts`).
+
+This commit (`620ea2141`) is confirmed present in this repository's history and is an ancestor of the pinned HEAD (`ee521a1c889f4cde6905c5db117959917568be9b`). A companion commit, `5295e8d64` ("tests: verify the fix for CVE-2022-27774"), adds regression tests (test973–test976) exercising exactly this redirect-to-different-protocol/port scenario, corroborating the fix.

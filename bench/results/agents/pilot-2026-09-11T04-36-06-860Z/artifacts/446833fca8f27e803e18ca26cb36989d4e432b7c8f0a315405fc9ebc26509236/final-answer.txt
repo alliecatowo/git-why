@@ -1,0 +1,49 @@
+Verified. Now let's investigate the history of the ignore-file naming.Found it. Let's examine that commit's details.This is a clear and complete answer. Let me also verify when `.rgignore` was first introduced, for completeness.This confirms `.rgignore` existed before being renamed to `.ignore`. I have all the information needed for a complete answer.
+
+## Answer
+
+**Yes** — ripgrep's special ignore-file name used to be **`.rgignore`** before it was changed to **`.ignore`**.
+
+### Supporting commit
+
+**SHA: `cc90511ab29d3c37e873acac0fd80f90473f54bb`**
+
+Commit message:
+```
+Switch from .rgignore to .ignore.
+
+But don't actually remove support for .rgignore until the next semver
+bump.
+
+Note that this puts us in line with the silver searcher:
+https://github.com/ggreer/the_silver_searcher/pull/974
+
+Fixes #40
+```
+
+Relevant diff excerpts:
+
+From `src/ignore.rs`:
+```diff
+ const IGNORE_NAMES: &'static [&'static str] = &[
+     ".gitignore",
++    ".ignore",
+     ".rgignore",
+ ];
+```
+
+From `README.md`:
+```diff
+-The above command also respects all `.rgignore` files, including in parent
+-directories. `.rgignore` files can be used when `.gitignore` files are
+-insufficient. In all cases, `.rgignore` patterns take precedence over
++The above command also respects all `.ignore` files, including in parent
++directories. `.ignore` files can be used when `.gitignore` files are
++insufficient. In all cases, `.ignore` patterns take precedence over
+ `.gitignore`.
+```
+
+### Context
+- `.rgignore` was ripgrep's original custom ignore-file name, present from the very early "draft"/initial-implementation commits (e.g. `f9bf1e4` "draft", `49003e8` "Add man page.", `a744ec1` "Rename xrep to ripgrep.").
+- On **2016-09-23**, commit `cc90511` added `.ignore` as the new name while keeping `.rgignore` working for backward compatibility ("don't actually remove support for .rgignore until the next semver bump"), explicitly aligning with The Silver Searcher's convention (referencing `ggreer/the_silver_searcher#974`) and closing issue #40.
+- `.rgignore` support was fully documented as a legacy/secondary name for a long time afterward (it still appears alongside `.ignore` in the current `crates/core/flags/defs.rs`, e.g. `"Don't use .ignore or .rgignore files."`), confirming `.rgignore` was the original special ignore-file name before `.ignore` became primary.

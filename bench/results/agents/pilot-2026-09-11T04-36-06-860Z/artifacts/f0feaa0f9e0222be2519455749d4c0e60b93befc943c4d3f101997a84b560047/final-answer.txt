@@ -1,0 +1,42 @@
+Found it. Let's get full details on commit 65ca22946.The original introducing commit is `04c03416e writeout: support to generate JSON output`. Let's inspect that.This is exactly the answer — commit message literally quotes `-w "%{json}"`. Let's confirm this commit is an ancestor of HEAD and double check the doc diff too.I have everything needed to answer confidently.
+
+## Answer
+
+**Yes** — curl can print transfer stats as JSON with `-w`/`--write-out` using the `%{json}` variable, exactly as you remembered.
+
+### Supporting commit
+
+**SHA:** `04c03416e68fd635a15cae8201872f5c29fdcca8`
+(confirmed to be an ancestor of the pinned HEAD `ee521a1c889f4cde6905c5db117959917568be9b`)
+
+**Author/Date:** Mathias Gumz, Sat Feb 1 2020 — `writeout: support to generate JSON output`
+
+**Commit message excerpt** (quotes the exact syntax you were thinking of):
+
+> This commit adds support to generate JSON via the writeout feature:
+>
+>     -w "%{json}"
+>
+> It leverages the existing infrastructure as much as possible. Thus, generating the JSON on STDERR is possible by:
+>
+>     -w "%{stderr}%{json}"
+>
+> This implements a variant of https://github.com/curl/curl/wiki/JSON#--write-out-json.
+>
+> Closes #4870
+
+**Documentation diff added by this commit** (`docs/cmdline-opts/write-out.d`):
+
+```diff
+ .B http_version
+ The http version that was effectively used. (Added in 7.50.0)
+ .TP
++.B json
++A JSON object with all available keys.
++.TP
+ .B local_ip
+```
+
+This commit also added the implementation files `src/tool_writeout_json.c` / `src/tool_writeout_json.h` that render the JSON object.
+
+Later commits in the history refine this feature (e.g. `4133a69f2` adds `%{header_json}`, and `65ca22946` refactors write-out/write-out-json and adds `%{errormsg}`/`%{exitcode}` support in JSON), but the original commit that establishes the `-w "%{json}"` capability is `04c03416e`.

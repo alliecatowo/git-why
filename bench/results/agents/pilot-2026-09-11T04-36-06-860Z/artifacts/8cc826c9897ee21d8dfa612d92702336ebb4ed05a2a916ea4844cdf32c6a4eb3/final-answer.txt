@@ -1,0 +1,52 @@
+All three checks match. Now let's investigate the streams/XADD history.These earliest ones look promising. Let's find the very first commit that introduces XADD command.This is the definitive commit. Let's check the full commit message and confirm XADD registration in server.c command table.This confirms it. Let's also check the parent commit's date to make sure this really is the first appearance (not present before, e.g., in a different branch merged later).I have confirmed the environment matches the pinned commit and located the answer.
+
+## Answer
+
+Redis first got the **Streams data type** (with commands like `XADD`) in commit:
+
+**`79866a6361829ed0602dedff9cb378c66977227a`** — *"Streams: 12 commits squashed into the initial Streams implementation."*
+Author: antirez, Date: Wed Aug 30 12:40:27 2017 +0200
+
+This is the first commit in the repository history that introduces `src/t_stream.c`, `src/stream.h`, and registers the stream commands in the command table. Confirmed via `git log --all --diff-filter=A -- src/t_stream.c`, which returns exactly this single commit as the one that added the file.
+
+### Supporting evidence
+
+**Commit message:**
+```
+Streams: 12 commits squashed into the initial Streams implementation.
+```
+
+**Diff in `src/server.c`** (registering the new commands):
+```c
++    {"xadd",xaddCommand,-4,"wmF",0,NULL,1,1,1,0,0},
++    {"xrange",xrangeCommand,-4,"r",0,NULL,1,1,1,0,0},
+```
+
+**Diff in `src/t_stream.c`** (the actual `XADD` command implementation):
+```c
++/* XADD key [field value] [field value] ... */
++void xaddCommand(client *c) {
++    if ((c->argc % 2) == 1) {
++        addReplyError(c,"wrong number of arguments for XADD");
++        return;
++    }
++
++    /* Lookup the stream at key. */
++    robj *o;
++    stream *s;
++    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;
++    s = o->ptr;
++
++    /* Append using the low level function and return the ID. */
++    streamID id;
++    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);
++    sds reply = sdscatfmt(sdsempty(),"+%U.%U\r\n",id.ms,id.seq);
++    addReplySds(c,reply);
++
++    signalModifiedKey(c->db,c->argv[1]);
++    notifyKeyspaceEvent(NOTIFY_HASH,"xadd",c->argv[1],c->db->id);
++    server.dirty++;
++}
+```
+
+This single squashed commit (which folds together antirez's initial 12-commit development series for the feature) is where the Stream type, the `listpack` encoding it depends on, and the `XADD`/`XRANGE` commands first enter the Redis codebase. Subsequent commits (e.g. `19b06935d`, `3a0b78bc5`, `054080328`, etc., all dated shortly after in the same development stream) refine `XADD`'s ID handling, MAXLEN option, and keyspace notifications, but this is the commit that establishes the feature's existence.

@@ -1,0 +1,134 @@
+{
+  "task_id": "X-requests-02",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "89e46080b58a18b73f0323276f3827ca71cde743",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:49:52.479Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "ec83471faeea1e7189fa4e762ccc9dd61fbab2321bf3ead55643809615a04f8e",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "0c2bbe73982a70623fb81bf16b2507ea0ca80b99",
+    "citedGoldSha": true,
+    "citedShaCount": 2,
+    "matchedTokens": [
+      "0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+    ]
+  },
+  "wall_ms": 54294,
+  "tool_calls": 10,
+  "history_calls": 6,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 21460,
+  "output_tokens": 2551,
+  "cache_read_tokens": 105029,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.08943580000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 44795,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-requests-02-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "ccc8afd32810b3ae9ee6cd7c47032bae9bfccf5a5efc4e3b75fbe924a9bfbee7",
+  "zg_index_build_ms": 17135,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  95 / 95 files\n  Entities    5,727\n  Truncated   7 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_wJbG6JFnUOxmYlavXJrSDk",
+        "status": "completed",
+        "input": {
+          "command": "git log -1 --format='%H %ci'; echo \"---\"; find . -maxdepth 2 -iname \"setup.py\" -o -iname \"setup.cfg\" -o -iname \"pyproject.toml\" | head -20"
+        },
+        "output": "dae7ef63b4df6eded86637f251fc4e3a06c3b479 2026-09-02 12:15:52 -0600\n---\n./pyproject.toml\n./setup.py\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_YZoexaTZ94E6FLiFqtN1EY",
+        "status": "completed",
+        "input": {
+          "command": "git show -s --format='%H%n%an%n%ad%n%s' dae7ef63b4df6eded86637f251fc4e3a06c3b479\necho \"---\"\ngrep -n \"python_requires\\|Programming Language :: Python\" setup.py pyproject.toml\n"
+        },
+        "output": "dae7ef63b4df6eded86637f251fc4e3a06c3b479\ndependabot[bot]\nWed Sep 2 12:15:52 2026 -0600\nBump https://github.com/astral-sh/ruff-pre-commit (#7616)\n---\npyproject.toml:33:    \"Programming Language :: Python\",\npyproject.toml:34:    \"Programming Language :: Python :: 3\",\npyproject.toml:35:    \"Programming Language :: Python :: 3.10\",\npyproject.toml:36:    \"Programming Language :: Python :: 3.11\",\npyproject.toml:37:    \"Programming Language :: Python :: 3.12\",\npyproject.toml:38:    \"Programming Language :: Python :: 3.13\",\npyproject.toml:39:    \"Programming Language :: Python :: 3.14\",\npyproject.toml:40:    \"Programming Language :: Python :: 3.15\",\npyproject.toml:41:    \"Programming Language :: Python :: 3 :: Only\",\npyproject.toml:42:    \"Programming Language :: Python :: Implementation :: CPython\",\npyproject.toml:43:    \"Programming Language :: Python :: Implementation :: PyPy\",\npyproject.toml:44:    \"Programming Language :: Python :: Free Threading :: 2 - Beta\",\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_LzNw8FP0Tn2x8hTLWom2n7",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all -- pyproject.toml | wc -l\ngit log -p --follow -- pyproject.toml | grep -n \"3.9\\|3.10\\|requires-python\" | head -80"
+        },
+        "output": "17\n167:commit 7407309c8a8a73aa2f4337184025d440bbedab7a\n243:@@ -18,8 +18,8 @@ requires-python = \">=3.10\"\n259:    Drop support for Python 3.9 (#7196)\n269:-requires-python = \">=3.9\"\n270:+requires-python = \">=3.10\"\n278:-    \"Programming Language :: Python :: 3.9\",\n279:     \"Programming Language :: Python :: 3.10\",\n286:-# UP036: Remove once Python 3.10 is the minimum supported version\n320:+requires-python = \">=3.9\"\n338:+    \"Programming Language :: Python :: 3.9\",\n339:+    \"Programming Language :: Python :: 3.10\",\n385:+# UP036: Remove once Python 3.10 is the minimum supported version\n401:    * Drop support for pypy-3.10\n440:commit d63e94f552ebf77ccf45d97e5863ac46500fa2c7\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_xshaGNbkz4LGykHFuBnHpr",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 7407309c8a8a73aa2f4337184025d440bbedab7a\necho \"===FULL MESSAGE===\"\ngit log -1 --format='%H%n%an <%ae>%n%ad%n%n%B' 7407309c8a8a73aa2f4337184025d440bbedab7a\necho \"===DIFF===\"\ngit show 7407309c8a8a73aa2f4337184025d440bbedab7a"
+        },
+        "output": "commit 7407309c8a8a73aa2f4337184025d440bbedab7a\nAuthor: Frank Dana <ferdnyc@gmail.com>\nDate:   Mon Mar 30 00:07:31 2026 -0400\n\n    Packaging: DRY out extras definition (#7277)\n\n pyproject.toml | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n===FULL MESSAGE===\n7407309c8a8a73aa2f4337184025d440bbedab7a\nFrank Dana <ferdnyc@gmail.com>\nMon Mar 30 00:07:31 2026 -0400\n\nPackaging: DRY out extras definition (#7277)\n===DIFF===\ncommit 7407309c8a8a73aa2f4337184025d440bbedab7a\nAuthor: Frank Dana <ferdnyc@gmail.com>\nDate:   Mon Mar 30 00:07:31 2026 -0400\n\n    Packaging: DRY out extras definition (#7277)\n\ndiff --git a/pyproject.toml b/pyproject.toml\nindex dcde263d..dcb537c2 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -53,11 +53,11 @@ security = []\n socks = [\"PySocks>=1.5.6, !=1.5.7\"]\n use_chardet_on_py3 = [\"chardet>=3.0.2,<8\"]\n test = [\n+    \"requests[socks]\",\n     \"pytest-httpbin==2.1.0\",\n     \"pytest-cov\",\n     \"pytest-mock\",\n     \"pytest-xdist\",\n-    \"PySocks>=1.5.6, !=1.5.7\",\n     \"pytest>=3\"\n ]\n \n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_CMpBI8TZuBpD1JXX34Iwa8",
+        "status": "completed",
+        "input": {
+          "command": "git log -p --follow -- pyproject.toml > /tmp/opencode/pyproject_history.txt\ngrep -n \"^commit\\|Drop support for Python 3.9\" /tmp/opencode/pyproject_history.txt | head -40"
+        },
+        "output": "1:commit 661970d171d9c3e12e4c789c4768db647d8c4da0\n21:commit e50e5945294f79ee9ab4ec69de24d14f9b26a7ae\n48:commit dc9dbdfb3434c6e58d48fd102f93e5342308817e\n67:commit eb173bc819c72580deed2d54190d340cc769e529\n86:commit 561e4b6889f53584c39a67f8794c53a414f68481\n117:commit 6ec76b4a36fba4a32fb72f5f9ba04e632635e477\n137:commit 4443b1a847b190010c2972a658924b98b5db6360\n167:commit 7407309c8a8a73aa2f4337184025d440bbedab7a\n191:commit b2a1d33f571518ca9a6148e7da787cc5827f897a\n213:commit 4bd79e397304d46dfccd76f36c07f66c0295ff82\n233:commit 733b2018a3987714f5a9576f2df4895f2a166449\n255:commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\n259:    Drop support for Python 3.9 (#7196)\n293:commit cb2c800518423e0042789ab09f8f6e719428a444\n391:commit f8bec2f7ca9d7c03981a12ff8866a9b3923f1699\n440:commit d63e94f552ebf77ccf45d97e5863ac46500fa2c7\n467:commit 51716c4ef390136b0d4b800ec7665dd5503e64fc\n487:commit 2a6f290bc09324406708a4d404a88a45d848ddf9\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_XUG2McoSheljlyBJNBRSSW",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\necho \"===FULL MESSAGE===\"\ngit log -1 --format='%H%n%an <%ae>%n%ad%n%n%B' 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\necho \"===DIFF===\"\ngit show 0c2bbe73982a70623fb81bf16b2507ea0ca80b99"
+        },
+        "output": "commit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\n .github/workflows/run-tests.yml | 10 +++++-----\n README.md                       |  2 +-\n pyproject.toml                  |  6 ++----\n setup.py                        |  4 ++--\n tox.ini                         |  2 +-\n 5 files changed, 11 insertions(+), 13 deletions(-)\n===FULL MESSAGE===\n0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nNate Prewitt <nate.prewitt@gmail.com>\nFri Feb 6 08:02:46 2026 -0700\n\nDrop support for Python 3.9 (#7196)\n\n\n===DIFF===\ncommit 0c2bbe73982a70623fb81bf16b2507ea0ca80b99\nAuthor: Nate Prewitt <nate.prewitt@gmail.com>\nDate:   Fri Feb 6 08:02:46 2026 -0700\n\n    Drop support for Python 3.9 (#7196)\n\ndiff --git a/.github/workflows/run-tests.yml b/.github/workflows/run-tests.yml\nindex 82bca72d..c9fd8100 100644\n--- a/.github/workflows/run-tests.yml\n+++ b/.github/workflows/run-tests.yml\n@@ -13,7 +13,7 @@ jobs:\n     strategy:\n       fail-fast: false\n       matrix:\n-        python-version: [\"3.9\", \"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\", \"3.15-dev\", \"pypy-3.11\"]\n+        python-version: [\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\", \"3.15-dev\", \"pypy-3.11\"]\n         os: [ubuntu-22.04, macOS-latest, windows-latest]\n         # Pypy-3.11 can't install openssl-sys with rust\n         # which prevents us from testing in GHA.\n@@ -45,10 +45,10 @@ jobs:\n \n     steps:\n       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd\n-      - name: 'Set up Python 3.9'\n+      - name: 'Set up Python 3.10'\n         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405\n         with:\n-          python-version: '3.9'\n+          python-version: '3.10'\n       - name: Install dependencies\n         run: |\n           make\n@@ -65,10 +65,10 @@ jobs:\n \n     steps:\n       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd\n-      - name: 'Set up Python 3.9'\n+      - name: 'Set up Python 3.10'\n         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405\n         with:\n-          python-version: '3.9'\n+          python-version: '3.10'\n       - name: Install dependencies\n         run: |\n           make\ndiff --git a/README.md b/README.md\nindex 74adab80..66640ff0 100644\n--- a/README.md\n+++ b/README.md\n@@ -33,7 +33,7 @@ Requests is available on PyPI:\n $ python -m pip install requests\n ```\n \n-Requests officially supports Python 3.9+.\n+Requests officially supports Python 3.10+.\n \n ## Supported Features & Best–Practices\n \ndiff --git a/pyproject.toml b/pyproject.toml\nindex 8f4fe5ba..f9513bf0 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -14,7 +14,7 @@ maintainers = [\n     {name = \"Ian Stapleton Cordasco\", email=\"graffatcolmingov@gmail.com\"},\n     {name = \"Nate Prewitt\", email=\"nate.prewitt@gmail.com\"}\n ]\n-requires-python = \">=3.9\"\n+requires-python = \">=3.10\"\n dependencies = [\n     \"charset_normalizer>=2,<4\",\n     \"idna>=2.5,<4\",\n@@ -32,7 +32,6 @@ classifiers = [\n     \"Operating System :: OS Independent\",\n     \"Programming Language :: Python\",\n     \"Programming Language :: Python :: 3\",\n-    \"Programming Language :: Python :: 3.9\",\n     \"Programming Language :: Python :: 3.10\",\n     \"Programming Language :: Python :: 3.11\",\n     \"Programming Language :: Python :: 3.12\",\n@@ -85,8 +84,7 @@ select = [\n     \"UP\",     # pyupgrade\n     \"T10\",    # flake8-debugger (replaces debug-statements hook)\n ]\n-# UP036: Remove once Python 3.10 is the minimum supported version\n-ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\", \"UP036\"]\n+ignore = [\"E203\", \"E501\", \"UP038\", \"UP031\"]\n per-file-ignores = {\"src/requests/__init__.py\" = [\"E402\", \"F401\"], \"src/requests/compat.py\" = [\"E402\", \"F401\"], \"tests/compat.py\" = [\"F401\"]}\n \n [tool.ruff.lint.isort]\ndiff --git a/setup.py b/setup.py\nindex f5f816ae..1095518a 100755\n--- a/setup.py\n+++ b/setup.py\n@@ -1,7 +1,7 @@\n import sys\n \n-if sys.version_info < (3, 9):\n-    sys.stderr.write(\"Requests requires Python 3.9 or later.\\n\")\n+if sys.version_info < (3, 10):  # noqa: UP036\n+    sys.stderr.write(\"Requests requires Python 3.10 or later.\\n\")\n     sys.exit(1)\n \n from setuptools import setup\ndiff --git a/tox.ini b/tox.ini\nindex 70c28551..b316359a 100644\n--- a/tox.ini\n+++ b/tox.ini\n@@ -1,5 +1,5 @@\n [tox]\n-envlist = py{39,310,311,312,313,314}-{default, use_chardet_on_py3}\n+envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}\n \n [testenv]\n deps = -rrequirements-dev.txt\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 21460,
+    "output": 2551,
+    "messages": 12
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/ccc8afd32810b3ae9ee6cd7c47032bae9bfccf5a5efc4e3b75fbe924a9bfbee7",
+  "completed": true
+}

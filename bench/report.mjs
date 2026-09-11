@@ -693,19 +693,13 @@ if (realRepoPerf?.data.realRepo?.latencyMs) {
     md += `\nAbout ${(rr.latencyMs.p50 / fixtureFresh.latencyMs.p50).toFixed(1)}x slower on the real repository. `;
   }
   md +=
-    'That is the number to quote, and it is not fast: a query on a 30,000-commit history takes a ' +
-    'few seconds, not the sub-second the fixture suggests. ' +
+    'That is the number to quote. ' +
     'Every query passed `--no-refresh`, so the workload could not write to or mutate the clone.\n\n';
 
   if (rr.breakdown) {
     const b = rr.breakdown;
-    md +=
-      '**Where the time goes.** The intuitive answer — "it is a one-shot CLI with no daemon, so\n';
-    md +=
-      'it is paying process start and model load every time" — is wrong, and worth disproving\n';
-    md +=
-      'because it points optimisation at the wrong thing. Each row below is a separate invocation\n';
-    md += 'of the real CLI, so the differences are externally attributable:\n\n';
+    md += '**Where the time goes.** Each row is a separate invocation of the real CLI, so the\n';
+    md += 'differences are externally attributable rather than inferred:\n\n';
     md += '| invocation | what it adds | p50 |\n|---|---|---:|\n';
     md += `| \`status\` | process start, open the index, no retrieval | ${ms(b.statusOnly?.p50)} |\n`;
     md += `| \`--text\` | + the full-text branch | ${ms(b.textOnly?.p50)} |\n`;
@@ -713,13 +707,18 @@ if (realRepoPerf?.data.realRepo?.latencyMs) {
     md += `| hybrid (default) | both branches, which overlap rather than sum | ${ms(b.hybrid?.p50)} |\n\n`;
     if (b.statusOnly?.p50 && b.hybrid?.p50) {
       const share = Math.round((b.statusOnly.p50 / b.hybrid.p50) * 100);
-      md += `Startup and opening the index is ${share}% of a query. The rest is retrieval over `;
-      md += `${rr.recordCount?.toLocaleString('en-US') ?? 'the'} records, and **both branches are expensive** — `;
+      md += `Process start and opening the index is now about ${share}% of a query, which makes it the\n`;
       md +=
-        'the embedding model is not the bottleneck people assume it is. A resident process or a\n';
+        'largest single remaining item. That is a change in the shape of the profile rather than a\n';
       md +=
-        'daemon would therefore recover a small fraction of this; the collection scan is where the\n';
-      md += 'time is.\n\n';
+        'regression: the same step was a small slice of a far slower query until the lineage table\n';
+      md +=
+        'stopped being loaded on every call (see `docs/decisions.md`). A resident process is now the\n';
+      md +=
+        'next meaningful lever, where before that fix it would have recovered almost nothing.\n\n';
+      md +=
+        'Note that `status` is not a lower bound on a query: it computes disk usage and coverage\n';
+      md += 'counts a search never asks for, which is why `--text` can come in under it.\n\n';
     }
     md += `_${rr.loadCaveat}_\n\n`;
   }

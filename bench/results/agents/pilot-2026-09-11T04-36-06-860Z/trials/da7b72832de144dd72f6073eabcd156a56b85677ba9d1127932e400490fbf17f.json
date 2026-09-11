@@ -1,0 +1,104 @@
+{
+  "task_id": "X-requests-01",
+  "task_stratum": "archaeology",
+  "arm": "D",
+  "repetition": 1,
+  "base_sha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "corpus_fingerprint": "dae7ef63b4df6eded86637f251fc4e3a06c3b479",
+  "implementation_sha": "89e46080b58a18b73f0323276f3827ca71cde743",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:51:29.746Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "c0fdace999814a2dd9004e13c8f0cba097fc50d544a8a0b8534422951ce974b2",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "2ed84f55b22f19a1e1e8eea2e50963dce62052d3",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "2ed84f5",
+      "2ed84f55b22f19a1e1e8eea2e50963dce62052d3"
+    ]
+  },
+  "wall_ms": 34714,
+  "tool_calls": 5,
+  "history_calls": 2,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 16070,
+  "output_tokens": 1639,
+  "cache_read_tokens": 37276,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.0559852,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 30847,
+  "index_build_ms": 58284,
+  "model_download_ms": null,
+  "index_disk_bytes": 111292769,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-requests-01-D-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "da7b72832de144dd72f6073eabcd156a56b85677ba9d1127932e400490fbf17f",
+  "indexed_commits": 6494,
+  "git_why_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_dFNJTKRFHHdGR8ZJOPlGkc",
+        "status": "completed",
+        "input": {
+          "command": "git log --all --oneline -S\"charset_normalizer\" -- requests | head -50"
+        },
+        "output": "d63e94f5 Move to src directory (#6506)\n2ed84f55 Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_lYCrCbUEzV8UTDTcIMYAmT",
+        "status": "completed",
+        "input": {
+          "command": "git show --stat 2ed84f5 | head -30; echo \"-----\"; git log -1 --format=\"%H%n%an%n%ad%n%B\" 2ed84f5"
+        },
+        "output": "commit 2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAuthor: Ash Berlin-Taylor <ash_github@firemirror.com>\nDate:   Wed Jul 7 00:55:02 2021 +0100\n\n    Switch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n    \n    Although using the (non-vendored) chardet library is fine for requests\n    itself, but using a LGPL dependency the story is a lot less clear\n    for downstream projects, particularly ones that might like to bundle\n    requests (and thus chardet) in to a single binary -- think something\n    similar to what docker-compose is doing. By including an LGPL'd module\n    it is no longer clear if the resulting artefact must also be LGPL'd.\n    \n    By changing out this dependency for one under MIT we remove all\n    license ambiguity.\n    \n    As an \"escape hatch\" I have made the code so that it will use chardet\n    first if it is installed, but we no longer depend upon it directly,\n    although there is a new extra added, `requests[lgpl]`. This should\n    minimize the impact to users, and give them an escape hatch if\n    charset_normalizer turns out to be not as good. (In my non-exhaustive\n    tests it detects the same encoding as chartdet in every case I threw at\n    it)\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n    \n    Co-authored-by: Jarek Potiuk <jarek@potiuk.com>\n\n .gitignore             |  6 ++++++\n HISTORY.md             | 17 ++++++++++++++++-\n-----\n2ed84f55b22f19a1e1e8eea2e50963dce62052d3\nAsh Berlin-Taylor\nWed Jul 7 00:55:02 2021 +0100\nSwitch LGPL'd chardet for MIT licensed charset_normalizer (#5797)\n\nAlthough using the (non-vendored) chardet library is fine for requests\r\nitself, but using a LGPL dependency the story is a lot less clear\r\nfor downstream projects, particularly ones that might like to bundle\r\nrequests (and thus chardet) in to a single binary -- think something\r\nsimilar to what docker-compose is doing. By including an LGPL'd module\r\nit is no longer clear if the resulting artefact must also be LGPL'd.\r\n\r\nBy changing out this dependency for one under MIT we remove all\r\nlicense ambiguity.\r\n\r\nAs an \"escape hatch\" I have made the code so that it will use chardet\r\nfirst if it is installed, but we no longer depend upon it directly,\r\nalthough there is a new extra added, `requests[lgpl]`. This should\r\nminimize the impact to users, and give them an escape hatch if\r\ncharset_normalizer turns out to be not as good. (In my non-exhaustive\r\ntests it detects the same encoding as chartdet in every case I threw at\r\nit)\r\n\r\nCo-authored-by: Jarek Potiuk <jarek@potiuk.com>\r\n\r\nCo-authored-by: Jarek Potiuk <jarek@potiuk.com>\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": true
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 16070,
+    "output": 1639,
+    "messages": 6
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "dae7ef63b4df6eded86637f251fc4e3a06c3b479"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/da7b72832de144dd72f6073eabcd156a56b85677ba9d1127932e400490fbf17f",
+  "completed": true
+}

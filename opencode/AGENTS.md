@@ -27,11 +27,10 @@ git why index --if-needed
 
 Idempotent and ~0.2s when the index is current. Safe to run unconditionally.
 
-Querying is not cheap the same way: a search is seconds, not milliseconds —
-measured p50 3.7s, p95 4.2s on a 30,000-commit repository, because there is no
-daemon and every invocation pays process start and model load. Ask one
-well-formed question rather than sweeping several phrasings, and do not put it
-in a loop.
+Querying costs more: p50 807 ms, p95 1199 ms on a 30,000-commit repository,
+since every invocation is a fresh process. Cheap enough to ask rather than
+guess, expensive enough to ask one well-formed question instead of sweeping
+several phrasings.
 
 ## Asking well
 

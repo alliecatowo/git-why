@@ -195,33 +195,50 @@ existing work got:
   `gh pr list --search`, and a human scrolling the PR. If those win, that is
   the finding.
 
-## 6. Query latency on large repositories
+## 6. A resident process, modelled on zg's daemon
 
-Measured, and not where it was assumed to be.
+Now worth doing, which it was not before.
 
-A query on curl (30,000 commits, 182,772 records) takes p50 ~3.7s. The obvious
-explanation — a one-shot CLI paying process start and model load every time —
-is wrong: `git why status`, which starts the process and opens the index but
-retrieves nothing, is about 12% of that. The remaining ~88% is retrieval, and
-**both branches are expensive**, not just the vector one. The embedding model
-is not the bottleneck.
+Query latency on curl was p50 3.8s. Loading the lineage table on every query
+was 63% of that and is fixed (`docs/decisions.md`); the workload is now p50
+807 ms, p95 1199 ms. That changes what is left: process start plus opening the
+index is about 40% of a query, where before it was a rounding error against
+two seconds of wasted parsing. **A daemon would now recover roughly four
+hundred milliseconds of an eight-hundred-millisecond query.**
 
-That redirects the obvious optimisations:
+**The design to copy is `zg server`**, which gets the ergonomics right:
 
-- **A daemon or resident process recovers ~12%.** Worth much less than it
-  sounds, and it costs the "no daemon, no watcher" property that makes the
-  operational contract simple. Not obviously a good trade.
-- **The collection scan is the target.** Both the FTS and vector branches read
-  over the full record set. Candidate limits are already top-50 per branch, so
-  the cost is in the scan rather than in what is returned.
-- **Record count, not commit count, is the scaling variable** — curl is 30,000
-  commits but 182,772 records, because evidence hunks dominate. Anything that
-  reduces records per commit without losing retrieval quality would help
-  directly, and the evidence ablation says removing them outright would not
-  (`docs/report.md` section 4c).
+- `zg server on` / `off` / `status --check-ready` — explicit lifecycle, and a
+  readiness check scripts can gate on.
+- `--stdio` starts **or reuses** the shared daemon and proxies MCP over
+  stdin/stdout, leaving it running when the client disconnects. An MCP client
+  needs no daemon-aware configuration; it spawns what looks like a stdio
+  server and transparently gets a warm shared one.
+- `ZVEC_GREP_MODE=direct|server|auto` — the CLI still works with no daemon
+  at all. That is the property that matters here: `git why` must keep working
+  in a script, in CI, and on a machine where nothing was started.
+- Loopback only, auth off by default, optional bearer token.
+- An idle timeout that releases per-workspace resources (default 4h), so a
+  forgotten daemon does not hold an index open forever.
 
-Needs measuring against the 174-case corpus like everything else: a latency win
-that costs accuracy on the questions this tool exists for is not a win.
+**What it would hold warm:** the open Zvec collection, the embedding model,
+and the lineage table for repositories that use ordinal queries. Those are
+exactly the per-call costs `Backend.search()` currently redoes every time —
+measured directly, not inferred, by running queries back-to-back in one
+process and observing no warm-up at all.
+
+**The honest cost.** "No daemon, no watcher, no server" is currently a stated
+property of the operational contract and part of why the security story is
+short. A daemon adds a long-lived process holding file handles into `.git`, a
+loopback socket, and a lifecycle users can get wrong. `auto` mode keeps the
+no-daemon path working, but the contract text has to change and the threat
+model grows. That is a real trade, not a free win, which is why it is recorded
+here rather than built late in a release.
+
+**What still needs measuring:** the 174-case corpus is unaffected (latency
+work cannot change ranking), but the agent benchmark would be worth re-running.
+An agent's cost is dominated by model tokens rather than tool latency, so a
+faster tool may show up as nothing at all — worth knowing before building it.
 
 ## Known limits that are not on this list
 

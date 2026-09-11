@@ -251,13 +251,44 @@ export function pruneLineageEvents(file: string, reachable: ReadonlySet<string>)
 }
 
 export class JsonLineageStore implements LineageStore {
-  readonly #events: readonly LineageEvent[];
+  /**
+   * Loaded on first use, not in the constructor.
+   *
+   * The lineage table is large -- 35 MB of JSON on curl -- and reading and
+   * indexing it costs roughly two seconds. The constructor used to do that
+   * eagerly, and `Backend.search()` constructs a store on EVERY query before
+   * it knows whether anything will ask it a question. Only ordinal and
+   * timeline constraints ever do. So an ordinary `git why "..."` paid two
+   * seconds to build a structure it then never touched, which was most of its
+   * runtime.
+   *
+   * Laziness alone is not the whole fix -- the caller must also stop asking on
+   * paths that do not need an answer (see `search.ts`) -- but it is the half
+   * that cannot be got wrong by a future caller.
+   */
+  #loaded: {
+    events: readonly LineageEvent[];
+    intervals: ReturnType<typeof buildIntervals>;
+  } | null = null;
   #pathCountCache: ReadonlyMap<string, number> | null = null;
-  readonly #intervals: ReturnType<typeof buildIntervals>;
-  constructor(private readonly file: string) {
-    this.#events = readFile(file).events;
-    this.#intervals = buildIntervals(this.#events);
+  constructor(private readonly file: string) {}
+
+  #load(): { events: readonly LineageEvent[]; intervals: ReturnType<typeof buildIntervals> } {
+    if (this.#loaded === null) {
+      const events = readFile(this.file).events;
+      this.#loaded = { events, intervals: buildIntervals(events) };
+    }
+    return this.#loaded;
   }
+
+  get #events(): readonly LineageEvent[] {
+    return this.#load().events;
+  }
+
+  get #intervals(): ReturnType<typeof buildIntervals> {
+    return this.#load().intervals;
+  }
+
   async lookupToken(token: string): Promise<LineageInterval | null> {
     return this.#intervals.tokens.get(token.toLowerCase()) ?? null;
   }

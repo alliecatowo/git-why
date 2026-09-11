@@ -438,8 +438,24 @@ export async function search(
     });
   }
 
+  // Only ordinal and timeline constraints read an interval. Resolving one
+  // costs a full load of the lineage table -- 35 MB of JSON on curl, about two
+  // seconds, which measured as 53% of a query's total time -- and on a plain
+  // query the result was computed and then never looked at, because `answer`
+  // and `timeline` are the only things that consume it.
+  //
+  // Structural expansion is already gated the same way (see `expandAlways`
+  // above), so this closes the one remaining unconditional path into the
+  // lineage table.
+  const needsInterval =
+    constraint.type === 'first' ||
+    constraint.type === 'last' ||
+    constraint.type === 'removed' ||
+    constraint.type === 'timeline';
   const selectedInterval =
-    lineage === null ? null : await selectInterval(lineage, coreQuery, request.filters.paths);
+    lineage === null || !needsInterval
+      ? null
+      : await selectInterval(lineage, coreQuery, request.filters.paths);
   let answer: OrdinalAnswer | null = null;
   if (selectedInterval !== null) {
     const { interval, viaToken, viaPath } = selectedInterval;

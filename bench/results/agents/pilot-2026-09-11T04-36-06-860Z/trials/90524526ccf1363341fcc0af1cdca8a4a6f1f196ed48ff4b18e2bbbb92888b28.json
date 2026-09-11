@@ -1,0 +1,209 @@
+{
+  "task_id": "X-zod-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "corpus_fingerprint": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67",
+  "implementation_sha": "89e46080b58a18b73f0323276f3827ca71cde743",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:52:30.861Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "447b0c6d6e1031c2e31218738c7aa762b71fe3c75b2fba619bf8653ff69740c7",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "18854492b4b6e1648499f2f920c615dab187ee1a",
+    "citedGoldSha": true,
+    "citedShaCount": 3,
+    "matchedTokens": [
+      "18854492",
+      "18854492b4b6e1648499f2f920c615dab187ee1a"
+    ]
+  },
+  "wall_ms": 103052,
+  "tool_calls": 18,
+  "history_calls": 13,
+  "zg_calls": 2,
+  "git_why_calls": 0,
+  "input_tokens": 45046,
+  "output_tokens": 3926,
+  "cache_read_tokens": 411670,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.211686,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 88202,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-zod-01-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "90524526ccf1363341fcc0af1cdca8a4a6f1f196ed48ff4b18e2bbbb92888b28",
+  "zg_index_build_ms": 16725,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  563 / 563 files\n  Entities    7,793\n  Truncated   162 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_e7R0DVkv9q6i3YyzGWVQZ3",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all -- packages/zod/src/v3/types.ts 2>/dev/null | wc -l; git log --oneline --all | wc -l"
+        },
+        "output": "18\n3210\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_MFXJqOx7zH91ZqaTO6MseJ",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -S\"unknownKeys\" -- . | tail -60"
+        },
+        "output": "9782f87c perf(v4): validate without building the output, and keep schemas out of dictionary mode (#6480)\nfa77a4d7 feat(v4): z.compile — ahead-of-time schema compilation (#6085)\n35e6a6f6 Add llms.txt (#4915)\nd4faf71b Add v3 docs (#4972)\n85928549 Zod 4 (#4074)\n7365b7d5 docs: translate README to Korean (#3934)\n4d016b77 Improve type inference in generics\ne6939195 3.20.6\n06c237c2 Revert merge changes\n033088da Optimize object strip case (#1393)\nf1dfabb6 3.19.0 (#1383)\nf923706e Refactor type checks (#1280)\nff5de24f Added README for deno (#1157)\na944dd7b COnfigure docsify\n863346b1 chore: Format, lint, build Deno\n0a5f6444 Update release, remove fix.yml\ncbbfedd1 Add readme to docs\nb277c14f Fix Deno\n491c123d Attempt to fix Deno\n18d17d9f Add additional tests\n30b453b0 Improve deepPartial\n79e94d3c Export extendShape\nf134223a Add extendZodObject\n5668773f docs: ✏️ add Chinese readme file\n814a88f3 Documented override behavior\n6e74f877 Removed map files\naeec3a5f Added rollup for ESM\n077300de Started reverting changes\ndc05fd2b Reverted tsdx\ne72b92a5 Stripped unnecessary items out of eslint and package.json\n6dd873c1 Added z.strictCreate. zod@3.0.0-alpha.9\n6863159b Added deno back. Played with tsconfigs/\n9e35feb7 Removed ZodIntersection\n4b350403 Added deno files\n510e40b0 Added or method\n52726362 Deleted ZodParser code\n64d696b9 Got rid of ZodTypes.\n435297d9 Moved all parsing logic into subclasses\nea2d7b9b Added deno\n7d5cd4cd removed deno\n9e8959fc Add files\nd60d872a Added all subtypes into base.ts\n78fbfa2e Added deno\n04247332 Building deno\na2abcc97 rebuilt deno\n410dd7b4 chore: automatic fixes and code generation for 27071ca1 (Merge branch 'de…)\n295e4e93 Added files\n6ca4ceaf Simplified file structure\n5c6f3e1b Deno compatibility improvements\n65faf4bd fix c6b6d57d (Include Deno during CI testing and automatically …)\n1f57b40c Resolve almost all except 6 circular dependencies\naddcbbd1 Modified gitignore\n465b3870 Added coverage folder\n8b1e9984 Added playground\n65a9c222 Added coverage, removed playground\nee2ae298 Fixed catchall bug\n78a4832b implemented catchall\n2936e65b Eliminated params from ZodObject\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_CNKmhBPeSbnBJKEQ4H39ym",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -S\"unknownKeys: \\\"strip\\\"\" -- . "
+        },
+        "output": "85928549 Zod 4 (#4074)\n863346b1 chore: Format, lint, build Deno\n0a5f6444 Update release, remove fix.yml\nb277c14f Fix Deno\n491c123d Attempt to fix Deno\n6e74f877 Removed map files\naeec3a5f Added rollup for ESM\ndc05fd2b Reverted tsdx\ne72b92a5 Stripped unnecessary items out of eslint and package.json\n4b350403 Added deno files\n64d696b9 Got rid of ZodTypes.\n435297d9 Moved all parsing logic into subclasses\nea2d7b9b Added deno\n7d5cd4cd removed deno\n9e8959fc Add files\nd60d872a Added all subtypes into base.ts\n78fbfa2e Added deno\n04247332 Building deno\na2abcc97 rebuilt deno\n295e4e93 Added files\n6ca4ceaf Simplified file structure\n5c6f3e1b Deno compatibility improvements\n65faf4bd fix c6b6d57d (Include Deno during CI testing and automatically …)\nda4934ca chore: run format with prettier defaults\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_dnRkQLzD8eH4r0T9gu4DVP",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -S\"unknownKeys\" --reverse -- . | head -30"
+        },
+        "output": "2936e65b Eliminated params from ZodObject\n78a4832b implemented catchall\nee2ae298 Fixed catchall bug\n65a9c222 Added coverage, removed playground\n8b1e9984 Added playground\n465b3870 Added coverage folder\naddcbbd1 Modified gitignore\n1f57b40c Resolve almost all except 6 circular dependencies\n65faf4bd fix c6b6d57d (Include Deno during CI testing and automatically …)\n5c6f3e1b Deno compatibility improvements\n6ca4ceaf Simplified file structure\n295e4e93 Added files\n410dd7b4 chore: automatic fixes and code generation for 27071ca1 (Merge branch 'de…)\na2abcc97 rebuilt deno\n04247332 Building deno\n78fbfa2e Added deno\nd60d872a Added all subtypes into base.ts\n9e8959fc Add files\n7d5cd4cd removed deno\nea2d7b9b Added deno\n435297d9 Moved all parsing logic into subclasses\n64d696b9 Got rid of ZodTypes.\n52726362 Deleted ZodParser code\n510e40b0 Added or method\n4b350403 Added deno files\n9e35feb7 Removed ZodIntersection\n6863159b Added deno back. Played with tsconfigs/\n6dd873c1 Added z.strictCreate. zod@3.0.0-alpha.9\ne72b92a5 Stripped unnecessary items out of eslint and package.json\ndc05fd2b Reverted tsdx\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_DX06BhjgugWKSXT4ewhenw",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 78a4832b --stat"
+        },
+        "output": "commit 78a4832b3c98ed94f55297fe15754a99f54fbbe3\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Wed Sep 16 13:49:29 2020 -0700\n\n    implemented catchall\n\n README.md                           |  10 +-\n package.json                        |   2 +-\n src/__tests__/anyunknown.test.ts    |   7 ++\n src/__tests__/async-parsing.test.ts |   1 +\n src/__tests__/error.test.ts         |   2 +-\n src/__tests__/masking.test.ts       |  14 +--\n src/__tests__/object.test.ts        |  94 ++++++++++++++-\n src/__tests__/parser.test.ts        |  15 ++-\n src/__tests__/pickomit.test.ts      |  11 +-\n src/__tests__/refine.test.ts        |   3 +-\n src/__tests__/transformer.test.ts   |   8 ++\n src/__tests__/tuple.test.ts         |  14 +++\n src/codegen.ts                      |  29 ++++-\n src/helpers/objectUtil.ts           |  79 +++++++------\n src/helpers/partialUtil.ts          |  22 +++-\n src/index.ts                        |  10 +-\n src/isScalar.ts                     |   4 +\n src/parser.ts                       |  83 +++++++-------\n src/playground.ts                   |  48 ++------\n src/switcher.ts                     |   4 +\n src/types/array.ts                  |   8 +-\n src/types/base.ts                   |  43 +++++--\n src/types/function.ts               |   5 +-\n src/types/intersection.ts           |   5 +-\n src/types/lazy.ts                   |   9 +-\n src/types/object.ts                 | 222 ++++++++++++++++++++++++------------\n src/types/promise.ts                |   4 +-\n src/types/raw.ts                    |   0\n src/types/record.ts                 |   4 +-\n src/types/string.ts                 |   2 +\n src/types/transformer.ts            |  29 +++--\n src/types/tuple.ts                  |  18 ++-\n src/types/union.ts                  |   6 +-\n 33 files changed, 551 insertions(+), 264 deletions(-)\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_wxLg64cOIGOG534YXEIQtd",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 78a4832b -- src/types/object.ts | head -200"
+        },
+        "output": "commit 78a4832b3c98ed94f55297fe15754a99f54fbbe3\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Wed Sep 16 13:49:29 2020 -0700\n\n    implemented catchall\n\ndiff --git a/src/types/object.ts b/src/types/object.ts\nindex 7a1af239..7199952b 100644\n--- a/src/types/object.ts\n+++ b/src/types/object.ts\n@@ -5,6 +5,7 @@ import { ZodUnion } from './union';\n import { objectUtil } from '../helpers/objectUtil';\n import { partialUtil } from '../helpers/partialUtil';\n import { isScalar } from '../isScalar';\n+import { ZodNever } from '..';\n \n const AugmentFactory = <Def extends ZodObjectDef>(def: Def) => <\n   Augmentation extends z.ZodRawShape\n@@ -18,7 +19,8 @@ const AugmentFactory = <Def extends ZodObjectDef>(def: Def) => <\n     >]: ReturnType<Def['shape']>[k];\n   } &\n     { [k in keyof Augmentation]: Augmentation[k] },\n-  Def['unknownKeys']\n+  Def['unknownKeys'],\n+  Def['catchall']\n > => {\n   return new ZodObject({\n     ...def,\n@@ -33,15 +35,56 @@ type UnknownKeysParam = 'allow' | 'strict' | 'strip';\n \n export interface ZodObjectDef<\n   T extends z.ZodRawShape = z.ZodRawShape,\n-  UnknownKeys extends UnknownKeysParam = UnknownKeysParam\n+  UnknownKeys extends UnknownKeysParam = UnknownKeysParam,\n+  Catchall extends z.ZodTypeAny = z.ZodTypeAny\n   // Params extends ZodObjectParams = ZodObjectParams\n > extends z.ZodTypeDef {\n   t: z.ZodTypes.object;\n   shape: () => T;\n+  catchall: Catchall;\n   unknownKeys: UnknownKeys;\n   // params: Params;\n }\n \n+export type baseObjectOutputType<\n+  Shape extends z.ZodRawShape\n+  // Catchall extends z.ZodTypeAny\n+> = objectUtil.flatten<\n+  objectUtil.addQuestionMarks<\n+    {\n+      [k in keyof Shape]: Shape[k]['_output'];\n+    }\n+  > //{ [k: string]: Catchall['_output'] }\n+>;\n+\n+export type objectOutputType<\n+  Shape extends z.ZodRawShape,\n+  Catchall extends z.ZodTypeAny\n+> = z.ZodTypeAny extends Catchall\n+  ? baseObjectOutputType<Shape>\n+  : objectUtil.flatten<\n+      baseObjectOutputType<Shape> & { [k: string]: Catchall['_output'] }\n+    >;\n+\n+export type baseObjectInputType<\n+  Shape extends z.ZodRawShape\n+> = objectUtil.flatten<\n+  objectUtil.addQuestionMarks<\n+    {\n+      [k in keyof Shape]: Shape[k]['_input'];\n+    }\n+  >\n+>;\n+\n+export type objectInputType<\n+  Shape extends z.ZodRawShape,\n+  Catchall extends z.ZodTypeAny\n+> = z.ZodTypeAny extends Catchall\n+  ? baseObjectInputType<Shape>\n+  : objectUtil.flatten<\n+      baseObjectInputType<Shape> & { [k: string]: Catchall['_input'] }\n+    >;\n+\n const objectDefToJson = (def: ZodObjectDef<any, any>) => ({\n   t: def.t,\n   shape: Object.assign(\n@@ -76,20 +119,21 @@ export type Scalars =\n //   { [k in Exclude<keyof Target, Key>]: Target[k] } & { [k in Key]: Value }\n // >;\n \n-type makeKeysRequired<T extends ZodObject<any, any>> = T extends ZodObject<\n-  infer U,\n-  infer P\n->\n-  ? ZodObject<objectUtil.NoNever<{ [k in keyof U]: makeRequired<U[k]> }>, P>\n-  : never;\n-\n-type makeRequired<T extends z.ZodType<any>> = T extends ZodUnion<infer U>\n-  ? U extends [infer Y, ZodUndefined]\n-    ? Y\n-    : U extends [ZodUndefined, infer Z]\n-    ? Z\n-    : T\n-  : T;\n+// type makeKeysRequired<T extends ZodObject<any, any, any>> = T extends ZodObject<\n+//   infer U,\n+//   infer P,\n+//   infer C\n+// >\n+//   ? ZodObject<objectUtil.NoNever<{ [k in keyof U]: makeRequired<U[k]> }>, P, C>\n+//   : never;\n+\n+// type makeRequired<T extends z.ZodType<any>> = T extends ZodUnion<infer U>\n+//   ? U extends [infer Y, ZodUndefined]\n+//     ? Y\n+//     : U extends [ZodUndefined, infer Z]\n+//     ? Z\n+//     : T\n+//   : T;\n \n // type ZodObjectType<\n //   T extends z.ZodRawShape,\n@@ -98,16 +142,29 @@ type makeRequired<T extends z.ZodType<any>> = T extends ZodUnion<infer U>\n //   ? objectUtil.ObjectType<T>\n //   : objectUtil.Flatten<objectUtil.ObjectType<T> & { [k: string]: any }>;\n \n+export type AnyZodObject = ZodObject<any, any, any>;\n+// export type AnyZodObject = ZodObject<\n+// z.ZodRawShape,\n+// UnknownKeysParam,\n+// z.ZodTypeAny\n+// >;\n export class ZodObject<\n   T extends z.ZodRawShape,\n   UnknownKeys extends UnknownKeysParam = 'allow',\n+  Catchall extends z.ZodTypeAny = z.ZodTypeAny\n   // Params extends ZodObjectParams = { strict: true },\n   // Type extends ZodObjectType<T, Params> = ZodObjectType<T, Params>\n-  Input extends objectUtil.ObjectTypeInput<T> = objectUtil.ObjectTypeInput<T>,\n-  Output extends objectUtil.ObjectTypeOutput<T> = objectUtil.ObjectTypeOutput<T>\n-> extends z.ZodType<Input, ZodObjectDef<T, UnknownKeys>, Output> {\n+  // Input extends objectUtil.objectInputType<T> = objectUtil.objectInputType<T>,\n+  // Output extends objectUtil.objectOutputType<T> = objectUtil.objectOutputType<T>\n+> extends z.ZodType<\n+  //  objectUtil.objectOutputType<T, UnknownKeys, Catchall>,\n+  objectOutputType<T, Catchall>,\n+  ZodObjectDef<T, UnknownKeys, Catchall>,\n+  objectInputType<T, Catchall>\n+> {\n   readonly _shape!: T;\n   readonly _unknownKeys!: UnknownKeys;\n+  readonly _catchall!: Catchall;\n \n   get shape() {\n     return this._def.shape();\n@@ -123,21 +180,23 @@ export class ZodObject<\n \n   toJSON = () => objectDefToJson(this._def);\n \n-  strict = (): ZodObject<T, 'strict'> =>\n+  strict = (): ZodObject<T, 'strict', Catchall> =>\n     new ZodObject({\n-      shape: this._def.shape,\n-\n-      t: z.ZodTypes.object,\n+      ...this._def,\n       unknownKeys: 'strict',\n-    }) as any;\n+    });\n \n-  allowUnknown = (): ZodObject<T, 'allow'> =>\n+  stripUnknown = (): ZodObject<T, 'strip', Catchall> =>\n     new ZodObject({\n-      shape: this._def.shape,\n+      ...this._def,\n+      unknownKeys: 'strip',\n+    });\n \n-      t: z.ZodTypes.object,\n+  allowUnknown = (): ZodObject<T, 'allow', Catchall> =>\n+    new ZodObject({\n+      ...this._def,\n       unknownKeys: 'allow',\n-    }) as any;\n+    });\n \n   nonstrict = this.allowUnknown;\n \n@@ -145,27 +204,43 @@ export class ZodObject<\n \n   // nullable: () => ZodUnion<[this, ZodNull]> = () => ZodUnion.create([this, ZodNull.create()]);\n \n-  augment = AugmentFactory<ZodObjectDef<T, UnknownKeys>>(this._def);\n-  extend = AugmentFactory<ZodObjectDef<T, UnknownKeys>>(this._def);\n+  augment = AugmentFactory<ZodObjectDef<T, UnknownKeys, Catchall>>(this._def);\n+  extend = AugmentFactory<ZodObjectDef<T, UnknownKeys, Catchall>>(this._def);\n \n   /**\n    * Prior to zod@1.0.12 there was a bug in the\n    * inferred type of merged objects. Please\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_k9YVWGRC7CbPWYCMk6kBie",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 78a4832b -- src/parser.ts | head -150"
+        },
+        "output": "commit 78a4832b3c98ed94f55297fe15754a99f54fbbe3\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Wed Sep 16 13:49:29 2020 -0700\n\n    implemented catchall\n\ndiff --git a/src/parser.ts b/src/parser.ts\nindex 4a397e05..062cb425 100644\n--- a/src/parser.ts\n+++ b/src/parser.ts\n@@ -1,5 +1,5 @@\n import * as z from './types/base';\n-import { ZodDef } from '.';\n+import { ZodDef, ZodNever } from '.';\n import {\n   ZodError,\n   ZodErrorCode,\n@@ -66,6 +66,7 @@ export const ZodParsedType = util.arrayToEnum([\n   'unknown',\n   'promise',\n   'void',\n+  'never',\n ]);\n \n export type ZodParsedType = keyof typeof ZodParsedType;\n@@ -257,6 +258,16 @@ export const ZodParser = (schema: z.ZodType<any>) => (\n     case z.ZodTypes.unknown:\n       RESULT.promise = PseudoPromise.resolve(data);\n       break;\n+    case z.ZodTypes.never:\n+      error.addError(\n+        makeError({\n+          code: ZodErrorCode.invalid_type,\n+          expected: ZodParsedType.never,\n+          received: parsedType,\n+        }),\n+      );\n+      RESULT.promise = PseudoPromise.resolve(INVALID);\n+      break;\n     case z.ZodTypes.void:\n       if (\n         parsedType !== ZodParsedType.undefined &&\n@@ -343,41 +354,18 @@ export const ZodParser = (schema: z.ZodType<any>) => (\n       const dataKeys = Object.keys(data);\n       const extraKeys = dataKeys.filter(k => shapeKeys.indexOf(k) === -1);\n \n-      for (const key of extraKeys) {\n-        if (def.unknownKeys === 'allow') {\n-          objectPromises[key] = PseudoPromise.resolve(data[key]);\n-        } else if (def.unknownKeys === 'strict') {\n-          error.addError(\n-            makeError({\n-              code: ZodErrorCode.unrecognized_keys,\n-              keys: extraKeys,\n-            }),\n-          );\n-        } else if (def.unknownKeys === 'strip') {\n-          // do nothing\n-        } else {\n-          util.assertNever(def.unknownKeys);\n-        }\n-      }\n-      // if (extraKeys.length) {\n-      //   if (def.params.strict) {\n-      //     error.addError(\n-      //       makeError({\n-      //         code: ZodErrorCode.unrecognized_keys,\n-      //         keys: extraKeys,\n-      //       }),\n-      //     );\n-      //   } else {\n-      //     for (const key of extraKeys) {\n-      //       objectPromises[key] = PseudoPromise.resolve(data[key]);\n-      //     }\n-      //   }\n-      // }\n-\n       for (const key of shapeKeys) {\n+        const keyValidator = shapeKeys.includes(key)\n+          ? def.shape()[key]\n+          : !(def.catchall instanceof ZodNever)\n+          ? def.catchall\n+          : undefined;\n+\n+        if (!keyValidator) continue;\n+\n         objectPromises[key] = new PseudoPromise().then(() => {\n           try {\n-            return def.shape()[key].parse(data[key], {\n+            return keyValidator.parse(data[key], {\n               ...params,\n               path: [...params.path, key],\n             });\n@@ -391,14 +379,27 @@ export const ZodParser = (schema: z.ZodType<any>) => (\n             }\n           }\n         });\n-        // try {\n-        //   parsedobject[key] = PseudoPromise.resolve(\n-        //     def.shape()[key].parse(data[key], { ...params, path: [...params.path, key] }),\n-        //   );\n-        // } catch (err) {\n-        //   const zerr: ZodError = err;\n-        //   error.addErrors(zerr.errors);\n-        // }\n+      }\n+\n+      if (def.catchall instanceof ZodNever) {\n+        if (def.unknownKeys === 'allow') {\n+          for (const key of extraKeys) {\n+            objectPromises[key] = PseudoPromise.resolve(data[key]);\n+          }\n+        } else if (def.unknownKeys === 'strict') {\n+          if (extraKeys.length > 0) {\n+            error.addError(\n+              makeError({\n+                code: ZodErrorCode.unrecognized_keys,\n+                keys: extraKeys,\n+              }),\n+            );\n+          }\n+        } else if (def.unknownKeys === 'strip') {\n+          // do nothing\n+        } else {\n+          util.assertNever(def.unknownKeys);\n+        }\n       }\n \n       RESULT.promise = PseudoPromise.object(objectPromises);\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_YxyjsG7extGILUiYZeMLJL",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -S\"UnknownKeysParam = 'allow'\" -- . \necho \"---\"\ngit log --all --oneline -S\"UnknownKeysParam = 'strip'\" -- .\necho \"---\"\ngit log --all --oneline -S\"UnknownKeys extends UnknownKeysParam = \" -- . "
+        },
+        "output": "18854492 strip unknown keys by default\n2936e65b Eliminated params from ZodObject\n---\ndc05fd2b Reverted tsdx\ne72b92a5 Stripped unnecessary items out of eslint and package.json\n---\n85928549 Zod 4 (#4074)\n3c6cdd24 Make generic optional in objectOutputType\nc8ce27e8 3.20.4\n5b194091 Clean up types\n2c134d89 Simplify ZodObject generic\n296d708d fix: [#1839] remove caught errors from issues (#1926)\n863346b1 chore: Format, lint, build Deno\n0a5f6444 Update release, remove fix.yml\n4b350403 Added deno files\n64d696b9 Got rid of ZodTypes.\n435297d9 Moved all parsing logic into subclasses\nea2d7b9b Added deno\n7d5cd4cd removed deno\n9e8959fc Add files\nd60d872a Added all subtypes into base.ts\n78fbfa2e Added deno\n04247332 Building deno\n295e4e93 Added files\n6ca4ceaf Simplified file structure\n65faf4bd fix c6b6d57d (Include Deno during CI testing and automatically …)\naddcbbd1 Modified gitignore\n465b3870 Added coverage folder\n8b1e9984 Added playground\n65a9c222 Added coverage, removed playground\n2936e65b Eliminated params from ZodObject\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_fzUzccJU1Fc7S69YnurcSb",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 18854492 --stat\necho \"======\"\ngit show 18854492 -s --format=\"%H%n%an%n%ad%n%s%n%n%b\""
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\n README.md                          | 24 ++++++++++++------------\n src/__tests__/intersection.test.ts | 22 +---------------------\n src/__tests__/object.test.ts       | 21 ++++++++++++++++++---\n src/parser.ts                      |  2 +-\n src/playground.ts                  | 22 ----------------------\n src/types/object.ts                | 16 ++++++++--------\n 6 files changed, 40 insertions(+), 67 deletions(-)\n======\n18854492b4b6e1648499f2f920c615dab187ee1a\nColin McDonnell\nThu Sep 17 13:20:45 2020 -0700\nstrip unknown keys by default\n\n\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_pONRmedCKlLaG3NSqJwSAl",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 18854492 -- src/types/object.ts"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/src/types/object.ts b/src/types/object.ts\nindex e1de0fcb..ab846f9e 100644\n--- a/src/types/object.ts\n+++ b/src/types/object.ts\n@@ -31,7 +31,7 @@ const AugmentFactory = <Def extends ZodObjectDef>(def: Def) => <\n   }) as any;\n };\n \n-type UnknownKeysParam = 'allow' | 'strict' | 'strip';\n+type UnknownKeysParam = 'passthrough' | 'strict' | 'strip';\n \n export interface ZodObjectDef<\n   T extends z.ZodRawShape = z.ZodRawShape,\n@@ -150,7 +150,7 @@ export type AnyZodObject = ZodObject<any, any, any>;\n // >;\n export class ZodObject<\n   T extends z.ZodRawShape,\n-  UnknownKeys extends UnknownKeysParam = 'allow',\n+  UnknownKeys extends UnknownKeysParam = 'passthrough',\n   Catchall extends z.ZodTypeAny = z.ZodTypeAny\n   // Params extends ZodObjectParams = { strict: true },\n   // Type extends ZodObjectType<T, Params> = ZodObjectType<T, Params>\n@@ -186,19 +186,19 @@ export class ZodObject<\n       unknownKeys: 'strict',\n     });\n \n-  stripUnknown = (): ZodObject<T, 'strip', Catchall> =>\n+  strip = (): ZodObject<T, 'strip', Catchall> =>\n     new ZodObject({\n       ...this._def,\n       unknownKeys: 'strip',\n     });\n \n-  allowUnknown = (): ZodObject<T, 'allow', Catchall> =>\n+  passthrough = (): ZodObject<T, 'passthrough', Catchall> =>\n     new ZodObject({\n       ...this._def,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'passthrough',\n     });\n \n-  nonstrict = this.allowUnknown;\n+  nonstrict = this.passthrough;\n \n   // opt optional: () => ZodUnion<[this, ZodUndefined]> = () => ZodUnion.create([this, ZodUndefined.create()]);\n \n@@ -388,7 +388,7 @@ export class ZodObject<\n     return new ZodObject({\n       t: z.ZodTypes.object,\n       shape: () => shape,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'strip',\n       catchall: ZodNever.create(),\n       //  params: {\n       //    strict: true,\n@@ -402,7 +402,7 @@ export class ZodObject<\n     return new ZodObject({\n       t: z.ZodTypes.object,\n       shape,\n-      unknownKeys: 'allow',\n+      unknownKeys: 'strip',\n       catchall: ZodNever.create(),\n     }) as any;\n   };\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_lzow0bpJoDClrLSoNeIdJ8",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 18854492 -- README.md | head -80"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/README.md b/README.md\nindex 2f12e132..c9c94ca5 100644\n--- a/README.md\n+++ b/README.md\n@@ -31,13 +31,13 @@ Here are some of the new features.\n \n - Transformers! These let you provide default values, do casting/coersion, and a lot more. Read more here: [Transformers](#transformers)\n - Asynchronous refinements and new `.parseAsync` and `.safeParseAsync` methods. Read more here: [Refinements](#refinements)\n-- New object methods: `.stripUnknown()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n+- New object methods: `.passthrough()`, `.strict()`, and `.catchall()`. Read more here: [Objects](#objects)\n \n In almost all cases, you'll be able to upgrade to Zod 2 without changing any code. Here are some of the (very minor) breaking changes:\n \n - Parsing now returns a _deep clone_ of the data you pass in. Previously it returned the exact same object you passed in.\n - Relatedly, Zod _no longer_ supports cyclical _data_. Recursive schemas are still supported, but Zod can't properly parse nested objects that contain cycles.\n-- Object schemas now _allow_ unknown keys by default, instead of throwing an error\n+- Object schemas now strip unknown keys by default, instead of throwing an error\n - Optional and nullable schemas are now represented with the dedicated ZodOptional and ZodNullable classes, instead of using ZodUnion.\n \n ---\n@@ -116,7 +116,7 @@ _To get your name + Twitter + website here, sponsor Zod at the [Freelancer](http\n   - [.extend](#extending-objects)\n   - [.pick/.omit](#pick-and-omit)\n   - [.partial/.deepPartial](#partials)\n-  - [.stripUnknown](#strip-unknown-keys)\n+  - [.strip](#strip-unknown-keys)\n   - [.strict](#disallow-unknown-keys)\n   - [.primitives/.nonprimitives](#primitives-and-nonprimitives)\n - [Records](#records)\n@@ -686,9 +686,9 @@ const deepPartialUser = user.deepPartial();\n \n #### Unknown keys\n \n-Zod object schemas allow unknown keys.\n+By default Zod object schema strip unknown keys from the output.\n \n-> ⚠️ Before Zod 2 object schema did NOT allow unknown keys by default.\n+> ⚠️ Before version 2, Zod did NOT allow unknown keys by default.\n \n Zod will return\n \n@@ -701,30 +701,30 @@ person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n });\n-// => { name: \"bob dylan\", extraKey: 61 }\n+// => { name: \"bob dylan\" }\n ```\n \n-#### Strip unknown keys\n+#### Pass through unknown keys\n \n-If you want to strip out unknown keys, use `.stripUnknown`:\n+If you want to pass through unknown keys, use `.passthrough()`. For backwards compatibility, you can also call `.nonstrict()` which behaves identically.\n \n ```ts\n const person = z\n   .object({\n     name: z.string(),\n   })\n-  .stripUnknown();\n+  .passthrough();\n \n person.parse({\n   name: 'bob dylan',\n   extraKey: 61,\n });\n-// => { name: \"bob dylan\" }\n+// => { name: \"bob dylan\", extraKey: 61 }\n ```\n \n #### Disallow unknown keys\n \n-You can _disallow_ unknown keys with `.strict()`\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_dnf42PsyiuEuJvOmx7NqRk",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 18854492 -- src/parser.ts"
+        },
+        "output": "commit 18854492b4b6e1648499f2f920c615dab187ee1a\nAuthor: Colin McDonnell <colinmcd@alum.mit.edu>\nDate:   Thu Sep 17 13:20:45 2020 -0700\n\n    strip unknown keys by default\n\ndiff --git a/src/parser.ts b/src/parser.ts\nindex 3348f632..2b14a829 100644\n--- a/src/parser.ts\n+++ b/src/parser.ts\n@@ -393,7 +393,7 @@ export const ZodParser = (schema: z.ZodType<any>) => (\n       }\n \n       if (def.catchall instanceof ZodNever) {\n-        if (def.unknownKeys === 'allow') {\n+        if (def.unknownKeys === 'passthrough') {\n           for (const key of extraKeys) {\n             objectPromises[key] = PseudoPromise.resolve(data[key]);\n           }\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_5n1EnY3llnuXpnqOJSTp6P",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline -S\"unknownKeys: \\\"passthrough\\\"\" -- packages/zod/src/v3/types.ts | tail -5\necho \"---current default---\"\ngrep -n \"unknownKeys extends UnknownKeysParam\\|unknownKeys: \\\"strip\\\"\\|catchall: never\\b\" packages/zod/src/v3/types.ts | head -10"
+        },
+        "output": "66a0f34b Move source to `/src` (#4808)\n364200a6 Revert \"Add back src (#4806)\"\nf6da0301 Add back src (#4806)\n90fa0cdc Switch to `zshy` (#4777)\n85928549 Zod 4 (#4074)\n---current default---\n2599:      unknownKeys: \"strip\",\n2892:      unknownKeys: \"strip\",\n2918:      unknownKeys: \"strip\",\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": [
+      {
+        "status": "completed",
+        "result_count": 0,
+        "output_nonempty": true
+      },
+      {
+        "status": "completed",
+        "result_count": 1,
+        "output_nonempty": true
+      }
+    ]
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 45046,
+    "output": 3926,
+    "messages": 20
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "62311eb2c4a93c7348a8b1c5abbde1ec77c66b67"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/90524526ccf1363341fcc0af1cdca8a4a6f1f196ed48ff4b18e2bbbb92888b28",
+  "completed": true
+}

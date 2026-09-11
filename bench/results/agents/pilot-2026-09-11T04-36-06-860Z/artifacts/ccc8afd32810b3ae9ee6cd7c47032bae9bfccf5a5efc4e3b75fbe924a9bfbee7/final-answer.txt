@@ -1,0 +1,41 @@
+Confirmed: at HEAD, `requires-python = ">=3.10"` and no 3.9 classifier. Now let's find the commit that dropped 3.9 support.Found it. Let's get the full commit details.Found the actual commit: `0c2bbe73982a70623fb81bf16b2507ea0ca80b99` with message "Drop support for Python 3.9 (#7196)".This commit is definitely in HEAD's history (found via `git log --follow -- pyproject.toml`). Let me double check it's an ancestor of HEAD and look for a changelog entry too.I now have everything needed, including corroboration from `HISTORY.md`.## Answer
+
+**Python 3.9 support has been dropped.** As of the pinned commit `dae7ef63b4df6eded86637f251fc4e3a06c3b479`, `requests` requires Python 3.10+ (`pyproject.toml` line 17: `requires-python = ">=3.10"`), and there is no `Programming Language :: Python :: 3.9` classifier remaining.
+
+### Supporting commit
+
+**`0c2bbe73982a70623fb81bf16b2507ea0ca80b99`** — *"Drop support for Python 3.9 (#7196)"*, authored by Nate Prewitt, dated 2026-02-06. This commit is a verified ancestor of HEAD (`git merge-base --is-ancestor` confirms it).
+
+**Diff excerpts:**
+
+- `pyproject.toml`:
+```diff
+-requires-python = ">=3.9"
++requires-python = ">=3.10"
+...
+-    "Programming Language :: Python :: 3.9",
+     "Programming Language :: Python :: 3.10",
+```
+
+- `setup.py`:
+```diff
+-if sys.version_info < (3, 9):
+-    sys.stderr.write("Requests requires Python 3.9 or later.\n")
++if sys.version_info < (3, 10):  # noqa: UP036
++    sys.stderr.write("Requests requires Python 3.10 or later.\n")
+```
+
+- `README.md`:
+```diff
+-Requests officially supports Python 3.9+.
++Requests officially supports Python 3.10+.
+```
+
+- `tox.ini` and `.github/workflows/run-tests.yml` also removed `3.9`/`py39` from their test matrices, replacing with `3.10` as the minimum.
+
+This is corroborated by `HISTORY.md`'s changelog entry for release **2.32.5** (which sits between 2.32.4 and 2.33.0):
+
+> **Deprecations**
+> - Dropped support for Python 3.9 following its end of support. (#7196)
+
+So the commit SHA `0c2bbe73982a70623fb81bf16b2507ea0ca80b99` establishes that Python 3.9 support was explicitly and intentionally dropped, and this state persists through to `HEAD` (confirmed by the current content of `pyproject.toml`).

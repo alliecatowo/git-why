@@ -1,0 +1,188 @@
+{
+  "task_id": "X-redis-01",
+  "task_stratum": "archaeology",
+  "arm": "B",
+  "repetition": 1,
+  "base_sha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "corpus_fingerprint": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801",
+  "implementation_sha": "89e46080b58a18b73f0323276f3827ca71cde743",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T05:05:50.094Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "30ec284b01c3b60e609c134cb4de3396e62e523c263682667b37b584c30b019c",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "79866a6361829ed0602dedff9cb378c66977227a",
+    "citedGoldSha": true,
+    "citedShaCount": 4,
+    "matchedTokens": [
+      "79866a6361829ed0602dedff9cb378c66977227a"
+    ]
+  },
+  "wall_ms": 61894,
+  "tool_calls": 14,
+  "history_calls": 12,
+  "zg_calls": 0,
+  "git_why_calls": 0,
+  "input_tokens": 23646,
+  "output_tokens": 3186,
+  "cache_read_tokens": 106012,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.10035440000000001,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 50291,
+  "index_build_ms": null,
+  "model_download_ms": null,
+  "index_disk_bytes": null,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-redis-01-B-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "8cc826c9897ee21d8dfa612d92702336ebb4ed05a2a916ea4844cdf32c6a4eb3",
+  "zg_index_build_ms": 0,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  887 / 887 files\n  Entities    10,955\n  Truncated   0 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "hit",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_QrKhIxFjy677IDLdgpPm7T",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all | wc -l"
+        },
+        "output": "12110\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_Cqe8my13uztORVN7cmhi4Z",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all -- t_stream.c | tail -50"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_upzesmFXSJRAgtvOdb2kCG",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --oneline --all --diff-filter=A -- t_stream.c"
+        },
+        "output": "(no output)"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_huICxAdKUUu31A3XO7zjCk",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline | grep -i \"XADD\" | head -50"
+        },
+        "output": "9d0158bf8 Reorder signalModifiedKey in xaddCommand. (#12895)\n737a09051 Set errno in case XADD with partial ID fails (#11424)\na642947e0 Optimize stream id sds creation on XADD key * (~20% saved cpu cycles) (#10574)\n21aa1d4b9 Adds auto-seq-only-generation via `XADD ... <ms>-*` (#9217)\n252981914 XADD - skip rewrite the id arg if it was given and is valid. (#9599)\n6476c8e85 Fix range issues in default value of LIMIT argument to XADD and XTRIM (#9147)\neaa7a7bb9 Fix XTRIM or XADD with LIMIT may delete more entries than Count. (#9048)\n91f3689bf XTRIM call streamParseAddOrTrimArgsOrReply use wrong arg xadd. (#9047)\nb164c4dec In XADD take deleted items into consideration when switch to new node (#8390)\n814aad65f XADD and XTRIM, Trim by MINID, and new LIMIT argument (#8169)\n0963edbc6 Adds tests for XADD/XTRIM's MAXLEN arguments (#8083)\nf328194d1 support NOMKSTREAM option in xadd command (#7910)\n70016f786 Merge pull request #6574 from guybe7/fix_xadd_empty_id\n4a12047c6 XADD with ID 0-0 stores an empty key\nb4f826837 Tests modified to use XADD MAXLEN 0 + XSETID.\nc1689166b Streams: rewrite empty streams with XADD MAXLEN 0. Use XSETID.\n3e78344d8 Refactoring of XADD / XTRIM MAXLEN rewriting.\n60acac4cd Streams: add test cases for XADD/XTRIM maxlen\n20c6a7fe2 Streams: propagate original MAXLEN argument in XADD context\n62f9ac6f4 Streams: Change XADD MAXLEN handling of values <= 0.\n79a1c19ac XADD MAXLEN should return an error for values < 0.\nfb9c1c3db Simplify XADD ID syntax error code path,.\na60f553b6 Merge pull request #4832 from 0xtonyxia/fix-xadd-ID-parse\n8a200b04c Merge pull request #4831 from 0xtonyxia/fix-xadd-arity-check\n19ae80945 Streams: XADD, handle signaling of write in different ways.\n3c20b3fc2 Bugfix: xadd command ID parse\n07125b8d2 Bugfix: xadd comand <field,value> arity check\n267f7f2c9 Streams: fix error description for XADD when specified ID is small.\n50595a588 Streams: fix XADD + MAXLEN propagation due to var shadowing.\ne53c90308 Streams: add XADD + MAXLEN test.\n054080328 Streams: XADD MAXLEN implementation.\nfa707ca15 Streams: more advanced XADD and XRANGE tests.\n7a41b402c Streams: basic XADD tests.\n3a0b78bc5 Streams: rewrite XADD ID argument for AOF/slaves.\n19b06935d Streams: fix XADD API and keyspace notifications.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_iDubpX2fAbaUxO1g7aUnvS",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline | grep -i \"XADD\" | tail -50"
+        },
+        "output": "9d0158bf8 Reorder signalModifiedKey in xaddCommand. (#12895)\n737a09051 Set errno in case XADD with partial ID fails (#11424)\na642947e0 Optimize stream id sds creation on XADD key * (~20% saved cpu cycles) (#10574)\n21aa1d4b9 Adds auto-seq-only-generation via `XADD ... <ms>-*` (#9217)\n252981914 XADD - skip rewrite the id arg if it was given and is valid. (#9599)\n6476c8e85 Fix range issues in default value of LIMIT argument to XADD and XTRIM (#9147)\neaa7a7bb9 Fix XTRIM or XADD with LIMIT may delete more entries than Count. (#9048)\n91f3689bf XTRIM call streamParseAddOrTrimArgsOrReply use wrong arg xadd. (#9047)\nb164c4dec In XADD take deleted items into consideration when switch to new node (#8390)\n814aad65f XADD and XTRIM, Trim by MINID, and new LIMIT argument (#8169)\n0963edbc6 Adds tests for XADD/XTRIM's MAXLEN arguments (#8083)\nf328194d1 support NOMKSTREAM option in xadd command (#7910)\n70016f786 Merge pull request #6574 from guybe7/fix_xadd_empty_id\n4a12047c6 XADD with ID 0-0 stores an empty key\nb4f826837 Tests modified to use XADD MAXLEN 0 + XSETID.\nc1689166b Streams: rewrite empty streams with XADD MAXLEN 0. Use XSETID.\n3e78344d8 Refactoring of XADD / XTRIM MAXLEN rewriting.\n60acac4cd Streams: add test cases for XADD/XTRIM maxlen\n20c6a7fe2 Streams: propagate original MAXLEN argument in XADD context\n62f9ac6f4 Streams: Change XADD MAXLEN handling of values <= 0.\n79a1c19ac XADD MAXLEN should return an error for values < 0.\nfb9c1c3db Simplify XADD ID syntax error code path,.\na60f553b6 Merge pull request #4832 from 0xtonyxia/fix-xadd-ID-parse\n8a200b04c Merge pull request #4831 from 0xtonyxia/fix-xadd-arity-check\n19ae80945 Streams: XADD, handle signaling of write in different ways.\n3c20b3fc2 Bugfix: xadd command ID parse\n07125b8d2 Bugfix: xadd comand <field,value> arity check\n267f7f2c9 Streams: fix error description for XADD when specified ID is small.\n50595a588 Streams: fix XADD + MAXLEN propagation due to var shadowing.\ne53c90308 Streams: add XADD + MAXLEN test.\n054080328 Streams: XADD MAXLEN implementation.\nfa707ca15 Streams: more advanced XADD and XRANGE tests.\n7a41b402c Streams: basic XADD tests.\n3a0b78bc5 Streams: rewrite XADD ID argument for AOF/slaves.\n19b06935d Streams: fix XADD API and keyspace notifications.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_073oMMsST6tGF4kkvOC8Ji",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --reverse | grep -i \"stream\" | head -80"
+        },
+        "output": "7572dc47d Test: new functions to capture and analyze the replication stream.\nfdaab0234 Merge remote-tracking branch 'upstream/unstable' into unstable\n5ee2ccf48 Diskless replication: EOF:<mark> streaming support slave side.\n363c0f67b Test: fix attach_to_replication_stream to handle newlines.\nb8579c225 PSYNC2: clarify the scenario when repl_stream_db can be -1\n93037f764 PSYNC2: make repl_stream_db never be -1\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n100d43c1a Streams: assign value of 6 to OBJ_STREAM + some refactoring.\n485014cc7 Streams: RDB saving.\nedd70c199 Streams: RDB loading. RDB saving modified.\ncd18f06e9 Streams: change listpack allocator to zmalloc.\n98d184db1 Streams: Save stream->length in RDB.\nec9bbe96b Streams: XLEN command.\n439120c62 Streams: implement stream object release.\n4a377cecd Streams: initial work to use blocking lists logic for streams XREAD.\nf80dfbf46 Streams: more internal preparation for blocking XREAD.\n4086dff47 Streams: augment client.bpop with XREAD specific fields.\ne65b4825f Streams: XREAD arguments parsing.\nfa61720d3 Streams: XREAD, first draft. Handling of blocked clients still missing.\n110041825 Streams: XREAD get-keys method.\na7d898334 Streams: XREAD get-key method fixed.\n6a1c92d52 Streams: synchronous xread fixes and improvements.\n0adb43b68 Streams: XREAD ability to block fixed.\n2cacdcd6f Streams: XREAD related code to serve blocked clients.\nb5be5093f Streams: fix XREAD timeout handling, zero is valid.\n6468cb2e8 Streams: fix XREAD ready-key signaling.\nc12819002 Streams: fix handleClientsBlockedOnKeys() access to invalid ID.\ndb89f7474 Streams: When XREAD blocks without COUNT, set a default one.\n19b06935d Streams: fix XADD API and keyspace notifications.\n3a0b78bc5 Streams: rewrite XADD ID argument for AOF/slaves.\n94af55c5e Streams: fix memory leak in freeStream().\n1a603e1a8 Streams: fix bug in XREAD last received ID processing.\nb1ec33363 Streams: stream iteration refactoring, WIP 1.\na58733cac Streams: stream iteration refactoring, WIP 2.\n9ed40f0fc Streams: implement streamReplyWithRange() in terms of the iterator.\n01ea018c4 Streams: export iteration API.\n26d4f8e3e Streams: AOF rewriting + minor iterator improvements.\n7a41b402c Streams: basic XADD tests.\nfa707ca15 Streams: more advanced XADD and XRANGE tests.\neb1230c99 Streams: XRANGE fuzz testing.\nae9065d80 Streams: tests for blocking and non-blocking XREAD.\n8f00cf85a Streams: fixed memory leaks when blocking again for same stream.\n3f2d7e277 Streams: items compression implemented.\n7d0d9693c Streams: modify tests to stress compression.\ncea421a02 Streams: specify better how the master enty works.\nf24d3a7de Streams: delta encode IDs based on key. Add count + deleted fields.\n0c00fd783 Streams: reduce listpack max size to 2k to speedup range queries.\n054080328 Streams: XADD MAXLEN implementation.\n0248a6b12 Streams: fix streamTrimByLength() standalone items skipping.\ne53c90308 Streams: add XADD + MAXLEN test.\na4e6aae6b Streams: fix memory leak in streamTrimByLength().\n50595a588 Streams: fix XADD + MAXLEN propagation due to var shadowing.\n5082ec641 Streams: move ID ms/seq separator from '.' to '-'\n1898c5057 Streams: fix XREAD test broken after previous tests improvements.\n671b1f6a9 Streams: fix TYPE for stream type.\nabab0b781 Streams: fix redis-cli to understand the stream type.\n020fe26bd Streams: fix COUNT parsing, issue #4433.\n0381931b4 Streams: Update listpack to fix 32bit strings encoding error.\n3c5d773f8 Streams: augment stream entries to allow backward scanning.\nee3490ec4 Streams: state machine for reverse iteration WIP 1.\n6919280cc Streams: fix reverse iteration next node jumping.\n9dc79c039 Streams: fix reverse iterator discarding of items out of range.\n9bb18e543 Streams: XRANGE REV option -> XREVRANGE command.\n115d076d6 Streams: fix lp-count field for non-same-fields entries.\n45fe1f5e0 Streams: add some initial test for XREVRANGE.\nf42df6f43 Streams: add code to compute the stream memory usage.\n8ac76be5f Streams: DEBUG DIGEST support.\n2869284e4 Streams: fix a few type mismatches in t_stream.c.\n8b5112199 Merge remote-tracking branch 'upstream/unstable' into help_subcommands\n10efdf307 Add REDISMODULE_NOTIFY_STREAM flag to support stream notifications\n84b281209 Stream: update the listpack pointer in streamTrimByLength().\n1fafe7def CG: fix raxFind() retval check in streamCreateCG().\nb8e523216 CG: fix parsing in XREADGROUP and streamLookupCG() NULL check.\n86fe8fde2 CG: consumer lookup + initial streamReplyWithRange() work to supprot CG.\n6c0af37b6 CG: streamCompareID() + group last_id updating.\nbbec4569a CG: Fix order of calls in streamReplyWithRange().\naa808394f CG: first draft of streamReplyWithRangeFromConsumerPEL().\n267f7f2c9 Streams: fix error description for XADD when specified ID is small.\n09e3b3b97 CG: remove unused argument from streamReplyWithRangeFromConsumerPEL().\nf7d4c3acd Streams: trap more errors in stream loading + RDB check type name.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_nZ9zyKYCIG8fSrIUsOHZpI",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --reverse -- t_stream.c 2>&1 | head -5\necho \"---\"\ngit log --all --diff-filter=A --oneline -- src/t_stream.c\necho \"---find first commit with t_stream.c---\"\ngit log --all --format=\"%H %ad %s\" --date=short --diff-filter=A -- src/t_stream.c"
+        },
+        "output": "---\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n---find first commit with t_stream.c---\n79866a6361829ed0602dedff9cb378c66977227a 2017-08-30 Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_jCOqTsNo0Nv8sk8UWYLSKq",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show --stat 79866a6361829ed0602dedff9cb378c66977227a | head -30\necho \"---\"\ngit log -1 79866a6361829ed0602dedff9cb378c66977227a"
+        },
+        "output": "commit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\n src/Makefile          |   2 +-\n src/listpack.c        | 783 ++++++++++++++++++++++++++++++++++++++++++++++++++\n src/listpack.h        |  61 ++++\n src/listpack_malloc.h |  44 +++\n src/object.c          |   7 +\n src/rax.c             |  24 +-\n src/rax.h             |   1 +\n src/rdb.h             |   3 +-\n src/server.c          |   2 +\n src/server.h          |   9 +\n src/stream.h          |  21 ++\n src/t_stream.c        | 376 ++++++++++++++++++++++++\n 12 files changed, 1323 insertions(+), 10 deletions(-)\n---\ncommit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_KXY5xvkEFYRgXCp6S23bNg",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 79866a6361829ed0602dedff9cb378c66977227a -- src/t_stream.c | grep -n \"xaddCommand\" | head -5"
+        },
+        "output": "339:+void xaddCommand(client *c) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_d08FEU4hsje5TJZtp9A1br",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git show 79866a6361829ed0602dedff9cb378c66977227a --format=\"%B\" -s\necho \"---server.c diff---\"\ngit show 79866a6361829ed0602dedff9cb378c66977227a -- src/server.c\necho \"---xaddCommand context---\"\ngit show 79866a6361829ed0602dedff9cb378c66977227a -- src/t_stream.c | sed -n '330,360p'"
+        },
+        "output": "Streams: 12 commits squashed into the initial Streams implementation.\n\n---server.c diff---\ncommit 79866a6361829ed0602dedff9cb378c66977227a\nAuthor: antirez <antirez@gmail.com>\nDate:   Wed Aug 30 12:40:27 2017 +0200\n\n    Streams: 12 commits squashed into the initial Streams implementation.\n\ndiff --git a/src/server.c b/src/server.c\nindex 7498a25fd..2c3647db6 100644\n--- a/src/server.c\n+++ b/src/server.c\n@@ -302,6 +302,8 @@ struct redisCommand redisCommandTable[] = {\n     {\"pfcount\",pfcountCommand,-2,\"r\",0,NULL,1,-1,1,0,0},\n     {\"pfmerge\",pfmergeCommand,-2,\"wm\",0,NULL,1,-1,1,0,0},\n     {\"pfdebug\",pfdebugCommand,-3,\"w\",0,NULL,0,0,0,0,0},\n+    {\"xadd\",xaddCommand,-4,\"wmF\",0,NULL,1,1,1,0,0},\n+    {\"xrange\",xrangeCommand,-4,\"r\",0,NULL,1,1,1,0,0},\n     {\"post\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"host:\",securityWarningCommand,-1,\"lt\",0,NULL,0,0,0,0,0},\n     {\"latency\",latencyCommand,-2,\"aslt\",0,NULL,0,0,0,0,0}\n---xaddCommand context---\n+    id->seq = seq;\n+    return C_OK;\n+\n+invalid:\n+    addReplyError(c,\"Invalid stream ID specified as stream command argument\");\n+    return C_ERR;\n+}\n+\n+/* XADD key [field value] [field value] ... */\n+void xaddCommand(client *c) {\n+    if ((c->argc % 2) == 1) {\n+        addReplyError(c,\"wrong number of arguments for XADD\");\n+        return;\n+    }\n+\n+    /* Lookup the stream at key. */\n+    robj *o;\n+    stream *s;\n+    if ((o = streamTypeLookupWriteOrCreate(c,c->argv[1])) == NULL) return;\n+    s = o->ptr;\n+\n+    /* Append using the low level function and return the ID. */\n+    streamID id;\n+    streamAppendItem(s,c->argv+2,(c->argc-2)/2,&id);\n+    sds reply = sdscatfmt(sdsempty(),\"+%U.%U\\r\\n\",id.ms,id.seq);\n+    addReplySds(c,reply);\n+\n+    signalModifiedKey(c->db,c->argv[1]);\n+    notifyKeyspaceEvent(NOTIFY_HASH,\"xadd\",c->argv[1],c->db->id);\n+    server.dirty++;\n+}\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_rozOWx88mWxIKYQeAkzT9p",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log --all --oneline --before=\"2017-08-30\" | grep -i \"OBJ_STREAM\\|xaddCommand\" \necho \"---check if any earlier commit references xadd/stream type---\"\ngit log --all --source --oneline -S \"xaddCommand\" | tail -5\necho \"---parents---\"\ngit log -1 --format=\"%P\" 79866a6361829ed0602dedff9cb378c66977227a\ngit show -s --format=\"%ci\" 79866a6361829ed0602dedff9cb378c66977227a^\n"
+        },
+        "output": "---check if any earlier commit references xadd/stream type---\n1f76bb17d\tHEAD Reimplement cli hints based on command arg docs (#10515)\n867816003\tHEAD Auto-generate the command table from JSON files (#9656)\n79866a636\tHEAD Streams: 12 commits squashed into the initial Streams implementation.\n---parents---\n045d65c3af460a71d2b89b84f5e0b85d98320a77\n2017-11-30 18:38:29 +0100\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_U9pN91oBwoLqaaSKhCHB4p",
+        "status": "completed",
+        "input": {
+          "command": "cd /workspace && git log -1 --format=\"%H %ci %s\" 045d65c3af460a71d2b89b84f5e0b85d98320a77\necho \"---\"\ngit log --oneline 79866a6361829ed0602dedff9cb378c66977227a -5"
+        },
+        "output": "045d65c3af460a71d2b89b84f5e0b85d98320a77 2017-11-30 18:38:29 +0100 PSYNC2: Fix off by one buffer size in luaCreateFunction().\n---\n79866a636 Streams: 12 commits squashed into the initial Streams implementation.\n045d65c3a PSYNC2: Fix off by one buffer size in luaCreateFunction().\n452ad2e92 PSYNC2: just store script bodies into RDB.\n28dfdca73 PSYNC2: luaCreateFunction() should handle NULL client parameter.\nf11a7585a PSYNC2: Save Lua scripts state into RDB file.\n"
+      }
+    ],
+    "gitWhy": [],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 23646,
+    "output": 3186,
+    "messages": 11
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "e64d91c37105bc2e23816b6f81b9ffc5e5d99801"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/8cc826c9897ee21d8dfa612d92702336ebb4ed05a2a916ea4844cdf32c6a4eb3",
+  "completed": true
+}

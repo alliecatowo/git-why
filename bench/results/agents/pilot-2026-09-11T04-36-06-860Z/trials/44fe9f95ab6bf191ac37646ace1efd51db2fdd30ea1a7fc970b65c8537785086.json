@@ -1,0 +1,125 @@
+{
+  "task_id": "X-curl-02",
+  "task_stratum": "archaeology",
+  "arm": "C",
+  "repetition": 1,
+  "base_sha": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "corpus_fingerprint": "ee521a1c889f4cde6905c5db117959917568be9b",
+  "implementation_sha": "89e46080b58a18b73f0323276f3827ca71cde743",
+  "model_id": "llmgateway/claude-sonnet-5",
+  "provider_id": "opencode",
+  "model_metadata_timestamp": "2026-09-11T04:54:33.685Z",
+  "opencode_version": "1.18.30",
+  "zg_version": "0.2.2",
+  "git_version": "git version 2.50.1 (Apple Git-155)",
+  "runtime_version": "v24.21.0",
+  "profile_hash": "092d5c643155981a4e3ba95cd26fb2a4918421316f21537505076de2d03efe8e",
+  "prompt_hash": "f508f0f5f27a56928fb542c9c49737b4b6326cfd662a94f310f7b243fbad3468",
+  "protocol_hash": "sha256:c40c8ac0462df26f9d2abc35768bae5ceb162743ae4adf58bdfff4874b5f676e",
+  "dependency_lock_hash": "44bd80c2e9f8c188ad0cd575b6ebbf9a78a7ab3e31008e36ca55968e0debc201",
+  "pass": null,
+  "evidence_grade": {
+    "goldSha": "620ea21410030a9977396b4661806bc187231b79",
+    "citedGoldSha": true,
+    "citedShaCount": 4,
+    "matchedTokens": [
+      "620ea2141",
+      "620ea21410030a9977396b4661806bc187231b79"
+    ]
+  },
+  "wall_ms": 41122,
+  "tool_calls": 6,
+  "history_calls": 4,
+  "zg_calls": 0,
+  "git_why_calls": 1,
+  "input_tokens": 17991,
+  "output_tokens": 1771,
+  "cache_read_tokens": 51320,
+  "cache_write_tokens": 0,
+  "actual_billed_cost": 0.063956,
+  "estimated_list_price_cost": null,
+  "tool_output_bytes": 33065,
+  "index_build_ms": 633035,
+  "model_download_ms": null,
+  "index_disk_bytes": 1105075197,
+  "events_file": "/Users/allie/.cache/git-why-bench/0199f07e4778/agents-runs/pilot-2026-09-11T04-36-06-860Z/events/X-curl-02-C-r1-a1.jsonl",
+  "exit_reason": "completed",
+  "infrastructure_error": null,
+  "treatment_error": null,
+  "invalidation_reason": null,
+  "attempt": 1,
+  "key": "44fe9f95ab6bf191ac37646ace1efd51db2fdd30ea1a7fc970b65c8537785086",
+  "indexed_commits": 30000,
+  "git_why_index_cache": "rebuilt",
+  "zg_index_build_ms": 33019,
+  "zg_status": "✓ Workspace index is ready\n  /workspace\n\n  Coverage    ████████████████████ 100%  3,563 / 3,563 files\n  Entities    15,853\n  Truncated   53 fragments\n  Queue       0 pending · 0 failed\n\n  Embedding   local/potion-code-16m-v2\n              256 dimensions · cosine\n\n  Storage     .zvec-grep/index.zvec\n  Roots       /workspace (glob=!bench/agents/**)",
+  "zg_index_cache": "rebuilt",
+  "command_instrumentation": {
+    "history": [
+      {
+        "tool": "bash",
+        "callID": "tooluse_i0JzCLv8Am8V7dFXnb6h4G",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline --all | grep -i \"CVE\" | head -50"
+        },
+        "output": "3141062c2 connect: revert the use of IP*_RECVERR\n5295e8d64 tests: verify the fix for CVE-2022-27774\nafe752e05 test898: verify the fix for CVE-2022-27776\n350306e47 test2080: verify the fix for CVE-2018-16842\na040ff88e docs/SECURITY-PROCESS: now we name the files after the CVE id\n5d7952f52 url: fix buffer overwrite with file protocol (CVE-2017-9502)\nc7468e8ea SECURITY: mention how to get windows-specific CVEs\n042cc1f69 - David Kierznowski notified us about a security flaw   (http://curl.haxx.se/docs/adv_20090303.html also known as CVE-2009-0037) in   which previous libcurl versions (by design) can be tricked to access an   arbitrary local/different file instead of a remote one when   CURLOPT_FOLLOWLOCATION is enabled. This flaw is now fixed in this release   together this the addition of two new setopt options for controlling this   new behavior:\n065852e46 execve.net is an official download mirror in HK\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_X2E0l0aXRUDjlS2GKuEhYA",
+        "status": "completed",
+        "input": {
+          "command": "git show 5295e8d64 --stat\necho ---\ngit log --all --grep=\"27774\" --oneline\necho ---\ngit log --all --grep=\"credential leak\" -i --oneline\n"
+        },
+        "output": "commit 5295e8d64ac6949ecb3f9e564317a608f51b90d8\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    tests: verify the fix for CVE-2022-27774\n    \n     - Test 973 redirects from HTTP to FTP, clear auth\n     - Test 974 redirects from HTTP to HTTP different port, clear auth\n     - Test 975 redirects from HTTP to FTP, permitted to keep auth\n     - Test 976 redirects from HTTP to HTTP different port, permitted to keep\n       auth\n\n tests/data/Makefile.inc |  2 +-\n tests/data/test973      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test974      | 87 ++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test975      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n tests/data/test976      | 88 +++++++++++++++++++++++++++++++++++++++++++++++++\n 5 files changed, 352 insertions(+), 1 deletion(-)\n---\n5295e8d64 tests: verify the fix for CVE-2022-27774\n620ea2141 transfer: redirects to other protocols or ports clear auth\n---\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_wWa7EsZ7Hwvdh7rZ5aaDeh",
+        "status": "completed",
+        "input": {
+          "command": "git show 620ea2141"
+        },
+        "output": "commit 620ea21410030a9977396b4661806bc187231b79\nAuthor: Daniel Stenberg <daniel@haxx.se>\nDate:   Mon Apr 25 16:24:33 2022 +0200\n\n    transfer: redirects to other protocols or ports clear auth\n    \n    ... unless explicitly permitted.\n    \n    Bug: https://curl.se/docs/CVE-2022-27774.html\n    Reported-by: Harry Sintonen\n    Closes #8748\n\ndiff --git a/lib/transfer.c b/lib/transfer.c\nindex 53ef0b03b..315da876c 100644\n--- a/lib/transfer.c\n+++ b/lib/transfer.c\n@@ -1611,10 +1611,57 @@ CURLcode Curl_follow(struct Curl_easy *data,\n       return CURLE_OUT_OF_MEMORY;\n   }\n   else {\n-\n     uc = curl_url_get(data->state.uh, CURLUPART_URL, &newurl, 0);\n     if(uc)\n       return Curl_uc_to_curlcode(uc);\n+\n+    /* Clear auth if this redirects to a different port number or protocol,\n+       unless permitted */\n+    if(!data->set.allow_auth_to_other_hosts && (type != FOLLOW_FAKE)) {\n+      char *portnum;\n+      int port;\n+      bool clear = FALSE;\n+\n+      if(data->set.use_port && data->state.allow_port)\n+        /* a custom port is used */\n+        port = (int)data->set.use_port;\n+      else {\n+        uc = curl_url_get(data->state.uh, CURLUPART_PORT, &portnum,\n+                          CURLU_DEFAULT_PORT);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+        port = atoi(portnum);\n+        free(portnum);\n+      }\n+      if(port != data->info.conn_remote_port) {\n+        infof(data, \"Clear auth, redirects to port from %u to %u\",\n+              data->info.conn_remote_port, port);\n+        clear = TRUE;\n+      }\n+      else {\n+        char *scheme;\n+        const struct Curl_handler *p;\n+        uc = curl_url_get(data->state.uh, CURLUPART_SCHEME, &scheme, 0);\n+        if(uc) {\n+          free(newurl);\n+          return Curl_uc_to_curlcode(uc);\n+        }\n+\n+        p = Curl_builtin_scheme(scheme);\n+        if(p && (p->protocol != data->info.conn_protocol)) {\n+          infof(data, \"Clear auth, redirects scheme from %s to %s\",\n+                data->info.conn_scheme, scheme);\n+          clear = TRUE;\n+        }\n+        free(scheme);\n+      }\n+      if(clear) {\n+        Curl_safefree(data->state.aptr.user);\n+        Curl_safefree(data->state.aptr.passwd);\n+      }\n+    }\n   }\n \n   if(type == FOLLOW_FAKE) {\n"
+      },
+      {
+        "tool": "bash",
+        "callID": "tooluse_nS22BhNX1JsJYre8oD8maG",
+        "status": "completed",
+        "input": {
+          "command": "git log --oneline | wc -l\ngit merge-base --is-ancestor 620ea2141 HEAD && echo \"IS ANCESTOR OF HEAD\" || echo \"NOT ancestor (HEAD is older? or diverged)\"\ngit log -1 --format=\"%H %ci\" HEAD\ngit log -1 --format=\"%H %ci\" 620ea2141\n"
+        },
+        "output": "30000\nIS ANCESTOR OF HEAD\nee521a1c889f4cde6905c5db117959917568be9b 2023-03-11 18:57:19 -0800\n620ea21410030a9977396b4661806bc187231b79 2022-04-25 16:24:33 +0200\n"
+      }
+    ],
+    "gitWhy": [
+      {
+        "status": "completed",
+        "result_count": 5,
+        "evidence_used": false
+      }
+    ],
+    "zg": []
+  },
+  "forced_use_probe": false,
+  "forced_use_passed": null,
+  "token_cross_check": {
+    "input": 17991,
+    "output": 1771,
+    "messages": 7
+  },
+  "token_cross_check_agrees": true,
+  "trajectory_audit": {
+    "valid": true,
+    "invalidation_reason": null,
+    "violations": [],
+    "expected": {
+      "workspace": "/workspace",
+      "baseSha": "ee521a1c889f4cde6905c5db117959917568be9b"
+    }
+  },
+  "review_packet_id": null,
+  "artifacts_dir": "artifacts/44fe9f95ab6bf191ac37646ace1efd51db2fdd30ea1a7fc970b65c8537785086",
+  "completed": true
+}

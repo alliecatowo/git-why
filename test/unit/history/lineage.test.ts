@@ -87,3 +87,47 @@ test('extraction event obtains code identifiers only from added and removed diff
   assert.deepEqual(result.removals, ['oldcookie']);
   assert.deepEqual(result.paths, ['src', 'src/session.ts']);
 });
+
+// The lineage table is large — 35 MB of JSON on curl, about two seconds to
+// read and index. `Backend.search()` constructs a store on EVERY query,
+// before it knows whether anything will ask it a question, and only ordinal
+// and timeline constraints ever do. An eager constructor therefore charged
+// every ordinary `git why "..."` two seconds for a structure it never touched:
+// 63% of the query's total time on curl.
+//
+// These pin the two halves of the fix. Constructing must not read; the first
+// lookup must.
+test('constructing a store does not read the file', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'git-why-lineage-lazy-'));
+  try {
+    const file = path.join(dir, 'lineage.json');
+    writeLineageEvents(file, [event('a', [], ['cookie'])]);
+    // A store over a file that cannot be read must still construct. If the
+    // constructor touches the file this throws, which is exactly the
+    // regression being guarded against.
+    assert.doesNotThrow(() => new JsonLineageStore(path.join(dir, 'does-not-exist.json')));
+    assert.doesNotThrow(() => new JsonLineageStore(file));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('the file is read on first lookup and not re-read afterwards', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'git-why-lineage-once-'));
+  try {
+    const file = path.join(dir, 'lineage.json');
+    writeLineageEvents(file, [event('a', [], ['cookie']), event('b', ['a'], ['cookie'])]);
+    const store = new JsonLineageStore(file);
+
+    assert.equal((await store.lookupToken('cookie'))?.firstAddedSha, 'a');
+
+    // Deleting the file after the first lookup must not affect later ones: if
+    // a second lookup re-read from disk, this would start returning null and
+    // every query would be paying the parse again.
+    fs.rmSync(file);
+    assert.equal((await store.lookupToken('cookie'))?.firstAddedSha, 'a');
+    assert.deepEqual([...(await store.linkedCommits('a', 1))].sort(), [['b', 1]]);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
