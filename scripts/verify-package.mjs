@@ -282,6 +282,38 @@ function main() {
       }
     }
 
+    // The daemon subcommand must exist in the packaged build. `status` is
+    // read-only and starts nothing, so this verifies the command shipped
+    // without leaving a process behind on whoever runs the check.
+    console.log('verify-package: git why server status (packaged, starts nothing)...');
+    {
+      const daemonHome = path.join(work, 'daemon-home');
+      const serverStatus = spawnSync('git', ['why', 'server', 'status'], {
+        cwd: elsewhere,
+        env: { ...env, GIT_WHY_DAEMON_HOME: daemonHome },
+        encoding: 'utf8',
+      });
+      if (serverStatus.status !== 0 || !/not running/.test(serverStatus.stdout)) {
+        fail(
+          `git why server status failed: status=${serverStatus.status} ` +
+            `stdout=${serverStatus.stdout} stderr=${serverStatus.stderr}`,
+        );
+      }
+      // With no daemon, --check-ready must be a failure: scripts gate on it.
+      const checkReady = spawnSync('git', ['why', 'server', 'status', '--check-ready'], {
+        cwd: elsewhere,
+        env: { ...env, GIT_WHY_DAEMON_HOME: daemonHome },
+        encoding: 'utf8',
+      });
+      if (checkReady.status === 0) {
+        fail('git why server status --check-ready exited 0 with no daemon running');
+      }
+      if (existsSync(daemonHome)) {
+        fail('git why server status created state; it must start nothing');
+      }
+      console.log('verify-package: server status works and starts nothing.');
+    }
+
     // Shell completions are hand-written data files, and they drift the same
     // way the man page did: bash was missing one flag, zsh five, fish ten,
     // including every anchored temporal flag. A completion that omits a flag
