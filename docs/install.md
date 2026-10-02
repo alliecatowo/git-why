@@ -5,6 +5,9 @@ unrelated, pre-existing package. The binary it installs is named `git-why`;
 Git dispatches `git why <args>` to any executable named `git-why` on your
 `PATH`, so no alias or shell configuration is required.
 
+> **Status:** nothing has been published yet (no npm package, no tagged release). Options 1-3 will work
+> once the first release tag is cut; until then use [Option 4: build from source](#option-4-build-from-source).
+
 Every install path below produces the same thing: a `git-why` executable on
 `PATH`. Pick whichever fits your environment.
 
