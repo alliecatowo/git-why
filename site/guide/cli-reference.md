@@ -27,6 +27,7 @@ does not reach the tool.
 | `--between=<a>,<b>`        | Prefer commits between two temporal anchors                                                                                                                         |
 | `--around=<anchor>`        | Prefer commits near a date, tag, or SHA                                                                                                                             |
 | `--owners`                 | Who established this area, ranked by relevance of their commits rather than by surviving lines or commit count                                                      |
+| `--daemon=<mode>`          | direct: never use the daemon. server: require it. auto (default): use it when running, else run directly                                                            |
 | `--group <query>`          | Additional retrieval group; fuse groups at commit level                                                                                                             |
 | `--after=<date>`           | Only commits at or after this date (UTC, ISO-8601)                                                                                                                  |
 | `--before=<date>`          | Only commits strictly before this date (UTC, ISO-8601)                                                                                                              |
