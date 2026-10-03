@@ -16,5 +16,8 @@
   },
   "dependencies": {
     "asciinema-player": "^3.17.0"
+  },
+  "overrides": {
+    "vite": "^6.4.3"
   }
 }
