@@ -33,3 +33,6 @@ site/public/install.sh
 # 3 MB of other projects' commit text to carry a derived artefact is not worth
 # it; the scores beside it are the result.
 bench/results/embedders/pool.json
+
+*.log
+.mcp.json
