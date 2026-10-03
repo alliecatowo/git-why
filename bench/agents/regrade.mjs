@@ -49,7 +49,7 @@ function resolvesToCommit(repo, token) {
     execFileSync('git', ['-C', repo, 'cat-file', '-e', token + '^{commit}'], { stdio: 'ignore' });
     ok = true;
   } catch {
-    ok = false;
+    // not a commit in this repo: stays false
   }
   resolved.set(key, ok);
   return ok;

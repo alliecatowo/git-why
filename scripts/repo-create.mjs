@@ -94,7 +94,7 @@ function looksLikeThisProject(nameWithOwner, info) {
     '.content',
   ]);
   if (!contents.ok || !contents.stdout) return false;
-  let decoded = '';
+  let decoded;
   try {
     decoded = Buffer.from(contents.stdout.replace(/\n/g, ''), 'base64').toString('utf8');
   } catch {

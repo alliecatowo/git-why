@@ -46,16 +46,16 @@
     "opencode/"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && node scripts/postbuild.mjs && node scripts/gen-man.mjs",
+    "build": "node node_modules/typescript-7/bin/tsc -p tsconfig.build.json && node scripts/postbuild.mjs && node scripts/gen-man.mjs",
     "prepublishOnly": "npm run check",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "node node_modules/typescript-7/bin/tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "test:unit": "npm run build:test && node --test --test-concurrency=4 \".tmp/tsc-test/test/unit/**/*.test.js\"",
     "test:integration": "npm run build:test && node --test --test-concurrency=2 --test-timeout=600000 \".tmp/tsc-test/test/integration/**/*.test.js\"",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run bench:freeze && npm run verify:plugins && npm run test:unit && npm run test:bench",
-    "build:test": "tsc -p tsconfig.test.json && node scripts/copy-test-assets.mjs",
+    "build:test": "node node_modules/typescript-7/bin/tsc -p tsconfig.test.json && node scripts/copy-test-assets.mjs",
     "test:bench": "node --test bench/agents/*.test.mjs",
     "site:install": "npm install --prefix site",
     "site:dev": "npm run --prefix site dev",
@@ -68,11 +68,12 @@
     "@zvec/zvec": "0.7.1"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
-    "typescript": "^5.7.0",
-    "eslint": "^9.17.0",
-    "typescript-eslint": "^8.19.0",
-    "@eslint/js": "^9.17.0",
-    "prettier": "^3.4.2"
+    "@types/node": "^26.6.4",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "eslint": "^10.12.0",
+    "typescript-eslint": "^8.71.0",
+    "@eslint/js": "^10.0.1",
+    "prettier": "^3.9.9",
+    "typescript-7": "npm:typescript@^7.0.2"
   }
 }
