@@ -6,6 +6,14 @@ name: Release
 on:
   push:
     tags: ['v*']
+  # Re-run the post-publish jobs (GitHub release, MCP registry, Homebrew) for a
+  # tag whose npm publish already succeeded. The publish job itself never runs
+  # from here, so a version cannot be published twice.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag, e.g. v0.1.2'
+        required: true
 
 permissions:
   contents: read
@@ -13,6 +21,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     # npm trusted publishing: registered on npmjs.com for this repo, workflow
     # release.yml and environment `npm`. No long-lived registry token is used.
     environment: npm
@@ -66,32 +75,36 @@ jobs:
       - name: Publish to npm
         run: npm publish --provenance --access public
 
-      - name: Pack the tarball for the GitHub release
-        run: npm pack --pack-destination "$RUNNER_TEMP/pack"
-
-      - uses: actions/upload-artifact@v7
-        with:
-          name: tarball
-          path: ${{ runner.temp }}/pack/*.tgz
-
   github-release:
     needs: publish
+    if: ${{ !cancelled() && contains(fromJSON('["success","skipped"]'), needs.publish.result) }}
     runs-on: ubuntu-latest
     permissions:
       contents: write # create the GitHub release
+    env:
+      TAG_NAME: ${{ inputs.tag || github.ref_name }}
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/setup-node@v7
         with:
-          name: tarball
-          path: dist
+          node-version: '24.21.0'
+
+      # Attach exactly what npm serves, rather than a tarball packed on the side.
+      - name: Fetch the published tarball
+        run: |
+          VERSION="${TAG_NAME#v}"
+          for attempt in 1 2 3 4 5 6; do
+            npm pack "@alliecatowo/git-why@${VERSION}" --pack-destination . && break
+            sleep 20
+          done
+          ls -l ./*.tgz
 
       - name: Attach the tarball to a GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" dist/*.tgz \
+          gh release create "${TAG_NAME}" ./*.tgz \
             --repo "$GITHUB_REPOSITORY" --verify-tag \
-            --title "${GITHUB_REF_NAME}" \
+            --title "${TAG_NAME}" \
             --notes "See CHANGELOG.md for what changed, and docs/report.md for the measurements behind it."
 
   # MCP registry entry (registry.modelcontextprotocol.io) for
@@ -102,12 +115,14 @@ jobs:
     name: Publish to the MCP registry
     needs: publish
     runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && !contains(github.ref_name, '-')
+    if: ${{ !cancelled() && contains(fromJSON('["success","skipped"]'), needs.publish.result) && !contains(inputs.tag || github.ref_name, '-') }}
     permissions:
       contents: read
       id-token: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - name: Install mcp-publisher
         run: |
           curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
@@ -124,14 +139,14 @@ jobs:
     name: Update Homebrew formula
     needs: publish
     runs-on: ubuntu-latest
-    if: github.ref_type == 'tag' && !contains(github.ref_name, '-')
+    if: ${{ !cancelled() && contains(fromJSON('["success","skipped"]'), needs.publish.result) && !contains(inputs.tag || github.ref_name, '-') }}
     permissions:
       contents: read
     steps:
       - name: Render and push Formula/git-why.rb
         env:
           HOMEBREW_TAP_DEPLOY_KEY: ${{ secrets.HOMEBREW_TAP_DEPLOY_KEY }}
-          TAG_NAME: ${{ github.ref_name }}
+          TAG_NAME: ${{ inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
           if [ -z "${HOMEBREW_TAP_DEPLOY_KEY:-}" ]; then
