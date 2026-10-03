@@ -8,12 +8,17 @@ on:
     tags: ['v*']
 
 permissions:
-  contents: write # create the GitHub release
-  id-token: write # npm provenance
+  contents: read
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # npm trusted publishing: registered on npmjs.com for this repo, workflow
+    # release.yml and environment `npm`. No long-lived registry token is used.
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write # OIDC token for trusted publishing and provenance
     steps:
       - uses: actions/checkout@v4
 
@@ -50,16 +55,36 @@ jobs:
       - run: node scripts/verify-package.mjs
       - run: node scripts/verify-plugins.mjs
 
+      # Trusted publishing (OIDC) needs npm >= 11.5.1; Node's bundled npm is older.
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest && npm --version
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Pack the tarball for the GitHub release
+        run: npm pack --pack-destination "$RUNNER_TEMP/pack"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tarball
+          path: ${{ runner.temp }}/pack/*.tgz
+
+  github-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the GitHub release
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tarball
+          path: dist
 
       - name: Attach the tarball to a GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          npm pack
-          gh release create "${GITHUB_REF_NAME}" ./*.tgz \
+          gh release create "${GITHUB_REF_NAME}" dist/*.tgz \
+            --repo "$GITHUB_REPOSITORY" --verify-tag \
             --title "${GITHUB_REF_NAME}" \
             --notes "See CHANGELOG.md for what changed, and docs/report.md for the measurements behind it."
