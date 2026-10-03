@@ -38,7 +38,7 @@ onMounted(async () => {
     speed: props.speed,
     fit: 'width',
     terminalFontSize: '13px',
-    theme: 'asciinema',
+    theme: 'dracula',
   });
 });
 

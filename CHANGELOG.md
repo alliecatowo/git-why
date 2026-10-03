@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.1
+
+### Added
+
+- `git why mcp` serves the MCP stdio bridge from the main executable, so MCP
+  clients can run `npx -y @alliecatowo/git-why mcp`. `git-why-mcp` still works.
+- MCP registry entry `io.github.alliecatowo/git-why` (`server.json`, `mcpName`),
+  published from the release workflow with GitHub OIDC.
+
+### Changed
+
+- Documentation site restyled (Dracula and Alucard palettes, light and dark
+  themes, no orange) and the hero tagline no longer shows literal backticks.
+- The MCP server reports the real package version.
+
 ## 0.1.0
 
 First release. There are no prior versions, so everything below is the initial

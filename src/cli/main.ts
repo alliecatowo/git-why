@@ -40,6 +40,7 @@ import { constraintFromFlags, decomposeQuery } from '../search/temporal/intent.j
 const HELP_TEXT = `Usage: git why <query> [-- <path>...] [options]
        git why --query <query> [options]
        git why index|status|rebuild|gc [options]
+       git why mcp
        git why help
 
 Search Git history for the commits that explain the code.
@@ -465,6 +466,16 @@ async function run(): Promise<number> {
   if (argv[0] === 'server') {
     const { runServerCommand } = await import('./server-command.js');
     return runServerCommand(argv.slice(1), { writeStdout, writeStderr });
+  }
+
+  // `mcp` serves the MCP stdio bridge. It lives behind the main bin so the
+  // registry entry can run it with `npx @alliecatowo/git-why mcp`.
+  if (argv[0] === 'mcp') {
+    const { startMcpServer } = await import('../mcp/main.js');
+    startMcpServer();
+    return new Promise<number>((resolve) =>
+      process.stdin.once('close', () => resolve(ExitCode.OK)),
+    );
   }
 
   if (argv[0] === 'completion') {

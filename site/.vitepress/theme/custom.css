@@ -1,27 +1,74 @@
 /**
- * Restrained brand pass: one accent color (matches the logo mark), no
- * gradients, no drop shadows piled on drop shadows. This is a Git tool.
+ * Palette: Dracula for the dark theme, Alucard (Dracula's light sibling) for
+ * the light one. One accent (purple), pink only for the commit dots in the
+ * logo and the hero name. No gradients, no glow, no stacked shadows: this is a
+ * Git tool and it should look like a terminal.
+ *
+ * Dracula: bg #282a36, darker #21222c, selection #44475a, fg #f8f8f2,
+ *          comment #6272a4, purple #bd93f9, pink #ff79c6.
+ * Alucard: bg #fffbeb, fg #1f1f1f, comment #6c664b, purple #644ac9,
+ *          pink #a3144d.
  */
 :root {
-  --vp-c-brand-1: #f97316;
-  --vp-c-brand-2: #ea6a0c;
-  --vp-c-brand-3: #c2540a;
-  --vp-c-brand-soft: rgba(249, 115, 22, 0.14);
+  --vp-c-bg: #fffbeb;
+  --vp-c-bg-alt: #f6f1da;
+  --vp-c-bg-elv: #fffbeb;
+  --vp-c-bg-soft: #f1ebd0;
+  --vp-c-divider: #ddd6b8;
+  --vp-c-gutter: #e8e1c5;
+  --vp-c-text-1: #1f1f1f;
+  --vp-c-text-2: #4a4630;
+  --vp-c-text-3: #6c664b;
+
+  --vp-c-brand-1: #644ac9;
+  --vp-c-brand-2: #5640ad;
+  --vp-c-brand-3: #644ac9;
+  --vp-c-brand-soft: rgba(100, 74, 201, 0.12);
+
+  --vp-button-brand-bg: #644ac9;
+  --vp-button-brand-text: #fffbeb;
+  --vp-button-brand-hover-bg: #5640ad;
+  --vp-button-brand-hover-text: #fffbeb;
+  --vp-button-brand-active-bg: #4a3593;
+  --vp-button-brand-active-text: #fffbeb;
+
+  --vp-home-hero-name-color: #a3144d;
+  --vp-code-block-bg: #f6f1da;
+  --vp-code-bg: #efe9cf;
+  --vp-code-color: #4a3593;
 }
 
 .dark {
-  --vp-c-brand-1: #fb923c;
-  --vp-c-brand-2: #f97316;
-  --vp-c-brand-3: #ea6a0c;
+  --vp-c-bg: #282a36;
+  --vp-c-bg-alt: #21222c;
+  --vp-c-bg-elv: #343746;
+  --vp-c-bg-soft: #303241;
+  --vp-c-divider: #44475a;
+  --vp-c-gutter: #21222c;
+  --vp-c-text-1: #f8f8f2;
+  --vp-c-text-2: #c2c5d6;
+  --vp-c-text-3: #8b94bd;
+
+  --vp-c-brand-1: #bd93f9;
+  --vp-c-brand-2: #caa8fa;
+  --vp-c-brand-3: #bd93f9;
+  --vp-c-brand-soft: rgba(189, 147, 249, 0.16);
+
+  --vp-button-brand-bg: #bd93f9;
+  --vp-button-brand-text: #282a36;
+  --vp-button-brand-hover-bg: #caa8fa;
+  --vp-button-brand-hover-text: #282a36;
+  --vp-button-brand-active-bg: #a77ff0;
+  --vp-button-brand-active-text: #282a36;
+
+  --vp-home-hero-name-color: #ff79c6;
+  --vp-code-block-bg: #21222c;
+  --vp-code-bg: #343746;
+  --vp-code-color: #bd93f9;
 }
 
-:root {
-  --vp-home-hero-name-color: var(--vp-c-brand-1);
-  --vp-code-block-bg: #0d1117;
-}
-
-.dark {
-  --vp-code-block-bg: #0a0d12;
+.VPHero .tagline code {
+  font-size: 0.92em;
 }
 
 .VPHero .name {

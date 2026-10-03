@@ -6,13 +6,17 @@ export default defineConfig({
     '`git blame` tells you who changed the code; `git why` finds the history that explains it.',
   base: '/git-why/',
   lang: 'en-US',
-  appearance: 'dark',
   cleanUrls: true,
   lastUpdated: true,
 
+  markdown: {
+    // Dracula in the dark theme, its light sibling's neutrals in the light one.
+    theme: { light: 'github-light', dark: 'dracula' },
+  },
+
   head: [
     ['link', { rel: 'icon', href: '/git-why/favicon.svg', type: 'image/svg+xml' }],
-    ['meta', { name: 'theme-color', content: '#f97316' }],
+    ['meta', { name: 'theme-color', content: '#282a36' }],
     ['meta', { property: 'og:title', content: 'Git Why' }],
     [
       'meta',
@@ -34,7 +38,7 @@ export default defineConfig({
       { text: 'Benchmarks', link: '/guide/benchmarks' },
       { text: 'FAQ', link: '/guide/faq' },
       {
-        text: 'v0.1.0',
+        text: 'v0.1.1',
         items: [
           { text: 'Changelog', link: 'https://github.com/alliecatowo/git-why/releases' },
           { text: 'Spec & operations', link: '/guide/operations' },
