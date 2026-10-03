@@ -61,7 +61,7 @@ for (let i = 0; i < cases.length; i += BATCH) {
   const prompt = `${INSTRUCTION}\n\n${batch
     .map((c, n) => `${n + 1}. ${c.question.replace(/\s+/g, ' ').slice(0, 400)}`)
     .join('\n')}`;
-  let text = '';
+  let text;
   try {
     text = execFileSync('opencode', ['run', '--model', MODEL, prompt], {
       encoding: 'utf8',

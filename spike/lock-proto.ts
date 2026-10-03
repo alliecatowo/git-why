@@ -114,7 +114,7 @@ function reclaimExclusiveIfStale(lockPath: string): boolean {
 
 function pruneStaleReaders(readersDir: string): number {
   let remaining = 0;
-  let entries: string[] = [];
+  let entries: string[];
   try {
     entries = fs.readdirSync(readersDir);
   } catch {

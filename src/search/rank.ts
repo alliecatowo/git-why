@@ -69,8 +69,8 @@ function groupBySha(records: readonly ScoredRecord[]): Map<string, ScoredRecord[
 
 async function runBranch(fetch: BranchFetch, n: number, cap: number): Promise<BranchResult> {
   let topK = Math.min(Math.max(MIN_CANDIDATE_POOL, CANDIDATE_POOL_MULTIPLIER * n), cap);
-  let records: readonly ScoredRecord[] = [];
-  let limitReached = false;
+  let records: readonly ScoredRecord[];
+  let limitReached: boolean;
 
   for (;;) {
     records = await fetch(topK);

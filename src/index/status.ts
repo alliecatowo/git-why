@@ -119,7 +119,7 @@ export function computeIndexStatus(input: ComputeStatusInput): IndexStatus {
     warnings.push('manifest policy versions do not match this build; a rebuild is required');
   }
 
-  let pendingRecovery = false;
+  let pendingRecovery: boolean;
   try {
     pendingRecovery = readPendingBatch(gp.pendingFile) !== null;
   } catch {
