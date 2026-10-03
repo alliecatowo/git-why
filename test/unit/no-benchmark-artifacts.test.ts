@@ -70,9 +70,16 @@ function trackedPaths(): Set<string> {
   return new Set(listed.split('\0').filter((entry) => entry !== ''));
 }
 
-test('no benchmark task artifact exists in the product tree', () => {
+test('no benchmark task artifact exists in the product tree', (t) => {
   const taskPaths = taskPathsFromEvaluator();
-  assert.ok(taskPaths.size > 0, 'expected evaluator task manifests with changed file paths');
+  // The task manifests live in a local benchmark workspace outside the repo
+  // (BENCH_WORK_DIR or ~/.cache/git-why-bench), so they only exist on machines
+  // that have run the benchmark. Without them (CI) there is nothing to check
+  // against; the `.cjs` guard below still runs everywhere.
+  if (taskPaths.size === 0) {
+    t.skip(`no evaluator task manifests under ${evaluatorManifestsDir}`);
+    return;
+  }
 
   // Some task paths collide with ordinary repository files by name -- T8 writes
   // a `README.md`, and so does every project. Tracked files are therefore
