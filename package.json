@@ -1,7 +1,8 @@
 {
   "name": "@alliecatowo/git-why",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Semantic archaeology for Git. Find the history that explains the code.",
+  "mcpName": "io.github.alliecatowo/git-why",
   "license": "Apache-2.0",
   "type": "module",
   "homepage": "https://alliecatowo.github.io/git-why/",

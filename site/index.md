@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 'Git Why'
   text: 'Finds the history that explains the code.'
-  tagline: "`git blame` tells you who changed it. `git why` finds the commit, the author's real words, and the diff that explain why."
+  tagline: "<code>git blame</code> tells you who changed it. <code>git why</code> finds the commit, the author's real words, and the diff that explain why."
   image:
     src: /logo.svg
     alt: Git Why
@@ -18,15 +18,9 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/alliecatowo/git-why
-
-features:
-  - title: Hybrid retrieval, fused at the commit
-    details: Full-text and vector search run independently over your commit history and are combined with Reciprocal Rank Fusion, so exact identifiers and paraphrased questions both work.
-  - title: Retrieves evidence, never invents it
-    details: Every result is a real commit, its author's actual words, and the relevant diff. Git Why does not generate an explanation of its own.
-  - title: Local by default
-    details: Embedding runs in-process with a small static model. Repository text is never sent to a model host; after one checksummed download, it works fully offline.
 ---
+
+Hybrid retrieval, fused at the commit: full-text and vector search run independently over your history and are combined with Reciprocal Rank Fusion, so exact identifiers and paraphrased questions both work. Every result is a real commit with its author's actual words and the relevant diff; Git Why does not generate an explanation of its own. Embedding runs in-process with a small static model, so repository text never leaves your machine and, after one checksummed download, it works fully offline.
 
 ## See it run
 

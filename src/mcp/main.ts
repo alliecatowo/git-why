@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** Minimal MCP stdio bridge; keeps the MCP surface on the stable CLI JSON contract. */
 import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -44,6 +45,15 @@ function runCli(args: string[], cwd: string | undefined): Promise<unknown> {
       }
     });
   });
+}
+
+function serverVersion(): string {
+  try {
+    const raw = readFileSync(new URL('../../package.json', import.meta.url), 'utf8');
+    return (JSON.parse(raw) as { version?: string }).version ?? '0.0.0';
+  } catch {
+    return '0.0.0';
+  }
 }
 
 const tools = [
@@ -182,41 +192,49 @@ export const mcpTools = tools;
 const isEntryPoint =
   process.argv[1] !== undefined && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-const rl = isEntryPoint ? createInterface({ input: process.stdin, crlfDelay: Infinity }) : null;
-rl?.on('line', async (line) => {
-  let request: Rpc;
-  try {
-    request = JSON.parse(line) as Rpc;
-  } catch {
-    return;
-  }
-  if (request.method === 'initialize') {
-    reply(request.id, {
-      protocolVersion: '2024-11-05',
-      capabilities: { tools: {} },
-      serverInfo: { name: 'git-why', version: '0.1.0' },
-    });
-  } else if (request.method === 'notifications/initialized') {
-    return;
-  } else if (request.method === 'tools/list') {
-    reply(request.id, { tools });
-  } else if (request.method === 'tools/call') {
-    const name = String(request.params?.name ?? '');
-    const args = (request.params?.arguments ?? {}) as Record<string, unknown>;
+/** Serve MCP over stdio until stdin closes. Also reachable as `git-why mcp`. */
+export function startMcpServer(): void {
+  const rl = createInterface({ input: process.stdin, crlfDelay: Infinity });
+  rl.on('line', async (line) => {
+    let request: Rpc;
     try {
-      if (name === 'git_why_search') {
-        const result = await runCli(searchCliArgs(args), args.cwd ? String(args.cwd) : undefined);
-        reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
-      } else if (name === 'git_why_status') {
-        const result = await runCli(['status', '--json'], args.cwd ? String(args.cwd) : undefined);
-        reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
-      } else {
-        error(request.id, -32602, `unknown tool: ${name}`);
-      }
-    } catch (cause) {
-      error(request.id, -32000, cause instanceof Error ? cause.message : String(cause));
+      request = JSON.parse(line) as Rpc;
+    } catch {
+      return;
     }
-  } else if (request.id !== undefined) {
-    error(request.id, -32601, `method not found: ${request.method}`);
-  }
-});
+    if (request.method === 'initialize') {
+      reply(request.id, {
+        protocolVersion: '2024-11-05',
+        capabilities: { tools: {} },
+        serverInfo: { name: 'git-why', version: serverVersion() },
+      });
+    } else if (request.method === 'notifications/initialized') {
+      return;
+    } else if (request.method === 'tools/list') {
+      reply(request.id, { tools });
+    } else if (request.method === 'tools/call') {
+      const name = String(request.params?.name ?? '');
+      const args = (request.params?.arguments ?? {}) as Record<string, unknown>;
+      try {
+        if (name === 'git_why_search') {
+          const result = await runCli(searchCliArgs(args), args.cwd ? String(args.cwd) : undefined);
+          reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
+        } else if (name === 'git_why_status') {
+          const result = await runCli(
+            ['status', '--json'],
+            args.cwd ? String(args.cwd) : undefined,
+          );
+          reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
+        } else {
+          error(request.id, -32602, `unknown tool: ${name}`);
+        }
+      } catch (cause) {
+        error(request.id, -32000, cause instanceof Error ? cause.message : String(cause));
+      }
+    } else if (request.id !== undefined) {
+      error(request.id, -32601, `method not found: ${request.method}`);
+    }
+  });
+}
+
+if (isEntryPoint) startMcpServer();

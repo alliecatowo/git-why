@@ -4,6 +4,7 @@
 Usage: git why <query> [-- <path>...] [options]
        git why --query <query> [options]
        git why index|status|rebuild|gc [options]
+       git why mcp
 ```
 
 Use `git why -h` for this from the terminal — see the note on

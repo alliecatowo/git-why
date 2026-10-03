@@ -86,3 +86,25 @@ test('both tools carry a description an agent can route on', () => {
   assert.match(search.description, /git log -S/);
   assert.match(search.description, /DO NOT USE/);
 });
+
+test('`git-why mcp` speaks MCP over stdio', async () => {
+  const { spawn } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const path = await import('node:path');
+  const cli = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    '../../../src/cli/main.js',
+  );
+  const child = spawn(process.execPath, [cli, 'mcp'], { stdio: ['pipe', 'pipe', 'inherit'] });
+  const lines: string[] = [];
+  child.stdout.setEncoding('utf8');
+  child.stdout.on('data', (chunk: string) => lines.push(...chunk.split('\n').filter(Boolean)));
+  child.stdin.write('{"jsonrpc":"2.0","id":1,"method":"tools/list"}\n');
+  child.stdin.end();
+  await new Promise((resolve) => child.on('close', resolve));
+  const reply = JSON.parse(lines[0] ?? '{}') as { result?: { tools?: { name: string }[] } };
+  assert.deepEqual(
+    reply.result?.tools?.map((t) => t.name),
+    ['git_why_search', 'git_why_status'],
+  );
+});

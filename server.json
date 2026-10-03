@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.alliecatowo/git-why",
+  "title": "Git Why",
+  "description": "Semantic and full-text search over Git history: finds the commits that explain why code is the way it is.",
+  "repository": {
+    "url": "https://github.com/alliecatowo/git-why",
+    "source": "github"
+  },
+  "websiteUrl": "https://alliecatowo.github.io/git-why/",
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@alliecatowo/git-why",
+      "version": "0.1.1",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
+      ]
+    }
+  ]
+}

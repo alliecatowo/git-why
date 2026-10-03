@@ -102,6 +102,11 @@ case this tool measurably loses (Hit@10 0.950 against 0.350), and to use code
 search rather than history for the current state of the code. A skill that
 claims its own tool is always best makes an agent worse at its job.
 
+Any other MCP client can run the server directly: `npx -y @alliecatowo/git-why mcp`
+(or `git why mcp` once installed). It is also listed in the
+[MCP registry](https://registry.modelcontextprotocol.io) as
+`io.github.alliecatowo/git-why`.
+
 See [`docs/plugin.md`](docs/plugin.md).
 
 ## Make it faster (optional)
