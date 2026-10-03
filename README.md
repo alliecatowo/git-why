@@ -63,6 +63,12 @@ Install from npm (Node >= 22.12):
 npm install -g @alliecatowo/git-why
 ```
 
+Or with Homebrew (macOS and Linux; pulls in `node`):
+
+```sh
+brew install alliecatowo/tap/git-why
+```
+
 Or build from source:
 
 ```sh
