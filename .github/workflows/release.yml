@@ -120,9 +120,16 @@ jobs:
       contents: read
       id-token: write
     steps:
+      # Push: the tag's tree. Dispatch: the default branch, so a fixed server.json
+      # can be republished for a tag whose npm package is already out.
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ inputs.tag || github.ref }}
+      - name: server.json matches the tag
+        run: |
+          tag="${TAG_NAME#v}"
+          server="$(node -p 'require("./server.json").version')"
+          [ "$tag" = "$server" ] || { echo "server.json ${server} != tag ${tag}" >&2; exit 1; }
+        env:
+          TAG_NAME: ${{ inputs.tag || github.ref_name }}
       - name: Install mcp-publisher
         run: |
           curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
