@@ -57,7 +57,13 @@ $ git why "why do we keep the session when the refresh token is empty?"
 
 ## Install
 
-There is no published release yet, so build from source (Node >= 22.12):
+Install from npm (Node >= 22.12):
+
+```sh
+npm install -g @alliecatowo/git-why
+```
+
+Or build from source:
 
 ```sh
 git clone https://github.com/alliecatowo/git-why.git
@@ -66,9 +72,6 @@ npm ci
 npm run build
 npm install -g .
 ```
-
-The npm package, the `curl | sh` installer and the GitHub release tarball are coming with the first
-tagged release (a release workflow is already in place); they do not work yet.
 
 The package installs a `git-why` executable, which Git dispatches as the
 subcommand `git why`. No alias setup needed. More install paths — pinned
