@@ -57,12 +57,20 @@ $ git why "why do we keep the session when the refresh token is empty?"
 
 ## Install
 
-```sh
-curl -fsSL https://alliecatowo.github.io/git-why/install.sh | sh
-```
+Install from npm (Node >= 22.12):
 
 ```sh
 npm install -g @alliecatowo/git-why
+```
+
+Or build from source:
+
+```sh
+git clone https://github.com/alliecatowo/git-why.git
+cd git-why
+npm ci
+npm run build
+npm install -g .
 ```
 
 The package installs a `git-why` executable, which Git dispatches as the
