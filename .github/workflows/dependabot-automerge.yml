@@ -21,12 +21,17 @@ jobs:
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v3
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Approve and enable auto-merge (patch and minor)
-        if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
+      # Only development dependencies and GitHub Actions are merged on CI alone.
+      # A runtime dependency (the native @zvec/zvec binding) ships to every user,
+      # so a patch/minor bump of it is labelled for a human instead.
+      - name: Approve and enable auto-merge (patch and minor, dev deps and actions only)
+        if: >-
+          (steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor') &&
+          (steps.metadata.outputs.dependency-type == 'direct:development' || steps.metadata.outputs.package-ecosystem == 'github_actions')
         run: |
           gh pr review --approve "$PR_URL" || echo "approval not possible, relying on required checks only"
           gh pr merge --auto --squash "$PR_URL"
@@ -34,10 +39,12 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Label major updates for manual review
-        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+      - name: Label runtime and major updates for manual review
+        if: >-
+          steps.metadata.outputs.update-type == 'version-update:semver-major' ||
+          (steps.metadata.outputs.dependency-type != 'direct:development' && steps.metadata.outputs.package-ecosystem != 'github_actions')
         run: |
-          gh label create major-update --color D93F0B --description "Major version bump, needs a human" 2>/dev/null || true
+          gh label create major-update --color D93F0B --description "Runtime or major version bump, needs a human" 2>/dev/null || true
           gh pr edit "$PR_URL" --add-label major-update
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}

@@ -1,5 +1,34 @@
 # Changelog
 
+## Unreleased
+
+### Security
+
+- Index locks: reclaiming a stale lock is serialised so it can no longer delete a
+  live replacement; reader/lock tokens are written atomically so a reader is never
+  pruned mid-write; tokens carry a PID-namespace id so a lock held from another
+  container is not stolen; liveness checks no longer block the event loop.
+- Jina (transformer) models are pinned to commit SHAs instead of `main`, honour
+  `--offline`, use git-why's model cache and embed in micro-batches. Existing
+  Jina indexes need a rebuild (the model fingerprint changed).
+- Model downloads abort on a stall (60 s without bytes) instead of holding the
+  download lock, and the lock is only reclaimed from a dead owner.
+- Workflows: actions pinned by SHA, npm pinned for trusted publishing,
+  `mcp-publisher` verified against its release checksum, the MCP registry step is
+  idempotent on re-run, Dependabot auto-merge no longer covers runtime deps.
+
+### Added
+
+- `GIT_WHY_MODEL_BASE_URL` (mirror; hashes still enforced), `GIT_WHY_OFFLINE=1`,
+  and `HTTPS_PROXY` support for model downloads.
+- CI runs the network-free integration suite and the unit suite on the Node 22.12
+  engines floor.
+
+### Fixed
+
+- Integration fixtures ignore the developer's global git config (CRLF, non-UTF-8
+  paths) and the EPIPE test no longer overflows the 128 KiB env-string limit.
+
 ## 0.1.2
 
 ### Security

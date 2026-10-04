@@ -25,7 +25,16 @@ function run(
     const child = spawn('git', args as string[], {
       cwd,
       shell: false,
-      env: { ...process.env, ...env, GIT_TERMINAL_PROMPT: '0' },
+      env: {
+        ...process.env,
+        // Isolate from the developer's global/system git config (core.autocrlf,
+        // signing, hooks...) so fixtures are byte-exact on every machine.
+        GIT_CONFIG_GLOBAL: '/dev/null',
+        GIT_CONFIG_SYSTEM: '/dev/null',
+        GIT_CONFIG_NOSYSTEM: '1',
+        ...env,
+        GIT_TERMINAL_PROMPT: '0',
+      },
     });
     const out: Buffer[] = [];
     const err: Buffer[] = [];
@@ -42,6 +51,12 @@ function run(
     if (input !== undefined) child.stdin.end(input);
     else child.stdin.end();
   });
+}
+
+function nulJoin(paths: readonly (string | Buffer)[]): Buffer {
+  return Buffer.concat(
+    paths.flatMap((p) => [typeof p === 'string' ? Buffer.from(p, 'utf8') : p, Buffer.from([0])]),
+  );
 }
 
 let counter = 0;
@@ -113,6 +128,7 @@ export async function createTestRepo(options: CreateTestRepoOptions = {}): Promi
   }
   await run(dir, ['config', 'user.name', FIXTURE_AUTHOR_NAME]);
   await run(dir, ['config', 'user.email', FIXTURE_AUTHOR_EMAIL]);
+  await run(dir, ['config', 'core.autocrlf', 'false']);
   await run(dir, ['config', 'commit.gpgsign', 'false']);
   await run(dir, ['config', 'tag.gpgsign', 'false']);
   await run(dir, ['branch', '-m', 'main']);
@@ -139,14 +155,15 @@ export async function createTestRepo(options: CreateTestRepoOptions = {}): Promi
       await fsWriteFile(full, data);
     },
     async add(paths) {
-      const args = ['add', '--'];
-      for (const p of paths) args.push(typeof p === 'string' ? p : p.toString('utf8'));
-      await repo.gitOrThrow(args);
+      // Paths travel on stdin as NUL-separated bytes: argv cannot carry non-UTF-8 names.
+      await repo.gitOrThrow(['add', '--pathspec-from-file=-', '--pathspec-file-nul'], {
+        input: nulJoin(paths),
+      });
     },
     async rm(paths) {
-      const args = ['rm', '-q', '--'];
-      for (const p of paths) args.push(typeof p === 'string' ? p : p.toString('utf8'));
-      await repo.gitOrThrow(args);
+      await repo.gitOrThrow(['rm', '-q', '--pathspec-from-file=-', '--pathspec-file-nul'], {
+        input: nulJoin(paths),
+      });
     },
     async mv(from, to) {
       const a = typeof from === 'string' ? from : from.toString('utf8');

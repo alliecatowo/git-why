@@ -27,6 +27,7 @@ import { createHash } from 'node:crypto';
 import { randomBytes } from 'node:crypto';
 import fs from 'node:fs';
 import fsPromises from 'node:fs/promises';
+import http from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
 import { GitWhyError } from '../types.js';
@@ -70,13 +71,74 @@ export interface CacheOptions {
   /** Injectable for tests; defaults to the global `fetch`. */
   readonly fetchImpl?: typeof fetch;
   readonly lockTimeoutMs?: number;
+  /** Abort a download that has produced no bytes for this long. Defaults to 60 s. */
+  readonly stallTimeoutMs?: number;
 }
 
 const DEFAULT_LOCK_TIMEOUT_MS = 5 * 60 * 1000;
 const LOCK_STALE_MS = 10 * 60 * 1000;
-const HF_BASE_URL = 'https://huggingface.co';
+const DEFAULT_BASE_URL = 'https://huggingface.co';
 const MAX_DOWNLOAD_ATTEMPTS = 3;
-const DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1000;
+/** Abort a download that has produced no bytes for this long (a stalled connection). */
+const STALL_TIMEOUT_MS = 60 * 1000;
+/** Hard ceiling for one file, however steadily it trickles in. */
+const DOWNLOAD_TIMEOUT_MS = 30 * 60 * 1000;
+/** How often a live downloader refreshes its lock so it is never mistaken for a dead one. */
+const LOCK_HEARTBEAT_MS = 30 * 1000;
+
+function envTruthy(value: string | undefined): boolean {
+  return value !== undefined && /^(1|true|yes|on)$/i.test(value.trim());
+}
+
+/** `--offline` (or `offline: true`) or `GIT_WHY_OFFLINE=1`: never touch the network for models. */
+export function isOffline(
+  options: Pick<CacheOptions, 'offline'> = {},
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  return options.offline === true || envTruthy(env.GIT_WHY_OFFLINE);
+}
+
+/**
+ * Where model files are fetched from. `GIT_WHY_MODEL_BASE_URL` points at a
+ * mirror laid out like huggingface.co (`<base>/<model>/resolve/<rev>/<file>`).
+ * A mirror gains no trust: every file is still checked against the pinned
+ * sha256, so a hostile mirror can only cause a failed download.
+ */
+export function resolveBaseUrl(env: NodeJS.ProcessEnv = process.env): string {
+  const raw = env.GIT_WHY_MODEL_BASE_URL;
+  if (raw === undefined || raw.trim() === '') return DEFAULT_BASE_URL;
+  let url: URL;
+  try {
+    url = new URL(raw.trim());
+  } catch {
+    throw new GitWhyError('INVALID_ARGUMENTS', 'GIT_WHY_MODEL_BASE_URL is not a valid URL');
+  }
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+    throw new GitWhyError('INVALID_ARGUMENTS', 'GIT_WHY_MODEL_BASE_URL must be an http(s) URL');
+  }
+  return url.toString().replace(/\/+$/, '');
+}
+
+let proxyConfigured = false;
+/**
+ * Node's built-in fetch ignores HTTPS_PROXY unless NODE_USE_ENV_PROXY=1 was set
+ * at process start. When a proxy is configured and the runtime offers
+ * `setGlobalProxyFromEnv` (Node >= 22.21 / 24.5), switch it on for model
+ * downloads so a corporate proxy does not require extra flags.
+ */
+function configureProxyFromEnv(env: NodeJS.ProcessEnv = process.env): void {
+  if (proxyConfigured || envTruthy(env.NODE_USE_ENV_PROXY)) return;
+  const hasProxy = [env.HTTPS_PROXY, env.https_proxy, env.HTTP_PROXY, env.http_proxy].some(
+    (v) => v !== undefined && v !== '',
+  );
+  if (!hasProxy) return;
+  proxyConfigured = true;
+  try {
+    (http as unknown as { setGlobalProxyFromEnv?: () => void }).setGlobalProxyFromEnv?.();
+  } catch {
+    // best effort: fall back to a direct connection
+  }
+}
 
 export function resolveCacheRoot(
   env: NodeJS.ProcessEnv = process.env,
@@ -190,7 +252,15 @@ function readLockToken(lockPath: string): LockToken | null {
 function reclaimIfStale(lockPath: string): void {
   const token = readLockToken(lockPath);
   if (!token) return; // unreadable/partial write from a racer; leave to retry
-  const stale = !isProcessAlive(token.pid) || Date.now() - token.acquiredAt > LOCK_STALE_MS;
+  // A live owner refreshes the lock's mtime (see the heartbeat in withDownloadLock),
+  // so age alone is only evidence of death once the heartbeat has stopped.
+  let lastBeat = token.acquiredAt;
+  try {
+    lastBeat = Math.max(lastBeat, fs.statSync(lockPath).mtimeMs);
+  } catch {
+    return;
+  }
+  const stale = !isProcessAlive(token.pid) || Date.now() - lastBeat > LOCK_STALE_MS;
   if (stale) {
     try {
       fs.unlinkSync(lockPath);
@@ -241,9 +311,19 @@ async function withDownloadLock<T>(
       await sleep(jitteredBackoff(attempt++));
     }
   }
+  const heartbeat = setInterval(() => {
+    try {
+      const now = new Date();
+      fs.utimesSync(lockPath, now, now);
+    } catch {
+      // lock removed under us; the body will still finish and verify its own files
+    }
+  }, LOCK_HEARTBEAT_MS);
+  heartbeat.unref();
   try {
     return await body();
   } finally {
+    clearInterval(heartbeat);
     try {
       fs.unlinkSync(lockPath);
     } catch {
@@ -270,15 +350,33 @@ async function downloadOne(
   dir: string,
   fetchImpl: typeof fetch,
   onProgress: ProgressCallback | undefined,
+  baseUrl: string,
+  stallTimeoutMs: number = STALL_TIMEOUT_MS,
 ): Promise<void> {
-  const url = `${HF_BASE_URL}/${artifact.modelId}/resolve/${artifact.revision}/${file.filename}`;
+  const url = `${baseUrl}/${artifact.modelId}/resolve/${artifact.revision}/${file.filename}`;
   let lastError: unknown;
   for (let attempt = 0; attempt < MAX_DOWNLOAD_ATTEMPTS; attempt++) {
     const tmpPath = path.join(dir, `.${file.filename}.tmp-${randomBytes(6).toString('hex')}`);
+    // Aborts on a stall (no bytes for stallTimeoutMs) or on the overall ceiling, so a
+    // hung connection cannot hold the download lock and make every other process wait.
+    const controller = new AbortController();
+    let idle: NodeJS.Timeout | undefined;
+    const armIdle = (): void => {
+      clearTimeout(idle);
+      idle = setTimeout(
+        () => controller.abort(new Error(`download stalled for ${stallTimeoutMs} ms`)),
+        stallTimeoutMs,
+      );
+    };
+    const overall = setTimeout(
+      () => controller.abort(new Error('download exceeded its time limit')),
+      DOWNLOAD_TIMEOUT_MS,
+    );
+    armIdle();
     try {
       const res = await fetchImpl(url, {
         redirect: 'follow',
-        signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS),
+        signal: controller.signal,
       });
       if (res.status === 404 || res.status === 410) {
         // Permanent: this pinned revision/file does not exist at the
@@ -299,6 +397,7 @@ async function downloadOne(
       try {
         const writable = fileHandle.createWriteStream();
         for await (const chunk of res.body as unknown as AsyncIterable<Uint8Array>) {
+          armIdle();
           bytesDownloaded += chunk.length;
           onProgress?.({
             modelId: artifact.modelId,
@@ -324,9 +423,13 @@ async function downloadOne(
           `checksum mismatch for ${file.filename}: expected ${file.sha256}, got ${actualHash} (possible tampering, mirror drift, or a stale pin)`,
         );
       }
+      clearTimeout(idle);
+      clearTimeout(overall);
       await fsPromises.rename(tmpPath, path.join(dir, file.filename));
       return;
     } catch (err) {
+      clearTimeout(idle);
+      clearTimeout(overall);
       await fsPromises.unlink(tmpPath).catch(() => {});
       if (err instanceof GitWhyError && err.code === 'MODEL_UNAVAILABLE') {
         throw err; // permanent, do not retry
@@ -361,7 +464,7 @@ export async function ensureCached(
     return pathsFor(dir, artifact);
   }
 
-  if (options.offline) {
+  if (isOffline(options)) {
     throw new GitWhyError(
       'OFFLINE_REQUIRED_RESOURCE',
       `${artifact.modelId}@${artifact.revision} is not cached locally and --offline forbids downloading it`,
@@ -371,6 +474,8 @@ export async function ensureCached(
     );
   }
 
+  const baseUrl = resolveBaseUrl();
+  configureProxyFromEnv();
   fs.mkdirSync(dir, { recursive: true });
   const fetchImpl = options.fetchImpl ?? fetch;
   const lockTimeoutMs = options.lockTimeoutMs ?? DEFAULT_LOCK_TIMEOUT_MS;
@@ -386,7 +491,15 @@ export async function ensureCached(
       ) {
         continue; // partial prior run already got this one right
       }
-      await downloadOne(artifact, file, dir, fetchImpl, options.onProgress);
+      await downloadOne(
+        artifact,
+        file,
+        dir,
+        fetchImpl,
+        options.onProgress,
+        baseUrl,
+        options.stallTimeoutMs,
+      );
     }
 
     const manifest: Manifest = {

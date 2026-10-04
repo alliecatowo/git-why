@@ -57,6 +57,7 @@
     "test:integration": "npm run build:test && node --test --test-concurrency=2 --test-timeout=600000 \".tmp/tsc-test/test/integration/**/*.test.js\"",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run bench:freeze && npm run verify:plugins && npm run test:unit && npm run test:bench",
     "build:test": "node node_modules/typescript-7/bin/tsc -p tsconfig.test.json && node scripts/copy-test-assets.mjs",
+    "test:integration:offline": "npm run build && npm run build:test && node --test --test-concurrency=2 --test-timeout=600000 \".tmp/tsc-test/test/integration/{git,index,cli,daemon}/**/*.test.js\"",
     "test:bench": "node --test bench/agents/*.test.mjs",
     "site:install": "npm install --prefix site",
     "site:dev": "npm run --prefix site dev",

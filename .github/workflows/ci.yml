@@ -16,12 +16,9 @@ concurrency:
 jobs:
   # Build, typecheck, lint, format-check and unit-test the CLI package.
   #
-  # Integration tests are intentionally NOT run here: they drive a real
-  # model download (network access, ~minutes) and real Zvec collections.
-  # They self-skip when network is unavailable (see
-  # test/integration/embedding/*.test.ts), which makes them unsuitable as a
-  # required, always-green CI gate on every push/PR. Run them locally or in
-  # a dedicated job with `mise run test:integration`.
+  # The network-free integration tests (git, index, cli, daemon) run in the
+  # `integration` job below. The embedding integration tests drive a real model
+  # download and stay out of CI; run them locally with `npm run test:integration`.
   test:
     strategy:
       fail-fast: false
@@ -29,9 +26,9 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '24.21.0'
           cache: npm
@@ -60,14 +57,53 @@ jobs:
       - name: Site CLI reference matches --help
         run: node site/scripts/gen-cli-reference.mjs --check
 
+  # Real git repositories, real Zvec collections, real child processes and the
+  # daemon; no network and no embedding model (test/integration/embedding is
+  # excluded). The unit job cannot see lock races, refresh recovery or
+  # argv/stdout behaviour, which is where the audited bugs lived.
+  integration:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24.21.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:integration:offline
+
+  # The declared engines floor (Node 22.12) is otherwise never exercised: CI and
+  # release both run 24. Build with the current toolchain, then run the unit
+  # suite on the oldest supported runtime.
+  engines-floor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24.21.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run build:test
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '22.12.0'
+      - name: Unit tests on the engines floor
+        run: node --test --test-concurrency=4 ".tmp/tsc-test/test/unit/**/*.test.js"
+
   # Smoke-test that the documentation site still builds. The real deploy
   # happens in pages.yml, on pushes to main only.
   site:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '24.21.0'
           cache: npm
@@ -96,8 +132,8 @@ jobs:
   package:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '24.21.0'
           cache: npm
