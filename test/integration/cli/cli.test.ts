@@ -208,6 +208,34 @@ test('status --json produces the status envelope, not a search response', async 
   assert.equal(parsed.index.state, 'current');
 });
 
+test('status --check-ready exits 0 when current and 4 (index failure, not 3) when there is no index', async () => {
+  const ready = await runCli(['status', '--check-ready'], { cwd: repo.dir, config: {} });
+  assert.equal(ready.code, 0);
+  const missing = await runCli(['status', '--check-ready'], {
+    cwd: repo.dir,
+    config: {
+      status: {
+        state: 'missing',
+        indexPath: '/fake/index',
+        generation: null,
+        indexedCommits: 0,
+        reachableCommits: 3,
+        refsChanged: false,
+        recordCount: 0,
+        model: null,
+        diskBytes: 0,
+        indexedAt: null,
+        objectFormat: 'sha1',
+        shallow: false,
+        coverage: { excludedFiles: 0, unavailableFiles: 0, failedFiles: 0, reasons: [] },
+        warnings: [],
+      },
+    },
+  });
+  // Exit 3 means "no usable Git repository"; the repository is fine, the index is missing.
+  assert.equal(missing.code, 4);
+});
+
 test('rebuild --use-default-model reaches the backend with useDefaultModel set', async () => {
   // The fake backend doesn't assert on options itself; this just proves
   // the flag parses and the lifecycle command dispatches without error.

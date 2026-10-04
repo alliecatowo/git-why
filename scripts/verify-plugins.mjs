@@ -16,6 +16,8 @@ import { fileURLToPath } from 'node:url';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PLUGINS = join(ROOT, 'plugins');
 
+const PACKAGE_VERSION = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).version;
+
 let failures = 0;
 const fail = (msg) => {
   console.error(`verify-plugins: FAIL — ${msg}`);
@@ -35,6 +37,9 @@ for (const name of readdirSync(PLUGINS)) {
   } catch (err) {
     fail(`${name}: manifest is not valid JSON — ${err.message}`);
     continue;
+  }
+  if (manifest.version !== PACKAGE_VERSION) {
+    fail(`${name}: plugin version ${manifest.version} != package.json ${PACKAGE_VERSION}`);
   }
   for (const field of ['name', 'version', 'description', 'license']) {
     if (typeof manifest[field] !== 'string' || manifest[field] === '') {

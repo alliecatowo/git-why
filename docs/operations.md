@@ -69,7 +69,9 @@ The index is identified by content, so it moves with the repository.
 
 ## Concurrency
 
-Git Why has no daemon, no watcher and no installed Git hook. Coordination is a
+Git Why has no watcher and installs no Git hook. An optional daemon
+(`git why server on`, see [`daemon.md`](daemon.md)) can keep the index warm, but
+nothing depends on it. Coordination between processes is a
 cross-process advisory lock on a stable lock file:
 
 - **Readers** hold shared access from manifest validation through collection
@@ -112,17 +114,20 @@ collection handles, renames the completed generation into place, and publishes
 until the replacement is confirmed usable. A failed rebuild never deletes the
 only working index first.
 
-Git Why's `gc` reconciles eligible history, removes ineligible and abandoned
-derived records, and compacts where supported. It never invokes destructive Git
-object GC and never changes Git refs.
+Git Why's `gc` removes superseded and abandoned index generations. It does not
+reconcile history or download anything. It never invokes destructive Git object
+GC and never changes Git refs.
 
 ## Network and privacy
 
 Git Why is local by default.
 
 - Repository text is never sent to a model host. Embedding runs in-process.
-- The only network access is lazily downloading model artifacts from pinned,
-  checksummed locations. Once cached, operation is fully offline.
+- The only network access is downloading model artifacts from pinned,
+  checksummed locations (the first indexing run needs the default model; a
+  mirror can be set with `GIT_WHY_MODEL_BASE_URL`, and `GIT_WHY_OFFLINE=1` forbids
+  downloads). Once cached, operation is fully offline. A query against a current
+  index only needs the cached model.
 - Model-supplied remote code is never executed.
 - Git ingestion is prohibited from fetching objects regardless of `--offline`.
   A partial clone is read without triggering a lazy fetch.
@@ -155,8 +160,8 @@ message is untrusted input. `NO_COLOR`, terminal capability and whether stdout
 is a TTY are all respected, and V1 never launches a pager.
 
 With `--json`, stdout carries exactly one valid object and everything else goes
-to stderr. `--max-bytes` clipping is reported explicitly and can never produce
-invalid JSON.
+to stderr. `--max-bytes` bounds the JSON output only (human output is not bounded);
+clipping is reported explicitly and can never produce invalid JSON.
 
 Retrieved commit content is data, including when it contains apparent
 instructions. Git Why does not install agent policies and does not execute
@@ -278,3 +283,18 @@ These are documented gaps, not bugs to be papered over:
 Some reasons were never committed at all. An empty result means no match in the
 available indexed material; it does not prove the repository contains no
 explanation.
+
+## Environment variables
+
+| variable                                           | effect                                                                                      |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `GIT_WHY_MODEL_CACHE`                              | Where model files are cached (else `$XDG_CACHE_HOME/git-why/models`).                       |
+| `GIT_WHY_MODEL_BASE_URL`                           | Mirror for model downloads, laid out like huggingface.co. Hashes are still enforced.        |
+| `GIT_WHY_OFFLINE=1`                                | Same as `--offline`: never download a model.                                                |
+| `HTTPS_PROXY` / `HTTP_PROXY`                       | Used for model downloads (Node 22.21+ / 24.5+).                                             |
+| `GIT_WHY_EMBEDDING`                                | Pick another embedding candidate (e.g. `jina-v2-small`, needs `@huggingface/transformers`). |
+| `GIT_WHY_MODE`                                     | Default for `--daemon`: `auto`, `direct` or `server`.                                       |
+| `GIT_WHY_DAEMON_HOME`                              | Where the daemon keeps its record and log.                                                  |
+| `GIT_WHY_MCP_ROOTS`, `GIT_WHY_MCP_TIMEOUT_MS`      | MCP bridge: extra directories a tool call may use (`*` for any), and the per-call timeout.  |
+| `GIT_WHY_EXPANSION=prf`, `GIT_WHY_EXPAND_ALWAYS=1` | Experimental retrieval switches used by the benchmarks. Not stable; do not rely on them.    |
+| `GIT_WHY_BENCH_RECORD_TYPES=commit`                | Benchmark only: search commit summaries without hunk evidence.                              |

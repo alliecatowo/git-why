@@ -127,10 +127,6 @@ description = "Re-record the asciinema demos; --only <name> for one scenario"
 depends = ["build"]
 run = "node scripts/record-casts.mjs"
 
-[tasks."repo:create"]
-description = "Idempotently create/verify and push the authorized public repository"
-run = "node scripts/repo-create.mjs"
-
 [tasks."site:install"]
 description = "Install the docs/marketing site's own dependencies (never touches the root dependency tree)"
 run = "npm install --prefix site --no-audit --fund=false"

@@ -118,7 +118,7 @@ export function writeInstance(record: InstanceRecord): void {
  * stale daemon for the user to stop.
  */
 export function processLooksLikeDaemon(pid: number): boolean {
-  let command: string | null = null;
+  let command: string;
   try {
     command = readFileSync(`/proc/${pid}/cmdline`, 'utf8').split('\0').join(' ');
   } catch {
@@ -163,7 +163,7 @@ export function claimDaemonLock(): (() => void) | undefined {
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code !== 'EEXIST') throw err;
     }
-    let owner: { pid?: number; hostname?: string } | null = null;
+    let owner: { pid?: number; hostname?: string } | null;
     try {
       owner = JSON.parse(readFileSync(file, 'utf8')) as { pid?: number; hostname?: string };
     } catch {

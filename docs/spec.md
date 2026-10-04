@@ -138,7 +138,7 @@ git why --version
 - `--text` means FTS only; `--semantic` means vector only; neither flag means hybrid.
 - `--no-refresh` prevents repository-index creation, mutation, recovery, and compaction. It requires an existing clean compatible index.
 - `--offline` also prevents model artifact downloads. All Git ingestion is prohibited from fetching objects regardless of this option.
-- `--max-bytes` bounds rendered output, including JSON framing; default 16 KiB, maximum 256 KiB. Report clipping explicitly. It must never produce invalid JSON.
+- `--max-bytes` bounds JSON output, including framing (human output is not bounded); default 16 KiB, maximum 256 KiB. Report clipping explicitly. It must never produce invalid JSON.
 - `--lock-timeout` is seconds, default 30. It bounds waiting for another process, not the caller's own indexing operation.
 
 FTS-only retrieval need not load the embedding model when using an existing current index. Initial indexing or a refresh still creates the normal hybrid index and therefore needs its embedder. An offline user whose model is unavailable can use `--text --no-refresh` against an existing index. Do not silently create a different index or silently switch hybrid queries to lexical mode.
@@ -176,7 +176,7 @@ Respect `NO_COLOR`, terminal capability, and whether stdout is a TTY. Sanitize t
 
 `index` creates or reconciles the normal hybrid index and explicitly retries obtainable missing evidence. `status` is read-only: it never downloads a model, repairs storage, or starts indexing. It reports index location, indexed/reachable counts where known, record count, model identity, disk use, coverage omissions, and one of `missing`, `current`, `stale`, `incomplete`, `busy`, `recovery_required`, or `rebuild_required`. A cheap check may report “refs changed” instead of pretending to know an exact number of new commits. Distinguish a caught-up shallow index from a complete-history clone.
 
-`rebuild` replaces derived index data using the recorded model when supported; on a missing index it uses the current default. `rebuild --use-default-model` explicitly migrates to the current built-in default. `gc` reconciles eligible history without downloading embeddings, removes ineligible/abandoned derived records, and compacts when supported; it does not mark unindexed new commits complete. All mutations take exclusive access. JSON status uses `schemaVersion: 1`, `command: "status"`, and a documented status object rather than a fake search response.
+`rebuild` replaces derived index data using the recorded model when supported; on a missing index it uses the current default. `rebuild --use-default-model` explicitly migrates to the current built-in default. `gc` removes superseded and abandoned index generations without downloading embeddings; it does not reconcile history and does not mark unindexed new commits complete. All mutations take exclusive access. JSON status uses `schemaVersion: 1`, `command: "status"`, and a documented status object rather than a fake search response.
 
 ## 6. Git repository and history contract
 

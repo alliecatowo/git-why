@@ -84,6 +84,20 @@ subcommand `git why`. No alias setup needed. More install paths — pinned
 versions, a GitHub release tarball, building from source, uninstalling —
 are in [`docs/install.md`](docs/install.md).
 
+## First run
+
+```sh
+cd your-repo
+git why "why do we retry twice before giving up"
+```
+
+The first query downloads a small embedding model (about 32 MB, checksum-verified,
+cached under `~/.cache/git-why/models`) and indexes the repository's history into
+`.git/why/`; later queries are incremental. Behind a proxy or offline, see
+`HTTPS_PROXY`, `GIT_WHY_MODEL_BASE_URL` (mirror) and `GIT_WHY_OFFLINE` in
+[`docs/operations.md`](docs/operations.md). `git why status` shows whether the
+index is current.
+
 ## Use it with an agent
 
 Two plugins ship in `plugins/`:

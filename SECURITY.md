@@ -10,8 +10,9 @@ repository shape that triggered it if it matters.
 
 Git Why reads a repository's history and writes an index under `.git/why/`.
 It does not write to your working tree, does not modify history, and makes no
-network calls at query time. The only network access is downloading the
-embedding model on first use, from a pinned revision with a recorded file
+network calls for your repository's content. The only network access is
+downloading the embedding model the first time it is needed (before the first
+index is built), from a pinned revision with a recorded file
 hash — a newer upstream revision cannot silently substitute itself.
 
 ## Untrusted history is data, not instructions

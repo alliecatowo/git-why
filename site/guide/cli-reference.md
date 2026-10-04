@@ -37,7 +37,7 @@ does not reach the tool.
 | `--refresh=<mode>`         | off: never create, mutate, or repair the index; requires one to exist. wait: refresh normally (the default); spelled out for scripts that want to say so explicitly |
 | `--no-refresh`             | Alias for --refresh=off                                                                                                                                             |
 | `--offline`                | Also forbid model downloads                                                                                                                                         |
-| `--max-bytes=<n>`          | Bound rendered output, including JSON framing (default 16384)                                                                                                       |
+| `--max-bytes=<n>`          | With --json: bound the output, including JSON framing (default 16384). Human output is not bounded                                                                  |
 | `--lock-timeout=<sec>`     | Seconds to wait for another process (default 30)                                                                                                                    |
 | `--verbose`                | Also report model loading and download progress on stderr                                                                                                           |
 | `--query <text>`           | Explicit query text, for text that looks like a command or option                                                                                                   |
