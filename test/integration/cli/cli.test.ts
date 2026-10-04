@@ -53,6 +53,7 @@ function runCli(args: readonly string[], options: RunOptions): Promise<RunResult
     };
     if (options.needsBackend !== false) {
       env.GIT_WHY_TEST_BACKEND = fakeBackendUrl;
+      env.NODE_ENV = 'test';
       env.GIT_WHY_TYPES_MODULE = typesModuleUrl;
       env.GIT_WHY_TEST_CONFIG = JSON.stringify(options.config ?? {});
     }
@@ -290,6 +291,7 @@ test('SIGINT during a slow search exits 130 promptly, honouring the abort signal
     env: {
       ...process.env,
       GIT_WHY_TEST_BACKEND: fakeBackendUrl,
+      NODE_ENV: 'test',
       GIT_WHY_TYPES_MODULE: typesModuleUrl,
       GIT_WHY_TEST_CONFIG: JSON.stringify({ searchDelayMs: 60_000 }),
     },
@@ -346,6 +348,7 @@ test('a closed stdout pipe (EPIPE) exits cleanly with no stack trace', async () 
     env: {
       ...process.env,
       GIT_WHY_TEST_BACKEND: fakeBackendUrl,
+      NODE_ENV: 'test',
       GIT_WHY_TYPES_MODULE: typesModuleUrl,
       GIT_WHY_TEST_CONFIG: JSON.stringify({ searchResponse: bigResponse }),
     },

@@ -13,6 +13,8 @@ import {
   type SearchRequest,
   type SnapshotSummary,
   type StorageFilter,
+  type TemporalAnchor,
+  type TemporalConstraint,
   NO_TEMPORAL_CONSTRAINT,
 } from '../../../src/types.js';
 
@@ -381,4 +383,79 @@ test('a query of only stop words leaves every score untouched', async () => {
     assert.equal(result.scores.final, result.scores.fused);
     assert.ok(Number.isFinite(result.rankScore));
   }
+});
+
+function timedStore(): HistoryStore {
+  const base = makeStore();
+  const at = (sha: string, subject: string, t: number): CommitRecord => ({
+    ...commit(sha, subject),
+    committerTime: t,
+  });
+  const commits = new Map([
+    ['sha1', at('sha1', 'Fix auth refresh loop', 100)],
+    ['sha2', at('sha2', 'Unrelated change', 5000)],
+  ]);
+  return {
+    ...base,
+    async fetchCommits(shas: readonly string[]) {
+      return new Map(shas.flatMap((s) => (commits.has(s) ? [[s, commits.get(s)!] as const] : [])));
+    },
+  };
+}
+
+const afterAnchor = (anchor: TemporalAnchor): TemporalConstraint => ({
+  type: 'after',
+  confidence: 'explicit',
+  anchor,
+  anchorEnd: null,
+});
+
+test('--after with a date anchor changes the ranking instead of being ignored', async () => {
+  const plain = await search(baseRequest, timedStore(), makeEmbedder(), snapshot);
+  assert.equal(plain.results[0]!.sha, 'sha1');
+  const constrained = await search(
+    {
+      ...baseRequest,
+      temporal: afterAnchor({ kind: 'date', raw: '1000', epochSeconds: 1000 }),
+    },
+    timedStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  assert.equal(constrained.results[0]!.sha, 'sha2');
+});
+
+test('--after with a tag anchor resolves through the resolver; an unresolvable one warns', async () => {
+  const tag: TemporalAnchor = { kind: 'tag', raw: 'v1.0', name: 'v1.0' };
+  const resolved = await search(
+    { ...baseRequest, temporal: afterAnchor(tag) },
+    timedStore(),
+    makeEmbedder(),
+    snapshot,
+    null,
+    async () => 1000,
+  );
+  assert.equal(resolved.results[0]!.sha, 'sha2');
+  assert.equal(resolved.warnings.length, 0);
+
+  const unresolved = await search(
+    { ...baseRequest, temporal: afterAnchor(tag) },
+    timedStore(),
+    makeEmbedder(),
+    snapshot,
+    null,
+    async () => null,
+  );
+  assert.ok(unresolved.warnings.some((w) => /Could not resolve after anchor/.test(w)));
+});
+
+test('a sentence containing "before" is not truncated or turned into a constraint', async () => {
+  const response = await search(
+    { ...baseRequest, query: 'why do we validate input before saving' },
+    makeStore(),
+    makeEmbedder(),
+    snapshot,
+  );
+  assert.equal(response.coreQuery, 'why do we validate input before saving');
+  assert.equal(response.temporal.intent, 'none');
 });

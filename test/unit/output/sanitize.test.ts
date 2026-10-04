@@ -73,3 +73,7 @@ test('sanitization is idempotent', () => {
   const twice = sanitizeForTerminal(once);
   assert.equal(once, twice);
 });
+
+test('bidi overrides and zero-width characters are stripped', () => {
+  assert.equal(sanitizeForTerminal('a‮b⁦c​d﻿e f'), 'abcdef');
+});

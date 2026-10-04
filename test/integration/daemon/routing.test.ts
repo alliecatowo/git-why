@@ -38,6 +38,7 @@ const run = (args: string[], env: Record<string, string> = {}) =>
       ...process.env,
       GIT_WHY_DAEMON_HOME: home,
       GIT_WHY_TEST_BACKEND: fakeBackendUrl,
+      NODE_ENV: 'test',
       GIT_WHY_TYPES_MODULE: typesModuleUrl,
       GIT_WHY_TEST_CONFIG: '{}',
       NO_COLOR: '1',

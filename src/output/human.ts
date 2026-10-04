@@ -28,7 +28,8 @@ function shortSha(sha: string): string {
 }
 
 function formatDate(epochSeconds: number): string {
-  return new Date(epochSeconds * 1000).toISOString().slice(0, 10);
+  const date = new Date(epochSeconds * 1000);
+  return Number.isNaN(date.getTime()) ? 'unknown' : date.toISOString().slice(0, 10);
 }
 
 function indentBlock(text: string, indent: string): string {

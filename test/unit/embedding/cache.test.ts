@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import {
   ensureCached,
   resolveCacheRoot,
@@ -38,12 +39,15 @@ test('resolveCacheRoot defaults to the XDG-style Linux cache directory', () => {
   assert.equal(root, path.join(os.homedir(), '.cache', 'git-why', 'models'));
 });
 
+const FILE_BYTES = 'irrelevant bytes for this test';
+const FILE_SHA = createHash('sha256').update(FILE_BYTES).digest('hex');
+
 const FAKE_ARTIFACT: PinnedArtifact = {
   modelId: 'test/fake-model',
   revision: 'abc123',
-  config: { filename: 'config.json', sha256: 'x'.repeat(64) },
-  tokenizer: { filename: 'tokenizer.json', sha256: 'y'.repeat(64) },
-  weights: { filename: 'model.safetensors', sha256: 'z'.repeat(64) },
+  config: { filename: 'config.json', sha256: FILE_SHA },
+  tokenizer: { filename: 'tokenizer.json', sha256: FILE_SHA },
+  weights: { filename: 'model.safetensors', sha256: FILE_SHA },
 };
 
 function tempCacheDir(): string {
@@ -69,9 +73,9 @@ test('a fully-populated cache with a matching manifest is used without calling f
   const cacheDir = tempCacheDir();
   const dir = path.join(cacheDir, 'test__fake-model', 'abc123');
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'config.json'), 'irrelevant bytes for this test');
-  fs.writeFileSync(path.join(dir, 'tokenizer.json'), 'irrelevant bytes for this test');
-  fs.writeFileSync(path.join(dir, 'model.safetensors'), 'irrelevant bytes for this test');
+  fs.writeFileSync(path.join(dir, 'config.json'), FILE_BYTES);
+  fs.writeFileSync(path.join(dir, 'tokenizer.json'), FILE_BYTES);
+  fs.writeFileSync(path.join(dir, 'model.safetensors'), FILE_BYTES);
   // Manifest hashes must match the pinned hashes for isFullyCached to
   // accept it — use the pinned (fake) hashes directly, since this test
   // only checks that a satisfied manifest short-circuits network use, not
@@ -137,4 +141,30 @@ test('a 404 is reported as MODEL_UNAVAILABLE and is not retried three times', as
     (err: unknown) => err instanceof GitWhyError && err.code === 'MODEL_UNAVAILABLE',
   );
   assert.equal(calls, 1); // permanent failure — must not burn the retry budget
+});
+
+test('a tampered cached file is not trusted: it is re-fetched instead of loaded', async () => {
+  const cacheDir = tempCacheDir();
+  const dir = path.join(cacheDir, 'test__fake-model', 'abc123');
+  fs.mkdirSync(dir, { recursive: true });
+  for (const f of ['config.json', 'tokenizer.json', 'model.safetensors']) {
+    fs.writeFileSync(path.join(dir, f), 'tampered');
+  }
+  fs.writeFileSync(
+    path.join(dir, 'manifest.json'),
+    JSON.stringify({
+      modelId: FAKE_ARTIFACT.modelId,
+      revision: FAKE_ARTIFACT.revision,
+      files: {
+        [FAKE_ARTIFACT.config.filename]: FILE_SHA,
+        [FAKE_ARTIFACT.tokenizer.filename]: FILE_SHA,
+        [FAKE_ARTIFACT.weights.filename]: FILE_SHA,
+      },
+      cachedAt: new Date().toISOString(),
+    }),
+  );
+  await assert.rejects(
+    () => ensureCached(FAKE_ARTIFACT, { cacheDir, offline: true }),
+    (err: unknown) => err instanceof GitWhyError && err.code === 'OFFLINE_REQUIRED_RESOURCE',
+  );
 });

@@ -15,11 +15,13 @@
  */
 
 import { loadDefaultEmbedder } from '../embedding/index.js';
+import { runGit } from '../git/exec.js';
 import { createGitHistoryExtractor } from '../git/extract.js';
 import { enumerateReachable } from '../git/reachable.js';
 import { resolveRepositoryIdentity } from '../git/repository.js';
 import { captureSnapshot } from '../git/snapshot.js';
 import {
+  assertModelCompatible,
   ensureCurrentGeneration,
   gc as gcGenerations,
   openReadOnlyStore,
@@ -30,9 +32,10 @@ import {
 } from '../index/refresh.js';
 import type { ManifestOmissionCounts } from '../index/manifest.js';
 import { computeIndexStatus } from '../index/status.js';
-import { generationPaths, layoutFor } from '../index/layout.js';
+import { generationPaths, layoutFor, readCurrentGenerationId } from '../index/layout.js';
+import { readManifest } from '../index/manifest.js';
 import { JsonLineageStore } from '../history/lineage.js';
-import { search as runSearch } from '../search/search.js';
+import { search as runSearch, type AnchorTimeResolver } from '../search/search.js';
 import {
   GitWhyError,
   type Embedder,
@@ -194,6 +197,17 @@ async function withIndexMissingHint<T>(work: Promise<T>): Promise<T> {
   }
 }
 
+function readCurrentManifest(commonDir: string) {
+  const layout = layoutFor(commonDir);
+  try {
+    const id = readCurrentGenerationId(layout);
+    return id === null ? null : readManifest(generationPaths(layout, id).manifestFile);
+  } catch {
+    // A missing or corrupt manifest means there is no recorded model to protect.
+    return null;
+  }
+}
+
 class RealBackend implements Backend {
   async openRepository(cwd: string): Promise<RepositoryHandle> {
     return { identity: await resolveRepositoryIdentity(cwd) };
@@ -214,11 +228,19 @@ class RealBackend implements Backend {
     const needsEmbedder = request.mode !== 'text';
 
     if (options.noRefresh) {
+      // Load the embedder first so the recorded model can be verified before
+      // the collection is opened.
+      const embedder = needsEmbedder ? await loadEmbedder(options) : null;
       const opened = await withIndexMissingHint(
-        openReadOnlyStore(repo.identity, refreshOptions(options)),
-      );
+        openReadOnlyStore(repo.identity, {
+          ...refreshOptions(options),
+          ...(embedder !== null ? { embedder } : {}),
+        }),
+      ).catch(async (err: unknown) => {
+        await embedder?.dispose();
+        throw err;
+      });
       try {
-        const embedder = needsEmbedder ? await loadEmbedder(options) : null;
         const lineage = new JsonLineageStore(
           generationPaths(layoutFor(repo.identity.commonDir), opened.generationId).lineageFile,
         );
@@ -231,25 +253,49 @@ class RealBackend implements Backend {
           fresh ? 'current' : 'stale',
           coverageSummaryOf(opened.manifest.omissions),
         );
-        return await runSearch(request, opened.store, embedder, summary, lineage);
+        return await runSearch(
+          request,
+          opened.store,
+          embedder,
+          summary,
+          lineage,
+          anchorResolverFor(repo.identity.commonDir),
+        );
       } finally {
         await opened.store.close();
         opened.lock.release();
+        await embedder?.dispose();
       }
     }
 
     const { snapshot, reachable } = await captureReachable(repo);
     const deps = await storageDeps(options);
-    const ensured = await ensureCurrentGeneration(
-      repo.identity,
-      snapshot,
-      reachable,
-      deps,
-      refreshOptions(options),
-    );
+    try {
+      return await this.#searchRefreshed(repo, request, options, deps, snapshot, reachable);
+    } finally {
+      await deps.embedder.dispose();
+    }
+  }
+
+  async #searchRefreshed(
+    repo: RepositoryHandle,
+    request: SearchRequest,
+    options: RunOptions,
+    deps: StorageDeps,
+    snapshot: RepositorySnapshot,
+    reachable: ReachableSet,
+  ): Promise<SearchResponse> {
+    const needsEmbedder = request.mode !== 'text';
+    const ensured = await ensureCurrentGeneration(repo.identity, snapshot, reachable, deps, {
+      ...refreshOptions(options),
+      checkModel: needsEmbedder,
+    });
 
     const opened = await withIndexMissingHint(
-      openReadOnlyStore(repo.identity, refreshOptions(options)),
+      openReadOnlyStore(repo.identity, {
+        ...refreshOptions(options),
+        ...(needsEmbedder ? { embedder: deps.embedder } : {}),
+      }),
     );
     try {
       const lineage = new JsonLineageStore(
@@ -268,11 +314,11 @@ class RealBackend implements Backend {
         needsEmbedder ? deps.embedder : null,
         summary,
         lineage,
+        anchorResolverFor(repo.identity.commonDir),
       );
     } finally {
       await opened.store.close();
       opened.lock.release();
-      await deps.embedder.dispose();
     }
   }
 
@@ -314,6 +360,12 @@ class RealBackend implements Backend {
     const { snapshot, reachable } = await captureReachable(repo);
     const deps = await storageDeps(options);
     try {
+      if (!options.useDefaultModel) {
+        // Without explicit consent a rebuild keeps the index's recorded model;
+        // a different default is a migration the user must ask for.
+        const current = readCurrentManifest(repo.identity.commonDir);
+        if (current !== null) assertModelCompatible(current, deps.embedder);
+      }
       await rebuildGeneration(repo.identity, snapshot, reachable, deps, refreshOptions(options));
     } finally {
       await deps.embedder.dispose();
@@ -338,9 +390,25 @@ class RealBackend implements Backend {
   }
 }
 
+/** Resolves tag/sha anchors to a committer time using the repository itself. */
+function anchorResolverFor(commonDir: string): AnchorTimeResolver {
+  return async (anchor) => {
+    const name = anchor.kind === 'tag' ? anchor.name : anchor.kind === 'sha' ? anchor.sha : null;
+    if (name === null || name.startsWith('-')) return null;
+    const result = await runGit({
+      gitDir: commonDir,
+      cwd: commonDir,
+      args: ['show', '-s', '--format=%ct', `${name}^{commit}`, '--'],
+    });
+    if (result.code !== 0) return null;
+    const time = Number(result.stdout.toString('utf8').trim());
+    return Number.isFinite(time) ? time : null;
+  };
+}
+
 export async function createBackend(): Promise<Backend> {
   const testBackendPath = process.env.GIT_WHY_TEST_BACKEND;
-  if (testBackendPath) {
+  if (testBackendPath && process.env.NODE_ENV === 'test') {
     const mod = (await import(testBackendPath)) as {
       default?: Backend;
       createBackend?: () => Backend;

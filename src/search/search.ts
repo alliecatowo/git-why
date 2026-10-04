@@ -21,6 +21,7 @@ import {
   type StorageFilter,
   type CommitRecord,
   type ResolvedAnchor,
+  type TemporalAnchor,
   type LineageStore,
   type LineageInterval,
   type OrdinalAnswer,
@@ -37,7 +38,12 @@ import {
   rankCommits,
 } from './rank.js';
 import { decomposeQuery } from './temporal/intent.js';
-import { applyTemporal, exponentFor, temporalScore } from './temporal/score.js';
+import {
+  applyTemporal,
+  exponentFor,
+  temporalScore,
+  type TemporalCandidate,
+} from './temporal/score.js';
 import { PROSE_ONLY_PENALTY } from './temporal/tuning.js';
 import { expandQuery, selectExpansionTerms } from './expansion.js';
 import { aggregateOwners } from './owners.js';
@@ -46,6 +52,34 @@ import { expandStructuralCandidates } from './expand.js';
 import type { ExpandedRank } from './expand.js';
 
 const MAX_MESSAGE_EXCERPT_CHARS = 280;
+
+const RELATIVE_TYPES: ReadonlySet<string> = new Set(['before', 'after', 'around', 'between']);
+
+function relationOf(
+  type: string,
+  candidateTime: number,
+  anchorTime: number | null | undefined,
+): Pick<TemporalCandidate, 'relationToAnchor' | 'distanceToAnchor'> {
+  if ((type !== 'before' && type !== 'after') || anchorTime === null || anchorTime === undefined) {
+    return {};
+  }
+  if (candidateTime === anchorTime) return { relationToAnchor: 'self' };
+  return {
+    relationToAnchor: candidateTime < anchorTime ? 'ancestor' : 'descendant',
+    distanceToAnchor: timeDistance(candidateTime, anchorTime),
+  };
+}
+
+/**
+ * Resolves a tag or abbreviated sha anchor to the committer time of the
+ * commit it names, or null when the repository has no such commit.
+ */
+export type AnchorTimeResolver = (anchor: TemporalAnchor) => Promise<number | null>;
+
+/** Hours-ish "hops" between two times, so before/after decay with distance. */
+function timeDistance(a: number, b: number): number {
+  return Math.round(Math.log1p(Math.abs(a - b) / 86400) * 3);
+}
 
 /**
  * How many commits to rank before reordering and cutting to the caller's limit.
@@ -184,6 +218,7 @@ export async function search(
   embedder: Embedder | null,
   snapshot: SnapshotSummary,
   lineage: LineageStore | null = null,
+  resolveAnchorTime: AnchorTimeResolver | null = null,
 ): Promise<SearchResponse> {
   const wantsLexical = request.mode === 'text' || request.mode === 'hybrid';
   const wantsSemantic = request.mode === 'semantic' || request.mode === 'hybrid';
@@ -288,13 +323,16 @@ export async function search(
   // expansion was built for: the explaining commit never touched the file
   // being asked about. GIT_WHY_EXPAND_ALWAYS enables it everywhere so the
   // trade-off can be measured before changing the default.
+  // Relative anchors (before/after/around/between) reorder by position in
+  // history; they have no use for lineage links, so they do not pay for them.
+  const usesExpansion = constraint.type !== 'none' && !RELATIVE_TYPES.has(constraint.type);
   const expandAlways = process.env.GIT_WHY_EXPAND_ALWAYS === '1';
   const temporalRanksForExpansion =
-    (constraint.type !== 'none' || expandAlways) && lineage !== null
+    (usesExpansion || expandAlways) && lineage !== null
       ? await expandStructuralCandidates(ranked, lineage)
       : ranked;
   const candidateRanks =
-    constraint.type === 'none' && !expandAlways
+    !usesExpansion && !expandAlways
       ? ranked.slice(0, Math.max(request.limit, RERANK_POOL_DEPTH))
       : temporalRanksForExpansion;
   const commits = await store.fetchCommits(candidateRanks.map((r) => r.sha));
@@ -361,21 +399,43 @@ export async function search(
   // Disconnected/incomplete candidate graphs still receive a stable DAG-free
   // fallback; timestamps are intentionally never used for ordinal ordering.
   for (const sha of [...bySha.keys()].sort()) if (!ordinal.has(sha)) ordinal.set(sha, ordinal.size);
-  const resolveAnchor = (anchor: typeof constraint.anchor): ResolvedAnchor | null => {
+  const resolveAnchor = async (
+    anchor: typeof constraint.anchor,
+  ): Promise<ResolvedAnchor | null> => {
     if (anchor === null) return null;
     if (anchor.kind === 'date') return { anchor, sha: null, epochSeconds: anchor.epochSeconds };
     if (anchor.kind === 'sha') {
       const commit = candidateCommits.find(({ commit }) => commit.sha.startsWith(anchor.sha));
-      return {
-        anchor,
-        sha: commit?.commit.sha ?? null,
-        epochSeconds: commit?.commit.committerTime ?? null,
-      };
+      if (commit !== undefined) {
+        return { anchor, sha: commit.commit.sha, epochSeconds: commit.commit.committerTime };
+      }
+    }
+    if ((anchor.kind === 'sha' || anchor.kind === 'tag') && resolveAnchorTime !== null) {
+      const epochSeconds = await resolveAnchorTime(anchor).catch(() => null);
+      return { anchor, sha: null, epochSeconds };
     }
     return { anchor, sha: null, epochSeconds: null };
   };
-  const anchor = resolveAnchor(constraint.anchor);
-  const anchorEnd = resolveAnchor(constraint.anchorEnd);
+  const anchor = await resolveAnchor(constraint.anchor);
+  const anchorEnd = await resolveAnchor(constraint.anchorEnd);
+  // A relative constraint whose anchor cannot be placed in history would
+  // otherwise be silently ignored; say so.
+  if (
+    (constraint.type === 'before' ||
+      constraint.type === 'after' ||
+      constraint.type === 'around' ||
+      constraint.type === 'between') &&
+    ((anchor !== null && anchor.epochSeconds === null) ||
+      (constraint.type === 'between' && anchorEnd !== null && anchorEnd.epochSeconds === null))
+  ) {
+    const unresolved = [anchor, anchorEnd]
+      .filter((a): a is ResolvedAnchor => a !== null && a.epochSeconds === null)
+      .map((a) => a.anchor.raw)
+      .join(', ');
+    warnings.push(
+      `Could not resolve ${constraint.type} anchor "${unresolved}" to a point in history (use a date, a tag or a commit sha); results are ranked without it.`,
+    );
+  }
   const w = exponentFor(constraint);
   const temporalRanksAll = candidateCommits
     .map(({ rank, commit }) => {
@@ -384,6 +444,7 @@ export async function search(
           sha: commit.sha,
           ordinal: ordinal.get(commit.sha) ?? 0,
           committerTime: commit.committerTime,
+          ...relationOf(constraint.type, commit.committerTime, anchor?.epochSeconds),
         },
         constraint,
         {
