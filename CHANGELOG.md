@@ -17,6 +17,19 @@
   `mcp-publisher` verified against its release checksum, the MCP registry step is
   idempotent on re-run, Dependabot auto-merge no longer covers runtime deps.
 
+### Changed (daemon and MCP)
+
+- The daemon no longer ignores `--offline` or `GIT_WHY_EMBEDDING`: both travel in the
+  search request, and the daemon loads the model the client asked for.
+- `instance.json` is written atomically and never deleted on a parse error; only one
+  daemon can run (O_EXCL lock); `server off` refuses to signal a pid that does not look
+  like a git-why daemon.
+- MCP bridge: queries are passed as `--query=` (so `help`, `status` or `--flag-like`
+  text is searched for), tool failures are `isError` results, `ping` and protocol
+  negotiation work, malformed JSON gets a parse error, calls time out after 120 s
+  (`GIT_WHY_MCP_TIMEOUT_MS`), and `cwd` must be inside the server's directory or
+  `GIT_WHY_MCP_ROOTS`.
+
 ### Added
 
 - `GIT_WHY_MODEL_BASE_URL` (mirror; hashes still enforced), `GIT_WHY_OFFLINE=1`,

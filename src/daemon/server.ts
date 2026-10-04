@@ -17,7 +17,13 @@ import { search as runSearch } from '../search/search.js';
 import { GitWhyError } from '../types.js';
 import { coverageSummaryOf, createBackend, toSnapshotSummary } from '../cli/wire.js';
 import { RuntimeManager } from './runtime.js';
-import { clearInstance, newToken, writeInstance, type InstanceRecord } from './instance.js';
+import {
+  claimDaemonLock,
+  clearInstance,
+  newToken,
+  writeInstance,
+  type InstanceRecord,
+} from './instance.js';
 import { DAEMON_PROTOCOL_VERSION, type DaemonRequest, type DaemonResponse } from './protocol.js';
 
 const MAX_BODY_BYTES = 1 << 20;
@@ -39,6 +45,13 @@ export interface RunningDaemon {
 export async function startDaemon(options: DaemonOptions): Promise<RunningDaemon> {
   const host = options.host ?? '127.0.0.1';
   const port = options.port ?? 0;
+  // One daemon per machine, enforced atomically rather than by a check-then-start race.
+  const releaseDaemonLock = claimDaemonLock();
+  if (releaseDaemonLock === undefined) {
+    throw new GitWhyError('INVALID_ARGUMENTS', 'a git-why daemon is already running', {
+      hint: 'use `git why server status`, or `git why server off` first',
+    });
+  }
   const runtimes = new RuntimeManager({ idleTtlMs: options.idleTtlMs });
   const token = newToken();
   const startedAt = Date.now();
@@ -81,7 +94,11 @@ export async function startDaemon(options: DaemonOptions): Promise<RunningDaemon
       }
       case 'search': {
         const needsEmbedder = body.request.mode !== 'text';
-        const lease = await runtimes.acquire(body.cwd, { needsEmbedder });
+        const lease = await runtimes.acquire(body.cwd, {
+          needsEmbedder,
+          offline: body.offline === true,
+          embedding: body.embedding ?? '',
+        });
         try {
           // A stale index must not be served silently as though it were
           // current. The daemon has no mandate to refresh — refreshing takes
@@ -184,13 +201,18 @@ export async function startDaemon(options: DaemonOptions): Promise<RunningDaemon
     })();
   });
 
-  await new Promise<void>((resolve, reject) => {
-    server.once('error', reject);
-    server.listen(port, host, () => {
-      server.removeListener('error', reject);
-      resolve();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      server.once('error', reject);
+      server.listen(port, host, () => {
+        server.removeListener('error', reject);
+        resolve();
+      });
     });
-  });
+  } catch (err) {
+    releaseDaemonLock();
+    throw err;
+  }
 
   const address = server.address();
   const boundPort = typeof address === 'object' && address !== null ? address.port : port;
@@ -214,6 +236,7 @@ export async function startDaemon(options: DaemonOptions): Promise<RunningDaemon
     clearInstance();
     await new Promise<void>((resolve) => server.close(() => resolve()));
     await runtimes.close();
+    releaseDaemonLock();
   };
 
   // A daemon serves many repositories. A fault caused by one request must

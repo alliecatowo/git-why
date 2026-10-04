@@ -4,10 +4,12 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import {
+  claimDaemonLock,
   clearInstance,
   daemonHome,
   instanceFile,
   processIsAlive,
+  processLooksLikeDaemon,
   readInstance,
   writeInstance,
 } from '../../../src/daemon/instance.js';
@@ -68,13 +70,62 @@ test('a record from another host is never trusted', () => {
   });
 });
 
-test('a corrupt record is discarded rather than thrown from', () => {
+test('an unreadable record is reported absent but never deleted (it may be mid-write)', () => {
   withHome(() => {
     fs.mkdirSync(daemonHome(), { recursive: true });
     fs.writeFileSync(instanceFile(), '{not json');
     assert.equal(readInstance(), undefined);
-    assert.equal(fs.existsSync(instanceFile()), false);
+    // Deleting here let a racing client erase a fresh record and orphan its daemon.
+    assert.equal(fs.existsSync(instanceFile()), true);
+    // The next daemon simply overwrites it, atomically.
+    writeInstance(record() as never);
+    assert.equal(readInstance()?.pid, process.pid);
   });
+});
+
+test('writing the record is atomic: no temp file is left and the old record is replaced whole', () => {
+  withHome(() => {
+    writeInstance(record({ token: 'one' }) as never);
+    writeInstance(record({ token: 'two' }) as never);
+    assert.equal(readInstance()?.token, 'two');
+    assert.deepEqual(
+      fs.readdirSync(daemonHome()).filter((f) => f.endsWith('.tmp')),
+      [],
+    );
+  });
+});
+
+test('a late shutdown cannot clear a successor daemon record', () => {
+  withHome(() => {
+    writeInstance(record({ pid: process.pid + 1 }) as never);
+    clearInstance(); // we are not that pid
+    assert.equal(fs.existsSync(instanceFile()), true);
+  });
+});
+
+test('only one daemon can claim the daemon lock; a dead owner is evicted', () => {
+  withHome(() => {
+    const first = claimDaemonLock();
+    assert.ok(first, 'first claim succeeds');
+    assert.equal(claimDaemonLock(), undefined, 'a second live claimant is refused');
+    first();
+    const again = claimDaemonLock();
+    assert.ok(again, 'released lock can be claimed again');
+    again();
+    // A crashed daemon leaves its lock behind; a dead pid must not block start-up forever.
+    fs.writeFileSync(
+      path.join(daemonHome(), 'daemon.lock'),
+      JSON.stringify({ pid: 4_194_303, hostname: os.hostname() }),
+    );
+    const evicting = claimDaemonLock();
+    assert.ok(evicting);
+    evicting();
+  });
+});
+
+test('processLooksLikeDaemon refuses an unrelated process, so a reused pid is never signalled', () => {
+  assert.equal(processLooksLikeDaemon(process.pid), false); // the test runner is not `server run`
+  assert.equal(processLooksLikeDaemon(4_194_303), false);
 });
 
 test('a missing record is absent, not an error', () => {

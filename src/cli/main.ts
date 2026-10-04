@@ -20,6 +20,7 @@ import { createBackend } from './wire.js';
 import type { Backend, ProgressEvent, RepositoryHandle } from './ports.js';
 import { renderSearchHuman, renderStatusHuman } from '../output/human.js';
 import { resolveMode, route } from '../daemon/client.js';
+import { isOffline } from '../embedding/cache.js';
 import {
   renderSearchErrorJson,
   renderSearchJson,
@@ -417,7 +418,11 @@ async function runSearch(
     // default without becoming a new way for the tool to break.
     const response = await route({
       mode: resolveMode(parsed.daemonMode),
-      viaDaemon: (connection) => connection.search(repo.identity.worktreeRoot ?? cwd, request),
+      viaDaemon: (connection) =>
+        connection.search(repo.identity.worktreeRoot ?? cwd, request, {
+          offline: isOffline({ offline: parsed.offline }),
+          embedding: process.env.GIT_WHY_EMBEDDING ?? '',
+        }),
       direct: () =>
         backend.search(repo, request, {
           offline: parsed.offline,
