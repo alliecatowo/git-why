@@ -55,6 +55,11 @@ export function probeGitCapabilities(): Promise<GitCapabilities> {
   return cached;
 }
 
+/** Uncached probe, exported so tests can run it under a hostile environment. */
+export function probeGitCapabilitiesUncached(): Promise<GitCapabilities> {
+  return probeNow();
+}
+
 async function probeNow(): Promise<GitCapabilities> {
   const versionResult = await spawnRaw(['git', 'version'], {
     cwd: tmpdir(),
@@ -115,40 +120,79 @@ async function probeConfigPathOverride(): Promise<boolean> {
 async function probeAttrSource(): Promise<boolean> {
   const dir = await mkdtemp(join(tmpdir(), 'gitwhy-probe-'));
   try {
-    await spawnRaw(['git', 'init', '-q'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
+    await spawnRaw(['git', 'init', '-q', '--template='], {
+      cwd: dir,
+      env: probeEnv(),
+      maxBytes: 4096,
+    });
     await spawnRaw(['git', 'config', 'user.name', 'probe'], {
       cwd: dir,
-      env: minimalEnv(),
+      env: probeEnv(),
       maxBytes: 4096,
+      timeoutMs: PROBE_TIMEOUT_MS,
     });
     await spawnRaw(['git', 'config', 'user.email', 'probe@example.com'], {
       cwd: dir,
-      env: minimalEnv(),
+      env: probeEnv(),
       maxBytes: 4096,
+      timeoutMs: PROBE_TIMEOUT_MS,
     });
     await writeFile(join(dir, 'f.txt'), 'x\n');
-    await spawnRaw(['git', 'add', 'f.txt'], { cwd: dir, env: minimalEnv(), maxBytes: 4096 });
-    await spawnRaw(['git', 'commit', '-q', '-m', 'probe'], {
-      cwd: dir,
-      env: minimalEnv(),
-      maxBytes: 4096,
-    });
+    await spawnRaw(['git', 'add', 'f.txt'], { cwd: dir, env: probeEnv(), maxBytes: 4096 });
+    await spawnRaw(
+      [
+        'git',
+        '-c',
+        'commit.gpgsign=false',
+        '-c',
+        'core.hooksPath=/dev/null',
+        'commit',
+        '-q',
+        '-m',
+        'probe',
+      ],
+      {
+        cwd: dir,
+        env: probeEnv(),
+        maxBytes: 4096,
+        timeoutMs: PROBE_TIMEOUT_MS,
+      },
+    );
     const head = await spawnRaw(['git', 'rev-parse', 'HEAD'], {
       cwd: dir,
-      env: minimalEnv(),
+      env: probeEnv(),
       maxBytes: 4096,
+      timeoutMs: PROBE_TIMEOUT_MS,
     });
     const sha = head.stdout.toString('utf8').trim();
     const result = await spawnRaw(['git', 'show', `--attr-source=${sha}`, sha], {
       cwd: dir,
-      env: minimalEnv(),
+      env: probeEnv(),
       maxBytes: 4096,
+      timeoutMs: PROBE_TIMEOUT_MS,
     });
     return result.code === 0;
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
 }
+
+/**
+ * Environment for capability probes that create a scratch repository. The caller's
+ * global/system git config (commit signing, hooks, templates) must not leak in: it
+ * made `attrSource` flip from machine to machine and, with it, snapshot fingerprints.
+ */
+function probeEnv(): NodeJS.ProcessEnv {
+  return {
+    ...minimalEnv(),
+    GIT_CONFIG_GLOBAL: '/dev/null',
+    GIT_CONFIG_SYSTEM: '/dev/null',
+    GIT_CONFIG_NOSYSTEM: '1',
+    GIT_TERMINAL_PROMPT: '0',
+  };
+}
+
+const PROBE_TIMEOUT_MS = 30_000;
 
 function minimalEnv(): NodeJS.ProcessEnv {
   const env: NodeJS.ProcessEnv = {};

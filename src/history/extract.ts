@@ -41,6 +41,7 @@ import {
   isPathologicalPatch,
 } from './policy.js';
 import { buildCommitText, buildHunkText, clipToBytes, type HunkTextInput } from './text.js';
+import { lineageTokensFromLines } from './lineage.js';
 import { selectSlicesWithinBudget, type CandidateFile } from './budget.js';
 
 /**
@@ -285,12 +286,15 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
           list.push({ change, hunk, slice });
         }
       }
-      candidatesByPath.set(change.path.display, list);
+      // Keyed by the path's bytes: two distinct non-UTF-8 paths can share one lossy display
+      // string, and keying on it made one file's slices overwrite the other's.
+      const key = change.path.bytesBase64;
+      candidatesByPath.set(key, [...(candidatesByPath.get(key) ?? []), ...list]);
     }
 
     const paths = [...candidatesByPath.keys()];
     const candidateFiles: CandidateFile[] = paths.map((path) => ({
-      path,
+      path: candidatesByPath.get(path)![0]?.change.path.display ?? path,
       slices: candidatesByPath.get(path)!.map((c) => ({
         tokenCount: embedder.countTokens(c.slice.sourceExcerpt),
       })),
@@ -386,7 +390,23 @@ export function buildCommitExtraction(raw: RawCommitInput, embedder: Embedder): 
     coverage: coverageOf(finalCommitReasons, finalCommitExtra),
   };
 
-  return { commit, evidence };
+  // Lineage tokens come from the complete parsed hunks of every retained file, not from
+  // the clipped, slice-limited excerpts, so a large initial import still records what
+  // it introduced (and --first does not credit a later commit).
+  const lineageChanges = pathological
+    ? { additions: [], removals: [] }
+    : lineageTokensFromLines(
+        raw.files.flatMap((f) =>
+          (classifyPathExclusion(f.change.path.display) ??
+            (f.change.oldPath !== null
+              ? classifyPathExclusion(f.change.oldPath.display)
+              : null)) === null
+            ? f.hunks.flatMap((h) => h.lines)
+            : [],
+        ),
+      );
+
+  return { commit, evidence, lineageChanges };
 }
 
 function renderHunkForSizing(hunk: RawHunk): string {

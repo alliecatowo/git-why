@@ -23,11 +23,12 @@ import { messageTokenBudget, semanticBudgetFor } from './policy.js';
  * Lexical normalisation
  * ------------------------------------------------------------------ */
 
-// Identifier-ish runs: letters, digits, underscore, dot, slash, hyphen.
+// Identifier-ish runs (Unicode-aware, so `café` stays one token and CJK/Cyrillic text is
+// indexed): letters, marks, digits, underscore, dot, slash, hyphen.
 // Everything else (natural-language punctuation, quotes, whitespace) is a
 // separator and is discarded -- but never a character *inside* a run.
-const RAW_TOKEN_RE = /[A-Za-z0-9_./-]+/g;
-const CAMEL_BOUNDARY_RE = /(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/g;
+const RAW_TOKEN_RE = /[\p{L}\p{M}\p{N}_./-]+/gu;
+const CAMEL_BOUNDARY_RE = /(?<=[\p{Ll}\p{N}])(?=\p{Lu})|(?<=\p{Lu})(?=\p{Lu}\p{Ll})/gu;
 
 function splitCamel(token: string): string[] {
   if (token.length === 0) return [];
@@ -89,6 +90,8 @@ export function tokenizeForLexical(text: string): string[] {
   const ordered: string[] = [];
   const rawTokens = text.match(RAW_TOKEN_RE) ?? [];
   for (const raw of rawTokens) {
+    // A run of only `.`, `/` and `-` (an ellipsis, `--`) carries no searchable content.
+    if (!/[\p{L}\p{N}_]/u.test(raw)) continue;
     for (const expanded of expandToken(raw)) {
       if (!seen.has(expanded)) {
         seen.add(expanded);

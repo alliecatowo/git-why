@@ -51,8 +51,8 @@ const STOP_WORDS = new Set(
  */
 function tokenize(text: string): string[] {
   const lowered = text.toLowerCase();
-  const direct = lowered.match(/[a-z_][a-z0-9_]{2,}|[a-z]+[0-9]+/g) ?? [];
-  const joined = [...lowered.matchAll(/([a-z]{2,})[/\-.]([0-9]+)/g)].map(
+  const direct = lowered.match(/[\p{L}_][\p{L}\p{M}\p{N}_]{2,}|\p{L}+\p{N}+/gu) ?? [];
+  const joined = [...lowered.matchAll(/(\p{L}{2,})[/\-.](\p{N}+)/gu)].map(
     (match) => `${match[1]}${match[2]}`,
   );
   return [...direct, ...joined].filter((word) => !STOP_WORDS.has(word));

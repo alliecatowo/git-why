@@ -9,8 +9,12 @@
 import * as path from 'node:path';
 import { GitWhyError, type PathRestriction } from '../types.js';
 
-/** Characters that signal pathspec magic or globbing we do not implement. */
-const UNSUPPORTED_PATTERN = /[*?[\]{}]|^:/;
+/**
+ * Glob wildcards and leading-colon pathspec magic, which we do not implement. Brackets and
+ * braces are ordinary characters in real paths (Next.js/SvelteKit routes such as
+ * `app/[id]/page.tsx`, brace-named directories) and, with no glob support, are literal.
+ */
+const UNSUPPORTED_PATTERN = /[*?]|^:/;
 
 export interface PathResolutionContext {
   /** Null for a bare repository, where restrictions are already repository-relative. */
@@ -26,7 +30,11 @@ export function resolvePathRestrictions(
   rawPaths: readonly string[],
   ctx: PathResolutionContext,
 ): readonly PathRestriction[] {
-  return rawPaths.map((raw) => resolveOne(raw, ctx));
+  const resolved = rawPaths.map((raw) => resolveOne(raw, ctx));
+  // `-- .` (or the root directory by any spelling) selects the whole repository, which is no
+  // restriction at all. Passing it through produced an empty-string key that matches nothing.
+  if (resolved.some((r) => r.value === '')) return [];
+  return resolved;
 }
 
 function resolveOne(raw: string, ctx: PathResolutionContext): PathRestriction {
@@ -35,7 +43,7 @@ function resolveOne(raw: string, ctx: PathResolutionContext): PathRestriction {
   }
   if (UNSUPPORTED_PATTERN.test(raw)) {
     throw new GitWhyError('UNSUPPORTED_PATHSPEC', `Unsupported path pattern: "${raw}".`, {
-      hint: 'Only literal file paths and directory prefixes are supported, not globs or pathspec magic.',
+      hint: 'Only literal file paths and directory prefixes are supported; `*` and `?` globs and pathspec magic are not.',
     });
   }
 

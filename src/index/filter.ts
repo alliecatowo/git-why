@@ -102,9 +102,14 @@ export function buildEligibilityExpression(
     clauses.push(`${fields.committerTime} < ${Math.trunc(filters.before)}`);
 
   if (filters.author !== null && filters.author.length > 0) {
-    clauses.push(
-      `${fields.authorSearch} LIKE ${likeSubstringPattern(filters.author.toLowerCase())}`,
-    );
+    // The stored author field has quote characters stripped (they cannot be embedded in a
+    // filter literal), so the query must be stripped the same way or --author="O'Brien"
+    // would search for a string that exists nowhere. A name of only quotes matches nothing
+    // useful and is skipped rather than turned into a match-everything pattern.
+    const needle = stripQuotesForIndexing(filters.author.toLowerCase());
+    if (needle.length > 0) {
+      clauses.push(`${fields.authorSearch} LIKE ${likeSubstringPattern(needle)}`);
+    }
   }
 
   if (filters.paths.length > 0) {

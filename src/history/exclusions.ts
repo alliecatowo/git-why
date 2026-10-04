@@ -116,7 +116,11 @@ export function classifyPathExclusion(normalizedPath: string): OmissionReason | 
   // Only whole path segments count, so a file named "distance.ts" is never
   // mistaken for the "dist" generated-output directory.
   if (segments.some((s) => GENERATED_PATH_SEGMENTS.has(s))) return 'generated';
-  if (segments.includes('dist') || segments.includes('build') || segments.includes('out')) {
+  // `dist` is output wherever it appears. `build` and `out` are also ordinary source
+  // directory names (src/build/graph.ts, cmd/build/main.go, tools/build/), so they only
+  // count as build output at the repository root, where the tooling puts it.
+  if (segments.includes('dist')) return 'generated';
+  if (segments.length > 1 && (segments[0] === 'build' || segments[0] === 'out')) {
     return 'generated';
   }
 

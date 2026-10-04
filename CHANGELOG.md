@@ -26,6 +26,23 @@
 
 ### Fixed
 
+- `-- .` (the repository root) no longer matches nothing; brackets and braces are
+  accepted in path restrictions (`app/[id]/page.tsx`); path keys with quotes match.
+- Only a root-level `build/` or `out/` is treated as generated output, so
+  `src/build/`, `cmd/build/` and similar source directories are indexed. (Existing
+  indexes rebuild automatically: extraction policy version 2.)
+- `--first` and the lineage index use tokens from the whole commit, not the 8 KB
+  excerpt; `++i;` and `-- comment` lines are no longer dropped.
+- Lexical, lineage, query and overlap tokenization are Unicode-aware (accents, CJK,
+  Cyrillic); queries with no indexable token no longer reach the FTS engine.
+- `--author="O'Brien"` matches; quotes of both kinds no longer produce an internal error.
+- A commit whose extraction throws is kept message-only with an `extraction_error`
+  reason instead of failing its batch on every refresh.
+- Commits touching more than 4096 paths keep their directory keys, so directory
+  restrictions still find them.
+- Two non-UTF-8 paths with the same display string no longer overwrite each other's hunks.
+- Capability probes ignore the caller's global git config, so snapshot fingerprints no
+  longer vary by machine.
 - Integration fixtures ignore the developer's global git config (CRLF, non-UTF-8
   paths) and the EPIPE test no longer overflows the 128 KiB env-string limit.
 

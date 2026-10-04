@@ -41,7 +41,7 @@ const MAX_TOKENS_PER_COMMIT = 256;
  * Pure two-letter words are still excluded; the digit is what makes a short
  * token specific rather than noise.
  */
-const TOKEN_RE = /[A-Za-z_][A-Za-z0-9_]{2,}|[A-Za-z]+[0-9]+/g;
+const TOKEN_RE = /[\p{L}_][\p{L}\p{M}\p{N}_]{2,}|\p{L}+\p{N}+/gu;
 
 export interface LineageEvent {
   readonly sha: string;
@@ -68,26 +68,43 @@ function tokens(text: string): string[] {
   return [...result].sort();
 }
 
-function diffTokens(evidence: EvidenceRecord[]): { additions: string[]; removals: string[] } {
+/**
+ * Identifier tokens from added and removed lines. Takes parsed lines (marker already
+ * removed), so an added `++i;` is not mistaken for a `+++` file header. The cap is
+ * enforced across the whole commit, not per line.
+ */
+export function lineageTokensFromLines(
+  lines: Iterable<{ readonly kind: 'context' | 'removed' | 'added'; readonly text: string }>,
+): { additions: string[]; removals: string[] } {
   const additions = new Set<string>();
   const removals = new Set<string>();
-  for (const item of evidence) {
-    if (item.kind !== 'hunk') continue;
-    for (const line of item.sourceExcerpt.split('\n')) {
-      const target =
-        line.startsWith('+') && !line.startsWith('+++')
-          ? additions
-          : line.startsWith('-') && !line.startsWith('---')
-            ? removals
-            : null;
-      if (target === null) continue;
-      for (const token of tokens(line.slice(1))) {
-        target.add(token);
-        if (target.size >= MAX_TOKENS_PER_COMMIT) break;
-      }
+  for (const line of lines) {
+    if (line.kind === 'context') continue;
+    const target = line.kind === 'added' ? additions : removals;
+    if (target.size >= MAX_TOKENS_PER_COMMIT) {
+      if (additions.size >= MAX_TOKENS_PER_COMMIT && removals.size >= MAX_TOKENS_PER_COMMIT) break;
+      continue;
+    }
+    for (const token of tokens(line.text)) {
+      target.add(token);
+      if (target.size >= MAX_TOKENS_PER_COMMIT) break;
     }
   }
   return { additions: [...additions].sort(), removals: [...removals].sort() };
+}
+
+/** Fallback for extractions without `lineageChanges`: parse the rendered excerpt (marker + text). */
+function diffTokens(evidence: EvidenceRecord[]): { additions: string[]; removals: string[] } {
+  const lines: { kind: 'added' | 'removed' | 'context'; text: string }[] = [];
+  for (const item of evidence) {
+    if (item.kind !== 'hunk') continue;
+    // Excerpts hold hunk bodies only (no ---/+++ file headers), so every +/- line is content.
+    for (const line of item.sourceExcerpt.split('\n')) {
+      if (line.startsWith('+')) lines.push({ kind: 'added', text: line.slice(1) });
+      else if (line.startsWith('-')) lines.push({ kind: 'removed', text: line.slice(1) });
+    }
+  }
+  return lineageTokensFromLines(lines);
 }
 
 /** Convert the extraction boundary into durable, bounded temporal facts. */
@@ -108,7 +125,13 @@ export function lineageEventFromExtraction(extraction: CommitExtraction): Lineag
           ? null
           : (e.newStart ?? e.oldStart ?? 0) + Math.max(e.newCount ?? 0, e.oldCount ?? 0),
     }));
-  const changes = diffTokens([...extraction.evidence]);
+  const changes =
+    extraction.lineageChanges !== undefined
+      ? {
+          additions: [...extraction.lineageChanges.additions],
+          removals: [...extraction.lineageChanges.removals],
+        }
+      : diffTokens([...extraction.evidence]);
   return {
     sha: extraction.commit.sha,
     parents: extraction.commit.parents,

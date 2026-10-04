@@ -7,6 +7,7 @@ import {
   tokenizeForLexical,
 } from '../../../src/history/text.js';
 import { makeFakeEmbedder } from './fakes.js';
+import { compileFtsQuery } from '../../../src/search/ftsquery.js';
 
 test('tokenizeForLexical retains 13 and 18 as distinct tokens', () => {
   const a = tokenizeForLexical('retry after 13 attempts');
@@ -149,4 +150,18 @@ test('buildCommitText lexical text includes decomposed path components from chan
   );
   assert.ok(built.lexicalText.includes('AuthSessionProvider'));
   assert.ok(built.lexicalText.split(' ').includes('session'));
+});
+
+test('lexical tokenization is Unicode-aware: accents stay whole, CJK and Cyrillic are indexed', () => {
+  assert.ok(tokenizeForLexical('café résumé').includes('café'));
+  assert.ok(!tokenizeForLexical('café').includes('caf'));
+  assert.ok(tokenizeForLexical('исправить ошибку').includes('исправить'));
+  assert.ok(tokenizeForLexical('修复 登录 错误').includes('登录'));
+  // camelCase decomposition still works, including with non-ASCII letters.
+  const parts = tokenizeForLexical('ÉchantillonRéseau');
+  assert.ok(parts.includes('Échantillon') && parts.includes('Réseau'));
+});
+
+test('a query with no indexable token compiles to an empty string (callers must skip it)', () => {
+  assert.equal(compileFtsQuery('?!  ...'.replace(/\./g, ' ')).trim(), '');
 });

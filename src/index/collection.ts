@@ -69,7 +69,7 @@ const ELIGIBILITY_FIELDS: EligibilityFieldNames = {
 };
 
 /** Records with more path/array entries than this are truncated deterministically for the eligibility index only; the full catalog lives in the JSON payload. */
-const MAX_PATH_MATCH_KEYS = 4096;
+export const MAX_PATH_MATCH_KEYS = 4096;
 
 export type VectorIndexKind = 'flat' | 'hnsw';
 
@@ -166,13 +166,29 @@ export function openOrCreateHistoryCollection(
     : ZVecCreateAndOpen(collectionDir, historyCollectionSchema(config));
 }
 
-function boundedUniqueKeys(keys: Iterable<string>): string[] {
-  const set = new Set<string>();
-  for (const key of keys) {
-    set.add(key);
-    if (set.size >= MAX_PATH_MATCH_KEYS) break;
-  }
-  return [...set];
+/**
+ * De-duplicates and bounds a record's path keys. When a commit touches more paths than
+ * the cap (mass renames, vendoring), keeping the first N in diff order would silently
+ * drop the later files from every path restriction. Shallow keys (directories and
+ * top-level files) are kept first instead, so a directory restriction still finds the
+ * commit; only the deepest leaf keys can be lost. Such commits carry the `path_limit`
+ * coverage reason, so the loss is reported rather than invisible.
+ */
+export function boundedUniqueKeys(keys: Iterable<string>, cap = MAX_PATH_MATCH_KEYS): string[] {
+  // Quote characters are stripped at query time (they cannot appear in a filter literal),
+  // so they must be stripped here too or such paths could never match a restriction.
+  const set = new Set<string>([...keys].map(stripQuotesForIndexing));
+  if (set.size <= cap) return [...set];
+  const depth = (key: string): number => {
+    let n = 0;
+    for (let i = 0; i < key.length; i++) if (key.charCodeAt(i) === 47) n++;
+    return n;
+  };
+  return [...set]
+    .map((key, order) => ({ key, order, depth: depth(key) }))
+    .sort((x, y) => x.depth - y.depth || x.order - y.order)
+    .slice(0, cap)
+    .map((entry) => entry.key);
 }
 
 function authorSearchValue(author: { readonly name: string; readonly email: string }): string {

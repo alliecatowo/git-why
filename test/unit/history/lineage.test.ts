@@ -7,6 +7,7 @@ import {
   JsonLineageStore,
   buildIntervals,
   lineageEventFromExtraction,
+  lineageTokensFromLines,
   writeLineageEvents,
   type LineageEvent,
 } from '../../../src/history/lineage.js';
@@ -130,4 +131,39 @@ test('the file is read on first lookup and not re-read afterwards', async () => 
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('lineage tokens keep lines whose content starts with +/-: ++i and -- comments', () => {
+  const { additions, removals } = lineageTokensFromLines([
+    { kind: 'added', text: '++counter;' },
+    { kind: 'removed', text: '- sql_comment_token' },
+    { kind: 'context', text: 'ignored_context' },
+  ]);
+  assert.deepEqual(additions, ['counter']);
+  assert.deepEqual(removals, ['sql_comment_token']);
+});
+
+test('lineage tokens are capped across the whole commit, not per line', () => {
+  const lines = Array.from({ length: 5000 }, (_, i) => ({
+    kind: 'added' as const,
+    text: `identifier_${i}_${'x'.repeat(3)}`,
+  }));
+  const { additions } = lineageTokensFromLines(lines);
+  assert.ok(additions.length <= 256);
+  assert.ok(additions.length > 0);
+});
+
+test('an extraction carrying full-hunk tokens is not limited to its clipped excerpts', () => {
+  const extraction = {
+    commit: {
+      sha: 'a'.repeat(40),
+      parents: [],
+      committerTime: 1,
+      subject: 's',
+      changedPaths: [],
+    },
+    evidence: [],
+    lineageChanges: { additions: ['beyondtheclip'], removals: [] },
+  } as unknown as CommitExtraction;
+  assert.deepEqual(lineageEventFromExtraction(extraction).additions, ['beyondtheclip']);
 });
