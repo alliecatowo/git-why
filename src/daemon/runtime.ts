@@ -45,26 +45,45 @@ export const DEFAULT_IDLE_TTL_MS = 15 * 60_000;
  * model is immutable once loaded and every caller uses it read-only, so a
  * single instance is safe to share.
  */
-class ModelPool {
-  #model: Promise<Embedder> | null = null;
+export class ModelPool {
+  /** One model per requested embedding name; a request for another model gets its own. */
+  readonly #models = new Map<string, Promise<Embedder>>();
 
-  async acquire(): Promise<Embedder> {
-    this.#model ??= loadDefaultEmbedder({ offline: false, onProgress: () => {} });
+  /**
+   * `embedding` is the CLIENT's `GIT_WHY_EMBEDDING`, not the daemon's: a daemon answer must
+   * be the one a direct run would give. `offline` is the client's `--offline`; it only
+   * matters on a cache miss, where it forbids the download the client forbade.
+   */
+  async acquire(options: { offline: boolean; embedding: string }): Promise<Embedder> {
+    const key = options.embedding;
+    let model = this.#models.get(key);
+    if (model === undefined) {
+      model = loadDefaultEmbedder(
+        { offline: options.offline, onProgress: () => {} },
+        options.embedding,
+      );
+      this.#models.set(key, model);
+    }
     try {
-      return await this.#model;
+      return await model;
     } catch (err) {
       // A failed load must not be cached, or every later request inherits a
       // failure that may have been transient (a download interrupted once).
-      this.#model = null;
+      if (this.#models.get(key) === model) this.#models.delete(key);
       throw err;
     }
   }
 
   async close(): Promise<void> {
-    const model = this.#model;
-    this.#model = null;
-    if (model === null) return;
-    await (await model).dispose?.();
+    const models = [...this.#models.values()];
+    this.#models.clear();
+    for (const model of models) {
+      try {
+        await (await model).dispose?.();
+      } catch {
+        /* a model that failed to load has nothing to dispose */
+      }
+    }
   }
 }
 
@@ -111,7 +130,10 @@ export class RuntimeManager {
    * idle sweep that closed a collection out from under an in-flight query
    * would surface as a storage error to a user who did nothing wrong.
    */
-  async acquire(cwd: string, options: { needsEmbedder: boolean }): Promise<RuntimeLease> {
+  async acquire(
+    cwd: string,
+    options: { needsEmbedder: boolean; offline?: boolean; embedding?: string },
+  ): Promise<RuntimeLease> {
     if (this.#closed) throw new Error('daemon is shutting down');
     const identity = await resolveRepositoryIdentity(cwd);
     const key = identity.commonDir;
@@ -139,7 +161,10 @@ export class RuntimeManager {
     let embedder: Embedder = null as never;
     try {
       if (options.needsEmbedder) {
-        embedder = await this.#models.acquire();
+        embedder = await this.#models.acquire({
+          offline: options.offline === true,
+          embedding: options.embedding ?? process.env.GIT_WHY_EMBEDDING ?? '',
+        });
         assertModelCompatible(runtime.opened.manifest, embedder);
       }
     } catch (err) {

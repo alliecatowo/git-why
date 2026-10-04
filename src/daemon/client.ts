@@ -62,11 +62,21 @@ async function call(
   }
 }
 
+/** Per-invocation settings the daemon must honour instead of using its own environment. */
+export interface SearchRouteOptions {
+  readonly offline?: boolean;
+  readonly embedding?: string;
+}
+
 export interface DaemonConnection {
   readonly url: string;
   readonly token: string;
   health(): Promise<DaemonHealth>;
-  search(cwd: string, request: SearchRequest): Promise<SearchResponse>;
+  search(
+    cwd: string,
+    request: SearchRequest,
+    options?: SearchRouteOptions,
+  ): Promise<SearchResponse>;
   status(cwd: string): Promise<IndexStatus>;
   shutdown(): Promise<void>;
 }
@@ -93,9 +103,20 @@ export function connect(record: { url: string; token: string }): DaemonConnectio
         r.ok && r.op === 'health' ? r.health : (undefined as never),
       );
     },
-    async search(cwd, request) {
+    async search(cwd, request, options = {}) {
       return unwrap(
-        await call(url, token, { op: 'search', cwd, request }, REQUEST_TIMEOUT_MS),
+        await call(
+          url,
+          token,
+          {
+            op: 'search',
+            cwd,
+            request,
+            ...(options.offline === true ? { offline: true } : {}),
+            ...(options.embedding !== undefined ? { embedding: options.embedding } : {}),
+          },
+          REQUEST_TIMEOUT_MS,
+        ),
         'search',
         (r) => (r.ok && r.op === 'search' ? r.response : (undefined as never)),
       );

@@ -19,6 +19,10 @@ export interface SearchRpc {
   readonly op: 'search';
   readonly cwd: string;
   readonly request: SearchRequest;
+  /** The client's `--offline`: the daemon must not download a model on its behalf. */
+  readonly offline?: boolean;
+  /** The client's `GIT_WHY_EMBEDDING` (empty/absent = the default model). */
+  readonly embedding?: string;
 }
 
 export interface StatusRpc {

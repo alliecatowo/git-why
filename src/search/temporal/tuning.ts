@@ -67,15 +67,6 @@ export const BETWEEN_INSIDE = 1;
 export const BETWEEN_OUTSIDE_DECAY = 0.7;
 
 /**
- * Fused-score discount per hop for structurally expanded (`linked`) commits.
- *
- * An expanded commit was never matched by either retrieval branch, so it must
- * enter below its seed. It must not enter at zero either -- surfacing terse
- * originating commits is the entire reason expansion exists.
- */
-export const LINK_HOP_DISCOUNT = 0.6;
-
-/**
  * Multiplier applied to commits that changed ONLY prose.
  *
  * Natural-language questions match natural-language commits. Asked "what was

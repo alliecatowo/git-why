@@ -13,7 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GitWhyError } from '../types.js';
 import { connect, discover, type DaemonConnection } from './client.js';
-import { daemonHome, readInstance } from './instance.js';
+import { daemonHome, processLooksLikeDaemon, readInstance } from './instance.js';
 
 export interface ServerStatus {
   readonly running: boolean;
@@ -101,10 +101,20 @@ export async function stopServer(): Promise<ServerStatus> {
   } else {
     // Not answering, but the PID is alive: ask it to exit rather than leaving
     // a process holding shared locks on every index it has open.
-    try {
-      process.kill(record.pid, 'SIGTERM');
-    } catch {
-      /* already gone */
+    // Only if the PID still looks like our daemon: after a crash or reboot the number may
+    // belong to an unrelated process, and signalling it would kill something of the user's.
+    if (processLooksLikeDaemon(record.pid)) {
+      try {
+        process.kill(record.pid, 'SIGTERM');
+      } catch {
+        /* already gone */
+      }
+    } else {
+      throw new GitWhyError(
+        'INTERNAL',
+        `pid ${record.pid} in the daemon record does not look like a git-why daemon; not signalling it`,
+        { hint: 'remove the stale instance.json under the daemon directory if the daemon is gone' },
+      );
     }
   }
   for (let i = 0; i < 50; i++) {

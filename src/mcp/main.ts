@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /** Minimal MCP stdio bridge; keeps the MCP surface on the stable CLI JSON contract. */
 import { spawn } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync, statSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -15,15 +15,63 @@ type Rpc = {
   params?: Record<string, unknown>;
 };
 
-function reply(id: Rpc['id'], result: unknown): void {
-  process.stdout.write(`${JSON.stringify({ jsonrpc: '2.0', id, result })}\n`);
+const SUPPORTED_PROTOCOL_VERSIONS = ['2025-06-18', '2025-03-26', '2024-11-05'];
+
+/** Kill a CLI run that exceeds this; a first search must not silently become a full index build. */
+const DEFAULT_TOOL_TIMEOUT_MS = 120_000;
+
+function toolTimeoutMs(): number {
+  const raw = Number(process.env.GIT_WHY_MCP_TIMEOUT_MS);
+  return Number.isFinite(raw) && raw > 0 ? raw : DEFAULT_TOOL_TIMEOUT_MS;
 }
 
-function error(id: Rpc['id'], code: number, message: string): void {
-  process.stdout.write(`${JSON.stringify({ jsonrpc: '2.0', id, error: { code, message } })}\n`);
+/**
+ * Directories a tool call may operate in. Defaults to the server's own working
+ * directory (what the MCP host launched it for); `GIT_WHY_MCP_ROOTS` adds more
+ * (path-delimiter separated) and `*` lifts the restriction. Without this, any
+ * caller of the tool could make git-why create and write an index inside any
+ * repository on the machine.
+ */
+export function allowedRoots(env: NodeJS.ProcessEnv = process.env, cwd = process.cwd()): string[] {
+  const extra = (env.GIT_WHY_MCP_ROOTS ?? '').split(path.delimiter).filter((p) => p.length > 0);
+  return [cwd, ...extra];
 }
 
-function runCli(args: string[], cwd: string | undefined): Promise<unknown> {
+/** Resolves a tool's `cwd` argument, or throws if it is outside the allowed roots. */
+export function resolveToolCwd(
+  requested: unknown,
+  roots: readonly string[] = allowedRoots(),
+): string | undefined {
+  if (requested === undefined || requested === null || requested === '') return undefined;
+  const wanted = String(requested);
+  let real: string;
+  try {
+    real = realpathSync(path.resolve(wanted));
+    if (!statSync(real).isDirectory()) throw new Error('not a directory');
+  } catch {
+    throw new Error(`cwd is not an existing directory: ${wanted}`);
+  }
+  if (roots.includes('*')) return real;
+  for (const root of roots) {
+    let realRoot: string;
+    try {
+      realRoot = realpathSync(path.resolve(root));
+    } catch {
+      continue;
+    }
+    const rel = path.relative(realRoot, real);
+    if (rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel))) return real;
+  }
+  throw new Error(
+    `cwd ${wanted} is outside the directories this server may use; set GIT_WHY_MCP_ROOTS to allow it`,
+  );
+}
+
+function runCli(
+  args: string[],
+  cwd: string | undefined,
+  timeoutMs = toolTimeoutMs(),
+): Promise<unknown> {
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [cli, ...args], {
       cwd,
@@ -31,10 +79,29 @@ function runCli(args: string[], cwd: string | undefined): Promise<unknown> {
     });
     let stdout = '';
     let stderr = '';
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      child.kill('SIGTERM');
+      setTimeout(() => child.kill('SIGKILL'), 2000).unref();
+    }, timeoutMs);
+    timer.unref();
     child.stdout.on('data', (chunk) => (stdout += chunk));
     child.stderr.on('data', (chunk) => (stderr += chunk));
-    child.on('error', reject);
+    child.on('error', (err) => {
+      clearTimeout(timer);
+      reject(err);
+    });
     child.on('close', (code) => {
+      clearTimeout(timer);
+      if (timedOut) {
+        reject(
+          new Error(
+            `git why did not finish within ${Math.round(timeoutMs / 1000)}s (a first search on a large repository builds its index); run \`git why index\` in a shell, then retry`,
+          ),
+        );
+        return;
+      }
       try {
         const parsed = JSON.parse(stdout);
         if (code !== 0)
@@ -160,7 +227,10 @@ inside a loop.`,
 export function searchCliArgs(args: Record<string, unknown>): string[] {
   const query = String(args.query ?? '').trim();
   if (!query) throw new Error('query is required');
-  const cliArgs = [query, '-n', String(args.limit ?? 5), '--json'];
+  // `--query=<q>` rather than a positional: a positional that looks like a flag
+  // (`--first-class foo`) is an unknown option, and one that equals a command word
+  // (`help`, `status`, `index`) is parsed as that command instead of searched for.
+  const cliArgs = [`--query=${query}`, '-n', String(args.limit ?? 5), '--json'];
   if (args.sort) cliArgs.push(`--sort=${String(args.sort)}`);
   if (args.mode === 'text') cliArgs.push('--text');
   if (args.mode === 'semantic') cliArgs.push('--semantic');
@@ -192,48 +262,87 @@ export const mcpTools = tools;
 const isEntryPoint =
   process.argv[1] !== undefined && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
-/** Serve MCP over stdio until stdin closes. Also reachable as `git-why mcp`. */
-export function startMcpServer(): void {
-  const rl = createInterface({ input: process.stdin, crlfDelay: Infinity });
-  rl.on('line', async (line) => {
-    let request: Rpc;
-    try {
-      request = JSON.parse(line) as Rpc;
-    } catch {
-      return;
-    }
-    if (request.method === 'initialize') {
-      reply(request.id, {
-        protocolVersion: '2024-11-05',
+type Reply = Record<string, unknown>;
+
+const ok = (id: Rpc['id'], result: unknown): Reply => ({ jsonrpc: '2.0', id, result });
+const fail = (id: Rpc['id'] | null, code: number, message: string): Reply => ({
+  jsonrpc: '2.0',
+  id: id ?? null,
+  error: { code, message },
+});
+
+/**
+ * Handles one line of input and returns the reply to write, or null when none is
+ * owed (notifications). Pure of stdio so tests can drive it; `run` is injectable.
+ */
+export async function handleLine(
+  line: string,
+  run: (args: string[], cwd: string | undefined) => Promise<unknown> = runCli,
+): Promise<Reply | null> {
+  let request: Rpc;
+  try {
+    request = JSON.parse(line) as Rpc;
+  } catch {
+    return fail(null, -32700, 'parse error: invalid JSON');
+  }
+  if (typeof request !== 'object' || request === null || typeof request.method !== 'string') {
+    return fail((request as { id?: Rpc['id'] } | null)?.id ?? null, -32600, 'invalid request');
+  }
+  const isNotification = request.id === undefined;
+  switch (request.method) {
+    case 'initialize': {
+      const asked = String(request.params?.protocolVersion ?? '');
+      const protocolVersion = SUPPORTED_PROTOCOL_VERSIONS.includes(asked)
+        ? asked
+        : SUPPORTED_PROTOCOL_VERSIONS[SUPPORTED_PROTOCOL_VERSIONS.length - 1];
+      return ok(request.id, {
+        protocolVersion,
         capabilities: { tools: {} },
         serverInfo: { name: 'git-why', version: serverVersion() },
       });
-    } else if (request.method === 'notifications/initialized') {
-      return;
-    } else if (request.method === 'tools/list') {
-      reply(request.id, { tools });
-    } else if (request.method === 'tools/call') {
+    }
+    case 'ping':
+      return ok(request.id, {});
+    case 'tools/list':
+      return ok(request.id, { tools });
+    case 'tools/call': {
       const name = String(request.params?.name ?? '');
       const args = (request.params?.arguments ?? {}) as Record<string, unknown>;
-      try {
-        if (name === 'git_why_search') {
-          const result = await runCli(searchCliArgs(args), args.cwd ? String(args.cwd) : undefined);
-          reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
-        } else if (name === 'git_why_status') {
-          const result = await runCli(
-            ['status', '--json'],
-            args.cwd ? String(args.cwd) : undefined,
-          );
-          reply(request.id, { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] });
-        } else {
-          error(request.id, -32602, `unknown tool: ${name}`);
-        }
-      } catch (cause) {
-        error(request.id, -32000, cause instanceof Error ? cause.message : String(cause));
+      if (name !== 'git_why_search' && name !== 'git_why_status') {
+        return fail(request.id, -32602, `unknown tool: ${name}`);
       }
-    } else if (request.id !== undefined) {
-      error(request.id, -32601, `method not found: ${request.method}`);
+      try {
+        const cwd = resolveToolCwd(args.cwd);
+        const result =
+          name === 'git_why_search'
+            ? await run(searchCliArgs(args), cwd)
+            : await run(['status', '--json'], cwd);
+        return ok(request.id, {
+          content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+        });
+      } catch (cause) {
+        // A tool that ran and failed is a result the model can read and act on
+        // (isError), not a protocol fault.
+        return ok(request.id, {
+          isError: true,
+          content: [{ type: 'text', text: cause instanceof Error ? cause.message : String(cause) }],
+        });
+      }
     }
+    default:
+      if (isNotification || request.method.startsWith('notifications/')) return null;
+      return fail(request.id, -32601, `method not found: ${request.method}`);
+  }
+}
+
+/** Serve MCP over stdio until stdin closes. Also reachable as `git-why mcp`. */
+export function startMcpServer(): void {
+  const rl = createInterface({ input: process.stdin, crlfDelay: Infinity });
+  rl.on('line', (line) => {
+    if (line.trim() === '') return;
+    void handleLine(line).then((reply) => {
+      if (reply !== null) process.stdout.write(`${JSON.stringify(reply)}\n`);
+    });
   });
 }
 

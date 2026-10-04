@@ -110,8 +110,11 @@ async function createGenericStaticEmbedder(
  * that quietly measured the default while claiming to measure a candidate
  * would be worse than no measurement.
  */
-export async function loadDefaultEmbedder(options?: CacheOptions): Promise<Embedder> {
-  const requested = process.env.GIT_WHY_EMBEDDING;
+export async function loadDefaultEmbedder(
+  options?: CacheOptions,
+  /** Defaults to `GIT_WHY_EMBEDDING`; the daemon passes its client's value instead. */
+  requested: string | undefined = process.env.GIT_WHY_EMBEDDING,
+): Promise<Embedder> {
   if (requested === undefined || requested === '' || requested === 'potion-code-16M-v2') {
     return createGenericStaticEmbedder(POTION_CODE_16M_V2, options);
   }

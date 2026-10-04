@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 ### Security
 
@@ -16,6 +16,28 @@
 - Workflows: actions pinned by SHA, npm pinned for trusted publishing,
   `mcp-publisher` verified against its release checksum, the MCP registry step is
   idempotent on re-run, Dependabot auto-merge no longer covers runtime deps.
+
+### Changed (daemon and MCP)
+
+- The daemon no longer ignores `--offline` or `GIT_WHY_EMBEDDING`: both travel in the
+  search request, and the daemon loads the model the client asked for.
+- `instance.json` is written atomically and never deleted on a parse error; only one
+  daemon can run (O_EXCL lock); `server off` refuses to signal a pid that does not look
+  like a git-why daemon.
+- MCP bridge: queries are passed as `--query=` (so `help`, `status` or `--flag-like`
+  text is searched for), tool failures are `isError` results, `ping` and protocol
+  negotiation work, malformed JSON gets a parse error, calls time out after 120 s
+  (`GIT_WHY_MCP_TIMEOUT_MS`), and `cwd` must be inside the server's directory or
+  `GIT_WHY_MCP_ROOTS`.
+
+### Docs and housekeeping
+
+- `status --check-ready` exits 4 (index failure) rather than 3 when the index is not
+  ready, as documented. `gc` and `--max-bytes` are described accurately; operations.md
+  no longer claims there is no daemon; SECURITY.md states when the model is downloaded;
+  environment variables are documented. README gains a first-run section.
+- Plugin manifests are kept in step with the package version (`verify-plugins` checks).
+  Removed the unused `scripts/repo-create.mjs` and a stale duplicate constant.
 
 ### Added
 

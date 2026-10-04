@@ -20,6 +20,7 @@ import { createBackend } from './wire.js';
 import type { Backend, ProgressEvent, RepositoryHandle } from './ports.js';
 import { renderSearchHuman, renderStatusHuman } from '../output/human.js';
 import { resolveMode, route } from '../daemon/client.js';
+import { isOffline } from '../embedding/cache.js';
 import {
   renderSearchErrorJson,
   renderSearchJson,
@@ -73,7 +74,8 @@ Options:
                         spelled out for scripts that want to say so explicitly
   --no-refresh          Alias for --refresh=off
   --offline             Also forbid model downloads
-  --max-bytes=<n>       Bound rendered output, including JSON framing (default 16384)
+  --max-bytes=<n>       With --json: bound the output, including JSON framing (default
+                        16384). Human output is not bounded
   --lock-timeout=<sec>  Seconds to wait for another process (default 30)
   --verbose             Also report model loading and download progress on stderr
   --query <text>        Explicit query text, for text that looks like a command or option
@@ -84,7 +86,7 @@ Commands:
   index                 Create or reconcile the index
   status                Report index state without mutating anything
   rebuild               Replace derived index data
-  gc                    Reconcile and compact without downloading embeddings
+  gc                    Remove superseded index generations (no embeddings downloaded)
   help                  Show this help
 
 Server:
@@ -245,16 +247,11 @@ function makeProgressListener(verbose: boolean): (event: ProgressEvent) => void 
 }
 
 /**
- * `status --check-ready`'s readiness contract (docs/operations.md): an index
- * must exist, be current for the repository's current refs snapshot, and
- * have complete coverage under the current policy. Policy-excluded content
- * (generated, binary, lockfile, and bounded oversize slices) is deliberately
- * outside the searchable corpus, so it is not an incomplete preparation;
- * unavailable or failed eligible files are. This is a pure read of
- * fields `IndexStatus` already carries — it does not re-derive anything
- * `computeIndexStatus` (src/index/status.ts) didn't already decide.
- */
-/**
+ * `status --check-ready`'s readiness contract (docs/operations.md), a pure read of
+ * fields `IndexStatus` already carries (see `computeIndexStatus`,
+ * src/index/status.ts). Not ready exits 4 (INDEX_FAILURE), never 3: the repository
+ * is fine, the index is what is missing.
+ *
  * Readiness means "this index is built and current for the current refs", not
  * "every file in history was ingested".
  *
@@ -372,7 +369,7 @@ async function runLifecycle(
       writeStdout(renderStatusHuman(status));
     }
     if (parsed.command === 'status' && parsed.checkReady) {
-      return isIndexReady(status) ? ExitCode.OK : ExitCode.NO_REPOSITORY;
+      return isIndexReady(status) ? ExitCode.OK : ExitCode.INDEX_FAILURE;
     }
     return ExitCode.OK;
   } catch (err) {
@@ -417,7 +414,11 @@ async function runSearch(
     // default without becoming a new way for the tool to break.
     const response = await route({
       mode: resolveMode(parsed.daemonMode),
-      viaDaemon: (connection) => connection.search(repo.identity.worktreeRoot ?? cwd, request),
+      viaDaemon: (connection) =>
+        connection.search(repo.identity.worktreeRoot ?? cwd, request, {
+          offline: isOffline({ offline: parsed.offline }),
+          embedding: process.env.GIT_WHY_EMBEDDING ?? '',
+        }),
       direct: () =>
         backend.search(repo, request, {
           offline: parsed.offline,
