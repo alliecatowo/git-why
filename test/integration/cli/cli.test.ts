@@ -327,7 +327,9 @@ test('a closed stdout pipe (EPIPE) exits cleanly with no stack trace', async () 
       coverage: 'complete_for_policy',
       generation: 'g1',
     },
-    results: Array.from({ length: 200 }, (_, i) => ({
+    // Stays under Linux's 128 KiB per-environment-string limit (MAX_ARG_STRLEN): the config
+    // travels in GIT_WHY_TEST_CONFIG, and a larger value fails spawn with E2BIG.
+    results: Array.from({ length: 100 }, (_, i) => ({
       sha: String(i).padStart(40, '0'),
       subject: `Commit ${i}`,
       author: { name: 'Fake Author', email: 'fake@example.invalid' },

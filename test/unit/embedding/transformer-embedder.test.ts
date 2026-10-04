@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { MODEL_CANDIDATES, loadDefaultEmbedder } from '../../../src/embedding/candidates.js';
-import { JINA_V2_SMALL_EN } from '../../../src/embedding/transformer-embedder.js';
+import {
+  EMBED_BATCH_SIZE,
+  JINA_V2_BASE_EN,
+  JINA_V2_SMALL_EN,
+  transformerPipelineOptions,
+} from '../../../src/embedding/transformer-embedder.js';
 
 /**
  * The optional runtime is present on a developer machine that installed it and
@@ -101,4 +106,20 @@ test('a transformer embedder produces unit vectors that discriminate', async (t)
   } finally {
     await embedder.dispose();
   }
+});
+
+test('Jina revisions are pinned to commit SHAs, never the floating main', () => {
+  for (const spec of [JINA_V2_SMALL_EN, JINA_V2_BASE_EN]) {
+    assert.match(spec.revision, /^[0-9a-f]{40}$/);
+  }
+});
+
+test('the pipeline is told the pinned revision, honours --offline, and uses git-why cache', () => {
+  const online = transformerPipelineOptions(JINA_V2_SMALL_EN, { cacheDir: '/c' });
+  assert.equal(online.revision, JINA_V2_SMALL_EN.revision);
+  assert.equal(online.local_files_only, false);
+  assert.equal(online.cache_dir, '/c/transformers');
+  const offline = transformerPipelineOptions(JINA_V2_SMALL_EN, { offline: true, cacheDir: '/c' });
+  assert.equal(offline.local_files_only, true);
+  assert.ok(EMBED_BATCH_SIZE > 0 && EMBED_BATCH_SIZE <= 64);
 });

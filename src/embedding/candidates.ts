@@ -210,7 +210,7 @@ export const MODEL_CANDIDATES: readonly CandidateDescriptor[] = [
     name: 'jina-v2-small',
     available: transformerRuntimeInstalled(),
     unavailableReason: transformerRuntimeInstalled() ? undefined : JINA_UNAVAILABLE_REASON,
-    createEmbedder: () => TransformerEmbedder.create(JINA_V2_SMALL_EN),
+    createEmbedder: (options) => TransformerEmbedder.create(JINA_V2_SMALL_EN, options),
   },
   {
     // The measured ceiling: +64% MRR over the default, and R@50 0.862 against
@@ -220,7 +220,7 @@ export const MODEL_CANDIDATES: readonly CandidateDescriptor[] = [
     name: 'jina-v2-base',
     available: transformerRuntimeInstalled(),
     unavailableReason: transformerRuntimeInstalled() ? undefined : JINA_UNAVAILABLE_REASON,
-    createEmbedder: () => TransformerEmbedder.create(JINA_V2_BASE_EN),
+    createEmbedder: (options) => TransformerEmbedder.create(JINA_V2_BASE_EN, options),
   },
 ];
 

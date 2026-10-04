@@ -29,9 +29,9 @@ jobs:
       contents: read
       id-token: write # OIDC token for trusted publishing and provenance
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '24.21.0'
           cache: npm
@@ -71,7 +71,7 @@ jobs:
 
       # Trusted publishing (OIDC) needs npm >= 11.5.1; Node's bundled npm is older.
       - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@latest && npm --version
+        run: npm install -g npm@11.21.0 && npm --version
       - name: Publish to npm
         run: npm publish --provenance --access public
 
@@ -84,7 +84,7 @@ jobs:
     env:
       TAG_NAME: ${{ inputs.tag || github.ref_name }}
     steps:
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: '24.21.0'
 
@@ -122,7 +122,7 @@ jobs:
     steps:
       # Push: the tag's tree. Dispatch: the default branch, so a fixed server.json
       # can be republished for a tag whose npm package is already out.
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: server.json matches the tag
         run: |
           tag="${TAG_NAME#v}"
@@ -130,12 +130,36 @@ jobs:
           [ "$tag" = "$server" ] || { echo "server.json ${server} != tag ${tag}" >&2; exit 1; }
         env:
           TAG_NAME: ${{ inputs.tag || github.ref_name }}
-      - name: Install mcp-publisher
+      # Re-runs must be harmless: the registry rejects a duplicate version with a
+      # 400, which used to turn a repeat dispatch red. Ask first; skip if present.
+      - name: Is this version already in the registry?
+        id: existing
         run: |
-          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          version="${TAG_NAME#v}"
+          code="$(curl -s -o /dev/null -w '%{http_code}' \
+            "https://registry.modelcontextprotocol.io/v0/servers/io.github.alliecatowo%2Fgit-why/versions/${version}")"
+          if [ "$code" = "200" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+            echo "io.github.alliecatowo/git-why ${version} is already published; nothing to do."
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          TAG_NAME: ${{ inputs.tag || github.ref_name }}
+      # The binary runs with id-token: write, so it is verified against the
+      # checksum published for this exact release rather than trusted off the wire.
+      - name: Install mcp-publisher
+        if: steps.existing.outputs.present != 'true'
+        run: |
+          base="https://github.com/modelcontextprotocol/registry/releases/download/v1.8.1"
+          curl -fsSL -o mcp-publisher.tar.gz "${base}/mcp-publisher_linux_amd64.tar.gz"
+          echo "a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc  mcp-publisher.tar.gz" | sha256sum -c -
+          tar xzf mcp-publisher.tar.gz mcp-publisher
       - name: Log in with GitHub OIDC
+        if: steps.existing.outputs.present != 'true'
         run: ./mcp-publisher login github-oidc
       - name: Publish server.json
+        if: steps.existing.outputs.present != 'true'
         run: ./mcp-publisher publish
 
   # Homebrew formula in alliecatowo/homebrew-tap. Renders Formula/git-why.rb

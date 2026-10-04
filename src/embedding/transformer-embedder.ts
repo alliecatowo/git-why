@@ -28,7 +28,9 @@
  *   GIT_WHY_EMBEDDING=jina-v2-small git why index
  */
 
+import path from 'node:path';
 import { GitWhyError, type Embedder } from '../types.js';
+import { isOffline, resolveCacheRoot, type CacheOptions } from './cache.js';
 
 /**
  * Held in a variable so TypeScript does not try to resolve it at compile time.
@@ -63,7 +65,7 @@ export interface TransformerModelSpec {
 export const JINA_V2_BASE_EN: TransformerModelSpec = {
   name: 'jina-v2-base',
   modelId: 'Xenova/jina-embeddings-v2-base-en',
-  revision: 'main',
+  revision: '459a733e015d7c72b678de3611fc444a7853168a',
   dimension: 768,
   maxInputTokens: 8192,
 };
@@ -74,7 +76,7 @@ export const JINA_V2_SMALL_EN: TransformerModelSpec = {
   // Pinned, for the same reason every static artifact is: a newer upstream
   // revision must never silently substitute itself into an index whose
   // fingerprint claims otherwise.
-  revision: 'main',
+  revision: '523cadcb9c2e71c7153fc46016e1fe79acb4f58f',
   dimension: 512,
   maxInputTokens: 8192,
 };
@@ -102,6 +104,27 @@ async function loadRuntime(): Promise<{
   }
 }
 
+/** Largest number of documents handed to the model in one forward pass. */
+export const EMBED_BATCH_SIZE = 16;
+
+/**
+ * Options for the transformers.js pipeline. The pinned revision is always sent
+ * (never the floating `main`), `--offline` becomes `local_files_only` so it is
+ * honoured rather than silently downloading, and the cache lives under git-why's
+ * own cache root so `GIT_WHY_MODEL_CACHE` applies.
+ */
+export function transformerPipelineOptions(
+  spec: TransformerModelSpec,
+  options: Pick<CacheOptions, 'offline' | 'cacheDir'> = {},
+): Record<string, unknown> {
+  return {
+    dtype: 'fp32',
+    revision: spec.revision,
+    local_files_only: isOffline(options),
+    cache_dir: path.join(options.cacheDir ?? resolveCacheRoot(), 'transformers'),
+  };
+}
+
 type Extractor = (
   texts: readonly string[],
   options: { pooling: string; normalize: boolean },
@@ -127,11 +150,16 @@ export class TransformerEmbedder implements Embedder {
     this.#extractor = extractor;
   }
 
-  static async create(spec: TransformerModelSpec): Promise<TransformerEmbedder> {
+  static async create(
+    spec: TransformerModelSpec,
+    options: Pick<CacheOptions, 'offline' | 'cacheDir'> = {},
+  ): Promise<TransformerEmbedder> {
     const { pipeline } = await loadRuntime();
-    const extractor = (await pipeline('feature-extraction', spec.modelId, {
-      dtype: 'fp32',
-    })) as Extractor;
+    const extractor = (await pipeline(
+      'feature-extraction',
+      spec.modelId,
+      transformerPipelineOptions(spec, options),
+    )) as Extractor;
     return new TransformerEmbedder(spec, extractor);
   }
 
@@ -153,11 +181,16 @@ export class TransformerEmbedder implements Embedder {
     if (this.#extractor === null) throw new GitWhyError('INTERNAL', 'embedder already disposed');
     if (texts.length === 0) return [];
     const bounded = texts.map((t) => this.truncateToTokens(t, this.maxInputTokens));
-    const output = await this.#extractor(bounded, { pooling: POOLING, normalize: true });
-    const width = output.dims[output.dims.length - 1] ?? this.dimension;
     const out: Float32Array[] = [];
-    for (let i = 0; i < texts.length; i++) {
-      out.push(Float32Array.from(output.data.slice(i * width, (i + 1) * width)));
+    // Micro-batch: a padded batch of 8k-token inputs is quadratic in memory, so
+    // an unbounded caller-supplied batch could exhaust it.
+    for (let start = 0; start < bounded.length; start += EMBED_BATCH_SIZE) {
+      const batch = bounded.slice(start, start + EMBED_BATCH_SIZE);
+      const output = await this.#extractor(batch, { pooling: POOLING, normalize: true });
+      const width = output.dims[output.dims.length - 1] ?? this.dimension;
+      for (let i = 0; i < batch.length; i++) {
+        out.push(Float32Array.from(output.data.slice(i * width, (i + 1) * width)));
+      }
     }
     return out;
   }
