@@ -51,6 +51,7 @@ import {
   clearPendingBatch,
   applyCommitBatch,
   type CommitBatchUnit,
+  type PendingBatch,
 } from './journal.js';
 import {
   openOrCreateHistoryCollection,
@@ -93,12 +94,23 @@ export interface RefreshOptions {
   readonly forceRetryIncomplete?: boolean;
   readonly batchSize?: number;
   readonly vectorIndex?: VectorIndexKind;
+  /**
+   * Refuse to touch an index built with a different embedding model. Callers
+   * that never use vectors (`--text` queries) may pass false.
+   */
+  readonly checkModel?: boolean;
 }
 
 export interface EnsureResult {
   readonly generationId: string;
   readonly manifest: IndexManifest;
 }
+
+const RETRYABLE_REASONS: ReadonlySet<OmissionReason> = new Set<OmissionReason>([
+  'missing_object',
+  'shallow_boundary',
+  'extraction_error',
+]);
 
 interface CatalogEntry {
   readonly id: string;
@@ -160,6 +172,43 @@ function writeCatalogAtomic(commitsFile: string, catalog: ReadonlyMap<string, Ca
     fs.closeSync(fd);
   }
   fs.renameSync(tmp, commitsFile);
+}
+
+/**
+ * Vectors from different models are not comparable (and may not even share a
+ * dimension), so an index is only usable with the model that built it. A new
+ * default model must never silently rebuild or silently query garbage.
+ */
+export function assertModelCompatible(
+  manifest: Pick<IndexManifest, 'embeddingFingerprint' | 'embeddingModelId'>,
+  embedder: Pick<Embedder, 'fingerprint' | 'modelId'>,
+): void {
+  if (
+    manifest.embeddingFingerprint === '' ||
+    manifest.embeddingFingerprint === embedder.fingerprint
+  )
+    return;
+  throw new GitWhyError(
+    'MODEL_MISMATCH',
+    `this index was built with embedding model "${manifest.embeddingModelId}" but "${embedder.modelId}" is selected`,
+    {
+      hint: 'select the original model (GIT_WHY_EMBEDDING) or run `git why rebuild --use-default-model` to migrate the index',
+    },
+  );
+}
+
+/**
+ * `readPendingBatch`, except that a corrupt marker is reported as 'corrupt'
+ * instead of throwing: recovery itself must be able to proceed (by replaying
+ * everything) rather than demanding a full `rebuild`.
+ */
+function readPendingLenient(pendingFile: string): PendingBatch | 'corrupt' | null {
+  try {
+    return readPendingBatch(pendingFile);
+  } catch (err) {
+    if (err instanceof GitWhyError && err.code === 'INDEX_RECOVERY_REQUIRED') return 'corrupt';
+    throw err;
+  }
 }
 
 function newGenerationId(): string {
@@ -299,7 +348,15 @@ async function applyBatch(
   for (const extraction of extractions) {
     if (!appliedSet.has(extraction.commit.sha)) continue;
     const coverages = [extraction.commit.coverage, ...extraction.evidence.map((e) => e.coverage)];
-    const complete = coverages.every((c) => c.complete);
+    // Policy exclusions (merge hunks, lockfiles, binaries, size/token limits)
+    // are deterministic: re-extracting cannot change them. Only material Git
+    // could not supply, or an extraction failure, is worth retrying.
+    const complete = !coverages.some(
+      (c) =>
+        c.unavailableFiles > 0 ||
+        c.failedFiles > 0 ||
+        c.reasons.some((r) => RETRYABLE_REASONS.has(r)),
+    );
     for (const c of coverages) {
       excludedFiles += c.excludedFiles;
       unavailableFiles += c.unavailableFiles;
@@ -353,7 +410,7 @@ async function reconcile(
   const viewChanged = isViewChanged(manifest, snapshot);
 
   const catalog = readCatalog(paths.commitsFile);
-  const pending = readPendingBatch(paths.pendingFile);
+  const pending = readPendingLenient(paths.pendingFile);
   // A generation written before the lineage sidecar existed must be
   // re-extracted once. Merely declaring it current would make ordinal
   // queries silently fall back to relevance, which is a false treatment.
@@ -368,7 +425,11 @@ async function reconcile(
     )
     .map(([sha]) => sha);
   const recoveryShas =
-    pending !== null ? pending.commitShas.filter((sha) => reachableSet.has(sha)) : [];
+    pending === 'corrupt'
+      ? [...catalog.keys()].filter((sha) => reachableSet.has(sha))
+      : pending !== null
+        ? pending.commitShas.filter((sha) => reachableSet.has(sha))
+        : [];
 
   const lineageRebuildShas = lineageMissing ? [...catalog.keys()] : [];
   const toProcess = [
@@ -385,59 +446,88 @@ async function reconcile(
     let unavailableFiles = 0;
     let failedFiles = 0;
 
-    for (const batch of chunk(toProcess, options.batchSize)) {
-      const outcome = await applyBatch(
-        collection,
-        paths.pendingFile,
-        paths.id,
-        deps.extractor,
-        deps.embedder,
-        snapshot,
-        batch,
-        catalog,
-      );
-      excludedFiles += outcome.excludedFiles;
-      unavailableFiles += outcome.unavailableFiles;
-      failedFiles += outcome.failedFiles;
-      for (const r of outcome.reasons) omissionReasons.add(r);
+    // The catalog and lineage sidecar are whole-file rewrites, so flushing
+    // them after every small batch is quadratic. Flush every FLUSH_EVERY
+    // batches and on any exit; replaying the unflushed tail is idempotent
+    // because document ids are deterministic and applied as upserts.
+    const FLUSH_EVERY_BATCHES = 32;
+    let unflushedBatches = 0;
+    let unflushedLineage: ReturnType<typeof lineageEventFromExtraction>[] = [];
+    const flush = (): void => {
+      if (unflushedLineage.length > 0) writeLineageEvents(paths.lineageFile, unflushedLineage);
+      unflushedLineage = [];
+      if (unflushedBatches > 0) writeCatalogAtomic(paths.commitsFile, catalog);
+      unflushedBatches = 0;
+    };
 
-      // The sidecar is updated only after Zvec's batch journal was applied.
-      // If the process dies before this write, a later refresh replays the
-      // same SHA and repairs it; it can never make an interval claim for a
-      // commit absent from the primary collection.
-      if (outcome.lineageEvents.length > 0)
-        writeLineageEvents(paths.lineageFile, outcome.lineageEvents);
-
-      writeCatalogAtomic(paths.commitsFile, catalog);
-      manifest = {
-        ...manifest,
-        ...currentPolicyIdentities(),
-        embeddingModelId: deps.embedder.modelId,
-        embeddingModelRevision: deps.embedder.revision,
-        embeddingFingerprint: deps.embedder.fingerprint,
-        objectFormat,
-        databaseFormatCompatibility: DATABASE_FORMAT_COMPATIBILITY,
-        counts: countsOf(catalog),
-        omissions: { excludedFiles, unavailableFiles, failedFiles, reasons: [...omissionReasons] },
-        updatedAt: new Date().toISOString(),
-        state: outcome.failedShas.length > 0 ? 'recovery_required' : 'clean',
-        generationId: paths.id,
-      };
-      writeManifestAtomic(paths.manifestFile, manifest);
-      clearPendingBatch(paths.pendingFile);
-
-      if (outcome.failedShas.length > 0) {
-        // Bounded batches are independent; stop here rather than compound
-        // failures, and leave a clean, resumable checkpoint behind.
-        throw new GitWhyError(
-          'EXTRACTION_FAILED',
-          `${outcome.failedShas.length} commit(s) failed extraction/embedding in this batch: ${outcome.failedShas
-            .slice(0, 3)
-            .map((f) => f.sha)
-            .join(', ')}${outcome.failedShas.length > 3 ? ', ...' : ''}`,
+    try {
+      for (const batch of chunk(toProcess, options.batchSize)) {
+        const outcome = await applyBatch(
+          collection,
+          paths.pendingFile,
+          paths.id,
+          deps.extractor,
+          deps.embedder,
+          snapshot,
+          batch,
+          catalog,
         );
+        excludedFiles += outcome.excludedFiles;
+        unavailableFiles += outcome.unavailableFiles;
+        failedFiles += outcome.failedFiles;
+        for (const r of outcome.reasons) omissionReasons.add(r);
+
+        // The sidecar is updated only after Zvec's batch journal was applied.
+        // If the process dies before this write, a later refresh replays the
+        // same SHA and repairs it; it can never make an interval claim for a
+        // commit absent from the primary collection.
+        unflushedLineage.push(...outcome.lineageEvents);
+        unflushedBatches++;
+        if (unflushedBatches >= FLUSH_EVERY_BATCHES || outcome.failedShas.length > 0) flush();
+        manifest = {
+          ...manifest,
+          ...currentPolicyIdentities(),
+          embeddingModelId: deps.embedder.modelId,
+          embeddingModelRevision: deps.embedder.revision,
+          embeddingFingerprint: deps.embedder.fingerprint,
+          objectFormat,
+          databaseFormatCompatibility: DATABASE_FORMAT_COMPATIBILITY,
+          counts: countsOf(catalog),
+          omissions: {
+            excludedFiles,
+            unavailableFiles,
+            failedFiles,
+            reasons: [...omissionReasons],
+          },
+          updatedAt: new Date().toISOString(),
+          state: outcome.failedShas.length > 0 ? 'recovery_required' : 'clean',
+          generationId: paths.id,
+        };
+        writeManifestAtomic(paths.manifestFile, manifest);
+        clearPendingBatch(paths.pendingFile);
+
+        if (outcome.failedShas.length > 0) {
+          // Bounded batches are independent; stop here rather than compound
+          // failures, and leave a clean, resumable checkpoint behind.
+          throw new GitWhyError(
+            'EXTRACTION_FAILED',
+            `${outcome.failedShas.length} commit(s) failed extraction/embedding in this batch: ${outcome.failedShas
+              .slice(0, 3)
+              .map((f) => f.sha)
+              .join(', ')}${outcome.failedShas.length > 3 ? ', ...' : ''}`,
+          );
+        }
       }
+    } catch (err) {
+      try {
+        flush();
+      } catch {
+        // best-effort; the original error is what matters
+      }
+      throw err;
     }
+
+    flush();
 
     // Prune now-ineligible commits, but ONLY when the reachable set and the
     // snapshot itself are both known-complete — an interrupted enumeration
@@ -511,13 +601,16 @@ export async function ensureCurrentGeneration(
     if (generationId !== null) {
       const paths = generationPaths(layout, generationId);
       const manifest = readManifest(paths.manifestFile);
-      const pending = manifest === null ? null : readPendingBatch(paths.pendingFile);
+      const pending = manifest === null ? null : readPendingLenient(paths.pendingFile);
       if (
         isAlreadyCurrent(manifest, pending !== null, snapshot) &&
         fs.existsSync(paths.lineageFile)
       ) {
+        if (options.checkModel !== false) assertModelCompatible(manifest!, deps.embedder);
         return { generationId, manifest: manifest! };
       }
+      if (manifest !== null && options.checkModel !== false)
+        assertModelCompatible(manifest, deps.embedder);
     }
   } finally {
     quick.release();
@@ -538,12 +631,20 @@ export async function ensureCurrentGeneration(
     if (generationId !== null) {
       paths = generationPaths(layout, generationId);
       const manifest = readManifest(paths.manifestFile);
-      const pending = manifest === null ? null : readPendingBatch(paths.pendingFile);
+      const pending = manifest === null ? null : readPendingLenient(paths.pendingFile);
       if (
         isAlreadyCurrent(manifest, pending !== null, snapshot) &&
         fs.existsSync(paths.lineageFile)
       ) {
         return { generationId, manifest: manifest! };
+      }
+      if (manifest !== null && options.checkModel !== false)
+        assertModelCompatible(manifest, deps.embedder);
+      if (manifest !== null && !manifestPolicyIsCompatible(manifest)) {
+        // Built by an older extraction/ranking policy. Re-stamping the version
+        // would label stale data as current, so rebuild into staging (the
+        // previous generation stays usable until the new one is published).
+        return rebuildLocked(layout, repository, snapshot, reachable, deps, options);
       }
     } else {
       generationId = newGenerationId();
@@ -585,6 +686,22 @@ export async function rebuild(
 
   const exclusive = await acquireExclusive(layout.repositoryLockFile, lockTimeoutSeconds);
   try {
+    return await rebuildLocked(layout, repository, snapshot, reachable, deps, options);
+  } finally {
+    exclusive.release();
+  }
+}
+
+/** The body of `rebuild`; the caller must already hold the exclusive lock. */
+async function rebuildLocked(
+  layout: ReturnType<typeof layoutFor>,
+  repository: { readonly commonDir: string; readonly objectFormat: ObjectFormat },
+  snapshot: RepositorySnapshot,
+  reachable: ReachableSet,
+  deps: StorageDeps,
+  options: RefreshOptions,
+): Promise<EnsureResult> {
+  {
     const stagingId = newGenerationId();
     const staging = stagingPaths(layout, stagingId);
     try {
@@ -628,8 +745,6 @@ export async function rebuild(
       }
       throw err;
     }
-  } finally {
-    exclusive.release();
   }
 }
 
@@ -685,7 +800,11 @@ function listDirSafe(dir: string): string[] {
  */
 export async function openReadOnlyStore(
   repository: { readonly commonDir: string },
-  options: { readonly lockTimeoutSeconds?: number } = {},
+  options: {
+    readonly lockTimeoutSeconds?: number;
+    /** When set, refuse an index whose recorded embedding fingerprint differs. */
+    readonly embedder?: Pick<Embedder, 'fingerprint' | 'modelId'>;
+  } = {},
 ): Promise<{
   store: ZvecHistoryStore;
   generationId: string;
@@ -710,10 +829,18 @@ export async function openReadOnlyStore(
         `generation ${generationId} is published but has no manifest`,
       );
     }
-    if (manifest.state === 'recovery_required' || readPendingBatch(paths.pendingFile) !== null) {
+    if (manifest.state === 'recovery_required' || readPendingLenient(paths.pendingFile) !== null) {
       throw new GitWhyError(
         'INDEX_RECOVERY_REQUIRED',
         `generation ${generationId} requires recovery before it can be queried`,
+      );
+    }
+    if (options.embedder !== undefined) assertModelCompatible(manifest, options.embedder);
+    if (!manifestPolicyIsCompatible(manifest)) {
+      throw new GitWhyError(
+        'INDEX_REBUILD_REQUIRED',
+        `generation ${generationId} was built by an older version of git-why`,
+        { hint: 'run `git why index` (or drop --no-refresh) to rebuild it' },
       );
     }
     let collection: ZVecCollection;

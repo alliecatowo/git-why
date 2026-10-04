@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.1.2
+
+### Security
+
+- Terminal output now strips bidirectional-override and zero-width characters
+  from repository text (Trojan Source style spoofing of subjects and paths).
+- A commit with an out-of-range timestamp no longer crashes human output.
+- The cached model files are re-hashed on first use per process and model
+  downloads have a timeout.
+- `GIT_WHY_TEST_BACKEND` is honoured only when `NODE_ENV=test`.
+- CI runs with read-only token permissions.
+
+### Fixed
+
+- Merge, lockfile, binary and size-clipped commits are no longer re-extracted
+  and re-embedded on every refresh; only commits with material Git could not
+  supply are retried.
+- Indexing no longer rewrites the whole catalog and lineage files after every
+  32-commit batch.
+- `--before`, `--after`, `--around` and `--between` now change the ranking for
+  date, tag and commit anchors, and warn when an anchor cannot be resolved.
+  Words like "before" or "since" in a question no longer trim the query or
+  switch on lineage expansion.
+- A daemon that finds its index stale releases its shared lock, so the next
+  direct query no longer waits 30 s and fails with `INDEX_BUSY`.
+- An index built with a different embedding model is refused with
+  `MODEL_MISMATCH`; `git why rebuild` keeps the recorded model unless
+  `--use-default-model` is given. An index built by an older extraction policy
+  is rebuilt into a new generation instead of being re-stamped.
+- A corrupt `pending.json` is recovered by replaying the generation.
+- Git subprocesses: unhandled stdin errors, orphaned children after a failed
+  extraction, and a hung git are handled (15 minute timeout).
+- The embedding model is disposed on every search path.
+
 ## 0.1.1
 
 ### Added

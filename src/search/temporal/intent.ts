@@ -250,10 +250,12 @@ const RULES: readonly Rule[] = [
     test: /\bwhen\s+(?:was|were)\s+.*\bchanged\b/i,
   },
 
-  // --- relative, anchored
-  { type: 'before', confidence: 'explicit', anchored: true, test: /\bbefore\s+(.+)$/i },
-  { type: 'after', confidence: 'explicit', anchored: true, test: /\b(?:after|since)\s+(.+)$/i },
-  { type: 'around', confidence: 'explicit', anchored: true, test: /\baround\s+(.+)$/i },
+  // --- relative, anchored: deliberately NOT parsed from prose. Ordinary
+  // --- sentences ("why do we validate input before saving", "work around X",
+  // --- "since the last release") use before/after/since/around without
+  // --- naming a point in history, and treating them as constraints truncated
+  // --- the retrieval query and switched on lineage expansion. Relative
+  // --- constraints come from --before/--after/--around/--between only.
 ];
 
 const BETWEEN_RE = /\bbetween\s+(\S+)\s+and\s+(\S+)/i;

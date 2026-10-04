@@ -175,6 +175,8 @@ interface SpawnOpts {
   readonly env: NodeJS.ProcessEnv;
   readonly maxBytes: number;
   readonly input?: Buffer;
+  /** Kill the child after this many milliseconds. */
+  readonly timeoutMs?: number;
 }
 
 function spawnRaw(argv: readonly string[], opts: SpawnOpts): Promise<CapResult> {
@@ -196,8 +198,21 @@ function spawnRaw(argv: readonly string[], opts: SpawnOpts): Promise<CapResult> 
     child.stdout.on('data', (chunk: Buffer) => out.push(chunk));
     child.stderr.on('data', (chunk: Buffer) => err.push(chunk));
 
-    child.on('error', (error) => reject(error));
+    // git may exit before reading all of its input (EPIPE); that is reported
+    // through its exit status, never as an unhandled stream error.
+    child.stdin.on('error', () => {});
+    const timer =
+      opts.timeoutMs !== undefined && opts.timeoutMs > 0
+        ? setTimeout(() => child.kill('SIGKILL'), opts.timeoutMs)
+        : null;
+    timer?.unref();
+
+    child.on('error', (error) => {
+      if (timer !== null) clearTimeout(timer);
+      reject(error);
+    });
     child.on('close', (code, signal) => {
+      if (timer !== null) clearTimeout(timer);
       resolve({
         stdout: out.buffer(),
         stderr: err.buffer(),
@@ -308,6 +323,8 @@ export interface RunGitOptions {
   readonly input?: Buffer;
   /** Hard cap on stdout/stderr bytes. Exceeding it truncates and kills the process. */
   readonly maxBytes?: number;
+  /** Kill git after this long (default 15 minutes) so a hung process cannot wedge indexing. */
+  readonly timeoutMs?: number;
 }
 
 export interface RunGitResult extends CapResult {
@@ -315,6 +332,7 @@ export interface RunGitResult extends CapResult {
 }
 
 const DEFAULT_MAX_BYTES = 256 * 1024 * 1024;
+const DEFAULT_TIMEOUT_MS = 15 * 60 * 1000;
 
 /** Run one Git invocation with every ingestion-safety option applied. */
 export async function runGit(opts: RunGitOptions): Promise<RunGitResult> {
@@ -325,6 +343,7 @@ export async function runGit(opts: RunGitOptions): Promise<RunGitResult> {
     env: gitEnv(caps),
     maxBytes: opts.maxBytes ?? DEFAULT_MAX_BYTES,
     input: opts.input,
+    timeoutMs: opts.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   });
   return { ...result, argv };
 }

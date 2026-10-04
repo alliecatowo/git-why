@@ -344,3 +344,12 @@ test('empty owners and timeline add no heading, so an ordinary query is unchange
   });
   assert.ok(out.startsWith('1. 91ad203'));
 });
+
+test('a commit with an absurd timestamp does not crash human rendering', () => {
+  const out = renderSearchHuman({
+    query: 'q',
+    results: [makeHit({ committerTime: 9999999999999 })],
+    warnings: [],
+  });
+  assert.ok(out.length > 0);
+});

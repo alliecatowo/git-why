@@ -39,6 +39,10 @@ const STRAY_ESCAPE = /\x1b/g;
 // all C1 controls (\x80-\x9f), which some terminals also treat as escapes.
 const OTHER_CONTROL = /[\x00-\x08\x0b\x0c\x0d\x0e-\x1f\x7f\x80-\x9f]/g;
 
+// Bidi overrides/isolates, zero-width and line/paragraph separators enable
+// "Trojan Source" style spoofing of subjects and paths in rendered output.
+const BIDI_AND_INVISIBLE = /[\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/g;
+
 /**
  * Strips terminal control sequences from a repository-sourced string,
  * preserving ordinary displayable text (including newlines and tabs).
@@ -51,5 +55,6 @@ export function sanitizeForTerminal(input: string): string {
     .replace(CHARSET, '')
     .replace(SIMPLE_ESCAPE, '')
     .replace(STRAY_ESCAPE, '')
-    .replace(OTHER_CONTROL, '');
+    .replace(OTHER_CONTROL, '')
+    .replace(BIDI_AND_INVISIBLE, '');
 }

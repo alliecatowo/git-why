@@ -76,6 +76,7 @@ const DEFAULT_LOCK_TIMEOUT_MS = 5 * 60 * 1000;
 const LOCK_STALE_MS = 10 * 60 * 1000;
 const HF_BASE_URL = 'https://huggingface.co';
 const MAX_DOWNLOAD_ATTEMPTS = 3;
+const DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1000;
 
 export function resolveCacheRoot(
   env: NodeJS.ProcessEnv = process.env,
@@ -117,7 +118,10 @@ function readManifest(dir: string): Manifest | null {
 }
 
 /** True when the manifest exists and every file it lists is present with the expected hash. */
+const verifiedDirs = new Set<string>();
+
 function isFullyCached(dir: string, artifact: PinnedArtifact): boolean {
+  if (verifiedDirs.has(dir)) return true;
   const manifest = readManifest(dir);
   if (!manifest) return false;
   const expected: Record<string, PinnedFile> = {
@@ -127,8 +131,17 @@ function isFullyCached(dir: string, artifact: PinnedArtifact): boolean {
   };
   for (const [filename, pinned] of Object.entries(expected)) {
     if (manifest.files[filename] !== pinned.sha256) return false;
-    if (!fs.existsSync(path.join(dir, filename))) return false;
+    const filePath = path.join(dir, filename);
+    if (!fs.existsSync(filePath)) return false;
+    // Re-hash once per process so a corrupted or tampered cached file is never
+    // loaded under a "verified" fingerprint.
+    try {
+      if (sha256OfFile(filePath) !== pinned.sha256) return false;
+    } catch {
+      return false;
+    }
   }
+  verifiedDirs.add(dir);
   return true;
 }
 
@@ -263,7 +276,10 @@ async function downloadOne(
   for (let attempt = 0; attempt < MAX_DOWNLOAD_ATTEMPTS; attempt++) {
     const tmpPath = path.join(dir, `.${file.filename}.tmp-${randomBytes(6).toString('hex')}`);
     try {
-      const res = await fetchImpl(url, { redirect: 'follow' });
+      const res = await fetchImpl(url, {
+        redirect: 'follow',
+        signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS),
+      });
       if (res.status === 404 || res.status === 410) {
         // Permanent: this pinned revision/file does not exist at the
         // trusted location. Retrying won't help — surface immediately

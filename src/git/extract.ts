@@ -438,21 +438,31 @@ async function* mapWithOrderedConcurrency<T, R>(
   const inFlight = new Map<number, Promise<R>>();
   const launch = (index: number): void => {
     const item = items[index] as T;
-    inFlight.set(index, fn(item, index));
+    const promise = fn(item, index);
+    // Consumed here so a rejection of an item we never get to await (because
+    // an earlier one failed) is not an unhandled rejection, which would
+    // terminate the process.
+    promise.catch(() => {});
+    inFlight.set(index, promise);
   };
   const initial = Math.min(limit, items.length);
   for (let i = 0; i < initial; i += 1) launch(i);
   let nextToLaunch = initial;
-  for (let cursor = 0; cursor < items.length; cursor += 1) {
-    const promise = inFlight.get(cursor);
-    if (promise === undefined) continue;
-    const result = await promise;
-    inFlight.delete(cursor);
-    if (nextToLaunch < items.length) {
-      launch(nextToLaunch);
-      nextToLaunch += 1;
+  try {
+    for (let cursor = 0; cursor < items.length; cursor += 1) {
+      const promise = inFlight.get(cursor);
+      if (promise === undefined) continue;
+      const result = await promise;
+      inFlight.delete(cursor);
+      if (nextToLaunch < items.length) {
+        launch(nextToLaunch);
+        nextToLaunch += 1;
+      }
+      yield result;
     }
-    yield result;
+  } finally {
+    // Do not return (or throw) while child git processes are still running.
+    await Promise.allSettled([...inFlight.values()]);
   }
 }
 

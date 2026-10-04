@@ -86,19 +86,22 @@ test('history questions map to timeline, not to changed_when', () => {
   }
 });
 
-test('relative phrasing captures an anchor', () => {
-  const before = decomposeQuery('retry logic before we migrated to the new client', NOW);
-  assert.equal(before.constraint.type, 'before');
-  assert.equal(before.constraint.anchor?.kind, 'query');
-
-  const after = decomposeQuery('cookie handling since v2.0', NOW);
-  assert.equal(after.constraint.type, 'after');
-  assert.equal(after.constraint.anchor?.kind, 'tag');
-
+test('between phrasing captures anchors; before/after/since in prose do not become constraints', () => {
   const between = decomposeQuery('tls changes between v1.0 and v2.0', NOW);
   assert.equal(between.constraint.type, 'between');
   assert.equal(between.constraint.anchor?.kind, 'tag');
   assert.equal(between.constraint.anchorEnd?.kind, 'tag');
+
+  for (const q of [
+    'why do we validate input before saving',
+    'retry logic before we migrated to the new client',
+    'cookie handling since v2.0',
+    'work around the flaky test',
+  ]) {
+    const d = decomposeQuery(q, NOW);
+    assert.equal(d.constraint.type, 'none', q);
+    assert.equal(d.core, q, q);
+  }
 });
 
 test('the core drops temporal scaffolding but keeps the topic', () => {

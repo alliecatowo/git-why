@@ -13,7 +13,7 @@ import {
 } from '../../../src/index/refresh.js';
 import { readCurrentGenerationId, layoutFor, generationPaths } from '../../../src/index/layout.js';
 import { readManifest } from '../../../src/index/manifest.js';
-import type { CommitExtraction, HistoryExtractor } from '../../../src/types.js';
+import { GitWhyError, type CommitExtraction, type HistoryExtractor } from '../../../src/types.js';
 import {
   freshTmpDir,
   rmDir,
@@ -453,6 +453,162 @@ test('rebuild produces a new generation while the old one stays usable; gc then 
       rebuilt.generationId,
       'gc must never remove the current generation',
     );
+  } finally {
+    rmDir(commonDir);
+  }
+});
+
+test('policy-excluded commits (merge hunks omitted) are not re-extracted when the view changes; retryable ones are', async () => {
+  const commonDir = freshTmpDir('refresh-policy-complete');
+  try {
+    const repository = fakeRepository(commonDir);
+    const mergeSha = fakeSha('merge');
+    const missingSha = fakeSha('missing');
+    const merge = makeExtraction({ sha: mergeSha });
+    const policy = {
+      complete: false,
+      reasons: ['merge_hunks_omitted' as const],
+      excludedFiles: 0,
+      unavailableFiles: 0,
+      failedFiles: 0,
+      truncated: true,
+    };
+    const bySha = new Map<string, CommitExtraction>([
+      [mergeSha, { ...merge, commit: { ...merge.commit, coverage: policy } }],
+    ]);
+    const missing = makeExtraction({ sha: missingSha });
+    bySha.set(missingSha, {
+      ...missing,
+      commit: {
+        ...missing.commit,
+        coverage: {
+          ...policy,
+          reasons: ['missing_object' as const],
+          unavailableFiles: 1,
+        },
+      },
+    });
+    const embedder = makeFakeEmbedder(FAKE_EMBEDDER_DIMENSION);
+    const shas = [mergeSha, missingSha];
+    const first = countingExtractor(bySha);
+    await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-1'),
+      { shas, complete: true },
+      { extractor: first.extractor, embedder },
+    );
+    const second = countingExtractor(bySha);
+    await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-2'),
+      { shas, complete: true },
+      { extractor: second.extractor, embedder },
+    );
+    assert.deepEqual(second.calls, [missingSha]);
+  } finally {
+    rmDir(commonDir);
+  }
+});
+
+test('an index built with a different embedding model is refused (MODEL_MISMATCH), not queried with mismatched vectors', async () => {
+  const commonDir = freshTmpDir('refresh-model-mismatch');
+  try {
+    const repository = fakeRepository(commonDir);
+    const shas = [fakeSha('a')];
+    const bySha = new Map(shas.map((sha) => [sha, makeExtraction({ sha })]));
+    const { extractor } = countingExtractor(bySha);
+    const original = makeFakeEmbedder(FAKE_EMBEDDER_DIMENSION);
+    await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-1'),
+      { shas, complete: true },
+      { extractor, embedder: original },
+    );
+    const other = { ...original, fingerprint: 'another-model-v9', modelId: 'another-model' };
+    const run = (checkModel: boolean) =>
+      ensureCurrentGeneration(
+        repository,
+        fakeSnapshot(repository, shas, 'fp-1'),
+        { shas, complete: true },
+        { extractor, embedder: other },
+        { checkModel },
+      );
+    await assert.rejects(
+      run(true),
+      (err: unknown) => err instanceof GitWhyError && err.code === 'MODEL_MISMATCH',
+    );
+    await run(false); // text-only callers never use vectors
+    await assert.rejects(
+      openReadOnlyStore(repository, { embedder: other }),
+      (err: unknown) => err instanceof GitWhyError && err.code === 'MODEL_MISMATCH',
+    );
+  } finally {
+    rmDir(commonDir);
+  }
+});
+
+test('a policy-incompatible index is rebuilt into a new generation instead of being re-stamped in place', async () => {
+  const commonDir = freshTmpDir('refresh-policy-rebuild');
+  try {
+    const repository = fakeRepository(commonDir);
+    const shas = [fakeSha('a'), fakeSha('b')];
+    const bySha = new Map(shas.map((sha) => [sha, makeExtraction({ sha })]));
+    const embedder = makeFakeEmbedder(FAKE_EMBEDDER_DIMENSION);
+    const first = countingExtractor(bySha);
+    const built = await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-1'),
+      { shas, complete: true },
+      { extractor: first.extractor, embedder },
+    );
+    const layout = layoutFor(commonDir);
+    const manifestFile = generationPaths(layout, built.generationId).manifestFile;
+    const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+    manifest.extractionPolicyVersion = 0;
+    fs.writeFileSync(manifestFile, JSON.stringify(manifest));
+
+    const second = countingExtractor(bySha);
+    const rebuilt = await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-1'),
+      { shas, complete: true },
+      { extractor: second.extractor, embedder },
+    );
+    assert.notEqual(rebuilt.generationId, built.generationId);
+    assert.deepEqual([...second.calls].sort(), [...shas].sort());
+    assert.equal(readCurrentGenerationId(layout), rebuilt.generationId);
+  } finally {
+    rmDir(commonDir);
+  }
+});
+
+test('a corrupt pending marker is recovered by replaying the generation, not an unrecoverable error', async () => {
+  const commonDir = freshTmpDir('refresh-corrupt-pending');
+  try {
+    const repository = fakeRepository(commonDir);
+    const shas = [fakeSha('a'), fakeSha('b')];
+    const bySha = new Map(shas.map((sha) => [sha, makeExtraction({ sha })]));
+    const embedder = makeFakeEmbedder(FAKE_EMBEDDER_DIMENSION);
+    const first = countingExtractor(bySha);
+    const built = await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-1'),
+      { shas, complete: true },
+      { extractor: first.extractor, embedder },
+    );
+    const paths = generationPaths(layoutFor(commonDir), built.generationId);
+    fs.writeFileSync(paths.pendingFile, '{ not json');
+
+    const second = countingExtractor(bySha);
+    const result = await ensureCurrentGeneration(
+      repository,
+      fakeSnapshot(repository, shas, 'fp-1'),
+      { shas, complete: true },
+      { extractor: second.extractor, embedder },
+    );
+    assert.equal(result.manifest.state, 'clean');
+    assert.deepEqual([...second.calls].sort(), [...shas].sort());
+    assert.equal(fs.existsSync(paths.pendingFile), false);
   } finally {
     rmDir(commonDir);
   }

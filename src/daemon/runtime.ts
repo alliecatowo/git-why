@@ -27,7 +27,7 @@
 
 import { JsonLineageStore } from '../history/lineage.js';
 import { generationPaths, layoutFor } from '../index/layout.js';
-import { openReadOnlyStore } from '../index/refresh.js';
+import { assertModelCompatible, openReadOnlyStore } from '../index/refresh.js';
 import { captureSnapshot } from '../git/snapshot.js';
 import { resolveRepositoryIdentity } from '../git/repository.js';
 import { loadDefaultEmbedder } from '../embedding/index.js';
@@ -134,6 +134,21 @@ export class RuntimeManager {
       runtime = await this.#open(key, identity, snapshot.fingerprint);
     }
 
+    // Resolved before taking a reader reference, so a model failure cannot
+    // leak one. The daemon's model must be the one that built the index.
+    let embedder: Embedder = null as never;
+    try {
+      if (options.needsEmbedder) {
+        embedder = await this.#models.acquire();
+        assertModelCompatible(runtime.opened.manifest, embedder);
+      }
+    } catch (err) {
+      // Do not sit on a shared lock for an index this daemon cannot serve:
+      // the fix (rebuild) needs the exclusive lock.
+      if (runtime.readers === 0) await this.#evict(key, runtime).catch(() => {});
+      throw err;
+    }
+
     runtime.readers += 1;
     runtime.lastUsedAt = Date.now();
     if (runtime.idleTimer !== null) {
@@ -141,8 +156,8 @@ export class RuntimeManager {
       runtime.idleTimer = null;
     }
 
-    const embedder = options.needsEmbedder ? await this.#models.acquire() : (null as never);
     const current = runtime;
+    const stale = current.opened.manifest.snapshotFingerprint !== snapshot.fingerprint;
     let released = false;
     return {
       identity,
@@ -152,13 +167,19 @@ export class RuntimeManager {
       lineage: current.lineage,
       embedder,
       snapshotFingerprint: snapshot.fingerprint,
-      stale: current.opened.manifest.snapshotFingerprint !== snapshot.fingerprint,
+      stale,
       release: () => {
         if (released) return;
         released = true;
         current.readers -= 1;
         current.lastUsedAt = Date.now();
-        if (current.readers === 0) this.#scheduleIdleClose(key, current);
+        if (current.readers === 0) {
+          // A stale runtime is never kept warm: its shared lock would block
+          // the direct client's exclusive refresh until the idle TTL expires
+          // (a 30 s INDEX_BUSY after every commit). Drop it immediately.
+          if (stale) void this.#evict(key, current).catch(() => {});
+          else this.#scheduleIdleClose(key, current);
+        }
       },
     };
   }
