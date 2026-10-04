@@ -16,8 +16,8 @@
 /** Bumping any of these invalidates an existing index generation. */
 export const MANIFEST_VERSION = 1;
 export const RECORD_SCHEMA_VERSION = 1;
-export const EXTRACTION_POLICY_VERSION = 1;
-export const LEXICAL_NORMALIZATION_VERSION = 1;
+export const EXTRACTION_POLICY_VERSION = 2;
+export const LEXICAL_NORMALIZATION_VERSION = 2;
 export const RANKING_VERSION = 2;
 export const DOC_ID_VERSION = 1;
 /**
@@ -302,6 +302,15 @@ export type HistoryRecord = CommitRecord | EvidenceRecord;
 export interface CommitExtraction {
   readonly commit: CommitRecord;
   readonly evidence: readonly EvidenceRecord[];
+  /**
+   * Identifier tokens added/removed anywhere in the commit's full parsed hunks, taken
+   * before excerpt clipping and slice selection so a large commit does not lose them.
+   * Absent on extractions from older producers; lineage then falls back to excerpts.
+   */
+  readonly lineageChanges?: {
+    readonly additions: readonly string[];
+    readonly removals: readonly string[];
+  };
 }
 
 export interface HistoryExtractor {

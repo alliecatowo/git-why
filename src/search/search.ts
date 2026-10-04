@@ -114,10 +114,10 @@ function queryTokens(query: string): string[] {
   // `HTTP/3` splits on the slash, so both `http` and `http3` are produced and
   // the rarer one wins in selectInterval.
   const lowered = query.toLowerCase();
-  const direct = lowered.match(/[a-z_][a-z0-9_]{2,}|[a-z]+[0-9]+/g) ?? [];
+  const direct = lowered.match(/[\p{L}_][\p{L}\p{M}\p{N}_]{2,}|\p{L}+\p{N}+/gu) ?? [];
   // Rejoin letter/digit pairs separated by a delimiter: "http/3" -> "http3",
   // which is how the same concept is usually spelled inside code.
-  const joined = [...lowered.matchAll(/([a-z]{2,})[/\-.]([0-9]+)/g)].map(
+  const joined = [...lowered.matchAll(/(\p{L}{2,})[/\-.](\p{N}+)/gu)].map(
     (match) => `${match[1]}${match[2]}`,
   );
   return [...direct, ...joined].filter((token, index, values) => values.indexOf(token) === index);
@@ -244,7 +244,14 @@ export async function search(
   const coreQuery = constraint.type === 'none' ? request.query : decomposition.core;
   const rankFor = async (query: string): Promise<RankResult> => {
     const lexicalFetch: BranchFetch | null = wantsLexical
-      ? (topK) => store.searchLexical(compileFtsQuery(query), filter, topK)
+      ? (topK) => {
+          const compiled = compileFtsQuery(query);
+          // A query with no indexable token (only punctuation) compiles to nothing; an empty
+          // match string is not a valid FTS query, so skip the branch instead of asking Zvec.
+          return compiled.trim().length === 0
+            ? Promise.resolve([])
+            : store.searchLexical(compiled, filter, topK);
+        }
       : null;
     let semanticFetch: BranchFetch | null = null;
     if (wantsSemantic && embedder !== null) {

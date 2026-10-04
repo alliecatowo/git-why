@@ -37,3 +37,12 @@ test('configuration, dependency manifests, migrations and ordinary tests are ret
   assert.equal(classifyPathExclusion('test/unit/history/text.test.ts'), null);
   assert.equal(classifyPathExclusion('src/__snapshots__/app.test.ts.snap'), null);
 });
+
+test('build and out are generated only at the repository root; deeper they are real source', () => {
+  assert.equal(classifyPathExclusion('build/index.js'), 'generated');
+  assert.equal(classifyPathExclusion('out/app.js'), 'generated');
+  assert.equal(classifyPathExclusion('src/build/graph.ts'), null);
+  assert.equal(classifyPathExclusion('cmd/build/main.go'), null);
+  assert.equal(classifyPathExclusion('tools/build/run.sh'), null);
+  assert.equal(classifyPathExclusion('packages/web/dist/index.js'), 'generated');
+});

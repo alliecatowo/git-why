@@ -516,7 +516,7 @@ export function createGitHistoryExtractor(
           // module deliberately empties out for merge/failure/pathological commits (so
           // no evidence is fabricated for them) while still knowing the real first-parent
           // changed paths from the raw diff. Restore them here.
-          return { commit: { ...built.commit, changedPaths }, evidence: built.evidence };
+          return { ...built, commit: { ...built.commit, changedPaths } };
         } catch {
           // One bad commit must not fail its whole batch (and, because the batch is
           // replayed, every future refresh). Keep what the commit object itself gives

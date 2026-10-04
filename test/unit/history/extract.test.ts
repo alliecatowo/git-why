@@ -242,3 +242,72 @@ test('commit and evidence ids are deterministic across repeated extraction of id
     b.evidence.map((e) => e.id),
   );
 });
+
+test('lineage tokens cover the whole commit even when the excerpts are clipped to 8 KB', () => {
+  const lines = Array.from({ length: 400 }, (_, i) => ({
+    kind: 'added' as const,
+    text: `${'padding_word '.repeat(40)}// ${i}`,
+  }));
+  lines.push({ kind: 'added' as const, text: 'tail_unique_identifier();' });
+  const commit = baseCommit(
+    [
+      {
+        change: change('src/big.ts', 'A'),
+        hunks: [
+          {
+            path: hp('src/big.ts'),
+            oldPath: null,
+            changeType: 'A',
+            hunkOrdinal: 0,
+            header: null,
+            oldStart: 0,
+            oldCount: 0,
+            newStart: 1,
+            newCount: lines.length,
+            lines,
+          },
+        ],
+      },
+    ],
+    { parents: [] },
+  );
+  const built = buildCommitExtraction(commit, makeFakeEmbedder());
+  const joined = built.evidence.map((e) => e.sourceExcerpt).join('\n');
+  assert.ok(!joined.includes('tail_unique_identifier'), 'precondition: the tail is clipped away');
+  assert.ok(built.lineageChanges?.additions.includes('tail_unique_identifier'));
+  assert.ok(built.lineageChanges?.additions.includes('padding_word'));
+});
+
+test('two distinct paths with the same lossy display keep their own hunks', () => {
+  const lossy = (bytes: number[]): HistoricalPath => ({
+    bytesBase64: Buffer.from(bytes).toString('base64'),
+    display: 'bad-\uFFFD.txt',
+    lossy: true,
+  });
+  const mk = (p: HistoricalPath, text: string): RawFileChange => ({
+    change: { ...change('x', 'A'), path: p },
+    hunks: [
+      {
+        path: p,
+        oldPath: null,
+        changeType: 'A',
+        hunkOrdinal: 0,
+        header: null,
+        oldStart: 0,
+        oldCount: 0,
+        newStart: 1,
+        newCount: 1,
+        lines: [{ kind: 'added', text }],
+      },
+    ],
+  });
+  const a = lossy([0x62, 0x61, 0x64, 0x2d, 0xff]);
+  const b = lossy([0x62, 0x61, 0x64, 0x2d, 0xfe]);
+  const built = buildCommitExtraction(
+    baseCommit([mk(a, 'content_of_first'), mk(b, 'content_of_second')], { parents: [] }),
+    makeFakeEmbedder(),
+  );
+  const excerpts = built.evidence.map((e) => e.sourceExcerpt).join('\n');
+  assert.match(excerpts, /content_of_first/);
+  assert.match(excerpts, /content_of_second/);
+});

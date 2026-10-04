@@ -459,3 +459,21 @@ test('a sentence containing "before" is not truncated or turned into a constrain
   assert.equal(response.coreQuery, 'why do we validate input before saving');
   assert.equal(response.temporal.intent, 'none');
 });
+
+test('a query with no indexable token never sends an empty match string to the lexical store', async () => {
+  const queries: string[] = [];
+  const store = makeStore({
+    async searchLexical(queryText: string) {
+      queries.push(queryText);
+      return [];
+    },
+  });
+  const response = await search(
+    { ...baseRequest, query: '?! ...', mode: 'text' },
+    store,
+    null,
+    snapshot,
+  );
+  assert.deepEqual(queries, []);
+  assert.deepEqual(response.results, []);
+});

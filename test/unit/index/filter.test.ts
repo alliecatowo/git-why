@@ -82,3 +82,13 @@ test('buildEligibilityExpression ORs multiple path restrictions via a single CON
   });
   assert.equal(expr, `pathKeys CONTAIN_ANY('src/index', 'README.md')`);
 });
+
+test('--author with quote characters matches the quote-stripped stored field and never throws', () => {
+  const single = buildEligibilityExpression(FIELDS, [], { ...NO_FILTERS, author: "O'Brien" });
+  assert.equal(single, `authorSearch LIKE '%obrien%'`);
+  // Both quote kinds used to escape as an INTERNAL error with a JSON dump.
+  const both = buildEligibilityExpression(FIELDS, [], { ...NO_FILTERS, author: `A'"B` });
+  assert.equal(both, `authorSearch LIKE '%ab%'`);
+  // A name made only of quotes adds no clause rather than matching everything weirdly.
+  assert.equal(buildEligibilityExpression(FIELDS, [], { ...NO_FILTERS, author: `'"` }), undefined);
+});

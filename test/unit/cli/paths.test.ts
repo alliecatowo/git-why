@@ -75,3 +75,24 @@ test('multiple restrictions resolve independently, preserving order', () => {
     ['src/a.ts', 'src/b'],
   );
 });
+
+test('the repository root (`-- .`) is no restriction, not an empty-string key that matches nothing', () => {
+  assert.deepEqual(resolvePathRestrictions(['.'], { worktreeRoot: '/repo', cwd: '/repo' }), []);
+  assert.deepEqual(resolvePathRestrictions(['./'], { worktreeRoot: '/repo', cwd: '/repo' }), []);
+  assert.deepEqual(resolvePathRestrictions(['.'], { worktreeRoot: null, cwd: '/x' }), []);
+  // Root alongside another path still means "everything".
+  assert.deepEqual(
+    resolvePathRestrictions(['.', 'src/a.ts'], { worktreeRoot: '/repo', cwd: '/repo' }),
+    [],
+  );
+});
+
+test('brackets and braces are literal path characters, so framework route paths work', () => {
+  const [route] = resolvePathRestrictions(['app/[id]/page.tsx'], {
+    worktreeRoot: '/repo',
+    cwd: '/repo',
+  });
+  assert.deepEqual(route, { value: 'app/[id]/page.tsx', kind: 'file' });
+  const [braces] = resolvePathRestrictions(['pkg/{a}/'], { worktreeRoot: '/repo', cwd: '/repo' });
+  assert.deepEqual(braces, { value: 'pkg/{a}', kind: 'directory' });
+});
