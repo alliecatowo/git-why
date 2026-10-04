@@ -92,8 +92,8 @@ jobs:
       - name: Fetch the published tarball
         run: |
           VERSION="${TAG_NAME#v}"
-          # The registry CDN can 404 a fresh publish for several minutes.
-          for attempt in $(seq 1 30); do
+          # The registry CDN can 404 a fresh publish for 10+ minutes.
+          for attempt in $(seq 1 45); do
             npm pack "@alliecatowo/git-why@${VERSION}" --pack-destination . && break
             sleep 20
           done
@@ -188,7 +188,7 @@ jobs:
           VERSION="${TAG_NAME#v}"
           URL="https://registry.npmjs.org/@alliecatowo/git-why/-/git-why-${VERSION}.tgz"
           # The registry can take a moment to serve a fresh publish.
-          curl --fail --silent --show-error --location --retry 40 --retry-delay 10 \
+          curl --fail --silent --show-error --location --retry 90 --retry-delay 10 \
             --retry-all-errors "$URL" -o git-why.tgz
           SHA="$(sha256sum git-why.tgz | cut -d' ' -f1)"
 
