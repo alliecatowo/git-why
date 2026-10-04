@@ -266,3 +266,42 @@ test('submodule pointer: gitlink OIDs kept as metadata, no submodule content ind
     await repo.cleanup();
   }
 });
+
+test('one commit whose extraction throws is recorded as extraction_error, not a failed batch', async () => {
+  const repo = await createTestRepo();
+  try {
+    await repo.writeFile('a.txt', 'fine\n');
+    await repo.add(['a.txt']);
+    const good = await repo.commit('good commit');
+    await repo.writeFile('b.txt', 'POISON content\n');
+    await repo.add(['b.txt']);
+    const bad = await repo.commit('bad commit');
+    await repo.writeFile('c.txt', 'also fine\n');
+    await repo.add(['c.txt']);
+    const after = await repo.commit('commit after the bad one');
+
+    const repository = await resolveRepositoryIdentity(repo.dir);
+    const snapshot = await captureSnapshot(repository);
+    class PoisonedEmbedder extends FakeEmbedder {
+      override countTokens(text: string): number {
+        if (text.includes('POISON')) throw new Error('simulated extraction failure');
+        return super.countTokens(text);
+      }
+    }
+    const extractor = createGitHistoryExtractor(new PoisonedEmbedder());
+    const out = new Map<string, CommitExtraction>();
+    for await (const item of extractor.extract(snapshot, [good, bad, after])) {
+      out.set(item.commit.sha, item);
+    }
+    assert.equal(out.size, 3, 'every commit in the batch is still produced');
+    assert.equal(out.get(good)?.commit.coverage.complete, true);
+    assert.equal(out.get(after)?.commit.coverage.complete, true);
+    const degraded = out.get(bad);
+    assert.ok(degraded);
+    assert.ok(degraded.commit.coverage.reasons.includes('extraction_error'));
+    assert.equal(degraded.commit.coverage.failedFiles, 1);
+    assert.equal(degraded.commit.subject, 'bad commit');
+  } finally {
+    await repo.cleanup();
+  }
+});

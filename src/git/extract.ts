@@ -503,19 +503,38 @@ export function createGitHistoryExtractor(
             hint: 'this indicates the reachable-commit list included an object Git cannot read',
           });
         }
-        const { raw, changedPaths } = await extractOneCommit(
-          repository,
-          sha,
-          parsed,
-          emptyTreeOid,
-          shallowBoundary,
-        );
-        const built = buildCommitExtraction(raw, embedder);
-        // `buildCommitExtraction` derives `changedPaths` from `raw.files`, which this
-        // module deliberately empties out for merge/failure/pathological commits (so
-        // no evidence is fabricated for them) while still knowing the real first-parent
-        // changed paths from the raw diff. Restore them here.
-        return { commit: { ...built.commit, changedPaths }, evidence: built.evidence };
+        try {
+          const { raw, changedPaths } = await extractOneCommit(
+            repository,
+            sha,
+            parsed,
+            emptyTreeOid,
+            shallowBoundary,
+          );
+          const built = buildCommitExtraction(raw, embedder);
+          // `buildCommitExtraction` derives `changedPaths` from `raw.files`, which this
+          // module deliberately empties out for merge/failure/pathological commits (so
+          // no evidence is fabricated for them) while still knowing the real first-parent
+          // changed paths from the raw diff. Restore them here.
+          return { commit: { ...built.commit, changedPaths }, evidence: built.evidence };
+        } catch {
+          // One bad commit must not fail its whole batch (and, because the batch is
+          // replayed, every future refresh). Keep what the commit object itself gives
+          // us -- the message -- and record the failure so it is retried later.
+          return buildCommitExtraction(
+            {
+              sha,
+              parents: parsed.parents,
+              subject: parsed.subject,
+              body: parsed.body,
+              author: parsed.author,
+              committerTime: parsed.committerTime,
+              files: [],
+              gitCoverage: { reasons: ['extraction_error'], failedFiles: 1 },
+            },
+            embedder,
+          );
+        }
       });
     },
   };
