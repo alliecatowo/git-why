@@ -1,0 +1,4 @@
+{"version": 3, "term": {"cols": 88, "rows": 13}, "timestamp": 1791164822}
+[0.005, "o", "$ git why \"daemon\" --owners -n 20 | cut -c1-88 | head -10\r\n"]
+[0.735, "o", "owners, by relevance of their commits:\r\n   1. alliecatowo <alliecatowo@users.noreply.github.com>  57%  11 commits  2026-09-10..2\r\n      c86a6f0  Add a daemon, modelled on zg's\r\n   2. Allison Coleman <98134425+alliecatowo@users.noreply.github.com>  43%  9 commits  2\r\n      e0d84f8  fix(daemon,mcp): honour offline and model in the daemon, atomic instance \r\n\r\n1. e0d84f8  fix(daemon,mcp): honour offline and model in the daemon, atomic instance rec\r\n   2026-10-04 \u00b7 Allison Coleman\r\n\r\n   Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\r\n"]
+[0.029, "o", "cut: write error: Broken pipe\r\n"]

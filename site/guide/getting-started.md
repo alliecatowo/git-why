@@ -33,11 +33,11 @@ or shell configuration is needed.
 ### Pin a version
 
 ```sh
-GIT_WHY_VERSION=0.1.0 curl -fsSL https://alliecatowo.github.io/git-why/install.sh | sh
+GIT_WHY_VERSION=0.2.0 curl -fsSL https://alliecatowo.github.io/git-why/install.sh | sh
 ```
 
 ```sh
-npm install -g @alliecatowo/git-why@0.1.0
+npm install -g @alliecatowo/git-why@0.2.0
 ```
 
 Re-running the install script is safe; it reinstalls/updates in place.
@@ -184,9 +184,20 @@ cannot disagree, and the install script places it where that lookup finds it.
 Packaging tests verify the dispatch end to end, and that every flag the tool
 advertises has its own entry in the page.
 
+## Optional extras
+
+```sh
+git why server on     # keep the index and model warm: about twice as fast
+git why completion zsh > ~/.zsh/completions/_git-why   # also: bash, fish
+git why mcp           # serve the MCP bridge for an agent
+```
+
+See [The daemon](/guide/daemon) and [Agents and MCP](/guide/mcp).
+
 ## Next
 
 - [How it works](/guide/how-it-works) — hybrid retrieval, history scope,
   offline behavior.
 - [CLI reference](/guide/cli-reference) — every flag and lifecycle command.
+- [Agents and MCP](/guide/mcp) — give an agent the same search.
 - [Benchmarks](/guide/benchmarks) — the measured numbers, with methodology.

@@ -41,6 +41,26 @@
       "name": "index",
       "title": "Index management",
       "file": "index.cast"
+    },
+    {
+      "name": "dig-ask",
+      "title": "Home page: the hero question, 0.2.0 on this repository",
+      "file": "dig-ask.cast"
+    },
+    {
+      "name": "dig-timeline",
+      "title": "Home page: --timeline, 0.2.0 on this repository",
+      "file": "dig-timeline.cast"
+    },
+    {
+      "name": "dig-owners",
+      "title": "Home page: --owners, 0.2.0 on this repository",
+      "file": "dig-owners.cast"
+    },
+    {
+      "name": "dig-daemon",
+      "title": "Home page: the daemon, 0.2.0 on this repository",
+      "file": "dig-daemon.cast"
     }
   ]
 }

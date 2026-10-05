@@ -1,0 +1,9 @@
+{"version": 3, "term": {"cols": 88, "rows": 24}, "timestamp": 1791164344}
+[0.004, "o", "$ git why server on\r\n"]
+[0.21, "o", "server: ready\r\npid:    1572049\r\nurl:    http://127.0.0.1:41859\r\nversion: 0.2.0\r\nuptime: 0s\r\nopen:   0 repositories\r\nserved: 0\r\n"]
+[1.012, "o", "$ git why server status\r\n"]
+[0.1, "o", "server: ready\r\npid:    1572049\r\nurl:    http://127.0.0.1:41859\r\nversion: 0.2.0\r\nuptime: 1s\r\nopen:   0 repositories\r\nserved: 0\r\n"]
+[1.011, "o", "$ git why \"how do we avoid a poisoned model download\" -n 1 | head -9\r\n"]
+[0.841, "o", "1. a07644e  fix(security,ci): lock races, Jina pinning, download stall, workflow hardening, offline integration CI\r\n   2026-10-04 \u00b7 Allison Coleman\r\n\r\n   Serialise stale-lock reclaim, write lock tokens atomically, add PID-namespace ids.\r\n   Pin Jina revisions, honour offline, micro-batch. Stall timeout, mirror, offline\r\n   env and proxy\u2026\r\n\r\n   src/embedding/cache.ts\r\n      /** Injectable for tests; defaults to the global `fetch`. */\r\n"]
+[1.011, "o", "$ git why server off\r\n"]
+[0.215, "o", "server: stopped\r\n"]

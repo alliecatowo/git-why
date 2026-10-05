@@ -1,8 +1,8 @@
 <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Git Why">
-  <circle cx="13" cy="13" r="9" stroke="#bd93f9" stroke-width="2.2"/>
-  <line x1="19.5" y1="19.5" x2="27" y2="27" stroke="#bd93f9" stroke-width="2.4" stroke-linecap="round"/>
-  <line x1="13" y1="7.5" x2="13" y2="18.5" stroke="#bd93f9" stroke-width="1.6" stroke-linecap="round"/>
-  <circle cx="13" cy="8.5" r="1.6" fill="#ff79c6"/>
-  <circle cx="13" cy="13" r="1.6" fill="#ff79c6"/>
-  <circle cx="13" cy="17.5" r="1.6" fill="#ff79c6"/>
+  <path d="M10 8.4V10.8M10 19.2V21.8" stroke="#7982b0" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10 18.2C10 22.5 22 19 22 24" stroke="#bb9af7" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="10" cy="6" r="3" stroke="#7dcfff" stroke-width="2"/>
+  <circle cx="10" cy="15" r="3" stroke="#7dcfff" stroke-width="2"/>
+  <circle cx="10" cy="26" r="3" stroke="#7dcfff" stroke-width="2"/>
+  <circle cx="22" cy="25" r="3" fill="#bb9af7"/>
 </svg>
