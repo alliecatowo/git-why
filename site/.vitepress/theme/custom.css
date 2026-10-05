@@ -330,3 +330,14 @@ div.ap-player,
     overflow-x: auto;
   }
 }
+
+/* Theme-toggle label on the home page (global: no scoped-:global quirks). */
+.dig .to-light {
+  display: none;
+}
+.dark .dig .to-light {
+  display: inline;
+}
+.dark .dig .to-dark {
+  display: none;
+}
