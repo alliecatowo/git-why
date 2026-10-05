@@ -400,15 +400,6 @@ code {
 .tool:hover {
   border-color: var(--dig-violet);
 }
-.to-light {
-  display: none;
-}
-:global(.dark) .to-light {
-  display: inline;
-}
-:global(.dark) .to-dark {
-  display: none;
-}
 .drawer {
   position: absolute;
   top: 100%;
