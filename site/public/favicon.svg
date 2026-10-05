@@ -1,9 +1,8 @@
-<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Git Why">
-  <rect width="32" height="32" rx="7" fill="#282a36"/>
-  <circle cx="13.5" cy="13.5" r="7.5" stroke="#bd93f9" stroke-width="2.3" fill="none"/>
-  <line x1="18.8" y1="18.8" x2="25.5" y2="25.5" stroke="#bd93f9" stroke-width="2.6" stroke-linecap="round"/>
-  <line x1="13.5" y1="9" x2="13.5" y2="18" stroke="#bd93f9" stroke-width="1.6" stroke-linecap="round"/>
-  <circle cx="13.5" cy="9.8" r="1.5" fill="#ff79c6"/>
-  <circle cx="13.5" cy="13.5" r="1.5" fill="#ff79c6"/>
-  <circle cx="13.5" cy="17.2" r="1.5" fill="#ff79c6"/>
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Git Why">
+  <path d="M10 8.4V10.8M10 19.2V21.8" stroke="#7982b0" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10 18.2C10 22.5 22 19 22 24" stroke="#bb9af7" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="10" cy="6" r="3" stroke="#7dcfff" stroke-width="2"/>
+  <circle cx="10" cy="15" r="3" stroke="#7dcfff" stroke-width="2"/>
+  <circle cx="10" cy="26" r="3" stroke="#7dcfff" stroke-width="2"/>
+  <circle cx="22" cy="25" r="3" fill="#bb9af7"/>
 </svg>

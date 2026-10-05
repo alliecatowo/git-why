@@ -1,4 +1,13 @@
 import { defineConfig } from 'vitepress';
+import tokyoNight from 'shiki/themes/tokyo-night.mjs';
+
+// Tokyo Night, with its orange and amber tokens moved onto the site's pinks and
+// soft yellow so no orange appears anywhere on the site.
+const tokyo = JSON.parse(
+  JSON.stringify({ ...tokyoNight, name: 'git-why-tokyo' })
+    .replaceAll('#ff9e64', '#f7a8c4')
+    .replaceAll('#e0af68', '#e3d18a'),
+);
 
 export default defineConfig({
   title: 'Git Why',
@@ -8,15 +17,25 @@ export default defineConfig({
   lang: 'en-US',
   cleanUrls: true,
   lastUpdated: true,
+  appearance: 'dark',
 
   markdown: {
-    // Dracula in the dark theme, its light sibling's neutrals in the light one.
-    theme: { light: 'github-light', dark: 'dracula' },
+    // Tokyo Night code blocks in both site themes: a terminal stays dark.
+    theme: { light: tokyo, dark: tokyo },
   },
 
   head: [
     ['link', { rel: 'icon', href: '/git-why/favicon.svg', type: 'image/svg+xml' }],
-    ['meta', { name: 'theme-color', content: '#282a36' }],
+    ['meta', { name: 'theme-color', content: '#1a1b26' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;700&display=swap',
+      },
+    ],
     ['meta', { property: 'og:title', content: 'Git Why' }],
     [
       'meta',
@@ -33,15 +52,17 @@ export default defineConfig({
 
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'CLI Reference', link: '/guide/cli-reference' },
+      { text: 'CLI', link: '/guide/cli-reference' },
+      { text: 'How it works', link: '/guide/how-it-works' },
+      { text: 'Agents & MCP', link: '/guide/mcp' },
       { text: 'Daemon', link: '/guide/daemon' },
-      { text: 'Benchmarks', link: '/guide/benchmarks' },
-      { text: 'FAQ', link: '/guide/faq' },
       {
-        text: 'v0.1.1',
+        text: 'v0.2.0',
         items: [
           { text: 'Changelog', link: 'https://github.com/alliecatowo/git-why/releases' },
-          { text: 'Spec & operations', link: '/guide/operations' },
+          { text: 'Operations & guarantees', link: '/guide/operations' },
+          { text: 'Benchmarks', link: '/guide/benchmarks' },
+          { text: 'FAQ', link: '/guide/faq' },
         ],
       },
     ],
@@ -60,6 +81,7 @@ export default defineConfig({
           text: 'Reference',
           items: [
             { text: 'CLI reference', link: '/guide/cli-reference' },
+            { text: 'Agents & MCP', link: '/guide/mcp' },
             { text: 'Daemon', link: '/guide/daemon' },
             { text: 'Embedding model', link: '/guide/embedding' },
             { text: 'Operations & guarantees', link: '/guide/operations' },

@@ -4,6 +4,10 @@ Recorded sessions, not reconstructions. Every frame is a command actually
 executing against a real public repository at a pinned commit: the timings are
 real latency and the output is whatever the tool printed.
 
+The sessions on the home page are recorded with 0.2.0 against this
+repository's own history. The ones below were recorded earlier against curl,
+zod and others, so they show the larger histories the benchmarks use.
+
 ## A question with nothing to grep for
 
 <Cast src="/casts/ask.cast" title='git why "why did making lots of schemas suddenly get slow and memory-hungry"' />

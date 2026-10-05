@@ -17,10 +17,10 @@ A query without a daemon opens the index, loads the embedding model and reads
 the lineage table, answers, and throws all three away. The next query does it
 again. Measured on curl — 30,000 commits, 182,772 records:
 
-|                     |    p50 |    p95 |
-| ------------------- | -----: | -----: |
-| no daemon           | 569 ms | 597 ms |
-| `git why server on` | 286 ms | 301 ms |
+|                     |    p50 |     p95 |
+| ------------------- | -----: | ------: |
+| no daemon           | 851 ms | 1371 ms |
+| `git why server on` | 384 ms |  491 ms |
 
 The daemon holds exactly those three things open, per repository, and one
 embedding model for the whole machine rather than one per repository.
@@ -64,9 +64,9 @@ from under a query that is still running.
 ```console
 $ git why server status
 server: ready
-pid:    64172
-url:    http://127.0.0.1:63856
-version: 0.1.0
+pid:    1568608
+url:    http://127.0.0.1:35457
+version: 0.2.0
 uptime: 66s
 open:   1 repository
 served: 76

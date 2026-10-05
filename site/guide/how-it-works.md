@@ -60,6 +60,24 @@ It excludes reflog-only objects, stash refs, notes, and replace refs, and it
 does not recurse into submodules — a submodule is its own repository with its
 own index. This is narrower than `git rev-list --all`, deliberately.
 
+## Lineage: first, last, removed, timeline, owners
+
+Ranking answers "which commits are about this". Questions about _when_ and
+_who_ need more, so the index also keeps a lineage table that follows each
+file through renames. `--first`, `--last` and `--removed` resolve an endpoint
+from it, which means they can name a commit the ranked list never surfaced.
+`--timeline` lays the matching changes out in date order, and `--owners`
+credits whoever established an area by the relevance of their commits rather
+than by surviving lines (`git blame`) or churn (`git shortlog`).
+
+## The index
+
+Everything derived lives in `<git-common-dir>/why`: a full-text index, a vector
+collection and the lineage table, versioned by generation. Queries check
+freshness against your refs and index only newly reachable commits, under a
+lock, so two processes cannot corrupt it. `git why status` reports the state
+without changing anything; `git why gc` removes superseded generations.
+
 ## Filters
 
 `-- <path>...` restricts to literal historical paths (a trailing `/` means a

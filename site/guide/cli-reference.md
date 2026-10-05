@@ -4,6 +4,8 @@
 Usage: git why <query> [-- <path>...] [options]
        git why --query <query> [options]
        git why index|status|rebuild|gc [options]
+       git why server on|off|status
+       git why completion bash|zsh|fish
        git why mcp
 ```
 
@@ -81,6 +83,28 @@ For "when was this first introduced?" questions, widen the pool first
 | `git why status --json` | Same, machine-readable.                                |
 | `git why rebuild`       | Replace derived index data.                            |
 | `git why gc`            | Reconcile and compact, without downloading embeddings. |
+
+## Other commands
+
+| Command                              | Effect                                                                                      |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `git why server on\|off\|status`     | Start, stop or inspect the optional [daemon](/guide/daemon). Searches use it automatically. |
+| `git why mcp`                        | Serve the MCP bridge over stdio. See [Agents and MCP](/guide/mcp).                          |
+| `git why completion bash\|zsh\|fish` | Print a shell completion script for `git why` and `git-why`.                                |
+| `git why help`, `-h`                 | Show the tool's own help.                                                                   |
+
+## Environment
+
+| Variable                 | Effect                                                                      |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `GIT_WHY_MODE`           | Default for `--daemon`: `direct`, `server` or `auto`.                       |
+| `GIT_WHY_OFFLINE=1`      | Same as `--offline`: never touch the network for models.                    |
+| `GIT_WHY_MODEL_CACHE`    | Where model files are cached (default: the platform cache directory).       |
+| `GIT_WHY_MODEL_BASE_URL` | An http(s) mirror to fetch model files from instead of the default host.    |
+| `GIT_WHY_DAEMON_HOME`    | Where the daemon keeps its instance record.                                 |
+| `GIT_WHY_MCP_ROOTS`      | Extra directories the MCP server may search in (`*` lifts the restriction). |
+| `GIT_WHY_MCP_TIMEOUT_MS` | Per-call timeout for the MCP server (default 120000).                       |
+| `NO_COLOR`               | Disable colour in human output.                                             |
 
 ## Exit codes
 
