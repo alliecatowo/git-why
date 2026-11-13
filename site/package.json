@@ -15,7 +15,7 @@
     "vitepress": "^1.6.4"
   },
   "dependencies": {
-    "asciinema-player": "^3.17.0"
+    "asciinema-player": "^3.18.0"
   },
   "overrides": {
     "vite": "^6.4.3"
