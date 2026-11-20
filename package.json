@@ -67,7 +67,7 @@
     "verify:plugins": "node scripts/verify-plugins.mjs"
   },
   "dependencies": {
-    "@zvec/zvec": "0.7.1"
+    "@zvec/zvec": "0.8.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
